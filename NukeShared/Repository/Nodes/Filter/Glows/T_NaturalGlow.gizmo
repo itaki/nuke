@@ -1,0 +1,267 @@
+#! C:/Program Files/Nuke11.3v1/nuke-11.3.1.dll -nx
+version 10.5 v1
+Group {
+ name T_NaturalGlow
+ inputs 2
+ knobChanged "thisNode = nuke.thisNode()\nthisKnob = nuke.thisKnob()\n\n\nif thisKnob.name() == 'falloff':\n\n    falloff = int(thisNode\['falloff'].value())\n\n    thisNode.begin()\n    dotIN = nuke.toNode('Dot_In')\n    dotOUT = nuke.toNode('Dot_Out')\n    merge = nuke.toNode('Merge_Glow')\n    Xpos = nuke.toNode('GlowMaster').xpos()\n    Ypos = nuke.toNode('GlowMaster').ypos()\n\n    for n in nuke.allNodes('Glow2'):\n        if n.name() not in \['GlowMaster']:\n           nuke.delete(n)\n\n    nuke.delete(merge)\n    merge = nuke.nodes.Merge2(xpos = Xpos, ypos = Ypos + 144)\n    merge.setName('Merge_Glow')\n    if thisNode\['operation'].value() == 'screen':\n        merge\['operation'].setValue('screen')\n    elif thisNode\['operation'].value() == 'plus':\n        merge\['operation'].setValue('plus')\n    merge.setInput(0, nuke.toNode('GlowMaster'))\n    merge\['Achannels'].setExpression('parent.GlowMaster.channels')\n    merge\['Bchannels'].setExpression('parent.GlowMaster.channels')\n    merge\['output'].setExpression('parent.GlowMaster.channels')\n    dotOUT.setInput(0,merge)\n\n\n    for n in range(falloff):\n        glow = nuke.nodes.Glow2(xpos = Xpos-(n+1)*110, ypos = Ypos)\n        glow.setName('Glow_'+str(n+1))\n        glow\['channels'].setExpression('parent.GlowMaster.channels')\n        glow\['tint'].setValue((1,1,1,1))\n        glow\['tint'].setExpression('parent.GlowMaster.tint')\n        glow\['tolerance'].setExpression('parent.GlowMaster.tolerance')\n        glow\['saturation'].setExpression('parent.GlowMaster.saturation')\n        glow\['brightness'].setExpression('parent.GlowMaster.brightness')\n        glow\['effect_only'].setExpression('parent.GlowMaster.effect_only')\n        glow\['size'].setValue(\[0,0])\n        glow\['size'].setExpression('parent.size*pow(2,int(\[string range \[value name] 5 end]))')\n        glow\['crop'].setExpression('parent.crop')\n        glow.setInput(0, dotIN)\n        if n==0:\n            merge.setInput(n+1, glow)\n        else :\n            merge.setInput(n+2, glow)\n\nif thisKnob.name() == 'operation':\n\n    opValue = thisNode\['operation'].value()\n    \n    if opValue == 'screen':\n        nuke.toNode('Merge_Glow')\['operation'].setValue('screen')\n    elif opValue == 'plus':\n        nuke.toNode('Merge_Glow')\['operation'].setValue('plus')"
+ tile_color 0xffbf00ff
+ label v1.0
+ addUserKnob {20 controls l Controls}
+ addUserKnob {41 channels l Channels T GlowMaster.channels}
+ addUserKnob {41 tint l Tint T GlowMaster.tint}
+ addUserKnob {7 tolerance l Tolerance}
+ addUserKnob {41 saturation l Saturation T GlowMaster.saturation}
+ addUserKnob {7 brightness l Brightness R 0 5}
+ brightness 1
+ addUserKnob {7 size l Size R 0 10}
+ size 1
+ addUserKnob {26 dummy l "" +STARTLINE T " "}
+ addUserKnob {3 falloff l Falloff}
+ falloff 6
+ addUserKnob {6 crop l "crop to format" -STARTLINE}
+ crop true
+ addUserKnob {4 operation l Operation M {screen plus "" ""}}
+ addUserKnob {26 dummy2 l "" +STARTLINE T " "}
+ addUserKnob {4 mask l Mask M {none alpha}}
+ addUserKnob {6 invert -STARTLINE}
+ addUserKnob {6 cropMask l crop -STARTLINE}
+ cropMask true
+ addUserKnob {26 dummy3 l "" +STARTLINE T " "}
+ addUserKnob {41 white l Gain T GradeGlow.white}
+ addUserKnob {41 gamma l Gamma T GradeGlow.gamma}
+ addUserKnob {26 ""}
+ addUserKnob {26 copyright1 l "" +STARTLINE T "<b>T_NaturalGlow v1.0</b> - Petar Tsonev (c)"}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos 180
+  ypos -585
+  number 1
+ }
+ Invert {
+  name Invert1
+  xpos 180
+  ypos -400
+  disable {{"parent.invert == 1 ? 0 : 1"}}
+ }
+ Crop {
+  box {0 0 {source.width} {source.height}}
+  crop false
+  name Crop1
+  xpos 70
+  ypos -394
+  disable {{"parent.cropMask == 1 ? 0 : 1"}}
+ }
+ Input {
+  inputs 0
+  name source
+  xpos -40
+  ypos -873
+ }
+ Dot {
+  name Dot2
+  xpos -6
+  ypos -726
+ }
+set N35d2000 [stack 0]
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge1
+  xpos -40
+  ypos -393
+  disable {{"parent.mask == 1 ? 0 : 1"}}
+ }
+ Dot {
+  name Dot_In
+  label "In\n"
+  note_font_size 25
+  xpos -6
+  ypos -54
+ }
+set N35d3800 [stack 0]
+ Glow2 {
+  channels {{{parent.GlowMaster.channels}}}
+  tint {{parent.GlowMaster.tint} {parent.GlowMaster.tint} {parent.GlowMaster.tint} {parent.GlowMaster.tint}}
+  tolerance {{parent.GlowMaster.tolerance}}
+  brightness {{parent.GlowMaster.brightness}}
+  saturation {{parent.GlowMaster.saturation}}
+  effect_only {{parent.GlowMaster.effect_only}}
+  size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+  crop {{parent.crop}}
+  name Glow_6
+  xpos -700
+  ypos 134
+ }
+push $N35d3800
+ Glow2 {
+  channels {{{parent.GlowMaster.channels}}}
+  tint {{parent.GlowMaster.tint} {parent.GlowMaster.tint} {parent.GlowMaster.tint} {parent.GlowMaster.tint}}
+  tolerance {{parent.GlowMaster.tolerance}}
+  brightness {{parent.GlowMaster.brightness}}
+  saturation {{parent.GlowMaster.saturation}}
+  effect_only {{parent.GlowMaster.effect_only}}
+  size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+  crop {{parent.crop}}
+  name Glow_5
+  xpos -590
+  ypos 134
+ }
+push $N35d3800
+ Glow2 {
+  channels {{{parent.GlowMaster.channels}}}
+  tint {{parent.GlowMaster.tint} {parent.GlowMaster.tint} {parent.GlowMaster.tint} {parent.GlowMaster.tint}}
+  tolerance {{parent.GlowMaster.tolerance}}
+  brightness {{parent.GlowMaster.brightness}}
+  saturation {{parent.GlowMaster.saturation}}
+  effect_only {{parent.GlowMaster.effect_only}}
+  size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+  crop {{parent.crop}}
+  name Glow_4
+  xpos -480
+  ypos 134
+ }
+push $N35d3800
+ Glow2 {
+  channels {{{parent.GlowMaster.channels}}}
+  tint {{parent.GlowMaster.tint} {parent.GlowMaster.tint} {parent.GlowMaster.tint} {parent.GlowMaster.tint}}
+  tolerance {{parent.GlowMaster.tolerance}}
+  brightness {{parent.GlowMaster.brightness}}
+  saturation {{parent.GlowMaster.saturation}}
+  effect_only {{parent.GlowMaster.effect_only}}
+  size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+  crop {{parent.crop}}
+  name Glow_3
+  xpos -370
+  ypos 134
+ }
+push $N35d3800
+ Glow2 {
+  channels {{{parent.GlowMaster.channels}}}
+  tint {{parent.GlowMaster.tint} {parent.GlowMaster.tint} {parent.GlowMaster.tint} {parent.GlowMaster.tint}}
+  tolerance {{parent.GlowMaster.tolerance}}
+  brightness {{parent.GlowMaster.brightness}}
+  saturation {{parent.GlowMaster.saturation}}
+  effect_only {{parent.GlowMaster.effect_only}}
+  size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+  crop {{parent.crop}}
+  name Glow_2
+  xpos -260
+  ypos 134
+ }
+push 0
+push $N35d3800
+ Glow2 {
+  channels {{{parent.GlowMaster.channels}}}
+  tint {{parent.GlowMaster.tint} {parent.GlowMaster.tint} {parent.GlowMaster.tint} {parent.GlowMaster.tint}}
+  tolerance {{parent.GlowMaster.tolerance}}
+  brightness {{parent.GlowMaster.brightness}}
+  saturation {{parent.GlowMaster.saturation}}
+  effect_only {{parent.GlowMaster.effect_only}}
+  size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+  crop {{parent.crop}}
+  name Glow_1
+  xpos -150
+  ypos 134
+ }
+push $N35d3800
+ Glow2 {
+  channels rgba
+  tolerance {{parent.tolerance}}
+  brightness {{parent.brightness}}
+  effect_only true
+  size {{parent.size}}
+  name GlowMaster
+  xpos -40
+  ypos 134
+ }
+ Merge2 {
+  inputs 7+1
+  operation screen
+  Achannels {{{parent.GlowMaster.channels}}}
+  Bchannels {{{parent.GlowMaster.channels}}}
+  output {{{parent.GlowMaster.channels}}}
+  name Merge_Glow
+  xpos -40
+  ypos 278
+ }
+ Dot {
+  name Dot_Out
+  label Out
+  note_font_size 25
+  xpos -6
+  ypos 378
+ }
+push $N35d3800
+ Dot {
+  name Dot5
+  xpos 104
+  ypos -54
+ }
+ Grade {
+  channels {{{parent.GradeGlow.channels}}}
+  white {{"parent.brightness <= 1 ? 1 - parent.brightness : 0"}}
+  name GradeInput
+  xpos 70
+  ypos 134
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge3
+  xpos 70
+  ypos 374
+ }
+ Grade {
+  channels rgba
+  name GradeGlow
+  xpos 70
+  ypos 471
+ }
+set N2181d000 [stack 0]
+ Dot {
+  name Dot4
+  xpos 214
+  ypos 475
+ }
+push $N35d2000
+ Dot {
+  name Dot1
+  xpos 434
+  ypos -726
+ }
+ Dot {
+  name Dot3
+  xpos 434
+  ypos 619
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge2
+  xpos 180
+  ypos 615
+ }
+push $N2181d000
+ Switch {
+  inputs 2
+  which {{parent.mask}}
+  name Switch1
+  xpos 70
+  ypos 615
+ }
+ Output {
+  name Output1
+  xpos 70
+  ypos 807
+ }
+push $N35d3800
+ Viewer {
+  frame 1
+  frame_range 1-100
+  name Viewer1
+  xpos -480
+  ypos 567
+ }
+end_group

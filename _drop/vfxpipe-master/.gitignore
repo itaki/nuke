@@ -1,0 +1,28 @@
+#python specific
+*.pyc
+
+#config files to ignore
+#######################
+shotgun_config.py
+
+# OS generated files #
+######################
+*~
+*.lock
+*.pyc
+*.DS_Store
+*.swp
+*.out
+*.bak
+*.bat
+*.sh
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+*.db
+config.json
+config.json

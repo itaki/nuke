@@ -1,0 +1,113 @@
+set cut_paste_input [stack 0]
+version 10.0 v5
+push $cut_paste_input
+Group {
+ name LensVignette
+ selected true
+ xpos -1140
+ ypos 734
+ addUserKnob {20 User l "Lens Vignette v1"}
+ addUserKnob {7 radial_width l width R -1000 1000}
+ addUserKnob {7 radial_height l height R -1000 1000}
+ addUserKnob {26 ""}
+ addUserKnob {7 primary_soft l "primary vignette softness"}
+ primary_soft 0.2
+ addUserKnob {7 secondary_soft l "secondary vignette softness"}
+ secondary_soft 0.5
+ addUserKnob {6 perceptually_linear l "perceptually linear" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 primary_blend l "primary vignette blend"}
+ primary_blend 1
+ addUserKnob {7 secondary_blend l "secondary vignette blend"}
+ secondary_blend 0.2
+ addUserKnob {6 normalize +STARTLINE}
+ normalize true
+ addUserKnob {26 ""}
+ addUserKnob {14 blur l "blur size" R 0 100}
+ addUserKnob {26 ""}
+ addUserKnob {19 colour l color R 0 4}
+ colour 1
+ addUserKnob {6 colour_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+}
+ Input {
+  inputs 0
+  name format
+  xpos -40
+  ypos 782
+ }
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  xpos -40
+  ypos 824
+ }
+set Na1792c0 [stack 0]
+ NoOp {
+  name Radius
+  xpos 180
+  ypos 830
+  addUserKnob {20 User}
+  addUserKnob {7 radius}
+  radius {{sqrt(pow2((parent.input.width/2))+pow2((parent.input.height/2)))}}
+ }
+set Na1880a0 [stack 0]
+ Radial {
+  invert true
+  area {{(parent.input.width/2)-Radius.radius-parent.radial_width} {(parent.input.height/2)-Radius.radius-parent.radial_height} {(parent.input.width/2)+Radius.radius+parent.radial_width} {(parent.input.height/2)+Radius.radius+parent.radial_height}}
+  softness {{parent.secondary_soft}}
+  plinear {{parent.perceptually_linear}}
+  color {{parent.colour} {parent.colour} {parent.colour} {parent.colour}}
+  p1 {374 1994}
+  p0 {1823 708}
+  name Radial1
+  label SOFT
+  xpos 290
+  ypos 920
+ }
+push $Na1880a0
+ Radial {
+  invert true
+  area {{(parent.input.width/2)-Radius.radius-parent.radial_width} {(parent.input.height/2)-Radius.radius-parent.radial_height} {(parent.input.width/2)+Radius.radius+parent.radial_width} {(parent.input.height/2)+Radius.radius+parent.radial_height}}
+  softness {{parent.primary_soft}}
+  plinear {{parent.perceptually_linear}}
+  color {{parent.colour} {parent.colour} {parent.colour} {parent.colour}}
+  p1 {374 1994}
+  p0 {1823 708}
+  name Radial2
+  label HARD
+  xpos 70
+  ypos 920
+ }
+ Blend {
+  inputs 2
+  channels rgba
+  weight0 {{parent.primary_blend}}
+  weight1 {{parent.secondary_blend}}
+  normalize {{parent.normalize}}
+  name Blend3
+  xpos 180
+  ypos 998
+ }
+push $Na1792c0
+ Copy {
+  inputs 2
+  channels rgba
+  name Copy1
+  xpos -40
+  ypos 986
+ }
+ Blur {
+  size {{blur} {blur}}
+  name Blur1
+  xpos -40
+  ypos 1064
+ }
+ Output {
+  name Output1
+  xpos -40
+  ypos 1118
+ }
+end_group

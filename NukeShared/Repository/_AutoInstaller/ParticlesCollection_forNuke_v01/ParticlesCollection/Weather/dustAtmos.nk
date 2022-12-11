@@ -1,0 +1,370 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/Desktop/dustAtmos.nk
+ frame 50
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Camera2 {
+ inputs 0
+ name Camera1
+ xpos -246
+ ypos 319
+}
+Reformat {
+ inputs 0
+ format "256 256 0 0 256 256 1 square_256"
+ name Reformat3
+ xpos -608
+ ypos -149
+}
+Roto {
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {px x42aa0000
+        {xc0000000 xc1600000}
+        {x41f00000 x42320000}
+        {x40000000 x41600000}
+        {xc1080000 xc1700000}
+        {x42860000 x42c50000}
+        {x41080000 x41700000}
+        {xc1700000 xc1b40000}
+        {x43268000 x43568000}
+        {x41700000 x41b40000}
+        {xbf800000 xbf000000}
+        {x43658000 x43718000}
+        {1 x3f000000}
+        {0 0}
+        {x435a8000 x43690000}
+        {0 0}
+        {1 x3f000000}
+        {x43338000 x43570000}
+        {xbf800000 xbf000000}
+        {0 0}
+        {x42990000 x42b40000}
+        {0 0}}}     idem}
+     {tx x42aa0000 x430a36db x43226db7}
+     {a osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x42aa0000 ltm x42aa0000 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {128 128}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ lifetime_start 85
+ lifetime_end 85
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ name Roto3
+ xpos -608
+ ypos -113
+}
+Blur {
+ channels rgba
+ size 9
+ name Blur5
+ label "\[value size]"
+ xpos -608
+ ypos -89
+}
+Reformat {
+ inputs 0
+ format "256 256 0 0 256 256 1 square_256"
+ name Reformat2
+ xpos -438
+ ypos -201
+}
+Roto {
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {px x42aa0000
+        {x3fc00000 xc28b0000}
+        {x423f2492 x42c36db6}
+        {xbfc00000 x428b0000}
+        {xc1a80000 xc1d80000}
+        {x42780000 x433e0000}
+        {x41a80000 x41d80000}
+        {xc1f00000 x428b0000}
+        {x43500000 x432f0000}
+        {x41f00000 xc28b0000}
+        {x42520000 x419c0000}
+        {x43360000 x42200000}
+        {xc2520000 xc19c0000}}}     idem}
+     {tx x42aa0000 x42f7c000 x42e48000}
+     {a osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x42aa0000 ltm x42aa0000 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {128 128}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ lifetime_start 85
+ lifetime_end 85
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ name Roto2
+ xpos -438
+ ypos -165
+}
+Blur {
+ channels rgba
+ size 19
+ name Blur4
+ label "\[value size]"
+ xpos -438
+ ypos -141
+}
+Reformat {
+ inputs 0
+ format "256 256 0 0 256 256 1 square_256"
+ name Reformat1
+ xpos -274
+ ypos -222
+}
+Roto {
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {px x42aa0000
+        {xbecccd00 xc1f00004}
+        {x42a13333 x42e93333}
+        {x3ecccd00 x41f00004}
+        {xc0199980 xc0400000}
+        {x42c9e2c6 x431fea0f}
+        {x40199980 x40400000}
+        {xbfb33300 x3fb33380}
+        {x4325cccd x4361ccce}
+        {x3fb33300 xbfb33380}
+        {xbf999980 x40400000}
+        {x4315999a x42d5999a}
+        {x3f999980 xc0400000}
+        {xbf999980 x3fcccce0}
+        {x43213333 x4265999a}
+        {x3f999980 xbfcccce0}
+        {0 xbf4ccd00}
+        {x434c6666 x42e40000}
+        {0 x3f4ccd00}
+        {xc09999a0 x40b33340}
+        {x43646666 x42fc0000}
+        {x409999a0 xc0b33330}
+        {xbe4ccc00 x3fccccc0}
+        {x43653333 x42580000}
+        {x3e4ccc00 xbfccccc0}
+        {x40f999a0 0}
+        {x4320cccd x42073333}
+        {xc0f999a0 0}
+        {x40d99990 xc1b9999a}
+        {x42a06666 x4218cccd}
+        {xc0d99990 x41b9999a}}}     idem}
+     {tx x42aa0000 x43196666 x42c65c29}
+     {a osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x42aa0000 ltm x42aa0000 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {128 128}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ lifetime_start 85
+ lifetime_end 85
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ name Roto1
+ xpos -274
+ ypos -186
+}
+Blur {
+ channels rgba
+ size 20.5
+ name Blur1
+ label "\[value size]"
+ xpos -274
+ ypos -162
+}
+Cube {
+ inputs 0
+ uniform_scale 8
+ name Cube1
+ xpos -38
+ ypos -131
+}
+push 0
+ParticleEmitter {
+ inputs 5
+ start_frame -200
+ emit_from bbox
+ rate 30
+ rate_variation 0.56
+ lifetime 320
+ velocity 0.007
+ rotation_velocity 0.006
+ rotation_velocity_variation 0.26
+ size 0.01
+ spread 0.23
+ name ParticleEmitter1
+ xpos -38
+ ypos -16
+}
+ParticleTurbulence {
+ strength {{strength.z} {strength.z} 0.0004}
+ scale {{scale.z} {scale.z} 1}
+ name ParticleTurbulence1
+ xpos -38
+ ypos 94
+}
+ParticleTurbulence {
+ strength {{strength.z} {strength.z} 0.0001}
+ scale {{scale.z} {scale.z} 50}
+ name ParticleTurbulence2
+ xpos -38
+ ypos 159
+}
+push 0
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ motion_vectors_type distance
+ name ScanlineRender1
+ xpos -38
+ ypos 340
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x969600ff
+ label "<b>https://www.youtube.com/watch?v=sFnkheIfI6M&ab_channel=OrlandiLuca        ."
+ note_font_size 20
+ xpos 378
+ ypos 314
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x969600ff
+ label "<b>https://www.youtube.com/watch?v=s0_C6aM5rvc&t=845s&ab_channel=Vishalvfx        ."
+ note_font_size 20
+ xpos 379
+ ypos 237
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0x93000000
+ label "<b>Have a look here for something more complex:"
+ note_font_size 20
+ xpos 375
+ ypos 140
+}

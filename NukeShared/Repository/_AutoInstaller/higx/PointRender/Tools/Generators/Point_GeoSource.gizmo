@@ -1,0 +1,50 @@
+Group {
+ name Point_GeoSource
+ tile_color 0x434343ff
+ note_font_color 0x7DADF9FF
+ addUserKnob {20 User}
+ addUserKnob {4 PointPlacement l "Point Placement" M {points edges faces}}
+ PointPlacement faces
+ addUserKnob {6 Static l "Static Input" t "By default this node freezes vertex and texture animation at frame 1.\nThis is to reduce the overhead of the particle node.\nIf you need animated geo or textures, turn this option off." +STARTLINE}
+ Static true
+}
+ Input {
+  inputs 0
+  name InputGeo
+  selected true
+  xpos 389
+  ypos -270
+ }
+push 0
+ ParticleEmitter {
+  inputs 2
+  emit_from {{parent.PointPlacement}}
+  emit_order uniformly
+  lifetime 1
+  velocity 0
+  color_from_texture true
+  name ParticleEmitter3
+  xpos 389
+  ypos -195
+ }
+add_layer {pos pos.red pos.green pos.blue pos.alpha}
+ ParticleToImage {
+  pos {pos.red pos.green pos.blue -pos.alpha}
+  active pos.alpha
+  name ParticleToImage1
+  xpos 389
+  ypos -133
+ }
+ FrameHold {
+  first_frame 1
+  name FrameHold1
+  xpos 389
+  ypos -109
+  disable {{!parent.Static}}
+ }
+ Output {
+  name Output1
+  xpos 389
+  ypos -37
+ }
+end_group

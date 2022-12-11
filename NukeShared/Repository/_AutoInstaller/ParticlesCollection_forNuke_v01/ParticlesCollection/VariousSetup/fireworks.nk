@@ -1,0 +1,299 @@
+#! /Applications/Nuke10.5v2/Nuke10.5v2.app/Contents/MacOS/libnuke-10.5.2.dylib -nx
+version 10.5 v2
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="23" w="1440" h="835" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="777" stretch="1"/>
+            <splitter orientation="2">
+                <split size="475"/>
+                <dock id="" activePageId="Viewer.1" focus="true">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="334"/>
+                <dock id="" activePageId="DAG.1">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.scripteditor.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "/Users/gere/Desktop/PARTICLES/FIRE and SPARKS/fireworks.nk"
+ frame 32
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+BackdropNode {
+ inputs 0
+ name General_forces
+ tile_color 0x9b9b9bff
+ note_font_size 18
+ xpos 326
+ ypos -2392
+ bdwidth 318
+ bdheight 192
+}
+StickyNote {
+ inputs 0
+ name StickyNote8
+ tile_color 0x9b9b9bff
+ label "Main rocket emission\n- Particles are emitted randomly from points on the Card.\n- They are placed in the default channel (a)."
+ note_font_size 18
+ xpos 501
+ ypos -2950
+}
+StickyNote {
+ inputs 0
+ name StickyNote7
+ tile_color 0x9b9b9bff
+ label "Rocket velocities\n\n- v(0.005, 0, 0) is applying an extra acceleration of 0.005 \nin the positive x direction to each particles movement.\n\n- Affecting the particles in the default channel (a),\n which is set in the Conditions tab."
+ note_font_size 18
+ xpos 498
+ ypos -2872
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x9b9b9bff
+ label "rocket trails"
+ note_font_size 18
+ xpos 501
+ ypos -2698
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x9b9b9bff
+ label explosion
+ note_font_size 18
+ xpos 502
+ ypos -2629
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0x9b9b9bff
+ label "explosion color & velocity"
+ note_font_size 18
+ xpos 500
+ ypos -2572
+}
+StickyNote {
+ inputs 0
+ name StickyNote4
+ tile_color 0x9b9b9bff
+ label dust
+ note_font_size 18
+ xpos 502
+ ypos -2512
+}
+StickyNote {
+ inputs 0
+ name StickyNote6
+ tile_color 0x9b9b9bff
+ label "dust size, opacity, position"
+ note_font_size 18
+ xpos 501
+ ypos -2451
+}
+Camera2 {
+ inputs 0
+ translate {-4.216890335 -36.59693146 64.59994507}
+ rotate {40 -4.669715812 0}
+ name Camera1
+ xpos 293
+ ypos -2176
+}
+ColorWheel {
+ inputs 0
+ edgeSaturation 0
+ edgeValue 0
+ gamma 0.45
+ name ColorWheel1
+ xpos 254
+ ypos -3013
+}
+BlendMat {
+ operation plus
+ surfaceblend modulate
+ name BlendMat1
+ xpos 254
+ ypos -2919
+}
+Card2 {
+ inputs 0
+ rows 10
+ columns 10
+ rotate {-90 0 0}
+ uniform_scale 20
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card1
+ xpos 393
+ ypos -2992
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ rate {{noise(frame/10)*2+frame<40}}
+ lifetime 100
+ lifetime_variation 0.4
+ velocity 0.9
+ size 0.2
+ color {1 1 1 1}
+ name ParticleEmitter1
+ xpos 393
+ ypos -2919
+}
+ParticleExpression {
+ accelexpr "v(0.005, 0, 0)"
+ velexpr "new?v((random-0.5)/10, 1, 0):vel"
+ channels {a}
+ name ParticleExpression1
+ xpos 393
+ ypos -2840
+}
+ParticleSpawn {
+ emit_channels {c}
+ size 0.4
+ mass 0.01
+ transfer_velocity 0
+ color {1 1 1 0.1}
+ name ParticleSpawn1
+ xpos 393
+ ypos -2702
+}
+ParticleSpawn {
+ rate 200
+ lifetime 30
+ size 0.2
+ mass 0.05
+ conserve_momentum false
+ color {1 0 0 1}
+ min_age 0.3
+ name ParticleSpawn2
+ xpos 393
+ ypos -2636
+}
+ParticleExpression {
+ temp_name0 greenness
+ temp_expr0 random*0.5+0.5
+ temp_expr0_pp false
+ temp_name1 redness
+ temp_expr1 random*0.5+0.5
+ temp_expr1_pp false
+ temp_name2 blueness
+ temp_expr2 random
+ temp_expr2_pp false
+ temp_name3 op
+ temp_expr3 1-(age/life)
+ colexpr "new?v(redness, greenness, blueness):color"
+ opacityexpr op<0?op:(op>1?1:op)
+ velexpr new?norm(randomv-0.5)/5:vel
+ channels {b}
+ name ParticleExpression2
+ xpos 393
+ ypos -2575
+}
+ParticleSpawn {
+ emit_channels {d}
+ rate 10
+ lifetime 50
+ velocity 0.01
+ velocity_variation 1
+ size 2
+ size_variation 0.2
+ mass 10
+ transfer_velocity 0
+ conserve_mass false
+ color {1 1 1 0.05}
+ min_age 0.29
+ name ParticleSpawn3
+ xpos 393
+ ypos -2516
+}
+ParticleExpression {
+ opacityexpr (1-(age/life))/50
+ sizeexpr (age/life)*20
+ posexpr new?randomv-0.5+pos:pos
+ channels {d}
+ name ParticleExpression3
+ xpos 393
+ ypos -2456
+}
+ParticleTurbulence {
+ strength {0.1 0.1 0}
+ channels {d}
+ name ParticleTurbulence1
+ xpos 393
+ ypos -2351
+}
+ParticleDrag {
+ drag 0.1
+ name ParticleDrag1
+ xpos 393
+ ypos -2307
+}
+ParticleGravity {
+ to {0 -0.01 0}
+ channels {a b c e f h}
+ name ParticleGravity1
+ xpos 393
+ ypos -2258
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0 0 0 0}
+ format "1024 1024 0 0 1024 1024 1 square_1K"
+ name Constant1
+ xpos 503
+ ypos -2179
+}
+ScanlineRender {
+ inputs 3
+ motion_vectors_type velocity
+ name ScanlineRender1
+ xpos 393
+ ypos -2155
+}
+Viewer {
+ frame 32
+ frame_range 1-100
+ input_process false
+ name Viewer1
+ selected true
+ xpos 393
+ ypos -2099
+}

@@ -1,0 +1,234 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="-1" y="-9" w="1920" h="1001" maximized="1" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1257" stretch="1"/>
+            <splitter orientation="2">
+                <split size="563"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="396"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/Desktop/Bugs.nk
+ frame 1010
+ first_frame 1001
+ last_frame 1100
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ label "<b>you can add a random function to move the legs        ."
+ note_font_size 20
+ xpos 149
+ ypos -307
+}
+NoOp {
+ inputs 0
+ name CTRL
+ tile_color 0xff500000
+ note_font "Verdana Bold"
+ note_font_size 110
+ xpos 393
+ ypos 114
+ addUserKnob {20 User}
+ addUserKnob {3 EmissionFrame l "Emission Frame"}
+ EmissionFrame 1010
+ addUserKnob {7 EmissionRate l "Emission Rate" R 0 100}
+ EmissionRate 30
+}
+ParticleEmitter {
+ inputs 0
+ start_frame 1000
+ emit_from bbox
+ rate {{frame==parent.CTRL.EmissionFrame?parent.CTRL.EmissionRate:0}}
+ lifetime 1000
+ velocity 0.39
+ rotation_velocity 0.036
+ size 0.275
+ size_variation 0.38
+ spread 0.6
+ name ParticleEmitter2
+ xpos -261
+ ypos 206
+}
+Camera2 {
+ inputs 0
+ translate {0 0 11.53999996}
+ name Camera2
+ xpos -165
+ ypos 557
+}
+Card2 {
+ inputs 0
+ translate {-1.219999909 0 -0.4666983485}
+ rotate {0 -32 0}
+ scaling {2 1.9 1}
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card2
+ label "LEG LEFT"
+ xpos 286
+ ypos -225
+}
+Card2 {
+ inputs 0
+ translate {1.391445518 0 -0.4666983485}
+ rotate {0 32 0}
+ scaling {2 1.9 1}
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card1
+ label "LEG RIGHT"
+ xpos 156
+ ypos -227
+}
+Sphere {
+ inputs 0
+ scaling {1 2.7 1}
+ name Sphere1
+ xpos -12
+ ypos -240
+}
+MergeGeo {
+ inputs 2
+ name MergeGeo1
+ xpos -12
+ ypos -157
+}
+MergeGeo {
+ inputs 2
+ name MergeGeo2
+ xpos -12
+ ypos -120
+}
+TransformGeo {
+ rotate {-90 0 0}
+ uniform_scale 0.37
+ name TransformGeo1
+ xpos -12
+ ypos 2
+}
+Cube {
+ inputs 0
+ uniform_scale 9
+ name Cube1
+ xpos -248
+ ypos 52
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ start_frame 1000
+ emit_from bbox
+ rate {{frame==parent.CTRL.EmissionFrame?parent.CTRL.EmissionRate:0}}
+ lifetime 1000
+ velocity 0.004
+ size 0.155
+ name ParticleEmitter3
+ xpos -12
+ ypos 145
+}
+ParticleTurbulence {
+ strength {0.3 0.4 0.5}
+ name ParticleTurbulence1
+ xpos -12
+ ypos 293
+}
+ParticleDrag2 {
+ drag 0.205
+ rotationalDrag 0.085
+ name ParticleDrag1
+ xpos -12
+ ypos 408
+}
+ParticleMotionAlign {
+ name ParticleMotionAlign1
+ xpos -12
+ ypos 483
+}
+push 0
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ motion_vectors_type distance
+ name ScanlineRender1
+ xpos -12
+ ypos 578
+}
+Viewer {
+ frame_range 1001-1100
+ gl_lighting true
+ name Viewer1
+ xpos 407
+ ypos -15
+ hide_input true
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0x335959ff
+ label "<b>author: Vishalvfx        ."
+ note_font_size 20
+ xpos 986
+ ypos 6
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x969600ff
+ label "<b>https://www.youtube.com/watch?v=C8yA652doHE&ab_channel=Vishalvfx  ."
+ note_font_size 20
+ xpos 985
+ ypos 110
+}

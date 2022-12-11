@@ -1,0 +1,156 @@
+Group {
+ inputs 0
+ name Point_Sphere
+ tile_color 0x434343ff
+ note_font_color 0x7dadf9ff
+ addUserKnob {20 User}
+ addUserKnob {26 info l "" +STARTLINE T "Sphere Generator 1.0\n"}
+ addUserKnob {26 devider_general l "<b><font color=#7DADF9>General</font><b>"}
+ addUserKnob {3 FormatX l "Number of Points x"}
+ FormatX 100
+ addUserKnob {3 FormatY l Y -STARTLINE}
+ FormatY 100
+ addUserKnob {13 offset l Offset}
+ addUserKnob {13 scale l Scale}
+ scale {1 1 1}
+ addUserKnob {26 devider_completion l "<b><font color=#7DADF9>Completion</font><b>"}
+ addUserKnob {7 Width}
+ addUserKnob {7 Height}
+ addUserKnob {26 info_shade l "<b><font color=#7DADF9>Shading</font><b>"}
+ addUserKnob {6 poleLight l "Reduce Pole" +STARTLINE}
+}
+ Crop {
+  inputs 0
+  box {0 0 {parent.FormatX} {parent.FormatY}}
+  reformat true
+  crop false
+  name Format
+  xpos 384
+  ypos -295
+ }
+ Expression {
+  expr1 (y)/height
+  expr2 (x)/width
+  name Generator
+  xpos 384
+  ypos -271
+ }
+ Grade {
+  channels {rgba.red rgba.green rgba.blue none}
+  blackpoint {{-whitepoint+1} {-whitepoint+1} {-whitepoint+1} {-whitepoint+1}}
+  blackpoint_panelDropped true
+  whitepoint {1 {((pow(parent.Height,2)*10)+1)} {((pow(parent.Width,2)*10)+1)} 1}
+  whitepoint_panelDropped true
+  add_panelDropped true
+  black_clamp false
+  name Grade2
+  xpos 383
+  ypos -228
+ }
+ Expression {
+  expr1 (g+(sin(((x/width)*pi*density))*scale))+offset
+  mix 0.095
+  name Expression3
+  xpos 383
+  ypos -197
+  disable true
+  addUserKnob {20 User}
+  addUserKnob {3 density l Density}
+  addUserKnob {7 offset l Offset R -2 2}
+  offset 77
+  addUserKnob {7 scale l Scale}
+ }
+ Expression {
+  expr1 g*height
+  expr2 b*width
+  name Expression2
+  xpos 383
+  ypos -166
+ }
+ Expression {
+  temp_name0 lat
+  temp_expr0 "g / (parent.FormatY-1) * 180- 90"
+  temp_name1 lon
+  temp_expr1 "b / (parent.FormatX-0) * 360-180"
+  temp_name2 r
+  temp_expr2 "cos(0.017453292519943295769236907684886 *  lat)"
+  expr0 "(r * cos (0.017453292519943295769236907684886 * lon) +1)*0.5"
+  expr1 "(sin (0.017453292519943295769236907684886 * lat)+1)*.5"
+  expr2 "(r * sin(0.017453292519943295769236907684886 * lon)+1)*.5"
+  name Expression9
+  xpos 384
+  ypos -142
+ }
+ Add {
+  value {{-.5+parent.offset} {-.5+parent.offset} {-.5+parent.offset} 0}
+  name Add1
+  xpos 384
+  ypos -86
+ }
+ Grade {
+  multiply {{parent.scale} {parent.scale} {parent.scale} 1}
+  multiply_panelDropped true
+  black_clamp false
+  name Grade1
+  xpos 384
+  ypos -24
+ }
+ Shuffle {
+  alpha white
+  name Shuffle4
+  xpos 384
+ }
+add_layer {pos pos.red pos.green pos.blue pos.alpha}
+ Shuffle {
+  black white
+  white white
+  red2 white
+  green2 white
+  out pos
+  out2 rgba
+  name Shuffle5
+  xpos 384
+  ypos 47
+ }
+ Expression {
+  expr0 smoothstep(0,1,1-abs(cy*(width/height)))
+  channel1 {-rgba.red rgba.green -rgba.blue none}
+  expr1 smoothstep(0,1,1-abs(cy*(width/height)))
+  channel2 {-rgba.red -rgba.green rgba.blue none}
+  expr2 smoothstep(0,1,1-abs(cy*(width/height)))
+  channel3 {none none none -rgba.alpha}
+  name Expression1
+  selected true
+  xpos 384
+  ypos 71
+  disable {{!parent.poleLight}}
+ }
+ ModifyMetaData {
+  metadata {
+   {set pointrender/n_points "\[expr \[value parent.FormatX]*\[value parent.FormatY]]"}
+   {set pointrender/gen_type 2}
+  }
+  name SetMetaData
+  xpos 384
+  ypos 105
+ }
+ Grade {
+  white {{1/((parent.FormatX*parent.FormatY)/40000)}}
+  black_clamp false
+  name Grade9
+  xpos 384
+  ypos 129
+ }
+ Crop {
+  box {0 0 {parent.FormatX} {parent.FormatY}}
+  crop false
+  name Format1
+  xpos 384
+  ypos 153
+ }
+ Output {
+  name Output1
+  xpos 384
+  ypos 262
+ }
+end_group

@@ -1,0 +1,181 @@
+#! C:/Program Files/Nuke6.2v2/Nuke6.2.exe -nx
+version 6.2 v2
+Gizmo {
+ inputs 2
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 twitch l Twitch3D}
+ addUserKnob {26 txt l "" +STARTLINE T "                                                           Enable"}
+ addUserKnob {26 ""}
+ addUserKnob {6 noise_on l Noise +STARTLINE}
+ addUserKnob {6 bulge_on l Bulge +STARTLINE}
+ addUserKnob {6 scale_on l Scale +STARTLINE}
+ addUserKnob {20 noisetab l Noise}
+ addUserKnob {41 Speed T ProcGeo1.Speed}
+ addUserKnob {41 amount l Amount T noise.amount}
+ addUserKnob {41 Lacunarity T ProcGeo1.Lacunarity}
+ addUserKnob {41 Gain T ProcGeo1.Gain}
+ addUserKnob {41 seed l Seed T noise.seed}
+ addUserKnob {20 bulgetab l Bulge}
+ addUserKnob {41 x l X T Bulge.x}
+ addUserKnob {41 y l Y -STARTLINE T Bulge.y}
+ addUserKnob {41 z l Z -STARTLINE T Bulge.z}
+ addUserKnob {41 speed l Speed T Bulge.speed}
+ addUserKnob {41 amount_1 l Amount T Bulge.amount}
+ addUserKnob {41 power l "Power Bias" T Bulge.power}
+ addUserKnob {20 scaletab l Scale}
+ addUserKnob {41 speed_1 l Speed T Scale.speed}
+ addUserKnob {41 amount_2 l Amount T Scale.amount}
+ addUserKnob {41 rotspeed l "Roration Speed" T Scale.rotspeed}
+ addUserKnob {41 rotamount l "Rotation Amount" T Scale.rotamount}
+ addUserKnob {20 pivot_1 l Pivot n 1}
+ pivot_1 0
+ addUserKnob {41 pivot l Pivot T TransformGeo1.pivot}
+ addUserKnob {20 endGroup n -1}
+}
+ StickyNote {
+  inputs 0
+  name note1
+  tile_color 0x43a0dbff
+  label Scale
+  note_font "Verdana Bold Bold Bold"
+  note_font_size 50
+  xpos 802
+  ypos 315
+ }
+ StickyNote {
+  inputs 0
+  name note2
+  tile_color 0x43a0dbff
+  label Noise
+  note_font "Verdana Bold Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 16
+  ypos -67
+ }
+ StickyNote {
+  inputs 0
+  name note
+  tile_color 0x43a0dbff
+  label Bulge
+  note_font "Verdana Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 445
+  ypos 80
+ }
+ StickyNote {
+  inputs 0
+  name Bulge
+  tile_color 0xdb4343ff
+  label "Bolge Control"
+  note_font "Verdana Bold Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 599
+  ypos 76
+  addUserKnob {20 bolge l Bolge}
+  addUserKnob {6 x l X +STARTLINE}
+  x true
+  addUserKnob {6 y l Y -STARTLINE}
+  addUserKnob {6 z l Z -STARTLINE}
+  addUserKnob {7 speed l Speed R 1 10}
+  speed 1
+  addUserKnob {7 amount l Amount R -1 1}
+  addUserKnob {7 power l "Power Bias" R 1 10}
+  power 1
+ }
+ StickyNote {
+  inputs 0
+  name noise
+  tile_color 0xdb4343ff
+  label "Noise Control"
+  note_font "Verdana Bold Bold Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 194
+  ypos -33
+  addUserKnob {20 User}
+  addUserKnob {7 amount l Amount R 1 20}
+  amount 1
+  addUserKnob {7 seed l Seed R 0 100}
+ }
+ StickyNote {
+  inputs 0
+  name Scale
+  tile_color 0xdb4343ff
+  label "Scale Control"
+  note_font "Verdana Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 952
+  ypos 315
+  addUserKnob {20 User}
+  addUserKnob {7 speed l Speed R 1 10}
+  speed 1
+  addUserKnob {7 amount l Amount R 1 10}
+  amount 1
+  addUserKnob {7 rotspeed l "Roration Speed" R 1 10}
+  rotspeed 1
+  addUserKnob {7 rotamount l "Rotation Amount" R 0 10}
+ }
+ Input {
+  inputs 0
+  name axis
+  xpos 881
+  ypos 464
+ }
+ Input {
+  inputs 0
+  name obj_scn
+  xpos 46
+  ypos -6
+  number 1
+ }
+ ProcGeo {
+  x_size {{20/parent.noise.amount}}
+  x_offset {{parent.noise.seed}}
+  y_size {{20/parent.noise.amount*-1}}
+  y_offset {{parent.noise.seed}}
+  Lacunarity 2
+  Speed 10
+  name ProcGeo1
+  xpos 46
+  ypos 34
+  disable {{noise_on+-1}}
+ }
+ Dot {
+  name Dot1
+  xpos 80
+  ypos 167
+ }
+ RadialDistort {
+  distortion {{parent.Bulge.amount i}}
+  power_bias {{parent.Bulge.power i}}
+  center {{(cos(frame/(10/parent.Bulge.speed)))*parent.Bulge.x i} {(cos((frame+1)/(10/parent.Bulge.speed)))*parent.Bulge.y i} {(cos((frame+2)/(10/parent.Bulge.speed)))*parent.Bulge.z i}}
+  name RadialDistort1
+  xpos 476
+  ypos 163
+  disable {{bulge_on+-1 i}}
+ }
+ Dot {
+  name Dot2
+  xpos 510
+  ypos 397
+ }
+ TransformGeo {
+  rotate {{(sin(frame/(10/parent.Scale.rotspeed)))*parent.Scale.rotamount i} {(sin(frame+1/(10/parent.Scale.rotspeed)))*parent.Scale.rotamount i} {(sin(frame+2/(10/parent.Scale.rotspeed)))*parent.Scale.rotamount i}}
+  uniform_scale {{random(sin(frame/(10/parent.Scale.speed)))*parent.Scale.amount i}}
+  name TransformGeo1
+  xpos 836
+  ypos 393
+  disable {{scale_on+-1 i}}
+ }
+ TransformGeo {
+  inputs 2
+  name TransformGeo2
+  xpos 836
+  ypos 509
+ }
+ Output {
+  name Output1
+  xpos 836
+  ypos 559
+ }
+end_group

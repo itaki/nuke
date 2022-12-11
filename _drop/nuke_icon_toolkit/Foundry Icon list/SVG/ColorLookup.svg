@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 13.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<svg version="1.2" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 x="0px" y="0px" width="72px" height="72px" viewBox="0 0 72 72" xml:space="preserve">
+<g>
+	<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="35.9995" x2="72" y2="35.9995">
+		<stop  offset="0" style="stop-color:#C60ADA"/>
+		<stop  offset="0.2637" style="stop-color:#DCDC00"/>
+		<stop  offset="0.522" style="stop-color:#28C728"/>
+		<stop  offset="0.7692" style="stop-color:#0844C7"/>
+		<stop  offset="1" style="stop-color:#D22828"/>
+	</linearGradient>
+	<path fill="url(#SVGID_1_)" d="M72,68.399c0,1.988-1.611,3.6-3.6,3.6H3.6c-1.988,0-3.6-1.611-3.6-3.6V3.6C0,1.612,1.611,0,3.6,0
+		H68.4C70.389,0,72,1.612,72,3.6V68.399z"/>
+	<line fill="none" stroke="#4D4D4D" x1="0" y1="18" x2="72" y2="18"/>
+	<line fill="none" stroke="#4D4D4D" x1="0" y1="27" x2="72" y2="27"/>
+	<line fill="none" stroke="#4D4D4D" x1="0" y1="36" x2="72" y2="36"/>
+	<line fill="none" stroke="#4D4D4D" x1="0" y1="45" x2="72" y2="45"/>
+	<line fill="none" stroke="#4D4D4D" x1="0" y1="54" x2="72" y2="54"/>
+	<line fill="none" stroke="#4D4D4D" x1="0" y1="9" x2="72" y2="9"/>
+	<line fill="none" stroke="#4D4D4D" x1="0" y1="63" x2="72" y2="63"/>
+	<line fill="none" stroke="#4D4D4D" x1="18" y1="72" x2="18" y2="0"/>
+	<line fill="none" stroke="#4D4D4D" x1="27" y1="72" x2="27" y2="0"/>
+	<line fill="none" stroke="#4D4D4D" x1="36" y1="72" x2="36" y2="0"/>
+	<line fill="none" stroke="#4D4D4D" x1="45" y1="72" x2="45" y2="0"/>
+	<line fill="none" stroke="#4D4D4D" x1="54" y1="72" x2="54" y2="0"/>
+	<line fill="none" stroke="#4D4D4D" x1="9" y1="72" x2="9" y2="0"/>
+	<line fill="none" stroke="#4D4D4D" x1="63" y1="72" x2="63" y2="0"/>
+	<path fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M1.8,70.2
+		c20.45,0,68.4-47.95,68.4-68.4"/>
+</g>
+</svg>

@@ -1,0 +1,578 @@
+#! ./Nuke6.3v1 -nx
+version 6.3 v1
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="4" y="22" w="1916" h="1178" screen="0">
+        <splitter orientation="1">
+            <split size="873"/>
+            <splitter orientation="2">
+                <split size="663"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="489"/>
+                <dock id="" activePageId="Properties.1">
+                    <page id="Properties.1"/>
+                </dock>
+            </splitter>
+            <split size="1039"/>
+            <splitter orientation="2">
+                <split size="1156"/>
+                <dock id="" activePageId="DAG.1">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                </dock>
+            </splitter>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name /tmp/cloud_example/cloud_examples_n63v1.nk
+ project_directory "\[python \{nuke.script_directory()\}]"
+ lock_range true
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0x3d3d3dff
+ label "particle texture"
+ note_font_size 42
+ xpos 653
+ ypos -952
+ bdwidth 443
+ bdheight 494
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x3d3d3dff
+ label "using turbulence"
+ note_font_size 42
+ xpos -100
+ ypos -422
+ bdwidth 585
+ bdheight 753
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode2
+ tile_color 0x3d3d3dff
+ label "simple approach"
+ note_font_size 42
+ xpos 653
+ ypos -416
+ bdwidth 612
+ bdheight 758
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "256 256 0 0 256 256 1 square_256"
+ last 20
+ name Constant5
+ xpos 774
+ ypos -864
+ postage_stamp false
+}
+set N1aa65160 [stack 0]
+Noise {
+ zoffset {{curve x1 0 x20 5}}
+ lacunarity 2.06
+ gain 0.685
+ gamma 0.355
+ center {1024 778}
+ name Noise2
+ xpos 774
+ ypos -840
+ postage_stamp true
+}
+ColorCorrect {
+ channels alpha
+ gamma 0.65
+ gain 3.65
+ name ColorCorrect4
+ xpos 774
+ ypos -768
+}
+set N1aaaf010 [stack 0]
+push $N1aa65160
+Dot {
+ name Dot2
+ xpos 918
+ ypos -859
+}
+Radial {
+ output alpha
+ replace true
+ area {0.8000030518 0.4000015259 256 256}
+ softness 0.745
+ plinear true
+ name Radial3
+ xpos 884
+ ypos -769
+}
+Merge2 {
+ inputs 2
+ operation multiply
+ Achannels alpha
+ Bchannels alpha
+ output alpha
+ name Merge2
+ xpos 884
+ ypos -719
+}
+ColorCorrect {
+ channels alpha
+ gamma 1.4
+ gain 4
+ name ColorCorrect5
+ xpos 884
+ ypos -669
+}
+push $N1aaaf010
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy2
+ xpos 774
+ ypos -669
+}
+Blur {
+ channels rgba
+ size 9.4
+ name Blur2
+ xpos 774
+ ypos -627
+}
+ColorCorrect {
+ gamma 2.55
+ name ColorCorrect6
+ xpos 774
+ ypos -603
+}
+Premult {
+ name Premult4
+ xpos 774
+ ypos -569
+ disable true
+}
+Write {
+ channels rgba
+ file /tmp/cloud_particle_%04d.dpx
+ file_type dpx
+ checkHashOnRead false
+ version 1
+ name Write1
+ xpos 774
+ ypos -530
+}
+Camera2 {
+ inputs 0
+ translate {-2.534974813 0.1134602129 0.004638812039}
+ rotate {10.88733578 -69.4993515 -0.4456910789}
+ name Camera2
+ xpos 5
+ ypos 217
+ disable true
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0.1411000043 0.3187749982 0.8299999833 1}
+ format "640 480 0 0 640 480 1 PC_Video"
+ name Constant2
+ xpos 355
+ ypos -8
+ disable true
+}
+Ramp {
+ output alpha
+ p0 {98 4}
+ p1 {102 480}
+ name Ramp1
+ xpos 355
+ ypos 64
+ disable true
+}
+Premult {
+ name Premult1
+ xpos 355
+ ypos 98
+ disable true
+}
+BasicMaterial {
+ name BasicMaterial1
+ xpos 355
+ ypos 122
+ disable true
+}
+Card2 {
+ translate {5.484853745 1.513916016 -3.678544521}
+ rotate {22.95908325 -55.2096724 0}
+ uniform_scale 10
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card2
+ xpos 355
+ ypos 146
+ disable true
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "256 256 0 0 256 256 1 square_256"
+ name Constant1
+ xpos -32
+ ypos -320
+ disable true
+ postage_stamp false
+}
+set N1e4d7d90 [stack 0]
+Noise {
+ zoffset {{curve x1 0 x20 5}}
+ lacunarity 2.06
+ gain 0.685
+ gamma 0.355
+ center {1024 778}
+ name Noise1
+ xpos -32
+ ypos -296
+ disable true
+ postage_stamp true
+}
+ColorCorrect {
+ channels alpha
+ gamma 0.65
+ gain 3.65
+ name ColorCorrect1
+ xpos -32
+ ypos -224
+ disable true
+}
+set N1e4e72c0 [stack 0]
+push $N1e4d7d90
+Dot {
+ name Dot1
+ xpos 112
+ ypos -317
+}
+Radial {
+ output alpha
+ replace true
+ area {0.8000030518 0.4000015259 256 256}
+ softness 0.745
+ plinear true
+ name Radial1
+ xpos 78
+ ypos -225
+ disable true
+}
+Merge2 {
+ inputs 2
+ operation multiply
+ Achannels alpha
+ Bchannels alpha
+ output alpha
+ name Merge1
+ xpos 78
+ ypos -185
+ disable true
+}
+ColorCorrect {
+ channels alpha
+ gamma 1.4
+ gain 4
+ name ColorCorrect2
+ xpos 78
+ ypos -151
+ disable true
+}
+push $N1e4e72c0
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy1
+ xpos -32
+ ypos -117
+ disable true
+}
+Blur {
+ channels rgba
+ size 9.4
+ name Blur1
+ xpos -32
+ ypos -83
+ disable true
+}
+ColorCorrect {
+ gamma 2.55
+ name ColorCorrect3
+ xpos -32
+ ypos -59
+ disable true
+}
+Premult {
+ name Premult2
+ xpos -32
+ ypos -35
+ disable true
+}
+BlendMat {
+ surfaceblend modulate
+ name BlendMat1
+ xpos -32
+ ypos -7
+ disable true
+}
+Card2 {
+ inputs 0
+ rows 1
+ columns 1
+ rotate {-90 0 0}
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card1
+ xpos 224
+ ypos -7
+ disable true
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ start_frame -14
+ emit_from faces
+ rate 50
+ velocity 0.1
+ size 0.47
+ start_frame_animation random
+ frame_advance constant
+ name ParticleEmitter1
+ xpos 114
+ ypos -7
+ disable true
+}
+ParticleTurbulence {
+ strength {0.1 0.1 0.1}
+ scale {0.6 0.3 0.4}
+ name ParticleTurbulence1
+ xpos 114
+ ypos 17
+ disable true
+}
+Scene {
+ inputs 2
+ name Scene1
+ xpos 124
+ ypos 125
+ disable true
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "1920 1080 0 0 1920 1080 1 HD"
+ name Constant3
+ xpos 240
+ ypos 205
+ disable true
+}
+ScanlineRender {
+ inputs 3
+ output_motion_vectors_type accurate
+ name ScanlineRender2
+ xpos 114
+ ypos 229
+ disable true
+}
+Camera2 {
+ inputs 0
+ translate {0 0.08500000089 0.8199999928}
+ name Camera1
+ xpos 771
+ ypos 191
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0.1411000043 0.3187749982 0.8299999833 1}
+ format "640 480 0 0 640 480 1 PC_Video"
+ name Constant4
+ xpos 1126
+ ypos -56
+}
+Ramp {
+ output alpha
+ p0 {98 4}
+ p1 {102 480}
+ name Ramp2
+ xpos 1126
+ ypos 18
+}
+Premult {
+ name Premult3
+ xpos 1126
+ ypos 62
+}
+BasicMaterial {
+ name BasicMaterial2
+ xpos 1126
+ ypos 90
+}
+Card2 {
+ translate {0 0 -1.169999957}
+ scaling {4 4 1}
+ type bicubic
+ uv_position {0.3576921821 0.01217948645}
+ control_points {3 3 3 6 
+
+1 {-0.5059999824 -0.375 1.659999967} 0 {0.004000008106 0 -1.029999971} 0 {0 0 0} 0 {0 0.1250000149 -0.009999990463} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.375 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1250000149 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.4939999878 -0.375 1.659999967} 0 {0 0 0} 0 {-0.005999982357 0 -1.039999962} 0 {0 0.1250000149 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5059999824 0 1.659999967} 0 {0.004000008106 0 -1.029999971} 0 {0 0 0} 0 {0 0.125 0} 0 {0 -0.125 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.125 0} 0 {0 -0.125 0} 0 {0.5 0.5 0} 
+1 {0.4939999878 0 1.659999967} 0 {0 0 0} 0 {-0.005999982357 0 -1.039999962} 0 {0 0.125 0} 0 {0 -0.125 0} 0 {1 0.5 0} 
+1 {-0.5059999824 0.375 1.659999967} 0 {0.004000008106 0 -1.029999971} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1250000149 -0.009999990463} 0 {0 1 0} 
+1 {0 0.375 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1250000149 0} 0 {0.5 1 0} 
+1 {0.4939999878 0.375 1.659999967} 0 {0 0 0} 0 {-0.005999982357 0 -1.039999962} 0 {0 0 0} 0 {0 -0.1250000149 -0.009999990463} 0 {1 1 0} }
+ drawPosition {-0.1717690974 -0.3658653796 0.1476006806}
+ name Card3
+ xpos 1126
+ ypos 118
+}
+Read {
+ inputs 0
+ file ./cloud_particle/cloud_particle_%04d.dpx
+ format "256 256 0 0 256 256 1 square_256"
+ last 20
+ origlast 20
+ origset true
+ version 1
+ timecode ff:ff:ff:ff
+ name Read2
+ xpos 715
+ ypos -275
+}
+Premult {
+ name Premult5
+ xpos 715
+ ypos -185
+}
+BlendMat {
+ surfaceblend modulate
+ name BlendMat2
+ xpos 715
+ ypos -157
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "256 256 0 0 256 256 1 square_256"
+ last 20
+ name Constant7
+ xpos 1124
+ ypos -204
+ postage_stamp false
+}
+Noise {
+ zoffset 2.894736835
+ lacunarity 2.06
+ gain 0.685
+ gamma 0.355
+ center {1024 778}
+ name Noise3
+ xpos 1124
+ ypos -180
+ postage_stamp true
+}
+Card2 {
+ inputs 0
+ rotate {-90 0 0}
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card5
+ xpos 1022
+ ypos -192
+}
+DisplaceGeo {
+ inputs 2
+ scale 0.292
+ name DisplaceGeo1
+ xpos 1022
+ ypos -157
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ emit_from faces
+ rate {{curve 100 0 0}}
+ lifetime 200
+ velocity 0
+ size 0.176
+ start_frame_animation random
+ frame_advance constant
+ name ParticleEmitter3
+ xpos 880
+ ypos -157
+}
+Scene {
+ inputs 2
+ name Scene2
+ xpos 890
+ ypos 99
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "1920 1080 0 0 1920 1080 1 HD"
+ name Constant6
+ xpos 1006
+ ypos 179
+}
+ScanlineRender {
+ inputs 3
+ output_motion_vectors_type accurate
+ name ScanlineRender1
+ xpos 880
+ ypos 203
+}
+Viewer {
+ frame_range 1-100
+ frame_range_lock true
+ input_process false
+ name Viewer1
+ xpos 880
+ ypos 250
+}

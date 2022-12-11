@@ -1,0 +1,61 @@
+Group {
+ name RepTile
+ tile_color 0x5a305ff
+ selected true
+ addUserKnob {20 User l Controls}
+ addUserKnob {14 tiles l "number of tiles" R 0 100}
+ tiles 3
+ addUserKnob {6 mirrorw l "mirror vertical" t "Check to mirror your tiles on the vertical axis" +STARTLINE}
+ addUserKnob {6 mirrorh l "mirror horizontal" t "Check to mirror your tiles on the horizontal axis" -STARTLINE}
+ addUserKnob {6 reformat_out l "reformat to source" t "Reformat to input format without cropping the image or bounding box." +STARTLINE}
+ addUserKnob {26 credit l INVISIBLE t "RepTile v1.0\n(c)2015 lucas pfaff" +INVISIBLE T "RepTile v1.0\n(c)2015 lucas pfaff"}
+}
+ Input {
+  inputs 0
+  name img
+  xpos -480
+  ypos -562
+ }
+ Reformat {
+  type scale
+  scale {{tiles.w} {tiles.h}}
+  resize distort
+  filter Impulse
+  name Reformat1
+  xpos -480
+  ypos -511
+ }
+ Tile {
+  rows {{tiles.h}}
+  mirrorRows {{mirrorh}}
+  columns {{tiles.w}}
+  mirrorCols {{mirrorw}}
+  filter Impulse
+  name Tile1
+  xpos -480
+  ypos -450
+ }
+ Mirror2 {
+  flip {{mirrorh}}
+  flop {{mirrorw}}
+  name Mirror2_1
+  xpos -480
+  ypos -394
+  disable {{reformat_out-1}}
+ }
+ Reformat {
+  type scale
+  scale {{1/parent.Reformat1.scale} {1/parent.Reformat1.scale}}
+  resize none
+  pbb true
+  name Reformat2
+  xpos -480
+  ypos -346
+  disable {{reformat_out-1}}
+ }
+ Output {
+  name Output1
+  xpos -480
+  ypos -304
+ }
+end_group

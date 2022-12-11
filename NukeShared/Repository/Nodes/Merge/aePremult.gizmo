@@ -1,0 +1,123 @@
+###
+### Deke Kincaid
+### dekekincaid@gmail.com
+### aePremult v1.02
+### tested with Nuke 10.0v5 & 10.5v1
+###
+### Release notes
+### 1.02 just adding an sRGB knob so operation is done in the same colorspace as photoshop
+###
+
+Gizmo {
+ name aePremult
+ help "This fixes the issue when your background color is anything other then black.\n\nJust pick whatever color the guys in 3d or matte painters gave you and Walla! the funky color fringe is now gone."
+ selected true
+ xpos 193
+ ypos -45
+ addUserKnob {20 aePremult}
+ addUserKnob {41 color T BG_COLOR.color}
+ addUserKnob {6 sRGB l "sRGB colorspace" t "Photoshop merge operations are done in sRGB colorspace. If this option is checked ( the default ) the input is converted to sRGB from linear, the merge performed and the result converted back to linear." +STARTLINE}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 388
+  ypos -129
+ }
+set N2ee5cc50 [stack 0]
+ Colorspace {
+  colorspace_out sRGB
+  name Colorspace1
+  xpos 388
+  ypos -33
+  disable {{"! sRGB"}}
+ }
+ Dot {
+  name Dot1
+  xpos 422
+  ypos 28
+ }
+set N2ee73790 [stack 0]
+ Dot {
+  name Dot2
+  xpos 556
+  ypos 28
+ }
+push $N2ee73790
+push $N2ee73790
+ Invert {
+  channels rgba
+  name Invert1
+  xpos 304
+  ypos 24
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {0 0 0 0}
+  name BG_COLOR
+  selected true
+  xpos 245
+  ypos -139
+ }
+ Reformat {
+  type "to box"
+  box_width {{Input1.width}}
+  box_height {{Input1.height}}
+  box_fixed true
+  name Reformat1
+  xpos 245
+  ypos -33
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 245
+  ypos 61
+ }
+ Premult {
+  name Premult2
+  xpos 245
+  ypos 100
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  xpos 388
+  ypos 100
+ }
+ Dot {
+  name Dot3
+  xpos 422
+  ypos 163
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 522
+  ypos 155
+ }
+ Colorspace {
+  colorspace_in sRGB
+  name Colorspace2
+  xpos 522
+  ypos 187
+  disable {{"! sRGB"}}
+ }
+ Output {
+  name Output1
+  xpos 522
+  ypos 248
+ }
+push $N2ee5cc50
+ Reformat {
+  name Reformat2
+  xpos 498
+  ypos -105
+ }
+end_group

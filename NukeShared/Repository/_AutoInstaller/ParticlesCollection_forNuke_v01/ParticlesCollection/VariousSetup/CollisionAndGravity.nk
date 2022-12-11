@@ -1,0 +1,224 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/Downloads/Setups/CollisionAndGravity.nk
+ frame 7
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+CheckerBoard2 {
+ inputs 0
+ name CheckerBoard1
+ xpos 114
+ ypos -438
+ postage_stamp false
+}
+Grade {
+ gamma {0.9275000691 1 -0.4500000477 1}
+ name Grade2
+ xpos 114
+ ypos -407
+}
+Card2 {
+ rotate {-90 0 0}
+ scaling {1 2 1}
+ uniform_scale 10
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card1
+ xpos 114
+ ypos -369
+}
+TransformGeo {
+ rotate {0 0 {parent.ParticleBounce1.bounceaxis_rotate.z i}}
+ name TransformGeo1
+ xpos 114
+ ypos -345
+}
+CheckerBoard2 {
+ inputs 0
+ name CheckerBoard2
+ xpos -231
+ ypos -396
+ postage_stamp false
+}
+Grade {
+ gamma {-0.4500000477 1 -0.0005000829697 1}
+ name Grade1
+ xpos -231
+ ypos -372
+}
+Card2 {
+ translate {{parent.ParticleBounce2.bounceaxis_translate.x i} {parent.ParticleBounce2.bounceaxis_translate.y i} 0}
+ rotate {-90 0 0}
+ scaling {1 2 1}
+ uniform_scale 10
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card2
+ xpos -231
+ ypos -316
+}
+TransformGeo {
+ rotate {0 0 {parent.ParticleBounce2.bounceaxis_rotate.z i}}
+ pivot {6.73 -4 0}
+ name TransformGeo2
+ xpos -231
+ ypos -292
+}
+Radial {
+ inputs 0
+ area {1231 271.5 1435 455}
+ color {0.2900000215 0.6591999531 1 1}
+ name Radial1
+ xpos 198
+ ypos -514
+}
+Crop {
+ box {1230 272 1434 454}
+ reformat true
+ crop false
+ name Crop1
+ xpos 198
+ ypos -490
+}
+Constant {
+ inputs 0
+ channels alpha
+ color 1
+ format "512 512 0 0 512 512 1 square_512"
+ name Constant1
+ xpos -51
+ ypos -644
+ postage_stamp false
+}
+Ramp {
+ p0 {134 212}
+ p1 {134 -8}
+ name Ramp1
+ xpos -51
+ ypos -608
+}
+Sphere {
+ translate {0 8 0}
+ name Sphere1
+ xpos -51
+ ypos -546
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ rate 485
+ rate_channel rgba.red
+ lifetime 51
+ velocity 0.044
+ size 0.09
+ name ParticleEmitter1
+ xpos -51
+ ypos -490
+}
+ParticleGravity {
+ name ParticleGravity1
+ xpos -51
+ ypos -400
+}
+ParticleBounce {
+ in_new_channels {b}
+ in_bounce 0.46
+ bounceaxis_rotate {0 0 {cos(frame/8)*10 i}}
+ bounceaxis_uniform_scale 10
+ name ParticleBounce1
+ xpos -51
+ ypos -352
+}
+ParticleBounce {
+ in_new_channels {b}
+ in_bounce 0.46
+ bounceaxis_translate {6.750791073 -3.971090317 0}
+ bounceaxis_rotate {0 0 {(cos(frame/8)*10)*-1 i}}
+ bounceaxis_uniform_scale 10
+ name ParticleBounce2
+ xpos -51
+ ypos -306
+}
+Scene {
+ inputs 3
+ name Scene1
+ xpos -41
+ ypos -220
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x969600ff
+ label "<b>http://www.nukepedia.com/toolsets/particles/toolsets        ."
+ note_font_size 20
+ xpos 433
+ ypos -413
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x335959ff
+ label "<b>author: INEED MONEY        ."
+ note_font_size 20
+ xpos 435
+ ypos -475
+}

@@ -1,0 +1,722 @@
+#! C:/Program Files/Nuke13.0v1/nuke-13.0.1.dll -nx
+version 13.0 v1
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1917" h="991" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1254" stretch="1"/>
+            <splitter orientation="2">
+                <split size="557"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="392"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/.nuke/Particles/Animals/P_Flies.nk
+ frame 1056
+ first_frame 1001
+ last_frame 1100
+ format "2048 1080 0 0 2048 1080 1 2K_DCP"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ monitorOutLUT rec709
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x42283801
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 2129
+ ypos 769
+ bookmark false
+ bdwidth 278
+ bdheight 397
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode45
+ tile_color 0x5b285601
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 2127
+ ypos 174
+ bookmark false
+ bdwidth 291
+ bdheight 292
+}
+StickyNote {
+ inputs 0
+ name StickyNote35
+ tile_color 0xffffffff
+ label "<b>Attraction ."
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 2127
+ ypos 104
+}
+Axis2 {
+ inputs 0
+ translate {-12.42000005 1.180000067 -80.19999886}
+ name Axis1
+ tile_color 0x9c000000
+ label "ATTRACTION POINT"
+ xpos 2321
+ ypos 309
+}
+NoOp {
+ inputs 0
+ name CTRL
+ tile_color 0xff500001
+ note_font "Bitstream Vera Sans Bold"
+ note_font_size 100
+ xpos 1593
+ ypos -900
+ addUserKnob {20 User}
+ addUserKnob {6 input l "change input dots/footage" +STARTLINE}
+ input true
+ addUserKnob {26 ""}
+ addUserKnob {3 startAt l "start emitting at Frame"}
+ startAt 800
+ addUserKnob {3 till -STARTLINE}
+ till 1000
+ addUserKnob {7 emissionRate l "emission rate" R 0 50}
+ emissionRate 15.6
+ addUserKnob {7 size R 0 10}
+ size 0.3
+ addUserKnob {26 ""}
+ addUserKnob {6 preview +STARTLINE}
+ addUserKnob {7 previewSize l "preview size" R 0 10}
+ previewSize 30
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0xcccccc00
+ label "<b>Connect here your footage for Bugs/Insects"
+ note_font_size 20
+ xpos 3293
+ ypos -1811
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0xcccccc00
+ label "<b>If this node is active, all the particles are orientated to Look at the Camera"
+ note_font_size 20
+ xpos 2253
+ ypos -218
+}
+StickyNote {
+ inputs 0
+ name StickyNote4
+ tile_color 0xffffffff
+ label "<b>Constrain                ."
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 2129
+ ypos 699
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0xcccccc00
+ label "<b>Here there are some Attraction Points. If you have flies/bees, you can use this solution to simulate lights, bushes or flowers\nMove the Axis and adjust the Strength/Radius\nWith Negative values for the Strength, you will push away particles from the point"
+ note_font_size 20
+ xpos 2433
+ ypos 311
+}
+StickyNote {
+ inputs 0
+ name StickyNote5
+ tile_color 0xcccccc00
+ label "<b>Here you can keep particles into an area.\nYou can use these 2 nodes."
+ note_font_size 20
+ xpos 2431
+ ypos 963
+}
+StickyNote {
+ inputs 0
+ name StickyNote6
+ tile_color 0xcccccc00
+ label "<b>You can increase the value of the MB in the ScanlineRender"
+ note_font_size 20
+ xpos 2457
+ ypos 1421
+}
+Camera3 {
+ inputs 0
+ name Camera2
+ xpos 2369
+ ypos 1412
+}
+Read {
+ inputs 0
+ file_type png
+ file "\[python \{Particles_path\} ]/Animals/img/bug02.png"
+ format "517 717 0 0 517 717 1 "
+ origset true
+ auto_alpha true
+ name Read4
+ xpos 3019
+ ypos -2030
+}
+Premult {
+ name Premult1
+ xpos 3019
+ ypos -1946
+}
+set N6211fc00 [stack 0]
+Reformat {
+ type "to box"
+ name Reformat2
+ xpos 3019
+ ypos -1907
+}
+Dot {
+ name Dot84
+ label FLY_FOOTAGE02
+ note_font_size 30
+ xpos 3053
+ ypos -1757
+}
+Dot {
+ name Dot73
+ xpos 3053
+ ypos -1491
+}
+Reformat {
+ inputs 0
+ format "256 256 0 0 256 256 1 square_256"
+ name Reformat13
+ xpos 2139
+ ypos -1842
+}
+set N6211e800 [stack 0]
+Dot {
+ name Dot79
+ xpos 2461
+ ypos -1833
+}
+Radial {
+ area {0 0 256 256}
+ name Radial1
+ xpos 2427
+ ypos -1798
+}
+set N6211dc00 [stack 0]
+Dot {
+ name Dot1
+ xpos 2642
+ ypos -1795
+}
+Shuffle {
+ red alpha
+ green black
+ blue black
+ name Shuffle1
+ tile_color 0xff000000
+ xpos 2608
+ ypos -1708
+}
+Dot {
+ name Dot3
+ xpos 2642
+ ypos -1587
+}
+Noise {
+ inputs 0
+ zoffset 3.1
+ gain 0.755
+ gamma 0.365
+ center {2021 1066}
+ name Noise13
+ xpos 2305
+ ypos -1700
+}
+push $N6211dc00
+Merge2 {
+ inputs 2
+ operation multiply
+ name Merge9
+ label "\[ expr \{ \[value mix] == 1 ? \" \" : \[value mix] \}]"
+ xpos 2428
+ ypos -1700
+}
+Switch {
+ inputs 2
+ which {{CTRL.preview}}
+ name Switch15
+ label PREVIEW
+ note_font "Bitstream Vera Sans Bold"
+ xpos 2428
+ ypos -1596
+}
+Switch {
+ inputs 2
+ which {{CTRL.input==1?1:0}}
+ name Switch14
+ label "Sprite switcher\n"
+ note_font "Bitstream Vera Sans Bold"
+ note_font_size 15
+ xpos 2428
+ ypos -1505
+}
+BlendMat {
+ surfaceblend modulate
+ name BlendMat8
+ xpos 2428
+ ypos -1309
+}
+Read {
+ inputs 0
+ file_type png
+ file "\[python \{Particles_path\} ]/Animals/img/bug01.png"
+ format "500 474 0 0 500 474 1 "
+ origset true
+ auto_alpha true
+ name Read2
+ xpos 2878
+ ypos -2028
+}
+Premult {
+ name Premult2
+ xpos 2878
+ ypos -1944
+}
+Reformat {
+ type "to box"
+ name Reformat1
+ xpos 2878
+ ypos -1906
+}
+Dot {
+ name Dot83
+ label FLY_FOOTAGE01
+ note_font_size 30
+ xpos 2912
+ ypos -1795
+}
+Dot {
+ name Dot78
+ xpos 2912
+ ypos -1393
+}
+push $N6211e800
+Radial {
+ area {0 0 256 256}
+ name Radial2
+ xpos 2139
+ ypos -1782
+}
+set N620c9800 [stack 0]
+Dot {
+ name Dot72
+ xpos 1860
+ ypos -1779
+}
+Shuffle {
+ red black
+ green alpha
+ blue black
+ name Shuffle19
+ tile_color 0xbf00ff
+ xpos 1826
+ ypos -1688
+}
+Dot {
+ name Dot89
+ xpos 1860
+ ypos -1587
+}
+Dot {
+ name Dot71
+ xpos 1860
+ ypos -1561
+}
+Noise {
+ inputs 0
+ gain 0.755
+ gamma 0.365
+ center {2021 1066}
+ name Noise12
+ xpos 2016
+ ypos -1657
+}
+push $N620c9800
+Merge2 {
+ inputs 2
+ operation multiply
+ name Merge8
+ label "\[ expr \{ \[value mix] == 1 ? \" \" : \[value mix] \}]"
+ xpos 2139
+ ypos -1657
+}
+Switch {
+ inputs 2
+ which {{CTRL.preview}}
+ name Switch11
+ label PREVIEW
+ note_font "Bitstream Vera Sans Bold"
+ xpos 2139
+ ypos -1570
+}
+Switch {
+ inputs 2
+ which {{CTRL.input==1?1:0}}
+ name Switch8
+ label "Sprite switcher\n"
+ note_font "Bitstream Vera Sans Bold"
+ note_font_size 15
+ xpos 2139
+ ypos -1406
+}
+BlendMat {
+ surfaceblend modulate
+ name BlendMat7
+ xpos 2139
+ ypos -1294
+}
+Card2 {
+ inputs 0
+ render_mode off
+ rows 10
+ columns 10
+ rotate {90 0 0}
+ scaling {4 4 1}
+ uniform_scale 200
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card5
+ xpos 2568
+ ypos -953
+}
+TransformGeo {
+ translate {0 10 0}
+ scaling {1 1 2}
+ name TransformGeo10
+ xpos 2568
+ ypos -853
+}
+push 0
+ParticleEmitter {
+ inputs 4
+ start_frame {{CTRL.startAt}}
+ emit_from faces
+ randomize_type "randomize outwards"
+ rate {{"frame < CTRL.startAt || frame > CTRL.till ? 0 : CTRL.emissionRate"}}
+ rate_variation 0.55
+ lifetime 800
+ velocity 10
+ velocity_variation 3
+ rotation_velocity 0.12
+ rotation_velocity_variation 0.185
+ size {{"CTRL.preview ? CTRL.previewSize : CTRL.size"}}
+ size_variation 0.205
+ transfer_velocity 0.235
+ spread 0.28
+ max_clip_length 500
+ name ParticleEmitter5
+ xpos 2139
+ ypos -853
+}
+ParticleTurbulence {
+ strength {1 {strength.x/3} {strength.x}}
+ scale {1.5 {scale.x/10} {scale.x}}
+ name ParticleTurbulence6
+ xpos 2139
+ ypos -699
+}
+ParticleTurbulence {
+ strength {{strength.z} {strength.z} 10}
+ scale {150 150 150}
+ offset {4 4 4}
+ name ParticleTurbulence7
+ label BIG
+ xpos 2139
+ ypos -663
+ disable true
+}
+ParticleTurbulence {
+ strength {{strength.z} {strength.z} 1.2}
+ name ParticleTurbulence8
+ label SMALL
+ xpos 2139
+ ypos -615
+}
+ParticleDrag2 {
+ drag 0.105
+ rotationalDrag 0.12
+ name ParticleDrag4
+ xpos 2139
+ ypos -409
+}
+ParticleLookAt {
+ position {{parent.Camera2.translate} {parent.Camera2.translate} {parent.Camera2.translate}}
+ name ParticleLookAt1
+ label "all the particles look at the CAM"
+ xpos 2139
+ ypos -229
+}
+ParticleMotionAlign {
+ name ParticleMotionAlign2
+ xpos 2139
+ ypos -6
+}
+Group {
+ name ParticlesAttractToSphereMY
+ xpos 2139
+ ypos 330
+ disable true
+ addUserKnob {20 AttractToSphere}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 paPosition l position T ParticleBlinkScript1.paPosition}
+ addUserKnob {41 paStrength l strength T ParticleBlinkScript1.paStrength}
+ addUserKnob {41 geoRadius l radius T ParticleBlinkScript1.paRadius}
+ addUserKnob {41 paFalloff l falloff T ParticleBlinkScript1.paFalloff}
+ addUserKnob {41 paMinRadius l "min radius" T ParticleBlinkScript1.paMinRadius}
+ addUserKnob {26 _1 l <b>VISUALIZATION}
+ addUserKnob {41 geoUniformScale l "uniform scale" T Geometry.uniform_scale}
+ addUserKnob {6 showGeometry l "Show Sphere" +STARTLINE}
+ showGeometry true
+}
+ Sphere {
+  inputs 0
+  display {{parent.showGeometry}}
+  render_mode off
+  rows 20
+  columns 20
+  radius {{parent.geoRadius}}
+  translate {{parent.ParticleBlinkScript1.paTranslate} {parent.ParticleBlinkScript1.paTranslate} {parent.ParticleBlinkScript1.paTranslate}}
+  uniform_scale 2
+  name Geometry
+  selected true
+  xpos 730
+  ypos 50
+ }
+ Input {
+  inputs 0
+  name particles
+  xpos 829
+  ypos 1
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleSphereKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead> p_position;\n  Image<eRead> p_mass;\n  Image<eReadWrite> p_velocity;\n\n  param:\n    float3 _centre;\n    float _radius;\n    float _minRadius;\n    float _strength;\n    float _falloff;\n    float _dt;\n\n  void define() \{\n    defineParam(_centre, \"paPosition\",  float3(0.0f, 0.0f, 0.0f));\n    defineParam(_radius, \"paRadius\", 1.0f);\n    defineParam(_minRadius, \"paMinRadius\", 0.1f);\n    defineParam(_strength, \"paStrength\", 0.0f);\n    defineParam(_falloff, \"paFalloff\", 2.0f);\n    defineParam(_dt, \"_dt\", 1.0f);\n  \}\n\n  void process() \{\n    float3  d = p_position()-_centre;\n    float r = length(d);\n    if ( r != 0.0f ) \{\n      float3 rHat = d/r;\n      float3 closestPoint  = _centre + rHat*_radius;\n      float distanceFromSurface = r-_radius;\n      if (distanceFromSurface > _minRadius) \{\n        float3 force = -_strength*rHat*pow(distanceFromSurface, -_falloff);\n        p_velocity() += force*_dt/p_mass();\n      \}\n    \}\n  \}\n\};\n"
+  encodedSource "\n"
+  translate {0 0.2879999876 0}
+  name ParticleBlinkScript1
+  xpos 829
+  ypos 44
+  addUserKnob {20 User l Force}
+  addUserKnob {13 paTranslate l translate}
+  paTranslate {{paPosition} {paPosition} {paPosition}}
+  addUserKnob {13 paRotate l rotate}
+  addUserKnob {13 paScale l scale}
+  paScale {1 1 1}
+  addUserKnob {7 paUniform_scale l "uniform scale"}
+  paUniform_scale {{parent.Geometry.uniform_scale}}
+  addUserKnob {7 paRadius l radius}
+  paRadius 9
+  addUserKnob {7 paMinRadius l "min radius"}
+  paMinRadius 0.045
+  addUserKnob {7 paStrength l strength}
+  paStrength 70
+  addUserKnob {7 paFalloff l falloff}
+  paFalloff 0.64
+  addUserKnob {13 paPosition l position}
+  paPosition {{parent.parent.Axis1.translate} {parent.parent.Axis1.translate} {parent.parent.Axis1.translate}}
+ }
+set Nc3bbc00 [stack 0]
+ MergeGeo {
+  inputs 2
+  name MergeGeo1
+  xpos 730
+  ypos 111
+ }
+push $Nc3bbc00
+ Output {
+  name Output1
+  xpos 829
+  ypos 141
+ }
+end_group
+Dot {
+ name Dot2
+ xpos 2173
+ ypos 854
+}
+set Nc3bb000 [stack 0]
+Dot {
+ name Dot4
+ xpos 2307
+ ypos 854
+}
+ParticleBounce {
+ object sphere
+ name ParticleBounce1
+ xpos 2273
+ ypos 977
+ disable true
+}
+Dot {
+ name Dot5
+ xpos 2307
+ ypos 1091
+}
+push $Nc3bb000
+Group {
+ name ParticleConstrainToSphereMY
+ xpos 2139
+ ypos 974
+ disable true
+ addUserKnob {20 ConstrainSphere}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 geoTranslate l translate T ParticleBlinkScript1.paTranslate}
+ addUserKnob {41 geoRotate l rotate T ParticleBlinkScript1.paRotate}
+ addUserKnob {41 geoScale l scale T ParticleBlinkScript1.paScale}
+ addUserKnob {41 geoUniformScale l "uniform scale" T ParticleBlinkScript1.paUniformScale}
+ addUserKnob {41 geoRadius l radius T ParticleBlinkScript1.paRadius}
+ addUserKnob {41 showGeometry l "Show Geometry" T ParticleBlinkScript1.showGeometry}
+ addUserKnob {20 Conditions}
+ addUserKnob {41 probability T ParticleBlinkScript1.probability}
+ addUserKnob {41 min_age l "min age" T ParticleBlinkScript1.min_age}
+ addUserKnob {41 max_age l "max age" T ParticleBlinkScript1.max_age}
+ addUserKnob {41 seed l "random seed" T ParticleBlinkScript1.seed}
+ addUserKnob {41 channels T ParticleBlinkScript1.channels}
+ addUserKnob {20 Region}
+ addUserKnob {41 region T ParticleBlinkScript1.region}
+ addUserKnob {41 region_invert l "invert region" -STARTLINE T ParticleBlinkScript1.region_invert}
+ addUserKnob {41 file_menu l @FolderIcon T ParticleBlinkScript1.file_menu}
+ addUserKnob {41 snap_menu l @AxisIcon -STARTLINE T ParticleBlinkScript1.snap_menu}
+ addUserKnob {41 xform_order l "transform order" T ParticleBlinkScript1.xform_order}
+ addUserKnob {41 rot_order l "rotation order" T ParticleBlinkScript1.rot_order}
+ addUserKnob {41 translate T ParticleBlinkScript1.translate}
+ addUserKnob {41 rotate T ParticleBlinkScript1.rotate}
+ addUserKnob {41 scaling l scale T ParticleBlinkScript1.scaling}
+ addUserKnob {41 uniform_scale l "uniform scale" T ParticleBlinkScript1.uniform_scale}
+ addUserKnob {41 skew T ParticleBlinkScript1.skew}
+ addUserKnob {41 pivot T ParticleBlinkScript1.pivot}
+}
+ Input {
+  inputs 0
+  name particles
+  xpos 829
+  ypos 1
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleSphereKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eReadWrite> p_conditions;\n  Image<eReadWrite> p_position;\n  Image<eReadWrite> p_velocity;\n\n  param:\n    float3 _translate;  // Origin of the sphere\n    float3 _rotate;      // Rotation of the sphere\n    float3 _scale;         // Scale of the sphere\n    float _uniformScale;  // Uniform scale of the sphere\n    float _radius;       // Radius of the sphere\n\n  local:\n    float4x4 _matrix;\n    float4x4 _imatrix;\n\n  void define() \{\n    defineParam(_translate, \"paTranslate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_rotate, \"paRotate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_scale, \"paScale\", float3(1.0f, 1.0f, 1.0f));\n    defineParam(_uniformScale, \"paUniformScale\", 1.0f);\n    defineParam(_radius, \"paRadius\", 1.0f);\n  \}\n\n  float3 transform(float3 p ) \{\n    float4 q = _matrix*float4(p.x, p.y, p.z, 1.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 itransform(float3 p ) \{\n    float4 q = _imatrix*float4(p.x, p.y, p.z, 1.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 vtransform(float3 p ) \{\n    float4 q = _matrix*float4(p.x, p.y, p.z, 0.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 ivtransform(float3 p ) \{\n    float4 q = _imatrix*float4(p.x, p.y, p.z, 0.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float toRadians(float a) \{\n    return a*3.141592653587f/180.0f;\n  \}\n\n  void init() \{\n    _matrix.setIdentity();\n    _matrix.scale(float4(_uniformScale*_scale.x, _uniformScale*_scale.y, _uniformScale*_scale.z, 1.0f));\n    _matrix.rotateY(toRadians(_rotate.y));\n    _matrix.rotateX(toRadians(_rotate.x));\n    _matrix.rotateZ(toRadians(_rotate.z));\n    _matrix.translate(float4(_translate.x, _translate.y, _translate.z, 1.0f));\n    _imatrix = _matrix.invert();\n  \}\n\n  void process() \{\n    if (!p_conditions().x)\n      return;\n    float3  d = itransform(p_position());\n    float r = length(d);\n     if ( r != 0.0f ) \{\n      d /= r;\n      // Move the particle to the sphere surface\n      p_position() = transform(d*_radius);\n\n      // Change the velocity to follow the surface\n      float3 v = ivtransform(p_velocity());\n      float lv = length(v);\n      if ( lv != 0.0f ) \{\n        v /= lv;\n        p_velocity() = vtransform(cross(cross(d, v), d)*lv);\n      \}\n    \}\n  \}\n\};\n"
+  encodedSource "\n"
+  name ParticleBlinkScript1
+  selected true
+  xpos 829
+  ypos 41
+  addUserKnob {20 User l Force}
+  addUserKnob {41 paTranslate T Geometry.translate}
+  addUserKnob {41 paRotate T Geometry.rotate}
+  addUserKnob {41 paScale T Geometry.scaling}
+  addUserKnob {41 paUniformScale l "uniform scale" T Geometry.uniform_scale}
+  addUserKnob {7 paRadius l radius}
+  paRadius 1
+  addUserKnob {6 showGeometry l "Show Geometry" +STARTLINE}
+  showGeometry true
+ }
+ Output {
+  name Output1
+  xpos 829
+  ypos 141
+ }
+ Sphere {
+  inputs 0
+  display {{parent.showGeometry}}
+  rows 10
+  columns 20
+  radius {{parent.geoRadius}}
+  translate {-860 1280 -1454.999878}
+  uniform_scale 5000
+  name Geometry
+  xpos 695
+  ypos 45
+ }
+ MergeGeo {
+  name MergeGeo1
+  xpos 695
+  ypos 69
+ }
+end_group
+Switch {
+ inputs 2
+ name Switch1
+ label "\[value which]"
+ xpos 2139
+ ypos 1082
+}
+Reformat {
+ inputs 0
+ type scale
+ scale 3
+ name Reformat3
+ label "x\[value scale]"
+ xpos 1969
+ ypos 1427
+ disable true
+}
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ motion_vectors_type distance
+ name ScanlineRender1
+ xpos 2139
+ ypos 1433
+}
+push $N6211fc00
+Viewer {
+ frame_range 1001-1100
+ name Viewer1
+ xpos 2490
+ ypos -9
+ hide_input true
+}

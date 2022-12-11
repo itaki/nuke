@@ -1,0 +1,1694 @@
+#! /Applications/Nuke10.0v3/Nuke10.0v3.app/Contents/MacOS/libnuke-10.0.3.dylib -nx
+#write_info Write1 file:"/Users/dkorolov/Dropbox/Nuke/Stich_Brussels/test03.jpg" format:"4096 2048 1" chans:":rgba.red:rgba.green:rgba.blue:" framerange:"1 4" fps:"0" colorspace:"default (sRGB)" datatype:"8 bit" transfer:"unknown" views:"main" colorManagement:"Nuke"
+version 10.0 v3
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="23" w="1440" h="834" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="777" stretch="1"/>
+            <splitter orientation="2">
+                <split size="474"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="334"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name /Users/dkorolov/Dropbox/Nuke/Stich_Brussels/DmytroKorolov_tools_Tool2/1.nk
+ frame 2
+ last_frame 4
+ lock_range true
+ format "2048 1024 0 0 2048 1024 1 2K_LatLong"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ onScriptLoad "import math\nimport nuke"
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x8e388e00
+ label "block A"
+ note_font_size 42
+ xpos 32
+ ypos -992
+ bdwidth 252
+ bdheight 656
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode2
+ tile_color 0x388e8e00
+ label "block B"
+ note_font_size 42
+ xpos 349
+ ypos -988
+ bdwidth 259
+ bdheight 652
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0x8e8e3800
+ label "block C"
+ note_font_size 42
+ xpos 673
+ ypos -986
+ bdwidth 255
+ bdheight 655
+}
+Camera2 {
+ inputs 0
+ display {{ControlCurve.display}}
+ selectable false
+ focal 4.28
+ haperture 4.54
+ vaperture 3.42
+ name Camera3
+ xpos 683
+ ypos -704
+ addUserKnob {20 User}
+ addUserKnob {4 Camera1_display l display M {}}
+}
+Dot {
+ name Dot5
+ xpos 707
+ ypos -573
+}
+Read {
+ inputs 0
+ file /Users/dkorolov/Dropbox/Nuke/Stich_Brussels/Zaventem/Zaventem_001.jpg
+ format "3264 2448 0 0 3264 2448 1 "
+ origlast 4
+ origset true
+ name Read1
+ xpos 817
+ ypos -906
+}
+SplineWarp3 {
+ crop_to_format false
+ colorOverlay {0 0 0 0}
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t x44cc0000 x44990000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {layer Bezier2
+     {f 512}
+     {t x44cc0000 x44990000}
+     {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+     {cubiccurve Bezier2_Dest 512 bezier
+      {cc
+       {f 8224}
+       {p
+        {{"=ControlCurve.curves.Bezier2.curve_points.0.left.x\ *\ ControlCurve.TanS"
+	  {{1 xc0c00000}
+	   {x40000000}}}
+	 {"=ControlCurve.curves.Bezier2.curve_points.0.left.y\ *\ ControlCurve.TanS"
+	  {{1 xc2ac0000}
+	   {x40000000}}}
+	 {{1 0}}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier2.curve_points.0.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_C.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w"
+	  {{1 x4502c000 0 1 xc4e36ccd 1}
+	   {x40000000 x43884ccc xc4e36ccd 1 0 1}}}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_C.x\ -\ ControlCurve.curves.Bezier2.curve_points.0.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h"
+	  {{1 x44548000 0 1 x41826640 1}
+	   {x40000000 x44589332 x41826640 1 0 1}}}
+	 {{1 0}}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.0.right.x\ *\ ControlCurve.TanS"
+	  {{1 x40c00000}
+	   {x40000000}}}
+	 {"=ControlCurve.curves.Bezier2.curve_points.0.right.y\ *\ ControlCurve.TanS"
+	  {{1 x42ac0000}
+	   {x40000000}}}
+	 {{1 0}}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.1.left.x\ *\ ControlCurve.TanS"
+	  {{1 0}
+	   {x40000000}}}
+	 {"=ControlCurve.curves.Bezier2.curve_points.1.left.y\ *\ ControlCurve.TanS"
+	  {{1 xc1e00000}
+	   {x40000000}}}
+	 {{1 0}}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier2.curve_points.1.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_C.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w"
+	  {{1 x4502fd2d 0 1 xc4e36ccb 1}
+	   {x40000000 x438a363c xc4e36ccb 1 0 1}}}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_C.x\ -\ ControlCurve.curves.Bezier2.curve_points.1.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h"
+	  {{1 x44a1c000 0 1 x41826640 1}
+	   {x40000000 x44a3c999 x41826640 1 0 1}}}
+	 {{1 0}}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.1.right.x\ *\ ControlCurve.TanS"
+	  {{1 0}
+	   {x40000000}}}
+	 {"=ControlCurve.curves.Bezier2.curve_points.1.right.y\ *\ ControlCurve.TanS"
+	  {{1 x41e00000}
+	   {x40000000}}}
+	 {{1 0}}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.2.left.x\ *\ ControlCurve.TanS"
+	  {{1 0}
+	   {x40000000}}}
+	 {"=ControlCurve.curves.Bezier2.curve_points.2.left.y\ *\ ControlCurve.TanS"
+	  {{1 xc1c80000}
+	   {x40000000}}}
+	 {{1 0}}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier2.curve_points.2.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_C.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w"
+	  {{1 x4502f696 0 1 xc4e36ccd 1}
+	   {x40000000 x438a017c xc4e36ccd 1 0 1}}}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_C.x\ -\ ControlCurve.curves.Bezier2.curve_points.2.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h"
+	  {{1 x44ae8000 0 1 x41826640 1}
+	   {x40000000 x44b08999 x41826640 1 0 1}}}
+	 {{1 0}}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.2.right.x\ *\ ControlCurve.TanS"
+	  {{1 0}
+	   {x40000000}}}
+	 {"=ControlCurve.curves.Bezier2.curve_points.2.right.y\ *\ ControlCurve.TanS"
+	  {{1 x41c80000}
+	   {x40000000}}}
+	 {{1 0}}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.3.left.x\ *\ ControlCurve.TanS"
+	  {{1 xc1200000}
+	   {x40000000}}}
+	 {"=ControlCurve.curves.Bezier2.curve_points.3.left.y\ *\ ControlCurve.TanS"
+	  {{1 xc0400000}
+	   {x40000000}}}
+	 {{1 0}}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier2.curve_points.3.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_C.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w"
+	  {{1 x45031000 0 1 xc4e36ccd 1}
+	   {x40000000 x438acccc xc4e36ccd 1 0 1}}}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_C.x\ -\ ControlCurve.curves.Bezier2.curve_points.3.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h"
+	  {{1 x44e14000 0 1 x41826640 1}
+	   {x40000000 x44e34999 x41826640 1 0 1}}}
+	 {{1 0}}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.3.right.x\ *\ ControlCurve.TanS"
+	  {{1 x41200000}
+	   {x40000000}}}
+	 {"=ControlCurve.curves.Bezier2.curve_points.3.right.y\ *\ ControlCurve.TanS"
+	  {{1 x40400000}
+	   {x40000000}}}
+	 {{1 0}}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.4.left.x\ *\ ControlCurve.TanS"
+	  {{1 xc0400000}
+	   {x40000000}}}
+	 {"=ControlCurve.curves.Bezier2.curve_points.4.left.y\ *\ ControlCurve.TanS"
+	  {{1 xc1100000}
+	   {x40000000}}}
+	 {{1 0}}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier2.curve_points.4.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_C.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w"
+	  {{1 x45053000 0 1 xc4e36ccd 1}
+	   {x40000000 x439bcccc xc4e36ccd 1 0 1}}}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_C.x\ -\ ControlCurve.curves.Bezier2.curve_points.4.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h"
+	  {{1 x44e28000 0 1 x41826640 1}
+	   {x40000000 x44e48999 x41826640 1 0 1}}}
+	 {{1 0}}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.4.right.x\ *\ ControlCurve.TanS"
+	  {{1 x40400000}
+	   {x40000000}}}
+	 {"=ControlCurve.curves.Bezier2.curve_points.4.right.y\ *\ ControlCurve.TanS"
+	  {{1 x41100000}
+	   {x40000000}}}
+	 {{1 0}}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.5.left.x\ *\ ControlCurve.TanS"
+	  {{1 0}
+	   {x40000000}}}
+	 {"=ControlCurve.curves.Bezier2.curve_points.5.left.y\ *\ ControlCurve.TanS"
+	  {{1 xbf800000}
+	   {x40000000}}}
+	 {{1 0}}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier2.curve_points.5.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_C.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w"
+	  {{1 x45058000 0 1 xc4e36ccd 1}
+	   {x40000000 x439e4ccc xc4e36ccd 1 0 1}}}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_C.x\ -\ ControlCurve.curves.Bezier2.curve_points.5.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h"
+	  {{1 x44e6e000 0 1 x41826640 1}
+	   {x40000000 x44e8e999 x41826640 1 0 1}}}
+	 {{1 0}}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.5.right.x\ *\ ControlCurve.TanS"
+	  {{1 0}
+	   {x40000000}}}
+	 {"=ControlCurve.curves.Bezier2.curve_points.5.right.y\ *\ ControlCurve.TanS"
+	  {{1 1}
+	   {x40000000}}}
+	 {{1 0}}}}}
+      {t
+       {{1 x4503bdf5}}
+       {{1 x44bb8555}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}      1 1
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}}
+      {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 pt 0 ab 1}}
+     {cubiccurve Bezier2_Source 512 bezier
+      {cc
+       {f 8224}
+       {p
+        {{{1 xc0c00000 0 1 x4093ddc0 1}
+	  {x40000000 xbfb08900 x4093ddc0 1 0 1}}
+	 {{1 xc2ac0000 0 1 xbe4ad000 1}
+	  {x40000000 xc2ac6568 xbe4ad000 1 0 1}}
+	 {{1 0}}}
+        {{{1 x4502c000 0 1 xc4e54ccd 1}
+	  {x40000000 x4380cccc xc4e54ccd 1 0 1}}
+	 {{1 x44548000 0 1 xc2b6fff8 1}
+	  {x40000000 x443da001 xc2b6fff8 1 0 1}}
+	 {{1 0}}}
+        {{{1 x40c00000 0 1 xc0933300 1}
+	  {x40000000 x3fb33400 xc0933300 1 0 1}}
+	 {{1 x42ac0000 0 1 x3fbffe00 1}
+	  {x40000000 x42aefff8 x3fbffe00 1 0 1}}
+	 {{1 0}}}
+        {{{1 0 -}
+	  {x40000000}}
+	 {{1 xc1e00000 -}
+	  {x40000000}}
+	 {{1 0}}}
+        {{{1 x4502fd2d 0 1 xc4e3f331 1}
+	  {x40000000 x43881ca4 xc4e3f331 1 0 1}}
+	 {{1 x44a1c000 0 1 xc2193340 1}
+	  {x40000000 x449cf666 xc2193340 1 0 1}}
+	 {{1 0}}}
+        {{{1 0 -}
+	  {x40000000}}
+	 {{1 x41e00000 -}
+	  {x40000000}}
+	 {{1 0}}}
+        {{{1 0 -}
+	  {x40000000}}
+	 {{1 xc1c80000 -}
+	  {x40000000}}
+	 {{1 0}}}
+        {{{1 x4502f696 0 1 xc4e50000 1}
+	  {x40000000 x4383b4af xc4e50000 1 0 1}}
+	 {{1 x44ae8000 0 1 xc1b73340 1}
+	  {x40000000 x44aba333 xc1b73340 1 0 1}}
+	 {{1 0}}}
+        {{{1 0 -}
+	  {x40000000}}
+	 {{1 x41c80000 -}
+	  {x40000000}}
+	 {{1 0}}}
+        {{{1 xc1200000 -}
+	  {x40000000}}
+	 {{1 xc0400000 -}
+	  {x40000000}}
+	 {{1 0}}}
+        {{{1 x45031000 0 1 xc4e46c0c 1}
+	  {x40000000 x4386cfce xc4e46c0c 1 0 1}}
+	 {{1 x44e14000 0 1 xc2511b60 1}
+	  {x40000000 x44dab725 xc2511b60 1 0 1}}
+	 {{1 0}}}
+        {{{1 x41200000 -}
+	  {x40000000}}
+	 {{1 x40400000 -}
+	  {x40000000}}
+	 {{1 0}}}
+        {{{1 xc0400000 -}
+	  {x40000000}}
+	 {{1 xc1100000 -}
+	  {x40000000}}
+	 {{1 0}}}
+        {{{1 x45053000 0 1 xc4e201e2 1}
+	  {x40000000 x43a1787a xc4e201e2 1 0 1}}
+	 {{1 x44e28000 0 1 xc2334520 1}
+	  {x40000000 x44dce5d7 xc2334520 1 0 1}}
+	 {{1 0}}}
+        {{{1 x40400000 -}
+	  {x40000000}}
+	 {{1 x41100000 -}
+	  {x40000000}}
+	 {{1 0}}}
+        {{{1 0 -}
+	  {x40000000}}
+	 {{1 xbf800000 -}
+	  {x40000000}}
+	 {{1 0}}}
+        {{{1 x45058000 0 1 xc4e2b334 1}
+	  {x40000000 x43a13330 xc4e2b334 1 0 1}}
+	 {{1 x44e6e000 0 1 xc2238da0 1}
+	  {x40000000 x44e1c393 xc2238da0 1 0 1}}
+	 {{1 0}}}
+        {{{1 0 -}
+	  {x40000000}}
+	 {{1 1 -}
+	  {x40000000}}
+	 {{1 0}}}}}
+      {t
+       {{1 x4503bdf5}}
+       {{1 x44bb8555}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}      1 1
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}}
+      {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 pt 0 ab 1}}}
+    {cubiccurve Pin4 262656 bezier
+     {cc
+      {f 8224}
+      {px x40000000
+       {0 0}
+       {x45412000 x433e0000}
+       {0 0}}}
+     {tx x40000000 x45412000 x433e0000}
+     {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 ltn x40000000 ltm x40000000 pt 0 ab 1}}
+    {cubiccurve Pin3 262656 bezier
+     {cc
+      {f 8224}
+      {px x40000000
+       {0 0}
+       {x45412000 x433e0000}
+       {0 0}}}
+     {tx x40000000 x45412000 x433e0000}
+     {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 ltn x40000000 ltm x40000000 pt 0 ab 1}}
+    {cubiccurve Pin2 262656 bezier
+     {cc
+      {f 8224}
+      {px x40000000
+       {0 0}
+       {x453cc000 x450e8000}
+       {0 0}}}
+     {tx x40000000 x453cc000 x450e8000}
+     {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 ltn x40000000 ltm x40000000 pt 0 ab 1}}
+    {cubiccurve Pin1 262656 bezier
+     {cc
+      {f 8224}
+      {px x40000000
+       {0 0}
+       {x453cc000 x450e8000}
+       {0 0}}}
+     {tx x40000000 x453cc000 x450e8000}
+     {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 ltn x40000000 ltm x40000000 pt 0 ab 1}}}}
+  {edge Bezier2.Bezier2_Source Bezier2.Bezier2_Dest
+   {cp x40a00000 x40a00000 0 0 0
+    {{{{x40000000 0}}
+      {{x40000000 0}}}
+     {{{x40000000 x3fd55556}}
+      {{x40000000 x3fd55556}}}
+     {{{x40000000 x40555556}}
+      {{x40000000 x40555556}}}
+     {{{x40000000 x40a00000}}
+      {{x40000000 x40a00000}}}}   cache
+    {{xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}}}
+   {a}}
+  {edge Pin4 Pin3
+   {cp 0 0 0 0 0
+    {{{{x40000000 x3f000000}}
+      {{x40000000 x3f000000}}}
+     {{{x40000000 x3f000000}}
+      {{x40000000 x3f000000}}}
+     {{{x40000000 x3f000000}}
+      {{x40000000 x3f000000}}}
+     {{{x40000000 x3f000000}}
+      {{x40000000 x3f000000}}}}   cache
+    {{xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}}}
+   {a}}
+  {edge Pin2 Pin1
+   {cp 0 0 0 0 0
+    {{{{x40000000 x3f000000}}
+      {{x40000000 x3f000000}}}
+     {{{x40000000 x3f000000}}
+      {{x40000000 x3f000000}}}
+     {{{x40000000 x3f000000}}
+      {{x40000000 x3f000000}}}
+     {{{x40000000 x3f000000}}
+      {{x40000000 x3f000000}}}}   cache
+    {{xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}}}
+   {a}}}}
+ toolbar_preview_mode "persistent preview"
+ name SplineWarp3_3
+ xpos 817
+ ypos -783
+}
+Project3D2 {
+ inputs 2
+ name Project3D1
+ xpos 817
+ ypos -576
+}
+Sphere {
+ name Sphere1
+ xpos 817
+ ypos -496
+}
+Dot {
+ name Dot1
+ xpos 851
+ ypos -276
+}
+Camera2 {
+ inputs 0
+ display {{ControlCurve.display}}
+ selectable false
+ rotate {0.7 32.35 0}
+ focal 4.28
+ haperture 4.54
+ vaperture 3.42
+ name Camera2
+ xpos 359
+ ypos -699
+}
+Dot {
+ name Dot8
+ xpos 383
+ ypos -572
+}
+Read {
+ inputs 0
+ file /Users/dkorolov/Dropbox/Nuke/Stich_Brussels/Zaventem/Zaventem_002.jpg
+ format "3264 2448 0 0 3264 2448 1 "
+ origlast 4
+ origset true
+ name Read3
+ xpos 493
+ ypos -908
+}
+SplineWarp3 {
+ crop_to_format false
+ colorOverlay {0 0 0 0}
+ view {}
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t x44800000 x44428000 0 0 0 0 0 0 0
+     {{1 1}}}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {layer Bezier2
+     {f 2097664}
+     {t x44cc0000 x44990000}
+     {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+     {cubiccurve Bezier2_Dest 512 bezier
+      {cc
+       {f 8224}
+       {px 1
+        {{"=ControlCurve.curves.Bezier2.curve_points.0.left.x\ *\ ControlCurve.TanS" xc0c00000}
+	 {"=ControlCurve.curves.Bezier2.curve_points.0.left.y\ *\ ControlCurve.TanS" xc2ac0000}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier2.curve_points.0.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_B.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w" x4502c000}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_B.x\ -\ ControlCurve.curves.Bezier2.curve_points.0.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h" x44548000}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.0.right.x\ *\ ControlCurve.TanS" x40c00000}
+	 {"=ControlCurve.curves.Bezier2.curve_points.0.right.y\ *\ ControlCurve.TanS" x42ac0000}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.1.left.x\ *\ ControlCurve.TanS" 0}
+	 {"=ControlCurve.curves.Bezier2.curve_points.1.left.y\ *\ ControlCurve.TanS" xc1e00000}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier2.curve_points.1.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_B.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w" x4502fd2d}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_B.x\ -\ ControlCurve.curves.Bezier2.curve_points.1.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h" x44a1c000}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.1.right.x\ *\ ControlCurve.TanS" 0}
+	 {"=ControlCurve.curves.Bezier2.curve_points.1.right.y\ *\ ControlCurve.TanS" x41e00000}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.2.left.x\ *\ ControlCurve.TanS" 0}
+	 {"=ControlCurve.curves.Bezier2.curve_points.2.left.y\ *\ ControlCurve.TanS" xc1c80000}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier2.curve_points.2.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_B.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w" x4502f696}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_B.x\ -\ ControlCurve.curves.Bezier2.curve_points.2.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h" x44ae8000}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.2.right.x\ *\ ControlCurve.TanS" 0}
+	 {"=ControlCurve.curves.Bezier2.curve_points.2.right.y\ *\ ControlCurve.TanS" x41c80000}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.3.left.x\ *\ ControlCurve.TanS" xc1200000}
+	 {"=ControlCurve.curves.Bezier2.curve_points.3.left.y\ *\ ControlCurve.TanS" xc0400000}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier2.curve_points.3.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_B.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w" x45031000}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_B.x\ -\ ControlCurve.curves.Bezier2.curve_points.3.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h" x44e14000}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.3.right.x\ *\ ControlCurve.TanS" x41200000}
+	 {"=ControlCurve.curves.Bezier2.curve_points.3.right.y\ *\ ControlCurve.TanS" x40400000}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.4.left.x\ *\ ControlCurve.TanS" xc0400000}
+	 {"=ControlCurve.curves.Bezier2.curve_points.4.left.y\ *\ ControlCurve.TanS" xc1100000}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier2.curve_points.4.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_B.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w" x45053000}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_B.x\ -\ ControlCurve.curves.Bezier2.curve_points.4.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h" x44e28000}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.4.right.x\ *\ ControlCurve.TanS" x40400000}
+	 {"=ControlCurve.curves.Bezier2.curve_points.4.right.y\ *\ ControlCurve.TanS" x41100000}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.5.left.x\ *\ ControlCurve.TanS" 0}
+	 {"=ControlCurve.curves.Bezier2.curve_points.5.left.y\ *\ ControlCurve.TanS" xbf800000}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier2.curve_points.5.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_B.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w" x45058000}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_B.x\ -\ ControlCurve.curves.Bezier2.curve_points.5.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h" x44e6e000}}
+        {{"=ControlCurve.curves.Bezier2.curve_points.5.right.x\ *\ ControlCurve.TanS" 0}
+	 {"=ControlCurve.curves.Bezier2.curve_points.5.right.y\ *\ ControlCurve.TanS" 1}}}}
+      {t
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}      1 1
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}}
+      {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 pt 0 ab 1}}
+     {cubiccurve Bezier2_Source 512 bezier
+      {cc
+       {f 8224}
+       {px
+        {1 x40000000}
+        {{{xc0c00000 -}}
+	 {{xc2ac0000 -}}}
+        {{{x4502c000 0 1 x416e6700 1}
+	  {x4503ae67 x416e6700 1 0 1}}
+	 {{x44548000 0 1 xc250ccd0 1}
+	  {x44477333 xc250ccd0 1 0 1}}}
+        {{{x40c00000 -}}
+	 {{x42ac0000 -}}}
+        {{{0 -}}
+	 {{xc1e00000 -}}}
+        {{{x4502fd2d 0 1 xbfd99800 1}
+	  {x4502e1fa xbfd99800 1 0 1}}
+	 {{x44a1c000 0 1 xc21599a0 1}
+	  {x449d1333 xc21599a0 1 0 1}}}
+        {{{0 -}}
+	 {{x41e00000 -}}}
+        {{{0 -}}
+	 {{xc1c80000 -}}}
+        {{{x4502f696 0 1 x3fd99800 1}
+	  {x450311c9 x3fd99800 1 0 1}}
+	 {{x44ae8000 0 1 x41233300 1}
+	  {x44afc666 x41233300 1 0 1}}}
+        {{{0 -}}
+	 {{x41c80000 -}}}
+        {{{xc1200000 -}}
+	 {{xc0400000 -}}}
+        {{{x45031000 0 1 x40666400 1}
+	  {x45034999 x40666400 1 0 1}}
+	 {{x44e14000 0 1 xc1f8cd00 1}
+	  {x44dd5ccc xc1f8cd00 1 0 1}}}
+        {{{x41200000 -}}
+	 {{x40400000 -}}}
+        {{{xc0400000 -}}
+	 {{xc1100000 -}}}
+        {{{x45053000 0 1 x40666400 1}
+	  {x45056999 x40666400 1 0 1}}
+	 {{x44e28000 0 1 xc104cc80 1}
+	  {x44e17667 xc104cc80 1 0 1}}}
+        {{{x40400000 -}}
+	 {{x41100000 -}}}
+        {{{0 -}}
+	 {{xbf800000 -}}}
+        {{{x45058000 0 1 xbff33800 1}
+	  {x45056199 xbff33800 1 0 1}}
+	 {{x44e6e000 0 1 x40600000 1}
+	  {x44e75000 x40600000 1 0 1}}}
+        {{{0 -}}
+	 {{1 -}}}}}
+      {t
+       {{1 x4503bdf5}}
+       {{1 x44bb8555}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}      1 1
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 0}}
+       {{1 1}}}
+      {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 pt 0 ab 1}}}
+    {layer Bezier1
+     {f 2097664}
+     {t x44cc0000 x44990000}
+     {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+     {cubiccurve Bezier1_Dest 512 bezier
+      {cc
+       {f 8224}
+       {px x40400000
+        {{"=ControlCurve.curves.Bezier1.curve_points.0.left.x\ *\ ControlCurve.TanS" 0}
+	 {"=ControlCurve.curves.Bezier1.curve_points.0.left.y\ *\ ControlCurve.TanS" 0}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.0.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_B.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w" x430c0000}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_B.x\ -\ ControlCurve.curves.Bezier1.curve_points.0.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h" x45151000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.0.right.x\ *\ ControlCurve.TanS" 0}
+	 {"=ControlCurve.curves.Bezier1.curve_points.0.right.y\ *\ ControlCurve.TanS" 0}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.1.left.x\ *\ ControlCurve.TanS" 0}
+	 {"=ControlCurve.curves.Bezier1.curve_points.1.left.y\ *\ ControlCurve.TanS" x42480000}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.1.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_B.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w" x42fa0000}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_B.x\ -\ ControlCurve.curves.Bezier1.curve_points.1.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h" x45089000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.1.right.x\ *\ ControlCurve.TanS" 0}
+	 {"=ControlCurve.curves.Bezier1.curve_points.1.right.y\ *\ ControlCurve.TanS" xc2480000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.2.left.x\ *\ ControlCurve.TanS" 0}
+	 {"=ControlCurve.curves.Bezier1.curve_points.2.left.y\ *\ ControlCurve.TanS" x41c80000}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.2.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_B.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w" x42e60000}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_B.x\ -\ ControlCurve.curves.Bezier1.curve_points.2.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h" x44d20000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.2.right.x\ *\ ControlCurve.TanS" 0}
+	 {"=ControlCurve.curves.Bezier1.curve_points.2.right.y\ *\ ControlCurve.TanS" xc1c80000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.3.left.x\ *\ ControlCurve.TanS" 0}
+	 {"=ControlCurve.curves.Bezier1.curve_points.3.left.y\ *\ ControlCurve.TanS" x41a00000}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.3.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_B.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w" x42c80000}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_B.x\ -\ ControlCurve.curves.Bezier1.curve_points.3.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h" x44b9a000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.3.right.x\ *\ ControlCurve.TanS" 0}
+	 {"=ControlCurve.curves.Bezier1.curve_points.3.right.y\ *\ ControlCurve.TanS" xc1a00000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.4.left.x\ *\ ControlCurve.TanS" x41200000}
+	 {"=ControlCurve.curves.Bezier1.curve_points.4.left.y\ *\ ControlCurve.TanS" x42480000}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.4.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_B.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w" x432f0000}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_B.x\ -\ ControlCurve.curves.Bezier1.curve_points.4.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h" x44910000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.4.right.x\ *\ ControlCurve.TanS" xc1200000}
+	 {"=ControlCurve.curves.Bezier1.curve_points.4.right.y\ *\ ControlCurve.TanS" xc2480000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.5.left.x\ *\ ControlCurve.TanS" x40a00000}
+	 {"=ControlCurve.curves.Bezier1.curve_points.5.left.y\ *\ ControlCurve.TanS" x420c0000}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.5.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_B.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w" x42aa0000}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_B.x\ -\ ControlCurve.curves.Bezier1.curve_points.5.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h" x444e4000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.5.right.x\ *\ ControlCurve.TanS" xc0a00000}
+	 {"=ControlCurve.curves.Bezier1.curve_points.5.right.y\ *\ ControlCurve.TanS" xc20c0000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.6.left.x\ *\ ControlCurve.TanS" xc1a00000}
+	 {"=ControlCurve.curves.Bezier1.curve_points.6.left.y\ *\ ControlCurve.TanS" x420c0000}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.6.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_B.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w" x425c0000}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_B.x\ -\ ControlCurve.curves.Bezier1.curve_points.6.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h" x440e8000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.6.right.x\ *\ ControlCurve.TanS" x41a00000}
+	 {"=ControlCurve.curves.Bezier1.curve_points.6.right.y\ *\ ControlCurve.TanS" xc20c0000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.7.left.x\ *\ ControlCurve.TanS" xc1700000}
+	 {"=ControlCurve.curves.Bezier1.curve_points.7.left.y\ *\ ControlCurve.TanS" x420c0000}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.7.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_B.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w" x42a00000}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_B.x\ -\ ControlCurve.curves.Bezier1.curve_points.7.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h" x43af0000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.7.right.x\ *\ ControlCurve.TanS" x41700000}
+	 {"=ControlCurve.curves.Bezier1.curve_points.7.right.y\ *\ ControlCurve.TanS" xc20c0000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.8.left.x\ *\ ControlCurve.TanS" xc1200000}
+	 {"=ControlCurve.curves.Bezier1.curve_points.8.left.y\ *\ ControlCurve.TanS" x42200000}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.8.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_B.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w" x42fa0000}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_B.x\ -\ ControlCurve.curves.Bezier1.curve_points.8.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h" x431b0000}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.8.right.x\ *\ ControlCurve.TanS" x41200000}
+	 {"=ControlCurve.curves.Bezier1.curve_points.8.right.y\ *\ ControlCurve.TanS" xc2200000}}}}
+      {tx x40400000 0}
+      {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 ltn x40400000 ltm x40400000 pt 0 ab 1}}
+     {cubiccurve Bezier1_Source 512 bezier
+      {cc
+       {f 8224}
+       {px x40400000
+        {0 0}
+        {x4303ccc6 x45151000}
+        {0 0}
+        {0 x42480000}
+        {x42f70003 x4506e665}
+        {0 xc2480000}
+        {0 x41c80000}
+        {x42d59994 x44d04ccd}
+        {0 xc1c80000}
+        {0 x41a00000}
+        {x42d9999a x44b78001}
+        {0 xc1a00000}
+        {x41200000 x42480000}
+        {x43310000 x44902666}
+        {xc1200000 xc2480000}
+        {x40a00000 x420c0000}
+        {x42ae0008 x4457999b}
+        {xc0a00000 xc20c0000}
+        {xc01998f0 x421599a0}
+        {x4271998f x44272666}
+        {x40253700 xc220ea00}
+        {xc1700000 x420c0000}
+        {x4281fff8 x44107333}
+        {x41700000 xc20c0000}
+        {xc1200000 x42200000}
+        {x42c79997 x439a0002}
+        {x41200000 xc2200000}}}
+      {tx x40400000 0}
+      {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 ltn x40400000 ltm x40400000 pt 0 ab 1}}}}}
+  {edge Bezier2.Bezier2_Source Bezier2.Bezier2_Dest
+   {cp x40a00000 x40a00000 0 0 0
+    {{{{x40000000 0}}
+      {{x40000000 0}}}
+     {{{x40000000 x3fd55556}}
+      {{x40000000 x3fd55556}}}
+     {{{x40000000 x40555556}}
+      {{x40000000 x40555556}}}
+     {{{x40000000 x40a00000}}
+      {{x40000000 x40a00000}}}}   cache
+    {{xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}}}
+   {a}}
+  {edge Bezier1.Bezier1_Source Bezier1.Bezier1_Dest
+   {cp x41000000 x41000000 0 0 0
+    {{{{x40400000 0}}
+      {{x40400000 0}}}
+     {{{x40400000 x402aaaab}}
+      {{x40400000 x402aaaab}}}
+     {{{x40400000 x40aaaaab}}
+      {{x40400000 x40aaaaab}}}
+     {{{x40400000 x41000000}}
+      {{x40400000 x41000000}}}}   cache
+    {{xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}}}
+   {a}}}}
+ toolbar_preview_mode "persistent preview"
+ name SplineWarp3_2
+ xpos 493
+ ypos -775
+}
+Roto {
+ output alpha
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t x44cc0000 x44990000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Rectangle1 512 bezier
+     {{cc
+       {f 8192}
+       {px x40800000
+        {0 xc4816000}
+        {xc3570000 x4520a000}
+        {x44792aab 0}
+        {xc4792aac 0}
+        {x44ece004 x4523a000}
+        {0 xc4816000}
+        {0 x44816000}
+        {x44ede002 xc3f77ffe}
+        {xc4792aac 0}
+        {x44792aab 0}
+        {xc3570000 xc405c000}
+        {0 x44816000}}}
+      {cc
+       {f 8192}
+       {px x40800000
+        {0 xc4816000}
+        {0 0}
+        {x44792aab 0}
+        {xc4792aac 0}
+        {x4366fff0 x41d80000}
+        {0 xc4816000}
+        {0 x44816000}
+        {x437ffb10 xc1000440}
+        {xc4792aac 0}
+        {x44792aab 0}
+        {0 0}
+        {0 x44816000}}}}
+     {tx x40800000 x44a00000 x447e6000}
+     {a osw x41200000 osf 0 str 1 spx x44cc0000 spy x44990000 sb 1 ltn x40800000 ltm x40800000 tt x41000000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 8 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {1632 1224}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ lifetime_start 4
+ lifetime_end 4
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ name Roto2
+ xpos 493
+ ypos -712
+}
+Premult {
+ name Premult2
+ xpos 493
+ ypos -661
+}
+Project3D2 {
+ inputs 2
+ name Project3D2
+ xpos 493
+ ypos -575
+}
+Sphere {
+ name Sphere2
+ xpos 493
+ ypos -497
+}
+Dot {
+ name Dot2
+ xpos 527
+ ypos -245
+}
+Dot {
+ name Dot10
+ xpos 806
+ ypos -245
+}
+Camera2 {
+ inputs 0
+ display {{ControlCurve.display}}
+ rotate {3.5 83.45 0}
+ focal 4.28
+ haperture 4.54
+ vaperture 3.42
+ name Camera1
+ xpos 42
+ ypos -705
+}
+Dot {
+ name Dot12
+ xpos 66
+ ypos -583
+}
+Read {
+ inputs 0
+ file /Users/dkorolov/Dropbox/Nuke/Stich_Brussels/Zaventem/Zaventem_003.jpg
+ format "3264 2448 0 0 3264 2448 1 "
+ origlast 4
+ origset true
+ name Read4
+ xpos 176
+ ypos -912
+}
+SplineWarp3 {
+ crop_to_format false
+ colorOverlay {0 0 0 0}
+ view {}
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t x44cc0000 x44990000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {cubiccurve Pin4 262656 bezier
+     {cc
+      {f 8224}
+      {px x40400000
+       {0 0}
+       {x43110000 x43070000}
+       {0 0}}}
+     {tx x40400000 x43110000 x43070000}
+     {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 ltn x40400000 ltm x40400000 pt 0 ab 1}}
+    {cubiccurve Pin3 262656 bezier
+     {cc
+      {f 8224}
+      {px x40400000
+       {0 0}
+       {x43110000 x43070000}
+       {0 0}}}
+     {tx x40400000 x43110000 x43070000}
+     {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 ltn x40400000 ltm x40400000 pt 0 ab 1}}
+    {cubiccurve Pin2 262656 bezier
+     {cc
+      {f 8224}
+      {px x40400000
+       {0 0}
+       {x42aa0000 x45151000}
+       {0 0}}}
+     {tx x40400000 x42aa0000 x45151000}
+     {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 ltn x40400000 ltm x40400000 pt 0 ab 1}}
+    {cubiccurve Pin1 262656 bezier
+     {cc
+      {f 8224}
+      {px x40400000
+       {0 0}
+       {x42aa0000 x45151000}
+       {0 0}}}
+     {tx x40400000 x42aa0000 x45151000}
+     {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 ltn x40400000 ltm x40400000 pt 0 ab 1}}
+    {layer Bezier1
+     {f 2097664}
+     {t x44cc0000 x44990000}
+     {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+     {cubiccurve Bezier1_Source 512 bezier
+      {cc
+       {f 8224}
+       {px
+        {x40400000 x40800000}
+        {{{0 -}}
+	 {{x41a00000 -}}}
+        {{{x453dd999 0 1 xc1accc80 1}
+	  {x453c8000 xc1accc80 1 0 1}}
+	 {{x4501f333 0 1 x40999a00 1}
+	  {x45024000 x40999a00 1 0 1}}}
+        {{{0 -}}
+	 {{xc1a00000 -}}}
+        {{{xc0800000 -}}
+	 {{x42500000 -}}}
+        {{{x453dd998 0 1 xc2066600 1}
+	  {x453bc000 xc2066600 1 0 1}}
+	 {{x44ea8000 0 1 x41400000 1}
+	  {x44ec0000 x41400000 1 0 1}}}
+        {{{x40800000 -}}
+	 {{xc2500000 -}}}
+        {{{0 -}}
+	 {{x42000000 -}}}
+        {{{x453d8001 0 1 xc1400100 1}
+	  {x453cc000 xc1400100 1 0 1}}
+	 {{x44b28000 0 1 xc1c00000 1}
+	  {x44af8000 xc1c00000 1 0 1}}}
+        {{{0 -}}
+	 {{xc2000000 -}}}
+        {{{xc0800000 -}}
+	 {{x42200000 -}}}
+        {{{x453d8ccc 0 1 xc0999800 1}
+	  {x453d4000 xc0999800 1 0 1}}
+	 {{x4496cccc 0 1 x41199a00 1}
+	  {x44980000 x41199a00 1 0 1}}}
+        {{{x40800000 -}}
+	 {{xc2200000 -}}}
+        {{{x41400000 -}}
+	 {{x42000000 -}}}
+        {{{x45462001 0 1 xc1d00080 1}
+	  {x45448000 xc1d00080 1 0 1}}
+	 {{x44768003 0 1 xc2940018 1}
+	  {x44640000 xc2940018 1 0 1}}}
+        {{{xc1400000 -}}
+	 {{xc2000000 -}}}
+        {{{x40800000 -}}
+	 {{x42000000 -}}}
+        {{{x45419b33 0 1 xc1ad9980 1}
+	  {x45404000 xc1ad9980 1 0 1}}
+	 {{x4430acd0 0 1 xc2e56680 1}
+	  {x44140000 xc2e56680 1 0 1}}}
+        {{{xc0800000 -}}
+	 {{xc2000000 -}}}
+        {{{0 -}}
+	 {{x42200000 -}}}
+        {{{x453ee4cc 0 1 x3fd9a000 1}
+	  {x453f0000 x3fd9a000 1 0 1}}
+	 {{x4403799b 0 1 xc2b3ccd8 1}
+	  {x43da0000 xc2b3ccd8 1 0 1}}}
+        {{{0 -}}
+	 {{xc2200000 -}}}
+        {{{xc1000000 -}}
+	 {{x41800000 -}}}
+        {{{x453ec001 0 1 x413fff00 1}
+	  {x453f8000 x413fff00 1 0 1}}
+	 {{x43d00000 0 1 xc3040000 1}
+	  {x438e0000 xc3040000 1 0 1}}}
+        {{{x41000000 -}}
+	 {{xc1800000 -}}}
+        {{{xc1400000 -}}
+	 {{x42a00000 -}}}
+        {{{x4540c999 0 1 xc0933200 1}
+	  {x45408000 xc0933200 1 0 1}}
+	 {{x4262000c 0 1 xc1a40018 1}
+	  {x42100000 xc1a40018 1 0 1}}}
+        {{{x41400000 -}}
+	 {{xc2a00000 -}}}}}
+      {tx x40800000 0}
+      {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 ltn x40800000 ltm x40800000 pt 0 ab 1}}
+     {cubiccurve Bezier1_Dest 512 bezier
+      {cc
+       {f 8224}
+       {px
+        {x40400000 x40800000}
+        {{"=ControlCurve.curves.Bezier1.curve_points.0.left.x\ *\ ControlCurve.TanS"
+	  {0}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.0.left.y\ *\ ControlCurve.TanS"
+	  {x3f000000 x41a00000}}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.0.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_A.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w"
+	  {x453ef90b x453c8000}}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_A.x\ -\ ControlCurve.curves.Bezier1.curve_points.0.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h"
+	  {x4503ec7b x45024000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.0.right.x\ *\ ControlCurve.TanS"
+	  {0}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.0.right.y\ *\ ControlCurve.TanS"
+	  {xbf000000 xc1a00000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.1.left.x\ *\ ControlCurve.TanS"
+	  {x3e800000 xc0800000}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.1.left.y\ *\ ControlCurve.TanS"
+	  {x40100000 x42500000}}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.1.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_A.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w"
+	  {x453e9d6c x453bc000}}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_A.x\ -\ ControlCurve.curves.Bezier1.curve_points.1.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h"
+	  {x44ef1a79 x44ec0000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.1.right.x\ *\ ControlCurve.TanS"
+	  {xbe800000 x40800000}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.1.right.y\ *\ ControlCurve.TanS"
+	  {xc0100000 xc2500000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.2.left.x\ *\ ControlCurve.TanS"
+	  {0}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.2.left.y\ *\ ControlCurve.TanS"
+	  {x3fa00000 x42000000}}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.2.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_A.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w"
+	  {x453e41ee x453cc000}}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_A.x\ -\ ControlCurve.curves.Bezier1.curve_points.2.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h"
+	  {x44b6d478 x44af8000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.2.right.x\ *\ ControlCurve.TanS"
+	  {0}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.2.right.y\ *\ ControlCurve.TanS"
+	  {xbfa00000 xc2000000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.3.left.x\ *\ ControlCurve.TanS"
+	  {xbf000000 xc0800000}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.3.left.y\ *\ ControlCurve.TanS"
+	  {x3fc00000 x42200000}}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.3.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_A.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w"
+	  {x453de690 x453d4000}}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_A.x\ -\ ControlCurve.curves.Bezier1.curve_points.3.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h"
+	  {x44a0278b x44980000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.3.right.x\ *\ ControlCurve.TanS"
+	  {x3f000000 x40800000}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.3.right.y\ *\ ControlCurve.TanS"
+	  {xbfc00000 xc2200000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.4.left.x\ *\ ControlCurve.TanS"
+	  {1 x41400000}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.4.left.y\ *\ ControlCurve.TanS"
+	  {x40600000 x42000000}}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.4.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_A.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w"
+	  {x45423795 x45448000}}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_A.x\ -\ ControlCurve.curves.Bezier1.curve_points.4.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h"
+	  {x4479b6d6 x44640000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.4.right.x\ *\ ControlCurve.TanS"
+	  {xbf800000 xc1400000}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.4.right.y\ *\ ControlCurve.TanS"
+	  {xc0600000 xc2000000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.5.left.x\ *\ ControlCurve.TanS"
+	  {x3f400000 x40800000}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.5.left.y\ *\ ControlCurve.TanS"
+	  {x40400000 x42000000}}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.5.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_A.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w"
+	  {x453d3038 x45404000}}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_A.x\ -\ ControlCurve.curves.Bezier1.curve_points.5.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h"
+	  {x442d51de x44140000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.5.right.x\ *\ ControlCurve.TanS"
+	  {xbf400000 xc0800000}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.5.right.y\ *\ ControlCurve.TanS"
+	  {xc0400000 xc2000000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.6.left.x\ *\ ControlCurve.TanS"
+	  {0}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.6.left.y\ *\ ControlCurve.TanS"
+	  {x40400000 x42200000}}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.6.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_A.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w"
+	  {x453b1034 x453f0000}}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_A.x\ -\ ControlCurve.curves.Bezier1.curve_points.6.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h"
+	  {x4409ee18 x43da0000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.6.right.x\ *\ ControlCurve.TanS"
+	  {0}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.6.right.y\ *\ ControlCurve.TanS"
+	  {xc0400000 xc2200000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.7.left.x\ *\ ControlCurve.TanS"
+	  {xbf000000 xc1000000}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.7.left.y\ *\ ControlCurve.TanS"
+	  {x3fa00000 x41800000}}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.7.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_A.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w"
+	  {x453b6a90 x453f8000}}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_A.x\ -\ ControlCurve.curves.Bezier1.curve_points.7.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h"
+	  {x43ccf13a x438e0000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.7.right.x\ *\ ControlCurve.TanS"
+	  {x3f000000 x41000000}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.7.right.y\ *\ ControlCurve.TanS"
+	  {xbfa00000 xc1800000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.8.left.x\ *\ ControlCurve.TanS"
+	  {xbe800000 xc1400000}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.8.left.y\ *\ ControlCurve.TanS"
+	  {x40c00000 x42a00000}}}
+        {{"=(0.5\ -\ tan(radians((0.5\ -\ ControlCurve.curves.Bezier1.curve_points.8.main.x/ControlCurve.LatLong_w)\ *\ 360\ -\ ControlCurve.rotate_A.y))\ *\ ControlCurve.focus_A/ControlCurve.haperture_A)\ *\ ControlCurve.pic_w"
+	  {x453d02b6 x45408000}}
+	 {"=(0.5\ -\ tan(radians(ControlCurve.rotate_A.x\ -\ ControlCurve.curves.Bezier1.curve_points.8.main.y\ *\ 180/ControlCurve.LatLong_h\ -\ 90))\ *\ ControlCurve.focus_A/ControlCurve.vaperture_A)\ *\ ControlCurve.pic_h"
+	  {x42f6f24f x42100000}}}
+        {{"=ControlCurve.curves.Bezier1.curve_points.8.right.x\ *\ ControlCurve.TanS"
+	  {x3e800000 x41400000}}
+	 {"=ControlCurve.curves.Bezier1.curve_points.8.right.y\ *\ ControlCurve.TanS"
+	  {xc0c00000 xc2a00000}}}}}
+      {tx x40800000 0}
+      {a ro 0 go 0 bo 0 ao 0 mbo 0 mb 1 mbs x3f000000 mbsot 0 mbso 0 fo 1 fx 0 fy 0 ff 1 ft 0 osw x41200000 osf 0 str 1 ltn x40800000 ltm x40800000 pt 0 ab 1}}}}}
+  {edge Pin4 Pin3
+   {cp 0 0 0 0 0
+    {{{{x40400000 x3f000000}}
+      {{x40400000 x3f000000}}}
+     {{{x40400000 x3f000000}}
+      {{x40400000 x3f000000}}}
+     {{{x40400000 x3f000000}}
+      {{x40400000 x3f000000}}}
+     {{{x40400000 x3f000000}}
+      {{x40400000 x3f000000}}}}   cache
+    {{xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}}}
+   {a}}
+  {edge Pin2 Pin1
+   {cp 0 0 0 0 0
+    {{{{x40400000 x3f000000}}
+      {{x40400000 x3f000000}}}
+     {{{x40400000 x3f000000}}
+      {{x40400000 x3f000000}}}
+     {{{x40400000 x3f000000}}
+      {{x40400000 x3f000000}}}
+     {{{x40400000 x3f000000}}
+      {{x40400000 x3f000000}}}}   cache
+    {{xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}}}
+   {a}}
+  {edge Bezier1.Bezier1_Source Bezier1.Bezier1_Dest
+   {cp x41000000 x41000000 0 0 0
+    {{{{x40400000 0}}
+      {{x40400000 0}}}
+     {{{x40400000 x402aaaab}}
+      {{x40400000 x402aaaab}}}
+     {{{x40400000 x40aaaaab}}
+      {{x40400000 x40aaaaab}}}
+     {{{x40400000 x41000000}}
+      {{x40400000 x41000000}}}}   cache
+    {{xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}
+     {xff7fffff x7f7fffff x7f7fffff}}}
+   {a}}}}
+ toolbar_preview_mode "persistent preview"
+ name SplineWarp3_1
+ xpos 176
+ ypos -799
+}
+Grade {
+ whitepoint 1.12
+ name Grade1
+ xpos 176
+ ypos -767
+}
+Roto {
+ output alpha
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x44cc0000 x44990000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Rectangle1 512 bezier
+     {{cc
+       {f 8192}
+       {px x40800000
+        {0 xc4816000}
+        {xc3570000 x4520a000}
+        {x44792aab 0}
+        {xc4792aac 0}
+        {x45367000 x45212000}
+        {0 xc4816000}
+        {0 x44816000}
+        {x4536efff xc405c000}
+        {xc4792aac 0}
+        {x44792aab 0}
+        {xc3570000 xc405c000}
+        {0 x44816000}}}
+      {cc
+       {f 8192}
+       {p
+        {{{x40800000 0}}
+      {{x40800000 xc4816000}}}
+        {{{x40800000 0}}
+      {{x40800000 0}}}
+        {{{x40800000 x44792aab}}
+      {{x40800000 0}}}
+        {{{x40800000 xc4792aac}}
+      {{x40800000 0}}}
+        {{{x40800000 x4366fff0}}
+      {{x40800000 x41d80000}}}
+        {{{x40800000 0}}
+      {{x40800000 xc4816000}}}
+        {{{x40800000 0}}
+      {{x40800000 x44816000}}}
+        {{{x40800000 x437ffb10}}
+      {{x40800000 xc1000440}}}
+        {{{x40800000 xc4792aac}}
+      {{x40800000 0}}}
+        {{{x40800000 x44792aab}}
+      {{x40800000 0}}}
+        {{{x40800000 0}}
+      {{x40800000 0}}}
+        {{{x40800000 0}}
+      {{x40800000 x44816000}}}}}}
+     {tx x40800000 x44a00000 x447e6000}
+     {a osw x41200000 osf 0 str 1 spx x44cc0000 spy x44990000 sb 1 ltn x40800000 ltm x40800000 tt x41000000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 8 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {1632 1224}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ lifetime_start 4
+ lifetime_end 4
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ name Roto1
+ xpos 176
+ ypos -717
+}
+Premult {
+ name Premult1
+ xpos 176
+ ypos -663
+}
+Project3D2 {
+ inputs 2
+ name Project3D3
+ xpos 176
+ ypos -586
+}
+Sphere {
+ name Sphere3
+ xpos 176
+ ypos -491
+}
+Dot {
+ name Dot7
+ xpos 210
+ ypos -207
+}
+Dot {
+ name Dot9
+ xpos 762
+ ypos -207
+}
+Scene {
+ inputs 3
+ name Scene1
+ xpos 827
+ ypos -187
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "4096 2048 0 0 4096 2048 1 4K_LatLong"
+ name Constant2
+ xpos 927
+ ypos -105
+}
+ScanlineRender {
+ inputs 2
+ conservative_shader_sampling false
+ projection_mode spherical
+ motion_vectors_type distance
+ name ScanlineRender1
+ xpos 817
+ ypos -81
+}
+set N1ce29170 [stack 0]
+Viewer {
+ frame_range 1-4
+ name Viewer1
+ xpos 602
+ ypos -18
+}
+push $N1ce29170
+Roto {
+ output alpha
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t x44800000 x44000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8224}
+       {px
+        {x40000000 x40800000}
+        {{0
+       {0 -}}
+      {1
+       {1 -}}}
+        {{{x44ac8555 -}
+       {x44aca000 -}}
+      {{x449ba000 -}
+       {x449bf000 -}}}
+        {{0
+       {0 -}}
+      {xbf800000
+       {xbf800000 -}}}
+        {{x3f000000
+       {x3f000000 -}}
+      {x40900000
+       {x40900000 -}}}
+        {{{x44ac8000 -}}
+      {{x4496b000 -}
+       {x44970000 -}}}
+        {{xbf000000
+       {xbf000000 -}}
+      {xc0900000
+       {xc0900000 -}}}
+        {{0
+       {0 -}}
+      {x40200000
+       {x40200000 -}}}
+        {{{x44ac4555 0 1 x3ed55800 1}
+       {x44ac6000 x3ed55800 1 0 1}}
+      {{x448a9556 0 1 x3fd55600 1}
+       {x448b5000 x3fd55600 1 0 1}}}
+        {{0
+       {0 -}}
+      {xc0200000
+       {xc0200000 -}}}
+        {{xbf800000
+       {xbf800000 -}}
+      {x40400000
+       {x40400000 -}}}
+        {{{x44ac5aaa 0 1 xbf555400 1}
+       {x44ac4000 xbf555400 1 0 1}}
+      {{x4485aaac 0 1 x403aaa00 1}
+       {x44868000 x403aaa00 1 0 1}}}
+        {{1
+       {1 -}}
+      {xc0400000
+       {xc0400000 -}}}
+        {{x40000000
+       {x40000000 -}}
+      {x40e00000
+       {x40e00000 -}}}
+        {{x44adc000
+       {x44adc000 -}}
+      {x447e0000
+       {x447e0000 xc0055600 1 0 1}}}
+        {{xc0000000
+       {xc0000000 -}}
+      {xc0e00000
+       {xc0e00000 -}}}
+        {{x3fc00000
+       {x3fc00000 -}}
+      {x40c00000
+       {x40c00000 -}}}
+        {{x44ac0000
+       {x44ac0000 x403aaa00 1 0 1}}
+      {x446e0000
+       {x446e0000 xbed55800 1 0 1}}}
+        {{xbfc00000
+       {xbfc00000 -}}
+      {xc0c00000
+       {xc0c00000 -}}}
+        {{0
+       {0 -}}
+      {x40c00000
+       {x40c00000 -}}}
+        {{x44ab4000
+       {x44ab4000 -}}
+      {x4466c000
+       {x4466c000 -}}}
+        {{0
+       {0 -}}
+      {xc0c00000
+       {xc0c00000 -}}}
+        {{xbf800000
+       {xbf800000 -}}
+      {x40200000
+       {x40200000 -}}}
+        {{{x44ab6000 -}}
+      {{x44604000 -}
+       {x445fa000 -}}}
+        {{1
+       {1 -}}
+      {xc0200000
+       {xc0200000 -}}}
+        {{xbf000000
+       {xbf000000 -}}
+      {x41400000
+       {x41400000 -}}}
+        {{{x44abf000 -}}
+      {{x44522aaa -}
+       {x4451c000 -}}}
+        {{x3f000000
+       {x3f000000 -}}
+      {xc1400000
+       {xc1400000 -}}}}}     idem}
+     {tx x40800000 x44ac3aab x4480c1c7}
+     {a osw x41200000 osf 0 str 1 spx x44800000 spy x44000000 sb 1 ltn x40800000 ltm x40800000 tt x40800000}}
+    {curvegroup Bezier2 512 bezier
+     {{cc
+       {f 8224}
+       {px x40000000
+        {{{xbe854000 0 1 x41253c00 1}}
+	 {{xc10adf40 0 1 xbf68ee00 1}}}
+        {{{x44ddb6e1 0 1 xc1057240 1}}
+	 {{x44681fe1 0 1 x403f6280 1}}}
+        {{{x3f1bd800 0 1 xc0af1a80 1}}
+	 {{x41a29a80 0 1 xc0f01400 1}}}
+        {{{xbdbd0000 0 1 xbee20000 1}}
+	 {{xc144d980 0 1 xc1a4a420 1}}}
+        {{{x44ddffd7 0 1 xc11c29c0 1}}
+	 {{x44810f32 0 1 xbfb3f800 1}}}
+        {{{x3dbf0000 0 1 x3d9e8000 1}}
+	 {{x4146fd80 0 1 x3e82c800 1}}}
+        {{{xbe4ce000 0 1 x3e98b800 1}}
+	 {{xc18ddb00 0 1 x40302400 1}}}
+        {{{x44de014b 0 1 xc11af7c0 1}}
+	 {{x4485a363 0 1 xc116fd80 1}}}
+        {{{x3e9b0000 0 1 xbf3c7800 1}}
+	 {{x41d66280 0 1 x4092b680 1}}}
+        {{{x3ee1b000 0 1 xc001bf00 1}}
+	 {{xc10cb700 0 1 x40785100 1}}}
+        {{{x44de31e5 0 1 xc1271b40 1}}
+	 {{x448f496e 0 1 xc0a3a200 1}}}
+        {{{xbe85d000 0 1 x4017a100 1}}
+	 {{x40a6ec00 0 1 xbffbc200 1}}}
+        {{{xbfc70c00 0 1 x3e1ab000 1}}
+	 {{xc000f200 0 1 xbe7af000 1}}}
+        {{{x44df2cbc 0 1 xc1239100 1}}
+	 {{x448fbbe5 0 1 xc0c2ad80 1}}}
+        {{{x3f9f6000 0 1 x3eaa0000 1}}
+	 {{x3fce6400 0 1 x3f8d2c00 1}}}
+        {{{xbd308000 0 1 x3cb08000 1}}
+	 {{xc0264c00 0 1 x3f4c9800 1}}}
+        {{{x44df2f8e 0 1 xc127af80 1}}
+	 {{x4490c1c5 0 1 xc0d99980 1}}}
+        {{{x3d278000 0 1 xbca78000 1}}
+	 {{x401f2600 0 1 xbf3e4c00 1}}}}}     idem}
+     {t 0}
+     {a osw x41200000 osf 0 str 1 ab 1 h x3e4ccccd bs x41c80000 bt 0 bu 0 dh 0 ds 0 dt 1 we 1 ws 0 bsp x3d4ccccd ep1 0 ep2 0 ep3 0 boundary 0 cookie 0 hard_boundary 0}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {1024 512}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ lifetime_start 4
+ lifetime_end 4
+ motionblur_shutter_offset_type centred
+ brush_spacing 0.05000000075
+ brush_hardness 0.200000003
+ buildup false
+ source_black_outside true
+ name ControlCurve
+ xpos 817
+ ypos -29
+ addUserKnob {20 Main_Control}
+ addUserKnob {4 SplineWarp_A l "Spline Warp A" M {SplineWarp3_1 SplineWarp3_2 SplineWarp3_3}}
+ addUserKnob {4 CamA_name l "   Camera A" -STARTLINE M {Camera1 Camera2 Camera3}}
+ addUserKnob {4 SplineWarp_B l "Spline Warp B" M {SplineWarp3_1 SplineWarp3_2 SplineWarp3_3}}
+ SplineWarp_B SplineWarp3_2
+ addUserKnob {4 CamB_name l "   Camera B" -STARTLINE M {Camera1 Camera2 Camera3}}
+ CamB_name Camera2
+ addUserKnob {4 SplineWarp_C l "Spline Warp C" M {SplineWarp3_1 SplineWarp3_2 SplineWarp3_3}}
+ SplineWarp_C SplineWarp3_3
+ addUserKnob {4 CamC_name l "   Camera C" -STARTLINE M {Camera1 Camera2 Camera3}}
+ CamC_name Camera3
+ addUserKnob {22 update l "update list" t "Update lists of input nodes above. Please press this button first, for correct selection of nodes" T "#ControlNode = nuke.toNode('ControlCurve')\nControlNode = nuke.thisNode()\n\nSplineWarpList = \[]\n\nfor node in nuke.allNodes(recurseGroups=True):\n    if node.Class() == 'SplineWarp3':\n        srcNode = node\n        SplineWarpList.append(node.name())\n        print node.name()\n        \n\nCameraList = \[]\n        \nfor node in nuke.allNodes(recurseGroups=True):\n    if node.Class() == 'Camera2':\n        srcNode = node\n        CameraList.append(node.name())\n        print node.name()\n\nSplineWarpList.sort()\nNodeknob = ControlNode.knob('SplineWarp_A')\nNodeknob.setValues(SplineWarpList)\n\nNodeknob = ControlNode.knob('SplineWarp_B')\nNodeknob.setValues(SplineWarpList)\n\nCameraList.sort()\nNodeknob = ControlNode.knob('CamA_name')\nNodeknob.setValues(CameraList)\n\nNodeknob = ControlNode.knob('CamB_name')\nNodeknob.setValues(CameraList)" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {4 CtrCurvesList l "Control Curve" t "Select control curve for linking to warp curves.\nTo have correct list of curves, please press button \"Update Curves List\" first" M {Bezier1 Bezier2 Bezier3}}
+ CtrCurvesList Bezier3
+ addUserKnob {4 InfluenceArea l "     Influence Area" t "Choice influence area of selected control curve:\nAB - control curve work between image A and image B\nBC - control curve work between image B and image C" -STARTLINE M {AB BC "" "" "" "" ""}}
+ InfluenceArea BC
+ addUserKnob {22 UpdateCurvesList l "Update Curves List" t "Update list of control curves. Please press this button first, for correct selection of curves" T "#ControlNode = nuke.toNode('ControlCurve')\nControlNode = nuke.thisNode()\n\nCurvesList = \[]\n        \nctrCurve = ControlNode\['curves']\nctrRoot = ctrCurve.rootLayer\n\nfor sh in ctrRoot:\n    sh.name\n    CurvesList.append(sh.name)\n    #print sh.name        \n        \n\nCurvesList.sort()\nNodeknob = ControlNode.knob('CtrCurvesList')\nNodeknob.setValues(CurvesList)\n" +STARTLINE}
+ addUserKnob {22 SetCtlCurve l "Link to exist Warp Curves" t "Link exist control curve to existing set of Warp Curves. Before press this button you must set next curves:\n\n1) Draw control curve in this node and select correctly from pulldown choice control it name and influence area.\n\n2) You need to draw and correctly name set of curves in appropriate to influence area SplineWarp nodes. If influence area \"AB\" - you need to set 2 curves in Area A SplineWarp node and 2 curves in Area B SplineWarp node.\nTo install all the script expressions to SplineWarp correctly, you need to follow the naming convention. In each node you need to create layer named same as control curve. and in this layer create two curves with name starting same way (as control curve) and finishing to \"_Source\" and \"_Dest\"\nExample: if control curve named \"Bezier1\", you need to create in both SplineWarp nodes layer named \"Bezier1\"  and two splines in it : \"Bezier1_Dest\" and \"Bezier1_Source\"\nAlso you will need to link this source and destination by Link tool in SplineWarp node" T "\n\ndef SetFormulaForWarp ( BaseCurveName,  PrefixName, CtrlNode):\n    pTime =0\n    \n    \n    \n    Warpknob = CtrlNode.knob('SplineWarp_' + PrefixName)\n    wrpNode = nuke.toNode(Warpknob.value())    \n    warpCurve = wrpNode\['curves']    \n    wrpRoot = warpCurve.rootLayer\n    \n    \n    ctrCurve = CtrlNode\['curves']\n    ctrRoot = ctrCurve.rootLayer\n    \n    shape = ctrRoot\[0]\n    for sh in ctrRoot:\n        if sh.name == BaseCurveName:\n            shape = sh\n    \n    wrpShape = wrpRoot\[0]\n    for wh in ctrRoot:\n        if wh.name == 'Bezier2':\n            wrpShape = wh    \n    \n    mainXStr = '(0.5 - tan(radians((0.5 - ControlCurve.curves.%s.curve_points.%s.main.x/ControlCurve.LatLong_w) * 360 - ControlCurve.rotate_%s.y)) * ControlCurve.focus_A/ControlCurve.haperture_A) * ControlCurve.pic_w'  \n    mainYStr = '(0.5 - tan(radians(ControlCurve.rotate_%s.x - ControlCurve.curves.%s.curve_points.%s.main.y * 180/ControlCurve.LatLong_h - 90)) * ControlCurve.focus_A/ControlCurve.vaperture_A) * ControlCurve.pic_h'  \n    leftXStr = 'ControlCurve.curves.%s.curve_points.%s.left.x * ControlCurve.TanS'\n    leftYStr = 'ControlCurve.curves.%s.curve_points.%s.left.y * ControlCurve.TanS'\n    rightXStr = 'ControlCurve.curves.%s.curve_points.%s.right.x * ControlCurve.TanS'\n    rightYStr = 'ControlCurve.curves.%s.curve_points.%s.right.y * ControlCurve.TanS'\n    \n    pt_type = 0 \n    ptcount = 0\n       \n    \n    for ind,points in enumerate(warpCurve.toElement(BaseCurveName + '/' + BaseCurveName + '_Dest')):        \n        aCurveX = points.getPositionAnimCurve(0)\n        aCurveY = points.getPositionAnimCurve(1)\n        #print ind\n        \n        # expression for left tangent   \n        if pt_type == 0:\n            aCurveX.expressionString = leftXStr %(BaseCurveName,str(ptcount))\n            aCurveY.expressionString = leftYStr %(BaseCurveName,str(ptcount))\n            aCurveX.useExpression = True\n            aCurveY.useExpression = True  \n            pt_type += 1\n        \n        # expression for main point  \n        elif pt_type == 1:\n            aCurveX.expressionString = mainXStr %(BaseCurveName,str(ptcount),PrefixName)\n            aCurveY.expressionString = mainYStr %(PrefixName, BaseCurveName,str(ptcount))\n            aCurveX.useExpression = True\n            aCurveY.useExpression = True   \n            pt_type += 1  \n            \n        # expression for right tangent    \n        elif pt_type == 2:\n            aCurveX.expressionString = rightXStr %(BaseCurveName,str(ptcount))\n            aCurveY.expressionString = rightYStr %(BaseCurveName,str(ptcount))\n            aCurveX.useExpression = True\n            aCurveY.useExpression = True   \n            pt_type = 0   \n            ptcount += 1\n    \n        points.setPositionAnimCurve(0, aCurveX)  \n        points.setPositionAnimCurve(1, aCurveY)  \n    \n    warpCurve.changed()    \n    \n    #    print wrpShape.serialise()\n    \n    return                \n\n\n\n#ControlNode = nuke.toNode('ControlCurve')\nControlNode = nuke.thisNode()\n\nctrCurve = ControlNode\['curves']\n\n\n\nWarpAknob = ControlNode.knob('SplineWarp_A')\nWarpANode = nuke.toNode(WarpAknob.value())\n\nWarpBknob = ControlNode.knob('SplineWarp_B')\nWarpBNode = nuke.toNode(WarpBknob.value())   \n\nWarpCknob = ControlNode.knob('SplineWarp_C')\nWarpCNode = nuke.toNode(WarpCknob.value())  \n    \n\n    \nCamAName = ControlNode.knob('CamA_name').value()\nCamANode = nuke.toNode(CamAName)\n    \n    \nCamBName = ControlNode.knob('CamB_name').value()\nCamBNode = nuke.toNode(CamBName)\n\nCamCName = ControlNode.knob('CamC_name').value()\nCamCNode = nuke.toNode(CamCName)\n\n\nwrpNodeA = WarpANode\nwrpCurveA = wrpNodeA\['curves']\n\nwrpNodeB = WarpBNode\nwrpCurveB = wrpNodeB\['curves']\n\nwrpNodeC = WarpCNode\nwrpCurveC = wrpNodeC\['curves']\n\nControlCurveName = ControlNode.knob('CtrCurvesList').value()\n\n\nif ControlNode.knob('InfluenceArea').value() == 'AB':\n    SetFormulaForWarp ( 'Bezier1',  'A', ControlNode)\n    SetFormulaForWarp ( 'Bezier1',  'B', ControlNode)\n    #print 'AB'\n    \nelif ControlNode.knob('InfluenceArea').value() == 'BC':\n    SetFormulaForWarp ( 'Bezier2',  'B', ControlNode)\n    SetFormulaForWarp ( 'Bezier2',  'C', ControlNode)\n    #print 'BC'" +STARTLINE}
+ addUserKnob {22 CreateNewWarp l "Create New Warp Curves" t "This function NOT IMPLEMENTED in this release. It will be released soon  - you can contact  me for new update nukementor@gmail.com" -STARTLINE T "import nuke\nimport nuke.splinewarp as sw\n\n\ndef SetFormulaForWarp (PrefixName, CtrlNode):\n    pTime =0\n\n    BaseCurveName = CtrlNode.knob('CtrCurvesList').value()\n\n    Warpknob = CtrlNode.knob('SplineWarp_' + PrefixName)\n    wrpNode = nuke.toNode(Warpknob.value())    \n    warpCurve = wrpNode\['curves']    \n    wrpRoot = warpCurve.rootLayer\n\n\n    ctrCurve = CtrlNode\['curves']\n    ctrRoot = ctrCurve.rootLayer\n\n    shape = ctrRoot\[0]\n    for sh in ctrRoot:\n        if sh.name == BaseCurveName:\n            shape = sh\n\n    wrpShape = wrpRoot\[0]\n    for wh in ctrRoot:\n        if wh.name == 'Bezier2':\n            wrpShape = wh    \n\n    mainXStr = '(0.5 - tan(radians((0.5 - ControlCurve.curves.%s.curve_points.%s.main.x/ControlCurve.LatLong_w) * 360 - ControlCurve.rotate_%s.y)) * ControlCurve.focus_A/ControlCurve.haperture_A) * ControlCurve.pic_w'  \n    mainYStr = '(0.5 - tan(radians(ControlCurve.rotate_%s.x - ControlCurve.curves.%s.curve_points.%s.main.y * 180/ControlCurve.LatLong_h - 90)) * ControlCurve.focus_A/ControlCurve.vaperture_A) * ControlCurve.pic_h'  \n    leftXStr = 'ControlCurve.curves.%s.curve_points.%s.left.x * ControlCurve.TanS'\n    leftYStr = 'ControlCurve.curves.%s.curve_points.%s.left.y * ControlCurve.TanS'\n    rightXStr = 'ControlCurve.curves.%s.curve_points.%s.right.x * ControlCurve.TanS'\n    rightYStr = 'ControlCurve.curves.%s.curve_points.%s.right.y * ControlCurve.TanS'\n\n    pt_type = 0 \n    ptcount = 0\n\n\n    for ind,points in enumerate(warpCurve.toElement(BaseCurveName + '/' + BaseCurveName + '_Dest')):        \n        aCurveX = points.getPositionAnimCurve(0)\n        aCurveY = points.getPositionAnimCurve(1)\n        #print ind\n\n        # expression for left tangent   \n        if pt_type == 0:\n            aCurveX.expressionString = leftXStr %(BaseCurveName,str(ptcount))\n            aCurveY.expressionString = leftYStr %(BaseCurveName,str(ptcount))\n            aCurveX.useExpression = True\n            aCurveY.useExpression = True  \n            pt_type += 1\n\n        # expression for main point  \n        elif pt_type == 1:\n            aCurveX.expressionString = mainXStr %(BaseCurveName,str(ptcount),PrefixName)\n            aCurveY.expressionString = mainYStr %(PrefixName, BaseCurveName,str(ptcount))\n            aCurveX.useExpression = True\n            aCurveY.useExpression = True   \n            pt_type += 1  \n\n        # expression for right tangent    \n        elif pt_type == 2:\n            aCurveX.expressionString = rightXStr %(BaseCurveName,str(ptcount))\n            aCurveY.expressionString = rightYStr %(BaseCurveName,str(ptcount))\n            aCurveX.useExpression = True\n            aCurveY.useExpression = True   \n            pt_type = 0   \n            ptcount += 1\n\n        points.setPositionAnimCurve(0, aCurveX)  \n        points.setPositionAnimCurve(1, aCurveY)  \n\n    warpCurve.changed()    \n\n    #    print wrpShape.serialise()\n\n    return   \n\n\ndef NewWarpCurveSet (PrefixName, CtrlNode):\n    pTime =0\n    ControlCurveName = CtrlNode.knob('CtrCurvesList').value()\n\n    ctrCurve = CtrlNode\['curves']\n    ctrRoot = ctrCurve.rootLayer\n\n    shape = ctrRoot\[0]\n    for sh in ctrRoot:\n        if sh.name == ControlCurveName:\n            shape = sh\n\n\n    Warpknob = CtrlNode.knob('SplineWarp_' + PrefixName)\n    wrpNode = nuke.toNode(Warpknob.value())    \n    warpCurve = wrpNode\['curves']    \n    wrpRoot = warpCurve.rootLayer\n\n    wrpLayer = nuke.splinewarp.Layer(warpCurve)\n    wrpLayer.name = ControlCurveName\n    wrpRoot.append(wrpLayer)\n    wrpShape = nuke.splinewarp.Shape(warpCurve, type=\"bezier\")\n    wrpShape.name = ControlCurveName + '_Dest'\n\n    srcShape = nuke.splinewarp.Shape(warpCurve, type=\"bezier\")\n    srcShape.name = ControlCurveName + '_Source'    \n\n\n    for ind,points in enumerate(shape):    \n        wrppoint = nuke.splinewarp.ShapeControlPoint(0.0, 0.0) #set point position\n        wrpShape.append(wrppoint) #add point to shape\n        srcpoint = nuke.splinewarp.ShapeControlPoint(0.0, 0.0) #set point position\n        srcShape.append(srcpoint) #add point to shape        \n\n    wrpShape.setVisible(0,True) #created shapes come with visibility off\n    wrpLayer.append(wrpShape) #add to the Layer\n    srcShape.setVisible(0,True) #created shapes come with visibility off\n    wrpLayer.append(srcShape) #add to the Layer    \n\n    warpCurve.changed()       \n\n\n    return                \n\n\n\ndef SetSourceCurve (PrefixName, CtrlNode):\n    ptime =0\n    BaseCurveName = CtrlNode.knob('CtrCurvesList').value()\n\n    Warpknob = CtrlNode.knob('SplineWarp_' + PrefixName)\n    wrpNode = nuke.toNode(Warpknob.value())    \n    warpCurve = wrpNode\['curves']    \n    wrpRoot = warpCurve.rootLayer\n\n\n    ctrCurve = CtrlNode\['curves']\n    ctrRoot = ctrCurve.rootLayer\n\n    srcShape = warpCurve.toElement(BaseCurveName + '/' + BaseCurveName + '_Source' )   \n\n    for ind,points in enumerate(warpCurve.toElement(BaseCurveName + '/' + BaseCurveName + '_Dest')):        \n        pos = points.getPosition(ptime)\n        print pos\n        srcShape\[ind].setPosition(pos)  \n        print 'result', srcShape\[ind].getPosition(ptime)\n\n    ctrCurve.changed()    \n    return                \n\n\n\n\n\n#ControlNode = nuke.toNode('ControlCurve')\nControlNode = nuke.thisNode()\n\n\n\nif ControlNode.knob('InfluenceArea').value() == 'AB':\n    NewWarpCurveSet ('A', ControlNode)\n    NewWarpCurveSet ('B', ControlNode)\n    SetFormulaForWarp ('A', ControlNode)\n    SetFormulaForWarp ('B', ControlNode) \n    SetSourceCurve ('A', ControlNode)\n    SetSourceCurve ('B', ControlNode)\n    #print 'AB'\n\nelif ControlNode.knob('InfluenceArea').value() == 'BC':\n    NewWarpCurveSet ('B', ControlNode)\n    NewWarpCurveSet ('C', ControlNode)\n    SetFormulaForWarp ('B', ControlNode)\n    SetFormulaForWarp ('C', ControlNode)  \n    SetSourceCurve ('B', ControlNode)\n    SetSourceCurve ('C', ControlNode)\n    #print 'BC'"}
+ addUserKnob {26 ""}
+ addUserKnob {7 TanS l "Tangent scale" t "Can adjust (scale) tangents of destination wasp curve for correct resultat"}
+ TanS 0.305
+ addUserKnob {26 ""}
+ addUserKnob {4 display l "display cameras" M {off wireframe "" ""}}
+ addUserKnob {22 connect_data l "Auto connect data" T "#ControlNode = nuke.toNode('ControlCurve')\nControlNode = nuke.thisNode()\n\ntry:\n\n    WarpAknob = ControlNode.knob('SplineWarp_A')\n    WarpBknob = ControlNode.knob('SplineWarp_B')\n    WarpCknob = ControlNode.knob('SplineWarp_C')\n    \n    \n    WarpANode = nuke.toNode(WarpAknob.value())\n    \n    CamAName = ControlNode.knob('CamA_name').value()\n    CamANode = nuke.toNode(CamAName)\n    \n    \n    CamBName = ControlNode.knob('CamB_name').value()\n    CamBNode = nuke.toNode(CamBName)\n    \n    CamCName = ControlNode.knob('CamC_name').value()\n    CamCNode = nuke.toNode(CamCName)    \n    \n    \n    ControlNode\['haperture_A'].setValue(CamANode\['haperture'].getValue())\n    ControlNode\['vaperture_A'].setValue(CamANode\['vaperture'].getValue())\n    ControlNode\['focus_A'].setValue(CamANode\['focal'].getValue())\n    \n    ControlNode\['translate_A'].setExpression( CamAName +\".translate.x\", 0)\n    ControlNode\['translate_A'].setExpression( CamAName +\".translate.y\", 1)\n    ControlNode\['translate_A'].setExpression( CamAName +\".translate.z\", 2)\n    ControlNode\['rotate_A'].setExpression( CamAName +\".rotate.x\", 0)\n    ControlNode\['rotate_A'].setExpression( CamAName +\".rotate.y\", 1)\n    ControlNode\['rotate_A'].setExpression( CamAName +\".rotate.z\", 2)\n    \n    \n    ControlNode\['haperture_B'].setValue(CamBNode\['haperture'].getValue())\n    ControlNode\['vaperture_B'].setValue(CamBNode\['vaperture'].getValue())\n    ControlNode\['focus_B'].setValue(CamBNode\['focal'].getValue())\n    \n    ControlNode\['translate_B'].setExpression( CamBName +\".translate.x\", 0)\n    ControlNode\['translate_B'].setExpression( CamBName +\".translate.y\", 1)\n    ControlNode\['translate_B'].setExpression( CamBName +\".translate.z\", 2)\n    ControlNode\['rotate_B'].setExpression( CamBName +\".rotate.x\", 0)\n    ControlNode\['rotate_B'].setExpression( CamBName +\".rotate.y\", 1)\n    ControlNode\['rotate_B'].setExpression( CamBName +\".rotate.z\", 2)\n    \n    \n    ControlNode\['translate_C'].setExpression( CamCName +\".translate.x\", 0)\n    ControlNode\['translate_C'].setExpression( CamCName +\".translate.y\", 1)\n    ControlNode\['translate_C'].setExpression( CamCName +\".translate.z\", 2)\n    ControlNode\['rotate_C'].setExpression( CamCName +\".rotate.x\", 0)\n    ControlNode\['rotate_C'].setExpression( CamCName +\".rotate.y\", 1)\n    ControlNode\['rotate_C'].setExpression( CamCName +\".rotate.z\", 2)    \n    \n    \n    ControlNode\['pic_w'].setValue(WarpANode.width())\n    ControlNode\['pic_h'].setValue(WarpANode.height())\n    \n    ControlNode\['LatLong_w'].setValue(ControlNode.width())\n    ControlNode\['LatLong_h'].setValue(ControlNode.height())\n    \nexcept:\n    nuke.message('Check Cameras and SplineWarps names')" +STARTLINE}
+ addUserKnob {7 haperture_A l "horizontal aperture" R 5 50}
+ haperture_A 4.54
+ addUserKnob {7 vaperture_A l "vertical aperture" R 5 50}
+ vaperture_A 3.42
+ addUserKnob {7 focus_A l focus R 1 100}
+ focus_A 4.28
+ addUserKnob {26 CameraA l "Camera A "}
+ addUserKnob {13 translate_A l translate}
+ translate_A {{Camera1.translate.x} {Camera1.translate.y} {Camera1.translate.z}}
+ addUserKnob {13 rotate_A l rotare}
+ rotate_A {{Camera1.rotate.x} {Camera1.rotate.y} {Camera1.rotate.z}}
+ addUserKnob {26 CameraB l "Camera B"}
+ addUserKnob {7 haperture_B l INVISIBLE +INVISIBLE R 5 50}
+ haperture_B 4.54
+ addUserKnob {7 vaperture_B l INVISIBLE +INVISIBLE R 5 50}
+ vaperture_B 3.42
+ addUserKnob {7 focus_B l INVISIBLE +INVISIBLE R 1 100}
+ focus_B 4.28
+ addUserKnob {13 translate_B l translate}
+ translate_B {{Camera2.translate.x} {Camera2.translate.y} {Camera2.translate.z}}
+ addUserKnob {13 rotate_B l rotate}
+ rotate_B {{Camera2.rotate.x} {Camera2.rotate.y} {Camera2.rotate.z}}
+ addUserKnob {26 CameraC l "Camera C"}
+ addUserKnob {13 translate_C l translate}
+ translate_C {{Camera3.translate.x} {Camera3.translate.y} {Camera3.translate.z}}
+ addUserKnob {13 rotate_C l rotate}
+ rotate_C {{Camera3.rotate.x} {Camera3.rotate.y} {Camera3.rotate.z}}
+ addUserKnob {26 pic l "Picture size"}
+ addUserKnob {3 pic_w l width}
+ pic_w 3264
+ addUserKnob {3 pic_h l height -STARTLINE}
+ pic_h 2448
+ addUserKnob {26 LatLong l "LatLong picture size"}
+ addUserKnob {3 LatLong_w l width}
+ LatLong_w 4096
+ addUserKnob {3 LatLong_h l height -STARTLINE}
+ LatLong_h 2048
+ addUserKnob {26 ""}
+}
+Write {
+ file /Users/dkorolov/Dropbox/Nuke/Stich_Brussels/test03.jpg
+ file_type jpeg
+ checkHashOnRead false
+ version 4
+ name Write1
+ xpos 817
+ ypos 39
+ addUserKnob {20 caravr l CaraVR}
+ addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
+ addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
+}

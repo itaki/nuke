@@ -1,0 +1,1480 @@
+#! C:/Program Files/Nuke13.0v1/nuke-13.0.1.dll -nx
+version 13.0 v1
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/OneDrive/VFX/PARTICLES/ParticleNodes.nk
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ monitorOutLUT rec709
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x44284c01
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 505
+ ypos -262
+ bookmark false
+ bdwidth 319
+ bdheight 299
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode2
+ tile_color 0x4c382b01
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 950
+ ypos -260
+ bookmark false
+ bdwidth 465
+ bdheight 592
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0x42683d01
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 1544
+ ypos -264
+ bookmark false
+ bdwidth 353
+ bdheight 234
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode4
+ tile_color 0x3a358901
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 1551
+ ypos 101
+ bookmark false
+ bdwidth 508
+ bdheight 231
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode5
+ tile_color 0x3a476d01
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 2169
+ ypos -285
+ bookmark false
+ bdwidth 611
+ bdheight 455
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode6
+ tile_color 0x3d424701
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 2174
+ ypos 266
+ bookmark false
+ bdwidth 605
+ bdheight 285
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode7
+ tile_color 0x38196d01
+ note_font "Helvetica bold"
+ note_font_size 100
+ xpos 2925
+ ypos -305
+ bookmark false
+ bdwidth 550
+ bdheight 586
+}
+ParticleSpawn {
+ inputs 0
+ name ParticleSpawn1
+ xpos 679
+ ypos -177
+}
+ParticleEmitter {
+ inputs 0
+ name ParticleEmitter1
+ xpos 515
+ ypos -168
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0xffffffff
+ label "<b>Emitters                ."
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 505
+ ypos -332
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ label "<right>Particle Emitter for creating particles, \nwith are without geometry input the normal \nalong which particles travel is the y-axis."
+ note_font_size 12
+ xpos 509
+ ypos -129
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0x3d3f8e00
+ label "<right>Particle Spawn emits particles from existing particles.\n(Requires a particle emitter node )"
+ note_font_size 12
+ xpos 504
+ ypos -56
+}
+ParticleWind {
+ inputs 0
+ name ParticleWind1
+ xpos 960
+ ypos -175
+}
+ParticleGravity {
+ inputs 0
+ name ParticleGravity1
+ xpos 1070
+ ypos -175
+}
+ParticleTurbulence {
+ inputs 0
+ name ParticleTurbulence1
+ xpos 1180
+ ypos -175
+}
+ParticleDrag {
+ inputs 0
+ name ParticleDrag1
+ xpos 1290
+ ypos -175
+}
+ParticleVortex {
+ inputs 0
+ name ParticleVortex1
+ xpos 1023
+ ypos -89
+}
+ParticleDirectionalForce {
+ inputs 0
+ name ParticleDirectionalForce1
+ xpos 1133
+ ypos -89
+}
+ParticlePointForce {
+ inputs 0
+ name ParticlePointForce1
+ xpos 1243
+ ypos -89
+}
+StickyNote {
+ inputs 0
+ name StickyNote4
+ tile_color 0xffffffff
+ label "<b>Particle Force                ."
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 950
+ ypos -330
+}
+StickyNote {
+ inputs 0
+ name StickyNote6
+ tile_color 0x335959ff
+ label "<right>Particle Gravity: Applies gravity to the particles. \nworks in any or all of the x, y and z directions"
+ note_font_size 12
+ xpos 978
+ ypos 14
+}
+StickyNote {
+ inputs 0
+ name StickyNote5
+ label "<right>Particle Wind: Simulates a wind blowing on the particles, \nThe bigger and longer the arrow, the stronger the wind effect."
+ note_font_size 12
+ xpos 976
+ ypos -38
+}
+StickyNote {
+ inputs 0
+ name StickyNote7
+ tile_color 0x934b4bff
+ label "<right>Particle Drag: Alter velocity over time. \nparticles will start off fast and gradually slow down"
+ note_font_size 12
+ xpos 981
+ ypos 64
+}
+StickyNote {
+ inputs 0
+ name StickyNote8
+ tile_color 0x3f633800
+ label "<right>Particle Turbulence: applies noise to the particle movement, \ndispersing the particles in the x, y and/or z directions."
+ note_font_size 12
+ xpos 979
+ ypos 113
+}
+StickyNote {
+ inputs 0
+ name StickyNote10
+ tile_color 0xffffffff
+ label "<right>Particle Directional Force: Similar to gravity add force to a particular direction"
+ note_font_size 12
+ xpos 976
+ ypos 221
+}
+StickyNote {
+ inputs 0
+ name StickyNote9
+ tile_color 0x512a50ff
+ label "<right>Particle Vortex: creates a circular force to the particles \nand attracts them to an imaginary line, thus creating a whirlpool of particles."
+ note_font_size 12
+ xpos 976
+ ypos 164
+}
+StickyNote {
+ inputs 0
+ name StickyNote11
+ tile_color 0x3f633800
+ label "<right>Particle Point force: Attract or repel particles to or from a certain point"
+ note_font_size 12
+ xpos 978
+ ypos 263
+}
+StickyNote {
+ inputs 0
+ name StickyNote12
+ tile_color 0xffffffff
+ label "<b>Collision                ."
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 1544
+ ypos -334
+}
+StickyNote {
+ inputs 0
+ name StickyNote13
+ label "Bounce off a 3D shape instead of travelling through it."
+ note_font_size 12
+ xpos 1583
+ ypos -126
+}
+ParticleSpeedLimit {
+ inputs 0
+ name ParticleSpeedLimit1
+ xpos 1633
+ ypos 165
+}
+StickyNote {
+ inputs 0
+ name StickyNote14
+ tile_color 0xffffffff
+ label "<b>Force Orientation                ."
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 1551
+ ypos 33
+}
+ParticleMotionAlign {
+ inputs 0
+ name ParticleMotionAlign1
+ xpos 1822
+ ypos 169
+}
+StickyNote {
+ inputs 0
+ name StickyNote15
+ label "<right>Particle Speed Limit: Restricts particles to a specified minimum and maximum speed."
+ note_font_size 12
+ xpos 1561
+ ypos 221
+}
+StickyNote {
+ inputs 0
+ name StickyNote16
+ label "<right>Particle Motion Align: Realign all the particles along their direction of motion."
+ note_font_size 12
+ xpos 1559
+ ypos 276
+}
+ParticleSettings {
+ inputs 0
+ name ParticleSettings1
+ xpos 2336
+ ypos -216
+}
+ParticleExpression {
+ inputs 0
+ name ParticleExpression1
+ xpos 2485
+ ypos -218
+}
+ParticleLookAt {
+ inputs 0
+ name ParticleLookAt1
+ xpos 2343
+ ypos -129
+}
+ParticleCurve {
+ inputs 0
+ name ParticleCurve1
+ xpos 2498
+ ypos -130
+}
+StickyNote {
+ inputs 0
+ name StickyNote18
+ label "<right>Particle Settings: adjust how many steps of particle simulation take place per animation frame."
+ note_font_size 12
+ xpos 2183
+ ypos -78
+}
+StickyNote {
+ inputs 0
+ name StickyNote19
+ tile_color 0x3f633800
+ label "<right>Particle Expression: Using expressions gives you a vast variety of ways of adjusting\nthe way your particles behave."
+ note_font_size 12
+ xpos 2178
+ ypos -35
+}
+StickyNote {
+ inputs 0
+ name StickyNote20
+ tile_color 0x3d3f8e00
+ label "<right>Particle Curve: Adjust the curve of each particles or mass, size, \nalpha channel so that each particle fades to invisibility toward the end of its lifetime."
+ note_font_size 12
+ xpos 2181
+ ypos 33
+}
+StickyNote {
+ inputs 0
+ name StickyNote21
+ tile_color 0x335959ff
+ label "<right>Particle Look at: Determine a 3D point at which all the particles within a certain region are looking toward."
+ note_font_size 12
+ xpos 2177
+ ypos 97
+}
+ParticleToGeo {
+ inputs 0
+ name ParticleToGeo1
+ xpos 2290
+ ypos 329
+}
+ParticleCache {
+ inputs 0
+ name ParticleCache1
+ xpos 2400
+ ypos 333
+}
+ParticleMerge {
+ inputs 0
+ name ParticleMerge1
+ xpos 2510
+ ypos 333
+}
+StickyNote {
+ inputs 0
+ name StickyNote22
+ tile_color 0xffffffff
+ label "<b>Utilities                ."
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 2174
+ ypos 196
+}
+StickyNote {
+ inputs 0
+ name StickyNote24
+ tile_color 0x969600ff
+ label "<right>Particle Cache: Stores the geometry simulation for a particle system to file."
+ note_font_size 12
+ xpos 2212
+ ypos 446
+}
+StickyNote {
+ inputs 0
+ name StickyNote23
+ label "<right>Particle To Geo: Duplicates that geometry at each particle."
+ note_font_size 12
+ xpos 2215
+ ypos 392
+}
+StickyNote {
+ inputs 0
+ name StickyNote25
+ tile_color 0x3d3f8e00
+ label "<right>Particle Merge: Combine multiple particle emitters  node output  into one stream."
+ note_font_size 12
+ xpos 2210
+ ypos 502
+}
+ParticleInfo {
+ inputs 0
+ name ParticleInfo1
+ xpos 2627
+ ypos 332
+}
+ParticleBounce {
+ inputs 0
+ name ParticleBounce1
+ xpos 1686
+ ypos -188
+}
+ParticleBlinkScript {
+ inputs 0
+ kernelSource "kernel ParticleExampleKernel : ImageComputationKernel<ePixelWise>\n\{\n  // Declare the particle attributes as Images:\n  Image<eReadWrite> p_velocity;\n\n  // Declare our parameter storage\n  param:\n    float _amount;\n    float _dt;\n\n  // Define the parameters to the outside world\n  void define() \{\n    defineParam(_amount, \"paAmount\", 0.0f);\n    defineParam(_dt, \"_dt\", 1.0f);\n  \}\n\n  // Process the particle attributes\n  void process() \{\n    p_velocity() *= (1.0f-_amount*_dt);\n  \}\n\};\n"
+ name ParticleBlinkScript1
+ xpos 3139
+ ypos -220
+}
+Group {
+ inputs 0
+ name ParticleColorByAge1
+ xpos 2940
+ ypos -123
+ addUserKnob {20 ColorByAge}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 color1 T ParticleBlinkScript1.paColor1}
+ addUserKnob {41 color2 T ParticleBlinkScript1.paColor2}
+ addUserKnob {41 color3 T ParticleBlinkScript1.paColor3}
+ addUserKnob {41 color4 T ParticleBlinkScript1.paColor4}
+ addUserKnob {20 Conditions}
+ addUserKnob {41 probability T ParticleBlinkScript1.probability}
+ addUserKnob {41 min_age l "min age" T ParticleBlinkScript1.min_age}
+ addUserKnob {41 max_age l "max age" T ParticleBlinkScript1.max_age}
+ addUserKnob {41 seed l "random seed" T ParticleBlinkScript1.seed}
+ addUserKnob {41 channels T ParticleBlinkScript1.channels}
+ addUserKnob {20 Region}
+ addUserKnob {41 region T ParticleBlinkScript1.region}
+ addUserKnob {41 region_invert l "invert region" -STARTLINE T ParticleBlinkScript1.region_invert}
+ addUserKnob {41 file_menu l @FolderIcon T ParticleBlinkScript1.file_menu}
+ addUserKnob {41 snap_menu l @AxisIcon -STARTLINE T ParticleBlinkScript1.snap_menu}
+ addUserKnob {41 xform_order l "transform order" T ParticleBlinkScript1.xform_order}
+ addUserKnob {41 rot_order l "rotation order" T ParticleBlinkScript1.rot_order}
+ addUserKnob {41 translate T ParticleBlinkScript1.translate}
+ addUserKnob {41 rotate T ParticleBlinkScript1.rotate}
+ addUserKnob {41 scaling l scale T ParticleBlinkScript1.scaling}
+ addUserKnob {41 uniform_scale l "uniform scale" T ParticleBlinkScript1.uniform_scale}
+ addUserKnob {41 skew T ParticleBlinkScript1.skew}
+ addUserKnob {41 pivot T ParticleBlinkScript1.pivot}
+}
+ Input {
+  inputs 0
+  name particles
+  xpos -6
+  ypos -119
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleColorKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead> p_conditions;\n  Image<eRead> p_startTime;\n  Image<eRead> p_life;\n  Image<eReadWrite> p_color;\n\n  param:\n    float4 _color1;\n    float4 _color2;\n    float4 _color3;\n    float4 _color4;\n    float _systemTime;\n\n  local:\n    float4 _colors\[6];\n\n  void define() \{\n    defineParam(_color1, \"paColor1\", float4(1.0f, 0.0f, 0.0f, 1.0f));\n    defineParam(_color2, \"paColor2\", float4(1.0f, 0.0f, 0.0f, 1.0f));\n    defineParam(_color3, \"paColor3\", float4(1.0f, 0.0f, 0.0f, 1.0f));\n    defineParam(_color4, \"paColor4\", float4(1.0f, 0.0f, 0.0f, 1.0f));\n    defineParam(_systemTime, \"_systemTime\", 0.0f);\n  \}\n\n  void init() \{\n    _colors\[0] = _color1;\n    _colors\[1] = _color1;\n    _colors\[2] = _color2;\n    _colors\[3] = _color3;\n    _colors\[4] = _color4;\n    _colors\[5] = _color4;\n  \}\n\n  // Catmull-Rom spline\n  float4 spline(float x, int numKnots)\n  \{\n    int numSpans = numKnots - 1;\n\n    float t = max(0.0f, min(1.0f, x)) * (numSpans-2);\n    int span = int(floor(t));\n    t -= span;\n\n    float4 k0 = _colors\[span];\n    float4 k1 = _colors\[span+1];\n    float4 k2 = _colors\[min(numSpans, span+2)];\n    float4 k3 = _colors\[min(numSpans, span+3)];\n\n    return 0.5f*(2.0f*k1\n      + (-k0 + k2)*t\n      + (2.0f*k0 - 5.0f*k1 + 4.0f*k2 - k3)*t*t\n      + (-k0 + 3.0f*k1 - 3.0f*k2 + k3)*t*t*t);\n  \}\n\n  void process() \{\n    if (  p_conditions() ) \{\n      float t = (_systemTime-p_startTime())/p_life();\n      p_color() = spline(t, 6);\n    \}\n  \}\n\};\n"
+  encodedSource "\n"
+  name ParticleBlinkScript1
+  xpos -6
+  ypos -79
+  addUserKnob {20 User}
+  addUserKnob {19 paColor1 l color1}
+  paColor1 {1 1 1 1}
+  addUserKnob {6 paColor1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 paColor2 l color2}
+  paColor2 {1 0 0 1}
+  addUserKnob {6 paColor2_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 paColor3 l color3}
+  paColor3 {0 1 0 1}
+  addUserKnob {6 paColor3_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 paColor4 l color4}
+  paColor4 {0 0 1 1}
+  addUserKnob {6 paColor4_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Output {
+  name Output1
+  xpos -6
+  ypos 21
+ }
+end_group
+Group {
+ inputs 0
+ name ParticleKill1
+ xpos 3093
+ ypos -120
+ addUserKnob {20 Kill}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {20 Conditions}
+ addUserKnob {41 probability T ParticleBlinkScript1.probability}
+ addUserKnob {41 min_age l "min age" T ParticleBlinkScript1.min_age}
+ addUserKnob {41 max_age l "max age" T ParticleBlinkScript1.max_age}
+ addUserKnob {41 seed l "random seed" T ParticleBlinkScript1.seed}
+ addUserKnob {41 channels T ParticleBlinkScript1.channels}
+ addUserKnob {20 Region}
+ addUserKnob {41 region T ParticleBlinkScript1.region}
+ addUserKnob {41 region_invert l "invert region" -STARTLINE T ParticleBlinkScript1.region_invert}
+ addUserKnob {41 file_menu l @FolderIcon T ParticleBlinkScript1.file_menu}
+ addUserKnob {41 snap_menu l @AxisIcon -STARTLINE T ParticleBlinkScript1.snap_menu}
+ addUserKnob {41 xform_order l "transform order" T ParticleBlinkScript1.xform_order}
+ addUserKnob {41 rot_order l "rotation order" T ParticleBlinkScript1.rot_order}
+ addUserKnob {41 translate T ParticleBlinkScript1.translate}
+ addUserKnob {41 rotate T ParticleBlinkScript1.rotate}
+ addUserKnob {41 scaling l scale T ParticleBlinkScript1.scaling}
+ addUserKnob {41 uniform_scale l "uniform scale" T ParticleBlinkScript1.uniform_scale}
+ addUserKnob {41 skew T ParticleBlinkScript1.skew}
+ addUserKnob {41 pivot T ParticleBlinkScript1.pivot}
+}
+ Input {
+  inputs 0
+  name particles
+  xpos 1000
+  ypos -119
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleKillKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead> p_conditions;\n  Image<eReadWrite> p_life;\n\n  void process() \{\n    if ( p_conditions() ) \{\n      p_life() = 0.0f;\n    \}\n  \}\n\};\n"
+  encodedSource "\n"
+  region box
+  translate {0 0.5 0}
+  name ParticleBlinkScript1
+  xpos 1000
+  ypos -79
+ }
+ Output {
+  name Output1
+  xpos 1000
+  ypos 21
+ }
+end_group
+Group {
+ inputs 0
+ name ParticleProjectDisplace1
+ xpos 3231
+ ypos -114
+ addUserKnob {20 ProjectDisplace}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 geoTranslate l translate T Geometry.translate}
+ addUserKnob {41 geoRotate l rotate T Geometry.rotate}
+ addUserKnob {41 geoScaling l scale T Geometry.scaling}
+ addUserKnob {41 geoUniformScale l "uniform scale" T Geometry.uniform_scale}
+ addUserKnob {41 amount l displacement T ParticleBlinkScript1.paAmount}
+ addUserKnob {6 showGeometry l "Show Geometry" +STARTLINE}
+ showGeometry true
+}
+ Input {
+  inputs 0
+  name image
+  xpos 515
+  ypos -18
+  number 1
+ }
+set N490b400 [stack 0]
+ Card2 {
+  display {{parent.showGeometry}}
+  render_mode off
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Geometry
+  xpos 515
+  ypos 101
+ }
+push $N490b400
+ Input {
+  inputs 0
+  name particles
+  xpos 660
+  ypos -19
+ }
+ ParticleBlinkScript {
+  inputs 2
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleDisplaceProjectKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead,eAccessRandom,eEdgeClamped> image_image1;\n  Image<eReadWrite> p_initialPosition;\n  Image<eReadWrite> p_position;\n\n  param:\n    float3 _translate;  // Origin of the cylinder\n    float3 _rotate;     // Rotation of the cylinder\n    float3 _scale;      // Scale of the cylinder\n    float3 _amount;\n    float _dt;\n\n  local:\n    float2 _imageSize;\n    float4x4 _matrix;\n    float4x4 _imatrix;\n    float3 _xAxis;\n    float3 _yAxis;\n    float3 _zAxis;\n\n  void define() \{\n    defineParam(_translate, \"paTranslate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_rotate, \"paRotate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_scale, \"paScale\", float3(1.0f, 1.0f, 1.0f));\n    defineParam(_amount, \"paAmount\", float3(0.0f, 0.0f, 1.0f));\n    defineParam(_dt, \"_dt\", 1.0f);\n  \}\n\n  float toRadians(float a) \{\n    return a*3.141592653587f/180.0f;\n  \}\n\n  void init() \{\n    _matrix.setIdentity();\n    _matrix.scale(float4(_scale.x, _scale.y, _scale.z, 1.0f));\n    _matrix.rotateY(toRadians(_rotate.y));\n    _matrix.rotateX(toRadians(_rotate.x));\n    _matrix.rotateZ(toRadians(_rotate.z));\n    _matrix.translate(float4(_translate.x, _translate.y, _translate.z, 1.0f));\n    _imatrix = _matrix.invert();\n    _imageSize = float2(image_image1.bounds.width(), image_image1.bounds.height());\n    _xAxis = vtransform(float3(1, 0, 0));\n    _yAxis = vtransform(float3(0, 1, 0));\n    _zAxis = vtransform(float3(0, 0, 1));\n  \}\n\n  float3 vtransform(float3 p ) \{\n    float4 q = _matrix*float4(p.x, p.y, p.z, 0.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 itransform(float3 p ) \{\n    float4 q = _imatrix*float4(p.x, p.y, p.z, 1.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  void process() \{\n    float3 uv = itransform(p_position());\n    float2 st = float2(uv.x+0.5f, uv.y+0.5f)*_imageSize;\n    float4 c = bilinear(image_image1, st.x, st.y);\n    float3 displacement = _amount*float3(c.x, c.y, c.z);\n    p_position() =  p_initialPosition()\n      +displacement.x*_xAxis\n      +displacement.y*_yAxis\n      +displacement.z*_zAxis;\n  \}\n\};\n"
+  encodedSource "\n"
+  rotate {-37.96066827 0 0}
+  name ParticleBlinkScript1
+  xpos 660
+  ypos 43
+  addUserKnob {20 User l Project}
+  addUserKnob {13 paTranslate l translate}
+  paTranslate {{parent.Geometry.translate.x x29 0.9940000176} {parent.Geometry.translate.y x29 -0.5379999876} {parent.Geometry.translate.z x29 -0.1199999973}}
+  addUserKnob {13 paRotate l rotate}
+  paRotate {{parent.Geometry.rotate.x} {parent.Geometry.rotate.y} {parent.Geometry.rotate.z}}
+  addUserKnob {13 paScale l scale}
+  paScale {{parent.Geometry.scaling.x} {parent.Geometry.scaling.y} {parent.Geometry.scaling.z}}
+  addUserKnob {13 paAmount l displacement}
+  paAmount {0 0 1}
+ }
+set N490a800 [stack 0]
+ MergeGeo {
+  inputs 2
+  name MergeGeo1
+  selected true
+  xpos 515
+  ypos 125
+ }
+push $N490a800
+ Output {
+  name Output1
+  xpos 660
+  ypos 145
+ }
+end_group
+Group {
+ inputs 0
+ name ParticleProjectImage1
+ xpos 3374
+ ypos -114
+ addUserKnob {20 ProjectImage}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 geoTranslate l translate T Geometry.translate}
+ addUserKnob {41 geoRotate l rotate T Geometry.rotate}
+ addUserKnob {41 geoScaling l scale T Geometry.scaling}
+ addUserKnob {41 geoUniformScale l "uniform scale" T Geometry.uniform_scale}
+ addUserKnob {6 showGeometry l "Show Geometry" +STARTLINE}
+ showGeometry true
+}
+ Input {
+  inputs 0
+  name image
+  xpos 515
+  ypos -18
+  number 1
+ }
+set N4908400 [stack 0]
+ Card2 {
+  display {{parent.showGeometry}}
+  render_mode off
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Geometry
+  xpos 515
+  ypos 101
+ }
+push $N4908400
+ Input {
+  inputs 0
+  name particles
+  xpos 660
+  ypos -19
+ }
+ ParticleBlinkScript {
+  inputs 2
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleImageProjectKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead,eAccessRandom,eEdgeClamped> image_image1;\n  Image<eReadWrite> p_position;\n  Image<eReadWrite> p_color;\n\n  param:\n    float3 _translate;  // Origin of the cylinder\n    float3 _rotate;     // Rotation of the cylinder\n    float3 _scale;      // Scale of the cylinder\n    float _amount;\n    float _dt;\n\n  local:\n    float2 _imageSize;\n    float4x4 _matrix;\n    float4x4 _imatrix;\n\n  void define() \{\n    defineParam(_translate, \"paTranslate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_rotate, \"paRotate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_scale, \"paScale\", float3(1.0f, 1.0f, 1.0f));\n    defineParam(_dt, \"_dt\", 1.0f);\n  \}\n\n  float toRadians(float a) \{\n    return a*3.141592653587f/180.0f;\n  \}\n\n  void init() \{\n    _matrix.setIdentity();\n    _matrix.scale(float4(_scale.x, _scale.y, _scale.z, 1.0f));\n    _matrix.rotateY(toRadians(_rotate.y));\n    _matrix.rotateX(toRadians(_rotate.x));\n    _matrix.rotateZ(toRadians(_rotate.z));\n    _matrix.translate(float4(_translate.x, _translate.y, _translate.z, 1.0f));\n    _imatrix = _matrix.invert();\n    _imageSize = float2(image_image1.bounds.width(), image_image1.bounds.height());\n  \}\n\n  float3 itransform(float3 p ) \{\n    float4 q = _imatrix*float4(p.x, p.y, p.z, 1.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  void process() \{\n    float3 p = itransform(p_position());\n    float2 uv = float2(p.x, p.y)+float2(0.5f);\n    float2 st = uv*_imageSize;\n    float4 c = bilinear(image_image1, st.x, st.y);\n    p_color() = float4(c.x, c.y, c.z, 1.0f);\n  \}\n\};\n"
+  encodedSource "\n"
+  rotate {-37.96066827 0 0}
+  name ParticleBlinkScript1
+  xpos 660
+  ypos 43
+  addUserKnob {20 User l Project}
+  addUserKnob {13 paTranslate l translate}
+  paTranslate {{parent.Geometry.translate.x} {parent.Geometry.translate.y} {parent.Geometry.translate.z}}
+  addUserKnob {13 paRotate l rotate}
+  paRotate {{parent.Geometry.rotate.x} {parent.Geometry.rotate.y} {parent.Geometry.rotate.z}}
+  addUserKnob {13 paScale l scale}
+  paScale {{parent.Geometry.scaling.x} {parent.Geometry.scaling.y} {parent.Geometry.scaling.z}}
+ }
+set N4873400 [stack 0]
+ MergeGeo {
+  inputs 2
+  name MergeGeo1
+  xpos 515
+  ypos 125
+ }
+push $N4873400
+ Output {
+  name Output1
+  xpos 660
+  ypos 145
+ }
+end_group
+Group {
+ inputs 0
+ name ParticleGrid1
+ xpos 2941
+ ypos -26
+ addUserKnob {20 Grid}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 cube T Geometry.cube}
+ addUserKnob {41 geoTranslate l translate T Geometry.translate}
+ addUserKnob {41 geoRotate l rotate T Geometry.rotate}
+ addUserKnob {41 geoScaling l scale T Geometry.scaling}
+ addUserKnob {41 geoUniformScale l "uniform scale" T Geometry.uniform_scale}
+ addUserKnob {41 xcells l "cells x" T ParticleBlinkScript1.paXcells}
+ addUserKnob {41 ycells l y -STARTLINE T ParticleBlinkScript1.paYcells}
+ addUserKnob {41 zcells l z -STARTLINE T ParticleBlinkScript1.paZcells}
+ addUserKnob {41 strength T ParticleBlinkScript1.paStrength}
+ addUserKnob {41 first_frame l "first frame only" T ParticleBlinkScript1.paFirst_frame}
+ addUserKnob {6 showGeometry l "Show Cube" +STARTLINE}
+ showGeometry true
+}
+ Cube {
+  inputs 0
+  display {{parent.showGeometry}}
+  render_mode off
+  rows 3
+  columns 3
+  name Geometry
+  xpos 706
+  ypos 44
+ }
+ Input {
+  inputs 0
+  name particles
+  xpos 829
+  ypos 1
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleGridKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eReadWrite> p_position;\n  Image<eRead> p_startTime;\n\n  param:\n    float3 _translate;  // Origin of the cube\n    float3 _rotate;     // Rotation of the cube\n    float3 _scale;      // Scale of the cube\n    float _uniformScale;\n    float _cube\[6];\n    int _xCells;        // Number of cells in the grid\n    int _yCells;        // Number of cells in the grid\n    int _zCells;        // Number of cells in the grid\n    float _strength;\n    bool _firstFrame;\n    float _startTime;\n    float _systemTime;\n    float _dt;\n\n  local:\n    float4x4 _matrix;\n    float4x4 _imatrix;\n    float3 _origin;\n    float3 _xAxis;\n    float3 _yAxis;\n    float3 _zAxis;\n    int3 _grid;\n\n  void define() \{\n    defineParam(_translate, \"paTranslate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_rotate, \"paRotate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_scale, \"paScale\", float3(1.0f, 1.0f, 1.0f));\n    defineParam(_uniformScale, \"paUniform_scale\", 1.0f);\n    defineParam(_cube, \"paCube\");\n    defineParam(_xCells, \"paXcells\", 1);\n    defineParam(_yCells, \"paYcells\", 1);\n    defineParam(_zCells, \"paZcells\", 1);\n    defineParam(_strength, \"paStrength\", 1.0f);\n    defineParam(_firstFrame, \"paFirst_frame\", false);\n    defineParam(_startTime, \"_startTime\", 0.0f);\n    defineParam(_systemTime, \"_systemTime\", 0.0f);\n    defineParam(_dt, \"_dt\", 1.0f);\n  \}\n\n  float toRadians(float a) \{\n    return a*3.141592653587f/180.0f;\n  \}\n\n  void init() \{\n    _matrix.setIdentity();\n    _matrix.scale(float4(_uniformScale*_scale.x, _uniformScale*_scale.y, _uniformScale*_scale.z, 1.0f));\n    _matrix.rotateY(toRadians(_rotate.y));\n    _matrix.rotateX(toRadians(_rotate.x));\n    _matrix.rotateZ(toRadians(_rotate.z));\n    _matrix.translate(float4(_translate.x, _translate.y, _translate.z, 1.0f));\n    _imatrix = _matrix.invert();\n    _grid = max(int3(1), int3(_xCells, _yCells, _zCells)); // Avoid divide by zero\n    float3 cube = float3(_cube\[3]-_cube\[0], _cube\[4]-_cube\[1], _cube\[5]-_cube\[2]);\n    _xAxis = vtransform(float3(cube.x, 0, 0))/float(_grid.x);\n    _yAxis = vtransform(float3(0, cube.y, 0))/float(_grid.y);\n    _zAxis = vtransform(float3(0, 0, cube.z))/float(_grid.z);\n    _origin = transform(_translate+float3(_cube\[0], _cube\[1], _cube\[2]));\n  \}\n\n  float3 mix(float3 a, float3 b, float t ) \{\n    return a+t*(b-a);\n  \}\n\n  float3 transform(float3 p ) \{\n    float4 q = _matrix*float4(p.x, p.y, p.z, 1.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 itransform(float3 p ) \{\n    float4 q = _imatrix*float4(p.x, p.y, p.z, 1.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 vtransform(float3 p ) \{\n    float4 q = _matrix*float4(p.x, p.y, p.z, 0.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 vitransform(float3 p ) \{\n    float4 q = _imatrix*float4(p.x, p.y, p.z, 0.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  void process(int2 pos) \{\n    if ( !_firstFrame || _systemTime-p_startTime() <= _dt*1.0001f ) \{\n      int n = pos.y;\n      int3 xyz;\n      xyz.z = n / (_grid.x*_grid.y);\n      n -= xyz.z * (_grid.x*_grid.y);\n      xyz.y = n / _grid.x;\n      n -= xyz.y * _grid.x;\n      xyz.x = n;\n      float3 p = float3(xyz);\n      p_position() = mix(p_position(), _origin+p.x*_xAxis+p.y*_yAxis+p.z*_zAxis, _strength);\n    \}\n  \}\n\};\n"
+  translate {0 0.2879999876 0}
+  name ParticleBlinkScript1
+  selected true
+  xpos 829
+  ypos 41
+  addUserKnob {20 User l Grid}
+  addUserKnob {31 paCube l cube}
+  paCube {{parent.Geometry.cube.x} {parent.Geometry.cube.y} {parent.Geometry.cube.n} {parent.Geometry.cube.r} {parent.Geometry.cube.t} {parent.Geometry.cube.f}}
+  addUserKnob {13 paTranslate l translate}
+  paTranslate {{parent.Geometry.translate.x} {parent.Geometry.translate.y} {parent.Geometry.translate.z}}
+  addUserKnob {13 paRotate l rotate}
+  paRotate {{parent.Geometry.rotate.x} {parent.Geometry.rotate.y} {parent.Geometry.rotate.z}}
+  addUserKnob {13 paScale l scale}
+  paScale {{parent.Geometry.scaling.x} {parent.Geometry.scaling.y} {parent.Geometry.scaling.z}}
+  addUserKnob {7 paUniform_scale l "uniform scale"}
+  paUniform_scale {{parent.Geometry.uniform_scale}}
+  addUserKnob {3 paXcells l "cells x"}
+  paXcells 10
+  addUserKnob {3 paYcells l y -STARTLINE}
+  paYcells 10
+  addUserKnob {3 paZcells l z -STARTLINE}
+  paZcells 10
+  addUserKnob {7 paStrength l strength}
+  paStrength 1
+  addUserKnob {6 paFirst_frame l "first frame only" +STARTLINE}
+  paFirst_frame true
+ }
+set N4870c00 [stack 0]
+ MergeGeo {
+  inputs 2
+  name MergeGeo1
+  xpos 706
+  ypos 68
+ }
+push $N4870c00
+ Output {
+  name Output1
+  xpos 829
+  ypos 141
+ }
+end_group
+Group {
+ inputs 0
+ name ParticleDirection1
+ xpos 3092
+ ypos -32
+ addUserKnob {20 Direction}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 direction T ParticleBlinkScript1.paDirection}
+ addUserKnob {41 strength T ParticleBlinkScript1.paStrength}
+ addUserKnob {20 Conditions}
+ addUserKnob {41 probability T ParticleBlinkScript1.probability}
+ addUserKnob {41 min_age l "min age" T ParticleBlinkScript1.min_age}
+ addUserKnob {41 max_age l "max age" T ParticleBlinkScript1.max_age}
+ addUserKnob {41 seed l "random seed" T ParticleBlinkScript1.seed}
+ addUserKnob {41 channels T ParticleBlinkScript1.channels}
+ addUserKnob {20 Region}
+ addUserKnob {41 region T ParticleBlinkScript1.region}
+ addUserKnob {41 region_invert l "invert region" -STARTLINE T ParticleBlinkScript1.region_invert}
+ addUserKnob {41 file_menu l @FolderIcon T ParticleBlinkScript1.file_menu}
+ addUserKnob {41 snap_menu l @AxisIcon -STARTLINE T ParticleBlinkScript1.snap_menu}
+ addUserKnob {41 xform_order l "transform order" T ParticleBlinkScript1.xform_order}
+ addUserKnob {41 rot_order l "rotation order" T ParticleBlinkScript1.rot_order}
+ addUserKnob {41 translate T ParticleBlinkScript1.translate}
+ addUserKnob {41 rotate T ParticleBlinkScript1.rotate}
+ addUserKnob {41 scaling l scale T ParticleBlinkScript1.scaling}
+ addUserKnob {41 uniform_scale l "uniform scale" T ParticleBlinkScript1.uniform_scale}
+ addUserKnob {41 skew T ParticleBlinkScript1.skew}
+ addUserKnob {41 pivot T ParticleBlinkScript1.pivot}
+}
+ Input {
+  inputs 0
+  name particles
+  xpos 500
+  ypos -128
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleDirectionKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead> p_position;\n  Image<eRead> p_startTime;\n  Image<eRead> p_conditions;\n  Image<eReadWrite> p_velocity;\n\n  param:\n    float3 _direction;\n    float _strength;\n    float _dt;\n    float _endTime;\n\n  local:\n    float3 _unitDirection;\n\n  void define() \{\n    defineParam(_direction, \"paDirection\", float3(1.0f, 0.0f, 0.0f));\n    defineParam(_strength, \"paStrength\", 1.0f);\n    defineParam(_dt, \"_dt\", 1.0f);\n    defineParam(_endTime, \"_endTime\", 1.0f);\n  \}\n\n  void init() \{\n    _unitDirection = _direction;\n    float l = length(_unitDirection);\n    if ( l != 0.0f )\n      _unitDirection /= l;\n  \}\n\n  // rotate v1 towards v2 by the given factor\n  float3 rotatedVector(float3 v1, float3 v2, float factor)\n  \{\n    float3 rHat = cross(cross(v1, v2), v1);\n    float l = length(rHat);\n    if ( l != 0.0f ) \{\n      rHat /= l;\n      float theta = acos(dot(v1, v2)) * factor;\n      return cos(theta)*v1 + sin(theta)*rHat;\n    \}\n    return v1;\n  \}\n\n  void process() \{\n    if ( p_conditions() ) \{\n      float speed = length(p_velocity());\n      if ( speed != 0.0f ) \{\n        float3 unitVelocity = p_velocity()/speed;\n        float dt =  max(0.0f, min(_dt, float(_endTime - p_startTime())));\n        float t = 1.0f-pow(1.0f-_strength, dt);  // Exponential decay over dt\n        p_velocity() = rotatedVector(unitVelocity, _unitDirection, t*_strength)*speed;\n      \}\n    \}\n  \}\n\};\n"
+  encodedSource "\n"
+  region half-space
+  name ParticleBlinkScript1
+  selected true
+  xpos 500
+  ypos -88
+  addUserKnob {20 User l Force}
+  addUserKnob {13 paDirection l direction}
+  paDirection {1 0 0}
+  addUserKnob {7 paStrength l strength}
+  paStrength 0.35
+ }
+ Output {
+  name Output1
+  xpos 500
+  ypos 12
+ }
+end_group
+Group {
+ inputs 0
+ name ParticleFuse1
+ xpos 3231
+ ypos -23
+ addUserKnob {20 Fuse}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 fuseDistance l "fuse distance" T ParticleBlinkScript1.paFuseDistance}
+}
+ Input {
+  inputs 0
+  name particles
+  xpos 628
+  ypos -139
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleFuseKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead,eAccessRandom> p_position;\n  Image<eReadWrite,eAccessRandom> p_life;\n  Image<eReadWrite,eAccessRandom> p_size;\n  Image<eReadWrite,eAccessRandom> p_mass;\n  Image<eReadWrite,eAccessRandom> p_velocity;\n\n  param:\n    float _fuseDistance;\n    float _dt;\n\n  local:\n    int _numParticles;\n\n  void define() \{\n    defineParam(_fuseDistance, \"paFuseDistance\", 0.1f);\n    defineParam(_dt, \"_dt\", 1.0f);\n  \}\n\n  void init() \{\n    _numParticles = p_position.bounds.height();\n  \}\n\n  void process(int2 pos) \{\n    const float kFuseDistanceSquared = _fuseDistance * _fuseDistance;\n\n    // The kernel is called from multiple threads and there is no guarantee in which order\n    // the particles are processed. For a kernel like this which is reading and\n    // writing simultaneously, this means that the results re non-deterministic and\n    // will vary from run to run. This is a very tacky way to avoid this: We process\n    // all the particles when called for the last particle. This means that we lose the\n    // benefits of multithreading, but keep the results deterministic. A future version\n    // of ParticleBlinkScript may provide better mechanisms for dealing with this.\n    if ( pos.y == _numParticles-1 ) \{\n      for (int i = 0; i < _numParticles; ++i) \{\n        if ( p_life(0, i).x > 0 ) \{\n          float3 lposition = p_position(0, i);\n\n          for (int j = 0; j < i; ++j) \{\n            if (p_life(0, j).x == 0.0f )\n              continue;\n\n            float3 gap = p_position(0, j) - lposition;\n            float distanceSquared = dot(gap, gap);\n            if (distanceSquared < kFuseDistanceSquared) \{\n              p_life(0, i) = 0.0f;\n              float mi = p_mass(0, i);\n              float mj = p_mass(0, j);\n              float3 vi = p_velocity(0, i);\n              float3 vj = p_velocity(0, j);\n              p_size(0, j) = p_size(0, j)+p_size(0, i);\n              p_mass(0, j) = mi+mj;\n              p_velocity(0, j) = (mi*vi+mj*vj)/(mi+mj);\n            \}\n          \}\n        \}\n      \}\n    \}\n  \}\n\};\n"
+  encodedSource "\n"
+  name ParticleBlinkScript1
+  xpos 628
+  ypos -99
+  addUserKnob {20 User}
+  addUserKnob {7 paFuseDistance l "fuse distance"}
+  paFuseDistance 0.215
+ }
+ Output {
+  name Output1
+  xpos 628
+  ypos 1
+ }
+end_group
+Group {
+ inputs 0
+ name ParticleDistributeSphere1
+ xpos 3375
+ ypos -24
+ addUserKnob {20 DistributeSphere}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 geoTranslate l translate T ParticleBlinkScript1.paTranslate}
+ addUserKnob {41 geoRotate l rotate T ParticleBlinkScript1.paRotate}
+ addUserKnob {41 geoScale l scale T ParticleBlinkScript1.paScale}
+ addUserKnob {41 geoUniformScale l "uniform scale" T ParticleBlinkScript1.paUniformScale}
+ addUserKnob {41 geoRadius l radius T ParticleBlinkScript1.paRadius}
+ addUserKnob {41 showGeometry l "Show Geometry" T ParticleBlinkScript1.showGeometry}
+ addUserKnob {41 firstFrame l "first frame only" T ParticleBlinkScript1.paFirstFrame}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -636
+  ypos -244
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "uint hash(uint seed) \{\n    seed = (seed ^ 61) ^ (seed >> 16);\n    seed *= 9;\n    seed = seed ^ (seed >> 4);\n    seed *= 0x27d4eb2d;\n    seed = seed ^ (seed >> 15);\n    return seed;\n\}\n\nfloat random(float seed) \{\n    return (float(hash(int(seed)))/float(0xffffffffU)-0.5f)*2.0f;\n\}\n\nfloat randomU(float seed) \{\n    return (float(hash(int(seed)))/float(0xffffffffU));\n\}\n\n// Gaussian-distrbuted random number. We should add\n// at least 6 times to get a proper Gaussain distribution, \n// but we're cheating for efficiency here.\nfloat randomG(float seed) \{\n    return random(seed) + random(seed*7.673+1.34) + random(seed*29.307+5.793);\n\}\n\nkernel ParticleExampleKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead> p_startTime;\n  Image<eReadWrite> p_position;\n\n  param:\n    float3 _translate;  // Origin of the sphere\n    float3 _rotate;      // Rotation of the sphere\n    float3 _scale;         // Scale of the sphere\n    float _uniformScale;  // Uniform scale of the sphere\n    float _radius;       // Radius of the sphere\n    bool _firstFrame;\n    float _systemTime;\n    float _dt;\n\n  local:\n    float4x4 _matrix;\n\n  void define() \{\n    defineParam(_translate, \"paTranslate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_rotate, \"paRotate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_scale, \"paScale\", float3(1.0f, 1.0f, 1.0f));\n    defineParam(_uniformScale, \"paUniformScale\", 1.0f);\n    defineParam(_radius, \"paRadius\", 1.0f);\n    defineParam(_firstFrame, \"paFirstFrame\", true);\n    defineParam(_systemTime, \"_systemTime\", 0.0f);\n    defineParam(_dt, \"_dt\", 1.0f);\n  \}\n\n  float3 transform(float3 p ) \{\n    float4 q = _matrix*float4(p.x, p.y, p.z, 1.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float toRadians(float a) \{\n    return a*3.141592653587f/180.0f;\n  \}\n\n  void init() \{\n    _matrix.setIdentity();\n    _matrix.scale(float4(_uniformScale*_scale.x, _uniformScale*_scale.y, _uniformScale*_scale.z, 1.0f));\n    _matrix.rotateY(toRadians(_rotate.y));\n    _matrix.rotateX(toRadians(_rotate.x));\n    _matrix.rotateZ(toRadians(_rotate.z));\n    _matrix.translate(float4(_translate.x, _translate.y, _translate.z, 0.0f));\n  \}\n\n  void process(int2 pos) \{\n    if ( _firstFrame && _systemTime-p_startTime() > _dt*1.0001f )\n      return;\n    int n = pos.y;\n    float3 xyz = float3(randomG(n), randomG(n+7.137), randomG(n+13.821));\n     float l = length(xyz);\n     float u = randomU(n*12.34+9.67);\n    p_position() = transform(_radius*pow(u, 1.0f/3.0f)*xyz/l);\n  \}\n\};\n"
+  name ParticleBlinkScript1
+  xpos -636
+  ypos -183
+  addUserKnob {20 User}
+  addUserKnob {41 paTranslate T Geometry.translate}
+  addUserKnob {41 paRotate T Geometry.rotate}
+  addUserKnob {41 paScale T Geometry.scaling}
+  addUserKnob {41 paUniformScale T Geometry.uniform_scale}
+  addUserKnob {7 paRadius l radius}
+  paRadius 3
+  addUserKnob {6 showGeometry l "Show Geometry" +STARTLINE}
+  showGeometry true
+  addUserKnob {6 paFirstFrame l "first frame only" +STARTLINE}
+  paFirstFrame true
+ }
+set N476b000 [stack 0]
+ Sphere {
+  inputs 0
+  display {{parent.showGeometry}}
+  rows 10
+  columns 20
+  radius {{parent.geoRadius}}
+  name Geometry
+  xpos -793
+  ypos -203
+ }
+ MergeGeo {
+  inputs 2
+  name MergeGeo1
+  xpos -793
+  ypos -179
+ }
+push $N476b000
+ Output {
+  name Output1
+  xpos -636
+  ypos -83
+ }
+end_group
+Group {
+ inputs 0
+ name ParticleCylinderFlow1
+ xpos 2939
+ ypos 84
+ addUserKnob {20 CylinderFlow}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 geoTranslate l translate T Geometry.translate}
+ addUserKnob {41 geoRotate l rotate T Geometry.rotate}
+ addUserKnob {41 geo_scale l scale T Geometry.scaling}
+ addUserKnob {41 geoUniformScale l "uniform scale" T Geometry.uniform_scale}
+ addUserKnob {41 geoRadius l radius T ParticleBlinkScript1.paRadius}
+ addUserKnob {6 showGeometry l "Show Cylinder" +STARTLINE}
+ showGeometry true
+ addUserKnob {26 ""}
+ addUserKnob {41 flow T ParticleBlinkScript1.paFlow}
+ addUserKnob {41 strength T ParticleBlinkScript1.paStrength}
+ addUserKnob {41 falloff T ParticleBlinkScript1.paFalloff}
+ addUserKnob {20 Conditions}
+ addUserKnob {41 probability T ParticleBlinkScript1.probability}
+ addUserKnob {41 min_age l "min age" T ParticleBlinkScript1.min_age}
+ addUserKnob {41 max_age l "max age" T ParticleBlinkScript1.max_age}
+ addUserKnob {41 seed l "random seed" T ParticleBlinkScript1.seed}
+ addUserKnob {41 channels T ParticleBlinkScript1.channels}
+ addUserKnob {20 Region}
+ addUserKnob {41 region T ParticleBlinkScript1.region}
+ addUserKnob {41 region_invert l "invert region" -STARTLINE T ParticleBlinkScript1.region_invert}
+ addUserKnob {41 file_menu l @FolderIcon T ParticleBlinkScript1.file_menu}
+ addUserKnob {41 snap_menu l @AxisIcon -STARTLINE T ParticleBlinkScript1.snap_menu}
+ addUserKnob {41 xform_order l "transform order" T ParticleBlinkScript1.xform_order}
+ addUserKnob {41 rot_order l "rotation order" T ParticleBlinkScript1.rot_order}
+ addUserKnob {41 translate T ParticleBlinkScript1.translate}
+ addUserKnob {41 rotate T ParticleBlinkScript1.rotate}
+ addUserKnob {41 scaling l scale T ParticleBlinkScript1.scaling}
+ addUserKnob {41 uniform_scale l "uniform scale" T ParticleBlinkScript1.uniform_scale}
+ addUserKnob {41 skew T ParticleBlinkScript1.skew}
+ addUserKnob {41 pivot T ParticleBlinkScript1.pivot}
+}
+ Cylinder {
+  inputs 0
+  display {{parent.showGeometry}}
+  render_mode off
+  radius {{parent.geoRadius}}
+  height 10
+  rotate {0 0 -45}
+  name Geometry
+  xpos 512
+  ypos 89
+ }
+ Input {
+  inputs 0
+  name particles
+  xpos 660
+  ypos 5
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleCylinderFlowKernel : ImageComputationKernel<ePixelWise>\n\{\n Image<eRead> p_conditions;\n Image<eRead> p_position;\n Image<eReadWrite> p_velocity;\n Image<eReadWrite> p_orientation;\n\n param:\n   float3 _translate;  // Origin of the cylinder\n   float3 _rotate;     // Rotation of the cylinder\n   float3 _scale;      // Scale of the cylinder\n   float _radius;      // Radius of the cylinder\n   float _uniformScale;\n    float3 _flow;       // Direction of flow\n   float _strength;    // The strength of the interaction with the flow\n   float _falloff;     // The speed at which the force falls off with distance from the surface\n\n local:\n   float3 _localFlow;\n   float4x4 _matrix;\n   float4x4 _imatrix;\n\n void define() \{\n   defineParam(_translate, \"paTranslate\", float3(0.0f, 0.0f, 0.0f));\n   defineParam(_rotate, \"paRotate\", float3(0.0f, 0.0f, 0.0f));\n   defineParam(_scale, \"paScale\", float3(1.0f, 1.0f, 1.0f));\n   defineParam(_uniformScale, \"paUniformScale\", 1.0f);\n   defineParam(_flow, \"paFlow\", float3(0.0f, 0.0f, -1.0f));\n   defineParam(_radius, \"paRadius\", 1.0f);\n   defineParam(_strength, \"paStrength\", 1.0f);\n   defineParam(_falloff, \"paFalloff\", 1.0f);\n \}\n\n float toRadians(float a) \{\n   return a*3.141592653587f/180.0f;\n \}\n\n void init() \{\n   _matrix.setIdentity();\n   _matrix.scale(float4(_uniformScale*_scale.x, _uniformScale*_scale.y, _uniformScale*_scale.z, 1.0f));\n   _matrix.rotateY(toRadians(_rotate.y));\n   _matrix.rotateX(toRadians(_rotate.x));\n   _matrix.rotateZ(toRadians(_rotate.z));\n   _matrix.translate(float4(_translate.x, _translate.y, _translate.z, 1.0f));\n   _imatrix = _matrix.invert();\n   _localFlow = vitransform(_flow);\n \}\n\n float3 mix(float3 a, float3 b, float t ) \{\n   return a+t*(b-a);\n \}\n\n float3 transform(float3 p ) \{\n   float4 q = _matrix*float4(p.x, p.y, p.z, 1.0f);\n   return float3(q.x, q.y, q.z);\n \}\n\n float3 itransform(float3 p ) \{\n   float4 q = _imatrix*float4(p.x, p.y, p.z, 1.0f);\n   return float3(q.x, q.y, q.z);\n \}\n\n float3 vtransform(float3 p ) \{\n   float4 q = _matrix*float4(p.x, p.y, p.z, 0.0f);\n   return float3(q.x, q.y, q.z);\n \}\n\n float3 vitransform(float3 p ) \{\n   float4 q = _imatrix*float4(p.x, p.y, p.z, 0.0f);\n   return float3(q.x, q.y, q.z);\n \}\n\n  void process() \{\n    if (!p_conditions().x)\n      return;\n    float3 axis = float3(0.0f, 1.0f, 0.0f);\n    float3 p = itransform(p_position());\n    float l = length(p);\n    if ( l != 0.0f ) \{\n      p -= axis*dot(p, axis);\n      float r = length(p);\n      float3 normal = p;\n      float3 d = cross(normal, _localFlow);\n      float3 tangent = cross(d, normal);\n      float fall;\n      if ( r >= _radius )\n        fall = exp(-_falloff*(r-_radius));\n      else\n        fall = 1.0f;\n      float3 force = tangent*_strength;\n      force = vtransform(force);\n      force = mix( _flow+p_velocity(), force, fall );\n      l = length(force);\n      if ( l != 0.0f ) \{\n        force = force/l;\n        float speed = length(p_velocity());\n        p_velocity() = speed*force;\n        p_orientation() = float4(0.0, force.x, force.y, force.z);\n      \}\n    \}\n  \}\n\};\n"
+  encodedSource "\n"
+  name ParticleBlinkScript1
+  selected true
+  xpos 660
+  ypos 43
+  addUserKnob {20 User l Flow}
+  addUserKnob {13 paTranslate l translate}
+  paTranslate {{parent.Geometry.translate.x} {parent.Geometry.translate.y} {parent.Geometry.translate.z}}
+  addUserKnob {13 paRotate l rotate}
+  paRotate {{parent.Geometry.rotate.x} {parent.Geometry.rotate.y} {parent.Geometry.rotate.z}}
+  addUserKnob {13 paScale l scale}
+  paScale {{parent.Geometry.scaling.x} {parent.Geometry.scaling.y} {parent.Geometry.scaling.z}}
+  addUserKnob {13 paFlow}
+  paFlow {0 0 1}
+  addUserKnob {7 paRadius}
+  paRadius 4
+  addUserKnob {7 paStrength}
+  paStrength 2
+  addUserKnob {7 paFalloff}
+  paFalloff 2
+  addUserKnob {7 paUniformScale l "uniform scale"}
+  paUniformScale {{parent.Geometry.uniform_scale}}
+ }
+set N4768400 [stack 0]
+ MergeGeo {
+  inputs 2
+  name MergeGeo1
+  xpos 512
+  ypos 113
+ }
+push $N4768400
+ Output {
+  name Output1
+  xpos 660
+  ypos 145
+ }
+end_group
+Group {
+ inputs 0
+ name ParticleConstrainToSphere1
+ xpos 3080
+ ypos 84
+ addUserKnob {20 ConstrainSphere}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 geoTranslate l translate T ParticleBlinkScript1.paTranslate}
+ addUserKnob {41 geoRotate l rotate T ParticleBlinkScript1.paRotate}
+ addUserKnob {41 geoScale l scale T ParticleBlinkScript1.paScale}
+ addUserKnob {41 geoUniformScale l "uniform scale" T ParticleBlinkScript1.paUniformScale}
+ addUserKnob {41 geoRadius l radius T ParticleBlinkScript1.paRadius}
+ addUserKnob {41 showGeometry l "Show Geometry" T ParticleBlinkScript1.showGeometry}
+ addUserKnob {20 Conditions}
+ addUserKnob {41 probability T ParticleBlinkScript1.probability}
+ addUserKnob {41 min_age l "min age" T ParticleBlinkScript1.min_age}
+ addUserKnob {41 max_age l "max age" T ParticleBlinkScript1.max_age}
+ addUserKnob {41 seed l "random seed" T ParticleBlinkScript1.seed}
+ addUserKnob {41 channels T ParticleBlinkScript1.channels}
+ addUserKnob {20 Region}
+ addUserKnob {41 region T ParticleBlinkScript1.region}
+ addUserKnob {41 region_invert l "invert region" -STARTLINE T ParticleBlinkScript1.region_invert}
+ addUserKnob {41 file_menu l @FolderIcon T ParticleBlinkScript1.file_menu}
+ addUserKnob {41 snap_menu l @AxisIcon -STARTLINE T ParticleBlinkScript1.snap_menu}
+ addUserKnob {41 xform_order l "transform order" T ParticleBlinkScript1.xform_order}
+ addUserKnob {41 rot_order l "rotation order" T ParticleBlinkScript1.rot_order}
+ addUserKnob {41 translate T ParticleBlinkScript1.translate}
+ addUserKnob {41 rotate T ParticleBlinkScript1.rotate}
+ addUserKnob {41 scaling l scale T ParticleBlinkScript1.scaling}
+ addUserKnob {41 uniform_scale l "uniform scale" T ParticleBlinkScript1.uniform_scale}
+ addUserKnob {41 skew T ParticleBlinkScript1.skew}
+ addUserKnob {41 pivot T ParticleBlinkScript1.pivot}
+}
+ Input {
+  inputs 0
+  name particles
+  xpos 829
+  ypos 1
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleSphereKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eReadWrite> p_conditions;\n  Image<eReadWrite> p_position;\n  Image<eReadWrite> p_velocity;\n\n  param:\n    float3 _translate;  // Origin of the sphere\n    float3 _rotate;      // Rotation of the sphere\n    float3 _scale;         // Scale of the sphere\n    float _uniformScale;  // Uniform scale of the sphere\n    float _radius;       // Radius of the sphere\n\n  local:\n    float4x4 _matrix;\n    float4x4 _imatrix;\n\n  void define() \{\n    defineParam(_translate, \"paTranslate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_rotate, \"paRotate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_scale, \"paScale\", float3(1.0f, 1.0f, 1.0f));\n    defineParam(_uniformScale, \"paUniformScale\", 1.0f);\n    defineParam(_radius, \"paRadius\", 1.0f);\n  \}\n\n  float3 transform(float3 p ) \{\n    float4 q = _matrix*float4(p.x, p.y, p.z, 1.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 itransform(float3 p ) \{\n    float4 q = _imatrix*float4(p.x, p.y, p.z, 1.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 vtransform(float3 p ) \{\n    float4 q = _matrix*float4(p.x, p.y, p.z, 0.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 ivtransform(float3 p ) \{\n    float4 q = _imatrix*float4(p.x, p.y, p.z, 0.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float toRadians(float a) \{\n    return a*3.141592653587f/180.0f;\n  \}\n\n  void init() \{\n    _matrix.setIdentity();\n    _matrix.scale(float4(_uniformScale*_scale.x, _uniformScale*_scale.y, _uniformScale*_scale.z, 1.0f));\n    _matrix.rotateY(toRadians(_rotate.y));\n    _matrix.rotateX(toRadians(_rotate.x));\n    _matrix.rotateZ(toRadians(_rotate.z));\n    _matrix.translate(float4(_translate.x, _translate.y, _translate.z, 1.0f));\n    _imatrix = _matrix.invert();\n  \}\n\n  void process() \{\n    if (!p_conditions().x)\n      return;\n    float3  d = itransform(p_position());\n    float r = length(d);\n     if ( r != 0.0f ) \{\n      d /= r;\n      // Move the particle to the sphere surface\n      p_position() = transform(d*_radius);\n\n      // Change the velocity to follow the surface\n      float3 v = ivtransform(p_velocity());\n      float lv = length(v);\n      if ( lv != 0.0f ) \{\n        v /= lv;\n        p_velocity() = vtransform(cross(cross(d, v), d)*lv);\n      \}\n    \}\n  \}\n\};\n"
+  encodedSource "\n"
+  name ParticleBlinkScript1
+  xpos 829
+  ypos 41
+  addUserKnob {20 User l Force}
+  addUserKnob {41 paTranslate T Geometry.translate}
+  addUserKnob {41 paRotate T Geometry.rotate}
+  addUserKnob {41 paScale T Geometry.scaling}
+  addUserKnob {41 paUniformScale l "uniform scale" T Geometry.uniform_scale}
+  addUserKnob {7 paRadius l radius}
+  paRadius 1
+  addUserKnob {6 showGeometry l "Show Geometry" +STARTLINE}
+  showGeometry true
+ }
+ Output {
+  name Output1
+  xpos 829
+  ypos 141
+ }
+ Sphere {
+  inputs 0
+  display {{parent.showGeometry}}
+  rows 10
+  columns 20
+  radius {{parent.geoRadius}}
+  name Geometry
+  xpos 695
+  ypos 45
+ }
+ MergeGeo {
+  name MergeGeo1
+  xpos 695
+  ypos 69
+ }
+end_group
+Group {
+ inputs 0
+ name ParticleFlock1
+ xpos 3233
+ ypos 89
+ addUserKnob {20 Flock}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 centeringRate l "Centering Rate" T ParticleBlinkScript1.paCenteringRate}
+ addUserKnob {41 separation l Separation T ParticleBlinkScript1.paSeparation}
+ addUserKnob {26 ""}
+ addUserKnob {41 velocityMatchRate l "Velocity Match Rate" T ParticleBlinkScript1.paVelocityMatchRate}
+ addUserKnob {41 maxSpeed l "Maximum Speed" T ParticleBlinkScript1.paMaxSpeed}
+ addUserKnob {26 ""}
+ addUserKnob {41 goalAttainRate l "Goal Attain Rate" T ParticleBlinkScript1.paGoalAttainRate}
+ addUserKnob {41 goal l "Goal Position" T ParticleBlinkScript1.paGoal}
+ addUserKnob {26 ""}
+ addUserKnob {41 avoid l "Avoid Position" T ParticleBlinkScript1.paAvoid}
+ addUserKnob {41 avoidDistance l "Avoid Distance" T ParticleBlinkScript1.paAvoidDistance}
+}
+ Input {
+  inputs 0
+  name particles
+  xpos 495
+  ypos 388
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleFlockKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eReadWrite,eAccessRandom> p_position;\n  Image<eReadWrite,eAccessRandom> p_velocity;\n  Image<eReadWrite> p_mass;\n\n  param:\n    float _centeringRate;\n    float _separation;\n    float _velocityMatchRate;\n    float _goalAttainRate;\n    float _maxSpeed;\n    float3 _goal;\n    float3 _avoid;\n    float _avoidDistance;\n    float _dt;\n\n  local:\n    int _numParticles;\n\n  void define() \{\n    defineParam(_centeringRate, \"paCenteringRate\", 100.0f);\n    defineParam(_separation, \"paSeparation\", 0.1f);\n    defineParam(_velocityMatchRate, \"paVelocityMatchRate\", 8.0f);\n    defineParam(_goalAttainRate, \"paGoalAttainRate\", 100.0f);\n    defineParam(_maxSpeed, \"paMaxSpeed\", 1.0f);\n    defineParam(_goal, \"paGoal\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_avoid, \"paAvoid\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_avoidDistance, \"paAvoidDistance\", 1.0f);\n    defineParam(_dt, \"_dt\", 1.0f);\n  \}\n\n  void init() \{\n    _numParticles = p_position.bounds.height();\n  \}\n\n  float lengthSquared(float3 v)\n  \{\n    return dot(v, v);\n  \}\n\n  float3 centering(float3 position, float3 summedPositions, int numParticles)\n  \{\n    float3 perceivedCenter = (summedPositions - position) / (numParticles - 1);\n    float3 motionTowardsCenter = (perceivedCenter - position) / _centeringRate;\n    return motionTowardsCenter;\n  \}\n\n  float3 separation(float3 position, int i, int numParticles, float separationSquared)\n  \{\n    float3 motionAwayFromOthers(0, 0, 0);\n    for (int j = 0; j < numParticles; ++j) \{\n      if (j == i)\n        continue;\n\n      float3 gap = p_position(0, j) - position;\n      float distanceSquared = lengthSquared(gap);\n      if (distanceSquared < separationSquared)\n        motionAwayFromOthers -= gap;\n    \}\n    return motionAwayFromOthers;\n  \}\n\n  float3 matchVelocity(float3 velocity, float3 summedVelocities, int numParticles)\n  \{\n    float3 perceivedVelocity =\n      (summedVelocities - velocity) / (numParticles - 1);\n    return\n      (perceivedVelocity - velocity) / _velocityMatchRate;\n  \}\n\n  float3 goalSeeking(float3 position)\n  \{\n    return  (_goal - position) / _goalAttainRate;\n  \}\n\n  float3 avoidance(float3 position, float avoidDistanceSquared)\n  \{\n    float3 gap = position - _avoid;\n    float distanceFromAvoidSquared = lengthSquared(gap);\n    if (distanceFromAvoidSquared < avoidDistanceSquared) \{\n      float distanceFromAvoid = sqrt(distanceFromAvoidSquared);\n      float3 normal = gap / distanceFromAvoid;\n      float distanceInside = _avoidDistance - distanceFromAvoid;\n      return normal * distanceInside;\n    \}\n    else \{\n      return float3(0.0f);\n    \}\n  \}\n\n  float3 speedLimit(float3 force, float maxSpeedSquared)\n  \{\n    float speedSquared = lengthSquared(force);\n    if (speedSquared > maxSpeedSquared) \{\n      float speed = sqrt(speedSquared);\n      float3 newForce = force / speed * _maxSpeed;\n      return newForce;\n    \}\n    else \{\n      return force;\n    \}\n  \}\n\n  void process(int2 pos) \{\n    const float kSeparationSquared = _separation * _separation;\n    const float kMaxSpeedSquared = _maxSpeed * _maxSpeed;\n    const float kAvoidDistanceSquared = _avoidDistance * _avoidDistance;\n\n    // Unfortunately, we can't really do the summed velocities without a reduction pass, so we cheat:\n    float3 summedPositions = (p_position(0, 0)+p_position(0, _numParticles-1))/2.0f;\n    float3 summedVelocities = (p_velocity(0, 0)+p_velocity(0, _numParticles-1))/2.0f;;\n\n    // The kernel is called from multiple threads and there is no guarantee in which order\n    // the particles are processed. For a kernel like this which is reading and\n    // writing simultaneously, this means that the results re non-deterministic and\n    // will vary from run to run. This is a very tacky way to avoid this: We process\n    // all the particles when called for the last particle. This means that we lose the\n    // benefits of multithreading, but keep the results deterministic. A future version\n    // of ParticleBlinkScript may provide better mechanisms for dealing with this.\n    if ( pos.y == _numParticles-1 ) \{\n      for (int i = 0; i < _numParticles; ++i) \{\n        // Apply the flocking rules to each particle.\n        float3 lposition = p_position(0, i);\n        float3 lvelocity = p_velocity(0, i);\n        float3 force = -lvelocity;\n\n        // Rule 1: particles try to move towards the centre of the flock.\n        force += centering(lposition, summedPositions, _numParticles);\n\n        // Rule 2: particles try to maintain a minimum separation from each other.\n        force += separation(lposition, i, _numParticles, kSeparationSquared);\n\n        // Rule 3: particles try to match velocity with each other.\n        force += matchVelocity(lvelocity, summedVelocities, _numParticles);\n\n        // Rule 4: particles try to move towards a common goal.\n        force += goalSeeking(lposition);\n\n        // Rule 5: avoid a specified location.\n        if (kAvoidDistanceSquared != 0)\n          force += avoidance(lposition, kAvoidDistanceSquared);\n\n        // Rule 6: limit the maximum speed of movement.\n        force = speedLimit(force, kMaxSpeedSquared);\n\n        // Apply the total force to the particle.\n        p_velocity(0, i) += force*_dt/p_mass();\n      \}\n    \}\n  \}\n\};\n"
+  encodedSource "\n"
+  name ParticleBlinkScript1
+  selected true
+  xpos 495
+  ypos 428
+  addUserKnob {20 User}
+  addUserKnob {7 paCenteringRate l "Centering Rate"}
+  paCenteringRate 10
+  addUserKnob {7 paSeparation l Separation}
+  paSeparation 0.5
+  addUserKnob {26 ""}
+  addUserKnob {7 paVelocityMatchRate l "Velocity Match Rate"}
+  paVelocityMatchRate 10
+  addUserKnob {7 paMaxSpeed l "Maximum Speed"}
+  paMaxSpeed 0.1
+  addUserKnob {26 ""}
+  addUserKnob {7 paGoalAttainRate l "Goal Attain Rate"}
+  paGoalAttainRate 10
+  addUserKnob {13 paGoal l "Goal Position"}
+  addUserKnob {26 ""}
+  addUserKnob {13 paAvoid l "Avoid Position"}
+  addUserKnob {7 paAvoidDistance l "Avoid Distance"}
+  paAvoidDistance 5
+ }
+ Output {
+  name Output1
+  xpos 495
+  ypos 528
+ }
+end_group
+Group {
+ inputs 0
+ name ParticleAttractToSphere1
+ xpos 3374
+ ypos 92
+ addUserKnob {20 AttractToSphere}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 geoTranslate l translate T Geometry.translate}
+ addUserKnob {41 geoRotate l rotate T Geometry.rotate}
+ addUserKnob {41 geoScaling l scale T Geometry.scaling}
+ addUserKnob {41 geoUniformScale l "uniform scale" T Geometry.uniform_scale}
+ addUserKnob {41 geoRadius l radius T ParticleBlinkScript1.paRadius}
+ addUserKnob {6 showGeometry l "Show Sphere" +STARTLINE}
+ showGeometry true
+}
+ Sphere {
+  inputs 0
+  display {{parent.showGeometry}}
+  render_mode off
+  rows 20
+  columns 20
+  radius {{parent.geoRadius}}
+  name Geometry
+  xpos 730
+  ypos 87
+ }
+ Input {
+  inputs 0
+  name particles
+  xpos 829
+  ypos 1
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleSphereKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead> p_position;\n  Image<eRead> p_mass;\n  Image<eReadWrite> p_velocity;\n\n  param:\n    float3 _centre;\n    float _radius;\n    float _minRadius;\n    float _strength;\n    float _falloff;\n    float _dt;\n\n  void define() \{\n    defineParam(_centre, \"paPosition\",  float3(0.0f, 0.0f, 0.0f));\n    defineParam(_radius, \"paRadius\", 1.0f);\n    defineParam(_minRadius, \"paMinRadius\", 0.1f);\n    defineParam(_strength, \"paStrength\", 0.0f);\n    defineParam(_falloff, \"paFalloff\", 2.0f);\n    defineParam(_dt, \"_dt\", 1.0f);\n  \}\n\n  void process() \{\n    float3  d = p_position()-_centre;\n    float r = length(d);\n    if ( r != 0.0f ) \{\n      float3 rHat = d/r;\n      float3 closestPoint  = _centre + rHat*_radius;\n      float distanceFromSurface = r-_radius;\n      if (distanceFromSurface > _minRadius) \{\n        float3 force = -_strength*rHat*pow(distanceFromSurface, -_falloff);\n        p_velocity() += force*_dt/p_mass();\n      \}\n    \}\n  \}\n\};\n"
+  encodedSource "\n"
+  translate {0 0.2879999876 0}
+  name ParticleBlinkScript1
+  xpos 829
+  ypos 41
+  addUserKnob {20 User l Force}
+  addUserKnob {13 paTranslate l translate}
+  paTranslate {{parent.Geometry.translate.x} {parent.Geometry.translate.y} {parent.Geometry.translate.z}}
+  addUserKnob {13 paRotate l rotate}
+  paRotate {{parent.Geometry.rotate.x} {parent.Geometry.rotate.y} {parent.Geometry.rotate.z}}
+  addUserKnob {13 paScale l scale}
+  paScale {{parent.Geometry.scaling.x} {parent.Geometry.scaling.y} {parent.Geometry.scaling.z}}
+  addUserKnob {7 paUniform_scale l "uniform scale"}
+  paUniform_scale {{parent.Geometry.uniform_scale}}
+  addUserKnob {7 paRadius l radius}
+  paRadius 1
+  addUserKnob {7 paMinRadius l "min radius"}
+  paMinRadius 0.045
+  addUserKnob {7 paStrength l strength}
+  paStrength 0.015
+  addUserKnob {7 paFalloff l falloff}
+  paFalloff 0.37
+ }
+set N4671400 [stack 0]
+ MergeGeo {
+  inputs 2
+  name MergeGeo1
+  selected true
+  xpos 730
+  ypos 111
+ }
+push $N4671400
+ Output {
+  name Output1
+  xpos 829
+  ypos 141
+ }
+end_group
+Group {
+ inputs 0
+ name ParticleHelixFlow1
+ xpos 2935
+ ypos 206
+ addUserKnob {20 HelixFlow}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 geoTranslate l translate T Axis1.translate}
+ addUserKnob {41 geoRotate l rotate T Axis1.rotate}
+ addUserKnob {41 geoScale l scale T Axis1.scaling}
+ addUserKnob {41 geoUniformScale l "uniform scale" T Axis1.uniform_scale}
+ addUserKnob {26 ""}
+ addUserKnob {41 geoRadius l radius T ParticleBlinkScript1.paRadius}
+ addUserKnob {41 geoRadiusInc l "radius increment" T ParticleBlinkScript1.paRadiusInc}
+ addUserKnob {41 paPitch l pitch T ParticleBlinkScript1.paPitch}
+ addUserKnob {26 ""}
+ addUserKnob {41 strength T ParticleBlinkScript1.paStrength}
+ addUserKnob {41 falloff T ParticleBlinkScript1.paFalloff}
+}
+ Input {
+  inputs 0
+  name particles
+  xpos 613
+  ypos 164
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleHelixFlowKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eReadWrite> p_position;\n  Image<eReadWrite> p_velocity;\n  Image<eRead> p_mass;\n  Image<eRead> p_startTime;\n\n  param:\n    float3 _translate;  // Origin of the cylinder\n    float3 _rotate;     // Rotation of the cylinder\n    float3 _scale;      // Scale of the cylinder\n    float _uniformScale;\n    float _radius;    // Radius of the helix at origin\n    float _radiusInc; // Increase in radius per turn\n    float _pitch;     // Pitch of the helix\n    float _strength;  // The strength of the interaction with the flow\n    float _falloff;   // The speed at which the force falls off with distance from the surface\n    float _dt;\n    float _endTime;\n\n local:\n   float4x4 _matrix;\n   float4x4 _imatrix;\n\n  void define() \{\n    defineParam(_translate, \"paTranslate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_rotate, \"paRotate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_scale, \"paScale\", float3(1.0f, 1.0f, 1.0f));\n    defineParam(_uniformScale, \"paUniformScale\", 1.0f);\n    defineParam(_radius, \"paRadius\", 1.0f);\n    defineParam(_radiusInc, \"paRadiusInc\", 0.0f);\n    defineParam(_strength, \"paStrength\", 1.0f);\n    defineParam(_falloff, \"paFalloff\", 1.0f);\n    defineParam(_pitch, \"paPitch\", 1.0f);\n    defineParam(_dt, \"_dt\", 1.0f);\n    defineParam(_endTime, \"_endTime\", 1.0f);\n  \}\n\n float toRadians(float a) \{\n   return a*3.141592653587f/180.0f;\n \}\n\n void init() \{\n   _matrix.setIdentity();\n   _matrix.scale(float4(_uniformScale*_scale.x, _uniformScale*_scale.y, _uniformScale*_scale.z, 1.0f));\n   _matrix.rotateY(toRadians(_rotate.y));\n   _matrix.rotateX(toRadians(_rotate.x));\n   _matrix.rotateZ(toRadians(_rotate.z));\n   _matrix.translate(float4(_translate.x, _translate.y, _translate.z, 1.0f));\n   _imatrix = _matrix.invert();\n \}\n\n  float3 mix(float3 a, float3 b, float t ) \{\n    return a+t*(b-a);\n  \}\n\n float3 transform(float3 p ) \{\n   float4 q = _matrix*float4(p.x, p.y, p.z, 1.0f);\n   return float3(q.x, q.y, q.z);\n \}\n\n float3 itransform(float3 p ) \{\n   float4 q = _imatrix*float4(p.x, p.y, p.z, 1.0f);\n   return float3(q.x, q.y, q.z);\n \}\n\n float3 vtransform(float3 p ) \{\n   float4 q = _matrix*float4(p.x, p.y, p.z, 0.0f);\n   return float3(q.x, q.y, q.z);\n \}\n\n float3 vitransform(float3 p ) \{\n   float4 q = _imatrix*float4(p.x, p.y, p.z, 0.0f);\n   return float3(q.x, q.y, q.z);\n \}\n\n  void process() \{\n    float3 v = p_velocity();\n    float speed = length(v);\n    if ( speed == 0.0f )\n      return;\n    constexpr float twoPi = 2.0f*3.1415926f;\n    // Find closest point on the axis\n    float3 p = itransform(p_position());\n    float3 axis = float3(0.0f, 1.0f, 0.0f);\n    float3 closestAxis = p.y*axis;\n    // Now find helix position at that point\n    float t = p.y/_pitch;\n    float angle = twoPi*t;\n    float r = _radius+t*_radiusInc;\n    float3 sc = float3(cos(angle), 0.0f, sin(angle));\n    float3 helixPos = closestAxis+r*sc;\n\n    // Now create a force towards the helix position\n    float3 d = helixPos-p;\n    r = length(d)+0.001;\n    float3 force = d/r*exp(-_falloff*r);\n    float dt =  max(0.0f, min(_dt, float(_endTime - p_startTime())));\n    p_velocity() += dt*_strength*force/p_mass();\n  \}\n\};\n"
+  encodedSource "\n"
+  name ParticleBlinkScript1
+  selected true
+  xpos 613
+  ypos 204
+  addUserKnob {20 User l Flow}
+  addUserKnob {13 paTranslate l translate}
+  paTranslate {{parent.Axis1.translate.x} {parent.Axis1.translate.y} {parent.Axis1.translate.z}}
+  addUserKnob {13 paRotate l rotate}
+  paRotate {{parent.Axis1.rotate.x} {parent.Axis1.rotate.y} {parent.Axis1.rotate.z}}
+  addUserKnob {13 paScale l scale}
+  paScale {{parent.Axis1.scaling.x} {parent.Axis1.scaling.y} {parent.Axis1.scaling.z}}
+  addUserKnob {7 paUniformScale l "uniform scale"}
+  paUniformScale {{parent.Axis1.uniform_scale}}
+  addUserKnob {26 ""}
+  addUserKnob {7 paRadius l radius}
+  addUserKnob {7 paRadiusInc l "radius increment"}
+  paRadiusInc 0.1
+  addUserKnob {7 paPitch l pitch}
+  paPitch 1
+  addUserKnob {26 ""}
+  addUserKnob {7 paStrength l strength}
+  paStrength 0.205
+  addUserKnob {7 paFalloff l falloff}
+  paFalloff 0.235
+ }
+set N55de800 [stack 0]
+ Output {
+  name Output1
+  xpos 613
+  ypos 304
+ }
+push $N55de800
+ Axis2 {
+  inputs 0
+  name Axis1
+  xpos 487
+  ypos 180
+ }
+ MergeGeo {
+  inputs 2
+  name MergeGeo1
+  xpos 477
+  ypos 246
+ }
+end_group
+Group {
+ inputs 0
+ name ParticleShockWave1
+ xpos 3081
+ ypos 206
+ addUserKnob {20 ShockWave}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 geoTranslate l translate T Cylinder1.translate}
+ addUserKnob {41 geoRotate l rotate T Cylinder1.rotate}
+ addUserKnob {41 geo_scale l scale T Cylinder1.scaling}
+ addUserKnob {41 radius T ParticleBlinkScript1.radius}
+ addUserKnob {6 showGeometry l "Show Cylinder" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {41 strength T ParticleBlinkScript1.strength}
+ addUserKnob {41 falloff T ParticleBlinkScript1.falloff}
+}
+ Cylinder {
+  inputs 0
+  display {{parent.showGeometry}}
+  render_mode off
+  rows 1
+  radius {{parent.radius}}
+  height 10
+  name Cylinder1
+  xpos 509
+  ypos 101
+ }
+ Input {
+  inputs 0
+  name particles
+  xpos 660
+  ypos 5
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleShockWaveKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eReadWrite> p_position;\n\n  param:\n    float3 _translate;  // Origin of the cylinder\n    float3 _rotate;     // Rotation of the cylinder\n    float3 _scale;      // Scale of the cylinder\n    float _radius;      // Radius of the cylinder\n    float _strength;    // The strength of the force\n    float _falloff;     // The speed at which the force falls off with distance from the surface\n    float _dt;\n\n  local:\n    float4x4 _matrix;\n    float4x4 _imatrix;\n    float3 _yAxis;\n\n  void define() \{\n    defineParam(_translate, \"cyl_translate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_rotate, \"cyl_rotate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_scale, \"cyl_scale\", float3(1.0f, 1.0f, 1.0f));\n    defineParam(_radius, \"radius\", 1.0f);\n    defineParam(_strength, \"strength\", 1.0f);\n    defineParam(_falloff, \"falloff\", 1.0f);\n    defineParam(_dt, \"_dt\", 1.0f);\n  \}\n\n  float toRadians(float a) \{\n    return a*3.141592653587f/180.0f;\n  \}\n\n  void init() \{\n    _matrix.setIdentity();\n    _matrix.scale(float4(_scale.x, _scale.y, _scale.z, 1.0f));\n    _matrix.rotateY(toRadians(_rotate.y));\n    _matrix.rotateX(toRadians(_rotate.x));\n    _matrix.rotateZ(toRadians(_rotate.z));\n    _matrix.translate(float4(_translate.x, _translate.y, _translate.z, 1.0f));\n    _imatrix = _matrix.invert();\n    _yAxis = vtransform(float3(0, 1, 0));\n  \}\n\n  float3 transform(float3 p ) \{\n    float4 q = _matrix*float4(p.x, p.y, p.z, 1.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 itransform(float3 p ) \{\n    float4 q = _imatrix*float4(p.x, p.y, p.z, 1.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 vtransform(float3 p ) \{\n    float4 q = _matrix*float4(p.x, p.y, p.z, 0.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 vitransform(float3 p ) \{\n    float4 q = _imatrix*float4(p.x, p.y, p.z, 0.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float cubicPulse( float c, float w, float x )\n  \{\n    x = fabs(x - c);\n    if ( x>w )\n      return 0.0f;\n    x /= w;\n    return 1.0f - x*x*(3.0f-2.0f*x);\n  \}\n\n  void process() \{\n    float3 p = p_position()-_translate;\n    float l = length(p);\n    if ( l != 0.0f ) \{\n      p -= _yAxis*dot(p, _yAxis);\n      float r = length(p);\n      if ( r != 0.0f ) \{\n        float force = cubicPulse( _radius, _falloff, r );\n        float3 p = p_position();\n        p_position() = float3(p.x, _strength*force, p.z);\n      \}\n    \}\n  \}\n\};\n"
+  encodedSource "\n"
+  rotate {-37.96066827 0 0}
+  name ParticleBlinkScript1
+  selected true
+  xpos 660
+  ypos 43
+  addUserKnob {20 User l ShockWave}
+  addUserKnob {13 cyl_translate l translate}
+  cyl_translate {{parent.Cylinder1.translate.x} {parent.Cylinder1.translate.y} {parent.Cylinder1.translate.z}}
+  addUserKnob {13 cyl_rotate l rotate}
+  cyl_rotate {{parent.Cylinder1.rotate.x} {parent.Cylinder1.rotate.y} {parent.Cylinder1.rotate.z}}
+  addUserKnob {13 cyl_scale l scale}
+  cyl_scale {{parent.Cylinder1.scaling.x} {parent.Cylinder1.scaling.y} {parent.Cylinder1.scaling.z}}
+  addUserKnob {7 radius}
+  addUserKnob {7 strength}
+  addUserKnob {7 falloff}
+  falloff 3
+ }
+ MergeGeo {
+  inputs 2
+  name MergeGeo1
+  xpos 660
+  ypos 101
+ }
+ Output {
+  name Output1
+  xpos 660
+  ypos 145
+ }
+end_group
+StickyNote {
+ inputs 0
+ name StickyNote17
+ tile_color 0xffffffff
+ label "<b>Attributes                ."
+ note_font "Helvetica Bold"
+ note_font_size 50
+ xpos 2169
+ ypos -355
+}
+StickyNote {
+ inputs 0
+ name StickyNote26
+ tile_color 0xffffffff
+ label "<b>BlinkScript                ."
+ note_font "Helvetica bold"
+ note_font_size 50
+ xpos 2927
+ ypos -376
+}

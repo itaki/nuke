@@ -1,0 +1,67 @@
+set cut_paste_input [stack 0]
+push $cut_paste_input
+Group {
+name Slice
+addUserKnob {20 Params}
+addUserKnob {41 ch T Copy1.from0}
+addUserKnob {41 c l center T range.c}
+addUserKnob {41 w l width T range.w}
+addUserKnob {41 fa_s l "falloff start" T range.fa_s}
+addUserKnob {41 fa_e l "falloff end" T range.fa_e}
+addUserKnob {41 ss l smoothstep T range.ss}
+}
+Input {
+inputs 0
+name Input
+xpos 290
+ypos -754
+}
+AddChannels {
+channels rgba
+channels2 depth
+name AddChannels1
+xpos 290
+ypos -729
+}
+set Ncf730100 [stack 0]
+push $Ncf730100
+Copy {
+inputs 2
+from0 depth.Z
+to0 rgba.red
+name Copy1
+xpos 290
+ypos -705
+}
+Expression {
+temp_name0 f
+temp_expr0 r<p.0?clamp((r-s.0)/(s.1-s.0)):clamp((r-p.1)/(p.0-p.1))
+temp_name1 fs
+temp_expr1 f*f*(3-2*f)
+channel0 rgba
+expr0 ss?fs:f
+name range
+xpos 290
+ypos -634
+addUserKnob {20 Params}
+addUserKnob {7 c l center R 0 1000}
+c 50
+addUserKnob {7 w l width R 0 100}
+w 10
+addUserKnob {7 fa_s l "falloff start" R 0 100}
+fa_s 10
+addUserKnob {7 fa_e l "falloff end" R 0 100}
+fa_e 10
+addUserKnob {78 s n 2}
+s {{s.1-fa_s} {c-w/2}}
+addUserKnob {78 p n 2}
+p {{c+w/2} {p.0+fa_e}}
+addUserKnob {6 ss l smoothstep +STARTLINE}
+ss true
+}
+Output {
+name Output
+xpos 290
+ypos -586
+}
+end_group

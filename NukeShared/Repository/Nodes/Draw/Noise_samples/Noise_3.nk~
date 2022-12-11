@@ -1,0 +1,495 @@
+#! /Applications/Nuke6.3v7/NukeX6.3v7.app/../Nuke6.3v7.app/Contents/MacOS/Nuke6.3v7 -nx
+version 6.3 v7
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="22" w="1600" h="1174" screen="0">
+        <splitter orientation="1">
+            <split size="63"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1533"/>
+            <splitter orientation="2">
+                <split size="1152"/>
+                <dock id="" activePageId="DAG.1">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                </dock>
+            </splitter>
+        </splitter>
+    </window>
+    <window x="807" y="230" w="1022" h="606" screen="0">
+        <splitter orientation="2">
+            <split size="590"/>
+            <dock id="" activePageId="Viewer.1">
+                <page id="Viewer.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "/Volumes/Data HD/School/-Mine/Learning Docs/ANI275/Wiki/assets/Noise/Noise_3.nk"
+ frame 60
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x7171c600
+ label "Here is a simple noise that has \nbeen masked with a rectangle \nand and a Min Merge. Note the \nunsatisfactory, hard-edged result."
+ note_font "Verdana Bold Bold Bold"
+ note_font_size 20
+ xpos -797
+ ypos -398
+ bdwidth 457
+ bdheight 456
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode2
+ tile_color 0x7171c600
+ label "Hre is minus blend mode has been used to\nachieve a more complex edge."
+ note_font "Verdana Bold Bold Bold Bold"
+ note_font_size 20
+ xpos -207
+ ypos -422
+ bdwidth 457
+ bdheight 456
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0x7171c600
+ label "Here a similar procedure has been used to\nmake an 'eventfull' hard-edged shape using\na roto as guide. A script very much like this \none was used to make Rorchach's mask \nin the film 'Watchmen'    \n   "
+ note_font "Verdana Bold Bold Bold Bold Bold"
+ note_font_size 20
+ xpos 1596
+ ypos -382
+ bdwidth 457
+ bdheight 456
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode5
+ tile_color 0x7171c600
+ label "Using the preceding script as a model, this cloud set was made. \nTo make it look more cloud-like it was given greater volume by \nthe adition of an extra noise of different size. "
+ note_font "Verdana Bold Bold Bold Bold Bold Bold"
+ note_font_size 20
+ xpos 372
+ ypos -425
+ bdwidth 1097
+ bdheight 819
+}
+Noise {
+ inputs 0
+ zoffset {{curve i x1 0 l x30 1.76}}
+ gain 0.48
+ translate {{curve i x1 0 l x30 789.7380981} 0}
+ center {1024 778}
+ name Noise3
+ xpos 1660
+ ypos -147
+}
+set C1a4105c0 [stack 0]
+Roto {
+ inputs 0
+ curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 1024 S 0 778 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "Bezier1" {
+    Flag: 512
+    NodeType: 3
+    CurveGroup: "" {
+     Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 901.429 S 0 817.857 
+     Flag: 0
+     NumOfCubicCurves: 2
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 21
+      0 S 0 150 S 0 -15 0 0 S 0 900 S 0 1270 0 0 S 0 -150 S 0 15 0 0 S 0 145 S 0 360 0 0 S 0 555 S 0 1110 0 0 S 0 -145 S 0 -360 0 0 S 0 10 S 0 205 0 0 S 0 585 S 0 770 0 0 S 0 -10 S 0 -205 0 0 S 0 -155 S 0 295 0 0 S 0 445 S 0 415 0 0 S 0 155 S 0 -295 0 0 S 0 -405 S 0 -140 0 0 S 0 930 S 0 120 0 0 S 0 405 S 0 140 0 0 S 0 360 S 0 -290 0 0 S 0 1645 S 0 780 0 0 S 0 -360 S 0 290 0 0 S 0 0 S 0 -115 0 0 S 0 1320 S 0 1300 0 0 S 0 0 S 0 115 0 
+     }
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 21
+      0 S 0 150 S 0 -15 0 0 S 0 0 S 0 0 0 0 S 0 -150 S 0 15 0 0 S 0 145 S 0 360 0 0 S 0 0 S 0 0 0 0 S 0 -145 S 0 -360 0 0 S 0 10 S 0 205 0 0 S 0 0 S 0 0 0 0 S 0 -10 S 0 -205 0 0 S 0 -155 S 0 295 0 0 S 0 0 S 0 0 0 0 S 0 155 S 0 -295 0 0 S 0 -405 S 0 -140 0 0 S 0 0 S 0 0 0 0 S 0 405 S 0 140 0 0 S 0 360 S 0 -290 0 0 S 0 0 S 0 0 0 0 S 0 -360 S 0 290 0 0 S 0 0 S 0 -115 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 115 0 
+     }
+     NumOfAttributes: 44
+     "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 1024 "spy" S 0 778 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 23 "ltm" S 0 23 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+    }
+   }
+   NumOfChildren: 0
+  }
+ }
+}
+}
+ toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_lifetime_type all
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ colorOverlay 0
+ lifetime_type "all frames"
+ lifetime_start 23
+ lifetime_end 23
+ view {}
+ motionblur_on true
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+ name Roto1
+ xpos 1906
+ ypos -210
+}
+Blur {
+ size 400
+ name Blur2
+ xpos 1906
+ ypos -186
+}
+Invert {
+ name Invert1
+ xpos 1906
+ ypos -152
+}
+Merge2 {
+ inputs 2
+ operation minus
+ name Merge1
+ xpos 1754
+ ypos -45
+}
+ColorLookup {
+ lut {master {curve K 0 S x0.01706418395 -0.0007462501526 C x0.03598381951 0.9913265109 s0.150000006 v0.7736393809 K x1 1}
+   red {}
+   green {}
+   blue {}
+   alpha {}}
+ name ColorLookup1
+ xpos 1754
+ ypos -21
+}
+clone $C1a4105c0 {
+ inputs 0
+ xpos -759
+ ypos -227
+ selected false
+}
+Rectangle {
+ inputs 0
+ area {-160 690 2495 1720}
+ name Rectangle2
+ xpos -558
+ ypos -270
+}
+Invert {
+ name Invert2
+ xpos -558
+ ypos -246
+}
+Blur {
+ size 400
+ name Blur3
+ xpos -558
+ ypos -212
+}
+Merge2 {
+ inputs 2
+ operation min
+ name Merge5
+ xpos -657
+ ypos -77
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0 0.2500038147 1 1}
+ name Constant2
+ xpos -459
+ ypos -135
+}
+Merge2 {
+ inputs 2
+ name Merge3
+ xpos -580
+ ypos -10
+}
+clone $C1a4105c0 {
+ inputs 0
+ xpos -167
+ ypos -297
+ selected false
+}
+Rectangle {
+ inputs 0
+ area {-160 690 2495 1720}
+ softness 100
+ name Rectangle1
+ xpos 27
+ ypos -325
+}
+Blur {
+ size 500
+ name Blur1
+ xpos 27
+ ypos -301
+}
+Merge2 {
+ inputs 2
+ operation minus
+ sRGB true
+ name Merge4
+ xpos -79
+ ypos -179
+}
+Shuffle {
+ alpha green
+ name Shuffle1
+ xpos -79
+ ypos -155
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0 0.2500038147 1 1}
+ name Constant1
+ xpos 102
+ ypos -188
+}
+Merge2 {
+ inputs 2
+ name Merge2
+ xpos -13
+ ypos -34
+}
+Noise {
+ inputs 0
+ zoffset {{curve i x1 0 l x30 1.76}}
+ gain 0.48
+ translate {{curve i x1 0 l x30 789.7380981} 0}
+ center {1024 778}
+ name Noise1
+ xpos 594
+ ypos -282
+}
+Rectangle {
+ inputs 0
+ area {-160 690 2495 1720}
+ softness 100
+ name Rectangle3
+ xpos 788
+ ypos -310
+}
+Blur {
+ size 500
+ name Blur4
+ xpos 788
+ ypos -286
+}
+Merge2 {
+ inputs 2
+ operation minus
+ sRGB true
+ name Merge6
+ xpos 682
+ ypos -164
+}
+Shuffle {
+ alpha green
+ name Shuffle2
+ xpos 682
+ ypos -140
+}
+set N1a4c25e0 [stack 0]
+Blur {
+ channels alpha
+ size 30.5
+ name Blur6
+ xpos 518
+ ypos -95
+}
+Multiply {
+ channels alpha
+ value 4
+ name Multiply1
+ xpos 518
+ ypos -61
+}
+set N1a4d3940 [stack 0]
+Transform {
+ translate {4 4}
+ center {1024 778}
+ name Transform1
+ xpos 446
+ ypos 88
+}
+push $N1a4d3940
+Merge2 {
+ inputs 2
+ operation minus
+ output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+ name Merge7
+ xpos 518
+ ypos 174
+}
+set N1a4e16c0 [stack 0]
+push $N1a4e16c0
+Noise {
+ inputs 0
+ size 540
+ zoffset {{parent.Noise1.zoffset i x1 0 l x30 1.76}}
+ gain 0.395
+ gamma 2
+ translate {{curve i x1 0 l x30 789.7380981} 0}
+ center {1024 778}
+ name Noise2
+ xpos 1093
+ ypos -271
+}
+Rectangle {
+ inputs 0
+ area {-172 474 2483 1744}
+ softness 100
+ name Rectangle4
+ xpos 1286
+ ypos -299
+}
+Blur {
+ size 500
+ name Blur5
+ xpos 1286
+ ypos -275
+}
+Merge2 {
+ inputs 2
+ operation minus
+ sRGB true
+ name Merge8
+ xpos 1180
+ ypos -153
+}
+Shuffle {
+ alpha green
+ name Shuffle3
+ xpos 1180
+ ypos -119
+}
+push $N1a4c25e0
+Merge2 {
+ inputs 2
+ name Merge9
+ xpos 895
+ ypos 12
+}
+Dot {
+ name Dot1
+ xpos 929
+ ypos 81
+}
+set N1b224e50 [stack 0]
+Dot {
+ name Dot2
+ xpos 806
+ ypos 81
+}
+ColorLookup {
+ lut {master {curve C 0 S x0.385848999 0.1117647886 x0.7327492237 0.866666615 C x1 1}
+   red {}
+   green {}
+   blue {}
+   alpha {}}
+ name ColorLookup2
+ xpos 772
+ ypos 150
+}
+push $N1b224e50
+Unpremult {
+ name Unpremult1
+ xpos 901
+ ypos 117
+}
+Add {
+ inputs 1+1
+ channels rgb
+ value 0.14
+ maskChannelMask rgba.green
+ name Add1
+ xpos 895
+ ypos 150
+}
+Add {
+ inputs 1+1
+ channels rgb
+ value 3
+ name Add2
+ xpos 895
+ ypos 174
+}
+Premult {
+ name Premult1
+ xpos 895
+ ypos 198
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0 0.2500038147 1 1}
+ name Constant3
+ xpos 1105
+ ypos 229
+}
+Merge2 {
+ inputs 2
+ name Merge10
+ xpos 895
+ ypos 253
+}
+Viewer {
+ inputs 2
+ frame 60
+ frame_range 1-30
+ input_process false
+ translate {-0.01400000043 -0.1159999967}
+ rotate 180
+ name Viewer1
+ xpos -258
+ ypos 716
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ label " \n      Animated! (different clods using the Noise node)\n"
+ note_font "Verdana Bold Bold Bold Bold"
+ note_font_size 30
+ xpos -21
+ ypos -666
+}

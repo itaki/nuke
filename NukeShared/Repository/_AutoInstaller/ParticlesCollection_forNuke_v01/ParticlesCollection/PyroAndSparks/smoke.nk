@@ -1,0 +1,494 @@
+#! C:/Program Files/Nuke13.0v1/nuke-13.0.1.dll -nx
+version 13.0 v1
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "C:/Users/lgere/OneDrive/VFX/PARTICLES/PYRO and SPARKS/smoke.nk"
+ frame 35
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ monitorOutLUT rec709
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Camera2 {
+ inputs 0
+ translate {0 1.184703231 5.879937649}
+ rotate {-0.7585932526 0 0}
+ name Camera1
+ xpos 566
+ ypos -2203
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0.1411000043 0.3187749982 0.8299999833 1}
+ format "640 480 0 0 640 480 1 PC_Video"
+ name Constant2
+ xpos 1029
+ ypos -2541
+}
+Ramp {
+ output alpha
+ p0 {98 4}
+ p1 {102 480}
+ name Ramp1
+ xpos 1029
+ ypos -2445
+}
+Premult {
+ name Premult3
+ xpos 1029
+ ypos -2386
+}
+BasicMaterial {
+ name BasicMaterial1
+ xpos 1029
+ ypos -2316
+}
+Card2 {
+ translate {0 0 -1.169999957}
+ scaling {4 30 1}
+ type bicubic
+ uv_position {0.3576921821 0.01217948645}
+ control_points {3 3 3 6 
+
+1 {-0.5059999824 -0.375 1.659999967} 0 {0.004000008106 0 -1.029999971} 0 {0 0 0} 0 {0 0.1250000149 -0.009999990463} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.375 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1250000149 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.4939999878 -0.375 1.659999967} 0 {0 0 0} 0 {-0.005999982357 0 -1.039999962} 0 {0 0.1250000149 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5059999824 0 1.659999967} 0 {0.004000008106 0 -1.029999971} 0 {0 0 0} 0 {0 0.125 0} 0 {0 -0.125 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.125 0} 0 {0 -0.125 0} 0 {0.5 0.5 0} 
+1 {0.4939999878 0 1.659999967} 0 {0 0 0} 0 {-0.005999982357 0 -1.039999962} 0 {0 0.125 0} 0 {0 -0.125 0} 0 {1 0.5 0} 
+1 {-0.5059999824 0.375 1.659999967} 0 {0.004000008106 0 -1.029999971} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1250000149 -0.009999990463} 0 {0 1 0} 
+1 {0 0.375 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1250000149 0} 0 {0.5 1 0} 
+1 {0.4939999878 0.375 1.659999967} 0 {0 0 0} 0 {-0.005999982357 0 -1.039999962} 0 {0 0 0} 0 {0 -0.1250000149 -0.009999990463} 0 {1 1 0} }
+ drawPosition {-0.1717690974 -0.3658653796 0.1476006508}
+ name Card2
+ xpos 1029
+ ypos -2261
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "256 256 0 0 256 256 1 square_256"
+ name Constant5
+ xpos 130
+ ypos -2891
+}
+set N498fc800 [stack 0]
+Noise {
+ zoffset {{frame/50}}
+ center {128 128}
+ name Noise1
+ xpos 130
+ ypos -2756
+ postage_stamp true
+}
+push $N498fc800
+Dot {
+ name Dot3
+ xpos 282
+ ypos -2864
+}
+Radial {
+ area {2 2.5 254 253.5}
+ name Radial1
+ xpos 248
+ ypos -2832
+ postage_stamp true
+}
+Merge2 {
+ inputs 2
+ operation multiply
+ name Merge1
+ xpos 248
+ ypos -2732
+}
+Transform {
+ rotate {{frame*2 i}}
+ center {128 128}
+ name Transform1
+ xpos 248
+ ypos -2698
+}
+Crop {
+ box {0 0 256 256}
+ reformat true
+ crop false
+ name Crop1
+ xpos 248
+ ypos -2659
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "256 256 0 0 256 256 1 square_256"
+ last 20
+ name Constant4
+ xpos 370
+ ypos -2785
+}
+Noise {
+ size 205
+ zoffset 2.894736835
+ lacunarity 2.06
+ gain 0.55
+ gamma 0.355
+ center {1024 778}
+ name Noise2
+ xpos 370
+ ypos -2698
+ postage_stamp true
+}
+Grade {
+ gamma 0.41
+ name Grade1
+ xpos 370
+ ypos -2609
+}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy1
+ xpos 248
+ ypos -2614
+}
+Premult {
+ name Premult1
+ xpos 248
+ ypos -2561
+}
+BlendMat {
+ surfaceblend modulate
+ name BlendMat1
+ xpos 248
+ ypos -2512
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "256 256 0 0 256 256 1 square_256"
+ name Constant3
+ xpos 808
+ ypos -2658
+}
+Roto {
+ output alpha
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x43000000 x43000000}
+    {a}
+    {curvegroup Bezier4 512 bezier
+     {{cc
+       {f 8192}
+       {px x42a00000
+        {xc1480000 x3fc00000}
+        {x42d45581 x4235554d}
+        {x41480000 xbfc00000}
+        {xc0e00000 xc1dc0000}
+        {x43038000 x428a0000}
+        {x40e00000 x41dc0000}
+        {xc1151279 xc06b0d30}
+        {x430c8000 x42dc0000}
+        {x41151279 x406b0d30}
+        {xc0d00000 x41c00000}
+        {x432baac1 x42a9aaa6}
+        {x40d00000 xc1c00000}
+        {xc0a1cf03 x40487896}
+        {x4349aac1 x427d554d}
+        {x40a1cf03 xc0487896}
+        {x40400000 x41900000}
+        {x43642ac1 x4247554d}
+        {xc0400000 xc1900000}
+        {x41980000 x40200000}
+        {x43392ac1 x41a6aa99}
+        {xc1980000 xc0200000}
+        {xc0200000 xc1400000}
+        {x4295555a x41d6aa99}
+        {x40200000 x41400000}}}     idem}
+     {t
+      {{x42a00000 x43118000}}
+      {{x42a00000 x424c8000}}     0
+      {{x42a00000 0}}
+      {{x42a00000 0}}     0 0 0
+      {{x42a00000 0}}
+      {{x42a00000 1}}
+      {{x42a00000 1}}     1
+      {{x42a00000 0}}}
+     {a spx x43000000 spy x43000000 sb 1 ltn x42a00000 ltm x42a00000 tt x40800000}}
+    {curvegroup Bezier3 512 bezier
+     {{cc
+       {f 8192}
+       {px x42a00000
+        {x41300000 xc0a00000}
+        {x41f55567 x4342553f}
+        {xc1300000 x40a00000}
+        {xc1e40000 x40e00000}
+        {x4299555a x4362d53f}
+        {x41e40000 xc0e00000}
+        {x41980000 x41c40000}
+        {x42e45581 x4347553f}
+        {xc1980000 xc1c40000}
+        {x41d40000 x41200000}
+        {x42b5555a x431a553f}
+        {xc1d40000 xc1200000}
+        {0 xc1840000}
+        {x4218aab3 x4323553f}
+        {0 x41840000}}}     idem}
+     {t
+      {{x42a00000 x4292cccd}}
+      {{x42a00000 x43334ccd}}     0
+      {{x42a00000 0}}
+      {{x42a00000 0}}     0 0 0
+      {{x42a00000 0}}
+      {{x42a00000 1}}
+      {{x42a00000 1}}     1
+      {{x42a00000 0}}}
+     {a spx x43000000 spy x43000000 sb 1 ltn x42a00000 ltm x42a00000 tt x40800000}}
+    {curvegroup Bezier2 512 bezier
+     {{cc
+       {f 8192}
+       {px x42a00000
+        {x40d5b131 x41767c85}
+        {x42f85581 x4336d53f}
+        {xc0d5b11c xc1767c85}
+        {xc13e7bb3 x4107a5b9}
+        {x43322ac1 x431b553f}
+        {x413e7bb3 xc107a5b9}
+        {xc0ba028a xc1568e22}
+        {x43592ac1 x42bfaaa6}
+        {x40ba028a x41568e22}
+        {x415ad4fe xc11bd59b}
+        {x434e2ac1 x4348d53f}
+        {xc15ad4fe x411bd59b}}}     idem}
+     {t
+      {{x42a00000 x430c0000}}
+      {{x42a00000 x42318000}}     0
+      {{x42a00000 0}}
+      {{x42a00000 0}}     0 0 0
+      {{x42a00000 0}}
+      {{x42a00000 1}}
+      {{x42a00000 1}}     1
+      {{x42a00000 0}}}
+     {a spx x43000000 spy x43000000 sb 1 ltn x42a00000 ltm x42a00000 tt x40800000}}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {px x42a00000
+        {xc0c00000 x41c80000}
+        {x41fd5567 x42dcaa7f}
+        {x40c00000 xc1c80000}
+        {xc1b80000 xc1000000}
+        {x4266aab3 x428caaa6}
+        {x41b80000 x41000000}
+        {xc0a00000 x40400000}
+        {x42bb555a x4296aaa6}
+        {x40a00000 xc0400000}
+        {x41980000 xc0400000}
+        {x429b555a x4304553f}
+        {xc1980000 x40400000}}}     idem}
+     {t
+      {{x42a00000 x42890000}}
+      {{x42a00000 x42b18000}}     0
+      {{x42a00000 0}}
+      {{x42a00000 0}}     0 0 0
+      {{x42a00000 0}}
+      {{x42a00000 1}}
+      {{x42a00000 1}}     1
+      {{x42a00000 0}}}
+     {a spx x43000000 spy x43000000 sb 1 ltn x42a00000 ltm x42a00000 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ colorOverlay 0
+ lifetime_type "all frames"
+ lifetime_start 80
+ lifetime_end 80
+ view {}
+ motionblur_on true
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ name Roto1
+ xpos 808
+ ypos -2568
+}
+Card2 {
+ lens_in_focal 2.9
+ translate {-0.00400000019 0 0}
+ rotate {-90 0 0}
+ uniform_scale 0.28
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card1
+ xpos 808
+ ypos -2512
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ emit_from faces
+ rate 200
+ rate_variation 1
+ rate_channel rgba.alpha
+ lifetime 200
+ lifetime_variation 1
+ halflife 10
+ velocity 0.11
+ velocity_variation 1
+ size 0.36
+ start_frame_animation random
+ frame_advance constant
+ name ParticleEmitter1
+ xpos 676
+ ypos -2512
+}
+ParticleDrag {
+ drag 0.47
+ name ParticleDrag1
+ xpos 676
+ ypos -2466
+}
+ParticleTurbulence {
+ strength {0.005 0.005 0.005}
+ name ParticleTurbulence1
+ xpos 676
+ ypos -2411
+}
+ParticleCurve {
+ curves {r {}
+   g {}
+   b {}
+   a {}
+   size {curve 0.5377450585 s0 t-0.3000000119 0.01470589638}
+   mass {}}
+ affect_size true
+ name ParticleCurve1
+ xpos 676
+ ypos -2360
+}
+Scene {
+ inputs 2
+ name Scene1
+ xpos 686
+ ypos -2282
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ name Constant1
+ xpos 800
+ ypos -2206
+}
+ScanlineRender {
+ inputs 3
+ motion_vectors_type velocity
+ name ScanlineRender1
+ xpos 676
+ ypos -2182
+}
+Viewer {
+ frame_range 1-100
+ frame_range_lock true
+ downrez 2
+ roi {-0.2419999987 -0.5559999943 0.1930000037 0.3950000107}
+ input_process false
+ grid_display false
+ name Viewer1
+ xpos 676
+ ypos -2119
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x9b9b9bff
+ label "Disable Premult in when in 3D View to see\na better representation of the textures."
+ note_font_size 18
+ xpos -100
+ ypos -2574
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x335959ff
+ label "<b>author: THE FOUNDRY        ."
+ note_font_size 20
+ xpos 1308
+ ypos -2444
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0x969600ff
+ label "<b>https://www.youtube.com/watch?v=olxBfdbHKWo&ab_channel=Foundry%2Cimaginationengineered        ."
+ note_font_size 20
+ xpos 1311
+ ypos -2384
+}

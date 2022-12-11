@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 13.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<svg version="1.2" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 x="0px" y="0px" width="72px" height="72px" viewBox="0 0 72 72" xml:space="preserve">
+<g>
+	<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="36" x2="72" y2="36">
+		<stop  offset="0" style="stop-color:#C60ADA"/>
+		<stop  offset="0.2637" style="stop-color:#DCDC00"/>
+		<stop  offset="0.522" style="stop-color:#28C728"/>
+		<stop  offset="0.7692" style="stop-color:#0844C7"/>
+		<stop  offset="1" style="stop-color:#D22828"/>
+	</linearGradient>
+	<path fill="url(#SVGID_1_)" d="M72,68.4c0,1.988-1.611,3.6-3.6,3.6H3.6C1.612,72,0,70.389,0,68.4V3.6C0,1.612,1.612,0,3.6,0h64.8
+		C70.389,0,72,1.612,72,3.6V68.4z"/>
+	<path fill="#CCCCCC" stroke="#000000" stroke-width="2" d="M36,9c14.912,0,27,12.088,27,27c0,14.911-12.088,27-27,27
+		C21.089,63,9,50.911,9,36C9,21.088,21.089,9,36,9z M27.09,36c0,4.92,3.99,8.909,8.91,8.909c4.92,0,8.91-3.989,8.91-8.909
+		s-3.99-8.911-8.91-8.911C31.08,27.089,27.09,31.08,27.09,36z"/>
+	<path fill="none" stroke="#000000" stroke-width="2" d="M36.031,9c-4.468,4.375-8.781,16.938-7.698,22.48"/>
+	<path fill="none" stroke="#000000" stroke-width="2" d="M43.743,40.413C44.625,46.813,39.812,58.374,36,63"/>
+	<path fill="none" stroke="#000000" stroke-width="2" d="M28.456,40.392C22.688,39.437,13.312,29.375,12.688,22.5"/>
+	<path fill="none" stroke="#000000" stroke-width="2" d="M36.088,44.798c-3.838,4.201-17.462,6.639-23.463,4.641"/>
+	<path fill="none" stroke="#000000" stroke-width="2" d="M59.375,22.5c-5.624-2.187-19.093,0.435-23.285,4.545"/>
+	<path fill="none" stroke="#000000" stroke-width="2" d="M43.744,31.537C49.5,33.375,59.25,43.063,59.312,49.5"/>
+</g>
+</svg>

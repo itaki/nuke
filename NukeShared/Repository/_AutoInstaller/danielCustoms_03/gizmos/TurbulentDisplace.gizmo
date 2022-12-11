@@ -1,0 +1,162 @@
+Group {
+ name TurbulentDisplace
+ inputs 2
+ help "by Daniel van der Kaaden\nversion 2.2"
+ tile_color 0x9f6fb3ff
+ addUserKnob {20 User}
+ addUserKnob {41 amount T IDistort1.uv_scale}
+ addUserKnob {41 size T Noise1.size}
+ addUserKnob {41 evolution T Noise1.zoffset}
+ addUserKnob {26 noiseControlsText l "" +STARTLINE}
+ addUserKnob {41 blur T Blur1.size}
+ addUserKnob {41 detail T Noise1.lacunarity}
+ addUserKnob {41 gain T Noise1.gain}
+ addUserKnob {41 gamma T Noise1.gamma}
+ addUserKnob {26 formatLine l "" +STARTLINE}
+ addUserKnob {41 format T Constant1.format}
+ addUserKnob {26 maskLine l "" +STARTLINE}
+ addUserKnob {26 maskName l "mask (alpha)" T ""}
+ addUserKnob {41 inject -STARTLINE T Multiply1.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Multiply1.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Multiply1.fringe}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos 123
+  ypos -302
+  number 1
+ }
+ Invert {
+  name Invert1
+  xpos 123
+  ypos -29
+ }
+ Dot {
+  name Dot5
+  xpos 157
+  ypos 134
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant1
+  xpos -258
+  ypos -314
+ }
+ Noise {
+  output {rgba.red -rgba.green -rgba.blue none}
+  size 100
+  zoffset 1
+  center {1600 900}
+  name Noise1
+  xpos -258
+  ypos -184
+ }
+ Grade {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  add -0.2595
+  black_clamp false
+  name Grade1
+  xpos -258
+  ypos -143
+ }
+ Dot {
+  name Dot2
+  xpos -224
+  ypos -100
+ }
+set N8633f800 [stack 0]
+ Shuffle {
+  red black
+  green red
+  name Shuffle1
+  xpos -148
+  ypos -104
+ }
+ Mirror2 {
+  flop true
+  name Mirror2_1
+  xpos -38
+  ypos -104
+ }
+ Dot {
+  name Dot3
+  xpos -4
+  ypos -22
+ }
+push $N8633f800
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge1
+  xpos -258
+  ypos -26
+ }
+ Blur {
+  name Blur1
+  xpos -258
+ }
+ Multiply {
+  inputs 1+1
+  value 0
+  name Multiply1
+  selected true
+  xpos -258
+  ypos 125
+  disable {{"\[exists parent.input1.name]==0"}}
+ }
+set Nd690a000 [stack 0]
+ Dot {
+  name Dot1
+  xpos -224
+  ypos 237
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos -447
+  ypos -304
+ }
+ Dot {
+  name Dot4
+  xpos -413
+  ypos -100
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name Copy2
+  xpos -447
+  ypos 220
+ }
+ IDistort {
+  uv forward
+  uv_scale 50
+  name IDistort1
+  xpos -447
+  ypos 288
+ }
+ Remove {
+  channels forward
+  name Remove1
+  xpos -447
+  ypos 386
+ }
+ Output {
+  name Output1
+  xpos -447
+  ypos 633
+ }
+push $Nd690a000
+ Viewer {
+  frame_range 1-100
+  fps 25
+  name Viewer1
+  xpos 148
+  ypos 439
+ }
+end_group

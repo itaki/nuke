@@ -1,0 +1,301 @@
+Gizmo {
+icon TimeMorph_Node.png
+ inputs 4
+ knobChanged "n = nuke.thisNode()\n\nif n.input(1) ==None :\n    n\['vectoroutput'].setEnabled(False)\nelse:\n    n\['vectoroutput'].setEnabled(True)\n    \n    \nif n.input(2) ==None :\n    n\['usecleanplate'].setEnabled(False)\nelse:\n    n\['usecleanplate'].setEnabled(True)"
+ tile_color 0x7050bff
+ note_font Verdana
+ note_font_color 0x857fa3ff
+ lock_connections true
+ addUserKnob {20 User}
+ addUserKnob {41 channels l Channels T IDistort15.channels}
+ addUserKnob {26 _____________________ l "" +STARTLINE}
+ addUserKnob {3 projectfirst l "Frame Range"}
+ projectfirst 1
+ addUserKnob {3 projectlast l "" -STARTLINE}
+ projectlast 100
+ addUserKnob {22 setprojectrange l "Set to Project" -STARTLINE T "projectFirst = nuke.Root()\['first_frame'].value()\nprojectLast = nuke.Root()\['last_frame'].value()\n\nnuke.thisNode()\['projectfirst'].setValue(projectFirst)\nnuke.thisNode()\['projectlast'].setValue(projectLast)"}
+ addUserKnob {26 ____________________________________ l " " T " "}
+ addUserKnob {26 _______________ l INVISIBLE +INVISIBLE}
+ addUserKnob {3 framesahead l "Frames Ahead"}
+ framesahead 2
+ addUserKnob {6 usecleanplate l "Use Cleanplate Only" -STARTLINE +DISABLED}
+ usecleanplate true
+ addUserKnob {26 ""}
+ addUserKnob {20 vectorgroup l "Vector Generator Settings" n 1}
+ addUserKnob {41 useGPUIfAvailable l "Use GPU if available" T VectorGenerator1.useGPUIfAvailable}
+ addUserKnob {41 vectorDetailReg l "Vector Detail" T VectorGenerator1.vectorDetailReg}
+ addUserKnob {41 strengthReg l Strength T VectorGenerator1.strengthReg}
+ addUserKnob {4 vectoroutput l Output +DISABLED M {Foreground "Background " ""}}
+ vectoroutput "Background "
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ______________ l " " T " "}
+ addUserKnob {26 credits l "" +STARTLINE T "<font size=\"5\"><span style=\"color:#575757;\">TimeMorph<font size=\"2\"><span style=\"color:#5a5a5a;\"> v1.0 &nbsp; │ &nbsp; <font size=\"1\">B Y &nbsp; D A M I A N &nbsp; B I N D E R"}
+}
+ Input {
+  inputs 0
+  name Mask
+  xpos -144
+  ypos 337
+  number 3
+ }
+ Input {
+  inputs 0
+  name Source
+  xpos 199
+  ypos -714
+ }
+ Dot {
+  name Dot5
+  xpos 233
+  ypos -618
+ }
+set N500edb10 [stack 0]
+ Dot {
+  name Dot2
+  xpos 15
+  ypos -618
+ }
+set N500efc70 [stack 0]
+ Dot {
+  name Dot9
+  xpos -420
+  ypos -618
+ }
+ Dot {
+  name Dot10
+  xpos -420
+  ypos 340
+ }
+ Input {
+  inputs 0
+  name CleanPlate
+  xpos -161
+  ypos -450
+  number 2
+ }
+ Dot {
+  name Dot3
+  xpos -127
+  ypos -356
+ }
+set N53434410 [stack 0]
+ Retime {
+  input.first {{parent.projectfirst}}
+  input.first_lock true
+  input.last {{parent.projectlast}}
+  input.last_lock true
+  output.first {{parent.projectfirst}}
+  output.first_lock true
+  output.last {{(parent.projectlast/0.5-parent.projectfirst)+1}}
+  output.last_lock true
+  speed 0.5
+  before continue
+  after continue
+  filter nearest
+  time ""
+  name Retime1
+  xpos -161
+  ypos -294
+ }
+ Remove {
+  channels alpha
+  name Remove2
+  xpos -161
+  ypos -249
+ }
+ Dot {
+  name Dot7
+  xpos -127
+  ypos -199
+ }
+ Input {
+  inputs 0
+  name FgMatte
+  xpos 199
+  ypos -495
+  number 1
+ }
+ Dot {
+  name Dot1
+  xpos 233
+  ypos -399
+ }
+set N534b2310 [stack 0]
+ TimeOffset {
+  time_offset {{-parent.framesahead}}
+  time ""
+  name TimeOffset2
+  xpos 105
+  ypos -402
+ }
+push $N500efc70
+ TimeOffset {
+  time_offset {{-parent.framesahead}}
+  time ""
+  name TimeOffset4
+  xpos -19
+  ypos -515
+ }
+set N9c9000 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -19
+  ypos -406
+  disable {{"!\[exists parent.input1]"}}
+ }
+ Retime {
+  input.first {{parent.projectfirst}}
+  input.first_lock true
+  input.last {{parent.projectlast}}
+  input.last_lock true
+  output.first {{parent.projectfirst}}
+  output.first_lock true
+  output.last {{(parent.projectlast/0.5-parent.projectfirst)+1}}
+  output.last_lock true
+  speed 0.5
+  before continue
+  after continue
+  filter nearest
+  time ""
+  name Retime4
+  xpos -19
+  ypos -294
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input2] * parent.usecleanplate"}}
+  name Switch1
+  xpos -19
+  ypos -202
+ }
+push $N534b2310
+push $N500edb10
+ Dot {
+  name Dot4
+  xpos 445
+  ypos -618
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 411
+  ypos -406
+  disable {{"!\[exists parent.input1]"}}
+ }
+ Retime {
+  input.first {{parent.projectfirst}}
+  input.first_lock true
+  input.last {{parent.projectlast}}
+  input.last_lock true
+  output.first {{parent.projectfirst}}
+  output.first_lock true
+  output.last {{(parent.projectlast/0.5-parent.projectfirst)+1}}
+  output.last_lock true
+  speed 0.5
+  before continue
+  after continue
+  filter nearest
+  time ""
+  name Retime3
+  xpos 411
+  ypos -298
+ }
+ Dot {
+  name Dot6
+  xpos 445
+  ypos -201
+ }
+ Switch {
+  inputs 2
+  which {{"(frame - parent.projectfirst)%2"}}
+  name Switch2
+  xpos 203
+  ypos -95
+ }
+ VectorGenerator {
+  motionEstimation Regularized
+  vectorDetailReg 0.4
+  strengthReg 1.4
+  matteChannel {{useMatte==1?1:0}}
+  output {{parent.vectoroutput}}
+  name VectorGenerator1
+  xpos 203
+  ypos -14
+  addUserKnob {20 User}
+  addUserKnob {6 useMatte l "use matte" +STARTLINE}
+  useMatte {{"\[exists parent.input1]"}}
+ }
+ Retime {
+  input.first {{parent.projectfirst}}
+  input.first_lock true
+  input.last {{(parent.projectlast/0.5-parent.projectfirst)+1}}
+  input.last_lock true
+  output.first {{parent.projectfirst}}
+  output.first_lock true
+  output.last {{parent.projectlast}}
+  output.last_lock true
+  speed 2
+  filter none
+  time ""
+  name RetimeDoubleSpeed
+  xpos 203
+  ypos 73
+ }
+push $N53434410
+push $N9c9000
+ Dot {
+  name Dot8
+  xpos -288
+  ypos -512
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input2] * parent.usecleanplate"}}
+  name Switch3
+  xpos -322
+  ypos -359
+ }
+ Copy {
+  inputs 2
+  from0 forward.u
+  to0 forward.u
+  from1 forward.v
+  to1 forward.v
+  name Copy15
+  xpos -322
+  ypos 64
+ }
+ IDistort {
+  channels rgb
+  uv forward
+  filter Lanczos4
+  name IDistort15
+  xpos -322
+  ypos 153
+ }
+ Remove {
+  channels motion
+  name Remove1
+  xpos -322
+  ypos 232
+ }
+ Keymix {
+  inputs 3
+  channels {{{IDistort15.channels}}}
+  invertMask true
+  name Keymix1
+  xpos -322
+  ypos 337
+  disable {{"!\[exists parent.input3]"}}
+ }
+ Output {
+  name Output1
+  xpos -322
+  ypos 430
+ }
+end_group

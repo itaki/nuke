@@ -1,0 +1,4738 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+#write_info Write1 file:"" format:"1920 1080 1" chans:":rgba.red:rgba.green:rgba.blue:" framerange:"205 229" fps:"24" colorspace:"default" datatype:"unknown" transfer:"unknown" views:"main" timecode:"00:00:00:00" colorManagement:"Nuke"
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/.nuke/Particles/Weather/dustHit/DustHit.nk
+ frame 226
+ first_frame 205
+ last_frame 229
+ lock_range true
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x3f3f3fff
+ label DustHits
+ note_font_size 32
+ note_font_color 0xffffffff
+ xpos 1191
+ ypos -325
+ bdwidth 1364
+ bdheight 465
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode2
+ tile_color 0x3f3f3fff
+ label "Camera Track\n"
+ note_font_size 32
+ note_font_color 0xffffffff
+ xpos 796
+ ypos -384
+ bdwidth 344
+ bdheight 386
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0x3f3f3fff
+ label "Render Dust Hits"
+ note_font_size 32
+ note_font_color 0xffffffff
+ xpos 1073
+ ypos 336
+ bdwidth 220
+ bdheight 320
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode4
+ tile_color 0x3f3f3fff
+ label "Grade and Merge"
+ note_font_size 32
+ note_font_color 0xffffffff
+ xpos 698
+ ypos 711
+ bdwidth 260
+ bdheight 191
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode5
+ tile_color 0x33449901
+ note_font "Helvetica Bold"
+ note_font_size 100
+ xpos 678
+ ypos -1299
+ bookmark false
+ bdwidth 662
+ bdheight 283
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode6
+ tile_color 0x601e8e01
+ note_font "Helvetica Bold"
+ note_font_size 100
+ xpos 688
+ ypos -668
+ bookmark false
+ bdwidth 1897
+ bdheight 1894
+}
+CheckerBoard2 {
+ inputs 0
+ name CheckerBoard2
+ xpos 1201
+ ypos -239
+}
+Sphere {
+ name Sphere1
+ xpos 1201
+ ypos -144
+}
+CheckerBoard2 {
+ inputs 0
+ name CheckerBoard3
+ xpos 1552
+ ypos -242
+}
+Sphere {
+ name Sphere2
+ xpos 1552
+ ypos -147
+}
+CheckerBoard2 {
+ inputs 0
+ name CheckerBoard4
+ xpos 1882
+ ypos -245
+}
+Sphere {
+ name Sphere3
+ xpos 1882
+ ypos -150
+}
+CheckerBoard2 {
+ inputs 0
+ name CheckerBoard5
+ xpos 2242
+ ypos -238
+}
+Sphere {
+ name Sphere4
+ xpos 2242
+ ypos -143
+}
+Camera {
+ inputs 0
+ translate {{CameraTracker1.camTranslate} {CameraTracker1.camTranslate} {CameraTracker1.camTranslate}}
+ rotate {{CameraTracker1.camRotate} {CameraTracker1.camRotate} {CameraTracker1.camRotate}}
+ focal {{CameraTracker1.focalLength}}
+ haperture {{CameraTracker1.aperture.x}}
+ vaperture {{CameraTracker1.aperture.y}}
+ win_translate {{CameraTracker1.windowTranslate} {CameraTracker1.windowTranslate}}
+ win_scale {{CameraTracker1.windowScale} {CameraTracker1.windowScale}}
+ name Camera1
+ xpos 1059
+ ypos -148
+}
+set Nae6cc400 [stack 0]
+Dot {
+ name Dot2
+ xpos 1083
+ ypos 440
+}
+set Nae66b800 [stack 0]
+push $Nae66b800
+Axis2 {
+ inputs 0
+ uniform_scale 0.03
+ name Axis1
+ xpos 1410
+ ypos -141
+}
+Group {
+ inputs 0
+ name P_DustHit
+ xpos 1300
+ ypos -142
+ addUserKnob {20 User l "Hit Setup"}
+ addUserKnob {6 preview l "Enable Preview Mode" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {3 dustHit_startFrame l "Start Frame"}
+ dustHit_startFrame 216
+ addUserKnob {3 dustHit_emitTime l "Emit Time"}
+ dustHit_emitTime 2
+ addUserKnob {26 ""}
+ addUserKnob {6 useCustomImg l "Use Custom Image" +STARTLINE}
+ addUserKnob {4 dustHit_emissionGeo l "Emission Geo" M {Cylinder Plane "Custom from input..."}}
+ addUserKnob {26 ""}
+ addUserKnob {3 dustHit_seed l Seed}
+ dustHit_seed 10
+ addUserKnob {20 InitialState l "Initial State"}
+ addUserKnob {7 dustHit_emitRate l Amount R 0 100}
+ dustHit_emitRate 100
+ addUserKnob {7 dustHit_startSize l Size R 0.01 5}
+ dustHit_startSize 0.5
+ addUserKnob {7 dustHit_emitVelocity l Speed}
+ dustHit_emitVelocity 0.195
+ addUserKnob {7 dustHit_randomVelMult l "Speed Randomness"}
+ addUserKnob {7 dustHit_spread l Spread}
+ addUserKnob {7 dustHit_life l Life R 1 100}
+ dustHit_life 50
+ addUserKnob {20 Look}
+ addUserKnob {7 dustHit_expandRate l "Growth Rate"}
+ dustHit_expandRate 1
+ addUserKnob {7 dustHit_startOpacity l Opacity}
+ dustHit_startOpacity 0.1
+ addUserKnob {7 opacityFadeRate l "Opacity Fade Rate"}
+ opacityFadeRate 0.4
+ addUserKnob {7 randomRotation l "Random Rotation"}
+ addUserKnob {20 Forces}
+ addUserKnob {7 drag l Drag}
+ drag 0.5
+ addUserKnob {7 dustHit_gravityMult l "Gravity Mult" R -5 5}
+ addUserKnob {7 turbulenceMult l "Turbulence Amount" R 0 2}
+ turbulenceMult 0.3
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode10
+  tile_color 0x68a85aff
+  label "Set initial opacity."
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 253
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode11
+  tile_color 0x68a85aff
+  label "Set particle growth"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 609
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode12
+  tile_color 0x68a85aff
+  label "B Channel randomisation"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 892
+  bdwidth 310
+  bdheight 131
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode13
+  tile_color 0x68a85aff
+  label "Set opacity falloff"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -267
+  ypos 792
+  bdwidth 280
+  bdheight 109
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode14
+  tile_color 0x454554ff
+  label "Dust Hit System"
+  note_font_size 42
+  note_font_color 0xd2d2ffff
+  xpos -925
+  ypos -982
+  bdwidth 1054
+  bdheight 2236
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x7171c600
+  label "Setup sprite presets"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -573
+  ypos -880
+  bdwidth 357
+  bdheight 463
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x68a85aff
+  label "Set opacity falloff"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -536
+  ypos 866
+  bdwidth 280
+  bdheight 109
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xc65353ff
+  label "Choose source geo."
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -251
+  ypos -383
+  bdwidth 305
+  bdheight 299
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x68a85aff
+  label "Setup Emitter system"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -535
+  ypos -34
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x68a85aff
+  label "Set growth over time"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -534
+  ypos 667
+  bdwidth 280
+  bdheight 109
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x68a85aff
+  label "Add initial opacity"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -538
+  ypos 202
+  bdwidth 287
+  bdheight 122
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x68a85aff
+  label "Add system forces"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 410
+  bdwidth 281
+  bdheight 171
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x8e388e00
+  label "3D Preview Geo"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -603
+  ypos -361
+  bdwidth 275
+  bdheight 167
+  z_order 1
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote3
+  label "Here I've set two pre-defined options\nfor emission geo, but I'm also allowing\ncustom geo to be used."
+  xpos -176
+  ypos -324
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote8
+  label "The emitter is set up as normal, except\nfor the expressions on 'emission_rate', \n'max lifetime', 'velocity', 'size' 'spread'\nand 'seed', that take our UI values into account"
+  xpos -774
+  ypos 14
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  format "1024 1024 0 0 1024 1024 1 square_1K"
+  name Constant1
+  xpos -587
+  ypos -308
+ }
+ BlendMat {
+  surfaceblend "vertex color"
+  name BlendMat1
+  xpos -587
+  ypos -236
+ }
+ Input {
+  inputs 0
+  name Img
+  xpos -314
+  ypos -522
+ }
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat3
+  xpos -314
+  ypos -465
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  format "256 256 0 0 256 256 1 square_256"
+  name Constant2
+  xpos -438
+  ypos -787
+ }
+set Nae621c00 [stack 0]
+ Noise {
+  output alpha
+  size 100
+  zoffset {{"(frame/100) + parent.dustHit_seed"}}
+  gain 0.6
+  gamma 1
+  center {960 540}
+  name Noise1
+  xpos -542
+  ypos -690
+ }
+ Roto {
+  output alpha
+  premultiply alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41100000
+        {xc28bba60 0}
+        {x42fd0000 x40400000}
+        {x428bba60 0}
+        {0 xc28c47c3}
+        {x437d0000 x43020000}
+        {0 x428c47c4}
+        {x428bba60 0}
+        {x42fd0000 x43808000}
+        {xc28bba60 0}
+        {0 x428c47c4}
+        {0 x43020000}
+        {0 xc28c47c3}}}     idem}
+     {t
+   {{x41100000 x42fd0000}}
+   {{x41100000 x43020000}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}  x3f8ccccd x3f8ccccd
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}}
+     {a fx xc2860000 fy xc2860000 osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x41100000 ltm x41100000 tt x40e00000 bm x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {128 128}
+  colorOverlay {0 0 0 0}
+  blending_mode multiply
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  feather -67
+  source_black_outside true
+  name Roto2
+  xpos -542
+  ypos -658
+ }
+ Premult {
+  name Premult1
+  xpos -542
+  ypos -626
+ }
+push $Nae621c00
+ Noise {
+  output alpha
+  size 90
+  zoffset {{"(frame/100)+100 + parent.dustHit_seed"}}
+  gamma 0.8
+  center {960 540}
+  name Noise3
+  xpos -438
+  ypos -690
+ }
+ Roto {
+  output alpha
+  premultiply alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41100000
+        {xc28bba60 0}
+        {x42fd0000 x40400000}
+        {x428bba60 0}
+        {0 xc28c47c3}
+        {x437d0000 x43020000}
+        {0 x428c47c4}
+        {x428bba60 0}
+        {x42fd0000 x43808000}
+        {xc28bba60 0}
+        {0 x428c47c4}
+        {0 x43020000}
+        {0 xc28c47c3}}}     idem}
+     {t
+   {{x41100000 x42fd0000}}
+   {{x41100000 x43020000}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}  x3f8ccccd x3f8ccccd
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}}
+     {a fx xc2860000 fy xc2860000 osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x41100000 ltm x41100000 tt x40e00000 bm x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {128 128}
+  colorOverlay {0 0 0 0}
+  blending_mode multiply
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  feather -67
+  source_black_outside true
+  name Roto3
+  xpos -438
+  ypos -658
+ }
+ Premult {
+  name Premult2
+  xpos -438
+  ypos -626
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge1
+  xpos -495
+  ypos -583
+ }
+push $Nae621c00
+ Noise {
+  output alpha
+  size 80
+  zoffset {{"200 + (frame/100) + parent.dustHit_seed"}}
+  gamma 0.7
+  center {960 540}
+  name Noise4
+  xpos -332
+  ypos -690
+ }
+ Roto {
+  output alpha
+  premultiply alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41100000
+        {xc28bba60 0}
+        {x42fd0000 x40400000}
+        {x428bba60 0}
+        {0 xc28c47c3}
+        {x437d0000 x43020000}
+        {0 x428c47c4}
+        {x428bba60 0}
+        {x42fd0000 x43808000}
+        {xc28bba60 0}
+        {0 x428c47c4}
+        {0 x43020000}
+        {0 xc28c47c3}}}     idem}
+     {tx x41100000 x42fd0000 x43020000}
+     {a fx xc2860000 fy xc2860000 osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x41100000 ltm x41100000 tt x40e00000 bm x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {128 128}
+  colorOverlay {0 0 0 0}
+  blending_mode multiply
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  feather -67
+  source_black_outside true
+  name Roto4
+  xpos -332
+  ypos -658
+ }
+ Premult {
+  name Premult3
+  xpos -332
+  ypos -626
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge2
+  xpos -435
+  ypos -547
+ }
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat2
+  xpos -435
+  ypos -523
+ }
+ Switch {
+  inputs 2
+  which {{parent.useCustomImg}}
+  name Switch1
+  xpos -435
+  ypos -465
+ }
+ Switch {
+  inputs 2
+  which {{parent.preview}}
+  name Switch4
+  xpos -435
+  ypos -236
+ }
+ Dot {
+  name Dot5
+  xpos -401
+  ypos -179
+ }
+ Input {
+  inputs 0
+  name Axis
+  xpos -218
+  ypos -133
+  number 1
+ }
+ Input {
+  inputs 0
+  name Geo
+  xpos -209
+  ypos -196
+  number 2
+ }
+ Card2 {
+  inputs 0
+  image_aspect false
+  rotate {-90 0 0}
+  uniform_scale 0.3
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Card1
+  xpos -158
+  ypos -242
+ }
+ Cylinder {
+  inputs 0
+  rows 2
+  radius 0.25
+  height 0.125
+  translate {0 0.05999999866 0}
+  rotate {0 {frame*2} 0}
+  name Cylinder1
+  xpos -63
+  ypos -240
+ }
+ Switch {
+  inputs 3
+  which {{parent.dustHit_emissionGeo i}}
+  name Switch2
+  xpos -108
+  ypos -196
+ }
+ TransformGeo {
+  inputs 2
+  name TransformGeo1
+  xpos -108
+  ypos -133
+ }
+ Dot {
+  name Dot2
+  xpos -74
+  ypos 46
+ }
+push 0
+ ParticleEmitter {
+  inputs 3
+  rate {{"frame >= \[value startFrame] && frame <= \[value startFrame] + \[value emitTime] ? \[value amount] : 0"}}
+  lifetime {{life}}
+  lifetime_variation 0.772
+  velocity {{velocity_1}}
+  velocity_variation 1
+  size {{startSize}}
+  mass_variation 0.722
+  spread {{spread}}
+  input_order "in order"
+  start_frame_animation "in order"
+  seed {{seed_1}}
+  name ParticleEmitter2
+  selected true
+  xpos -435
+  ypos 43
+  addUserKnob {20 User}
+  addUserKnob {7 velocity_1 l velocity}
+  velocity_1 {{parent.dustHit_emitVelocity}}
+  addUserKnob {7 life}
+  life {{parent.dustHit_life}}
+  addUserKnob {3 startFrame}
+  startFrame {{parent.dustHit_startFrame}}
+  addUserKnob {3 seed_1 l seed}
+  seed_1 {{parent.dustHit_seed}}
+  addUserKnob {7 startSize}
+  startSize {{parent.dustHit_startSize}}
+  addUserKnob {3 emitTime}
+  emitTime {{parent.dustHit_emitTime}}
+  addUserKnob {7 amount}
+  amount {{parent.dustHit_emitRate}}
+  addUserKnob {7 spread_1 l spread}
+  spread_1 {{parent.dustHit_spread}}
+ }
+ ParticleExpression {
+  temp_name0 opacityVal
+  temp_expr0 "\[value opacity]"
+  opacityexpr opacityVal
+  name ParticleExpression7
+  xpos -435
+  ypos 266
+  addUserKnob {20 User}
+  addUserKnob {7 opacity}
+  opacity {{parent.dustHit_startOpacity}}
+ }
+ ParticleTurbulence {
+  strength {{parent.turbulenceMult} {parent.turbulenceMult} {parent.turbulenceMult}}
+  probability 0.3
+  max_age 0.2
+  name ParticleTurbulence2
+  xpos -435
+  ypos 467
+ }
+ ParticleGravity {
+  to {0 {gravityMult} 0}
+  name ParticleGravity2
+  xpos -435
+  ypos 499
+  addUserKnob {20 User}
+  addUserKnob {7 gravityMult R -1 1}
+  gravityMult {{parent.dustHit_gravityMult}}
+ }
+ ParticleDrag {
+  drag {{drag_1}}
+  name ParticleDrag2
+  xpos -435
+  ypos 535
+  addUserKnob {20 User}
+  addUserKnob {7 drag_1 l drag}
+  drag_1 {{parent.drag}}
+ }
+ ParticleExpression {
+  temp_name0 ageMultiplier
+  temp_expr0 "\[value growthRate] / 100"
+  sizeexpr "size + (age*ageMultiplier)"
+  name ParticleExpression3
+  xpos -435
+  ypos 713
+  addUserKnob {20 User}
+  addUserKnob {7 growthRate}
+  growthRate {{parent.dustHit_expandRate}}
+ }
+ ParticleExpression {
+  temp_name0 opacityStart
+  temp_expr0 3
+  temp_name1 opacityMult
+  temp_expr1 "\[value opacityFadeRate]"
+  opacityexpr "age > opacityStart ? opacity * opacityMult : opacity"
+  name ParticleExpression6
+  xpos -435
+  ypos 926
+  addUserKnob {20 User}
+  addUserKnob {7 opacityFadeRate}
+  opacityFadeRate {{"1 - parent.opacityFadeRate"}}
+ }
+ NoOp {
+  name System_Completed
+  tile_color 0xff00ff
+  note_font "Verdana Bold"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -435
+  ypos 1073
+ }
+ Output {
+  name Output1
+  xpos -435
+  ypos 1201
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote12
+  label "To enable better placement in the 3D view\nthe user can switch between the sprite and\na placeholder image for each spark."
+  xpos -837
+  ypos -305
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote4
+  label "Here we're setting the initial opacity\nof the particles based upon the UI values."
+  xpos -751
+  ypos 251
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote7
+  label "Here I'm setting the opacity of the particles\nto falloff over time, only if their age is greater\nthan 3. The falloff itself is also based upon age."
+  xpos -772
+  ypos 893
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote6
+  label "Using a simple expression on size, \nwe ca make the particles grow over\ntime. (Could be replaced with a \nParticleCurve node)."
+  xpos -725
+  ypos 673
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote5
+  label "Turbulence, gravity and drag are being added,\ntaking UI values into account where appropriate."
+  xpos -781
+  ypos 479
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "In this section, we're choosing between the exisiting\nsprite image (based upon an evolving Noise node)\nand an input from the 'Img' pipe on the main node."
+  xpos -517
+  ypos -835
+ }
+end_group
+TransformGeo {
+ inputs 2
+ name TransformGeo1
+ xpos 1300
+ ypos -45
+}
+Axis2 {
+ inputs 0
+ translate {0.0719999969 0 0.0700000003}
+ uniform_scale 0.03
+ name Axis2
+ xpos 1763
+ ypos -146
+}
+Group {
+ inputs 0
+ name P_DustHit1
+ xpos 1653
+ ypos -148
+ addUserKnob {20 User l "Hit Setup"}
+ addUserKnob {6 preview l "Enable Preview Mode" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {3 dustHit_startFrame l "Start Frame"}
+ dustHit_startFrame 214
+ addUserKnob {3 dustHit_emitTime l "Emit Time"}
+ dustHit_emitTime 2
+ addUserKnob {26 ""}
+ addUserKnob {6 useCustomImg l "Use Custom Image" +STARTLINE}
+ addUserKnob {4 dustHit_emissionGeo l "Emission Geo" M {Cylinder Plane "Custom from input..."}}
+ addUserKnob {26 ""}
+ addUserKnob {3 dustHit_seed l Seed}
+ dustHit_seed 12
+ addUserKnob {20 InitialState l "Initial State"}
+ addUserKnob {7 dustHit_emitRate l Amount R 0 100}
+ dustHit_emitRate 100
+ addUserKnob {7 dustHit_startSize l Size R 0.01 5}
+ dustHit_startSize 0.5
+ addUserKnob {7 dustHit_emitVelocity l Speed}
+ dustHit_emitVelocity 0.195
+ addUserKnob {7 dustHit_randomVelMult l "Speed Randomness"}
+ addUserKnob {7 dustHit_spread l Spread}
+ addUserKnob {7 dustHit_life l Life R 1 100}
+ dustHit_life 50
+ addUserKnob {20 Look}
+ addUserKnob {7 dustHit_expandRate l "Growth Rate"}
+ dustHit_expandRate 1
+ addUserKnob {7 dustHit_startOpacity l Opacity}
+ dustHit_startOpacity 0.1
+ addUserKnob {7 opacityFadeRate l "Opacity Fade Rate"}
+ opacityFadeRate 0.4
+ addUserKnob {7 randomRotation l "Random Rotation"}
+ addUserKnob {20 Forces}
+ addUserKnob {7 drag l Drag}
+ drag 0.5
+ addUserKnob {7 dustHit_gravityMult l "Gravity Mult" R -5 5}
+ addUserKnob {7 turbulenceMult l "Turbulence Amount" R 0 2}
+ turbulenceMult 0.3
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode10
+  tile_color 0x68a85aff
+  label "Set initial opacity."
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 253
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode11
+  tile_color 0x68a85aff
+  label "Set particle growth"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 609
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode12
+  tile_color 0x68a85aff
+  label "B Channel randomisation"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 892
+  bdwidth 310
+  bdheight 131
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode13
+  tile_color 0x68a85aff
+  label "Set opacity falloff"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -267
+  ypos 792
+  bdwidth 280
+  bdheight 109
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode14
+  tile_color 0x454554ff
+  label "Dust Hit System"
+  note_font_size 42
+  note_font_color 0xd2d2ffff
+  xpos -925
+  ypos -982
+  bdwidth 1054
+  bdheight 2236
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x7171c600
+  label "Setup sprite presets"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -573
+  ypos -880
+  bdwidth 357
+  bdheight 463
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x68a85aff
+  label "Set opacity falloff"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -536
+  ypos 866
+  bdwidth 280
+  bdheight 109
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xc65353ff
+  label "Choose source geo."
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -251
+  ypos -383
+  bdwidth 305
+  bdheight 299
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x68a85aff
+  label "Setup Emitter system"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -535
+  ypos -34
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x68a85aff
+  label "Set growth over time"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -534
+  ypos 667
+  bdwidth 280
+  bdheight 109
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x68a85aff
+  label "Add initial opacity"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -538
+  ypos 202
+  bdwidth 287
+  bdheight 122
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x68a85aff
+  label "Add system forces"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 410
+  bdwidth 281
+  bdheight 171
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x8e388e00
+  label "3D Preview Geo"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -603
+  ypos -361
+  bdwidth 275
+  bdheight 167
+  z_order 1
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote3
+  label "Here I've set two pre-defined options\nfor emission geo, but I'm also allowing\ncustom geo to be used."
+  xpos -176
+  ypos -324
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote8
+  label "The emitter is set up as normal, except\nfor the expressions on 'emission_rate', \n'max lifetime', 'velocity', 'size' 'spread'\nand 'seed', that take our UI values into account"
+  xpos -774
+  ypos 14
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  format "1024 1024 0 0 1024 1024 1 square_1K"
+  name Constant1
+  xpos -587
+  ypos -308
+ }
+ BlendMat {
+  surfaceblend "vertex color"
+  name BlendMat1
+  xpos -587
+  ypos -236
+ }
+ Input {
+  inputs 0
+  name Img
+  xpos -314
+  ypos -522
+ }
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat3
+  xpos -314
+  ypos -465
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  format "256 256 0 0 256 256 1 square_256"
+  name Constant2
+  xpos -438
+  ypos -787
+ }
+set Neae79c00 [stack 0]
+ Noise {
+  output alpha
+  size 100
+  zoffset {{"(frame/100) + parent.dustHit_seed"}}
+  gain 0.6
+  gamma 1
+  center {960 540}
+  name Noise1
+  xpos -542
+  ypos -690
+ }
+ Roto {
+  output alpha
+  premultiply alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41100000
+        {xc28bba60 0}
+        {x42fd0000 x40400000}
+        {x428bba60 0}
+        {0 xc28c47c3}
+        {x437d0000 x43020000}
+        {0 x428c47c4}
+        {x428bba60 0}
+        {x42fd0000 x43808000}
+        {xc28bba60 0}
+        {0 x428c47c4}
+        {0 x43020000}
+        {0 xc28c47c3}}}     idem}
+     {t
+   {{x41100000 x42fd0000}}
+   {{x41100000 x43020000}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}  x3f8ccccd x3f8ccccd
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}}
+     {a fx xc2860000 fy xc2860000 osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x41100000 ltm x41100000 tt x40e00000 bm x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {128 128}
+  colorOverlay {0 0 0 0}
+  blending_mode multiply
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  feather -67
+  source_black_outside true
+  name Roto2
+  xpos -542
+  ypos -658
+ }
+ Premult {
+  name Premult1
+  xpos -542
+  ypos -626
+ }
+push $Neae79c00
+ Noise {
+  output alpha
+  size 90
+  zoffset {{"(frame/100)+100 + parent.dustHit_seed"}}
+  gamma 0.8
+  center {960 540}
+  name Noise3
+  xpos -438
+  ypos -690
+ }
+ Roto {
+  output alpha
+  premultiply alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41100000
+        {xc28bba60 0}
+        {x42fd0000 x40400000}
+        {x428bba60 0}
+        {0 xc28c47c3}
+        {x437d0000 x43020000}
+        {0 x428c47c4}
+        {x428bba60 0}
+        {x42fd0000 x43808000}
+        {xc28bba60 0}
+        {0 x428c47c4}
+        {0 x43020000}
+        {0 xc28c47c3}}}     idem}
+     {t
+   {{x41100000 x42fd0000}}
+   {{x41100000 x43020000}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}  x3f8ccccd x3f8ccccd
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}}
+     {a fx xc2860000 fy xc2860000 osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x41100000 ltm x41100000 tt x40e00000 bm x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {128 128}
+  colorOverlay {0 0 0 0}
+  blending_mode multiply
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  feather -67
+  source_black_outside true
+  name Roto3
+  xpos -438
+  ypos -658
+ }
+ Premult {
+  name Premult2
+  xpos -438
+  ypos -626
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge1
+  xpos -495
+  ypos -583
+ }
+push $Neae79c00
+ Noise {
+  output alpha
+  size 80
+  zoffset {{"200 + (frame/100) + parent.dustHit_seed"}}
+  gamma 0.7
+  center {960 540}
+  name Noise4
+  xpos -332
+  ypos -690
+ }
+ Roto {
+  output alpha
+  premultiply alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41100000
+        {xc28bba60 0}
+        {x42fd0000 x40400000}
+        {x428bba60 0}
+        {0 xc28c47c3}
+        {x437d0000 x43020000}
+        {0 x428c47c4}
+        {x428bba60 0}
+        {x42fd0000 x43808000}
+        {xc28bba60 0}
+        {0 x428c47c4}
+        {0 x43020000}
+        {0 xc28c47c3}}}     idem}
+     {tx x41100000 x42fd0000 x43020000}
+     {a fx xc2860000 fy xc2860000 osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x41100000 ltm x41100000 tt x40e00000 bm x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {128 128}
+  colorOverlay {0 0 0 0}
+  blending_mode multiply
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  feather -67
+  source_black_outside true
+  name Roto4
+  xpos -332
+  ypos -658
+ }
+ Premult {
+  name Premult3
+  xpos -332
+  ypos -626
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge2
+  xpos -435
+  ypos -547
+ }
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat2
+  xpos -435
+  ypos -523
+ }
+ Switch {
+  inputs 2
+  which {{parent.useCustomImg}}
+  name Switch1
+  xpos -435
+  ypos -465
+ }
+ Switch {
+  inputs 2
+  which {{parent.preview}}
+  name Switch4
+  xpos -435
+  ypos -236
+ }
+ Dot {
+  name Dot5
+  xpos -401
+  ypos -179
+ }
+ Input {
+  inputs 0
+  name Axis
+  xpos -218
+  ypos -133
+  number 1
+ }
+ Input {
+  inputs 0
+  name Geo
+  xpos -209
+  ypos -196
+  number 2
+ }
+ Card2 {
+  inputs 0
+  image_aspect false
+  rotate {-90 0 0}
+  uniform_scale 0.3
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Card1
+  xpos -158
+  ypos -242
+ }
+ Cylinder {
+  inputs 0
+  rows 2
+  radius 0.25
+  height 0.125
+  translate {0 0.05999999866 0}
+  rotate {0 {frame*2} 0}
+  name Cylinder1
+  xpos -63
+  ypos -240
+ }
+ Switch {
+  inputs 3
+  which {{parent.dustHit_emissionGeo i}}
+  name Switch2
+  xpos -108
+  ypos -196
+ }
+ TransformGeo {
+  inputs 2
+  name TransformGeo1
+  xpos -108
+  ypos -133
+ }
+ Dot {
+  name Dot2
+  xpos -74
+  ypos 46
+ }
+push 0
+ ParticleEmitter {
+  inputs 3
+  rate {{"frame >= \[value startFrame] && frame <= \[value startFrame] + \[value emitTime] ? \[value amount] : 0"}}
+  lifetime {{life}}
+  lifetime_variation 0.772
+  velocity {{velocity_1}}
+  velocity_variation 1
+  size {{startSize}}
+  mass_variation 0.722
+  spread {{spread}}
+  input_order "in order"
+  start_frame_animation "in order"
+  seed {{seed_1}}
+  name ParticleEmitter2
+  selected true
+  xpos -435
+  ypos 43
+  addUserKnob {20 User}
+  addUserKnob {7 velocity_1 l velocity}
+  velocity_1 {{parent.dustHit_emitVelocity}}
+  addUserKnob {7 life}
+  life {{parent.dustHit_life}}
+  addUserKnob {3 startFrame}
+  startFrame {{parent.dustHit_startFrame}}
+  addUserKnob {3 seed_1 l seed}
+  seed_1 {{parent.dustHit_seed}}
+  addUserKnob {7 startSize}
+  startSize {{parent.dustHit_startSize}}
+  addUserKnob {3 emitTime}
+  emitTime {{parent.dustHit_emitTime}}
+  addUserKnob {7 amount}
+  amount {{parent.dustHit_emitRate}}
+  addUserKnob {7 spread_1 l spread}
+  spread_1 {{parent.dustHit_spread}}
+ }
+ ParticleExpression {
+  temp_name0 opacityVal
+  temp_expr0 "\[value opacity]"
+  opacityexpr opacityVal
+  name ParticleExpression7
+  xpos -435
+  ypos 266
+  addUserKnob {20 User}
+  addUserKnob {7 opacity}
+  opacity {{parent.dustHit_startOpacity}}
+ }
+ ParticleTurbulence {
+  strength {{parent.turbulenceMult} {parent.turbulenceMult} {parent.turbulenceMult}}
+  probability 0.3
+  max_age 0.2
+  name ParticleTurbulence2
+  xpos -435
+  ypos 467
+ }
+ ParticleGravity {
+  to {0 {gravityMult} 0}
+  name ParticleGravity2
+  xpos -435
+  ypos 499
+  addUserKnob {20 User}
+  addUserKnob {7 gravityMult R -1 1}
+  gravityMult {{parent.dustHit_gravityMult}}
+ }
+ ParticleDrag {
+  drag {{drag_1}}
+  name ParticleDrag2
+  xpos -435
+  ypos 535
+  addUserKnob {20 User}
+  addUserKnob {7 drag_1 l drag}
+  drag_1 {{parent.drag}}
+ }
+ ParticleExpression {
+  temp_name0 ageMultiplier
+  temp_expr0 "\[value growthRate] / 100"
+  sizeexpr "size + (age*ageMultiplier)"
+  name ParticleExpression3
+  xpos -435
+  ypos 713
+  addUserKnob {20 User}
+  addUserKnob {7 growthRate}
+  growthRate {{parent.dustHit_expandRate}}
+ }
+ ParticleExpression {
+  temp_name0 opacityStart
+  temp_expr0 3
+  temp_name1 opacityMult
+  temp_expr1 "\[value opacityFadeRate]"
+  opacityexpr "age > opacityStart ? opacity * opacityMult : opacity"
+  name ParticleExpression6
+  xpos -435
+  ypos 926
+  addUserKnob {20 User}
+  addUserKnob {7 opacityFadeRate}
+  opacityFadeRate {{"1 - parent.opacityFadeRate"}}
+ }
+ NoOp {
+  name System_Completed
+  tile_color 0xff00ff
+  note_font "Verdana Bold"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -435
+  ypos 1073
+ }
+ Output {
+  name Output1
+  xpos -435
+  ypos 1201
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote12
+  label "To enable better placement in the 3D view\nthe user can switch between the sprite and\na placeholder image for each spark."
+  xpos -837
+  ypos -305
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote4
+  label "Here we're setting the initial opacity\nof the particles based upon the UI values."
+  xpos -751
+  ypos 251
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote7
+  label "Here I'm setting the opacity of the particles\nto falloff over time, only if their age is greater\nthan 3. The falloff itself is also based upon age."
+  xpos -772
+  ypos 893
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote6
+  label "Using a simple expression on size, \nwe ca make the particles grow over\ntime. (Could be replaced with a \nParticleCurve node)."
+  xpos -725
+  ypos 673
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote5
+  label "Turbulence, gravity and drag are being added,\ntaking UI values into account where appropriate."
+  xpos -781
+  ypos 479
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "In this section, we're choosing between the exisiting\nsprite image (based upon an evolving Noise node)\nand an input from the 'Img' pipe on the main node."
+  xpos -517
+  ypos -835
+ }
+end_group
+TransformGeo {
+ inputs 2
+ name TransformGeo2
+ xpos 1653
+ ypos -53
+}
+Axis2 {
+ inputs 0
+ translate {0.123999998 0 -0.03799999878}
+ uniform_scale 0.03
+ name Axis3
+ xpos 2099
+ ypos -153
+}
+Group {
+ inputs 0
+ name P_DustHit2
+ xpos 1983
+ ypos -148
+ addUserKnob {20 User l "Hit Setup"}
+ addUserKnob {6 preview l "Enable Preview Mode" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {3 dustHit_startFrame l "Start Frame"}
+ dustHit_startFrame 212
+ addUserKnob {3 dustHit_emitTime l "Emit Time"}
+ dustHit_emitTime 2
+ addUserKnob {26 ""}
+ addUserKnob {6 useCustomImg l "Use Custom Image" +STARTLINE}
+ addUserKnob {4 dustHit_emissionGeo l "Emission Geo" M {Cylinder Plane "Custom from input..."}}
+ addUserKnob {26 ""}
+ addUserKnob {3 dustHit_seed l Seed}
+ dustHit_seed 14
+ addUserKnob {20 InitialState l "Initial State"}
+ addUserKnob {7 dustHit_emitRate l Amount R 0 100}
+ dustHit_emitRate 100
+ addUserKnob {7 dustHit_startSize l Size R 0.01 5}
+ dustHit_startSize 0.5
+ addUserKnob {7 dustHit_emitVelocity l Speed}
+ dustHit_emitVelocity 0.195
+ addUserKnob {7 dustHit_randomVelMult l "Speed Randomness"}
+ addUserKnob {7 dustHit_spread l Spread}
+ addUserKnob {7 dustHit_life l Life R 1 100}
+ dustHit_life 50
+ addUserKnob {20 Look}
+ addUserKnob {7 dustHit_expandRate l "Growth Rate"}
+ dustHit_expandRate 1
+ addUserKnob {7 dustHit_startOpacity l Opacity}
+ dustHit_startOpacity 0.1
+ addUserKnob {7 opacityFadeRate l "Opacity Fade Rate"}
+ opacityFadeRate 0.4
+ addUserKnob {7 randomRotation l "Random Rotation"}
+ addUserKnob {20 Forces}
+ addUserKnob {7 drag l Drag}
+ drag 0.5
+ addUserKnob {7 dustHit_gravityMult l "Gravity Mult" R -5 5}
+ addUserKnob {7 turbulenceMult l "Turbulence Amount" R 0 2}
+ turbulenceMult 0.3
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode10
+  tile_color 0x68a85aff
+  label "Set initial opacity."
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 253
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode11
+  tile_color 0x68a85aff
+  label "Set particle growth"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 609
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode12
+  tile_color 0x68a85aff
+  label "B Channel randomisation"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 892
+  bdwidth 310
+  bdheight 131
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode13
+  tile_color 0x68a85aff
+  label "Set opacity falloff"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -267
+  ypos 792
+  bdwidth 280
+  bdheight 109
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode14
+  tile_color 0x454554ff
+  label "Dust Hit System"
+  note_font_size 42
+  note_font_color 0xd2d2ffff
+  xpos -925
+  ypos -982
+  bdwidth 1054
+  bdheight 2236
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x7171c600
+  label "Setup sprite presets"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -573
+  ypos -880
+  bdwidth 357
+  bdheight 463
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x68a85aff
+  label "Set opacity falloff"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -536
+  ypos 866
+  bdwidth 280
+  bdheight 109
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xc65353ff
+  label "Choose source geo."
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -251
+  ypos -383
+  bdwidth 305
+  bdheight 299
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x68a85aff
+  label "Setup Emitter system"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -535
+  ypos -34
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x68a85aff
+  label "Set growth over time"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -534
+  ypos 667
+  bdwidth 280
+  bdheight 109
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x68a85aff
+  label "Add initial opacity"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -538
+  ypos 202
+  bdwidth 287
+  bdheight 122
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x68a85aff
+  label "Add system forces"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 410
+  bdwidth 281
+  bdheight 171
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x8e388e00
+  label "3D Preview Geo"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -603
+  ypos -361
+  bdwidth 275
+  bdheight 167
+  z_order 1
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote3
+  label "Here I've set two pre-defined options\nfor emission geo, but I'm also allowing\ncustom geo to be used."
+  xpos -176
+  ypos -324
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote8
+  label "The emitter is set up as normal, except\nfor the expressions on 'emission_rate', \n'max lifetime', 'velocity', 'size' 'spread'\nand 'seed', that take our UI values into account"
+  xpos -774
+  ypos 14
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  format "1024 1024 0 0 1024 1024 1 square_1K"
+  name Constant1
+  xpos -587
+  ypos -308
+ }
+ BlendMat {
+  surfaceblend "vertex color"
+  name BlendMat1
+  xpos -587
+  ypos -236
+ }
+ Input {
+  inputs 0
+  name Img
+  xpos -314
+  ypos -522
+ }
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat3
+  xpos -314
+  ypos -465
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  format "256 256 0 0 256 256 1 square_256"
+  name Constant2
+  xpos -438
+  ypos -787
+ }
+set Ne7a89c00 [stack 0]
+ Noise {
+  output alpha
+  size 100
+  zoffset {{"(frame/100) + parent.dustHit_seed"}}
+  gain 0.6
+  gamma 1
+  center {960 540}
+  name Noise1
+  xpos -542
+  ypos -690
+ }
+ Roto {
+  output alpha
+  premultiply alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41100000
+        {xc28bba60 0}
+        {x42fd0000 x40400000}
+        {x428bba60 0}
+        {0 xc28c47c3}
+        {x437d0000 x43020000}
+        {0 x428c47c4}
+        {x428bba60 0}
+        {x42fd0000 x43808000}
+        {xc28bba60 0}
+        {0 x428c47c4}
+        {0 x43020000}
+        {0 xc28c47c3}}}     idem}
+     {t
+   {{x41100000 x42fd0000}}
+   {{x41100000 x43020000}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}  x3f8ccccd x3f8ccccd
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}}
+     {a fx xc2860000 fy xc2860000 osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x41100000 ltm x41100000 tt x40e00000 bm x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {128 128}
+  colorOverlay {0 0 0 0}
+  blending_mode multiply
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  feather -67
+  source_black_outside true
+  name Roto2
+  xpos -542
+  ypos -658
+ }
+ Premult {
+  name Premult1
+  xpos -542
+  ypos -626
+ }
+push $Ne7a89c00
+ Noise {
+  output alpha
+  size 90
+  zoffset {{"(frame/100)+100 + parent.dustHit_seed"}}
+  gamma 0.8
+  center {960 540}
+  name Noise3
+  xpos -438
+  ypos -690
+ }
+ Roto {
+  output alpha
+  premultiply alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41100000
+        {xc28bba60 0}
+        {x42fd0000 x40400000}
+        {x428bba60 0}
+        {0 xc28c47c3}
+        {x437d0000 x43020000}
+        {0 x428c47c4}
+        {x428bba60 0}
+        {x42fd0000 x43808000}
+        {xc28bba60 0}
+        {0 x428c47c4}
+        {0 x43020000}
+        {0 xc28c47c3}}}     idem}
+     {t
+   {{x41100000 x42fd0000}}
+   {{x41100000 x43020000}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}  x3f8ccccd x3f8ccccd
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}}
+     {a fx xc2860000 fy xc2860000 osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x41100000 ltm x41100000 tt x40e00000 bm x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {128 128}
+  colorOverlay {0 0 0 0}
+  blending_mode multiply
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  feather -67
+  source_black_outside true
+  name Roto3
+  xpos -438
+  ypos -658
+ }
+ Premult {
+  name Premult2
+  xpos -438
+  ypos -626
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge1
+  xpos -495
+  ypos -583
+ }
+push $Ne7a89c00
+ Noise {
+  output alpha
+  size 80
+  zoffset {{"200 + (frame/100) + parent.dustHit_seed"}}
+  gamma 0.7
+  center {960 540}
+  name Noise4
+  xpos -332
+  ypos -690
+ }
+ Roto {
+  output alpha
+  premultiply alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41100000
+        {xc28bba60 0}
+        {x42fd0000 x40400000}
+        {x428bba60 0}
+        {0 xc28c47c3}
+        {x437d0000 x43020000}
+        {0 x428c47c4}
+        {x428bba60 0}
+        {x42fd0000 x43808000}
+        {xc28bba60 0}
+        {0 x428c47c4}
+        {0 x43020000}
+        {0 xc28c47c3}}}     idem}
+     {tx x41100000 x42fd0000 x43020000}
+     {a fx xc2860000 fy xc2860000 osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x41100000 ltm x41100000 tt x40e00000 bm x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {128 128}
+  colorOverlay {0 0 0 0}
+  blending_mode multiply
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  feather -67
+  source_black_outside true
+  name Roto4
+  xpos -332
+  ypos -658
+ }
+ Premult {
+  name Premult3
+  xpos -332
+  ypos -626
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge2
+  xpos -435
+  ypos -547
+ }
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat2
+  xpos -435
+  ypos -523
+ }
+ Switch {
+  inputs 2
+  which {{parent.useCustomImg}}
+  name Switch1
+  xpos -435
+  ypos -465
+ }
+ Switch {
+  inputs 2
+  which {{parent.preview}}
+  name Switch4
+  xpos -435
+  ypos -236
+ }
+ Dot {
+  name Dot5
+  xpos -401
+  ypos -179
+ }
+ Input {
+  inputs 0
+  name Axis
+  xpos -218
+  ypos -133
+  number 1
+ }
+ Input {
+  inputs 0
+  name Geo
+  xpos -209
+  ypos -196
+  number 2
+ }
+ Card2 {
+  inputs 0
+  image_aspect false
+  rotate {-90 0 0}
+  uniform_scale 0.3
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Card1
+  xpos -158
+  ypos -242
+ }
+ Cylinder {
+  inputs 0
+  rows 2
+  radius 0.25
+  height 0.125
+  translate {0 0.05999999866 0}
+  rotate {0 {frame*2} 0}
+  name Cylinder1
+  xpos -63
+  ypos -240
+ }
+ Switch {
+  inputs 3
+  which {{parent.dustHit_emissionGeo i}}
+  name Switch2
+  xpos -108
+  ypos -196
+ }
+ TransformGeo {
+  inputs 2
+  name TransformGeo1
+  xpos -108
+  ypos -133
+ }
+ Dot {
+  name Dot2
+  xpos -74
+  ypos 46
+ }
+push 0
+ ParticleEmitter {
+  inputs 3
+  rate {{"frame >= \[value startFrame] && frame <= \[value startFrame] + \[value emitTime] ? \[value amount] : 0"}}
+  lifetime {{life}}
+  lifetime_variation 0.772
+  velocity {{velocity_1}}
+  velocity_variation 1
+  size {{startSize}}
+  mass_variation 0.722
+  spread {{spread}}
+  input_order "in order"
+  start_frame_animation "in order"
+  seed {{seed_1}}
+  name ParticleEmitter2
+  selected true
+  xpos -435
+  ypos 43
+  addUserKnob {20 User}
+  addUserKnob {7 velocity_1 l velocity}
+  velocity_1 {{parent.dustHit_emitVelocity}}
+  addUserKnob {7 life}
+  life {{parent.dustHit_life}}
+  addUserKnob {3 startFrame}
+  startFrame {{parent.dustHit_startFrame}}
+  addUserKnob {3 seed_1 l seed}
+  seed_1 {{parent.dustHit_seed}}
+  addUserKnob {7 startSize}
+  startSize {{parent.dustHit_startSize}}
+  addUserKnob {3 emitTime}
+  emitTime {{parent.dustHit_emitTime}}
+  addUserKnob {7 amount}
+  amount {{parent.dustHit_emitRate}}
+  addUserKnob {7 spread_1 l spread}
+  spread_1 {{parent.dustHit_spread}}
+ }
+ ParticleExpression {
+  temp_name0 opacityVal
+  temp_expr0 "\[value opacity]"
+  opacityexpr opacityVal
+  name ParticleExpression7
+  xpos -435
+  ypos 266
+  addUserKnob {20 User}
+  addUserKnob {7 opacity}
+  opacity {{parent.dustHit_startOpacity}}
+ }
+ ParticleTurbulence {
+  strength {{parent.turbulenceMult} {parent.turbulenceMult} {parent.turbulenceMult}}
+  probability 0.3
+  max_age 0.2
+  name ParticleTurbulence2
+  xpos -435
+  ypos 467
+ }
+ ParticleGravity {
+  to {0 {gravityMult} 0}
+  name ParticleGravity2
+  xpos -435
+  ypos 499
+  addUserKnob {20 User}
+  addUserKnob {7 gravityMult R -1 1}
+  gravityMult {{parent.dustHit_gravityMult}}
+ }
+ ParticleDrag {
+  drag {{drag_1}}
+  name ParticleDrag2
+  xpos -435
+  ypos 535
+  addUserKnob {20 User}
+  addUserKnob {7 drag_1 l drag}
+  drag_1 {{parent.drag}}
+ }
+ ParticleExpression {
+  temp_name0 ageMultiplier
+  temp_expr0 "\[value growthRate] / 100"
+  sizeexpr "size + (age*ageMultiplier)"
+  name ParticleExpression3
+  xpos -435
+  ypos 713
+  addUserKnob {20 User}
+  addUserKnob {7 growthRate}
+  growthRate {{parent.dustHit_expandRate}}
+ }
+ ParticleExpression {
+  temp_name0 opacityStart
+  temp_expr0 3
+  temp_name1 opacityMult
+  temp_expr1 "\[value opacityFadeRate]"
+  opacityexpr "age > opacityStart ? opacity * opacityMult : opacity"
+  name ParticleExpression6
+  xpos -435
+  ypos 926
+  addUserKnob {20 User}
+  addUserKnob {7 opacityFadeRate}
+  opacityFadeRate {{"1 - parent.opacityFadeRate"}}
+ }
+ NoOp {
+  name System_Completed
+  tile_color 0xff00ff
+  note_font "Verdana Bold"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -435
+  ypos 1073
+ }
+ Output {
+  name Output1
+  xpos -435
+  ypos 1201
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote12
+  label "To enable better placement in the 3D view\nthe user can switch between the sprite and\na placeholder image for each spark."
+  xpos -837
+  ypos -305
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote4
+  label "Here we're setting the initial opacity\nof the particles based upon the UI values."
+  xpos -751
+  ypos 251
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote7
+  label "Here I'm setting the opacity of the particles\nto falloff over time, only if their age is greater\nthan 3. The falloff itself is also based upon age."
+  xpos -772
+  ypos 893
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote6
+  label "Using a simple expression on size, \nwe ca make the particles grow over\ntime. (Could be replaced with a \nParticleCurve node)."
+  xpos -725
+  ypos 673
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote5
+  label "Turbulence, gravity and drag are being added,\ntaking UI values into account where appropriate."
+  xpos -781
+  ypos 479
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "In this section, we're choosing between the exisiting\nsprite image (based upon an evolving Noise node)\nand an input from the 'Img' pipe on the main node."
+  xpos -517
+  ypos -835
+ }
+end_group
+TransformGeo {
+ inputs 2
+ name TransformGeo3
+ xpos 1983
+ ypos -58
+}
+Axis2 {
+ inputs 0
+ translate {0.1735000014 0 0.03500000015}
+ uniform_scale 0.03
+ name Axis4
+ xpos 2485
+ ypos -167
+}
+Group {
+ inputs 0
+ name P_DustHit3
+ xpos 2341
+ ypos -143
+ addUserKnob {20 User l "Hit Setup"}
+ addUserKnob {6 preview l "Enable Preview Mode" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {3 dustHit_startFrame l "Start Frame"}
+ dustHit_startFrame 210
+ addUserKnob {3 dustHit_emitTime l "Emit Time"}
+ dustHit_emitTime 2
+ addUserKnob {26 ""}
+ addUserKnob {6 useCustomImg l "Use Custom Image" +STARTLINE}
+ addUserKnob {4 dustHit_emissionGeo l "Emission Geo" M {Cylinder Plane "Custom from input..."}}
+ addUserKnob {26 ""}
+ addUserKnob {3 dustHit_seed l Seed}
+ dustHit_seed 16
+ addUserKnob {20 InitialState l "Initial State"}
+ addUserKnob {7 dustHit_emitRate l Amount R 0 100}
+ dustHit_emitRate 100
+ addUserKnob {7 dustHit_startSize l Size R 0.01 5}
+ dustHit_startSize 0.5
+ addUserKnob {7 dustHit_emitVelocity l Speed}
+ dustHit_emitVelocity 0.195
+ addUserKnob {7 dustHit_randomVelMult l "Speed Randomness"}
+ addUserKnob {7 dustHit_spread l Spread}
+ addUserKnob {7 dustHit_life l Life R 1 100}
+ dustHit_life 50
+ addUserKnob {20 Look}
+ addUserKnob {7 dustHit_expandRate l "Growth Rate"}
+ dustHit_expandRate 1
+ addUserKnob {7 dustHit_startOpacity l Opacity}
+ dustHit_startOpacity 0.1
+ addUserKnob {7 opacityFadeRate l "Opacity Fade Rate"}
+ opacityFadeRate 0.4
+ addUserKnob {7 randomRotation l "Random Rotation"}
+ addUserKnob {20 Forces}
+ addUserKnob {7 drag l Drag}
+ drag 0.5
+ addUserKnob {7 dustHit_gravityMult l "Gravity Mult" R -5 5}
+ addUserKnob {7 turbulenceMult l "Turbulence Amount" R 0 2}
+ turbulenceMult 0.3
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode10
+  tile_color 0x68a85aff
+  label "Set initial opacity."
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 253
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode11
+  tile_color 0x68a85aff
+  label "Set particle growth"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 609
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode12
+  tile_color 0x68a85aff
+  label "B Channel randomisation"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 892
+  bdwidth 310
+  bdheight 131
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode13
+  tile_color 0x68a85aff
+  label "Set opacity falloff"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -267
+  ypos 792
+  bdwidth 280
+  bdheight 109
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode14
+  tile_color 0x454554ff
+  label "Dust Hit System"
+  note_font_size 42
+  note_font_color 0xd2d2ffff
+  xpos -925
+  ypos -982
+  bdwidth 1054
+  bdheight 2236
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x7171c600
+  label "Setup sprite presets"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -573
+  ypos -880
+  bdwidth 357
+  bdheight 463
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x68a85aff
+  label "Set opacity falloff"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -536
+  ypos 866
+  bdwidth 280
+  bdheight 109
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xc65353ff
+  label "Choose source geo."
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -251
+  ypos -383
+  bdwidth 305
+  bdheight 299
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x68a85aff
+  label "Setup Emitter system"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -535
+  ypos -34
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x68a85aff
+  label "Set growth over time"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -534
+  ypos 667
+  bdwidth 280
+  bdheight 109
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x68a85aff
+  label "Add initial opacity"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -538
+  ypos 202
+  bdwidth 287
+  bdheight 122
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x68a85aff
+  label "Add system forces"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 410
+  bdwidth 281
+  bdheight 171
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x8e388e00
+  label "3D Preview Geo"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -603
+  ypos -361
+  bdwidth 275
+  bdheight 167
+  z_order 1
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote3
+  label "Here I've set two pre-defined options\nfor emission geo, but I'm also allowing\ncustom geo to be used."
+  xpos -176
+  ypos -324
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote8
+  label "The emitter is set up as normal, except\nfor the expressions on 'emission_rate', \n'max lifetime', 'velocity', 'size' 'spread'\nand 'seed', that take our UI values into account"
+  xpos -774
+  ypos 14
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  format "1024 1024 0 0 1024 1024 1 square_1K"
+  name Constant1
+  xpos -587
+  ypos -308
+ }
+ BlendMat {
+  surfaceblend "vertex color"
+  name BlendMat1
+  xpos -587
+  ypos -236
+ }
+ Input {
+  inputs 0
+  name Img
+  xpos -314
+  ypos -522
+ }
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat3
+  xpos -314
+  ypos -465
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  format "256 256 0 0 256 256 1 square_256"
+  name Constant2
+  xpos -438
+  ypos -787
+ }
+set Neb255c00 [stack 0]
+ Noise {
+  output alpha
+  size 100
+  zoffset {{"(frame/100) + parent.dustHit_seed"}}
+  gain 0.6
+  gamma 1
+  center {960 540}
+  name Noise1
+  xpos -542
+  ypos -690
+ }
+ Roto {
+  output alpha
+  premultiply alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41100000
+        {xc28bba60 0}
+        {x42fd0000 x40400000}
+        {x428bba60 0}
+        {0 xc28c47c3}
+        {x437d0000 x43020000}
+        {0 x428c47c4}
+        {x428bba60 0}
+        {x42fd0000 x43808000}
+        {xc28bba60 0}
+        {0 x428c47c4}
+        {0 x43020000}
+        {0 xc28c47c3}}}     idem}
+     {t
+   {{x41100000 x42fd0000}}
+   {{x41100000 x43020000}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}  x3f8ccccd x3f8ccccd
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}}
+     {a fx xc2860000 fy xc2860000 osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x41100000 ltm x41100000 tt x40e00000 bm x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {128 128}
+  colorOverlay {0 0 0 0}
+  blending_mode multiply
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  feather -67
+  source_black_outside true
+  name Roto2
+  xpos -542
+  ypos -658
+ }
+ Premult {
+  name Premult1
+  xpos -542
+  ypos -626
+ }
+push $Neb255c00
+ Noise {
+  output alpha
+  size 90
+  zoffset {{"(frame/100)+100 + parent.dustHit_seed"}}
+  gamma 0.8
+  center {960 540}
+  name Noise3
+  xpos -438
+  ypos -690
+ }
+ Roto {
+  output alpha
+  premultiply alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41100000
+        {xc28bba60 0}
+        {x42fd0000 x40400000}
+        {x428bba60 0}
+        {0 xc28c47c3}
+        {x437d0000 x43020000}
+        {0 x428c47c4}
+        {x428bba60 0}
+        {x42fd0000 x43808000}
+        {xc28bba60 0}
+        {0 x428c47c4}
+        {0 x43020000}
+        {0 xc28c47c3}}}     idem}
+     {t
+   {{x41100000 x42fd0000}}
+   {{x41100000 x43020000}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}  x3f8ccccd x3f8ccccd
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}}
+     {a fx xc2860000 fy xc2860000 osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x41100000 ltm x41100000 tt x40e00000 bm x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {128 128}
+  colorOverlay {0 0 0 0}
+  blending_mode multiply
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  feather -67
+  source_black_outside true
+  name Roto3
+  xpos -438
+  ypos -658
+ }
+ Premult {
+  name Premult2
+  xpos -438
+  ypos -626
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge1
+  xpos -495
+  ypos -583
+ }
+push $Neb255c00
+ Noise {
+  output alpha
+  size 80
+  zoffset {{"200 + (frame/100) + parent.dustHit_seed"}}
+  gamma 0.7
+  center {960 540}
+  name Noise4
+  xpos -332
+  ypos -690
+ }
+ Roto {
+  output alpha
+  premultiply alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41100000
+        {xc28bba60 0}
+        {x42fd0000 x40400000}
+        {x428bba60 0}
+        {0 xc28c47c3}
+        {x437d0000 x43020000}
+        {0 x428c47c4}
+        {x428bba60 0}
+        {x42fd0000 x43808000}
+        {xc28bba60 0}
+        {0 x428c47c4}
+        {0 x43020000}
+        {0 xc28c47c3}}}     idem}
+     {tx x41100000 x42fd0000 x43020000}
+     {a fx xc2860000 fy xc2860000 osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x41100000 ltm x41100000 tt x40e00000 bm x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {128 128}
+  colorOverlay {0 0 0 0}
+  blending_mode multiply
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  feather -67
+  source_black_outside true
+  name Roto4
+  xpos -332
+  ypos -658
+ }
+ Premult {
+  name Premult3
+  xpos -332
+  ypos -626
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge2
+  xpos -435
+  ypos -547
+ }
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat2
+  xpos -435
+  ypos -523
+ }
+ Switch {
+  inputs 2
+  which {{parent.useCustomImg}}
+  name Switch1
+  xpos -435
+  ypos -465
+ }
+ Switch {
+  inputs 2
+  which {{parent.preview}}
+  name Switch4
+  xpos -435
+  ypos -236
+ }
+ Dot {
+  name Dot5
+  xpos -401
+  ypos -179
+ }
+ Input {
+  inputs 0
+  name Axis
+  xpos -218
+  ypos -133
+  number 1
+ }
+ Input {
+  inputs 0
+  name Geo
+  xpos -209
+  ypos -196
+  number 2
+ }
+ Card2 {
+  inputs 0
+  image_aspect false
+  rotate {-90 0 0}
+  uniform_scale 0.3
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Card1
+  xpos -158
+  ypos -242
+ }
+ Cylinder {
+  inputs 0
+  rows 2
+  radius 0.25
+  height 0.125
+  translate {0 0.05999999866 0}
+  rotate {0 {frame*2} 0}
+  name Cylinder1
+  xpos -63
+  ypos -240
+ }
+ Switch {
+  inputs 3
+  which {{parent.dustHit_emissionGeo i}}
+  name Switch2
+  xpos -108
+  ypos -196
+ }
+ TransformGeo {
+  inputs 2
+  name TransformGeo1
+  xpos -108
+  ypos -133
+ }
+ Dot {
+  name Dot2
+  xpos -74
+  ypos 46
+ }
+push 0
+ ParticleEmitter {
+  inputs 3
+  rate {{"frame >= \[value startFrame] && frame <= \[value startFrame] + \[value emitTime] ? \[value amount] : 0"}}
+  lifetime {{life}}
+  lifetime_variation 0.772
+  velocity {{velocity_1}}
+  velocity_variation 1
+  size {{startSize}}
+  mass_variation 0.722
+  spread {{spread}}
+  input_order "in order"
+  start_frame_animation "in order"
+  seed {{seed_1}}
+  name ParticleEmitter2
+  selected true
+  xpos -435
+  ypos 43
+  addUserKnob {20 User}
+  addUserKnob {7 velocity_1 l velocity}
+  velocity_1 {{parent.dustHit_emitVelocity}}
+  addUserKnob {7 life}
+  life {{parent.dustHit_life}}
+  addUserKnob {3 startFrame}
+  startFrame {{parent.dustHit_startFrame}}
+  addUserKnob {3 seed_1 l seed}
+  seed_1 {{parent.dustHit_seed}}
+  addUserKnob {7 startSize}
+  startSize {{parent.dustHit_startSize}}
+  addUserKnob {3 emitTime}
+  emitTime {{parent.dustHit_emitTime}}
+  addUserKnob {7 amount}
+  amount {{parent.dustHit_emitRate}}
+  addUserKnob {7 spread_1 l spread}
+  spread_1 {{parent.dustHit_spread}}
+ }
+ ParticleExpression {
+  temp_name0 opacityVal
+  temp_expr0 "\[value opacity]"
+  opacityexpr opacityVal
+  name ParticleExpression7
+  xpos -435
+  ypos 266
+  addUserKnob {20 User}
+  addUserKnob {7 opacity}
+  opacity {{parent.dustHit_startOpacity}}
+ }
+ ParticleTurbulence {
+  strength {{parent.turbulenceMult} {parent.turbulenceMult} {parent.turbulenceMult}}
+  probability 0.3
+  max_age 0.2
+  name ParticleTurbulence2
+  xpos -435
+  ypos 467
+ }
+ ParticleGravity {
+  to {0 {gravityMult} 0}
+  name ParticleGravity2
+  xpos -435
+  ypos 499
+  addUserKnob {20 User}
+  addUserKnob {7 gravityMult R -1 1}
+  gravityMult {{parent.dustHit_gravityMult}}
+ }
+ ParticleDrag {
+  drag {{drag_1}}
+  name ParticleDrag2
+  xpos -435
+  ypos 535
+  addUserKnob {20 User}
+  addUserKnob {7 drag_1 l drag}
+  drag_1 {{parent.drag}}
+ }
+ ParticleExpression {
+  temp_name0 ageMultiplier
+  temp_expr0 "\[value growthRate] / 100"
+  sizeexpr "size + (age*ageMultiplier)"
+  name ParticleExpression3
+  xpos -435
+  ypos 713
+  addUserKnob {20 User}
+  addUserKnob {7 growthRate}
+  growthRate {{parent.dustHit_expandRate}}
+ }
+ ParticleExpression {
+  temp_name0 opacityStart
+  temp_expr0 3
+  temp_name1 opacityMult
+  temp_expr1 "\[value opacityFadeRate]"
+  opacityexpr "age > opacityStart ? opacity * opacityMult : opacity"
+  name ParticleExpression6
+  xpos -435
+  ypos 926
+  addUserKnob {20 User}
+  addUserKnob {7 opacityFadeRate}
+  opacityFadeRate {{"1 - parent.opacityFadeRate"}}
+ }
+ NoOp {
+  name System_Completed
+  tile_color 0xff00ff
+  note_font "Verdana Bold"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -435
+  ypos 1073
+ }
+ Output {
+  name Output1
+  xpos -435
+  ypos 1201
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote12
+  label "To enable better placement in the 3D view\nthe user can switch between the sprite and\na placeholder image for each spark."
+  xpos -837
+  ypos -305
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote4
+  label "Here we're setting the initial opacity\nof the particles based upon the UI values."
+  xpos -751
+  ypos 251
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote7
+  label "Here I'm setting the opacity of the particles\nto falloff over time, only if their age is greater\nthan 3. The falloff itself is also based upon age."
+  xpos -772
+  ypos 893
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote6
+  label "Using a simple expression on size, \nwe ca make the particles grow over\ntime. (Could be replaced with a \nParticleCurve node)."
+  xpos -725
+  ypos 673
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote5
+  label "Turbulence, gravity and drag are being added,\ntaking UI values into account where appropriate."
+  xpos -781
+  ypos 479
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "In this section, we're choosing between the exisiting\nsprite image (based upon an evolving Noise node)\nand an input from the 'Img' pipe on the main node."
+  xpos -517
+  ypos -835
+ }
+end_group
+TransformGeo {
+ inputs 2
+ name TransformGeo4
+ xpos 2341
+ ypos -59
+}
+Scene {
+ inputs 4
+ name Scene3
+ xpos 1833
+ ypos 70
+}
+Dot {
+ name Dot7
+ xpos 1857
+ ypos 440
+}
+Scene {
+ inputs 2
+ name Scene2
+ xpos 1223
+ ypos 416
+}
+push 0
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ motion_vectors_type distance
+ name ScanlineRender1
+ xpos 1142
+ ypos 556
+}
+Dot {
+ name Dot3
+ xpos 1176
+ ypos 671
+}
+Dot {
+ name Dot8
+ xpos 902
+ ypos 791
+}
+Shuffle {
+ alpha red
+ name Shuffle1
+ xpos 868
+ ypos 850
+}
+Grade {
+ multiply 1.1
+ name Grade1
+ xpos 868
+ ypos 874
+}
+Read {
+ inputs 0
+ file_type mov
+ file "\[python \{Particles_path\} ]/Weather/dustHit/img/wander.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 25
+ origlast 25
+ origset true
+ name Read2
+ xpos 708
+ ypos -583
+}
+TimeOffset {
+ time_offset 205
+ time ""
+ name TimeOffset2
+ xpos 708
+ ypos -503
+}
+Dot {
+ name Dot1
+ xpos 742
+ ypos -449
+}
+set Neb0a8c00 [stack 0]
+ColorCorrect {
+ saturation 0.1
+ gain 0.7
+ mix 0.36
+ name ColorCorrect2
+ xpos 708
+ ypos 789
+}
+Merge2 {
+ inputs 2
+ name Merge1
+ xpos 708
+ ypos 874
+}
+Dot {
+ name Dot5
+ xpos 742
+ ypos 954
+}
+Write {
+ checkHashOnRead false
+ version 2
+ name Write1
+ xpos 708
+ ypos 972
+}
+CheckerBoard2 {
+ inputs 0
+ format "512 512 0 0 512 512 1 square_512"
+ name CheckerBoard1
+ xpos 806
+ ypos -140
+}
+Cube {
+ rows 1
+ columns 1
+ cube {-0.5 1 -0.5 0.5 0 0.5}
+ translate {-0.15 0 0.35}
+ scaling {1 0.5 1.8}
+ uniform_scale 0.1
+ name Cube1
+ xpos 806
+ ypos -58
+}
+push $Neb0a8c00
+Dot {
+ name Dot4
+ xpos 954
+ ypos -449
+}
+ColorCorrect {
+ contrast 1.2
+ gamma 0.4
+ midtones.contrast 0.9
+ highlights.contrast 2
+ name ColorCorrect1
+ xpos 920
+ ypos -304
+}
+set Neb01e400 [stack 0]
+Roto {
+ output alpha
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x44700000 x44070000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {px
+        {x43480000 x43570000 x43610000 x43660000 x436b0000 x43700000 x43750000 x437a0000 x437f0000 x43820000 x43848000 x43898000 x438e8000 x43938000 x43988000}
+        {{{x 3
+        {0 -}}      0
+       {x 11
+        {0 -}}}
+      {{x 3
+        {0 -}}      0
+       {x 11
+        {0 -}}}}
+        {{{x44870000 0 1 xc0098166 1}
+       {x44845079 -}
+       {x44848ef8 -}      x44844deb
+       {x448489e5 -}
+       {x4484d032 x3f960200 1 x3f960200 1}
+       {x448600ea x3fea7a00 1 x3fea7a00 1}
+       {x44871a63 x3fea5933 1 x3fea5933 1}
+       {x44884ac9 x3fe6b19a 1 x3fe6b19a 1}
+       {x44895b1f x40098166 1 x40098166 1}
+       {x448afa50 x40188622 1 x40188622 1}
+       {x448dd30d x403960e6 1 x403960e6 1}
+       {x44923819 -}
+       {x4491383b -}
+       {x449270bd x3fbb8133 1 0 1}}
+      {{x43e08000 0 1 x3faf01cd 1}
+       {x43e75612 -}
+       {x43db9df4 -}      x43da8394
+       {x43dd5141 -}
+       {x43d5fe30 -}
+       {x43dc573f x40321880 1 x40321880 1}
+       {x43e3e81a x40b0e620 1 x40b0e620 1}
+       {x43f7fb34 x40cee80d 1 x40cee80d 1}
+       {x44021e2e x40a281b3 1 x40a281b3 1}
+       {x4408afbc x40191f9a 1 x40191f9a 1}
+       {x440b1708 x3fd38900 1 x3fd38900 1}
+       {x4410f316 x4009abb3 1 x4009abb3 1}
+       {x4415d872 x40482c80 1 x40482c80 1}
+       {x44209690 x409c3720 1 0 1}}}
+        {{{x 3
+        {0 -}}      0
+       {x 11
+        {0 -}}}
+      {{x 3
+        {0 -}}      0
+       {x 11
+        {0 -}}}}
+        {{{x 3
+        {0 -}}      0
+       {x 11
+        {0 -}}}
+      {{x 3
+        {0 -}}      0
+       {x 11
+        {0 -}}}}
+        {{{x44914000 0 1 xc0098166 1}
+       {x448e9079 -}
+       {x448ecef8 x3f15fd9a 1 x3f15fd9a 1}      x448f5eeb
+       {x44909a58 x3f955222 1 x3f955222 1}
+       {x4490feec x3f960200 1 x3f960200 1}
+       {x4492115d x4023aecd 1 x4023aecd 1}
+       {x44943156 x40628166 1 x40628166 1}
+       {x44967de4 x402ad500 1 x402ad500 1}
+       {x4497877f x40098166 1 x40098166 1}
+       {x44992d6b x4070aa00 1 x4070aa00 1}
+       {x449e947a x407acf80 1 x407acf80 1}
+       {x44a2f986 x4023b2e6 1 x4023b2e6 1}
+       {x44a4f977 x3fa4e3cd 1 x3fa4e3cd 1}
+       {x44a631f9 x3f521e99 1 0 1}}
+      {{x43e18000 0 1 x3faf01cd 1}
+       {x43e85612 -}
+       {x43dc9df4 -}      x43dba040
+       {x43de8a99 -}
+       {x43d73788 -}
+       {x43dd9097 x403325da 1 x403325da 1}
+       {x43e5367d x40b210ed 1 x40b210ed 1}
+       {x43f9633c x40cf11fa 1 x40cf11fa 1}
+       {x4402c8a6 x40a281b3 1 x40a281b3 1}
+       {x440963c0 x401bb755 1 x401bb755 1}
+       {x440be864 x3fd67833 1 x3fd67833 1}
+       {x4411c472 x400b2833 1 x400b2833 1}
+       {x4416c788 x4049a900 1 x4049a900 1}
+       {x442185a6 x409bd800 1 0 1}}}
+        {{{x 3
+        {0 -}}      0
+       {x 11
+        {0 -}}}
+      {{x 3
+        {0 -}}      0
+       {x 11
+        {0 -}}}}
+        {{{x 3
+        {0 -}}      0
+       {x 11
+        {0 -}}}
+      {{x 3
+        {0 -}}      0
+       {x 11
+        {0 -}}}}
+        {{{x44900000 0 1 xc0098166 1}
+       {x448d5079 -}
+       {x448d8ef8 x3f15fd9a 1 x3f15fd9a 1}      x448e0764
+       {x448f21b4 x3f85fbbc 1 x3f85fbbc 1}
+       {x448f8568 x3f960200 1 x3f960200 1}
+       {x449098b9 x401d749a 1 x401d749a 1}
+       {x449298af x40552c00 1 x40552c00 1}
+       {x4494c295 x4024109a 1 x4024109a 1}
+       {x4495cd02 x40098166 1 x40098166 1}
+       {x4497721c x4065ea44 1 x4065ea44 1}
+       {x449c895f x4072d4b3 1 x4072d4b3 1}
+       {x44a0ee6b x401a55cd 1 x401a55cd 1}
+       {x44a290b9 x3f92299a 1 x3f92299a 1}
+       {x44a3c93b x3f64d8cc 1 0 1}}
+      {{x439c8000 0 1 x3faf01cd 1}
+       {x43a35612 -}
+       {x43979df4 xc0219af3 1 xc0219af3 1}      x438f169d
+       {x438a15dc xc03518e6 1 xc03518e6 1}
+       {x43826509 -}
+       {x43891bda x3fe71766 1 x3fe71766 1}
+       {x438b6bf3 x4031a11a 1 x4031a11a 1}
+       {x43985901 x40a7bb40 1 x40a7bb40 1}
+       {x43a5a135 x40a281b3 1 x40a281b3 1}
+       {x43b1bd45 -}
+       {x43a6f545 -}
+       {x43b2ad63 -}
+       {x43acacf8 -}
+       {x43c22933 x40ce4236 1 0 1}}}
+        {{{x 3
+        {0 -}}      0
+       {x 11
+        {0 -}}}
+      {{x 3
+        {0 -}}      0
+       {x 11
+        {0 -}}}}
+        {{{x 3
+        {0 -}}      0
+       {x 11
+        {0 -}}}
+      {{x 3
+        {xbf800000 -}}      xbf8e5600
+       {x 3
+        {xbf9cac00 -}}
+       {xbfa85800 xbc956666 1 xbc956666 1}
+       {x 3
+        {xbfb40400 -}}
+       {x 2
+        {xbfd15c00 -}}
+       {x 2
+        {xbfef1600 -}}}}
+        {{{x44854000 0 1 xc0098166 1}
+       {x44829079 -}
+       {x4482cef8 -}      x44826645
+       {x44827a99 -}
+       {x4482c4a2 x3f960200 1 x3f960200 1}
+       {x4483f19e x3fd70e66 1 x3fd70e66 1}
+       {x4484de46 x3fc50400 1 x3fc50400 1}
+       {x4485de28 x3fd3bf33 1 x3fd3bf33 1}
+       {x4486efa4 x40098166 1 x40098166 1}
+       {x44888daf x400979de 1 x400979de 1}
+       {x448af6b6 x402e351a 1 x402e351a 1}
+       {x448f5bc2 -}
+       {x448dd8ce -}
+       {x448f1150 x3fbb8133 1 0 1}}
+      {{x439c8000 0 1 x3faf01cd 1}
+       {x43a35612 -}
+       {x43979df4 xc0219af3 1 xc0219af3 1}      x438f169d
+       {x438a15dc xc03518e6 1 xc03518e6 1}
+       {x43826509 -}
+       {x43891bda x3fe71766 1 x3fe71766 1}
+       {x438b6bf3 x4031a11a 1 x4031a11a 1}
+       {x43985901 x40a7bb40 1 x40a7bb40 1}
+       {x43a5a135 x40a281b3 1 x40a281b3 1}
+       {x43b1bd45 -}
+       {x43a6f545 -}
+       {x43b2ad63 -}
+       {x43acacf8 -}
+       {x43c22933 x40ce4236 1 0 1}}}
+        {{{x 3
+        {0 -}}      0
+       {x 11
+        {0 -}}}
+      {{x 3
+        {1 -}}      x3f8e5600
+       {x 3
+        {x3f9cac00 -}}
+       {x3fa85800 x3c956666 1 x3c956666 1}
+       {x 3
+        {x3fb40400 -}}
+       {x 2
+        {x3fd15c00 -}}
+       {x 2
+        {x3fef1700 -}}}}}}     idem}
+     {tx x43480000 x448b6000 x43bec000}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x43480000 ltm x43480000 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {960 540}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ lifetime_start 200
+ lifetime_end 200
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ name Roto1
+ xpos 1050
+ ypos -264
+}
+push $Neb01e400
+CameraTracker {
+ inputs 2
+ serializeKnob "22 serialization::archive 16 0 4 0 2 0 0 0 0 0 0 0 0 0 0 0 0 -1 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0"
+ ignore "Mask Alpha"
+ trackStart 205
+ trackStop 305
+ referenceFrames {{curve x205 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 225 226 227 228 229 230 231 232 233 234 235 236 237 238 239 240 241 242 243 244 245 246 247 248 249 250 251 252 253 254 255 256 257 258 259 260 261 262 263 264 265 266 267 268 269 270 271 272 273 274 275 276 277 278 279 280 281 282 283 284 285 286 287 288 289 290 291 292 293 294 295 296 297 298 299 300 301 302 303 304 305}}
+ focalLengthType "Unknown Varying"
+ filenameSalt 211318641
+ solveRMSE 1.04
+ solveError {{curve x205 1.552732159 1.763750977 1.364178229 1.268254829 1.332519437 1.27023886 1.046887738 0.9466979585 0.9582925674 1.032771632 1.08658197 1.526213857 1.129236813 0.8392339791 0.8727643221 0.8811113348 0.9623253604 1.015011495 1.051767905 0.9927362596 1.147646115 1.248924425 0.9089398646 1.020591506 0.8148715073 0.991305482 0.9595608598 0.9380078657 1.029962596 1.062087655 1.050551335 0.9170308356 1.118463912 1.815894384 1.028008291 0.9581546313 1.11544959 1.860358918 1.300582204 1.790503699 0.9170804207 0.8709066411 0.8753343969 0.8014950231 0.9029332767 0.7957501071 0.8019150321 1.123003766 0.9756374874 0.9772312271 0.8856009424 0.9142203216 1.680934751 0.7853258587 2.704991594 0.831915919 0.8806748766 0.8576206 0.9341325494 0.9250771263 0.894832339 0.9289902613 0.7080362436 0.8636665445 0.8056774499 0.8102331313 0.8047951139 0.8038172568 0.8266393903 0.8046076031 0.7380405777 0.7472239478 0.7089087376 0.7668134372 0.9580750581 0.7998125985 0.6833650943 0.8011469846 1.038929387 1.170492517 1.072857617 0.7886702088 0.7155722454 0.7319739716 0.796619719 0.7905592993 0.7814015411 0.9639837326 0.928578239 0.7931116201 0.7057897312 0.801272699 0.7070801953 0.7871892011 0.8736571108 0.8034619437 1.106737903 1.945275961 0.9950439633 1.081552335 1.351635117}}
+ linkOutput false
+ userTrackViews {left right}
+ trackCurves {"num tracks" {curve x205 171 182 220 218 199 239 242 252 248 245 242 241 236 249 243 237 239 237 235 235 242 212 210 209 207 214 205 205 209 198 191 203 201 199 186 199 195 178 158 172 198 211 206 199 202 196 175 168 212 215 214 211 207 203 199 246 245 246 248 249 245 260 255 257 252 254 270 273 270 248 241 235 265 261 259 257 250 243 245 238 236 235 250 244 246 232 226 222 219 213 202 197 199 201 206 186 169 206 198 196 195}
+   "track len - min" {curve x205 3 3 3 4 3 3 3 5 5 5 4 4 4 4 4 4 4 4 3 3 3 3 3 4 4 4 4 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 4 4 3 3 3 3 3 3 4 3 3 3 4 4 4 4 3 3 3 3 4 4 4 4 4 3 3 3 4 4 4 4 4 3 3 3 4 4 4 4 4 4 4 5 6 5 5 5 3 3 3 3 3 3 3 3 3 3}
+   "track len - avg" {curve x205 26 26 23 24 27 25 25 24 25 26 26 27 31 30 31 31 31 32 32 32 31 33 34 34 35 33 34 34 33 34 34 33 33 33 35 33 34 36 39 37 32 30 31 32 32 33 36 37 31 31 31 31 33 33 35 32 32 32 32 32 33 32 33 33 33 33 32 32 32 34 34 34 32 32 33 33 33 34 33 33 33 32 31 31 31 32 32 33 33 33 34 33 31 31 30 31 32 26 27 27 27}
+   "track len - max" {curve x205 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101 101}
+   "Min Length" {curve x205 3 x305 3}
+   "Solve Error" {curve x205 1.041404724 x305 1.041404724}
+   "error - min" {curve x205 0.0407120958 0.08433201909 0.07703908533 0.03236509487 0.05670567602 0.02478057332 0.06063553318 0.01151617151 0.05051794648 0.0280263871 0.01912894845 0.06747300923 0.02878351323 0.03625388443 0.02374832891 0.03492556512 0.0146627035 0.04888413846 0.0334934853 0.03628759459 0.03356489539 0.0322127454 0.0566076003 0.01330549829 0.03408616781 0.03856533393 0.0318162404 0.08779062331 0.04932852834 0.0153242005 0.0619283095 0.06407121569 0.03171374276 0.0781263411 0.07880555838 0.06463782489 0.03234863281 0.2157503068 0.1357428581 0.03921146691 0.0412168093 0.009650054388 0.02332741022 0.06463687867 0.07197575271 0.04026123509 0.0547169894 0.01950181276 0.03324826807 0.02871282399 0.02303513698 0.03373792395 0.122253038 0.06034109369 0.3367095292 0.01862082444 0.07945793122 0.08743226528 0.04967125505 0.02424585633 0.02602118813 0.04156260937 0.02000929415 0.03403650597 0.0461335741 0.06814380735 0.01947198622 0.04218356311 0.04575574398 0.02879992872 0.007001523394 0.009834239259 0.01341763884 0.004367853515 0.03722134978 0.03077942878 0.02671622299 0.01286380179 0.04096932337 0.08053869009 0.05466685444 0.0772228241 0.05082326755 0.01905824803 0.04144736379 0.01870695129 0.02723563649 0.03113271669 0.06345602125 0.008408686146 0.004028435796 0.04488819465 0.0369909443 0.02188806608 0.04135396332 0.02504316904 0.02719032206 0.04763074592 0.008548408747 0.02501458675 0.05437845364}
+   "error - rms" {curve x205 1.55273211 1.76375103 1.364178181 1.268254876 1.332519412 1.270238876 1.046887755 0.9466979504 0.9582925439 1.032771587 1.086581945 1.526213884 1.129236817 0.8392339945 0.872764349 0.8811113238 0.9623253345 1.015011549 1.051767945 0.99273628 1.14764607 1.248924375 0.9089398384 1.020591497 0.81487149 0.9913054705 0.9595608711 0.9380078912 1.02996254 1.062087655 1.050551295 0.9170308113 1.118463874 1.815894365 1.028008342 0.9581546187 1.115449548 1.860358953 1.30058217 1.79050374 0.9170804024 0.870906651 0.8753343821 0.8014950156 0.9029332995 0.7957500815 0.8019150496 1.123003721 0.9756374955 0.9772312045 0.8856009245 0.9142203331 1.680934787 0.7853258848 2.704991579 0.831915915 0.8806748986 0.8576205969 0.934132576 0.9250771403 0.8948323131 0.9289902449 0.7080362439 0.8636665344 0.8056774735 0.8102331161 0.8047950864 0.8038172722 0.8266394138 0.8046076298 0.7380405664 0.7472239733 0.7089087367 0.766813457 0.9580750465 0.7998126149 0.6833651066 0.8011469841 1.038929343 1.17049253 1.072857618 0.7886701822 0.715572238 0.7319739461 0.7966197133 0.7905592918 0.781401515 0.9639837146 0.9285782576 0.7931116223 0.7057897449 0.8012726903 0.7070801854 0.7871891856 0.8736571074 0.8034619689 1.106737852 1.945275903 0.995043993 1.081552386 1.351635098}
+   "error - track" {curve x205 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.421765327 4.421765327 4.421765327 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 4.213060856 3.68489933 3.68489933 3.68489933 3.68489933 3.68489933 3.68489933 3.68489933 3.68489933 3.68489933 3.68489933 3.703704596 3.703704596 3.703704596 3.703704596 3.703704596 3.703704596 3.703704596 3.703704596 3.703704596 3.703704596 3.703704596 3.703704596 2.784207821 2.784207821 2.784207821 2.784207821 2.784207821 2.784207821 2.784207821 3.92424202 3.92424202 3.92424202 3.92424202}
+   "error - max" {curve x205 7.388705254 7.61734724 8.500242233 7.448090076 6.413403511 6.798662186 6.51940012 5.677719116 4.278377056 4.204744339 4.632694244 4.184886456 5.90780735 3.66632843 4.162246227 4.887148857 5.39312315 6.560882568 5.86367178 4.124921799 5.39525795 4.256326675 3.022879601 6.938774586 2.800786495 4.671854496 5.127398968 4.42876339 6.013045311 6.622067451 5.6492486 5.98145628 6.696374416 7.944734097 5.45093441 5.59336853 5.883756161 6.175645828 4.656461239 5.703339577 3.589681387 2.969043493 3.309929132 3.49455142 5.027991772 4.844556808 5.058932781 6.209174156 5.835292816 4.975154877 5.556673527 4.015882015 6.592571735 4.015443802 8.242706299 6.549273491 5.501872063 5.392557621 5.532806873 5.444860458 6.354198933 8.226810455 2.956909895 3.842526197 3.737763643 4.791821957 6.346952438 7.631982327 3.067769051 2.405327082 3.012573004 3.778276682 4.871970177 5.411726475 8.542740822 5.085524559 4.476543903 5.907261848 8.514546394 6.567364216 7.50065279 4.225036144 2.890488386 4.446864605 3.931155443 4.02367115 3.694319725 3.42743206 7.075391769 3.287054539 3.613247395 3.549079657 3.474749327 4.368432045 3.845319033 4.224787235 4.142693043 7.217897892 4.545780659 5.122596264 5.891417503}
+   "Max Track Error" {curve x205 4.421765327 x305 4.421765327}
+   "Max Error" {curve x205 8.542740822 x305 8.542740822}}
+ minLengthThreshold 3
+ maxRMSEThreshold 4.42
+ maxErrorThreshold 8.54
+ numberFeatures 200
+ rootReferenceFrame 265
+ cameraIsSolved true
+ camTranslate {{curve x205 1.261085868 1.248714328 1.231227279 1.219571471 1.208378315 1.194803596 1.182781339 1.171606064 1.160164237 1.149464488 1.136168599 1.123090506 1.110774636 1.102561235 1.088647604 1.077975392 1.065546989 1.054950953 1.046545267 1.035095334 1.023421884 1.008997321 1.00369668 0.9936262965 0.9838195443 0.9717147946 0.9617689848 0.9518761635 0.942278564 0.9323411584 0.9204798937 0.9118629098 0.9036530256 0.8902247548 0.8843374252 0.8737883568 0.8668569922 0.8519807458 0.854290545 0.8443015814 0.8300429583 0.8196285367 0.8128734827 0.804818511 0.793966651 0.7884859443 0.7807668447 0.7750174999 0.7658476233 0.7578308582 0.7513430119 0.7447917461 0.7383235693 0.7312767506 0.7340424061 0.7163745165 0.7092852592 0.7028660774 0.6982526183 0.6902183294 0.6842125654 0.6780941486 0.6720212102 0.6661396027 0.6566331387 0.651789248 0.6461794376 0.6399465203 0.6331022382 0.6273844242 0.622639358 0.617575407 0.6101551652 0.6055315733 0.5995261669 0.5931950212 0.5892497301 0.583001554 0.5784775019 0.5743215084 0.5670755506 0.5615233183 0.557289958 0.5522079468 0.5467305779 0.5425433517 0.5369049311 0.5314053893 0.5270579457 0.522043407 0.5183480978 0.5133770704 0.5088586807 0.5047804713 0.5007146597 0.4954933822 0.4930183589 0.4848275185 0.482627809 0.4783851802 0.4749206305} {curve x205 0.7186944485 0.7111925483 0.7036704421 0.6970637441 0.6902204156 0.6831720471 0.6769757867 0.6703037024 0.6639386415 0.6579077244 0.6514183283 0.6456823349 0.6384155154 0.6328758001 0.6263954639 0.6204050779 0.6132559776 0.6074409485 0.6039171219 0.5974422693 0.5910240412 0.5832347274 0.5805183053 0.5751048326 0.5691677332 0.5620520115 0.5574249029 0.5526545048 0.5466085672 0.5407600403 0.5357224941 0.5300542116 0.5252791047 0.5192901492 0.5140945315 0.5083830357 0.503708899 0.4957974553 0.4956330359 0.489435643 0.482867986 0.4771882892 0.4726327062 0.4670466483 0.4600969255 0.4570311308 0.4516577125 0.4476221502 0.4419515729 0.437482655 0.4335547388 0.4288046062 0.4271164238 0.4208368957 0.4212637246 0.411316365 0.4071726799 0.4028945565 0.3995918334 0.3945082724 0.3912465274 0.3871716261 0.3833587766 0.3797489107 0.3744520545 0.3713111877 0.367972225 0.3638987243 0.3590129912 0.3549655378 0.3525281549 0.3489690125 0.3443231285 0.34091869 0.3375565708 0.3334024549 0.3297954798 0.3262795508 0.3235943019 0.3200616539 0.3160583079 0.312496841 0.3090514243 0.305847019 0.3032322526 0.2992987931 0.296059072 0.2933036685 0.2895818651 0.2859630287 0.2827346921 0.2798369825 0.2762697935 0.2729590237 0.2704919875 0.2668835521 0.264559567 0.2604286373 0.2576418221 0.2545315027 0.2522358298} {curve x205 -0.0968676731 -0.09991694242 -0.09865854681 -0.1014504507 -0.1045211405 -0.1067033634 -0.1101289019 -0.1128100306 -0.1148903742 -0.1183208451 -0.1197889149 -0.122636579 -0.1242933348 -0.1275199205 -0.1287602633 -0.1319785565 -0.1324618161 -0.134079352 -0.1385558993 -0.1400310546 -0.1418625116 -0.1399353445 -0.1472110599 -0.1482937932 -0.1485850215 -0.148674801 -0.1504378021 -0.1526604891 -0.1541702449 -0.1545595676 -0.1553514004 -0.1574174315 -0.1580562592 -0.1613365114 -0.1597130746 -0.1611610353 -0.1643019319 -0.1665524095 -0.1658412069 -0.1630772948 -0.1664146036 -0.1665921807 -0.1680935621 -0.1693713963 -0.1701534986 -0.1720927209 -0.1736776233 -0.1752215028 -0.1753908992 -0.1752432585 -0.1761614084 -0.1773539335 -0.1811380535 -0.1782462299 -0.1905823648 -0.1794803143 -0.1793037206 -0.1808591187 -0.1827228963 -0.1819205284 -0.1826230139 -0.1829461753 -0.1829291582 -0.183219105 -0.1821527183 -0.1830720156 -0.1838551462 -0.1828277111 -0.1817721575 -0.1824405491 -0.1842393279 -0.1850925386 -0.1832606047 -0.1839916706 -0.1836859435 -0.1833901703 -0.1846066117 -0.1845775843 -0.1854653805 -0.1869378239 -0.1846069396 -0.1845812052 -0.1849571615 -0.1846999526 -0.1852324307 -0.1856336296 -0.185394004 -0.1850637496 -0.1851587743 -0.1849756986 -0.1851936281 -0.1855292618 -0.1855370998 -0.1854772419 -0.1861794293 -0.1854958981 -0.187134847 -0.1831609011 -0.1851851791 -0.1858795285 -0.1868587732}}
+ camRotate {{curve x205 -24.57457733 -24.60764694 -24.69345665 -24.68995476 -24.65475273 -24.64037323 -24.61663437 -24.56872749 -24.55183029 -24.5220356 -24.51678848 -24.50378609 -24.42935562 -24.34341431 -24.30330276 -24.21895409 -24.13040733 -24.04732895 -23.99564362 -23.88735962 -23.7781086 -23.68002319 -23.60655022 -23.51218605 -23.41514015 -23.31273842 -23.26753044 -23.21409225 -23.12266159 -23.04273033 -22.97732353 -22.82788849 -22.69432449 -22.62982941 -22.51258469 -22.46167374 -22.39783478 -22.3854847 -22.39413261 -22.38983727 -22.39898109 -22.36649513 -22.29941368 -22.25754929 -22.19739532 -22.28412056 -22.27677345 -22.34878349 -22.47585106 -22.63504601 -22.7832756 -22.83920288 -23.04415894 -23.06770897 -23.06969833 -23.19660187 -23.33597946 -23.43844032 -23.50681114 -23.57707405 -23.62577057 -23.59753799 -23.56461906 -23.54908562 -23.51068878 -23.39835358 -23.30309677 -23.21980095 -23.13804054 -23.0708046 -23.08806801 -23.0644474 -23.05946159 -23.0032959 -22.99805069 -22.96500778 -22.86055756 -22.83333015 -22.82653809 -22.7231369 -22.68022728 -22.60460472 -22.46248055 -22.37193871 -22.35125351 -22.215271 -22.15976715 -22.13553619 -22.00989532 -21.91046715 -21.82666016 -21.84414673 -21.80027962 -21.77840042 -21.82445526 -21.81579971 -21.76402283 -21.86850166 -21.81021881 -21.78153801 -21.82670403} {curve x205 100.7429733 100.9284821 100.9372864 101.0860977 101.2429276 101.3842239 101.5443954 101.6671906 101.7919083 101.9580917 102.0948944 102.2615738 102.4362183 102.629303 102.8069916 103.0312119 103.1749268 103.3583984 103.6558151 103.8477631 104.0472336 104.1288071 104.5336838 104.6969986 104.8494644 105.0131607 105.2366486 105.4826736 105.6841507 105.8593674 106.0855942 106.3426132 106.5147247 106.911377 106.9498749 107.2073364 107.4852676 107.8690186 107.8393021 107.881012 108.3313217 108.5354919 108.7404404 108.9669418 109.2069397 109.3993759 109.6212769 109.7910614 109.979187 110.1128311 110.2623215 110.4561081 110.8204193 110.7576294 111.4418716 111.1212769 111.2478333 111.4566345 111.6498032 111.780426 111.9583435 112.1337051 112.2887268 112.4836426 112.6910477 112.9312973 113.1853485 113.3652802 113.5680008 113.8528824 114.1923981 114.4512863 114.6252594 114.8780441 115.0970306 115.340477 115.6077347 115.8559723 116.1117554 116.3421783 116.3624191 116.4846954 116.5744629 116.6381912 116.7553253 116.7938004 116.8338318 116.8769836 116.916626 117.0070419 117.0936584 117.2480774 117.35672 117.4392242 117.6006546 117.6887207 117.8535385 117.7771149 117.9684525 118.1254425 118.2921524} {curve x205 5.081950665 4.931676865 4.817609787 4.707866669 4.665249348 4.639457226 4.630129337 4.771488667 4.951979637 5.022135258 5.030331612 5.093953133 5.189661026 5.240204334 5.295998096 5.318746567 5.381927967 5.424160004 5.371896744 5.319662094 5.288663387 5.353362083 5.273968697 5.295935154 5.328616142 5.40237093 5.442426682 5.438576221 5.448207378 5.408059597 5.375835419 5.305488586 5.287873268 5.188574791 5.257411957 5.222109318 5.105978489 4.983431816 4.983482838 4.957702637 4.740459442 4.636387348 4.543480873 4.401839733 4.176092625 4.053929329 4.006514072 4.033320427 4.014767647 3.986595869 3.951453447 3.917309284 3.764194727 3.735758781 3.374990702 3.50460124 3.442444324 3.361987352 3.33985424 3.426747799 3.497758865 3.563490868 3.638617754 3.644048452 3.553482771 3.458925009 3.436405897 3.400032282 3.196753502 2.909710407 2.677150965 2.503152132 2.331171513 2.132479668 1.960738778 1.750134587 1.446147323 1.129069805 0.793412745 0.3739109039 0.06091918051 -0.1922455579 -0.3438416421 -0.4456803799 -0.5032484531 -0.4556951225 -0.3582752645 -0.1942176968 0.07325091958 0.3610720038 0.4869475067 0.4200684428 0.42639184 0.4484998584 0.3714928925 0.3037833869 0.1850703061 0.200628981 0.05920117348 -0.09415898472 -0.3283579648}}
+ focalLength {{curve x205 44.13441541 44.03196565 43.57037925 43.42107644 43.33164002 43.11148209 42.9757778 42.84738856 42.71500465 42.60846702 42.3805038 42.12532282 42.04749249 42.00358381 41.7677282 41.6341397 41.44129719 41.32682597 41.31300574 41.14573165 40.96979747 40.62137597 40.78235496 40.67409702 40.54722652 40.31312384 40.18978364 40.078149 39.9733247 39.85066185 39.62818552 39.57485978 39.48739147 39.27964472 39.22253721 39.06369009 39.00641411 38.68609928 38.98771955 38.77051699 38.4449211 38.22479599 38.17795028 38.10084446 37.85875172 37.89758266 37.78938098 37.79075918 37.61925924 37.47761077 37.44681097 37.36304636 37.4384116 37.2409312 37.8405488 37.00710379 36.9087272 36.85595903 36.85851821 36.71608962 36.64751355 36.59786189 36.51261581 36.48407616 36.22250222 36.21410308 36.19002792 36.09452112 35.93860504 35.87893719 35.91090915 35.88098498 35.68208355 35.67345841 35.59213228 35.46825025 35.48077092 35.38054447 35.39037101 35.40404563 35.16296527 35.09340534 35.08032437 35.01902041 34.96173885 34.92677928 34.84682116 34.76515122 34.72347775 34.64607022 34.63061299 34.55948977 34.49898163 34.4525225 34.45484214 34.31687179 34.41578284 33.9879836 34.12016977 34.07093076 34.1092414}}
+ aperture {36 24}
+ windowScale {1 1}
+ lensDistortionType "Unknown Lens"
+ distortion1 -0.01517781522
+ distortion2 0.001276847906
+ distortionCenter {0.0005267790984 -0.0002133241942}
+ name CameraTracker1
+ xpos 920
+ ypos -207
+}
+CameraTrackerPointCloud {
+ name CameraTrackerPointCloud1
+ xpos 920
+ ypos -127
+ disable true
+}
+push $Nae6cc400
+Scene {
+ inputs 3
+ name Scene1
+ xpos 930
+ ypos -68
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0xc1c1c1ff
+ gl_color 0xccccccff
+ label "You can either download the toolset example files by pasting this URL into your browser:\n\nhttp://thefoundry.s3.amazonaws.com/products/nuke/toolsets/toolset_examples.zip\n\nOr by clicking on the Download Toolset Examples button of this node:\n\n\n"
+ note_font Verdana
+ note_font_size 14
+ note_font_color 0xffffffff
+ xpos 688
+ ypos -1157
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0xffffffff
+ label "<b>Gizmo                ."
+ note_font "Helvetica Bold"
+ note_font_size 100
+ xpos 678
+ ypos -1424
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0xffffffff
+ label "<b>Example                ."
+ note_font "Helvetica Bold"
+ note_font_size 100
+ xpos 688
+ ypos -793
+}
+NoOp {
+ inputs 0
+ name Examples
+ xpos 1256
+ ypos -1101
+ addUserKnob {20 Examples}
+ addUserKnob {22 HTML l "Download Toolset Examples" t "Click to download the example script for this Toolset" T "import webbrowser\nwebbrowser.open(\"http://thefoundry.s3.amazonaws.com/products/nuke/toolsets/toolset_examples.zip\")" +STARTLINE}
+}
+Group {
+ inputs 0
+ name P_DustHit4
+ xpos 1254
+ ypos -1232
+ addUserKnob {20 User l "Hit Setup"}
+ addUserKnob {6 preview l "Enable Preview Mode" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {3 dustHit_startFrame l "Start Frame"}
+ dustHit_startFrame 1
+ addUserKnob {3 dustHit_emitTime l "Emit Time"}
+ dustHit_emitTime 3
+ addUserKnob {26 ""}
+ addUserKnob {6 useCustomImg l "Use Custom Image" +STARTLINE}
+ addUserKnob {4 dustHit_emissionGeo l "Emission Geo" M {Cylinder Plane "Custom from input..."}}
+ addUserKnob {26 ""}
+ addUserKnob {3 dustHit_seed l Seed}
+ dustHit_seed 10
+ addUserKnob {20 InitialState l "Initial State"}
+ addUserKnob {7 dustHit_emitRate l Amount R 0 100}
+ dustHit_emitRate 35
+ addUserKnob {7 dustHit_startSize l Size R 0.01 5}
+ dustHit_startSize 2
+ addUserKnob {7 dustHit_emitVelocity l Speed}
+ dustHit_emitVelocity 0.395
+ addUserKnob {7 dustHit_randomVelMult l "Speed Randomness"}
+ dustHit_randomVelMult 0.2
+ addUserKnob {7 dustHit_spread l Spread}
+ addUserKnob {7 dustHit_life l Life R 1 100}
+ dustHit_life 25
+ addUserKnob {20 Look}
+ addUserKnob {7 dustHit_expandRate l "Growth Rate"}
+ dustHit_expandRate 1
+ addUserKnob {7 dustHit_startOpacity l Opacity}
+ dustHit_startOpacity 0.05
+ addUserKnob {7 opacityFadeRate l "Opacity Fade Rate"}
+ opacityFadeRate 0.75
+ addUserKnob {7 randomRotation l "Random Rotation"}
+ addUserKnob {20 Forces}
+ addUserKnob {7 drag l Drag}
+ drag 0.4
+ addUserKnob {7 dustHit_gravityMult l "Gravity Mult" R -5 5}
+ dustHit_gravityMult 0.01
+ addUserKnob {7 turbulenceMult l "Turbulence Amount" R 0 2}
+ turbulenceMult 0.1
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode10
+  tile_color 0x68a85aff
+  label "Set initial opacity."
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 253
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode11
+  tile_color 0x68a85aff
+  label "Set particle growth"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 609
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode12
+  tile_color 0x68a85aff
+  label "B Channel randomisation"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 892
+  bdwidth 310
+  bdheight 131
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode13
+  tile_color 0x68a85aff
+  label "Set opacity falloff"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -267
+  ypos 792
+  bdwidth 280
+  bdheight 109
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode14
+  tile_color 0x454554ff
+  label "Dust Hit System"
+  note_font_size 42
+  note_font_color 0xd2d2ffff
+  xpos -925
+  ypos -982
+  bdwidth 1054
+  bdheight 2236
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x7171c600
+  label "Setup sprite presets"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -573
+  ypos -880
+  bdwidth 357
+  bdheight 463
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x68a85aff
+  label "Set opacity falloff"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -536
+  ypos 866
+  bdwidth 280
+  bdheight 109
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xc65353ff
+  label "Choose source geo."
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -251
+  ypos -383
+  bdwidth 305
+  bdheight 299
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x68a85aff
+  label "Setup Emitter system"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -535
+  ypos -34
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x68a85aff
+  label "Set growth over time"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -534
+  ypos 667
+  bdwidth 280
+  bdheight 109
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x68a85aff
+  label "Add initial opacity"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -538
+  ypos 202
+  bdwidth 287
+  bdheight 122
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x68a85aff
+  label "Add system forces"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -537
+  ypos 410
+  bdwidth 281
+  bdheight 171
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x8e388e00
+  label "3D Preview Geo"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -603
+  ypos -361
+  bdwidth 275
+  bdheight 167
+  z_order 1
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote3
+  label "Here I've set two pre-defined options\nfor emission geo, but I'm also allowing\ncustom geo to be used."
+  xpos -176
+  ypos -324
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote8
+  label "The emitter is set up as normal, except\nfor the expressions on 'emission_rate', \n'max lifetime', 'velocity', 'size' 'spread'\nand 'seed', that take our UI values into account"
+  xpos -774
+  ypos 14
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  format "1024 1024 0 0 1024 1024 1 square_1K"
+  name Constant1
+  xpos -587
+  ypos -308
+ }
+ BlendMat {
+  surfaceblend "vertex color"
+  name BlendMat1
+  xpos -587
+  ypos -236
+ }
+ Input {
+  inputs 0
+  name Img
+  xpos -314
+  ypos -522
+ }
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat3
+  xpos -314
+  ypos -465
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  format "256 256 0 0 256 256 1 square_256"
+  name Constant2
+  xpos -438
+  ypos -787
+ }
+set Neb466c00 [stack 0]
+ Noise {
+  output alpha
+  size 100
+  zoffset {{"(frame/100) + parent.dustHit_seed"}}
+  gain 0.6
+  gamma 1
+  center {960 540}
+  name Noise1
+  xpos -542
+  ypos -690
+ }
+ Roto {
+  output alpha
+  premultiply alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41100000
+        {xc28bba60 0}
+        {x42fd0000 x40400000}
+        {x428bba60 0}
+        {0 xc28c47c3}
+        {x437d0000 x43020000}
+        {0 x428c47c4}
+        {x428bba60 0}
+        {x42fd0000 x43808000}
+        {xc28bba60 0}
+        {0 x428c47c4}
+        {0 x43020000}
+        {0 xc28c47c3}}}     idem}
+     {t
+   {{x41100000 x42fd0000}}
+   {{x41100000 x43020000}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}  x3f8ccccd x3f8ccccd
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}}
+     {a fx xc2860000 fy xc2860000 osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x41100000 ltm x41100000 tt x40e00000 bm x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {128 128}
+  colorOverlay {0 0 0 0}
+  blending_mode multiply
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  feather -67
+  source_black_outside true
+  name Roto2
+  xpos -542
+  ypos -658
+ }
+ Premult {
+  name Premult1
+  xpos -542
+  ypos -626
+ }
+push $Neb466c00
+ Noise {
+  output alpha
+  size 90
+  zoffset {{"(frame/100)+100 + parent.dustHit_seed"}}
+  gamma 0.8
+  center {960 540}
+  name Noise3
+  xpos -438
+  ypos -690
+ }
+ Roto {
+  output alpha
+  premultiply alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41100000
+        {xc28bba60 0}
+        {x42fd0000 x40400000}
+        {x428bba60 0}
+        {0 xc28c47c3}
+        {x437d0000 x43020000}
+        {0 x428c47c4}
+        {x428bba60 0}
+        {x42fd0000 x43808000}
+        {xc28bba60 0}
+        {0 x428c47c4}
+        {0 x43020000}
+        {0 xc28c47c3}}}     idem}
+     {t
+   {{x41100000 x42fd0000}}
+   {{x41100000 x43020000}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}  x3f8ccccd x3f8ccccd
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 0}}
+   {{x41100000 1}}}
+     {a fx xc2860000 fy xc2860000 osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x41100000 ltm x41100000 tt x40e00000 bm x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {128 128}
+  colorOverlay {0 0 0 0}
+  blending_mode multiply
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  feather -67
+  source_black_outside true
+  name Roto3
+  xpos -438
+  ypos -658
+ }
+ Premult {
+  name Premult2
+  xpos -438
+  ypos -626
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge1
+  xpos -495
+  ypos -583
+ }
+push $Neb466c00
+ Noise {
+  output alpha
+  size 80
+  zoffset {{"200 + (frame/100) + parent.dustHit_seed"}}
+  gamma 0.7
+  center {960 540}
+  name Noise4
+  xpos -332
+  ypos -690
+ }
+ Roto {
+  output alpha
+  premultiply alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41100000
+        {xc28bba60 0}
+        {x42fd0000 x40400000}
+        {x428bba60 0}
+        {0 xc28c47c3}
+        {x437d0000 x43020000}
+        {0 x428c47c4}
+        {x428bba60 0}
+        {x42fd0000 x43808000}
+        {xc28bba60 0}
+        {0 x428c47c4}
+        {0 x43020000}
+        {0 xc28c47c3}}}     idem}
+     {tx x41100000 x42fd0000 x43020000}
+     {a fx xc2860000 fy xc2860000 osw x41200000 osf 0 str 1 spx x43000000 spy x43000000 sb 1 ltn x41100000 ltm x41100000 tt x40e00000 bm x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {128 128}
+  colorOverlay {0 0 0 0}
+  blending_mode multiply
+  lifetime_type "all frames"
+  lifetime_start 9
+  lifetime_end 9
+  motionblur_shutter_offset_type centred
+  feather -67
+  source_black_outside true
+  name Roto4
+  xpos -332
+  ypos -658
+ }
+ Premult {
+  name Premult3
+  xpos -332
+  ypos -626
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge2
+  xpos -435
+  ypos -547
+ }
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat2
+  xpos -435
+  ypos -523
+ }
+ Switch {
+  inputs 2
+  which {{parent.useCustomImg}}
+  name Switch1
+  xpos -435
+  ypos -465
+ }
+ Switch {
+  inputs 2
+  which {{parent.preview}}
+  name Switch4
+  xpos -435
+  ypos -236
+ }
+ Dot {
+  name Dot5
+  xpos -401
+  ypos -179
+ }
+ Input {
+  inputs 0
+  name Axis
+  xpos -218
+  ypos -133
+  number 1
+ }
+ Input {
+  inputs 0
+  name Geo
+  xpos -209
+  ypos -196
+  number 2
+ }
+ Card2 {
+  inputs 0
+  image_aspect false
+  rotate {-90 0 0}
+  uniform_scale 0.3
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Card1
+  xpos -158
+  ypos -242
+ }
+ Cylinder {
+  inputs 0
+  rows 2
+  radius 0.25
+  height 0.125
+  translate {0 0.05999999866 0}
+  rotate {0 {frame*2} 0}
+  name Cylinder1
+  xpos -63
+  ypos -240
+ }
+ Switch {
+  inputs 3
+  which {{parent.dustHit_emissionGeo i}}
+  name Switch2
+  xpos -108
+  ypos -196
+ }
+ TransformGeo {
+  inputs 2
+  name TransformGeo1
+  xpos -108
+  ypos -133
+ }
+ Dot {
+  name Dot2
+  xpos -74
+  ypos 46
+ }
+push 0
+ ParticleEmitter {
+  inputs 3
+  rate {{"frame >= \[value startFrame] && frame <= \[value startFrame] + \[value emitTime] ? \[value amount] : 0"}}
+  lifetime {{life}}
+  lifetime_variation 0.772
+  velocity {{velocity_1}}
+  velocity_variation 1
+  size {{startSize}}
+  mass_variation 0.722
+  spread {{spread}}
+  input_order "in order"
+  start_frame_animation "in order"
+  seed {{seed_1}}
+  name ParticleEmitter2
+  selected true
+  xpos -435
+  ypos 43
+  addUserKnob {20 User}
+  addUserKnob {7 velocity_1 l velocity}
+  velocity_1 {{parent.dustHit_emitVelocity}}
+  addUserKnob {7 life}
+  life {{parent.dustHit_life}}
+  addUserKnob {3 startFrame}
+  startFrame {{parent.dustHit_startFrame}}
+  addUserKnob {3 seed_1 l seed}
+  seed_1 {{parent.dustHit_seed}}
+  addUserKnob {7 startSize}
+  startSize {{parent.dustHit_startSize}}
+  addUserKnob {3 emitTime}
+  emitTime {{parent.dustHit_emitTime}}
+  addUserKnob {7 amount}
+  amount {{parent.dustHit_emitRate}}
+  addUserKnob {7 spread_1 l spread}
+  spread_1 {{parent.dustHit_spread}}
+ }
+ ParticleExpression {
+  temp_name0 opacityVal
+  temp_expr0 "\[value opacity]"
+  opacityexpr opacityVal
+  name ParticleExpression7
+  xpos -435
+  ypos 266
+  addUserKnob {20 User}
+  addUserKnob {7 opacity}
+  opacity {{parent.dustHit_startOpacity}}
+ }
+ ParticleTurbulence {
+  strength {{parent.turbulenceMult} {parent.turbulenceMult} {parent.turbulenceMult}}
+  probability 0.3
+  max_age 0.2
+  name ParticleTurbulence2
+  xpos -435
+  ypos 467
+ }
+ ParticleGravity {
+  to {0 {gravityMult} 0}
+  name ParticleGravity2
+  xpos -435
+  ypos 499
+  addUserKnob {20 User}
+  addUserKnob {7 gravityMult R -1 1}
+  gravityMult {{parent.dustHit_gravityMult}}
+ }
+ ParticleDrag {
+  drag {{drag_1}}
+  name ParticleDrag2
+  xpos -435
+  ypos 535
+  addUserKnob {20 User}
+  addUserKnob {7 drag_1 l drag}
+  drag_1 {{parent.drag}}
+ }
+ ParticleExpression {
+  temp_name0 ageMultiplier
+  temp_expr0 "\[value growthRate] / 100"
+  sizeexpr "size + (age*ageMultiplier)"
+  name ParticleExpression3
+  xpos -435
+  ypos 713
+  addUserKnob {20 User}
+  addUserKnob {7 growthRate}
+  growthRate {{parent.dustHit_expandRate}}
+ }
+ ParticleExpression {
+  temp_name0 opacityStart
+  temp_expr0 3
+  temp_name1 opacityMult
+  temp_expr1 "\[value opacityFadeRate]"
+  opacityexpr "age > opacityStart ? opacity * opacityMult : opacity"
+  name ParticleExpression6
+  xpos -435
+  ypos 926
+  addUserKnob {20 User}
+  addUserKnob {7 opacityFadeRate}
+  opacityFadeRate {{"1 - parent.opacityFadeRate"}}
+ }
+ NoOp {
+  name System_Completed
+  tile_color 0xff00ff
+  note_font "Verdana Bold"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -435
+  ypos 1073
+ }
+ Output {
+  name Output1
+  xpos -435
+  ypos 1201
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote12
+  label "To enable better placement in the 3D view\nthe user can switch between the sprite and\na placeholder image for each spark."
+  xpos -837
+  ypos -305
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote4
+  label "Here we're setting the initial opacity\nof the particles based upon the UI values."
+  xpos -751
+  ypos 251
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote7
+  label "Here I'm setting the opacity of the particles\nto falloff over time, only if their age is greater\nthan 3. The falloff itself is also based upon age."
+  xpos -772
+  ypos 893
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote6
+  label "Using a simple expression on size, \nwe ca make the particles grow over\ntime. (Could be replaced with a \nParticleCurve node)."
+  xpos -725
+  ypos 673
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote5
+  label "Turbulence, gravity and drag are being added,\ntaking UI values into account where appropriate."
+  xpos -781
+  ypos 479
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "In this section, we're choosing between the exisiting\nsprite image (based upon an evolving Noise node)\nand an input from the 'Img' pipe on the main node."
+  xpos -517
+  ypos -835
+ }
+end_group

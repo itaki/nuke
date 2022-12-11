@@ -1,0 +1,379 @@
+#! /Applications/Nuke10.0v5/Nuke10.0v5.app/Contents/MacOS/libnuke-10.0.5.dylib -nx
+version 10.0 v5
+Gizmo {
+ addUserKnob {20 GoldRatioFrame l "Gold Ratio Frame"}
+ addUserKnob {41 ShowFrame l "Show Frame" T Line_Parameters.ShowFrame}
+ addUserKnob {41 ShowMoreDetails l "Show More Details" T Line_Parameters.ShowMoreDetails}
+ addUserKnob {41 ColorFrame l "Color Frame" T Line_Parameters.ColorFrame}
+ addUserKnob {41 Transparency T Merge1.mix}
+ addUserKnob {41 translate T Transform2.translate}
+ addUserKnob {41 rotate T Transform2.rotate}
+ addUserKnob {41 scale T Transform2.scale}
+ addUserKnob {41 Crop T Line_Parameters.Crop}
+ addUserKnob {20 GoldRatioLine l "Gold Ratio Line"}
+ addUserKnob {41 ShowLine l "Show Line" T Line_Parameters.ShowLine}
+ addUserKnob {41 Start T Line_Parameters.Start}
+ addUserKnob {41 Finish T Line_Parameters.Finish}
+ addUserKnob {41 Color_1 l Color T Line_Parameters.Color_1}
+ addUserKnob {41 MidRadius l "Middle Point Radius" T Line_Parameters.MidRadius}
+ addUserKnob {41 strokeWidth l "Line Width" T Line_Parameters.strokeWidth}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 269
+  ypos -91
+ }
+ RotoPaint {
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t x44800000 x44428000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {cubiccurve Brush1 512 catmullrom
+     {cc
+      {f 2080}
+      {px 1
+       {{"=\ Line_Parameters.Start.x" x44e0b333}
+     {"=\ Line_Parameters.Start.y" x43e3e664}    1}
+       {{=Line_Parameters.Finish.x x44cd3002}
+     {=Line_Parameters.Finish.y x43a0ccd0}    1}}}
+     {tx 1 x444ed612 x43be6584}
+     {a ro 0 go 0 bo 0 ao 0 dt 0 str 1 spx x44800000 spy x44428000 sb 1 tt x41880000 a
+   {=Gold_Ratio.Line_Parameters.Color_1.r 1}     b
+   {=Gold_Ratio.Line_Parameters.Color_1.r 1}     g
+   {=Gold_Ratio.Line_Parameters.Color_1.r 1}     r
+   {=Gold_Ratio.Line_Parameters.Color_1.r 1}     bs
+   {=Line_Parameters.strokeWidth x41c80000}     h 1}}}}}}
+  toolbox {selectAll {
+  { selectAll dt 0 bu 0 str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { addPoints str 1 ssx 1 ssy 1 sf 1 }
+  { brush dt 0 bu 0 str 1 ssx 1 ssy 1 sf 1 sb 1 ltt 0 tt 17 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 tt 18 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_show_paint_selection true
+  toolbar_dynamic_transparency false
+  toolbar_brush_hardness 0.200000003
+  toolbar_buildup false
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {1024 778}
+  color {{Gold_Ratio.Line_Parameters.Color_1.r 1} {Gold_Ratio.Line_Parameters.Color_1.r} {Gold_Ratio.Line_Parameters.Color_1.r} {Gold_Ratio.Line_Parameters.Color_1.r}}
+  colorOverlay {0 0 0 0}
+  lifetime_type "all frames"
+  motionblur_on true
+  motionblur_shutter_offset_type centred
+  brush_size {{Line_Parameters.strokeWidth 25}}
+  brush_spacing 0.05000000075
+  brush_hardness 1
+  dynamic_transparency false
+  buildup false
+  source_black_outside true
+  name RotoPaint3
+  xpos 269
+  ypos 89
+  disable {{!Line_Parameters.ShowLine}}
+ }
+set N2b7bea40 [stack 0]
+ Radial {
+  area {{"Line_Parameters.Start.x + (Line_Parameters.Finish.x - Line_Parameters.Start.x) * 0.382  - Line_Parameters.MidRadius" x1 1002.05} {"Line_Parameters.Start.y + (Line_Parameters.Finish.y - Line_Parameters.Start.y) * 0.382 - Line_Parameters.MidRadius" x1 1014.45} {"Line_Parameters.Start.x + (Line_Parameters.Finish.x - Line_Parameters.Start.x) * 0.382  + Line_Parameters.MidRadius" x1 7.95} {"Line_Parameters.Start.y + (Line_Parameters.Finish.y - Line_Parameters.Start.y) * 0.382 + Line_Parameters.MidRadius" x1 345.55}}
+  softness 0
+  color0 {0 1 0 0}
+  color0_panelDropped true
+  name Radial1
+  xpos 269
+  ypos 140
+  disable {{!Line_Parameters.ShowLine}}
+ }
+ Radial {
+  area {{"Line_Parameters.Start.x - Line_Parameters.MidRadius" x1 1002.05} {"Line_Parameters.Start.y - Line_Parameters.MidRadius" x1 1014.45} {"Line_Parameters.Start.x + Line_Parameters.MidRadius" x1 7.95} {"Line_Parameters.Start.y  + Line_Parameters.MidRadius" x1 345.55}}
+  softness 0
+  color0 {0 1 0 0}
+  color0_panelDropped true
+  name Radial2
+  xpos 269
+  ypos 201
+  disable {{!Line_Parameters.ShowLine}}
+ }
+ Radial {
+  area {{"Line_Parameters.Finish.x - Line_Parameters.MidRadius" x1 1770} {"Line_Parameters.Finish.y - Line_Parameters.MidRadius" x1 346} {"Line_Parameters.Finish.x + Line_Parameters.MidRadius" x1 1873.2} {"Line_Parameters.Finish.y  + Line_Parameters.MidRadius" x1 1443.2}}
+  softness 0
+  color0 {0 1 0 0}
+  color0_panelDropped true
+  name Radial3
+  xpos 269
+  ypos 264
+  disable {{!Line_Parameters.ShowLine}}
+ }
+ Dot {
+  name Dot2
+  xpos 303
+  ypos 377
+ }
+set N29805f00 [stack 0]
+ Dot {
+  name Dot3
+  xpos 303
+  ypos 1108
+ }
+set N2980a1f0 [stack 0]
+ Transform {
+  rotate {{"- Transform2.rotate"}}
+  scale {{"1 / Transform2.scale"}}
+  center {{"Transform2.center.x + Transform2.translate.x"} {"Transform2.center.y + Transform2.translate.y"}}
+  name Transform3
+  xpos 269
+  ypos 1170
+  disable {{!Gold_Ratio.Line_Parameters.ShowFrame}}
+ }
+ Transform {
+  translate {{"- Transform2.translate.x"} {"- Transform2.translate.y"}}
+  center {1024 778}
+  name Transform4
+  xpos 269
+  ypos 1234
+  disable {{!Gold_Ratio.Line_Parameters.ShowFrame}}
+ }
+push $N29805f00
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  xpos 110
+  ypos 374
+  disable {{!Line_Parameters.ShowFrame}}
+ }
+ Grid {
+  number 1
+  size 7
+  translate {{"Grid1.width * 0.382"} {"Grid1.height * 0.382"}}
+  color {{Gold_Ratio.Line_Parameters.ColorFrame.r}}
+  name Grid1
+  xpos 110
+  ypos 414
+  disable {{!Line_Parameters.ShowFrame}}
+ }
+ Grid {
+  number 1
+  size 7
+  translate {{"Grid3.width * 0.618"} {"Grid3.height * 0.618"}}
+  color {{Gold_Ratio.Line_Parameters.ColorFrame.r}}
+  name Grid3
+  selected true
+  xpos 110
+  ypos 466
+  disable {{!Line_Parameters.ShowFrame x19 1}}
+ }
+ Grid {
+  number 1
+  size 16
+  color {{Gold_Ratio.Line_Parameters.ColorFrame.r}}
+  name Grid2
+  xpos 110
+  ypos 490
+  disable {{!Line_Parameters.ShowFrame x19 1}}
+ }
+ Dot {
+  name Dot4
+  xpos 144
+  ypos 538
+ }
+set N29858e20 [stack 0]
+ Dot {
+  name Dot5
+  xpos 30
+  ypos 538
+ }
+set N2985d160 [stack 0]
+ Dot {
+  name Dot6
+  xpos -76
+  ypos 538
+ }
+set N29861470 [stack 0]
+ Dot {
+  name Dot7
+  xpos -182
+  ypos 538
+ }
+set N29865780 [stack 0]
+ Dot {
+  name Dot8
+  xpos -286
+  ypos 538
+ }
+ Transform {
+  translate {{Transform7.width*0.309} {Transform7.height*0.309}}
+  scale 0.382
+  center {{Transform7.width/2} {Transform7.height/2}}
+  name Transform7
+  xpos -320
+  ypos 613
+ }
+ Dot {
+  name Dot12
+  xpos -286
+  ypos 902
+ }
+push $N29865780
+ Transform {
+  translate {{-Transform6.width*0.309} {Transform6.height*0.309}}
+  scale 0.382
+  center {{Transform6.width/2} {Transform6.height/2}}
+  name Transform6
+  xpos -216
+  ypos 612
+ }
+ Dot {
+  name Dot11
+  xpos -182
+  ypos 828
+ }
+push $N29861470
+ Transform {
+  translate {{Transform5.width*0.309} {-Transform5.height*0.309}}
+  scale 0.382
+  center {{Transform5.width/2} {Transform5.height/2}}
+  name Transform5
+  xpos -110
+  ypos 612
+ }
+ Dot {
+  name Dot10
+  xpos -76
+  ypos 751
+ }
+push $N2985d160
+ Transform {
+  translate {{-Transform1.width*0.309} {-Transform1.height*0.309}}
+  scale 0.382
+  center {{Transform1.width/2} {Transform1.height/2}}
+  name Transform1
+  xpos -4
+  ypos 610
+ }
+ Dot {
+  name Dot9
+  xpos 30
+  ypos 670
+ }
+push $N29858e20
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos 110
+  ypos 667
+  disable {{!(Line_Parameters.ShowFrame&&Line_Parameters.ShowMoreDetails)}}
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  xpos 110
+  ypos 748
+  disable {{!(Line_Parameters.ShowFrame&&Line_Parameters.ShowMoreDetails)}}
+ }
+ Merge2 {
+  inputs 2
+  name Merge4
+  xpos 110
+  ypos 825
+  disable {{!(Line_Parameters.ShowFrame&&Line_Parameters.ShowMoreDetails)}}
+ }
+ Merge2 {
+  inputs 2
+  name Merge5
+  xpos 110
+  ypos 899
+  disable {{!(Line_Parameters.ShowFrame&&Line_Parameters.ShowMoreDetails)}}
+ }
+ Transform {
+  translate {122 -8}
+  scale 0.76
+  center {654 390}
+  name Transform2
+  xpos 110
+  ypos 990
+  disable {{!Line_Parameters.ShowFrame}}
+ }
+push $N2980a1f0
+ Merge2 {
+  inputs 2
+  mix 0.2
+  name Merge1
+  xpos 110
+  ypos 1105
+  disable {{!Line_Parameters.ShowFrame}}
+ }
+ Dot {
+  name Dot1
+  xpos 144
+  ypos 1300
+ }
+ Switch {
+  inputs 2
+  which {{Gold_Ratio.Line_Parameters.Crop}}
+  name Switch1
+  xpos 269
+  ypos 1297
+  disable {{!Gold_Ratio.Line_Parameters.ShowFrame}}
+ }
+set N2b9a5450 [stack 0]
+ Output {
+  name Output1
+  xpos 269
+  ypos 1489
+ }
+push $N2b9a5450
+ Viewer {
+  frame_range 1-3245
+  colour_sample_bbox {0.8125 -0.168750003 0.8140624762 -0.167187497}
+  name Viewer1
+  xpos 197
+  ypos 520
+ }
+push $N2b7bea40
+ NoOp {
+  name Line_Parameters
+  xpos 648
+  ypos 417
+  addUserKnob {20 line l Line}
+  addUserKnob {6 ShowLine l "Show Line" +STARTLINE}
+  ShowLine true
+  addUserKnob {12 Start}
+  Start {282 626}
+  addUserKnob {12 Finish}
+  Finish {280 90}
+  addUserKnob {19 Color_1 l Color}
+  Color_1 {1 1 1 1}
+  addUserKnob {6 Color_1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {7 MidRadius l "Middle Point Radius" R 0 50}
+  MidRadius 15
+  addUserKnob {7 strokeWidth l "Line Width" R 0 50}
+  strokeWidth 3.2
+  addUserKnob {20 Frame}
+  addUserKnob {6 ShowFrame l "Show Frame" +STARTLINE}
+  addUserKnob {6 ShowMoreDetails l "Show More Details" +STARTLINE}
+  addUserKnob {6 Color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 ColorFrame l "Color Frame"}
+  ColorFrame {1 1 1 1}
+  addUserKnob {6 ColorFrame_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 Crop +STARTLINE}
+ }
+end_group

@@ -1,0 +1,232 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/.nuke/Particles/VariousSetup/DNA.nk
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+CheckerBoard2 {
+ inputs 0
+ name CheckerBoard1
+ xpos -109
+ ypos -278
+ postage_stamp false
+}
+set N30b6fc00 [stack 0]
+Sphere {
+ translate {{(sin(frame/5)*30)*-1 i} {frame*5 i} {(cos(frame/5)*30)*-1 i}}
+ uniform_scale {{parent.Sphere1.uniform_scale i}}
+ name Sphere2
+ xpos -207
+ ypos -224
+}
+set N30b6f800 [stack 0]
+Dot {
+ name Dot1
+ xpos -173
+ ypos -414
+}
+push $N30b6fc00
+Sphere {
+ translate {{sin(frame/5)*30 i} {frame*5 i} {cos(frame/5)*30 i}}
+ uniform_scale 3
+ name Sphere1
+ xpos 6
+ ypos -224
+}
+set N30b6f000 [stack 0]
+Dot {
+ name Dot2
+ xpos 40
+ ypos -414
+}
+Scene {
+ inputs 2
+ name Scene1
+ xpos -83
+ ypos -438
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x969600ff
+ label "<b>http://www.nukepedia.com/toolsets/particles/toolsets        ."
+ note_font_size 20
+ xpos 479
+ ypos -24
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x335959ff
+ label "<b>author: INEED MONEY        ."
+ note_font_size 20
+ xpos 481
+ ypos -86
+}
+Camera2 {
+ inputs 0
+ translate {-220.7200012 142.6178589 435.5682983}
+ rotate {10.32200215 -31.80000498 0}
+ name Camera1
+ xpos 331
+ ypos 214
+}
+set N773e1c00 [stack 0]
+push $N773e1c00
+Constant {
+ inputs 0
+ color {0.5099999905 0 0 0}
+ format "256 256 0 0 256 256 1 square_256"
+ name Constant1
+ xpos 215
+ ypos -274
+ postage_stamp false
+}
+Radial {
+ opacity 0.495
+ area {94.5 106.5 222.5 234.5}
+ softness 1.4
+ name Radial1
+ xpos 215
+ ypos -250
+}
+Sphere {
+ name Sphere5
+ xpos 215
+ ypos -206
+}
+set N30b6dc00 [stack 0]
+Constant {
+ inputs 0
+ color {0.05610006675 0 0.5099999905 0}
+ format "256 256 0 0 256 256 1 square_256"
+ name Constant2
+ xpos -386
+ ypos -264
+ postage_stamp false
+}
+Radial {
+ opacity 0.495
+ area {94.5 106.5 222.5 234.5}
+ softness 1.4
+ name Radial2
+ xpos -386
+ ypos -240
+}
+Sphere {
+ name Sphere4
+ xpos -386
+ ypos -194
+}
+set N30b6d000 [stack 0]
+push $N30b6f000
+push $N30b6dc00
+push $N30b6d000
+push $N30b6f800
+push 0
+ParticleEmitter {
+ inputs 4
+ start_frame -65
+ rate {{curve i x1 10 0}}
+ lifetime 600
+ velocity 0
+ size {{parent.ParticleEmitter1.size i}}
+ size_variation 1
+ name ParticleEmitter2
+ xpos -207
+ ypos -132
+}
+ParticleEmitter {
+ inputs 4
+ start_frame -65
+ rate {{curve i x1 10 0}}
+ lifetime 600
+ velocity 0
+ size 1.5
+ size_variation 0.855
+ name ParticleEmitter1
+ xpos 6
+ ypos -132
+}
+ParticleTurbulence {
+ strength {{curve i x1 5 x4 0} {curve i x1 5 x4 0} {curve i x1 5 x4 0}}
+ name ParticleTurbulence1
+ xpos 6
+ ypos -49
+ disable true
+}
+ParticleSettings {
+ steps_per_frame 25
+ name ParticleSettings1
+ xpos 6
+ ypos 121
+}
+ParticleToGeo {
+ name ParticleToGeo1
+ xpos 6
+ ypos 168
+}
+TransformGeo {
+ translate {0 326 0}
+ name TransformGeo1
+ xpos 6
+ ypos 235
+}
+Scene {
+ inputs 2
+ name Scene2
+ xpos 157
+ ypos 214
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "960 580 0 0 960 580 1 HD_Proxy"
+ name Constant3
+ xpos -18
+ ypos 305
+ postage_stamp false
+}
+ScanlineRender {
+ inputs 3
+ name ScanlineRender1
+ xpos 147
+ ypos 305
+}

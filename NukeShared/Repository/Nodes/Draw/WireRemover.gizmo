@@ -1,0 +1,311 @@
+#! /Applications/Nuke11.1v1/Nuke11.1v1.app/Contents/MacOS/libnuke-11.1.1.dylib -nx
+version 11.1 v1
+Gizmo {
+inputs 2
+addUserKnob {20 wireRemover l WireRemover t "Wire Remover by Daniel van der Kaaden"}
+addUserKnob {41 method l Method T NoOp2.method}
+addUserKnob {20 extend l Extend t "Extend method" n 1}
+addUserKnob {41 pixelStretch l "Pixel Stretch" T NoOp1.pixelStretch}
+addUserKnob {41 erodeSize l "Erode Size" T NoOp1.erodeSize}
+addUserKnob {41 blurFix l "Blur Fix" T NoOp1.blurFix}
+addUserKnob {20 endGroup n -1}
+addUserKnob {20 godrays l Godrays t "Godrays method" n 1}
+addUserKnob {41 rayLength l "Ray Length" T NoOp2.rayLength}
+addUserKnob {41 wireSide2 l "Wire Side 2" T NoOp2.wireSide2}
+addUserKnob {41 wireSide1 l "Wire Side 1" T NoOp2.wireSide1}
+addUserKnob {20 endGroup_1 l endGroup n -1}
+addUserKnob {26 outputControls l "Output Controls"}
+addUserKnob {41 fixWidth l "Fix Width" T NoOp1.fixWidth}
+addUserKnob {41 alphaBlur l "Alpha Blur" T NoOp1.alphaBlur}
+}
+BackdropNode {
+inputs 0
+name BackdropNode6
+tile_color 0x8e388e00
+label "\n\n\n\n\n\n\nfinal\nalpha"
+note_font_size 42
+xpos 570
+ypos 262
+bdwidth 107
+bdheight 738
+}
+BackdropNode {
+inputs 0
+name BackdropNode7
+tile_color 0x7cb568ff
+label "\n\n\n       extend/erode"
+note_font_size 42
+xpos 226
+ypos 595
+bdwidth 321
+bdheight 258
+}
+BackdropNode {
+inputs 0
+name BackdropNode8
+tile_color 0x388e8e00
+label platePrep
+note_font_size 42
+xpos 221
+ypos 338
+bdwidth 313
+bdheight 262
+}
+BackdropNode {
+inputs 0
+name BackdropNode9
+tile_color 0x7171c600
+label godrays
+note_font_size 42
+xpos -116
+ypos 488
+bdwidth 292
+bdheight 261
+}
+NoOp {
+inputs 0
+name NoOp1
+xpos 788
+ypos 344
+addUserKnob {20 User}
+addUserKnob {14 blurFix l "Blur Fix" t "Blurs the patch." R 0 100}
+blurFix {0 3}
+addUserKnob {14 erodeSize l "Erode Size" t "Positive values will extend the darker areas.\nNegative values will extend the lighter areas.\nThis can be used to blend the seam.\n" R 0 100}
+erodeSize {0 -3}
+addUserKnob {14 pixelStretch l "Pixel Stretch" t "Extends the pixels around the wire to fill the gap." R 0 100}
+pixelStretch 4
+addUserKnob {14 alphaBlur l "Alpha Blur" t "Blurs the edges of the effect.\n" R 0 100}
+alphaBlur 14.5
+addUserKnob {7 fixWidth l "Fix Width" t "Expands the final alpha of the effect." R 0 10}
+fixWidth 3.8
+}
+StickyNote {
+inputs 0
+name StickyNote3
+label "making a hole in the plate"
+xpos 323
+ypos 466
+}
+NoOp {
+inputs 0
+name NoOp2
+tile_color 0xa5a5a5ff
+gl_color 0x9edfffff
+xpos -289
+ypos 652
+addUserKnob {20 User}
+addUserKnob {4 method l Method t "Choose the method to use for wire removal." M {Extend "Godrays\t"}}
+addUserKnob {12 wireSide2 l "Wire Side 2" t "Place this on one side of the wire opposite to the other control."}
+wireSide2 {2036 -266}
+addUserKnob {12 wireSide1 l "Wire Side 1" t "Place this on one side of the wire opposite to the other control."}
+wireSide1 {2070 2336}
+addUserKnob {14 rayLength l "Ray Length" t "Lenght the rays need to fill in the gap.\nTry to keep this value as low as possible." R 0 100}
+rayLength 20
+}
+Input {
+inputs 0
+name Wire
+xpos 231
+ypos 220
+number 1
+}
+Input {
+inputs 0
+name Plate
+xpos 42
+ypos 301
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy2
+xpos 231
+ypos 297
+}
+set Nb4628590 [stack 0]
+Dot {
+name Dot8
+xpos 478
+ypos 304
+}
+set Nb4633d80 [stack 0]
+Dilate {
+size {{parent.NoOp1.fixWidth}}
+name Dilate3
+label BUITENKANTMASTER
+xpos 580
+ypos 292
+}
+Blur {
+size {{parent.NoOp1.alphaBlur} {parent.NoOp1.alphaBlur}}
+name Blur5
+xpos 580
+ypos 955
+}
+push $Nb4633d80
+Dilate {
+size 3
+name Dilate2
+label BINNENKANT
+xpos 444
+ypos 419
+}
+Dot {
+name Dot4
+xpos 478
+ypos 528
+}
+push $Nb4628590
+Dilate {
+channels alpha
+size {{parent.Dilate3.size+10}}
+name Dilate1
+label BUITENKANT
+xpos 231
+ypos 418
+}
+ChannelMerge {
+inputs 2
+operation from
+name ChannelMerge1
+xpos 231
+ypos 516
+}
+Premult {
+name Premult6
+xpos 231
+ypos 572
+}
+set Nb466c450 [stack 0]
+Dot {
+name Dot10
+xpos 154
+ypos 575
+}
+set Nb4672f10 [stack 0]
+Dot {
+name Dot11
+xpos 154
+ypos 724
+}
+push $Nb4672f10
+Dot {
+name Dot9
+xpos 58
+ypos 575
+}
+set Nb467a6c0 [stack 0]
+GodRays {
+scale {{1+(parent.NoOp2.rayLength/1000)}}
+center {{parent.NoOp2.wireSide1.x} {parent.NoOp2.wireSide1.y}}
+steps 20
+name GodRays1
+selected true
+xpos -106
+ypos 568
+}
+push $Nb467a6c0
+GodRays {
+scale {{1+(parent.NoOp2.rayLength/1000)}}
+center {{parent.NoOp2.wireSide2.x} {parent.NoOp2.wireSide2.y}}
+name GodRays2
+xpos 24
+ypos 617
+}
+Merge2 {
+inputs 2
+name Merge7
+xpos -106
+ypos 621
+}
+Unpremult {
+name Unpremult3
+xpos -106
+ypos 663
+}
+Merge2 {
+inputs 2
+name Merge8
+xpos -106
+ypos 721
+}
+Dot {
+name Dot12
+xpos -72
+ypos 894
+}
+push $Nb466c450
+Dot {
+name Dot5
+xpos 370
+ypos 575
+}
+Dot {
+name Dot6
+xpos 370
+ypos 702
+}
+push $Nb466c450
+Blur {
+size {{parent.NoOp1.pixelStretch}}
+name Blur3
+xpos 231
+ypos 605
+}
+Unpremult {
+name Unpremult2
+xpos 231
+ypos 642
+}
+Merge2 {
+inputs 2
+name Merge5
+xpos 231
+ypos 699
+}
+Dot {
+name Dot7
+xpos 265
+ypos 741
+}
+FilterErode {
+channels rgb
+size {{parent.NoOp1.erodeSize} {parent.NoOp1.erodeSize}}
+filter triangle
+name FilterErode1
+xpos 231
+ypos 774
+}
+Blur {
+size {{parent.NoOp1.blurFix} {parent.NoOp1.blurFix}}
+name Blur4
+xpos 231
+ypos 812
+}
+Switch {
+inputs 2
+which {{parent.NoOp2.method}}
+name Switch1
+xpos 231
+ypos 891
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy1
+xpos 231
+ypos 955
+}
+Output {
+name Output1
+xpos 231
+ypos 1044
+}
+Output {
+name Output2
+xpos 231
+ypos 1144
+}
+end_group

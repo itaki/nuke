@@ -1,0 +1,114 @@
+#! /Applications/Nuke6.1v1-32/NukeX6.1v1.app/../Nuke6.1v1.app/Contents/MacOS/Nuke6.1v1 -nx
+version 6.1 v1
+Gizmo {
+ inputs 2
+ help "Put this node AFTER you comp the CG element onto your background, then plug in the alpha of the CG element. Adjust the amount of diffuse, how much it spreads onto the background, how much of the core should be left undiffused, and how much the edge is blurred."
+ addUserKnob {20 User}
+ addUserKnob {41 diffuseMix l "Diffuse amount" T Merge2.mix}
+ addUserKnob {41 diffuseSize l "Diffuse size" T Blur1.size}
+ addUserKnob {26 ""}
+ addUserKnob {41 dilateSize l "Spread size " T Dilate1.size}
+ addUserKnob {41 dilateBlur l "Spread soften" T Blur2.size}
+ addUserKnob {26 ""}
+ addUserKnob {41 coreSize l "Core size" T Dilate2.size}
+ addUserKnob {41 edgeBlurSize l "Edge Blur" T EdgeBlur1.size}
+}
+ Input {
+  inputs 0
+  name alpha
+  xpos 441
+  ypos -317
+  number 1
+ }
+ Dot {
+  name Dot3
+  xpos 475
+  ypos -244
+ }
+set N1d5c8670 [stack 0]
+ Dilate {
+  size 10
+  name Dilate1
+  xpos 441
+  ypos -183
+ }
+ Blur {
+  size 20
+  name Blur2
+  label "\[value size]"
+  xpos 441
+  ypos 6
+ }
+push $N1d5c8670
+ Dot {
+  name Dot2
+  xpos 605
+  ypos -244
+ }
+ Dilate {
+  size -10
+  name Dilate2
+  xpos 571
+  ypos -135
+ }
+ Blur {
+  size {{-(Dilate2.size)*2 i}}
+  name Blur3
+  label "\[value size]"
+  xpos 571
+  ypos -72
+ }
+ Merge2 {
+  inputs 2
+  operation out
+  name Merge1
+  xpos 571
+  ypos 17
+ }
+ Input {
+  inputs 0
+  name Comp
+  xpos 802
+  ypos -316
+ }
+ Dot {
+  name Dot1
+  xpos 836
+  ypos -175
+ }
+set N1d3d4b60 [stack 0]
+ Blur {
+  size 10
+  name Blur1
+  label "\[value size]"
+  xpos 1010
+  ypos -189
+ }
+push $N1d3d4b60
+ Merge2 {
+  inputs 2
+  operation average
+  mix 0.5
+  name Merge2
+  xpos 1010
+  ypos 17
+ }
+push $N1d3d4b60
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 802
+  ypos 12
+ }
+ EdgeBlur {
+  size 1
+  name EdgeBlur1
+  xpos 802
+  ypos 69
+ }
+ Output {
+  name Output1
+  xpos 802
+  ypos 162
+ }
+end_group

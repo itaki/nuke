@@ -1,0 +1,440 @@
+set cut_paste_input [stack 0]
+version 12.2 v3
+push $cut_paste_input
+Group {
+ name jkUVEdgeExtend
+ tile_color 0x11212dff
+ selected true
+ xpos 5
+ ypos -434
+ addUserKnob {20 jkUVEdgeExtend}
+ addUserKnob {26 _2 l "" +STARTLINE T "<font size=\"4\"><strong>Please make sure to input a premultiplied image."}
+ addUserKnob {26 ""}
+ addUserKnob {41 erode t "Erode your alpha." T MasterCTRL.erode}
+ addUserKnob {41 alphablackpoint l "alpha blackpoint" t "Change the blackpoint of your alpha." T MasterCTRL.alphablackpoint}
+ addUserKnob {41 alphawhitepoint l "alpha whitepoint" t "Change the whitepoint of your alpha." T MasterCTRL.alphawhitepoint}
+ addUserKnob {26 ""}
+ addUserKnob {41 edgeextend l "edge extend" t "Change how far the edge should be extended." T MasterCTRL.edgeextend}
+ addUserKnob {41 transition t "Change the smoothness of the transition." T MasterCTRL.transition}
+ addUserKnob {26 ""}
+ addUserKnob {41 restoredarkdetail l "restore dark detail" t "Brings back original dark detail from the input." T MasterCTRL.restoredarkdetail}
+ addUserKnob {41 restorebrightdetail l "restore bright detail" t "Brings back original bright detail from the input." T MasterCTRL.restorebrightdetail}
+ addUserKnob {26 ""}
+ addUserKnob {41 output t "Change the output to \"contaminated edge\" while you determine the contaminated edge with the \"erode\", \"alpha blackpoint\" and \"alpha whitepoint\". Change the output to \"extended edge\" to see, if you extend your edge far enough and if your transition works well. When you are happy, change the output back to \"final result\" and fine tune everything." T MasterCTRL.output}
+ addUserKnob {41 mix t "Dissolve between the original image at 0 and the full effect at 1." T MasterCTRL.mix}
+ addUserKnob {26 ""}
+ addUserKnob {26 _1 l "" +STARTLINE T "jkUVEdgeExtend v1.1 - by Jakob Kardoeus - www.kardoeus.com"}
+}
+ Input {
+  inputs 0
+  name img
+  xpos 650
+  ypos 145
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels1
+  xpos 650
+  ypos 230
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove1
+  xpos 650
+  ypos 269
+ }
+ Dot {
+  name Dot3
+  xpos 684
+  ypos 355
+ }
+set N3cce8800 [stack 0]
+ Dot {
+  name Dot4
+  xpos 684
+  ypos 478
+ }
+set N3cce8400 [stack 0]
+ Dot {
+  name Dot15
+  xpos 684
+  ypos 1297
+ }
+set N3cc93c00 [stack 0]
+ Dot {
+  name Dot10
+  xpos 684
+  ypos 1383
+ }
+set N3cc93800 [stack 0]
+ Dot {
+  name Dot12
+  xpos 684
+  ypos 1456
+ }
+set N3cc93400 [stack 0]
+ Dot {
+  name Dot13
+  xpos 684
+  ypos 1582
+ }
+set N3cc93000 [stack 0]
+ Dot {
+  name Dot21
+  xpos 684
+  ypos 1646
+ }
+set N3cc92c00 [stack 0]
+ Dot {
+  name Dot1
+  xpos 684
+  ypos 1798
+ }
+set N3cc92800 [stack 0]
+ Dot {
+  name Dot2
+  xpos 684
+  ypos 1885
+ }
+set N3cc92400 [stack 0]
+ Dot {
+  name Dot20
+  xpos 684
+  ypos 1969
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos 1240
+  ypos 1882
+  number 2
+ }
+push $N3cc93400
+push $N3cce8400
+push $N3cce8800
+ Remove {
+  name Remove2
+  xpos 966
+  ypos 346
+ }
+ Expression {
+  expr0 (x+0.5)/width
+  expr1 (y+0.5)/height
+  expr3 1
+  name Expression1
+  xpos 966
+  ypos 414
+ }
+set N3cc91400 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 966
+  ypos 469
+ }
+set N3cc91000 [stack 0]
+ FilterErode {
+  channels alpha
+  size {{parent.MasterCTRL.erode}}
+  name FilterErode1
+  xpos 966
+  ypos 539
+ }
+ Grade {
+  channels alpha
+  blackpoint {{parent.MasterCTRL.alphablackpoint}}
+  whitepoint {{parent.MasterCTRL.alphawhitepoint}}
+  white_clamp true
+  name Grade1
+  xpos 966
+  ypos 609
+ }
+ Dot {
+  name Dot7
+  xpos 1000
+  ypos 676
+ }
+set N3cc90400 [stack 0]
+ Dot {
+  name Dot8
+  xpos 837
+  ypos 676
+ }
+ Blur {
+  channels alpha
+  size {{MasterCTRL.transition}}
+  name Blur2
+  xpos 803
+  ypos 793
+ }
+ set C3cbf3800 [stack 0]
+ Dot {
+  name Dot9
+  xpos 837
+  ypos 1224
+ }
+push $N3cc91400
+ Dot {
+  name Dot6
+  xpos 1272
+  ypos 417
+ }
+ Dot {
+  name Dot5
+  xpos 1272
+  ypos 1148
+ }
+set N3cbf2c00 [stack 0]
+ Dot {
+  name Dot18
+  xpos 1272
+  ypos 1224
+ }
+push $N3cbf2c00
+ Input {
+  inputs 0
+  name area
+  xpos 1118
+  ypos 1003
+  number 1
+ }
+clone $C3cbf3800 {
+  xpos 1118
+  ypos 1067
+  selected false
+ }
+set N3cbf2000 [stack 0]
+push $N3cc90400
+ Premult {
+  name Premult1
+  xpos 966
+  ypos 733
+ }
+ Blur {
+  size {{parent.MasterCTRL.edgeextend}}
+  name Blur1
+  xpos 966
+  ypos 794
+ }
+ Unpremult {
+  name Unpremult1
+  xpos 966
+  ypos 867
+ }
+ Expression {
+  expr3 ceil(a)
+  name Expression2
+  xpos 966
+  ypos 928
+ }
+ Clamp {
+  name Clamp1
+  xpos 966
+  ypos 991
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge5
+  xpos 966
+  ypos 1073
+  disable {{"\[exists parent.input1] ? 0 : 1"}}
+ }
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge2
+  xpos 966
+  ypos 1145
+ }
+ Keymix {
+  inputs 3
+  name Keymix2
+  xpos 966
+  ypos 1215
+ }
+push $N3cc93800
+ Unpremult {
+  name Unpremult2
+  xpos 794
+  ypos 1380
+ }
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap1
+  xpos 966
+  ypos 1374
+ }
+set N3cba3400 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 966
+  ypos 1447
+ }
+set N3cba3000 [stack 0]
+push $N3cba3400
+ Premult {
+  name Premult5
+  xpos 1243
+  ypos 1380
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  xpos 1243
+  ypos 1447
+ }
+ Dot {
+  name Dot17
+  xpos 1277
+  ypos 1609
+ }
+push $N3cbf2000
+push $N3cc90400
+ Invert {
+  channels alpha
+  name Invert1
+  xpos 1110
+  ypos 667
+ }
+push $N3cc91000
+ Dot {
+  name Dot14
+  xpos 1404
+  ypos 478
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name Merge7
+  xpos 1370
+  ypos 667
+ }
+ Grade {
+  channels alpha
+  whitepoint 0.5
+  white_clamp true
+  name Grade2
+  xpos 1370
+  ypos 731
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge6
+  xpos 1370
+  ypos 1073
+  disable {{"\[exists parent.input1] ? 0 : 1"}}
+ }
+ Constant {
+  inputs 0
+  channels {rgba.red -rgba.green -rgba.blue none}
+  color 1
+  name Constant1
+  xpos 1550
+  ypos 1294
+  postage_stamp false
+ }
+push $N3cc93c00
+ Keymix {
+  inputs 3
+  channels rgb
+  name Keymix1
+  xpos 1370
+  ypos 1294
+ }
+ Dot {
+  name Dot11
+  xpos 1404
+  ypos 1717
+ }
+push $N3cc92c00
+push $N3cc93000
+push $N3cba3000
+ Premult {
+  name Premult3
+  xpos 966
+  ypos 1522
+ }
+ Merge2 {
+  inputs 2
+  operation min
+  mix {{MasterCTRL.restoredarkdetail}}
+  name Min
+  xpos 966
+  ypos 1579
+ }
+ Merge2 {
+  inputs 2
+  operation max
+  mix {{MasterCTRL.restorebrightdetail}}
+  name Max
+  xpos 966
+  ypos 1643
+ }
+ Switch {
+  inputs 3
+  which {{MasterCTRL.output}}
+  name Switch2
+  xpos 966
+  ypos 1714
+ }
+push $N3cc92800
+ Merge2 {
+  inputs 2
+  operation copy
+  mix {{parent.MasterCTRL.mix}}
+  name Merge1
+  xpos 966
+  ypos 1795
+ }
+push $N3cc92400
+ Merge2 {
+  inputs 2+1
+  operation copy
+  name Merge4
+  xpos 966
+  ypos 1882
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 966
+  ypos 1966
+ }
+ Output {
+  name Output1
+  xpos 966
+  ypos 2057
+ }
+ NoOp {
+  inputs 0
+  name MasterCTRL
+  xpos 805
+  ypos 136
+  addUserKnob {20 MasterCTRL}
+  addUserKnob {7 erode R 0 10}
+  addUserKnob {7 alphablackpoint l "alpha blackpoint"}
+  addUserKnob {7 alphawhitepoint l "alpha whitepoint"}
+  alphawhitepoint 1
+  addUserKnob {7 edgeextend l "edge extend" R 0 100}
+  edgeextend 30
+  addUserKnob {7 transition R 0 100}
+  transition 30
+  addUserKnob {7 restoredarkdetail l "restore dark detail"}
+  addUserKnob {7 restorebrightdetail l "restore bright detail"}
+  addUserKnob {4 output M {"final result" "contaminated edge" "extended edge" ""}}
+  addUserKnob {7 mix}
+  mix 1
+ }
+end_group

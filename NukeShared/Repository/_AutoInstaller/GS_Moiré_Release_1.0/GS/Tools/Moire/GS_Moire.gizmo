@@ -1,0 +1,417 @@
+set cut_paste_input [stack 0]
+version 10.0 v3
+Gizmo {
+ inputs 0
+ name GS_Moiré1
+ tile_color 0xe25bffff
+ note_font_color 0xff
+ selected true
+ xpos 88
+ ypos -71
+ lock_connections true
+ addUserKnob {20 User}
+ addUserKnob {26 GizmoName l "" +STARTLINE T "<font size=\"6\"><div><span style=\"color:#AC7CDD;\">M</span><span style=\"color:#B989E1;\">o</span><span style=\"color:#C695E5;\">i</span><span style=\"color:#E4AAEF;\">r</span><span style=\"color:#F4CEF6;\">é</span><font size=\"3\"><span style=\"color:#F8E5F9;\">v</span><span style=\"color:#EBF5FB;\">1</span><span style=\"color:#EBF5FB;\">.0"}
+ addUserKnob {26 gerardoschiavone92@gmail.com l "" +STARTLINE T "<font size=\"3\"><span style=\"color:#EBF5FB\">B</span><span style=\"color:#EBF5FB;\">y</span><span style=\"color:#EBF5FB;\"> </span><span style=\"color:#EBF5FB;\">G</span><span style=\"color:#EBF5FB;\">e</span><span style=\"color#EBF5FB;\">r</span><span style=\"color:#EBF5FB;\">a</span><span style=\"color:#EBF5FB;\">r</span><span style=\"color:#EBF5FB;\">d</span><span style=\"color:#EBF5FB;\">o</span><span style=\"color:#EBF5FB;\"> S</span><span style=\"color:#EBF5FB;\">c</span><span style=\"color:#EBF5FB;\">h</span><span style=\"color:#EBF5FB;\">iavone"}
+ addUserKnob {26 g l "" +STARTLINE T "\n"}
+ addUserKnob {41 format_1 l "output format" T SphericalTransform2.format}
+ addUserKnob {26 crt_grid l "<span style=\"color:#ffccff\">crt grid"}
+ addUserKnob {6 view_crt l "view crt grid" +STARTLINE}
+ addUserKnob {14 size R 0 100}
+ size 1
+ addUserKnob {41 filter T Transform8.filter}
+ addUserKnob {7 preblur R 0 10}
+ preblur 2
+ addUserKnob {26 a l "" +STARTLINE T "\n"}
+ addUserKnob {26 moire l "<span style=\"color:#ffccff\">moiré"}
+ addUserKnob {6 viewgrid l "view moire" +STARTLINE}
+ addUserKnob {41 scale T Moiré_Expression.scale}
+ addUserKnob {41 vx l "cam translate x" T Moiré_Expression.vx}
+ addUserKnob {41 vy l "cam translate z" T Moiré_Expression.vy}
+ addUserKnob {26 b l "" +STARTLINE T "\n"}
+ addUserKnob {26 aberration l "<span style=\"color:#ffccff\">aberration"}
+ addUserKnob {7 aberration_1 l aberration R 0 10}
+ aberration_1 0.6
+ addUserKnob {41 smear T VectorBlur4.smear}
+ addUserKnob {41 radialsoftness l "radial softness" T Radial1.softness}
+}
+ Dot {
+  inputs 0
+  name Dot10
+  tile_color 0xff0000ff
+  xpos 445
+  ypos -190
+  hide_input true
+ }
+ Dot {
+  name Dot11
+  tile_color 0xff3898ff
+  xpos 445
+  ypos -174
+  hide_input true
+ }
+ Dot {
+  name Dot12
+  tile_color 0xff00ff
+  xpos 445
+  ypos -154
+  hide_input true
+ }
+ Dot {
+  name Dot13
+  tile_color 0xff3898ff
+  xpos 445
+  ypos -136
+  hide_input true
+ }
+ Dot {
+  name Dot14
+  tile_color 0xffff
+  xpos 445
+  ypos -118
+  hide_input true
+ }
+ Dot {
+  name Dot15
+  tile_color 0xbc61ffff
+  xpos 445
+  ypos -100
+  hide_input true
+ }
+ Dot {
+  name Dot16
+  tile_color 0xff0000ff
+  xpos 445
+  ypos -77
+  hide_input true
+ }
+ Dot {
+  name Dot17
+  tile_color 0xff3898ff
+  xpos 445
+  ypos -59
+  hide_input true
+ }
+ Dot {
+  name Dot18
+  tile_color 0xff00ff
+  xpos 445
+  ypos -41
+  hide_input true
+ }
+ Expression {
+  inputs 0
+  expr0 cos((x+(vx*100))*((y+(vy*100))/scale/100))
+  expr1 cos((x+(vx*100))*((y+(vy*100))/scale/100))
+  expr2 cos((x+(vx*100))*((y+(vy*100))/scale/100))
+  channel3 {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr3 cos((x+(vx*100))*((y+(vy*100))/scale/100))
+  name Moiré_Expression
+  xpos 528
+  ypos -189
+  hide_input true
+  postage_stamp true
+  addUserKnob {20 User}
+  addUserKnob {7 scale R 0 10}
+  scale 10
+  addUserKnob {7 vx R 0 10}
+  vx 5
+  addUserKnob {7 vy R 0 10}
+  vy 5
+ }
+ SphericalTransform {
+  input "Light Probe 360"
+  rot_order YZX
+  out_rx {{parent.NoOp1.spherical_transform}}
+  format "1920 1080 0 0 1920 1080 1 HD_1080"
+  fix true
+  name SphericalTransform2
+  xpos 528
+  ypos -33
+ }
+ Transform {
+  scale 1.6
+  center {{SphericalTransform2.width/2} {SphericalTransform2.height/2}}
+  black_outside false
+  name ScaleUp
+  xpos 528
+  ypos 36
+ }
+ Crop {
+  box {0 0 {SphericalTransform2.width} {SphericalTransform2.height}}
+  name Crop1
+  xpos 528
+  ypos 79
+ }
+set N683b5800 [stack 0]
+ Dot {
+  name Dot2
+  xpos 1050
+  ypos 83
+ }
+ Dot {
+  name Dot1
+  xpos 1050
+  ypos 1028
+ }
+set N683b4800 [stack 0]
+ Dot {
+  name Dot20
+  xpos 1050
+  ypos 1198
+ }
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width {{parent.Crop1.box.r}}
+  box_height {{parent.Crop1.box.t}}
+  box_fixed true
+  name Reformat1
+  xpos 293
+  ypos -236
+ }
+ Expression {
+  expr0 fmod((x/2),2)==0?fmod(y,2)==0?1:0:0
+  expr1 fmod((x/2),2)==0.5?fmod(y,2)==0?1:0:0
+  expr2 fmod((x/2),2)==1?fmod(y,2)==0?1:0:0
+  name CRT_Expression
+  xpos 293
+  ypos -194
+  hide_input true
+  postage_stamp true
+ }
+ Transform {
+  scale {{parent.size.w+1 x1029 4.248000145} {parent.size.w+1 x1029 4.248000145}}
+  center {{parent.ScaleUp.center.x} {parent.ScaleUp.center.y}}
+  filter Impulse
+  black_outside false
+  name Transform8
+  xpos 293
+  ypos 277
+ }
+set N7e7ad400 [stack 0]
+ Dot {
+  name Dot3
+  xpos 327
+  ypos 1097
+ }
+push $N683b4800
+push $N7e7ad400
+push $N683b5800
+ Blur {
+  size {{parent.preblur}}
+  name Blur6
+  xpos 528
+  ypos 124
+ }
+ Grade {
+  channels rgba
+  name Grade10
+  xpos 528
+  ypos 202
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge9
+  xpos 528
+  ypos 277
+ }
+set N68469400 [stack 0]
+ Radial {
+  inputs 0
+  cliptype none
+  invert true
+  opacity 0.06
+  area {{curve} {curve} {FHD.width} {FHD.height}}
+  plinear true
+  name Radial1
+  xpos 930
+  ypos 683
+ }
+push $N68469400
+ Remove {
+  name Remove1
+  xpos 770
+  ypos 271
+ }
+ AdjBBox {
+  numpixels {{width/4} {width/4}}
+  name AdjBBox1
+  xpos 770
+  ypos 379
+ }
+ Expression {
+  expr0 x
+  expr1 y
+  name Expression1
+  xpos 770
+  ypos 447
+ }
+set N695cf400 [stack 0]
+ Transform {
+  scale 1.28
+  center {{input.width/2 x1 110} {input.height/2 x1 -84}}
+  black_outside false
+  name Transform1
+  xpos 898
+  ypos 447
+ }
+ Dot {
+  name Dot4
+  xpos 932
+  ypos 519
+ }
+push $N695cf400
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  xpos 770
+  ypos 515
+ }
+ Invert {
+  channels rgba
+  name Invert1
+  xpos 770
+  ypos 598
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge2
+  xpos 769
+  ypos 683
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 644
+  ypos 683
+ }
+push $N68469400
+ Reformat {
+  type scale
+  format "1280 720 0 0 1280 720 1 HD_720"
+  resize none
+  center false
+  filter Impulse
+  name FHD
+  xpos 528
+  ypos 353
+  disable true
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name Copy1
+  xpos 528
+  ypos 670
+ }
+ Dot {
+  name Dot5
+  tile_color 0xff0000ff
+  xpos 562
+  ypos 793
+ }
+set N72cf1000 [stack 0]
+ VectorBlur {
+  channels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  uv forward
+  scale {{1-parent.aberration_1-1}}
+  offset {{1-smear-1}}
+  name VectorBlur4
+  xpos 528
+  ypos 857
+  addUserKnob {20 User}
+  addUserKnob {7 smear R 1 5}
+  smear 2
+ }
+push $N72cf1000
+ Dot {
+  name Dot6
+  tile_color 0xff06ff
+  xpos 658
+  ypos 793
+ }
+set N79419c00 [stack 0]
+ VectorBlur {
+  channels {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  uv forward
+  scale {{1-parent.aberration_1-1}}
+  offset {{-1-(VectorBlur4.smear/2)}}
+  name VectorBlur1
+  xpos 624
+  ypos 858
+ }
+ Dot {
+  name Dot9
+  xpos 658
+  ypos 915
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  blue black
+  alpha black
+  name ShuffleCopy1
+  xpos 528
+  ypos 911
+ }
+push $N79419c00
+ Dot {
+  name Dot7
+  tile_color 0xffff
+  xpos 757
+  ypos 793
+ }
+ VectorBlur {
+  channels {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  uv forward
+  scale {{1-parent.aberration_1-1}}
+  offset {{-1-VectorBlur4.smear}}
+  name VectorBlur2
+  xpos 723
+  ypos 860
+ }
+ Dot {
+  name Dot8
+  xpos 757
+  ypos 955
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  name ShuffleCopy2
+  xpos 528
+  ypos 951
+ }
+ Switch {
+  inputs 2
+  which {{parent.viewgrid}}
+  name moire_switch
+  xpos 528
+  ypos 1024
+ }
+ Switch {
+  inputs 2
+  which {{parent.view_crt}}
+  name crt_switch
+  xpos 528
+  ypos 1093
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox4
+  xpos 528
+  ypos 1194
+ }
+ Output {
+  name Output2
+  xpos 528
+  ypos 1321
+ }
+end_group

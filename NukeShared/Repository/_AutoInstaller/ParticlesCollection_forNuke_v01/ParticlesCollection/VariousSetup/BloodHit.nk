@@ -1,0 +1,1524 @@
+#! C:/Program Files/Nuke13.0v1/nuke-13.0.1.dll -nx
+version 13.0 v1
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "C:/Users/lgere/OneDrive/VFX/PARTICLES/VARIOUS SETUP/BloodHit.nk"
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ monitorOutLUT rec709
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Group {
+ inputs 0
+ name BloodHit
+ knobChanged "\n# The 3 apostrophes above are opening a multi-line string. We're basically passing a python script to a knob as a string.\n# If we're touching a knob other than the mode, there is no point going further, so we check first.\nif nuke.thisKnob().name() == \"BloodPresets\": \n    # At this point the code will only run if we change the value of the mode knob.\n    # Let's check which mode we selected.\n    # I'm using getValue() instead of value() so that I get an ID back rather than the string of the mode, this way I can change the text later if I want to.\n    if nuke.thisKnob().getValue() == 0:\n        # Now I can do the actions that I want depending on this mode.\n        # In my case hide mode1_knob and show mode0_knob\n        nuke.thisNode().knob('Left_Side_Down').setValue(\"Left Side Down\")\n        # Do the same for the other mode(s)\n    if nuke.thisKnob().getValue() == 1:\n        nuke.thisNode().knob('right_side_down').setValue(\"Right Side Down\")\n        # Do the same for the other mode(s)\n    if nuke.thisKnob().getValue() == 2:\n        nuke.thisNode().knob('Front_Down').setValue(\"Front Down\")\n        # Do the same for the other mode(s)\n    if nuke.thisKnob().getValue() == 3:\n        nuke.thisNode().knob('Front_Arc').setValue(\"Front Arc\")\n        # Do the same for the other mode(s)\n    if nuke.thisKnob().getValue() == 4:\n        nuke.thisNode().knob('Right_To_Cam').setValue(\"Right To Cam\")\n        # Do the same for the other mode(s)\n    if nuke.thisKnob().getValue() == 5:\n        nuke.thisNode().knob('Left_To_Cam').setValue(\"Left To Cam\")\n        # Do the same for the other mode(s)\n    if nuke.thisKnob().getValue() == 6:\n        nuke.thisNode().knob('left_from_cam').setValue(\"Left From Cam\")\n        # Do the same for the other mode(s)\n    if nuke.thisKnob().getValue() == 7:\n        nuke.thisNode().knob('arc_from_cam').setValue(\"Arc From Cam\")\n        # Do the same for the other mode(s)\n    if nuke.thisKnob().getValue() == 8:\n        nuke.thisNode().knob('Angle_From_Cam').setValue(\"right/right\")\n"
+ tile_color 0x313943ff
+ note_font Verdana
+ xpos -30
+ ypos -273
+ addUserKnob {20 User l Blood}
+ addUserKnob {26 ""}
+ addUserKnob {41 channels l Channels T Remove1.channels}
+ addUserKnob {26 ""}
+ addUserKnob {3 reference_frame l "Reference Frame" t "Sets the start frame for the blood to the current frame. Clear your cache or refresh the preset if no update!"}
+ reference_frame 1013
+ addUserKnob {22 blood_frame_push l "Set To Current" t "Clear your cache or refresh the preset if no update!" -STARTLINE T "kk = nuke.thisNode()\n\n##Set Reference Frame\nkk.knob('reference_frame').setValue( nuke.frame() )\n\n"}
+ addUserKnob {3 blood_amount l "Blood Amount" t "Clear your cache or refresh the preset if no update!"}
+ blood_amount 12
+ addUserKnob {22 RefreshCache l "Refresh Cache" -STARTLINE T "nukescripts.cache_clear('')\nnuke.clearDiskCache()\nnuke.clearRAMCache()\n\nkk = nuke.thisNode()\n\n##Adding knob to have anim cleared\nknobs = \['b_emission_rate']\n\n##CLEAR ALL KNOB ANIMATION - add warning\nfor a in nuke.thisNode().knobs():\n    if a in knobs:\n        nuke.thisNode()\[a].clearAnimated()\n\n##Emission Rate based on reference frame\nkk.knob('b_emission_rate').setExpression('x==\[value reference_frame]?\[value blood_amount]:0')"}
+ addUserKnob {41 seed l Seed t "Clear your cache or refresh the preset if no update!" T ParticleEmitter1.seed}
+ addUserKnob {6 disable_orient_to_cam l "Disable Orient To Cam" t "Particles orient to your camera by default. Enable this to break that.\n" +STARTLINE}
+ addUserKnob {6 disable_light l "Disable Light" t "Disables spec merge. The AOV still exists though as 'bloodspec' to use downstream." -STARTLINE}
+ addUserKnob {6 mblur l "Motion Blur On" t "Enables ScanlineRender Motion Blur." -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {35 BloodPresets l "Blood Preset" M {"Choose/Left Side Down" "python nuke.thisNode().knob('Left_Side_Down').execute()" "Choose/Right Side Down" "python nuke.thisNode().knob('right_side_down').execute()" "Choose/Front Down" "python nuke.thisNode().knob('Front_Down').execute()" "Choose/Front Arc" "python nuke.thisNode().knob('Front_Arc').execute()" "Choose/Left To Cam" "python nuke.thisNode().knob('Left_To_Cam').execute()" "Choose/Right To Cam" "python nuke.thisNode().knob('Right_To_Cam').execute()" "Choose/Left From Cam" "python nuke.thisNode().knob('left_from_cam').execute()" "Choose/Arc From Cam" "python nuke.thisNode().knob('arc_from_cam').execute()" "Choose/Right From Cam" "python nuke.thisNode().knob('Angle_From_Cam').execute()" ""}}
+ addUserKnob {26 preset_label l "" -STARTLINE T "<font color='red'>Front Arc"}
+ addUserKnob {26 warning l "" +STARTLINE +INVISIBLE T "<center>\n<font color='#707070'>Presets Will Clear Any User Changes\n</center>"}
+ addUserKnob {22 Left_Side_Down l "Left Side Down" t "Clear your cache or refresh the preset if no update!\n\n" -STARTLINE +INVISIBLE T "kk = nuke.thisNode()\n\nnuke.thisNode().knob('preset_label').setValue(\"<font color='red'>Left Side Down\")\n\n##switch\nkk.knob('which').setValue( 0)\n\n##Start At\nkk.knob('start_frame').setValue( 990)\n\n##Emit From\nkk.knob('emit_order').setValue( 'randomly')\n\n##Adding user presets to be excluded from anim clear\nknobs = \['preset_max_lifetime', 'preset_velocity', 'preset_velocity_range', 'preset_rotate_velocity', 'preset_rotate_velocity_range', 'preset_size', 'preset_size_range', 'preset_mass', 'preset_mass_range', 'preset_spread', 'preset_turbulence_strength', 'preset_turbulence_scale', 'preset_turbulence_offset', 'preset_wind_from', 'preset_wind_to', 'preset_wind2_to', 'preset_gravity_from', 'preset_gravity_to', 'preset_new_transform', 'preset_rotate', 'preset_light_translate']\n\n##CLEAR ALL KNOB ANIMATION - add warning\nfor a in nuke.thisNode().knobs():\n    if a not in knobs:\n        nuke.thisNode()\[a].clearAnimated()\n\n##CLEAR ALL KNOB ANIMATION - add warning\n##for a in nuke.thisNode().knobs():\n##    nuke.thisNode()\[a].clearAnimated()\n\n##Emission Rate based on reference frame\nkk.knob('b_emission_rate').setExpression('x==\[value reference_frame]?\[value blood_amount]:0')\n\n##MBlur start\n##kk.knob('samples').setExpression('mblur==0?samples:100')\n\n##MBlur start\nkk.knob('samples').setExpression('mblur==0?samples:\[value samples_value]')\n\n##################\n\n##Particle Emitter Settings\nkk.knob('b_max_lifetime').setValue(50)\nkk.knob('b_velocity').setValue(.73)\nkk.knob('b_velocity_range').setValue(.915)\nkk.knob('b_rotate_velocity').setValue(.315)\nkk.knob('b_rotate_velocity_range').setValue(.225)\nkk.knob('b_size').setValue(.1)\nkk.knob('b_size_range').setValue(2)\nkk.knob('b_mass').setValue(1)\nkk.knob('b_mass_range').setValue(.2)\nkk.knob('b_spread').setValue(.11)\n\n\n##Particle Turbulence Strength\nkk.knob('b_turbulence_strength').setValue( .012, 0)\nkk.knob('b_turbulence_strength').setValue( .012, 1)\nkk.knob('b_turbulence_strength').setValue( .012, 2)\n\n##Particle Turbulence Scale\nkk.knob('b_turbulence_scale').setValue( 0, 0)\nkk.knob('b_turbulence_scale').setValue( .07, 1)\nkk.knob('b_turbulence_scale').setValue( 0, 2)\n\n##Particle Turbulence Offset\nkk.knob('b_turbulence_offset').setValue( .001, 0)\nkk.knob('b_turbulence_offset').setValue( .011, 1)\nkk.knob('b_turbulence_offset').setValue( 0, 2)\n\n\n##Particle Wind From \nkk.knob('b_wind_from').setValue(  0, 0)\nkk.knob('b_wind_from').setValue(  10, 1)\nkk.knob('b_wind_from').setValue(  0, 2)\n\n\n##Particle Wind To\nkk.knob('b_wind_to').setValue(  -.09, 0)\nkk.knob('b_wind_to').setValue(  9.5, 1)\nkk.knob('b_wind_to').setValue(  -.2, 2)\n\n##Particle Wind Secondary To\nkk.knob('b_wind2_to').setValue(  0)\n\n\n##Particle Gravity\n##kk.knob('b_gravity_from').setValue( 0)\n\nkk.knob('b_gravity_to').setValue( 0, 0)\nkk.knob('b_gravity_to').setValue( 0, 1)\nkk.knob('b_gravity_to').setValue( 0, 2)\n\n##################\n\n##Axis Transform\nkk.knob('new_transform').setValue( 0, 0)\nkk.knob('new_transform').setValue( 5.5, 1)\nkk.knob('new_transform').setValue( 0, 2)\n\n##Axis Rotate\nkk.knob('rotate').setValue( 180, 0)\nkk.knob('rotate').setValue( -90, 1)\nkk.knob('rotate').setValue( 180, 2)\n\n##################\n\n##Light Translate\nkk.knob('light_translate').setValue( -1.72, 0)\nkk.knob('light_translate').setValue( 1.7, 1)\nkk.knob('light_translate').setValue( -18.5, 2)\n\n## Reset Light Values\n##knobs = \['light_scale', 'light_rotate', 'light_skew', 'light_pivot']\n\n##for var in knobs:\n##\tkk.knob(var).setValue( 0)\n\n##Light Scale Uniform\n##kk.knob('light_uniformscale').setValue( 1)\n"}
+ addUserKnob {22 right_side_down l "Right Side Down" t "Clear your cache or refresh the preset if no update!" -STARTLINE +INVISIBLE T "kk = nuke.thisNode()\n\nnuke.thisNode().knob('preset_label').setValue(\"<font color='red'>Right Side Down\")\n\n##switch\nkk.knob('which').setValue( 0)\n\n##Start At\nkk.knob('start_frame').setValue( 990)\n\n##Emit From\nkk.knob('emit_order').setValue( 'randomly')\n\n##Adding user presets to be excluded from anim clear\nknobs = \['preset_max_lifetime', 'preset_velocity', 'preset_velocity_range', 'preset_rotate_velocity', 'preset_rotate_velocity_range', 'preset_size', 'preset_size_range', 'preset_mass', 'preset_mass_range', 'preset_spread', 'preset_turbulence_strength', 'preset_turbulence_scale', 'preset_turbulence_offset', 'preset_wind_from', 'preset_wind_to', 'preset_wind2_to', 'preset_gravity_from', 'preset_gravity_to', 'preset_new_transform', 'preset_rotate', 'preset_light_translate']\n\n##CLEAR ALL KNOB ANIMATION - add warning\nfor a in nuke.thisNode().knobs():\n    if a not in knobs:\n        nuke.thisNode()\[a].clearAnimated()\n\n##Emission Rate based on reference frame\nkk.knob('b_emission_rate').setExpression('x==\[value reference_frame]?\[value blood_amount]:0')\n\n##MBlur start\nkk.knob('samples').setExpression('mblur==0?samples:\[value samples_value]')\n\n##################\n\n##Particle Emitter Settings\nkk.knob('b_max_lifetime').setValue(50)\nkk.knob('b_velocity').setValue(.73)\nkk.knob('b_velocity_range').setValue(.915)\nkk.knob('b_rotate_velocity').setValue(.315)\nkk.knob('b_rotate_velocity_range').setValue(.225)\nkk.knob('b_size').setValue(.1)\nkk.knob('b_size_range').setValue(2)\nkk.knob('b_mass').setValue(1)\nkk.knob('b_mass_range').setValue(.2)\nkk.knob('b_spread').setValue(.11)\n\n\n##Particle Turbulence Strength\nkk.knob('b_turbulence_strength').setValue( .012, 0)\nkk.knob('b_turbulence_strength').setValue( .012, 1)\nkk.knob('b_turbulence_strength').setValue( .012, 2)\n\n##Particle Turbulence Scale\nkk.knob('b_turbulence_scale').setValue( 0, 0)\nkk.knob('b_turbulence_scale').setValue( .07, 1)\nkk.knob('b_turbulence_scale').setValue( 0, 2)\n\n##Particle Turbulence Offset\nkk.knob('b_turbulence_offset').setValue( .001, 0)\nkk.knob('b_turbulence_offset').setValue( .011, 1)\nkk.knob('b_turbulence_offset').setValue( 0, 2)\n\n\n##Particle Wind From \nkk.knob('b_wind_from').setValue(  0, 0)\nkk.knob('b_wind_from').setValue(  10, 1)\nkk.knob('b_wind_from').setValue(  0, 2)\n\n\n##Particle Wind To\nkk.knob('b_wind_to').setValue(  -.09, 0)\nkk.knob('b_wind_to').setValue(  9.5, 1)\nkk.knob('b_wind_to').setValue(  -.2, 2)\n\n##Particle Wind Secondary To\nkk.knob('b_wind2_to').setValue(  0)\n\n\n##Particle Gravity\n##kk.knob('b_gravity_from').setValue( 0)\n\nkk.knob('b_gravity_to').setValue( 0, 0)\nkk.knob('b_gravity_to').setValue( 0, 1)\nkk.knob('b_gravity_to').setValue( 0, 2)\n\n##################\n\n##Axis Transform\nkk.knob('new_transform').setValue( 0, 0)\nkk.knob('new_transform').setValue( 5.5, 1)\nkk.knob('new_transform').setValue( 0, 2)\n\n##Axis Rotate\nkk.knob('rotate').setValue( 180, 0)\nkk.knob('rotate').setValue( 90, 1)\nkk.knob('rotate').setValue( 180, 2)\n\n##################\n\n##Light Translate\nkk.knob('light_translate').setValue( -1.72, 0)\nkk.knob('light_translate').setValue( 1.7, 1)\nkk.knob('light_translate').setValue( -18.5, 2)\n\n## Reset Light Values\n##knobs = \['light_scale', 'light_rotate', 'light_skew', 'light_pivot']\n\n##for var in knobs:\n##\tkk.knob(var).setValue( 0)\n\n##Light Scale Uniform\n##kk.knob('light_uniformscale').setValue( 1)\n"}
+ addUserKnob {22 Front_Down l "Front Down" t "Clear your cache or refresh the preset if no update!" +INVISIBLE T "kk = nuke.thisNode()\n\nnuke.thisNode().knob('preset_label').setValue(\"<font color='red'>Front Down\")\n\n##switch\nkk.knob('which').setValue( 0)\n\n##Start At\nkk.knob('start_frame').setValue( 990)\n\n##Emit From\nkk.knob('emit_order').setValue( 'randomly')\n\n##Adding user presets to be excluded from anim clear\nknobs = \['preset_max_lifetime', 'preset_velocity', 'preset_velocity_range', 'preset_rotate_velocity', 'preset_rotate_velocity_range', 'preset_size', 'preset_size_range', 'preset_mass', 'preset_mass_range', 'preset_spread', 'preset_turbulence_strength', 'preset_turbulence_scale', 'preset_turbulence_offset', 'preset_wind_from', 'preset_wind_to', 'preset_wind2_to', 'preset_gravity_from', 'preset_gravity_to', 'preset_new_transform', 'preset_rotate', 'preset_light_translate']\n\n##CLEAR ALL KNOB ANIMATION - add warning\nfor a in nuke.thisNode().knobs():\n    if a not in knobs:\n        nuke.thisNode()\[a].clearAnimated()\n\n##Emission Rate based on reference frame\nkk.knob('b_emission_rate').setExpression('x==\[value reference_frame]?\[value blood_amount]:0')\n\n##MBlur start\nkk.knob('samples').setExpression('mblur==0?samples:\[value samples_value]')\n\n##################\n\n\n##Particle Emitter Settings\nkk.knob('b_max_lifetime').setValue(50)\nkk.knob('b_velocity').setValue(.73)\nkk.knob('b_velocity_range').setValue(.915)\nkk.knob('b_rotate_velocity').setValue(.315)\nkk.knob('b_rotate_velocity_range').setValue(.225)\nkk.knob('b_size').setValue(.1)\nkk.knob('b_size_range').setValue(2)\nkk.knob('b_mass').setValue(1)\nkk.knob('b_mass_range').setValue(.2)\nkk.knob('b_spread').setValue(.11)\n\n\n##Particle Turbulence\nkk.knob('b_turbulence_strength').setValue(0)\nkk.knob('b_turbulence_scale').setValue(0)\nkk.knob('b_turbulence_offset').setValue(0)\n\n\n##Particle Wind From \nkk.knob('b_wind_from').setValue(  0, 0)\nkk.knob('b_wind_from').setValue(  1.3, 1)\nkk.knob('b_wind_from').setValue(  0,2 )\n\n##Particle Wind To\nkk.knob('b_wind_to').setValue( 0, 0)\nkk.knob('b_wind_to').setValue( 1.3, 1)\nkk.knob('b_wind_to').setValue(0, 2)\n\n##Particle Wind Secondary To\nkk.knob('b_wind2_to').setValue(  0)\n\n##Particle Gravity\nkk.knob('b_gravity_from').setValue( 0)\n\nkk.knob('b_gravity_to').setValue( 0, 0)\nkk.knob('b_gravity_to').setValue( -.1, 1)\nkk.knob('b_gravity_to').setValue( 0, 2)\n\n##################\n\n##Axis Transform\nkk.knob('new_transform').setValue( 0, 0)\nkk.knob('new_transform').setValue( 5.5, 1)\nkk.knob('new_transform').setValue( 0, 2)\n\n##Axis Rotate\nkk.knob('rotate').setValue( 0, 0)\nkk.knob('rotate').setValue( 0, 1)\nkk.knob('rotate').setValue( 0, 2)\n\n##################\n\n##Light Translate\nkk.knob('light_translate').setValue( -1.72, 0)\nkk.knob('light_translate').setValue( 1.7, 1)\nkk.knob('light_translate').setValue( -18.5, 2)\n\n## Reset Light Values\n##knobs = \['light_scale', 'light_rotate', 'light_skew', 'light_pivot']\n\n##for var in knobs:\n##\tkk.knob(var).setValue( 0)\n\n##Light Scale Uniform\n##kk.knob('light_uniformscale').setValue( 1)\n\n" +STARTLINE}
+ addUserKnob {22 Front_Arc l "Front Arc" t "Clear your cache or refresh the preset if no update!" -STARTLINE +INVISIBLE T "kk = nuke.thisNode()\n\nnuke.thisNode().knob('preset_label').setValue(\"<font color='red'>Front Arc\")\n\n##switch\nkk.knob('which').setValue( 0)\n\n##Start At\nkk.knob('start_frame').setValue( 990)\n\n##Emit From\nkk.knob('emit_order').setValue( 'randomly')\n\n##Adding user presets to be excluded from anim clear\nknobs = \['preset_max_lifetime', 'preset_velocity', 'preset_velocity_range', 'preset_rotate_velocity', 'preset_rotate_velocity_range', 'preset_size', 'preset_size_range', 'preset_mass', 'preset_mass_range', 'preset_spread', 'preset_turbulence_strength', 'preset_turbulence_scale', 'preset_turbulence_offset', 'preset_wind_from', 'preset_wind_to', 'preset_wind2_to', 'preset_gravity_from', 'preset_gravity_to', 'preset_new_transform', 'preset_rotate', 'preset_light_translate']\n\n##CLEAR ALL KNOB ANIMATION - add warning\nfor a in nuke.thisNode().knobs():\n    if a not in knobs:\n        nuke.thisNode()\[a].clearAnimated()\n\n##Emission Rate based on reference frame\nkk.knob('b_emission_rate').setExpression('x==\[value reference_frame]?\[value blood_amount]:0')\n\n##MBlur start\nkk.knob('samples').setExpression('mblur==0?samples:\[value samples_value]')\n\n##################\n\n\n##Particle Emitter Settings\nkk.knob('b_max_lifetime').setValue(50)\nkk.knob('b_velocity').setValue(.73)\nkk.knob('b_velocity_range').setValue(.915)\nkk.knob('b_rotate_velocity').setValue(.315)\nkk.knob('b_rotate_velocity_range').setValue(.225)\nkk.knob('b_size').setValue(.1)\nkk.knob('b_size_range').setValue(2)\nkk.knob('b_mass').setValue(1)\nkk.knob('b_mass_range').setValue(.2)\nkk.knob('b_spread').setValue(.11)\n\n\n##Particle Turbulence\nkk.knob('b_turbulence_strength').setValue(0)\nkk.knob('b_turbulence_scale').setValue(0)\nkk.knob('b_turbulence_offset').setValue(0)\n\n#SET KNOB TO ACCEPT ANIMATION\nnode = nuke.thisNode()\npp = node\['b_wind_from']\npp.setAnimated()\n\n##Particle Wind From Animation Start\nkk.knob('b_wind_from').setValueAt(  0, 2+kk.knob('reference_frame').value(), 0)\nkk.knob('b_wind_from').setValueAt(  -1, 2+kk.knob('reference_frame').value(), 1)\nkk.knob('b_wind_from').setValueAt(  0, 2+kk.knob('reference_frame').value(), 2)\n\n##Particle Wind From Animation Stop\nkk.knob('b_wind_from').setValueAt( 0, 3+kk.knob('reference_frame').value())\n\n##Particle Wind To\nkk.knob('b_wind_to').setValue(0)\n\n##Particle Wind Secondary To\nkk.knob('b_wind2_to').setValue(  0)\n\n##Particle Gravity\nkk.knob('b_gravity_from').setValue( 0)\n\nkk.knob('b_gravity_to').setValue( 0, 0)\nkk.knob('b_gravity_to').setValue( -.1, 1)\nkk.knob('b_gravity_to').setValue( 0, 2)\n\n##################\n\n##Axis Transform\nkk.knob('new_transform').setValue( -.06, 0)\nkk.knob('new_transform').setValue( 5, 1)\nkk.knob('new_transform').setValue( -5.45, 2)\n\n##Axis Rotate\nkk.knob('rotate').setValue( 0, 0)\nkk.knob('rotate').setValue( 0, 1)\nkk.knob('rotate').setValue( 0, 2)\n\n##################\n\n##Light Translate\nkk.knob('light_translate').setValue( -1.72, 0)\nkk.knob('light_translate').setValue( 1.7, 1)\nkk.knob('light_translate').setValue( -18.5, 2)\n\n## Reset Light Values\n##knobs = \['light_scale', 'light_rotate', 'light_skew', 'light_pivot']\n\n##for var in knobs:\n##\tkk.knob(var).setValue( 0)\n\n##Light Scale Uniform\n##kk.knob('light_uniformscale').setValue( 1)\n\n"}
+ addUserKnob {22 Right_To_Cam l "Right To Cam" t "Clear your cache or refresh the preset if no update!" -STARTLINE +INVISIBLE T "kk = nuke.thisNode()\n\nnuke.thisNode().knob('preset_label').setValue(\"<font color='red'>Right To Cam\")\n\n##switch\nkk.knob('which').setValue( 0)\n\n##Start At\nkk.knob('start_frame').setValue( 990)\n\n##Emit From\nkk.knob('emit_order').setValue( 'in order')\n\n##Adding user presets to be excluded from anim clear\nknobs = \['preset_max_lifetime', 'preset_velocity', 'preset_velocity_range', 'preset_rotate_velocity', 'preset_rotate_velocity_range', 'preset_size', 'preset_size_range', 'preset_mass', 'preset_mass_range', 'preset_spread', 'preset_turbulence_strength', 'preset_turbulence_scale', 'preset_turbulence_offset', 'preset_wind_from', 'preset_wind_to', 'preset_wind2_to', 'preset_gravity_from', 'preset_gravity_to', 'preset_new_transform', 'preset_rotate', 'preset_light_translate']\n\n##CLEAR ALL KNOB ANIMATION - add warning\nfor a in nuke.thisNode().knobs():\n    if a not in knobs:\n        nuke.thisNode()\[a].clearAnimated()\n\n##Emission Rate based on reference frame\nkk.knob('b_emission_rate').setExpression('x==\[value reference_frame]?\[value blood_amount]:0')\n\n##MBlur start\nkk.knob('samples').setExpression('mblur==0?samples:\[value samples_value]')\n\n##################\n\n##Particle Emitter Settings\nkk.knob('b_max_lifetime').setValue(20)\nkk.knob('b_velocity').setValue(.65)\nkk.knob('b_velocity_range').setValue(1)\nkk.knob('b_rotate_velocity').setValue(.15)\nkk.knob('b_rotate_velocity_range').setValue(.225)\nkk.knob('b_size').setValue(.12)\nkk.knob('b_size_range').setValue(2)\nkk.knob('b_mass').setValue(1)\nkk.knob('b_mass_range').setValue(.2)\nkk.knob('b_spread').setValue(.1)\n\n\n##Particle Turbulence Strength\nkk.knob('b_turbulence_strength').setValue( .012, 0)\nkk.knob('b_turbulence_strength').setValue( .012, 1)\nkk.knob('b_turbulence_strength').setValue( .012, 2)\n\n##Particle Turbulence Scale\nkk.knob('b_turbulence_scale').setValue( 0, 0)\nkk.knob('b_turbulence_scale').setValue( .07, 1)\nkk.knob('b_turbulence_scale').setValue( 0, 2)\n\n##Particle Turbulence Offset\nkk.knob('b_turbulence_offset').setValue( .001, 0)\nkk.knob('b_turbulence_offset').setValue( .011, 1)\nkk.knob('b_turbulence_offset').setValue( 0, 2)\n\n\n##Particle Wind From \nkk.knob('b_wind_from').setValue(  0, 0)\nkk.knob('b_wind_from').setValue(  10, 1)\nkk.knob('b_wind_from').setValue(  0, 2)\n\n\n##Particle Wind To\nkk.knob('b_wind_to').setValue(  -.09, 0)\nkk.knob('b_wind_to').setValue(  9.5, 1)\nkk.knob('b_wind_to').setValue(  -.2, 2)\n\n##Particle Wind Secondary To\nkk.knob('b_wind2_to').setValue(  0)\n\n\n##Particle Gravity\nkk.knob('b_gravity_from').setValue( 0)\n\nkk.knob('b_gravity_to').setValue( 0, 0)\nkk.knob('b_gravity_to').setValue( 0, 1)\nkk.knob('b_gravity_to').setValue( 0, 2)\n\n##################\n\n##Axis Transform\nkk.knob('new_transform').setValue( 0, 0)\nkk.knob('new_transform').setValue( 5.159, 1)\nkk.knob('new_transform').setValue( 0, 2)\n\n##Axis Rotate\nkk.knob('rotate').setValue( -31.6, 0)\nkk.knob('rotate').setValue(15.48, 1)\nkk.knob('rotate').setValue( 5.85, 2)\n\n##################\n\n##Light Translate\nkk.knob('light_translate').setValue( -1.72, 0)\nkk.knob('light_translate').setValue( 1.7, 1)\nkk.knob('light_translate').setValue( -18.5, 2)\n\n## Reset Light Values\n##knobs = \['light_scale', 'light_rotate', 'light_skew', 'light_pivot']\n\n##for var in knobs:\n##\tkk.knob(var).setValue( 0)\n\n##Light Scale Uniform\n##kk.knob('light_uniformscale').setValue( 1)\n\n\n"}
+ addUserKnob {22 Left_To_Cam l "Left To Cam" +INVISIBLE T "kk = nuke.thisNode()\n\nnuke.thisNode().knob('preset_label').setValue(\"<font color='red'>Left To Cam\")\n\n##switch\nkk.knob('which').setValue( 0)\n\n##Start At\nkk.knob('start_frame').setValue( 990)\n\n##Emit From\nkk.knob('emit_order').setValue( 'in order')\n\n##Adding user presets to be excluded from anim clear\nknobs = \['preset_max_lifetime', 'preset_velocity', 'preset_velocity_range', 'preset_rotate_velocity', 'preset_rotate_velocity_range', 'preset_size', 'preset_size_range', 'preset_mass', 'preset_mass_range', 'preset_spread', 'preset_turbulence_strength', 'preset_turbulence_scale', 'preset_turbulence_offset', 'preset_wind_from', 'preset_wind_to', 'preset_wind2_to', 'preset_gravity_from', 'preset_gravity_to', 'preset_new_transform', 'preset_rotate', 'preset_light_translate']\n\n##CLEAR ALL KNOB ANIMATION - add warning\nfor a in nuke.thisNode().knobs():\n    if a not in knobs:\n        nuke.thisNode()\[a].clearAnimated()\n\n##Emission Rate based on reference frame\nkk.knob('b_emission_rate').setExpression('x==\[value reference_frame]?\[value blood_amount]:0')\n\n##MBlur start\nkk.knob('samples').setExpression('mblur==0?samples:\[value samples_value]')\n\n##################\n\n##Particle Emitter Settings\nkk.knob('b_max_lifetime').setValue(20)\nkk.knob('b_velocity').setValue(.65)\nkk.knob('b_velocity_range').setValue(1)\nkk.knob('b_rotate_velocity').setValue(.15)\nkk.knob('b_rotate_velocity_range').setValue(.225)\nkk.knob('b_size').setValue(.12)\nkk.knob('b_size_range').setValue(2)\nkk.knob('b_mass').setValue(1)\nkk.knob('b_mass_range').setValue(.2)\nkk.knob('b_spread').setValue(.1)\n\n\n##Particle Turbulence Strength\nkk.knob('b_turbulence_strength').setValue( .012, 0)\nkk.knob('b_turbulence_strength').setValue( .012, 1)\nkk.knob('b_turbulence_strength').setValue( .012, 2)\n\n##Particle Turbulence Scale\nkk.knob('b_turbulence_scale').setValue( 0, 0)\nkk.knob('b_turbulence_scale').setValue( .07, 1)\nkk.knob('b_turbulence_scale').setValue( 0, 2)\n\n##Particle Turbulence Offset\nkk.knob('b_turbulence_offset').setValue( .001, 0)\nkk.knob('b_turbulence_offset').setValue( .011, 1)\nkk.knob('b_turbulence_offset').setValue( 0, 2)\n\n\n##Particle Wind From \nkk.knob('b_wind_from').setValue(  0, 0)\nkk.knob('b_wind_from').setValue(  10, 1)\nkk.knob('b_wind_from').setValue(  0, 2)\n\n\n##Particle Wind To\nkk.knob('b_wind_to').setValue(  -.09, 0)\nkk.knob('b_wind_to').setValue(  9.5, 1)\nkk.knob('b_wind_to').setValue(  -.2, 2)\n\n##Particle Wind Secondary To\nkk.knob('b_wind2_to').setValue(  0)\n\n\n##Particle Gravity\nkk.knob('b_gravity_from').setValue( 0)\n\nkk.knob('b_gravity_to').setValue( 0, 0)\nkk.knob('b_gravity_to').setValue( 0, 1)\nkk.knob('b_gravity_to').setValue( 0, 2)\n\n##################\n\n##Axis Transform\nkk.knob('new_transform').setValue( 0, 0)\nkk.knob('new_transform').setValue( 5.159, 1)\nkk.knob('new_transform').setValue( 0, 2)\n\n##Axis Rotate\nkk.knob('rotate').setValue( -31.6, 0)\nkk.knob('rotate').setValue(-15.48, 1)\nkk.knob('rotate').setValue( 5.85, 2)\n\n##################\n\n##Light Translate\nkk.knob('light_translate').setValue( -1.72, 0)\nkk.knob('light_translate').setValue( 1.7, 1)\nkk.knob('light_translate').setValue( -18.5, 2)\n\n## Reset Light Values\n##knobs = \['light_scale', 'light_rotate', 'light_skew', 'light_pivot']\n\n##for var in knobs:\n##\tkk.knob(var).setValue( 0)\n\n##Light Scale Uniform\n##kk.knob('light_uniformscale').setValue( 1)\n\n\n" +STARTLINE}
+ addUserKnob {22 left_from_cam l "Left From Cam" t "Clear your cache or refresh the preset if no update!" +INVISIBLE T "kk = nuke.thisNode()\n\nnuke.thisNode().knob('preset_label').setValue(\"<font color='red'>Left From Cam\")\n\n##switch\nkk.knob('which').setValue( 2)\n\n##Start At\nkk.knob('start_frame').setValue( 990)\n\n##Emit From\nkk.knob('emit_order').setValue( 'randomly')\n\n##Adding user presets to be excluded from anim clear\nknobs = \['preset_max_lifetime', 'preset_velocity', 'preset_velocity_range', 'preset_rotate_velocity', 'preset_rotate_velocity_range', 'preset_size', 'preset_size_range', 'preset_mass', 'preset_mass_range', 'preset_spread', 'preset_turbulence_strength', 'preset_turbulence_scale', 'preset_turbulence_offset', 'preset_wind_from', 'preset_wind_to', 'preset_wind2_to', 'preset_gravity_from', 'preset_gravity_to', 'preset_new_transform', 'preset_rotate', 'preset_light_translate']\n\n##CLEAR ALL KNOB ANIMATION - add warning\nfor a in nuke.thisNode().knobs():\n    if a not in knobs:\n        nuke.thisNode()\[a].clearAnimated()\n\n##Emission Rate based on reference frame\nkk.knob('b_emission_rate').setExpression('x==\[value reference_frame]?\[value blood_amount]:0')\n\n##MBlur start\nkk.knob('samples').setExpression('mblur==0?samples:\[value samples_value]')\n\n##################\n\n\n##Particle Emitter Settings\nkk.knob('b_max_lifetime').setValue(50)\nkk.knob('b_velocity').setValue(.7)\nkk.knob('b_velocity_range').setValue(.925)\nkk.knob('b_rotate_velocity').setValue(.315)\nkk.knob('b_rotate_velocity_range').setValue(.225)\nkk.knob('b_size').setValue(.06)\nkk.knob('b_size_range').setValue(2)\nkk.knob('b_mass').setValue(1)\nkk.knob('b_mass_range').setValue(.2)\nkk.knob('b_spread').setValue(.05)\n\n\n##Particle Turbulence Strength\nkk.knob('b_turbulence_strength').setValue( .012, 0)\nkk.knob('b_turbulence_strength').setValue( .012, 1)\nkk.knob('b_turbulence_strength').setValue( .012, 2)\n\n##Particle Turbulence Scale\nkk.knob('b_turbulence_scale').setValue( 0, 0)\nkk.knob('b_turbulence_scale').setValue( .07, 1)\nkk.knob('b_turbulence_scale').setValue( 0, 2)\n\n##Particle Turbulence Offset\nkk.knob('b_turbulence_offset').setValue( .001, 0)\nkk.knob('b_turbulence_offset').setValue( .011, 1)\nkk.knob('b_turbulence_offset').setValue( 0, 2)\n\n##Particle Wind From \nkk.knob('b_wind_from').setValue(  0, 0)\nkk.knob('b_wind_from').setValue(  10, 1)\nkk.knob('b_wind_from').setValue(  0, 2)\n\n##Particle Wind To\nkk.knob('b_wind_to').setValue(  0, 0)\nkk.knob('b_wind_to').setValue(  9.5, 1)\nkk.knob('b_wind_to').setValue(  -.2, 2)\n\n#SET KNOB TO ACCEPT ANIMATION\nnode = nuke.thisNode()\npp = node\['b_wind2_to']\npp.setAnimated()\n\n##Particle Wind From Animation Start\nkk.knob('b_wind2_to').setValueAt(  .5, 1+kk.knob('reference_frame').value(), 1)\n##kk.knob('b_wind2_to').setValueAt(  -.1, 2+kk.knob('reference_frame').value(), 1)\nkk.knob('b_wind2_to').setValueAt(  0, 4+kk.knob('reference_frame').value(), 1)\n\n\n##Particle Gravity\nkk.knob('b_gravity_from').setValue( 0)\n\nkk.knob('b_gravity_to').setValue( 0, 0)\nkk.knob('b_gravity_to').setValue( 0, 1)\nkk.knob('b_gravity_to').setValue( 0, 2)\n\n##################\n\n##Axis Transform\nkk.knob('new_transform').setValue( 0, 0)\nkk.knob('new_transform').setValue( 0, 1)\nkk.knob('new_transform').setValue( 0, 2)\n\n\n##Axis Rotate\nkk.knob('rotate').setValue( 0, 0)\nkk.knob('rotate').setValue( 0, 1)\nkk.knob('rotate').setValue( 0, 2)\n\n##################\n\n##Light Translate\nkk.knob('light_translate').setValue( 1.72, 0)\nkk.knob('light_translate').setValue( 7.64, 1)\nkk.knob('light_translate').setValue( .88, 2)\n\n## Reset Light Values\n##knobs = \['light_scale', 'light_rotate', 'light_skew', 'light_pivot']\n\n##for var in knobs:\n##\tkk.knob(var).setValue( 0)\n\n##Light Scale Uniform\n##kk.knob('light_uniformscale').setValue( 1)\n\n\n\n" +STARTLINE}
+ addUserKnob {22 arc_from_cam l "Arc From Cam" t "Clear your cache or refresh the preset if no update!" -STARTLINE +INVISIBLE T "kk = nuke.thisNode()\n\nnuke.thisNode().knob('preset_label').setValue(\"<font color='red'>Arc From Cam\")\n\n##switch\nkk.knob('which').setValue( 3)\n\n##Start At\nkk.knob('start_frame').setValue( 990)\n\n##Emit From\nkk.knob('emit_order').setValue( 'randomly')\n\n##Adding user presets to be excluded from anim clear\nknobs = \['preset_max_lifetime', 'preset_velocity', 'preset_velocity_range', 'preset_rotate_velocity', 'preset_rotate_velocity_range', 'preset_size', 'preset_size_range', 'preset_mass', 'preset_mass_range', 'preset_spread', 'preset_turbulence_strength', 'preset_turbulence_scale', 'preset_turbulence_offset', 'preset_wind_from', 'preset_wind_to', 'preset_wind2_to', 'preset_gravity_from', 'preset_gravity_to', 'preset_new_transform', 'preset_rotate', 'preset_light_translate']\n\n##CLEAR ALL KNOB ANIMATION - add warning\nfor a in nuke.thisNode().knobs():\n    if a not in knobs:\n        nuke.thisNode()\[a].clearAnimated()\n\n##Emission Rate based on reference frame\nkk.knob('b_emission_rate').setExpression('x==\[value reference_frame]?\[value blood_amount]:0')\n\n##MBlur start\nkk.knob('samples').setExpression('mblur==0?samples:\[value samples_value]')\n\n##################\n\n\n##Particle Emitter Settings\nkk.knob('b_max_lifetime').setValue(50)\nkk.knob('b_velocity').setValue(.73)\nkk.knob('b_velocity_range').setValue(1.2)\nkk.knob('b_rotate_velocity').setValue(.1)\nkk.knob('b_rotate_velocity_range').setValue(.1)\nkk.knob('b_size').setValue(.086)\nkk.knob('b_size_range').setValue(2)\nkk.knob('b_mass').setValue(.8)\nkk.knob('b_mass_range').setValue(.2)\nkk.knob('b_spread').setValue(.06)\n\n\n##Particle Turbulence\nkk.knob('b_turbulence_strength').setValue(0)\nkk.knob('b_turbulence_scale').setValue(0)\nkk.knob('b_turbulence_offset').setValue(0)\n\n#SET KNOB TO ACCEPT ANIMATION\nnode = nuke.thisNode()\npp = node\['b_wind_from']\npp.setAnimated()\n\n##Particle Wind From Animation Start\nkk.knob('b_wind_from').setValueAt(  0, 2+kk.knob('reference_frame').value(), 0)\nkk.knob('b_wind_from').setValueAt(  -1, 2+kk.knob('reference_frame').value(), 1)\nkk.knob('b_wind_from').setValueAt(  0, 2+kk.knob('reference_frame').value(), 2)\n\n##Particle Wind From Animation Stop\nkk.knob('b_wind_from').setValueAt( 0, 3+kk.knob('reference_frame').value())\n\n##Particle Wind To\nkk.knob('b_wind_to').setValue(0)\n\n##Particle Wind Secondary To\nkk.knob('b_wind2_to').setValue(  0)\n\n##Particle Gravity\nkk.knob('b_gravity_from').setValue( 0)\n\nkk.knob('b_gravity_to').setValue( 0, 0)\nkk.knob('b_gravity_to').setValue( -.1, 1)\nkk.knob('b_gravity_to').setValue( 0, 2)\n\n##################\n\n##Axis Transform\nkk.knob('new_transform').setValue( -.06, 0)\nkk.knob('new_transform').setValue( 5, 1)\nkk.knob('new_transform').setValue( -5.45, 2)\n\n##Axis Rotate\nkk.knob('rotate').setValue( 0, 0)\nkk.knob('rotate').setValue( 0, 1)\nkk.knob('rotate').setValue( 0, 2)\n\n##################\n\n##Light Translate\nkk.knob('light_translate').setValue( 1.72, 0)\nkk.knob('light_translate').setValue( 7.64, 1)\nkk.knob('light_translate').setValue( .88, 2)\n\n## Reset Light Values\n##knobs = \['light_scale', 'light_rotate', 'light_skew', 'light_pivot']\n\n##for var in knobs:\n##\tkk.knob(var).setValue( 0)\n\n##Light Scale Uniform\n##kk.knob('light_uniformscale').setValue( 1)\n\n\n\n"}
+ addUserKnob {22 Angle_From_Cam l "Right From Cam" t "Clear your cache or refresh the preset if no update!" -STARTLINE +INVISIBLE T "kk = nuke.thisNode()\n\nnuke.thisNode().knob('preset_label').setValue(\"<font color='red'>Right From Cam\")\n\n##switch\nkk.knob('which').setValue( 1)\n\n##Start At\nkk.knob('start_frame').setValue( 990)\n\n##Emit From\nkk.knob('emit_order').setValue( 'randomly')\n\n##Adding user presets to be excluded from anim clear\nknobs = \['preset_max_lifetime', 'preset_velocity', 'preset_velocity_range', 'preset_rotate_velocity', 'preset_rotate_velocity_range', 'preset_size', 'preset_size_range', 'preset_mass', 'preset_mass_range', 'preset_spread', 'preset_turbulence_strength', 'preset_turbulence_scale', 'preset_turbulence_offset', 'preset_wind_from', 'preset_wind_to', 'preset_wind2_to', 'preset_gravity_from', 'preset_gravity_to', 'preset_new_transform', 'preset_rotate', 'preset_light_translate']\n\n##CLEAR ALL KNOB ANIMATION - add warning\nfor a in nuke.thisNode().knobs():\n    if a not in knobs:\n        nuke.thisNode()\[a].clearAnimated()\n\n##Emission Rate based on reference frame\nkk.knob('b_emission_rate').setExpression('x==\[value reference_frame]?\[value blood_amount]:0')\n\n##MBlur start\nkk.knob('samples').setExpression('mblur==0?samples:\[value samples_value]')\n\n##################\n\n\n##Particle Emitter Settings\nkk.knob('b_max_lifetime').setValue(50)\nkk.knob('b_velocity').setValue(.7)\nkk.knob('b_velocity_range').setValue(.925)\nkk.knob('b_rotate_velocity').setValue(.315)\nkk.knob('b_rotate_velocity_range').setValue(.225)\nkk.knob('b_size').setValue(.06)\nkk.knob('b_size_range').setValue(2)\nkk.knob('b_mass').setValue(1)\nkk.knob('b_mass_range').setValue(.2)\nkk.knob('b_spread').setValue(.05)\n\n\n##Particle Turbulence Strength\nkk.knob('b_turbulence_strength').setValue( .012, 0)\nkk.knob('b_turbulence_strength').setValue( .012, 1)\nkk.knob('b_turbulence_strength').setValue( .012, 2)\n\n##Particle Turbulence Scale\nkk.knob('b_turbulence_scale').setValue( 0, 0)\nkk.knob('b_turbulence_scale').setValue( .07, 1)\nkk.knob('b_turbulence_scale').setValue( 0, 2)\n\n##Particle Turbulence Offset\nkk.knob('b_turbulence_offset').setValue( .001, 0)\nkk.knob('b_turbulence_offset').setValue( .011, 1)\nkk.knob('b_turbulence_offset').setValue( 0, 2)\n\n##Particle Wind From \nkk.knob('b_wind_from').setValue(  0, 0)\nkk.knob('b_wind_from').setValue(  10, 1)\nkk.knob('b_wind_from').setValue(  0, 2)\n\n##Particle Wind To\nkk.knob('b_wind_to').setValue(  0, 0)\nkk.knob('b_wind_to').setValue(  9.5, 1)\nkk.knob('b_wind_to').setValue(  -.2, 2)\n\n#SET KNOB TO ACCEPT ANIMATION\nnode = nuke.thisNode()\npp = node\['b_wind2_to']\npp.setAnimated()\n\n##Particle Wind From Animation Start\nkk.knob('b_wind2_to').setValueAt(  .5, 1+kk.knob('reference_frame').value(), 1)\n##kk.knob('b_wind2_to').setValueAt(  -.1, 2+kk.knob('reference_frame').value(), 1)\nkk.knob('b_wind2_to').setValueAt(  0, 4+kk.knob('reference_frame').value(), 1)\n\n\n##Particle Gravity\nkk.knob('b_gravity_from').setValue( 0)\n\nkk.knob('b_gravity_to').setValue( 0, 0)\nkk.knob('b_gravity_to').setValue( 0, 1)\nkk.knob('b_gravity_to').setValue( 0, 2)\n\n##################\n\n##Axis Transform\nkk.knob('new_transform').setValue( 0, 0)\nkk.knob('new_transform').setValue( 0, 1)\nkk.knob('new_transform').setValue( 0, 2)\n\n##Axis Rotate\nkk.knob('rotate').setValue( 0, 0)\nkk.knob('rotate').setValue( 0, 1)\nkk.knob('rotate').setValue( 0, 2)\n\n##################\n\n##Light Translate\nkk.knob('light_translate').setValue( 1.72, 0)\nkk.knob('light_translate').setValue( 7.64, 1)\nkk.knob('light_translate').setValue( .88, 2)\n\n## Reset Light Values\n##knobs = \['light_scale', 'light_rotate', 'light_skew', 'light_pivot']\n\n##for var in knobs:\n##\tkk.knob(var).setValue( 0)\n\n##Light Scale Uniform\n##kk.knob('light_uniformscale').setValue( 1)\n\n\n"}
+ addUserKnob {26 ""}
+ addUserKnob {22 copy l "Save User Preset" t 'b_emission_rate' T "n=nuke.thisNode()\n\nnuke.thisNode().knob('preset_label').setValue(\"<font color='red'>User Preset Copied\")\n\n##nuke.message (\"Copied to User Preset\")\n\n## Copy local values to stored values \n\nn\['preset_max_lifetime'].fromScript(n\['b_max_lifetime'].toScript())\nn\['preset_velocity'].fromScript(n\['b_velocity'].toScript())\nn\['preset_velocity_range'].fromScript(n\['b_velocity_range'].toScript())\nn\['preset_rotate_velocity'].fromScript(n\['b_rotate_velocity'].toScript())\nn\['preset_rotate_velocity_range'].fromScript(n\['b_rotate_velocity_range'].toScript())\nn\['preset_size'].fromScript(n\['b_size'].toScript())\nn\['preset_size_range'].fromScript(n\['b_size_range'].toScript())\nn\['preset_mass'].fromScript(n\['b_mass'].toScript())\nn\['preset_mass_range'].fromScript(n\['b_mass_range'].toScript())\nn\['preset_spread'].fromScript(n\['b_spread'].toScript())\nn\['preset_turbulence_strength'].fromScript(n\['b_turbulence_strength'].toScript())\nn\['preset_turbulence_scale'].fromScript(n\['b_turbulence_scale'].toScript())\nn\['preset_turbulence_offset'].fromScript(n\['b_turbulence_offset'].toScript())\nn\['preset_wind_from'].fromScript(n\['b_wind_from'].toScript())\nn\['preset_wind_to'].fromScript(n\['b_wind_to'].toScript())\nn\['preset_wind2_to'].fromScript(n\['b_wind2_to'].toScript())\nn\['preset_gravity_from'].fromScript(n\['b_gravity_from'].toScript())\nn\['preset_gravity_to'].fromScript(n\['b_gravity_to'].toScript())\nn\['preset_new_transform'].fromScript(n\['new_transform'].toScript())\nn\['preset_rotate'].fromScript(n\['rotate'].toScript())\nn\['preset_light_translate'].fromScript(n\['light_translate'].toScript())\n\n" +STARTLINE}
+ addUserKnob {22 paste l "Restore User Preset" -STARTLINE T "### paste smaller\n\nn=nuke.thisNode()\n\nnuke.thisNode().knob('preset_label').setValue(\"<font color='red'>User Preset Restored\")\n\n##nuke.message (\"Restored from User Preset\")\n\n##Adding user presets to be excluded from anim clear  -- includes b_emission_rate!!!\nknobs = \['preset_max_lifetime', 'preset_velocity', 'preset_velocity_range', 'preset_rotate_velocity', 'preset_rotate_velocity_range', 'preset_size', 'preset_size_range', 'preset_mass', 'preset_mass_range', 'preset_spread', 'preset_turbulence_strength', 'preset_turbulence_scale', 'preset_turbulence_offset', 'preset_wind_from', 'preset_wind_to', 'preset_wind2_to', 'preset_gravity_from', 'preset_gravity_to', 'preset_new_transform', 'preset_rotate', 'preset_light_translate', 'b_emission_rate']\n\n##CLEAR ALL KNOB ANIMATION - add warning\nfor a in nuke.thisNode().knobs():\n    if a not in knobs:\n        nuke.thisNode()\[a].clearAnimated()\n\n## Paste local stored values to main\n\nn\['b_max_lifetime'].fromScript(n\['preset_max_lifetime'].toScript())\nn\['b_velocity'].fromScript(n\['preset_velocity'].toScript())\nn\['b_velocity_range'].fromScript(n\['preset_velocity_range'].toScript())\nn\['b_rotate_velocity'].fromScript(n\['preset_rotate_velocity'].toScript())\nn\['b_rotate_velocity_range'].fromScript(n\['preset_rotate_velocity_range'].toScript())\nn\['b_size'].fromScript(n\['preset_size'].toScript())\nn\['b_size_range'].fromScript(n\['preset_size_range'].toScript())\nn\['b_mass'].fromScript(n\['preset_mass'].toScript())\nn\['b_mass_range'].fromScript(n\['preset_mass_range'].toScript())\nn\['b_spread'].fromScript(n\['preset_spread'].toScript())\nn\['b_turbulence_strength'].fromScript(n\['preset_turbulence_strength'].toScript())\nn\['b_turbulence_scale'].fromScript(n\['preset_turbulence_scale'].toScript())\nn\['b_turbulence_offset'].fromScript(n\['preset_turbulence_offset'].toScript())\nn\['b_wind_from'].fromScript(n\['preset_wind_from'].toScript())\nn\['b_wind_to'].fromScript(n\['preset_wind_to'].toScript())\nn\['b_wind2_to'].fromScript(n\['preset_wind2_to'].toScript())\nn\['b_gravity_from'].fromScript(n\['preset_gravity_from'].toScript())\nn\['b_gravity_to'].fromScript(n\['preset_gravity_to'].toScript())\nn\['new_transform'].fromScript(n\['preset_new_transform'].toScript())\nn\['rotate'].fromScript(n\['preset_rotate'].toScript())\nn\['light_translate'].fromScript(n\['preset_light_translate'].toScript())\n\n"}
+ addUserKnob {26 ""}
+ addUserKnob {13 new_transform l "Translate Blood"}
+ new_transform {-0.06 5 -5.45}
+ addUserKnob {13 preset_new_transform +INVISIBLE}
+ preset_new_transform {-0.06 5 -5.45}
+ addUserKnob {41 rotate l "Rotate Blood" T Axis17.rotate}
+ addUserKnob {13 preset_rotate +INVISIBLE}
+ addUserKnob {26 ""}
+ addUserKnob {20 Particle_Emitter_Settings l "Particle Emitter Settings" n 1}
+ Particle_Emitter_Settings 0
+ addUserKnob {41 start_frame l "Start At" T ParticleEmitter1.start_frame}
+ addUserKnob {41 emit_order l "Emit Order" -STARTLINE T ParticleEmitter1.emit_order}
+ addUserKnob {7 b_emission_rate l "Emission Rate"}
+ b_emission_rate {{"x==\[value reference_frame]?\[value blood_amount]:0"}}
+ addUserKnob {7 b_max_lifetime l "Max Lifetime"}
+ b_max_lifetime 50
+ addUserKnob {7 preset_max_lifetime +INVISIBLE}
+ preset_max_lifetime 50
+ addUserKnob {7 b_velocity l Velocity}
+ b_velocity 0.73
+ addUserKnob {7 preset_velocity +INVISIBLE}
+ preset_velocity 0.73
+ addUserKnob {7 b_velocity_range l "Velocity Range"}
+ b_velocity_range 0.915
+ addUserKnob {7 preset_velocity_range +INVISIBLE}
+ preset_velocity_range 0.915
+ addUserKnob {7 b_rotate_velocity l "Rotate Velocity"}
+ b_rotate_velocity 0.315
+ addUserKnob {7 preset_rotate_velocity +INVISIBLE}
+ preset_rotate_velocity 0.315
+ addUserKnob {7 b_rotate_velocity_range l "Rotate Velocity Range"}
+ b_rotate_velocity_range 0.225
+ addUserKnob {7 preset_rotate_velocity_range +INVISIBLE}
+ preset_rotate_velocity_range 0.225
+ addUserKnob {7 b_size l Size}
+ b_size 0.1
+ addUserKnob {7 preset_size +INVISIBLE}
+ preset_size 0.1
+ addUserKnob {7 b_size_range l "Size Range"}
+ b_size_range 2
+ addUserKnob {7 preset_size_range +INVISIBLE}
+ preset_size_range 2
+ addUserKnob {7 b_mass l Mass}
+ b_mass 1
+ addUserKnob {7 preset_mass +INVISIBLE}
+ preset_mass 1
+ addUserKnob {7 b_mass_range l "Mass Range"}
+ b_mass_range 0.2
+ addUserKnob {7 preset_mass_range +INVISIBLE}
+ preset_mass_range 0.2
+ addUserKnob {7 b_spread l Spread}
+ b_spread 0.11
+ addUserKnob {7 preset_spread +INVISIBLE}
+ preset_spread 0.11
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 _3 l "" +STARTLINE}
+ addUserKnob {20 Particle_Forces l "Particle Forces" n 1}
+ Particle_Forces 0
+ addUserKnob {26 Turbulence}
+ addUserKnob {13 b_turbulence_strength l Strength}
+ addUserKnob {13 preset_turbulence_strength +INVISIBLE}
+ addUserKnob {13 b_turbulence_scale l Scale}
+ addUserKnob {13 preset_turbulence_scale +INVISIBLE}
+ addUserKnob {13 b_turbulence_offset l Offset}
+ addUserKnob {13 preset_turbulence_offset +INVISIBLE}
+ addUserKnob {26 Wind}
+ addUserKnob {13 b_wind_from l From}
+ b_wind_from {{curve x1015 0 0} {curve x1015 -1 0} {curve x1015 0 0}}
+ addUserKnob {13 preset_wind_from +INVISIBLE}
+ preset_wind_from {{curve x1015 0 0} {curve x1015 -1 0} {curve x1015 0 0}}
+ addUserKnob {13 b_wind_to l To}
+ addUserKnob {13 preset_wind_to +INVISIBLE}
+ addUserKnob {13 b_wind2_to l "Extra To"}
+ addUserKnob {13 preset_wind2_to +INVISIBLE}
+ addUserKnob {26 Gravity}
+ addUserKnob {13 b_gravity_from l From}
+ addUserKnob {13 preset_gravity_from +INVISIBLE}
+ addUserKnob {13 b_gravity_to l " To"}
+ b_gravity_to {0 -0.1 0}
+ addUserKnob {13 preset_gravity_to +INVISIBLE}
+ preset_gravity_to {0 -0.1 0}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 top_light l Light}
+ addUserKnob {26 ""}
+ addUserKnob {20 light_control l Light n 1}
+ light_control 0
+ addUserKnob {26 ""}
+ addUserKnob {26 userlight l "" +STARTLINE T "User Lights will overide these."}
+ addUserKnob {26 ""}
+ addUserKnob {41 color l Color T Light4.color}
+ addUserKnob {41 color_panelDropped l "panel dropped state" +INVISIBLE T Light4.color_panelDropped}
+ addUserKnob {41 intensity l Intensity T Light4.intensity}
+ addUserKnob {13 light_translate l Translate}
+ light_translate {-1.72 1.7 -18.5}
+ addUserKnob {13 preset_light_translate +INVISIBLE}
+ preset_light_translate {-1.72 1.7 -18.5}
+ addUserKnob {20 endGroup_4 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 spec_control_1 l "Spec Control" n 1}
+ spec_control_1 0
+ addUserKnob {41 emission l Emission T BasicMaterial1.emission}
+ addUserKnob {41 emission_panelDropped l "panel dropped state" +INVISIBLE T BasicMaterial1.emission_panelDropped}
+ addUserKnob {41 diffuse l Diffuse T BasicMaterial1.diffuse}
+ addUserKnob {41 diffuse_panelDropped l "panel dropped state" +INVISIBLE T BasicMaterial1.diffuse_panelDropped}
+ addUserKnob {41 specular l Specular T BasicMaterial1.specular}
+ addUserKnob {41 specular_panelDropped l "panel dropped state" +INVISIBLE T BasicMaterial1.specular_panelDropped}
+ addUserKnob {41 min_shininess l "Min Shininess" T BasicMaterial1.min_shininess}
+ addUserKnob {41 max_shininess l "Max Shininess" T BasicMaterial1.max_shininess}
+ addUserKnob {41 shininess_channel l "Shininess Channel" T BasicMaterial1.shininess_channel}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {20 Output_Settings l "Output Settings"}
+ addUserKnob {26 hey l "" +STARTLINE +INVISIBLE T "! This node outputs the light as an AOV called BloodSpec !"}
+ addUserKnob {26 ""}
+ addUserKnob {41 overscan l Overscan T ScanlineRender2.overscan}
+ addUserKnob {26 ""}
+ addUserKnob {3 samples_value l "Motion Blur Samples" -STARTLINE}
+ samples_value 20
+ addUserKnob {41 samples l "" -STARTLINE T ScanlineRender2.samples}
+ addUserKnob {41 which +INVISIBLE T Switch1.which}
+ addUserKnob {20 Info}
+ addUserKnob {26 createdby l "" +STARTLINE T "\nBy AKelway\nVersion 5.0\nLast Updated: December 14, 2019\n\n"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x8e388e00
+  label Forces
+  note_font_size 42
+  xpos 51
+  ypos 588
+  bdwidth 304
+  bdheight 457
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x8e8e3800
+  label "Orients To Cam"
+  note_font_size 42
+  xpos 20
+  ypos 1864
+  bdwidth 404
+  bdheight 164
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x8e8e3800
+  label "Preset Orientations"
+  note_font_size 42
+  xpos 32
+  ypos 1382
+  bdwidth 404
+  bdheight 164
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0x4e5767ff
+  label "Spec Top Light"
+  note_font_size 42
+  xpos 839
+  ypos 1816
+  bdwidth 756
+  bdheight 828
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x388e8e00
+  label "Check Light Position"
+  note_font_size 42
+  xpos 449
+  ypos 2799
+  bdwidth 492
+  bdheight 226
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x8e180bff
+  label "USER LIGHT"
+  note_font_size 42
+  xpos 1996
+  ypos 2023
+  bdwidth 325
+  bdheight 226
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode7
+  tile_color 0x8e180bff
+  label "USER CAMERA"
+  note_font_size 42
+  xpos -666
+  ypos 1518
+  bdwidth 325
+  bdheight 226
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x4e5767ff
+  label "Default Cam"
+  note_font_size 42
+  xpos -1165
+  ypos 1723
+  bdwidth 371
+  bdheight 283
+ }
+ Radial {
+  inputs 0
+  area {0 0 {width x1009 1920} {height x1009 1080}}
+  softness 0.045
+  name Radial3
+  xpos 19
+  ypos -1080
+ }
+ Reformat {
+  inputs 0
+  format "3200 1800 0 0 3200 1800 1 Alexa_Mini_3_2K"
+  name Reformat4
+  label 3200x1800
+  xpos -196
+  ypos -1465
+ }
+set N5a067800 [stack 0]
+ Noise {
+  size 450
+  zoffset {{x/10 l x1071 0 0.17}}
+  gain 0.76
+  gamma 0.155
+  scale {1 0.5}
+  center {1707 1099}
+  name Noise1
+  label "more spec detail"
+  xpos -72
+  ypos -1402
+ }
+push $N5a067800
+ Noise {
+  size 185
+  zoffset {{x/10 l x1071 0 0.17}}
+  gain 0.76
+  gamma 0.155
+  scale {1 0.5}
+  center {1707 1099}
+  name Noise2
+  label "less spec detail"
+  xpos -196
+  ypos -1397
+ }
+ Switch {
+  inputs 2
+  name Switch15
+  label "MORE DETAIL OR LESS"
+  xpos -196
+  ypos -1352
+ }
+ Reformat {
+  name Reformat5
+  label root_format
+  xpos -196
+  ypos -1307
+ }
+ Clamp {
+  name Clamp3
+  xpos -196
+  ypos -1258
+ }
+ Grade {
+  multiply 0.38
+  name Grade3
+  label "Mute Sparkles"
+  xpos -196
+  ypos -1208
+ }
+ Grade {
+  white {1.700000048 0.169707492 0.01242605224 1}
+  multiply 10
+  gamma 0.71
+  name Grade2
+  xpos -196
+  ypos -1153
+ }
+ ColorCorrect {
+  saturation 0.39
+  gain {0.400000006 0.3116164207 0.286847204 1}
+  name ColorCorrect1
+  xpos -196
+  ypos -1114
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge3
+  xpos -196
+  ypos -1080
+ }
+set N5a064c00 [stack 0]
+ Toe2 {
+  lift {0.1899999976 0.04516794533 0.03756165504 0.04190086573}
+  mix 0.75
+  name Toe1
+  xpos -298
+  ypos -1043
+ }
+ BasicMaterial {
+  inputs 0
+  diffuse 0.035
+  specular 0.017
+  name BasicMaterial1
+  xpos 1425
+  ypos 2518
+ }
+ Camera2 {
+  inputs 0
+  translate {0 5 19.54999924}
+  focal 35
+  name Default_Camera
+  tile_color 0xffbf00ff
+  xpos -1028
+  ypos 1851
+ }
+ Input {
+  inputs 0
+  name Camera
+  xpos -549
+  ypos 1636
+  addUserKnob {20 User}
+  addUserKnob {6 connected l connected? +STARTLINE}
+  connected {{"\[exists input0]"}}
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch4
+  xpos -549
+  ypos 1872
+  disable {{parent.Camera.connected}}
+ }
+ Dot {
+  name Dot4
+  xpos -515
+  ypos 1958
+ }
+set N38e4f000 [stack 0]
+ Dot {
+  name Dot2
+  xpos -515
+  ypos 2261
+ }
+set N38e4ec00 [stack 0]
+ Dot {
+  name Dot28
+  xpos -515
+  ypos 2354
+ }
+ Dot {
+  name Dot29
+  xpos 1068
+  ypos 2354
+ }
+push $N38e4f000
+ Dot {
+  name Dot22
+  xpos 75
+  ypos 1958
+ }
+set N38e4e000 [stack 0]
+push 0
+ Switch {
+  inputs 2
+  which 1
+  name Switch2
+  xpos 925
+  ypos 1954
+  disable {{parent.disable_orient_to_cam}}
+ }
+ Light2 {
+  intensity 8
+  translate {{parent.light_translate} {parent.light_translate} {parent.light_translate}}
+  rotate {{parent.light_rotate} {parent.light_rotate} {parent.light_rotate}}
+  scaling {{parent.light_scale} {parent.light_scale} {parent.light_scale}}
+  uniform_scale {{parent.light_uniformscale}}
+  skew {{parent.light_skew} {parent.light_skew} {parent.light_skew}}
+  pivot {{parent.light_pivot} {parent.light_pivot} {parent.light_pivot}}
+  depthmap_slope_bias 0.01
+  name Light4
+  xpos 1211
+  ypos 1933
+ }
+ Input {
+  inputs 0
+  name Light
+  xpos 2104
+  ypos 2134
+  number 1
+  addUserKnob {20 User}
+  addUserKnob {6 connected l connected? +STARTLINE}
+  connected {{"\[exists input1]"}}
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch3
+  xpos 1201
+  ypos 2134
+  disable {{parent.Light.connected}}
+ }
+ Dot {
+  name Dot24
+  xpos 1235
+  ypos 2309
+ }
+set N38e4cc00 [stack 0]
+push $N38e4ec00
+push $N38e4e000
+ Dot {
+  name Dot23
+  xpos 75
+  ypos 2069
+ }
+ Axis2 {
+  inputs 0
+  rot_order XYZ
+  translate {{parent.new_transform} {parent.new_transform} {parent.new_transform}}
+  name Axis17
+  tile_color 0xff005fff
+  label All
+  xpos 801
+  ypos 1468
+ }
+ Constant {
+  inputs 0
+  color 1
+  format "512 512 0 0 512 512 1 square_512"
+  name Constant2
+  xpos 2
+  ypos -896
+ }
+ Dot {
+  name Dot26
+  xpos 36
+  ypos -724
+ }
+push $N5a064c00
+ Toe2 {
+  lift {0.1899999976 0.04516794533 0.03756165504 0.04190086573}
+  mix 0.15
+  name Toe3
+  xpos -196
+  ypos -1041
+ }
+ Grade {
+  multiply {1 0.7969844341 0.7599999905 1}
+  black_clamp false
+  name Grade1
+  xpos -196
+  ypos -1010
+ }
+ Blur {
+  size 50
+  name Blur2
+  xpos -196
+  ypos -974
+ }
+ Shuffle {
+  alpha white
+  name Shuffle4
+  xpos -196
+  ypos -916
+ }
+ Reformat {
+  format "512 512 0 0 512 512 1 square_512"
+  resize distort
+  name Reformat3
+  xpos -196
+  ypos -851
+ }
+add_layer {particle particle.red}
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 particle.red
+  name Copy3
+  xpos -196
+  ypos -731
+ }
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat1
+  xpos -196
+  ypos -608
+ }
+ Dot {
+  name Dot31
+  xpos -162
+  ypos -484
+ }
+set N38e09000 [stack 0]
+ Dot {
+  name Dot32
+  xpos 37
+  ypos -484
+ }
+set N38e08c00 [stack 0]
+ Dot {
+  name Dot1
+  xpos 214
+  ypos -484
+ }
+set N38e08800 [stack 0]
+ Dot {
+  name Dot33
+  xpos 374
+  ypos -484
+ }
+set N38e08400 [stack 0]
+ Dot {
+  name Dot34
+  xpos 551
+  ypos -484
+ }
+set N38dbbc00 [stack 0]
+ Dot {
+  name Dot12
+  xpos 725
+  ypos -484
+ }
+set N38dbb800 [stack 0]
+ Dot {
+  name Dot35
+  xpos 896
+  ypos -484
+ }
+set N38dbb400 [stack 0]
+ Dot {
+  name Dot44
+  xpos 1068
+  ypos -483
+ }
+set N38dbb000 [stack 0]
+ Sphere {
+  rotate {66 0 0}
+  name Sphere3
+  xpos 1034
+  ypos -228
+ }
+set N38dbac00 [stack 0]
+ Trilinear {
+  p0 {0.1330000013 -0.2549999952 -0.3120000064}
+  p1 {-0.1659999937 0.2080000043 -0.1930000037}
+  p2 {0.1810000241 0.4120000005 -0.2090000063}
+  p3 {0.4979999959 -0.01399999857 -0.09399999678}
+  p4 {0.01100001484 -0.2879999876 0.2879999876}
+  p5 {-0.2169999778 0.01799999923 0.1159999967}
+  p6 {-0.05200000107 0.425999999 0.261500001}
+  p7 {0.3829999864 -0.0549999997 0.3330000043}
+  name Trilinear3
+  xpos 1034
+  ypos -156
+ }
+push $N38dbac00
+ Trilinear {
+  p0 {0.1650000066 -0.3319999874 -0.4740000069}
+  p1 {-0.1049999967 0.1350000054 -0.4399999976}
+  p2 {0.2680000067 0.3339999914 -0.275000006}
+  p3 {0.5849999785 -0.09200000018 -0.1599999964}
+  p4 {0.09799999744 -0.3659999967 0.2220000029}
+  p5 {-0.1299999952 -0.06000000238 0.04999999702}
+  p6 {0.1099999994 0.3459999859 0.2949999869}
+  p7 {0.481000036 -0.1379999965 0.4280000329}
+  name Trilinear10
+  tile_color 0xff0000ff
+  xpos 1124
+  ypos -62
+ }
+ Switch {
+  inputs 2
+  which {{parent.Switch5.which}}
+  name Switch13
+  xpos 1034
+  ypos 3
+  disable {{parent.Switch5.disable}}
+ }
+ Dot {
+  name Dot15
+  xpos 1068
+  ypos 175
+ }
+push $N38dbb800
+ TimeOffset {
+  time_offset -66
+  time ""
+  name TimeOffset2
+  xpos 691
+  ypos -295
+ }
+ Sphere {
+  rotate {0 32 55}
+  name Sphere9
+  xpos 691
+  ypos -233
+ }
+set N38db9800 [stack 0]
+ Trilinear {
+  p0 {-0.0869999975 -0.0719999969 -0.3799999952}
+  p1 {-0.1430000067 0.273999989 -0.3219999969}
+  p2 {0.3149999976 0.3379999995 -0.2399999797}
+  p3 {0.4210000038 -0.0719999969 -0.1620000005}
+  p4 {-0.02500000037 -0.1679999977 0.2680000067}
+  p5 {-0.1279999912 0.2639999986 0.2580000162}
+  p6 {0.3330000043 0.3659999967 0.2569999993}
+  p7 {0.3650000095 -0.1579999924 0.2960000038}
+  name Trilinear9
+  xpos 691
+  ypos -114
+ }
+push $N38db9800
+ Trilinear {
+  p0 {0.150000006 -0.1459999979 -0.4639999866}
+  p1 {-0.2849999964 0.1019999981 -0.3400000036}
+  p2 {0.2840000093 0.5799999833 -0.25}
+  p3 {0.4440000057 -0.01400000043 -0.1040000021}
+  p4 {0.1340000033 -0.126000002 0.2779999971}
+  p5 {-0.3580000103 0.1019999981 0.2939999998}
+  p6 {0.2599999905 0.5199999809 0.273999989}
+  p7 {0.4799999893 -0.04199999571 0.3720000088}
+  name Trilinear11
+  tile_color 0xff0000ff
+  xpos 794
+  ypos -76
+ }
+ Switch {
+  inputs 2
+  which {{parent.Switch5.which}}
+  name Switch11
+  xpos 691
+  ypos -2
+  disable {{parent.Switch5.disable}}
+ }
+ Dot {
+  name Dot14
+  xpos 725
+  ypos 170
+ }
+push $N38e08800
+ TimeOffset {
+  time_offset 5
+  time ""
+  name TimeOffset5
+  xpos 180
+  ypos -297
+ }
+ Sphere {
+  name Sphere2
+  xpos 180
+  ypos -237
+ }
+set N38db8400 [stack 0]
+ Trilinear {
+  p0 {0.006000000052 -0.200000003 -0.273999989}
+  p1 {-0.09000000358 0.1659999937 -0.2779999971}
+  p2 {0.2540000081 0.2520000041 -0.2579999864}
+  p3 {0.4280000031 -0.2060000002 -0.2280000001}
+  p4 {0.0700000003 -0.3449999988 0.2879999876}
+  p5 {-0.1340000033 0.1120000035 0.1539999992}
+  p6 {0.2080000043 0.324000001 0.2240000069}
+  p7 {0.3560000062 -0.1019999981 0.3459999859}
+  name Trilinear6
+  xpos 180
+  ypos -159
+ }
+push $N38db8400
+ Trilinear {
+  p0 {0.08200000226 -0.3639999926 -0.6140000224}
+  p1 {-0.1049999967 0.1350000054 -0.4399999976}
+  p2 {0.1019999981 0.2899999917 -0.2280000001}
+  p3 {0.4199999869 -0.2119999975 -0.1640000045}
+  p4 {0.06400000304 -0.3819999993 0.3199999928}
+  p5 {-0.2960000038 -0.05000000075 0.09799999744}
+  p6 {0.0540000014 0.2360000014 0.3580000103}
+  p7 {0.3919999897 -0.08200000226 0.3959999979}
+  name Trilinear12
+  tile_color 0xff0000ff
+  xpos 266
+  ypos -104
+ }
+ Switch {
+  inputs 2
+  which {{parent.Switch5.which}}
+  name Switch8
+  xpos 180
+  ypos 1
+  disable {{parent.Switch5.disable}}
+ }
+ Dot {
+  name Dot45
+  xpos 214
+  ypos 160
+ }
+push $N38dbb000
+ Dot {
+  name Dot36
+  xpos 1260
+  ypos -483
+ }
+ TimeOffset {
+  time_offset -85
+  time ""
+  name TimeOffset3
+  xpos 1226
+  ypos -292
+ }
+ Sphere {
+  rotate {0 -6 0}
+  name Sphere1
+  xpos 1226
+  ypos -229
+ }
+set N38d3e800 [stack 0]
+ Trilinear {
+  p0 {-0.5379999876 -0.2119999975 -0.02199999988}
+  p1 {-0.4970000088 0.2460000068 0.04500000179}
+  p2 {-0.2049999982 0.2639999986 -0.2090000063}
+  p3 {0.03000000119 -0.07500000298 -0.3039999902}
+  p4 {-0.1680000126 -0.1459999979 0.2939999998}
+  p5 {-0.2700000107 0.2520000041 0.3319999874}
+  p6 {0.1059999913 0.3939999938 0.06400000304}
+  p7 {0.1580000073 -0.200000003 0.06300000101}
+  name Trilinear1
+  xpos 1226
+  ypos -155
+ }
+push $N38d3e800
+ Trilinear {
+  p0 {-0.5879999995 -0.1679999977 0.06499999762}
+  p1 {-0.7039999962 0.2280000001 0.1599999964}
+  p2 {-0.3120000064 0.25 -0.05200000107}
+  p3 {-0.2080000043 -0.1099999994 -0.1840000004}
+  p4 {-0.4359999895 -0.1580000073 0.4140000045}
+  p5 {-0.4839999974 0.200000003 0.4499999881}
+  p6 {-0.1800000072 0.2240000069 0.2349999994}
+  p7 {-0.1780000031 -0.2540000081 0.2450000048}
+  name Trilinear13
+  tile_color 0xff0000ff
+  xpos 1321
+  ypos -69
+ }
+ Switch {
+  inputs 2
+  which {{parent.Switch5.which}}
+  name Switch14
+  xpos 1226
+  ypos 8
+  disable {{parent.Switch5.disable}}
+ }
+ Dot {
+  name Dot38
+  xpos 1260
+  ypos 182
+ }
+push $N38dbb400
+ TimeOffset {
+  time_offset -85
+  time ""
+  name TimeOffset4
+  xpos 862
+  ypos -294
+ }
+ Sphere {
+  rotate {0 32 55}
+  name Sphere4
+  xpos 862
+  ypos -233
+ }
+set N38d3d400 [stack 0]
+ Trilinear {
+  p0 {-0.4199999869 0.07800000161 -0.2450000048}
+  p1 {-0.03599999845 0.2479999959 -0.4779999852}
+  p2 {0.3400000036 -0.1519999951 -0.3179999888}
+  p3 {-0.2150000036 -0.4449999928 0.09000000358}
+  p4 {-0.05799999833 0.2179999948 0.4120000005}
+  p5 {0.1099999994 0.3280000091 0.05200000107}
+  p6 {0.2599999905 0.2080000043 -0.09399999678}
+  p7 {0.1180000007 -0.150000006 0.4959999919}
+  name Trilinear2
+  xpos 862
+  ypos -161
+ }
+push $N38d3d400
+ Trilinear {
+  p0 {-0.7039999962 -0.07800000906 -0.5080000162}
+  p1 {-0.03200000152 0.1780000031 -0.6359999776}
+  p2 {0.2939999998 -0.1819999963 -0.3700000048}
+  p3 {-0.2150000036 -0.4449999928 0.09000000358}
+  p4 {-0.1420000046 0.2160000056 0.3700000048}
+  p5 {0.1459999979 0.3899999857 0.1620000005}
+  p6 {0.2899999917 0.2759999931 -0.01800000668}
+  p7 {0.3149999976 -0.1949999928 0.4900000095}
+  name Trilinear14
+  tile_color 0xff0000ff
+  xpos 935
+  ypos -83
+ }
+ Switch {
+  inputs 2
+  which {{parent.Switch5.which}}
+  name Switch12
+  xpos 862
+  ypos 5
+  disable {{parent.Switch5.disable}}
+ }
+ Dot {
+  name Dot39
+  xpos 896
+  ypos 173
+ }
+push $N38dbbc00
+ TimeOffset {
+  time_offset -65
+  time ""
+  name TimeOffset6
+  xpos 517
+  ypos -296
+ }
+ Sphere {
+  rotate {0 23 0}
+  scaling {2 1 1}
+  name Sphere5
+  xpos 517
+  ypos -233
+ }
+set N38ccfc00 [stack 0]
+ Trilinear {
+  p0 {0.2160000056 -0.1920000017 -0.2840000093}
+  p1 {0.1420000046 0.2779999971 -0.173999995}
+  p2 {0.2860000134 0.3030000031 0.1949999928}
+  p3 {0.2619999945 -0.200000003 0.2479999959}
+  p4 {-0.1819999963 -0.1949999928 -0.1379999965}
+  p5 {-0.2339999974 0.2919999957 -0.08600000292}
+  p6 {-0.2199999988 0.2700000107 0.3059999943}
+  p7 {-0.2560000122 -0.1410000026 0.3935000002}
+  name Trilinear4
+  xpos 517
+  ypos -163
+ }
+push $N38ccfc00
+ Trilinear {
+  p0 {-0.01799999923 -0.2339999974 0.1199999973}
+  p1 {0.1319999993 0.2080000043 -0.04599999636}
+  p2 {0.01999999583 0.2800000012 0.2080000043}
+  p3 {-0.1439999938 0.1289999932 0.5279999971}
+  p4 {-0.4939999878 -0.07599999756 0.1400000006}
+  p5 {-0.3319999874 0.200000003 0.006000000052}
+  p6 {-0.3100000024 0.3300000131 0.2099999934}
+  p7 {-0.4359999895 0.04999998212 0.3729999661}
+  name Trilinear15
+  tile_color 0xff0000ff
+  xpos 597
+  ypos -81
+ }
+ Switch {
+  inputs 2
+  which {{parent.Switch5.which}}
+  name Switch10
+  xpos 517
+  ypos -23
+  disable {{parent.Switch5.disable}}
+ }
+ Dot {
+  name Dot40
+  xpos 551
+  ypos 177
+ }
+push $N38e08400
+ TimeOffset {
+  time_offset -45
+  time ""
+  name TimeOffset7
+  xpos 340
+  ypos -295
+ }
+ Sphere {
+  name Sphere6
+  xpos 340
+  ypos -233
+ }
+set N38cce800 [stack 0]
+ Trilinear {
+  p0 {-0.06599999964 -0.2140000015 -0.2540000081}
+  p1 {-0.08399999887 0.2240000069 -0.3059999943}
+  p2 {0.2860000134 0.3079999983 -0.1850000024}
+  p3 {0.4620000124 -0.200000003 -0.1000000015}
+  p4 {0.01999999955 -0.2259999961 0.3300000131}
+  p5 {-0.1840000004 0.1539999992 0.1180000007}
+  p6 {0.3379999995 0.3680000007 0.3779999912}
+  p7 {0.3819999993 -0.1640000045 0.5}
+  name Trilinear5
+  xpos 340
+  ypos -163
+ }
+push $N38cce800
+ Trilinear {
+  p0 {0.01799999923 -0.175999999 -0.3680000007}
+  p1 {-0.1220000014 0.2399999946 -0.2599999905}
+  p2 {0.2860000134 0.3219999969 -0.2380000055}
+  p3 {0.3860000074 -0.1220000014 -0.2039999962}
+  p4 {0.02999999933 -0.175999999 0.3300000131}
+  p5 {-0.09200000018 0.1319999993 0.3100000024}
+  p6 {0.324000001 0.3000000119 0.3519999981}
+  p7 {0.5180000067 -0.1700000018 0.4199999869}
+  name Trilinear16
+  tile_color 0xff0000ff
+  xpos 445
+  ypos -69
+ }
+ Switch {
+  inputs 2
+  which {{parent.Switch5.which}}
+  name Switch9
+  xpos 340
+  ypos 4
+  disable {{parent.Switch5.disable}}
+ }
+ Dot {
+  name Dot41
+  xpos 374
+  ypos 177
+ }
+push $N38e08c00
+ TimeOffset {
+  time_offset -25
+  time ""
+  name TimeOffset8
+  xpos 3
+  ypos -297
+ }
+ Sphere {
+  name Sphere7
+  xpos 3
+  ypos -236
+ }
+set N38ccd400 [stack 0]
+ Trilinear {
+  p0 {-0.1459999979 -0.1879999936 -0.1959999949}
+  p1 {-0.2899999917 0.2160000056 -0.2300000042}
+  p2 {0.1899999976 0.3219999969 -0.2700000107}
+  p3 {0.01999999583 -0.2899999917 -0.3000000119}
+  p4 {-0.4149999917 -0.0719999969 0.3400000036}
+  p5 {-0.2680000067 0.2460000068 0.3440000117}
+  p6 {0.1319999993 0.4120000005 0.3160000145}
+  p7 {0.3459999859 -0.1340000033 0.3919999897}
+  name Trilinear7
+  xpos 3
+  ypos -148
+ }
+push $N38ccd400
+ Trilinear {
+  p0 {-0.1099999994 -0.125 -0.3249999881}
+  p1 {-0.2899999917 0.2160000056 -0.2300000042}
+  p2 {0.1899999976 0.3219999969 -0.2700000107}
+  p3 {0.01999999583 -0.2899999917 -0.3000000119}
+  p4 {-0.4149999917 -0.0719999969 0.3400000036}
+  p5 {-0.3300000131 0.1920000017 0.3000000119}
+  p6 {0.2269999981 0.4830000103 0.4450000226}
+  p7 {0.3899999857 -0.1049999893 0.474999994}
+  name Trilinear17
+  tile_color 0xff0000ff
+  xpos 77
+  ypos -101
+ }
+ Switch {
+  inputs 2
+  which {{parent.Switch5.which}}
+  name Switch7
+  xpos 3
+  disable {{parent.Switch5.disable}}
+ }
+ Dot {
+  name Dot42
+  xpos 37
+  ypos 181
+ }
+push $N38e09000
+ Sphere {
+  name Sphere8
+  xpos -196
+  ypos -252
+ }
+set N38c5bc00 [stack 0]
+ Trilinear {
+  p0 {-0.4959999919 -0.2899999917 -0.07400000095}
+  p1 {-0.5240000486 0.25 0.1710000038}
+  p2 {0.0339999944 0.2980000079 -0.2139999866}
+  p3 {-0.02199999988 -0.2259999961 -0.324000001}
+  p4 {-0.1400000006 -0.2380000055 0.5479999781}
+  p5 {-0.3160000145 0.1519999951 0.5859999657}
+  p6 {0.2220000029 0.2459999919 0.3310000002}
+  p7 {0.2579999864 -0.2980000079 0.4099999964}
+  name Trilinear8
+  xpos -196
+  ypos -157
+ }
+push $N38c5bc00
+ Trilinear {
+  p0 {-0.6480000019 -0.2700000107 -0.2220000029}
+  p1 {-0.7120000124 0.3399999738 0.07000000775}
+  p2 {-0.1019999981 0.3180000186 -0.3569999933}
+  p3 {-0.1579999924 -0.2060000002 -0.4670000076}
+  p4 {-0.221999988 -0.2639999986 0.5279999971}
+  p5 {-0.44599998 0.2499999851 0.506000042}
+  p6 {0.1260000169 0.3519999981 0.2660000026}
+  p7 {0.1360000074 -0.1580000073 0.3659999967}
+  name Trilinear18
+  tile_color 0xff0000ff
+  xpos -112
+  ypos -101
+ }
+ Switch {
+  inputs 2
+  which {{parent.Switch5.which}}
+  name Switch6
+  xpos -196
+  ypos -6
+  disable {{parent.Switch5.disable}}
+ }
+ Dot {
+  name Dot43
+  xpos -162
+  ypos 175
+ }
+ Axis2 {
+  inputs 0
+  rot_order XYZ
+  translate {0 -0.2800000012 22}
+  rotate {-174 0 -179}
+  uniform_scale 0.8
+  name From_Cam_Arc
+  tile_color 0xff5f00ff
+  xpos -803
+  ypos 19
+ }
+ CheckerBoard2 {
+  inputs 0
+  name CheckerBoard3
+  xpos -1823
+  ypos -61
+ }
+ Dot {
+  name Dot17
+  xpos -1789
+  ypos 103
+ }
+ Card2 {
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Card12
+  xpos -1823
+  ypos 160
+ }
+set N38c59800 [stack 0]
+ Dot {
+  name Dot5
+  xpos -1585
+  ypos 163
+ }
+set N38c59400 [stack 0]
+ Dot {
+  name Dot9
+  xpos -1265
+  ypos 163
+ }
+set N38c59000 [stack 0]
+ Dot {
+  name Dot7
+  xpos -939
+  ypos 163
+ }
+ Dot {
+  name Dot8
+  xpos -939
+  ypos 236
+ }
+ TransformGeo {
+  inputs 2
+  name TransformGeo1
+  xpos -813
+  ypos 232
+ }
+ Axis2 {
+  inputs 0
+  rot_order XYZ
+  translate {-0.6 5.000006676 18.16000557}
+  rotate {-175.0859161 2 -179.5911635}
+  uniform_scale 0.2
+  name Left_From_Cam_Axis1
+  tile_color 0xffbf00ff
+  xpos -1129
+  ypos 18
+ }
+push $N38c59000
+ Dot {
+  name Dot10
+  xpos -1265
+  ypos 236
+ }
+ TransformGeo {
+  inputs 2
+  name TransformGeo3
+  xpos -1139
+  ypos 232
+ }
+ Axis2 {
+  inputs 0
+  rot_order XYZ
+  translate {0.6900000572 5 18.16000557}
+  rotate {-175.1029096 -5.008956131e-06 180.000005}
+  uniform_scale 0.2
+  name Right_From_Cam_Axis
+  tile_color 0xffbf00ff
+  xpos -1449
+  ypos 11
+ }
+push $N38c59400
+ Dot {
+  name Dot6
+  xpos -1585
+  ypos 236
+ }
+ TransformGeo {
+  inputs 2
+  name TransformGeo7
+  xpos -1459
+  ypos 232
+ }
+push $N38c59800
+ Dot {
+  name Dot89
+  xpos -1789
+  ypos 374
+ }
+ Dot {
+  name Dot11
+  xpos -1536
+  ypos 374
+ }
+ Switch {
+  inputs 4
+  name Switch1
+  xpos -1459
+  ypos 370
+ }
+ Dot {
+  name Dot13
+  xpos -203
+  ypos 374
+ }
+push 0
+ ParticleEmitter {
+  inputs 11
+  start_frame 990
+  emit_from bbox
+  rate {{parent.b_emission_rate}}
+  selection_threshhold 0.44
+  lifetime {{parent.b_max_lifetime}}
+  velocity {{parent.b_velocity}}
+  velocity_variation {{parent.b_velocity_range}}
+  rotation_velocity {{parent.b_rotate_velocity}}
+  rotation_velocity_variation {{parent.b_rotate_velocity_range}}
+  size {{parent.b_size}}
+  size_variation {{parent.b_size_range}}
+  mass {{parent.b_mass}}
+  mass_variation {{parent.b_mass_range}}
+  spread {{parent.b_spread}}
+  frame_advance constant
+  seed 3
+  name ParticleEmitter1
+  xpos 180
+  ypos 446
+ }
+ Dot {
+  name Dot101
+  xpos 214
+  ypos 526
+ }
+ ParticleTurbulence {
+  strength {{parent.b_turbulence_strength} {parent.b_turbulence_strength} {parent.b_turbulence_strength}}
+  scale {{parent.b_turbulence_scale} {parent.b_turbulence_scale} {parent.b_turbulence_scale}}
+  offset {{parent.b_turbulence_offset} {parent.b_turbulence_offset} {parent.b_turbulence_offset}}
+  name ParticleTurbulence1
+  xpos 180
+  ypos 676
+ }
+ ParticleWind {
+  from {{parent.b_wind_from} {parent.b_wind_from x1021 -1 0} {parent.b_wind_from}}
+  to {{parent.b_wind_to} {parent.b_wind_to} {parent.b_wind_to}}
+  name ParticleWind1
+  xpos 180
+  ypos 754
+ }
+ ParticleWind {
+  to {{parent.b_wind2_to} {parent.b_wind2_to x1020 1 -0.1 0} {parent.b_wind2_to}}
+  name ParticleWind18
+  tile_color 0xffbf00ff
+  label Secondary
+  xpos 180
+  ypos 840
+ }
+ ParticleGravity {
+  from {{parent.b_gravity_from} {parent.b_gravity_from} {parent.b_gravity_from}}
+  to {{parent.b_gravity_to} {parent.b_gravity_to} {parent.b_gravity_to}}
+  name ParticleGravity1
+  xpos 180
+  ypos 939
+ }
+ ParticleMotionAlign {
+  name ParticleMotionAlign1
+  xpos 180
+  ypos 1109
+ }
+ ParticlePointForce {
+  strength -1
+  radius 5
+  position {-0.5399999619 -4.550000191 17.10000038}
+  name ParticlePointForce1
+  xpos 180
+  ypos 1206
+  disable true
+ }
+ TransformGeo {
+  inputs 2
+  name TransformGeo8
+  xpos 180
+  ypos 1482
+ }
+ Dot {
+  name Dot27
+  xpos 214
+  ypos 1824
+ }
+ TransformGeo {
+  inputs 2
+  translate {0 -5 -19.54}
+  name TransformGeo2
+  xpos 180
+  ypos 2066
+  disable {{parent.disable_orient_to_cam}}
+ }
+ Dot {
+  name Dot18
+  xpos 214
+  ypos 2160
+ }
+set N38b8dc00 [stack 0]
+push 0
+add_layer {geo_ppos geo_ppos.red geo_ppos.green geo_ppos.blue}
+add_layer {geo_N geo_N.red geo_N.green geo_N.blue}
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  antialiasing medium
+  samples {{"mblur==0?samples:\[value samples_value]"}}
+  motion_vectors_type distance
+  output_shader_vectors true
+  P_channel geo_ppos
+  N_channel geo_N
+  name ScanlineRender2
+  tile_color 0xffbf00ff
+  xpos 180
+  ypos 2258
+ }
+ Dot {
+  name Dot92
+  xpos 214
+  ypos 2522
+ }
+set N38b8d400 [stack 0]
+ Dot {
+  name Dot19
+  xpos 686
+  ypos 2522
+ }
+set N38b8d000 [stack 0]
+ ReLight {
+  inputs 4
+  use_alpha true
+  normal geo_N
+  position geo_ppos
+  name ReLight1
+  xpos 1201
+  ypos 2519
+ }
+ Clamp {
+  maximum 10
+  name Clamp1
+  xpos 1201
+  ypos 2962
+  disable true
+ }
+ Shuffle {
+  alpha black
+  name Shuffle2
+  xpos 1201
+  ypos 3012
+ }
+add_layer {bloodspec bloodspec.red bloodspec.green bloodspec.blue}
+ Shuffle {
+  out bloodspec
+  name Shuffle3
+  xpos 1201
+  ypos 3047
+ }
+ Dot {
+  name Dot20
+  xpos 1235
+  ypos 3172
+ }
+set N38b23800 [stack 0]
+ Dot {
+  name Dot16
+  xpos 1235
+  ypos 3287
+ }
+push $N38b23800
+push $N38b8d400
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  channels bloodspec
+  name Copy1
+  xpos 180
+  ypos 3160
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge21
+  xpos 180
+  ypos 3284
+  disable {{parent.disable_light}}
+ }
+ Remove {
+  channels geo_N
+  channels2 geo_ppos
+  channels3 particle
+  name Remove2
+  xpos 180
+  ypos 3330
+ }
+ Remove {
+  operation keep
+  channels2 bloodspec
+  channels3 forward
+  name Remove1
+  label "\[value channels]\n\[value channels2]"
+  xpos 180
+  ypos 3379
+ }
+ Output {
+  name Output1
+  xpos 180
+  ypos 3482
+ }
+push $N38b8dc00
+ Dot {
+  name Dot21
+  xpos 510
+  ypos 2160
+ }
+ Dot {
+  name Dot30
+  xpos 510
+  ypos 2725
+ }
+push $N38e4cc00
+push $N38b8d000
+ PositionToPoints2 {
+  display textured
+  render_mode textured
+  P_channel geo_ppos
+  N_channel geo_N
+  name PositionToPoints1
+  xpos 652
+  ypos 2620
+ }
+ Scene {
+  inputs 3
+  name Scene1
+  xpos 662
+  ypos 2902
+ }
+ Switch {
+  inputs 0
+  which 1
+  name Switch5
+  tile_color 0xff0000ff
+  label "Switch Less uniform shapes"
+  xpos -431
+  ypos 20
+ }
+end_group
+Viewer {
+ frame 1
+ frame_range 1-100
+ name Viewer1
+ xpos -40
+ ypos -9
+ hide_input true
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x335959ff
+ label "<b>author: Adam Kelway        ."
+ note_font_size 20
+ xpos 150
+ ypos -336
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x969600ff
+ label "<b>http://www.nukepedia.com/gizmos/particles/p_blood_hit/finishdown?mjv=5        ."
+ note_font_size 20
+ xpos 147
+ ypos -242
+}

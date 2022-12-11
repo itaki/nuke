@@ -1,0 +1,172 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/.nuke/Particles/VariousSetup/LEGO.nk
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Camera2 {
+ inputs 0
+ translate {-1.402885199 1.130596161 -2.240080118}
+ rotate {-26.47800013 -148.5999725 0}
+ name Camera1
+ xpos -147
+ ypos -73
+}
+Light {
+ inputs 0
+ intensity 2
+ falloff_type Cubic
+ translate {0 1.7 0}
+ depthmap_slope_bias 0.01
+ name Point1
+ xpos 188
+ ypos -206
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {1 0 0 0}
+ name Constant1
+ xpos -33
+ ypos -595
+}
+BasicMaterial {
+ diffuse 0.26
+ specular 2.5
+ max_shininess 23
+ name BasicMaterial1
+ xpos -33
+ ypos -482
+}
+Dot {
+ name Dot1
+ xpos 0
+ ypos -415
+}
+set N5781ec00 [stack 0]
+Card2 {
+ image_aspect false
+ rows 20
+ columns {{rows}}
+ rotate {-90 0 0}
+ uniform_scale 3
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card1
+ xpos -208
+ ypos -256
+}
+set N5781e800 [stack 0]
+push $N5781ec00
+Cylinder {
+ rows 10
+ columns 10
+ radius 1.7
+ height 1.6
+ close_top true
+ uniform_scale 0.5
+ name Cylinder1
+ xpos -33
+ ypos -357
+}
+TransformGeo {
+ translate {0 0.5 0}
+ uniform_scale 0.6
+ pivot {0 -0.5 0}
+ name TransformGeo1
+ xpos -33
+ ypos -333
+}
+push $N5781e800
+push 0
+ParticleEmitter {
+ inputs 3
+ emit_from faces
+ emit_order "in order"
+ rate 10000
+ velocity 0
+ name ParticleEmitter1
+ xpos -33
+ ypos -256
+}
+ParticleToGeo {
+ name ParticleToGeo1
+ xpos -33
+ ypos -226
+}
+MergeGeo {
+ inputs 2
+ name MergeGeo1
+ xpos -33
+ ypos -173
+}
+MergeGeo {
+ inputs 2
+ name MergeGeo2
+ xpos -33
+ ypos -144
+}
+FrameHold {
+ first_frame 1
+ name FrameHold2
+ xpos -33
+ ypos -84
+}
+push 0
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ motion_vectors_type distance
+ name ScanlineRender1
+ xpos -33
+ ypos 13
+}

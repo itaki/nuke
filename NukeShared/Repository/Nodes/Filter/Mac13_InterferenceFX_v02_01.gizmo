@@ -1,0 +1,485 @@
+#! /software/nuke/linux.centos5.x86_64/7.0v6_nolib/Nuke7.0 -nx
+version 7.0 v6
+Gizmo {
+ addUserKnob {20 User}
+ addUserKnob {41 OnOff l Amount T NoOp1.OnOff}
+ addUserKnob {26 ""}
+ addUserKnob {26 distortion l "" +STARTLINE T "Horizontal lines adjustment\n\nFirst adjust input size of the grid warp by clicking on the below buttons"}
+ addUserKnob {41 src_preset_input l "Set up image size source" T GridWarp2.src_preset_input}
+ addUserKnob {41 dst_preset_input l "Set up image size destination" T GridWarp2.dst_preset_input}
+ addUserKnob {41 Gridlines l "Horizontal lines" T NoOp2.Gridlines}
+ addUserKnob {26 Distorttext l "" +STARTLINE T "\nDistort the horizontal grid using the Gridwarp center points in the viewer. \nMoving them in the y axis will increase the interference effect"}
+ addUserKnob {26 ""}
+ addUserKnob {26 Color l "" +STARTLINE T "Color bleed"}
+ addUserKnob {41 hue_rotation l "hue rotation" T HueShift1.hue_rotation}
+ addUserKnob {41 saturation l "overall saturation" T HueShift1.saturation}
+ addUserKnob {41 BlurColor l "Color blur" T NoOp3.BlurColor}
+}
+ NoOp {
+  inputs 0
+  name NoOp3
+  xpos -534
+  ypos -1495
+  addUserKnob {20 User}
+  addUserKnob {7 BlurColor l "Color blur" R 0 10}
+  BlurColor 7.5
+ }
+ NoOp {
+  inputs 0
+  name NoOp1
+  xpos 881
+  ypos -495
+  addUserKnob {20 User}
+  addUserKnob {7 OnOff}
+  OnOff 1
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant1
+  xpos -215
+  ypos -944
+ }
+ Reformat {
+  type "to box"
+  box_width {{parent.Format.box.r}}
+  box_height {{parent.Format.box.t}}
+  box_fixed true
+  box_pixel_aspect {{Format.pixel_aspect}}
+  resize distort
+  filter Mitchell
+  name Reformat2
+  xpos -215
+  ypos -844
+ }
+ Grid {
+  number {0 {parent.NoOp2.Gridlines}}
+  size 2.7
+  translate {0 5}
+  name Grid9
+  xpos -215
+  ypos -778
+ }
+ GridWarp {
+  srcgrid  {
+    2 3 4 0  {
+      1 3 4 0
+      0 0 0 64 0 -64 -120 0 120 0 0
+      360 0 0 64 0 -64 -120 0 120 0 0
+      720 0 0 64 0 -64 -120 0 120 0 0
+      0 192 0 64 0 -64 -120 0 120 0 0
+      360 192 0 64 0 -64 -120 0 120 0 0
+      720 192 0 64 0 -64 -120 0 120 0 0
+      0 384 0 64 0 -64 -120 0 120 0 0
+      360 384 0 64 0 -64 -120 0 120 0 0
+      720 384 0 64 0 -64 -120 0 120 0 0
+      0 576 0 64 0 -64 -120 0 120 0 0
+      360 576 0 64 0 -64 -120 0 120 0 0
+      720 576 0 64 0 -64 -120 0 120 0 0
+    }  {
+      1 0 0 0 0 
+    } 
+  } 
+  dstgrid  {
+    2 3 4 0  {
+      1 3 4 0
+      0 0 0 64 0 -64 -120 0 120 0 0
+      360 0 0 64 0 -64 -120 0 120 0 0
+      720 0 0 64 0 -64 -120 0 120 0 0
+      0 192 0 64 0 -64 -120 0 120 0 0
+      354 73 0 64 0 -64 -120 0 120 0 0
+      720 192 0 64 0 -64 -120 0 120 0 0
+      0 384 0 64 0 -64 -120 0 120 0 0
+      363 471 0 64 0 -64 -120 0 120 0 0
+      720 384 0 64 0 -64 -120 0 120 0 0
+      0 576 0 64 0 -64 -120 0 120 0 0
+      360 576 0 64 0 -64 -120 0 120 0 0
+      720 576 0 64 0 -64 -120 0 120 0 0
+    }  {
+      1 0 0 0 0 
+    } 
+  } 
+  src_hide true
+  distortion {{"random((frame+8.4)/15.0) * (1.0-0.2) + 0.2"}}
+  name GridWarp2
+  xpos -215
+  ypos -542
+ }
+set N479df00 [stack 0]
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant3
+  xpos 351
+  ypos -916
+ }
+ Reformat {
+  type "to box"
+  box_width {{parent.Format.box.r}}
+  box_height {{parent.Format.box.t}}
+  box_fixed true
+  box_pixel_aspect {{Format.pixel_aspect}}
+  resize distort
+  filter Mitchell
+  name Reformat5
+  xpos 351
+  ypos -811
+ }
+ Noise {
+  size {350 9}
+  gain 1
+  gamma 1
+  translate {{"random((frame+8.4)/1.0) * (1280.0--30.0) + -30.0"} 2.500180842}
+  center {1024 778}
+  name Noise1
+  xpos 351
+  ypos -759
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos 88
+  ypos -2086
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  name Format
+  xpos 88
+  ypos -1960
+ }
+ Dot {
+  name Dot4
+  xpos 122
+  ypos -1837
+ }
+set N47dcfc0 [stack 0]
+ Saturation {
+  saturation {{"random((frame+8.4)/3.8) * (1.0-0.3) + 0.3"}}
+  name Saturation2
+  xpos 88
+  ypos -1615
+ }
+set N47e1a10 [stack 0]
+ Expression {
+  expr0 r
+  expr1 0
+  expr2 0
+  name Expression_right
+  xpos -106
+  ypos -1491
+ }
+ HueShift {
+  saturation {{parent.HueShift1.saturation}}
+  hue_rotation {{-parent.HueShift1.hue_rotation}}
+  name HueShift2
+  xpos -106
+  ypos -1453
+ }
+ Transform {
+  translate {{"- parent.Transform2.translate.main" i} {"- parent.Transform2.translate.main" i}}
+  center {640 360}
+  name Transform3
+  xpos -106
+  ypos -1401
+ }
+ Blur {
+  channels rgb
+  size {{parent.NoOp3.BlurColor} 0}
+  name Blur_right
+  xpos -106
+  ypos -1338
+ }
+push $N47e1a10
+ Dot {
+  name Dot2
+  xpos -262
+  ypos -1611
+ }
+ Expression {
+  expr0 0
+  channel1 {-rgba.red rgba.green rgba.blue}
+  expr1 b
+  expr2 0
+  name Expression_left
+  xpos -296
+  ypos -1497
+ }
+ HueShift {
+  name HueShift1
+  xpos -296
+  ypos -1458
+ }
+ Transform {
+  translate {{"random((frame+0.0)/2.0) * (30.0-3.0) + 3.0"} 0}
+  center {640 360}
+  name Transform2
+  xpos -296
+  ypos -1407
+ }
+ Blur {
+  channels rgb
+  size {{parent.NoOp3.BlurColor} 0}
+  name Blur_left
+  xpos -296
+  ypos -1330
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge1
+  xpos -296
+  ypos -1231
+ }
+ Clamp {
+  channels alpha
+  name Clamp1
+  xpos -296
+  ypos -1205
+ }
+push $N47e1a10
+ Merge2 {
+  inputs 2
+  operation max
+  name Merge3
+  xpos 88
+  ypos -1199
+ }
+ Dot {
+  name Dot1
+  xpos 122
+  ypos -755
+ }
+set N4874980 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 forward.u
+  name Copy2
+  xpos 220
+  ypos -765
+ }
+ IDistort {
+  uv forward
+  uv_scale {{"parent.NoOp1.OnOff * 100 "}}
+  name IDistort1
+  xpos 220
+  ypos -671
+ }
+ Transform {
+  translate {41 0}
+  scale {1.1 1}
+  center {640 360}
+  name Transform4
+  xpos 220
+  ypos -623
+ }
+push $N4874980
+ Merge2 {
+  inputs 2
+  operation max
+  name Merge8
+  xpos 88
+  ypos -623
+ }
+ Multiply {
+  inputs 1+1
+  channels rgba
+  value 0
+  mix {{parent.NoOp1.OnOff}}
+  name Multiply23
+  xpos 88
+  ypos -542
+ }
+ Clamp {
+  channels alpha
+  name Clamp2
+  xpos 88
+  ypos -516
+ }
+set N48b1400 [stack 0]
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant2
+  xpos -494
+  ypos -680
+ }
+ Reformat {
+  type "to box"
+  box_width {{parent.Format.box.r}}
+  box_height {{parent.Format.box.t}}
+  box_fixed true
+  box_pixel_aspect {{Format.pixel_aspect}}
+  resize distort
+  filter Mitchell
+  name Reformat1
+  xpos -494
+  ypos -575
+ }
+ Shuffle {
+  alpha white
+  name Shuffle16
+  xpos -494
+  ypos -540
+ }
+set Na9cd160 [stack 0]
+ AdjBBox {
+  numpixels {{"-Format.box.r * 0.01"} {"-Format.box.t * 0.015"}}
+  name AdjBBox1
+  xpos -625
+  ypos -540
+ }
+ Reformat {
+  type "to box"
+  box_width {{"Format.box.r - Format.box.r * 0.01"}}
+  box_height {{"Format.box.t - Format.box.t * 0.015"}}
+  box_fixed true
+  box_pixel_aspect {{Format.pixel_aspect}}
+  resize distort
+  filter Mitchell
+  black_outside true
+  name Reformat8
+  xpos -625
+  ypos -504
+ }
+ Reformat {
+  type "to box"
+  box_width {{parent.Format.box.r}}
+  box_height {{parent.Format.box.t}}
+  box_fixed true
+  box_pixel_aspect {{Format.pixel_aspect}}
+  resize distort
+  filter Mitchell
+  black_outside true
+  name Reformat6
+  xpos -625
+  ypos -470
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos -625
+  ypos -438
+ }
+set Na71df40 [stack 0]
+push $Na9cd160
+ ChannelMerge {
+  inputs 2
+  operation stencil
+  bbox B
+  name ChannelMerge1
+  xpos -494
+  ypos -444
+ }
+ Dilate {
+  channels alpha
+  size -100
+  name Dilate4
+  xpos -494
+  ypos -391
+ }
+ Blur {
+  channels alpha
+  size 83
+  name Blur21
+  xpos -494
+  ypos -353
+ }
+set Na9b2360 [stack 0]
+push $N479df00
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -215
+  ypos -353
+ }
+ Reformat {
+  type "to box"
+  box_width {{parent.Format.box.r}}
+  box_height {{parent.Format.box.t}}
+  box_fixed true
+  box_pixel_aspect {{Format.pixel_aspect}}
+  resize distort
+  filter Mitchell
+  name Reformat3
+  xpos -215
+  ypos -297
+ }
+push $N48b1400
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge6
+  xpos -63
+  ypos -297
+ }
+ Transform {
+  translate {0 {"random((frame+-20.0)/3.0) * (300.0--300.0) + -300.0"}}
+  center {640 360}
+  name Transform5
+  xpos -63
+  ypos -212
+ }
+ Dissolve {
+  inputs 2
+  which {{"random((frame+8.4)/1.0) * (1.0-0.5) + 0.5"}}
+  name Dissolve1
+  xpos 88
+  ypos -218
+ }
+ Reformat {
+  type "to box"
+  box_width {{parent.Format.box.r}}
+  box_height {{parent.Format.box.t}}
+  box_fixed true
+  box_pixel_aspect {{Format.pixel_aspect}}
+  resize distort
+  filter Mitchell
+  name Reformat4
+  xpos 294
+  ypos -212
+ }
+push $N47dcfc0
+ Dot {
+  name Dot3
+  xpos 595
+  ypos -1837
+ }
+ Dissolve {
+  inputs 2
+  which {{parent.NoOp1.OnOff}}
+  name Dissolve2
+  xpos 561
+  ypos -218
+ }
+ Output {
+  name Output1
+  xpos 561
+  ypos -23
+ }
+ NoOp {
+  inputs 0
+  name NoOp2
+  xpos -36
+  ypos -776
+  addUserKnob {20 User}
+  addUserKnob {7 Gridlines l "Grid lines" R 1 500}
+  Gridlines 130
+ }
+push $Na9b2360
+push $Na71df40
+ Viewer {
+  inputs 2
+  frame 1021
+  input_number 1
+  viewerProcess "Screen (sRGB)"
+  input_process false
+  name Viewer1
+  selected true
+  xpos -1580
+  ypos -2602
+  hide_input true
+ }
+end_group

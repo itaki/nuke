@@ -1,0 +1,1271 @@
+version 6.3 v5
+Group {
+ name Kaleido
+ help "TX_Kaleido \nCreate a kaleidoscop effect based on the AE CC_Kaleida with some additional features\n\n // v 1.0 \nby Tomas Lefebvre \nlefebvre.tomas@gmail.com"
+ tile_color 0xcc804eff
+ addUserKnob {20 User l Settings}
+ addUserKnob {12 center}
+ center {200 200}
+ addUserKnob {7 size t "size of the pattern" R 50 1000}
+ size 150
+ addUserKnob {26 dummy1 l "" +STARTLINE T " "}
+ addUserKnob {4 method M {Wheel "Fish head" "Can meas" "Flip flop" Flower "Dia cross" Flipper Starlish}}
+ addUserKnob {26 dummy2 l "" +STARTLINE T " "}
+ addUserKnob {7 rotation R 0 360}
+ addUserKnob {6 rotation_center l "from center" t "use the position of the center point as center of the rotation" -STARTLINE}
+ addUserKnob {6 floating_center l "floating center" t "use the position of the center as center of the effect" +STARTLINE}
+ addUserKnob {6 keepAlpha l "keep alpha" t "keep the alpha of the source, by default it will be filled with white" -STARTLINE}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x45787fff
+  label WHEEL
+  note_font "Bitstream Vera Sans Bold Bold Bold"
+  note_font_size 50
+  xpos 55
+  ypos -34
+  bdwidth 587
+  bdheight 887
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0xc95951ff
+  label FISHHEAD
+  note_font "Bitstream Vera Sans Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 682
+  ypos -37
+  bdwidth 587
+  bdheight 887
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xba9242ff
+  label "CAN MEAS"
+  note_font "Bitstream Vera Sans Bold Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 1309
+  ypos -37
+  bdwidth 587
+  bdheight 887
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x83609bff
+  label FLOWER
+  note_font "Bitstream Vera Sans Bold Bold"
+  note_font_size 50
+  xpos 2566
+  ypos -44
+  bdwidth 615
+  bdheight 894
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x9eba42ff
+  label "FLIP FLOP"
+  note_font "Bitstream Vera Sans Bold Bold Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 1936
+  ypos -43
+  bdwidth 587
+  bdheight 887
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0xba4282ff
+  label "DIA CROSS"
+  note_font "Bitstream Vera Sans Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 3210
+  ypos -41
+  bdwidth 587
+  bdheight 887
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode7
+  tile_color 0x42baabff
+  label FLIPPER
+  note_font "Bitstream Vera Sans Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 3822
+  ypos -45
+  bdwidth 587
+  bdheight 887
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x5991dbff
+  label STARLISH
+  note_font "Bitstream Vera Sans Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 4435
+  ypos -44
+  bdwidth 970
+  bdheight 878
+ }
+add_layer {rgba rgba.water redguard1.glow}
+ Expression {
+  inputs 0
+  temp_expr0 r(fmod(x,size*2),fmod(y,size*2))
+  temp_name2 C
+  temp_expr2 "(x>width/2? fmod(x-width/2,size*2) : size*2+fmod(x-width/2,size*2))"
+  temp_name3 D
+  expr0 fmod(abs(x-width/2),size*2)/size
+  expr1 "g((C2>size?C-2*size:C)+width/2, height)"
+  name Expression2
+  xpos 3
+  ypos 2006
+ }
+ Input {
+  inputs 0
+  name Input1
+  selected true
+  xpos -229
+  ypos -348
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove1
+  xpos -229
+  ypos -289
+ }
+ Dot {
+  name Dot2
+  xpos -195
+  ypos -221
+ }
+set N3687490 [stack 0]
+ Dot {
+  name Dot1
+  xpos 301
+  ypos -221
+ }
+ Transform {
+  rotate {{parent.rotation}}
+  center {{"rotation_center == 1 ? parent.center.x : width/2"} {"rotation_center == 1 ? parent.center.y : height/2"}}
+  name Rotation
+  xpos 267
+  ypos -178
+ }
+set N3477070 [stack 0]
+ Shuffle {
+  black alpha
+  out2 mask
+  name ShuffleMask
+  xpos 267
+  ypos -152
+  disable {{!keepAlpha i}}
+ }
+ Dot {
+  name Dot9
+  xpos 301
+  ypos -100
+ }
+set N40cfef0 [stack 0]
+ Dot {
+  name Dot15
+  xpos 946
+  ypos -100
+ }
+set N37f2f70 [stack 0]
+ Dot {
+  name Dot19
+  xpos 1584
+  ypos -100
+ }
+set N37f6080 [stack 0]
+ Dot {
+  name Dot20
+  xpos 2213
+  ypos -100
+ }
+set N3909e40 [stack 0]
+ Dot {
+  name Dot13
+  xpos 2851
+  ypos -100
+ }
+set N3896df0 [stack 0]
+ Dot {
+  name Dot37
+  xpos 3482
+  ypos -100
+ }
+set N3899fb0 [stack 0]
+ Dot {
+  name Dot38
+  xpos 4130
+  ypos -100
+ }
+set N40a7a20 [stack 0]
+ Dot {
+  name Dot39
+  xpos 4727
+  ypos -100
+ }
+ Crop {
+  box {{center.x-size} {center.y+size} {center.x} {center.y}}
+  reformat true
+  crop false
+  name Crop19
+  xpos 4693
+  ypos 82
+ }
+ Expression {
+  channel0 alpha
+  expr0 "(x+1)/width+(y+1)/(2.4*height) > 1 "
+  name Expression4
+  xpos 4693
+  ypos 147
+ }
+ Transform {
+  center {250 250}
+  filter Rifman
+  name Transform28
+  xpos 4693
+  ypos 214
+ }
+set N40da3a0 [stack 0]
+ Transform {
+  scale {-1 1}
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform29
+  xpos 4583
+  ypos 214
+ }
+push $N40da3a0
+ Merge2 {
+  inputs 2
+  also_merge mask
+  name Merge11
+  xpos 4693
+  ypos 261
+ }
+ Dot {
+  name Dot49
+  xpos 4727
+  ypos 349
+ }
+set N35600a0 [stack 0]
+ Dot {
+  name Dot54
+  xpos 4852
+  ypos 349
+ }
+set N35633d0 [stack 0]
+ Dot {
+  name Dot50
+  xpos 4962
+  ypos 349
+ }
+set N35665d0 [stack 0]
+ Dot {
+  name Dot55
+  xpos 5066
+  ypos 349
+ }
+set N4061660 [stack 0]
+ Dot {
+  name Dot51
+  xpos 5176
+  ypos 349
+ }
+set N4064ad0 [stack 0]
+ Dot {
+  name Dot56
+  xpos 5286
+  ypos 349
+ }
+ Transform {
+  rotate 315
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform36
+  xpos 5252
+  ypos 423
+ }
+push $N4061660
+ Transform {
+  rotate 225
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform35
+  xpos 5032
+  ypos 423
+ }
+push $N35633d0
+ Transform {
+  rotate 135
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform34
+  xpos 4818
+  ypos 423
+ }
+push $N35600a0
+ Dot {
+  name Dot53
+  xpos 4627
+  ypos 349
+ }
+set N38ab2b0 [stack 0]
+ Transform {
+  rotate 90
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform32
+  xpos 4593
+  ypos 423
+ }
+push $N4064ad0
+ Transform {
+  rotate 270
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform30
+  xpos 5142
+  ypos 423
+ }
+push $N35665d0
+ Transform {
+  rotate 180
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform31
+  xpos 4928
+  ypos 428
+ }
+push 0
+push $N38ab2b0
+ Dot {
+  name Dot52
+  xpos 4517
+  ypos 349
+ }
+ Transform {
+  rotate 45
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform33
+  xpos 4483
+  ypos 424
+ }
+push $N35600a0
+ Premult {
+  name Premult1
+  xpos 4693
+  ypos 427
+ }
+ Merge2 {
+  inputs 8+1
+  operation matte
+  also_merge mask
+  name Merge12
+  xpos 4693
+  ypos 564
+ }
+ Transform {
+  scale 1.4
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform38
+  xpos 4693
+  ypos 630
+ }
+ Crop {
+  box {0 {-size} {size*2} {size}}
+  reformat true
+  name Crop20
+  xpos 4693
+  ypos 696
+ }
+ Dot {
+  name Dot42
+  xpos 4727
+  ypos 805
+ }
+push $N40a7a20
+ Shuffle {
+  alpha white
+  name Shuffle6
+  xpos 4096
+  ypos 99
+ }
+ Crop {
+  box {{center.x-size i} {center.y+size i} {center.x i} {center.y i}}
+  reformat true
+  crop false
+  name Crop17
+  xpos 4096
+  ypos 350
+ }
+ Dot {
+  name Dot44
+  xpos 4130
+  ypos 413
+ }
+set N3874d90 [stack 0]
+ Dot {
+  name Dot46
+  xpos 4225
+  ypos 413
+ }
+set N3874a60 [stack 0]
+ Dot {
+  name Dot47
+  xpos 4335
+  ypos 413
+ }
+ Transform {
+  translate {{-size i} 0}
+  rotate 180
+  scale {1 1}
+  center {{size i} 0}
+  filter Rifman
+  name Transform27
+  xpos 4301
+  ypos 471
+ }
+push $N3874a60
+ Transform {
+  rotate 180
+  scale {1 1}
+  center {{size i} 0}
+  filter Rifman
+  name Transform25
+  xpos 4191
+  ypos 471
+ }
+push 0
+push $N3874d90
+ Dot {
+  name Dot45
+  xpos 3982
+  ypos 413
+ }
+ Transform {
+  translate {{size i} 0}
+  scale {1 1}
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform26
+  xpos 3948
+  ypos 471
+ }
+push $N3874d90
+ Merge2 {
+  inputs 4+1
+  name Merge10
+  xpos 4096
+  ypos 546
+ }
+ Crop {
+  box {{0 i} {-size i} {size*2 i} {size i}}
+  reformat true
+  name Crop16
+  xpos 4096
+  ypos 688
+ }
+ Dot {
+  name Dot41
+  xpos 4130
+  ypos 810
+ }
+push $N3899fb0
+ Crop {
+  box {{center.x-size i} {center.y+size i} {center.x+size i} {center.y i}}
+  reformat true
+  crop false
+  name Crop18
+  xpos 3448
+  ypos 35
+ }
+ Dot {
+  name Dot61
+  xpos 3482
+  ypos 138
+ }
+set N49af6a0 [stack 0]
+ Expression {
+  channel0 alpha
+  expr0 "(x+1)/width*2-(y+1)/height >1"
+  channel1 none
+  channel2 none
+  name Expression6
+  xpos 3558
+  ypos 134
+ }
+push $N49af6a0
+ Expression {
+  temp_expr1 "(x+1)/width*2+(y+1)/height >1 && (x+1)/width*2-(y+1)/height <1 ? 1 : 0"
+  temp_expr3 "(x+1)/width*2+(y+1)/height >1"
+  channel0 alpha
+  expr0 "(x+1)/width*2+(y+1)/height >1"
+  name Expression5
+  xpos 3338
+  ypos 134
+ }
+ ChannelMerge {
+  inputs 2
+  operation stencil
+  name ChannelMerge1
+  xpos 3448
+  ypos 181
+ }
+ Dot {
+  name Dot57
+  xpos 3482
+  ypos 406
+ }
+set Nf867f320 [stack 0]
+ Dot {
+  name Dot58
+  xpos 3593
+  ypos 406
+ }
+set Nf8499800 [stack 0]
+ Dot {
+  name Dot59
+  xpos 3703
+  ypos 406
+ }
+ Transform {
+  rotate 90
+  scale {1 -1}
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform37
+  xpos 3669
+  ypos 480
+ }
+push $Nf8499800
+ Transform {
+  rotate 180
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform39
+  xpos 3559
+  ypos 485
+ }
+push 0
+push $Nf867f320
+ Dot {
+  name Dot60
+  xpos 3361
+  ypos 406
+ }
+ Transform {
+  rotate 90
+  scale {-1 1}
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform40
+  xpos 3327
+  ypos 480
+ }
+push $Nf867f320
+ Merge2 {
+  inputs 4+1
+  operation matte
+  also_merge mask
+  name Merge13
+  xpos 3448
+  ypos 568
+ }
+ Crop {
+  box {{0 i} {-size i} {size*2 i} {size i}}
+  reformat true
+  name Crop21
+  xpos 3448
+  ypos 666
+ }
+ Dot {
+  name Dot40
+  xpos 3482
+  ypos 804
+ }
+push $N3896df0
+ Crop {
+  box {{center.x-size i} {center.y+size i} {center.x i} {center.y i}}
+  reformat true
+  crop false
+  name Crop1
+  xpos 2817
+  ypos 47
+ }
+ Expression {
+  channel0 alpha
+  expr0 "(x+1)/width+(y+1)/height > 1 "
+  name Expression1
+  xpos 2817
+  ypos 93
+ }
+ Transform {
+  center {250 250}
+  filter Rifman
+  name Transform5
+  xpos 2817
+  ypos 160
+ }
+set N35aa6c0 [stack 0]
+ Transform {
+  scale {-1 1}
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform1
+  xpos 2707
+  ypos 160
+ }
+push $N35aa6c0
+ Merge2 {
+  inputs 2
+  also_merge mask
+  name Merge1
+  xpos 2817
+  ypos 207
+ }
+ Crop {
+  box {0 0 {size*2 i} {size i}}
+  reformat true
+  crop false
+  name Crop2
+  xpos 2817
+  ypos 334
+ }
+ Dot {
+  name Dot48
+  xpos 2851
+  ypos 411
+ }
+set N36a8770 [stack 0]
+ Dot {
+  name Dot7
+  xpos 2962
+  ypos 411
+ }
+set N36abaa0 [stack 0]
+ Dot {
+  name Dot5
+  xpos 3072
+  ypos 411
+ }
+ Transform {
+  rotate 270
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform4
+  xpos 3038
+  ypos 485
+ }
+push $N36abaa0
+ Transform {
+  rotate 180
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform3
+  xpos 2928
+  ypos 490
+ }
+push 0
+push $N36a8770
+ Dot {
+  name Dot6
+  xpos 2730
+  ypos 411
+ }
+ Transform {
+  rotate 90
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform2
+  xpos 2696
+  ypos 485
+ }
+push $N36a8770
+ Merge2 {
+  inputs 4+1
+  operation matte
+  also_merge mask
+  name Merge2
+  xpos 2817
+  ypos 573
+ }
+ Crop {
+  box {{0 i} {-size i} {size*2 i} {size i}}
+  reformat true
+  name Crop3
+  xpos 2817
+  ypos 671
+ }
+ Dot {
+  name Dot3
+  xpos 2851
+  ypos 804
+ }
+push $N3909e40
+ Shuffle {
+  alpha white
+  name Shuffle5
+  xpos 2179
+  ypos 100
+ }
+ Crop {
+  box {{center.x-size i} {center.y+size i} {center.x i} {center.y i}}
+  reformat true
+  crop false
+  name Crop14
+  xpos 2179
+  ypos 358
+ }
+ Dot {
+  name Dot32
+  xpos 2213
+  ypos 410
+ }
+set N380bcf0 [stack 0]
+ Dot {
+  name Dot36
+  xpos 2304
+  ypos 410
+ }
+set N3820420 [stack 0]
+ Dot {
+  name Dot35
+  xpos 2426
+  ypos 410
+ }
+ Transform {
+  scale {-1 -1}
+  center {{size i} 0}
+  filter Rifman
+  name Transform23
+  xpos 2392
+  ypos 491
+ }
+push $N3820420
+ Transform {
+  scale {1 -1}
+  center {{size i} 0}
+  filter Rifman
+  name Transform24
+  xpos 2269
+  ypos 486
+ }
+push 0
+push $N380bcf0
+ Dot {
+  name Dot34
+  xpos 2138
+  ypos 410
+ }
+set N382eb50 [stack 0]
+ Transform {
+  translate {0 {size i}}
+  scale {-1 -1}
+  center {{size i} 0}
+  filter Rifman
+  name Transform22
+  xpos 2104
+  ypos 491
+ }
+push $N382eb50
+ Dot {
+  name Dot33
+  xpos 2004
+  ypos 410
+ }
+ Transform {
+  translate {0 {size i}}
+  scale {1 -1}
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform19
+  xpos 1970
+  ypos 491
+ }
+ Merge2 {
+  inputs 4+1
+  operation matte
+  also_merge mask
+  name Merge9
+  xpos 2179
+  ypos 589
+ }
+ Crop {
+  box {{0 i} {-size i} {size*2 i} {size i}}
+  reformat true
+  name Crop15
+  xpos 2179
+  ypos 683
+ }
+ Dot {
+  name Dot12
+  xpos 2213
+  ypos 806
+ }
+push $N37f6080
+ Shuffle {
+  alpha white
+  name Shuffle4
+  xpos 1550
+  ypos 104
+ }
+ Crop {
+  box {{center.x-size i} {center.y+size i} {center.x i} {center.y i}}
+  reformat true
+  crop false
+  name Crop12
+  xpos 1550
+  ypos 355
+ }
+ Dot {
+  name Dot22
+  xpos 1584
+  ypos 416
+ }
+set N34a1a20 [stack 0]
+ Dot {
+  name Dot25
+  xpos 1648
+  ypos 416
+ }
+set N34a4d60 [stack 0]
+ Dot {
+  name Dot24
+  xpos 1759
+  ypos 416
+ }
+ Transform {
+  scale {1 -1}
+  center {{size i} 0}
+  filter Rifman
+  name Transform17
+  xpos 1725
+  ypos 499
+ }
+push $N34a4d60
+ Transform {
+  scale {-1 -1}
+  center {{size i} 0}
+  filter Rifman
+  name Transform18
+  xpos 1614
+  ypos 500
+ }
+push 0
+push $N34a1a20
+ Dot {
+  name Dot23
+  xpos 1526
+  ypos 416
+ }
+set N34bc1a0 [stack 0]
+ Transform {
+  rotate 90
+  scale {-1 -1}
+  center {{size i} 0}
+  filter Rifman
+  name Transform21
+  xpos 1492
+  ypos 500
+ }
+push $N34bc1a0
+ Dot {
+  name Dot21
+  xpos 1400
+  ypos 416
+ }
+ Transform {
+  rotate 90
+  scale {-1 1}
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform20
+  xpos 1366
+  ypos 497
+ }
+ Merge2 {
+  inputs 4+1
+  operation matte
+  also_merge mask
+  name Merge8
+  xpos 1550
+  ypos 597
+ }
+ Crop {
+  box {{0 i} {-size i} {size*2 i} {size i}}
+  reformat true
+  name Crop13
+  xpos 1550
+  ypos 693
+ }
+ Dot {
+  name Dot11
+  xpos 1584
+  ypos 820
+ }
+push $N37f2f70
+ Shuffle {
+  alpha white
+  name Shuffle3
+  xpos 912
+  ypos 104
+ }
+ Crop {
+  box {{center.x-size i} {center.y+size i} {center.x i} {center.y i}}
+  reformat true
+  crop false
+  name Crop10
+  xpos 912
+  ypos 354
+ }
+ Dot {
+  name Dot26
+  xpos 946
+  ypos 407
+ }
+set N34f8370 [stack 0]
+ Dot {
+  name Dot30
+  xpos 1010
+  ypos 407
+ }
+set N34fb660 [stack 0]
+ Dot {
+  name Dot29
+  xpos 1135
+  ypos 407
+ }
+ Transform {
+  translate {0 {-size i}}
+  rotate 90
+  scale {-1 1}
+  center {{size i} 0}
+  filter Rifman
+  name Transform14
+  xpos 1101
+  ypos 499
+ }
+push $N34fb660
+ Transform {
+  scale {-1 -1}
+  center {{size i} 0}
+  filter Rifman
+  name Transform16
+  xpos 976
+  ypos 500
+ }
+push 0
+push $N34f8370
+ Dot {
+  name Dot28
+  xpos 873
+  ypos 407
+ }
+set N34f7ca0 [stack 0]
+ Transform {
+  scale {-1 1}
+  center {{size i} 0}
+  filter Rifman
+  name Transform15
+  xpos 839
+  ypos 500
+ }
+push $N34f7ca0
+ Dot {
+  name Dot27
+  xpos 752
+  ypos 407
+ }
+ Transform {
+  translate {0 {size i}}
+  rotate 90
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform13
+  xpos 718
+  ypos 498
+ }
+ Merge2 {
+  inputs 4+1
+  operation matte
+  also_merge mask
+  name Merge7
+  xpos 912
+  ypos 597
+ }
+ Crop {
+  box {{0 i} {-size i} {size*2 i} {size i}}
+  reformat true
+  name Crop11
+  xpos 912
+  ypos 693
+ }
+ Dot {
+  name Dot10
+  xpos 946
+  ypos 805
+ }
+push $N40cfef0
+ Shuffle {
+  alpha white
+  name Shuffle2
+  xpos 267
+  ypos 104
+ }
+ Crop {
+  box {{center.x-size i} {center.y+size i} {center.x i} {center.y i}}
+  reformat true
+  crop false
+  name Crop8
+  xpos 267
+  ypos 198
+ }
+ Dot {
+  name Dot31
+  xpos 301
+  ypos 407
+ }
+set N354e7c0 [stack 0]
+ Dot {
+  name Dot17
+  xpos 406
+  ypos 407
+ }
+set N35b6330 [stack 0]
+ Dot {
+  name Dot18
+  xpos 540
+  ypos 407
+ }
+ Transform {
+  rotate -90
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform8
+  xpos 506
+  ypos 508
+ }
+push $N35b6330
+ Transform {
+  rotate -180
+  center {{size i} 0}
+  filter Rifman
+  name Transform11
+  xpos 370
+  ypos 503
+ }
+push 0
+push $N354e7c0
+ Dot {
+  name Dot16
+  xpos 166
+  ypos 407
+ }
+ Transform {
+  rotate -270
+  center {{size i} {0 i}}
+  filter Rifman
+  name Transform12
+  xpos 132
+  ypos 516
+ }
+push $N354e7c0
+ Merge2 {
+  inputs 4+1
+  operation matte
+  also_merge mask
+  name Merge6
+  xpos 267
+  ypos 602
+ }
+ Crop {
+  box {{0 i} {-size i} {size*2 i} {size i}}
+  reformat true
+  name Crop9
+  xpos 267
+  ypos 688
+ }
+ Dot {
+  name Dot14
+  xpos 301
+  ypos 781
+ }
+ Switch {
+  inputs 8
+  which {{method i}}
+  name Switch1
+  xpos 2817
+  ypos 1244
+ }
+ Dot {
+  name Dot43
+  xpos 2851
+  ypos 1503
+ }
+push $N3687490
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  xpos -229
+  ypos 233
+ }
+set N35f5510 [stack 0]
+ Merge2 {
+  inputs 2
+  also_merge mask
+  name Merge3
+  xpos -229
+  ypos 1499
+ }
+ Expression {
+  temp_expr0 r(fmod(x,size*2),fmod(y,size*2))
+  temp_name2 C
+  temp_expr2 "(x>width/2? fmod(x-width/2,size*2) : size*2+fmod(x-width/2,size*2))"
+  temp_name3 D
+  expr0 r(fmod(x,size*2),fmod(y,size*2))
+  expr1 g(fmod(x,size*2),fmod(y,size*2))
+  expr2 b(fmod(x,size*2),fmod(y,size*2))
+  channel3 mask
+  expr3 mask.a(fmod(x,size*2),fmod(y,size*2))
+  name Expression3
+  xpos -229
+  ypos 1574
+ }
+ Shuffle {
+  alpha white
+  name FullAlpha
+  xpos -229
+  ypos 1600
+ }
+set N36130f0 [stack 0]
+ Crop {
+  box {{0 i} {0 i} {width i} {Transform6.translate.y i}}
+  name Crop6
+  xpos -33
+  ypos 1663
+ }
+ Transform {
+  scale {1 -1}
+  filter Impulse
+  name Transform10
+  xpos -33
+  ypos 1689
+ }
+push $N36130f0
+ Crop {
+  box {{curve i} {0 i} {Transform6.translate.x i} {Transform6.translate.y i}}
+  name Crop5
+  xpos -164
+  ypos 1667
+ }
+ Transform {
+  scale {-1 -1}
+  filter Impulse
+  name Transform9
+  xpos -164
+  ypos 1689
+ }
+push 0
+push $N36130f0
+ Crop {
+  box {0 0 {Transform6.translate.x i} {height i}}
+  name Crop4
+  xpos -368
+  ypos 1674
+ }
+ Transform {
+  scale {-1 1}
+  filter Impulse
+  name Transform7
+  xpos -368
+  ypos 1700
+ }
+push $N36130f0
+ Merge2 {
+  inputs 4+1
+  also_merge mask
+  name Merge4
+  xpos -229
+  ypos 1777
+ }
+ Transform {
+  translate {{"floating_center==1? parent.center.x-center.x : width/2-size" i} {"floating_center==1? parent.center.y-center.y : height/2-size" i}}
+  center {{size i} {size i}}
+  filter Rifman
+  name Transform6
+  xpos -229
+  ypos 1902
+ }
+set N36547d0 [stack 0]
+ Shuffle {
+  in2 mask
+  alpha red2
+  name ShuffleAlpha
+  xpos -229
+  ypos 2082
+  disable {{!keepAlpha i}}
+ }
+ Shuffle {
+  alpha white
+  name AlphaWhite
+  xpos -229
+  ypos 2104
+  disable {{keepAlpha i}}
+ }
+ Dot {
+  name Dot8
+  xpos -195
+  ypos 2193
+ }
+push $N35f5510
+ Dot {
+  name Dot4
+  xpos -551
+  ypos 237
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge5
+  xpos -585
+  ypos 2189
+ }
+ Crop {
+  box {{input.bbox.x i} {input.bbox.y i} {input.bbox.r i} {input.bbox.t i}}
+  reformat true
+  crop false
+  name Crop7
+  xpos -585
+  ypos 2256
+ }
+ Output {
+  name Output1
+  xpos -585
+  ypos 2414
+ }
+push $N3477070
+push $N36547d0
+ Viewer {
+  inputs 2
+  input_number 1
+  input_process false
+  name Viewer1
+  xpos 75
+  ypos 1735
+ }
+end_group

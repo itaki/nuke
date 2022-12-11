@@ -1,0 +1,61 @@
+set cut_paste_input [stack 0]
+version 12.2 v2
+push $cut_paste_input
+Group {
+ name UV_Project
+ tile_color 0x38ffff
+ note_font Verdana
+ selected true
+ xpos -11866
+ ypos -7744
+ addUserKnob {20 UVProject}
+ addUserKnob {26 UVProject_1 l UVProject T ""}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 UdimsOffset_CheckMap l "Check Map" t "To see the STMap without Udims Offsets\n" T BlinkScript2.UdimsOffset_CheckMap}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 contact l "" +STARTLINE T lremy@artfx.fr}
+}
+ Input {
+  inputs 0
+  name Src
+  xpos -785
+  ypos -638
+  number 1
+ }
+ Input {
+  inputs 0
+  name STMap
+  xpos -499
+  ypos -841
+ }
+ BlinkScript {
+  inputs 2
+  recompileCount 58
+  ProgramGroup 1
+  KernelDescription "2 \"UdimsOffset\" iterate pixelWise 8c081bc9dc5820c5c0c9b348727ee10a77e93effbf79f62e58ca3e452e43404f 3 \"STMap\" Read Point \"src\" Read Random \"dst\" Write Point 1 \"CheckMap\" Bool 1 AA== 1 \"CheckMap\" 1 1 7 \"STMapconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"FirstPart\" Int 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"UV\" Float 2 1 AAAAAAAAAAA= \"UVRes\" Float 2 1 AAAAAAAAAAA= \"resolution\" Int 2 1 AAAAAAAAAAA= \"UV4\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "\nkernel UdimsOffset : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessPoint, eEdgeConstant> STMap;\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eWrite> dst; // the output image\n\n  param:\n   // This parameter is made available to the user.\n\n   bool CheckMap;\n\n  local:\n   // This local variable is not exposed to the user.\n \n    int4 FirstPart;\n    float2 UV;\n    float2 UVRes;\n    int2 resolution;\n    float4 UV4;\n\n  // The init() function is run before any calls to process().\n\n  void init() \{\n    \n// Initialise coefficients according to rec. 709 standard.\n    resolution.x = STMap.bounds.width();\n    resolution.y = STMap.bounds.height();\n  \}\n\n  void process(int2 pos) \{\n    // Read the input image\n    \n    UV.x = STMap().x;\n    UV.y = STMap().y;\n    \n\n    if (UV.x < 0) \{\n\n      UV.x = STMap().x*-1.0f;\n\n    \}\n\n    if (UV.y < 0) \{\n\n      UV.y = UV.y*-1.0f;\n\n    \}\n\n    //FirstPart = Output;\n\n    FirstPart.x = int(UV.x);\n    FirstPart.y = int(UV.y);\n  \n    UV.x = UV.x-FirstPart.x;\n    UV.y = UV.y-FirstPart.y;\n\n    UVRes.x = UV.x*resolution.x;\n    UVRes.y = UV.y*resolution.y;\n\n    UV4.x = UV.x;\n    UV4.y = UV.y;\n\n\n\n\n     // Write the result to the output image\n  \n    if (CheckMap == 1) \{\n\n       dst() = UV4;\n\n    \}\n    \n    if (CheckMap == 0) \{\n\n      dst() = bilinear(src, UVRes.x, UVRes.y);\n\n    \}\n\}\n\};\n"
+  useGPUIfAvailable false
+  rebuild ""
+  rebuild_finalise ""
+  name BlinkScript2
+  selected true
+  xpos -499
+  ypos -644
+ }
+set N8a083000 [stack 0]
+ Viewer {
+  frame 23
+  frame_range 1-204
+  fps 25
+  viewerProcess "sRGB (ACES)"
+  name Viewer1
+  xpos -499
+  ypos -240
+ }
+push $N8a083000
+ Output {
+  name Output1
+  xpos -499
+  ypos -497
+ }
+end_group

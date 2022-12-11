@@ -1,0 +1,1796 @@
+Gizmo {
+icon DefocusPlus_Node.png
+ inputs 3
+ knobChanged "n = nuke.thisNode()\n\nif n.input(1) ==None :\n    n\['tiltshift'].setEnabled(False)\n    n\['tsquality'].setEnabled(False)\nelse:\n    n\['tiltshift'].setEnabled(True)\n    n\['tsquality'].setEnabled(True)\n    \nif n.input(2) ==None :\n    n\['fill'].setEnabled(True)\n    n\['ring'].setEnabled(True)\n    n\['ringthickness'].setEnabled(True)\n    n\['ringfeather'].setEnabled(True)\n    n\['outerfalloff'].setEnabled(True)\n    n\['innerfalloff'].setEnabled(True)\n    n\['filtercorners'].setEnabled(True)\n    n\['flattening'].setEnabled(True)\n    n\['filtercornersharpness'].setEnabled(True)\n    n\['filterrotate'].setEnabled(True)\n    n\['asymmetry'].setEnabled(True)\n    n\['asymmetryrepeat'].setEnabled(True)\n    n\['asymmetrymult'].setEnabled(True)\n    n\['asymmetryfalloff'].setEnabled(True)\n    n\['asymmetryangle'].setEnabled(True)\nelse:\n    n\['fill'].setEnabled(False)\n    n\['ring'].setEnabled(False)\n    n\['ringthickness'].setEnabled(False)\n    n\['ringfeather'].setEnabled(False)\n    n\['outerfalloff'].setEnabled(False)\n    n\['innerfalloff'].setEnabled(False)\n    n\['filtercorners'].setEnabled(False)\n    n\['flattening'].setEnabled(False)\n    n\['filtercornersharpness'].setEnabled(False)\n    n\['filterrotate'].setEnabled(False)\n    n\['asymmetry'].setEnabled(False)\n    n\['asymmetryrepeat'].setEnabled(False)\n    n\['asymmetrymult'].setEnabled(False)\n    n\['asymmetryfalloff'].setEnabled(False)\n    n\['asymmetryangle'].setEnabled(False)"
+ tile_color 0xa0500ff
+ note_font_color 0xd17e4fff
+ addUserKnob {20 User l DefocusPlus}
+ addUserKnob {41 channels l Channels T Remove16.channels}
+ addUserKnob {6 tiltshift l "Tilt-Shift Mode  " t "Mimics depth of field driven by a matte via the Mask input." +DISABLED +STARTLINE}
+ addUserKnob {68 tsquality l Quality t "Tilt-Shift quality\n\nFull: 13 Convolutions\nEco: 7 Convolutions" -STARTLINE +DISABLED M {Full "Eco " "" "" "" ""}}
+ addUserKnob {7 size l Size R 0 100}
+ size 20
+ addUserKnob {26 ____________________ l "<b>Filter Shape"}
+ addUserKnob {6 preview l "Preview Filter" +STARTLINE}
+ addUserKnob {7 filteranamorph l Anamorph R -2 2}
+ addUserKnob {7 fill l "Fill Opacity"}
+ fill 0.5
+ addUserKnob {7 ring l "Ring Opacity"}
+ ring 1
+ addUserKnob {7 ringthickness l "Ring Thickness" R 0 2}
+ ringthickness 1
+ addUserKnob {7 ringfeather l "Ring Feather"}
+ addUserKnob {7 outerfalloff l "Outer Falloff" R 0.1 10}
+ outerfalloff 1
+ addUserKnob {7 innerfalloff l "Inner Falloff" R 0.1 10}
+ innerfalloff 1
+ addUserKnob {3 filtercorners l Corners}
+ filtercorners 5
+ addUserKnob {7 flattening l "Edge Flattening"}
+ addUserKnob {7 filtercornersharpness l "Corner Sharpness"}
+ filtercornersharpness 0.98
+ addUserKnob {7 filterrotate l Rotate R -180 180}
+ addUserKnob {20 asymmetry l Asymmetry n 1}
+ asymmetry 0
+ addUserKnob {3 asymmetryrepeat l Repeat}
+ addUserKnob {7 asymmetrymult l Multiplier}
+ asymmetrymult 0.2
+ addUserKnob {7 asymmetryfalloff l Falloff R 0.1 10}
+ asymmetryfalloff 2
+ addUserKnob {7 asymmetryangle l Angle R -180 180}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ____________ l "<b>Speed Up"}
+ addUserKnob {41 useGPUIfAvailable l "Use GPU if available" T Convolve4.useGPUIfAvailable}
+ addUserKnob {7 predownres l "Pre Downres Img" t "Lowers the resolution of the incoming image before defocusing to save rendering time." R 0.1 1}
+ predownres 1
+ addUserKnob {41 filter l "Post Upres Filter" t "Concatenation filter" T Reformat3.filter}
+ addUserKnob {7 filterquality l "Filter Quality" t "Lowers the convolution filter's resolution to save rendering time. \n\nThe default resolution is 129x129 which should be enough for most cases. Use values greater than 1 if more resolution is needed." R 0.1 1}
+ filterquality 1
+ addUserKnob {6 preservebb l "Preserve Bounding Box   " +STARTLINE}
+ addUserKnob {6 blackoutside l "Black Outside" -STARTLINE}
+ addUserKnob {26 credits l " " T "<font size=\"5\"><span style=\"color:#575757;\">DefocusPlus <font size=\"2\"><span style=\"color:#5a5a5a;\"> v1.2 &nbsp; │ &nbsp; <font size=\"1\">B Y &nbsp; D A M I A N &nbsp; B I N D E R"}
+ addUserKnob {20 Swirl}
+ addUserKnob {6 enableswirl l Enable t "Please consider precomping whenever possible or activating it only for rendering to avoid script slow downs." +STARTLINE}
+ addUserKnob {3 swirlsplits l Splits t "Each split represents a different convolution filter that cycles according to its coordinate in 2D space.\n\nThe higher the split count the less noticeable the transitions will be but at a cost in performance.\n\nTry to keep the split count low and blending the seams with the softness slider below."}
+ swirlsplits 12
+ addUserKnob {6 previewsplits l "Preview Splits" -STARTLINE}
+ addUserKnob {7 splitssoftness l "Splits Softness" t "Blends the split seams to make them less noticeable." R 0 500}
+ splitssoftness 100
+ addUserKnob {26 ""}
+ addUserKnob {7 swirlsqueeze l Squeeze}
+ swirlsqueeze 0.5
+ addUserKnob {7 swirlcrop l Crop}
+ swirlcrop 0.5
+ addUserKnob {7 swirlcropsoft l "Crop Softness"}
+ addUserKnob {6 invertcrop l "Invert Crop" -STARTLINE}
+ addUserKnob {7 lenscurvature l "Lens Curvature" t "Controls the falloff from the center towards the edge of the frame. This can be used to protect the center area." R 0.1 2}
+ lenscurvature 1
+ addUserKnob {7 swirlaspectratio l "Aspect Ratio" t "Makes the effect more/less pronounced horizontally or vertically." R -1 1}
+ addUserKnob {26 ""}
+ addUserKnob {14 swirloverscan l "Overscan %" t "Check \"Preserve Bounding Box\" in the main tab.\n\nThis slider limits how much of the input's overscan will be used for the swirl effect." R 0 100}
+ swirloverscan 5
+}
+ Input {
+  inputs 0
+  name Filter
+  xpos 216
+  ypos -2041
+  number 2
+ }
+ Reformat {
+  type "to box"
+  box_width 129
+  box_height 129
+  box_fixed true
+  name Reformat1
+  label 129
+  xpos 216
+  ypos -1977
+ }
+ Reformat {
+  type scale
+  scale {{parent.filterquality}}
+  name Reformat4
+  xpos 216
+  ypos -1939
+ }
+ set C817e1400 [stack 0]
+ Dot {
+  name Dot81
+  xpos 250
+  ypos -1811
+ }
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width 129
+  box_height 129
+  box_fixed true
+  name Reformat6
+  label 129
+  xpos 360
+  ypos -1977
+  hide_input true
+ }
+clone $C817e1400 {
+  xpos 360
+  ypos -1939
+  selected false
+ }
+set N817e0000 [stack 0]
+ Flare {
+  position {{width/2} {height/2}}
+  radius {{"-((120-(100+((parent.ringthickness-1)*20)))-(100+((parent.ringthickness-1)*20))) * ((parent.ringfeather+1)-parent.ringfeather*2)"} {100+((parent.ringthickness-1)*20)} 120}
+  size_mult {{"(parent.filterquality/2) / (parent.filteranamorph > 1 ? 1/anamorph : anamorph)"}}
+  ring_color {{parent.ring}}
+  inner_color {{parent.fill}}
+  outer_falloff {{parent.outerfalloff}}
+  inner_falloff {{parent.innerfalloff}}
+  corners {{parent.filtercorners}}
+  flattening {{parent.flattening}}
+  sharpness {{parent.filtercornersharpness}}
+  corners_angle {{parent.filterrotate}}
+  asym_repeat {{asymmetryrepeat}}
+  asym_multiplier {{asymmetrymult}}
+  asym_falloff {{asymmetryfalloff}}
+  asym_angle {{asymmetryangle}}
+  name Flare5
+  xpos 360
+  ypos -1879
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input2]"}}
+  name Switch2
+  xpos 360
+  ypos -1815
+ }
+set N8242d000 [stack 0]
+ Dot {
+  name Dot89
+  xpos 706
+  ypos -1811
+ }
+ Transform {
+  scale {{"1 / (parent.filteranamorph>0?(1+parent.filteranamorph/2):1)"} {"1 / (parent.filteranamorph<0?(1+(-parent.filteranamorph)/2):1)"}}
+  center {{width/2} {height/2}}
+  black_outside false
+  name Transform16
+  xpos 672
+  ypos -1616
+ }
+ Dot {
+  name Dot88
+  xpos 706
+  ypos 3972
+ }
+ Input {
+  inputs 0
+  name Image
+  xpos 1170
+  ypos -1587
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  crop {{parent.blackoutside}}
+  name Crop3
+  xpos 1170
+  ypos -1438
+  disable {{parent.preservebb}}
+ }
+set N82457c00 [stack 0]
+ Dot {
+  name Dot64
+  xpos 851
+  ypos -1434
+ }
+ Remove {
+  channels {{{Remove16.channels}}}
+  name Remove17
+  xpos 817
+  ypos -812
+ }
+ Dot {
+  name Dot83
+  xpos 851
+  ypos 3881
+ }
+ Input {
+  inputs 0
+  name Mask
+  xpos -1548
+  ypos -1605
+  number 1
+ }
+ Reformat {
+  type scale
+  scale {{1+(swirloverscan/100)} {1+(swirloverscan/100)}}
+  resize none
+  name Reformat20
+  label Overscan
+  xpos -1548
+  ypos -1130
+  disable {{!parent.enableswirl+!parent.preservebb}}
+ }
+ NoTimeBlur {
+  rounding none
+  name NoTimeBlur3
+  xpos -1548
+  ypos -1081
+  disable {{!parent.enableswirl}}
+ }
+ Dot {
+  name Dot14
+  xpos -1514
+  ypos 1552
+ }
+set N82477c00 [stack 0]
+ Dot {
+  name Dot19
+  xpos -1514
+  ypos 1660
+ }
+set N82477800 [stack 0]
+ Dot {
+  name Dot20
+  xpos -1514
+  ypos 1771
+ }
+set N82477400 [stack 0]
+ Dot {
+  name Dot27
+  xpos -1514
+  ypos 1881
+ }
+set N82477000 [stack 0]
+ Dot {
+  name Dot29
+  xpos -1514
+  ypos 1984
+ }
+set N82476c00 [stack 0]
+ Dot {
+  name Dot37
+  xpos -1514
+  ypos 2100
+ }
+set N82476800 [stack 0]
+ Dot {
+  name Dot41
+  xpos -1514
+  ypos 2208
+ }
+set N82476400 [stack 0]
+ Dot {
+  name Dot60
+  xpos -1514
+  ypos 2334
+ }
+set N82476000 [stack 0]
+ Dot {
+  name Dot45
+  xpos -1514
+  ypos 2459
+ }
+set N8248dc00 [stack 0]
+ Dot {
+  name Dot58
+  xpos -1514
+  ypos 2580
+ }
+set N8248d800 [stack 0]
+ Dot {
+  name Dot47
+  xpos -1514
+  ypos 2699
+ }
+set N8248d400 [stack 0]
+ Dot {
+  name Dot65
+  xpos -1514
+  ypos 2820
+ }
+set N8248d000 [stack 0]
+ Dot {
+  name Dot49
+  xpos -1514
+  ypos 3138
+ }
+set N8248cc00 [stack 0]
+ Dot {
+  name Dot85
+  xpos -1514
+  ypos 3251
+ }
+ Invert {
+  name Invert1
+  xpos 475
+  ypos 3241
+ }
+ Dot {
+  name Dot50
+  xpos 1088
+  ypos 3251
+ }
+push $N82457c00
+ Reformat {
+  type scale
+  scale {{1+(swirloverscan/100)} {1+(swirloverscan/100)}}
+  resize none
+  name Reformat19
+  label Overscan
+  xpos 1170
+  ypos -1365
+  disable {{!parent.enableswirl+!parent.preservebb}}
+ }
+ Dot {
+  name Dot87
+  xpos 1204
+  ypos -1277
+ }
+set N824a7400 [stack 0]
+ Dot {
+  name Dot51
+  xpos 999
+  ypos -1277
+ }
+ Dot {
+  name Dot93
+  xpos 999
+  ypos 3196
+ }
+set N824a6c00 [stack 0]
+ Dot {
+  name Dot86
+  xpos 999
+  ypos 3308
+ }
+push $N8248cc00
+ Grade {
+  channels alpha
+  whitepoint 0.05
+  white_clamp true
+  name Grade7
+  xpos 476
+  ypos 3128
+ }
+ Dot {
+  name Dot43
+  xpos 1090
+  ypos 3138
+ }
+push $N824a6c00
+push $N8248d000
+ Grade {
+  channels alpha
+  blackpoint 0.05
+  whitepoint 0.1
+  white_clamp true
+  name Grade9
+  xpos 476
+  ypos 2810
+  disable {{parent.tsquality}}
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.05
+  whitepoint 0.15
+  white_clamp true
+  name Grade19
+  xpos 586
+  ypos 2810
+  disable {{!parent.tsquality}}
+ }
+push $N817e0000
+ Dot {
+  name Dot82
+  xpos 537
+  ypos -1935
+ }
+ Radial {
+  area {0 0 {width} {height}}
+  softness {{parent.swirlcropsoft}}
+  name Radial1
+  xpos 503
+  ypos -1643
+ }
+ Transform {
+  translate {{(pow(parent.Crop1.distance,parent.lenscurvature))*(width*parent.swirlcrop)} 0}
+  center {64.5 64.5}
+  name Transform15
+  xpos 503
+  ypos -1598
+ }
+ Mirror2 {
+  flop true
+  name Mirror2_1
+  xpos 503
+  ypos -1561
+  disable {{parent.invertcrop}}
+ }
+push $N8242d000
+ NoTimeBlur {
+  rounding none
+  name NoTimeBlur2
+  xpos 360
+  ypos -1642
+  disable {{!parent.enableswirl}}
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  bbox B
+  name Merge14
+  xpos 360
+  ypos -1561
+  disable {{!parent.enableswirl}}
+ }
+ Transform {
+  rotate {{parent.Crop1.angle}}
+  scale {{1-(pow(parent.Crop1.distance,parent.lenscurvature)*parent.swirlsqueeze)} 1}
+  center {{width/2} {height/2}}
+  name Transform1
+  xpos 360
+  ypos -1519
+  disable {{!parent.enableswirl}}
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  crop false
+  name Crop5
+  xpos 360
+  ypos -1479
+  disable {{!parent.enableswirl}}
+ }
+ Dot {
+  name Dot1
+  xpos 394
+  ypos -932
+ }
+set N821b7400 [stack 0]
+ Dot {
+  name Dot68
+  xpos 528
+  ypos -932
+ }
+ Remove {
+  name Remove1
+  xpos 494
+  ypos -889
+ }
+ Rectangle {
+  output rgb
+  opacity 0.02
+  area {{(width/2)-0.5} {(height/2)-0.5} {(width/2)+0.5} {(height/2)+0.5}}
+  name Rectangle1
+  xpos 494
+  ypos -851
+ }
+ Crop {
+  box {{(width/2)-0.5} {(height/2)-0.5} {(width/2)+0.5} {(height/2)+0.5}}
+  name Crop4
+  xpos 494
+  ypos -825
+ }
+ Remove {
+  channels alpha
+  name Remove2
+  xpos 494
+  ypos -799
+ }
+ Dot {
+  name Dot69
+  xpos 528
+  ypos -718
+ }
+set N821dfc00 [stack 0]
+ Dot {
+  name Dot70
+  xpos 528
+  ypos -665
+ }
+set N821df800 [stack 0]
+ Dot {
+  name Dot71
+  xpos 528
+  ypos -610
+ }
+set N821df400 [stack 0]
+ Dot {
+  name Dot72
+  xpos 528
+  ypos -559
+ }
+set N821df000 [stack 0]
+ Dot {
+  name Dot73
+  xpos 528
+  ypos -504
+ }
+set N821dec00 [stack 0]
+ Dot {
+  name Dot74
+  xpos 528
+  ypos -444
+ }
+set N821de800 [stack 0]
+ Dot {
+  name Dot75
+  xpos 528
+  ypos -383
+ }
+set N821de400 [stack 0]
+ Dot {
+  name Dot76
+  xpos 528
+  ypos -319
+ }
+set N821de000 [stack 0]
+ Dot {
+  name Dot67
+  xpos 528
+  ypos -257
+ }
+set N821f7c00 [stack 0]
+ Dot {
+  name Dot77
+  xpos 528
+  ypos -189
+ }
+set N821f7800 [stack 0]
+ Dot {
+  name Dot78
+  xpos 528
+  ypos -122
+ }
+set N821f7400 [stack 0]
+ Dot {
+  name Dot79
+  xpos 528
+  ypos -58
+ }
+set N821f7000 [stack 0]
+ Dot {
+  name Dot80
+  xpos 528
+  ypos 14
+ }
+push $N821b7400
+ Dot {
+  name Dot2
+  xpos 261
+  ypos -932
+ }
+set N821f6800 [stack 0]
+ Dot {
+  name Dot3
+  xpos 129
+  ypos -932
+ }
+set N821f6400 [stack 0]
+ Dot {
+  name Dot4
+  xpos -6
+  ypos -932
+ }
+set N821f6000 [stack 0]
+ Dot {
+  name Dot5
+  xpos -131
+  ypos -932
+ }
+set N82209c00 [stack 0]
+ Dot {
+  name Dot6
+  xpos -262
+  ypos -932
+ }
+set N82209800 [stack 0]
+ Dot {
+  name Dot7
+  xpos -389
+  ypos -932
+ }
+set N82209400 [stack 0]
+ Dot {
+  name Dot9
+  xpos -513
+  ypos -932
+ }
+set N82209000 [stack 0]
+ Dot {
+  name Dot52
+  xpos -645
+  ypos -932
+ }
+set N82208c00 [stack 0]
+ Dot {
+  name Dot10
+  xpos -775
+  ypos -932
+ }
+set N82208800 [stack 0]
+ Dot {
+  name Dot53
+  xpos -900
+  ypos -932
+ }
+set N82208400 [stack 0]
+ Dot {
+  name Dot11
+  xpos -1029
+  ypos -932
+ }
+set N82208000 [stack 0]
+ Dot {
+  name Dot62
+  xpos -1148
+  ypos -932
+ }
+ Transform {
+  scale {{"(((parent.size/50) / (parent.filteranamorph>0?(1+parent.filteranamorph/2):1)) / parent.filterquality * parent.predownres)*0.05/Image.pixel_aspect"} {"(((parent.size/50) / (parent.filteranamorph<0?(1+(-parent.filteranamorph)/2):1)) / parent.filterquality * parent.predownres)*0.05"}}
+  center {{width/2} {height/2}}
+  name Transform14
+  xpos -1182
+  ypos -868
+ }
+ Remove {
+  channels alpha
+  name Remove15
+  xpos -1182
+  ypos -819
+ }
+ Merge2 {
+  inputs 2
+  name Merge13
+  xpos -1182
+  ypos 10
+ }
+ Dot {
+  name Dot63
+  xpos -1148
+  ypos 908
+ }
+push $N824a7400
+ Reformat {
+  type scale
+  scale {{parent.predownres}}
+  pbb true
+  name Reformat5
+  label "Pre Downres"
+  xpos 1170
+  ypos -1114
+  disable {{parent.predownres>=1}}
+ }
+ NoTimeBlur {
+  rounding none
+  name NoTimeBlur1
+  xpos 1170
+  ypos -1003
+  disable {{!parent.enableswirl}}
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove16
+  xpos 1170
+  ypos -813
+ }
+add_layer {swirl_unpremult swirl_unpremult.red swirl_unpremult.green swirl_unpremult.blue swirl_unpremult.alpha}
+ AddChannels {
+  channels swirl_unpremult
+  color 1
+  name AddChannels1
+  xpos 1170
+  ypos -775
+  disable {{!parent.enableswirl}}
+ }
+ Crop {
+  box {{(floor(frame*splits%1*splits)/splits*width)-(parent.splitssoftness/2)} {(floor(frame%1*splits)/splits*height)-(parent.splitssoftness/2)} {(floor(frame*splits%1*splits)/splits*width+width/splits)+(parent.splitssoftness/2)} {(floor(frame%1*splits)/splits*height+height/splits)+(parent.splitssoftness/2)}}
+  softness {{parent.splitssoftness}}
+  name Crop1
+  xpos 1170
+  ypos -481
+  disable {{!parent.enableswirl}}
+  addUserKnob {20 User}
+  addUserKnob {3 splits}
+  splits {{parent.swirlsplits}}
+  addUserKnob {12 center l "crop center"}
+  center {{(box.x+box.r)/2} {(box.y+box.t)/2}}
+  addUserKnob {7 angle R 0 1000}
+  angle {{atan2((height/2)-center.y,(width/2)-center.x)*(180/pi)}}
+  addUserKnob {7 distance R 0 1000}
+  distance {{hypot((center.x-width/2)*multxy.w,(center.y-height/2)*multxy.h)/hypot(width/2,height/2)}}
+  addUserKnob {14 multxy l "mult xy" R 0 100}
+  multxy {{parent.swirlaspectratio>0?1-parent.swirlaspectratio:1} {parent.swirlaspectratio<0?1+parent.swirlaspectratio:1}}
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  intersect true
+  name Crop6
+  xpos 1170
+  ypos -455
+  disable {{!parent.enableswirl}}
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  intersect true
+  crop false
+  name Crop7
+  xpos 1170
+  ypos -429
+  disable {{!parent.preservebb+!parent.enableswirl}}
+ }
+ Dot {
+  name Dot15
+  xpos 1204
+ }
+set N82246800 [stack 0]
+ Dot {
+  name Dot16
+  xpos 1314
+ }
+set N82246400 [stack 0]
+ Dot {
+  name Dot17
+  xpos 1416
+ }
+set N82246000 [stack 0]
+ Dot {
+  name Dot13
+  xpos 1526
+ }
+set N8226dc00 [stack 0]
+ Dot {
+  name Dot25
+  xpos 1636
+ }
+set N8226d800 [stack 0]
+ Dot {
+  name Dot31
+  xpos 1746
+ }
+set N8226d400 [stack 0]
+ Dot {
+  name Dot33
+  xpos 1856
+ }
+set N8226d000 [stack 0]
+ Dot {
+  name Dot35
+  xpos 1966
+ }
+set N8226cc00 [stack 0]
+ Dot {
+  name Dot54
+  xpos 2081
+ }
+set N8226c800 [stack 0]
+ Dot {
+  name Dot39
+  xpos 2198
+ }
+set N8226c400 [stack 0]
+ Dot {
+  name Dot92
+  xpos 2311
+ }
+set N8226c000 [stack 0]
+ Dot {
+  name Dot91
+  xpos 2429
+ }
+set N81605c00 [stack 0]
+ Dot {
+  name Dot90
+  xpos 2548
+ }
+ Convolve2 {
+  inputs 2
+  filter_channel rgba.red
+  name Convolve4
+  xpos 2514
+  ypos 898
+ }
+ set C81605400 [stack 0]
+ Multiply {
+  channels none
+  name Multiply13
+  xpos 2514
+  ypos 1173
+ }
+ Reformat {
+  type "to box"
+  box_width {{Dot87.width}}
+  box_height {{Dot87.height}}
+  box_fixed true
+  box_pixel_aspect {{Dot87.pixel_aspect}}
+  filter Keys
+  pbb true
+  name Reformat3
+  label Upres
+  xpos 2514
+  ypos 1211
+  disable {{parent.predownres>=1}}
+ }
+ set C81604c00 [stack 0]
+ Dot {
+  name Dot66
+  xpos 2548
+  ypos 2820
+ }
+push $N8248d400
+ Grade {
+  channels alpha
+  blackpoint 0.1
+  whitepoint 0.15
+  white_clamp true
+  name Grade8
+  xpos 478
+  ypos 2689
+ }
+push $N821f7000
+push $N82208000
+ Transform {
+  scale {{"(((parent.size/50) / (parent.filteranamorph>0?(1+parent.filteranamorph/2):1)) / parent.filterquality * parent.predownres)*0.1/Image.pixel_aspect"} {"(((parent.size/50) / (parent.filteranamorph<0?(1+(-parent.filteranamorph)/2):1)) / parent.filterquality * parent.predownres)*0.1"}}
+  center {{width/2} {height/2}}
+  name Transform11
+  xpos -1063
+  ypos -867
+ }
+ Remove {
+  channels alpha
+  name Remove14
+  xpos -1063
+  ypos -818
+ }
+ Merge2 {
+  inputs 2
+  name Merge12
+  xpos -1063
+  ypos -62
+ }
+ Dot {
+  name Dot44
+  xpos -1029
+  ypos 845
+ }
+push $N81605c00
+clone $C81605400 {
+  inputs 2
+  xpos 2395
+  ypos 835
+  selected false
+ }
+ Multiply {
+  channels none
+  name Multiply12
+  xpos 2395
+  ypos 1172
+ }
+clone $C81604c00 {
+  xpos 2395
+  ypos 1210
+  selected false
+ }
+ Dot {
+  name Dot48
+  xpos 2429
+  ypos 2699
+ }
+push $N8248d800
+ Grade {
+  channels alpha
+  blackpoint 0.15
+  whitepoint 0.2
+  white_clamp true
+  name Grade10
+  xpos 476
+  ypos 2570
+  disable {{parent.tsquality}}
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.15
+  whitepoint 0.25
+  white_clamp true
+  name Grade18
+  xpos 586
+  ypos 2570
+  disable {{!parent.tsquality}}
+ }
+push $N821f7400
+push $N82208400
+ Transform {
+  scale {{"(((parent.size/50) / (parent.filteranamorph>0?(1+parent.filteranamorph/2):1)) / parent.filterquality * parent.predownres)*0.15/Image.pixel_aspect"} {"(((parent.size/50) / (parent.filteranamorph<0?(1+(-parent.filteranamorph)/2):1)) / parent.filterquality * parent.predownres)*0.15"}}
+  center {{width/2} {height/2}}
+  name Transform13
+  xpos -934
+  ypos -867
+ }
+ Remove {
+  channels alpha
+  name Remove13
+  xpos -934
+  ypos -818
+ }
+ Merge2 {
+  inputs 2
+  name Merge11
+  xpos -934
+  ypos -126
+ }
+ Dot {
+  name Dot57
+  xpos -900
+  ypos 780
+ }
+push $N8226c000
+clone $C81605400 {
+  inputs 2
+  xpos 2277
+  ypos 770
+  selected false
+ }
+ Multiply {
+  channels none
+  name Multiply11
+  xpos 2277
+  ypos 1173
+ }
+clone $C81604c00 {
+  xpos 2277
+  ypos 1211
+  selected false
+ }
+ Dot {
+  name Dot59
+  xpos 2311
+  ypos 2580
+ }
+push $N8248dc00
+ Grade {
+  channels alpha
+  blackpoint 0.2
+  whitepoint 0.25
+  white_clamp true
+  name Grade15
+  xpos 477
+  ypos 2449
+ }
+push $N821f7800
+push $N82208800
+ Transform {
+  scale {{"(((parent.size/50) / (parent.filteranamorph>0?(1+parent.filteranamorph/2):1)) / parent.filterquality * parent.predownres)*0.2/Image.pixel_aspect"} {"(((parent.size/50) / (parent.filteranamorph<0?(1+(-parent.filteranamorph)/2):1)) / parent.filterquality * parent.predownres)*0.2"}}
+  center {{width/2} {height/2}}
+  name Transform10
+  xpos -809
+  ypos -867
+ }
+ Remove {
+  channels alpha
+  name Remove12
+  xpos -809
+  ypos -818
+ }
+ Merge2 {
+  inputs 2
+  name Merge10
+  xpos -809
+  ypos -193
+ }
+ Dot {
+  name Dot40
+  xpos -775
+  ypos 719
+ }
+push $N8226c400
+clone $C81605400 {
+  inputs 2
+  xpos 2164
+  ypos 709
+  selected false
+ }
+ Multiply {
+  channels none
+  name Multiply10
+  xpos 2164
+  ypos 1173
+ }
+clone $C81604c00 {
+  xpos 2164
+  ypos 1211
+  selected false
+ }
+ Dot {
+  name Dot46
+  xpos 2198
+  ypos 2459
+ }
+push $N82476000
+ Grade {
+  channels alpha
+  blackpoint 0.25
+  whitepoint 0.3
+  white_clamp true
+  name Grade16
+  xpos 476
+  ypos 2324
+  disable {{parent.tsquality}}
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.25
+  whitepoint 0.4
+  white_clamp true
+  name Grade17
+  xpos 586
+  ypos 2324
+  disable {{!parent.tsquality}}
+ }
+push $N821f7c00
+push $N82208c00
+ Transform {
+  scale {{"(((parent.size/50) / (parent.filteranamorph>0?(1+parent.filteranamorph/2):1)) / parent.filterquality * parent.predownres)*0.25/Image.pixel_aspect"} {"(((parent.size/50) / (parent.filteranamorph<0?(1+(-parent.filteranamorph)/2):1)) / parent.filterquality * parent.predownres)*0.25"}}
+  center {{width/2} {height/2}}
+  name Transform12
+  xpos -679
+  ypos -869
+ }
+ Remove {
+  channels alpha
+  name Remove11
+  xpos -679
+  ypos -820
+ }
+ Merge2 {
+  inputs 2
+  name Merge9
+  xpos -679
+  ypos -261
+ }
+ Dot {
+  name Dot55
+  xpos -645
+  ypos 656
+ }
+push $N8226c800
+clone $C81605400 {
+  inputs 2
+  xpos 2047
+  ypos 646
+  selected false
+ }
+ Multiply {
+  channels none
+  name Multiply9
+  xpos 2047
+  ypos 1171
+ }
+clone $C81604c00 {
+  xpos 2047
+  ypos 1209
+  selected false
+ }
+ Dot {
+  name Dot61
+  xpos 2081
+  ypos 2334
+ }
+push $N82476400
+ Grade {
+  channels alpha
+  blackpoint 0.3
+  whitepoint 0.4
+  white_clamp true
+  name Grade6
+  xpos 475
+  ypos 2198
+ }
+push $N821de000
+push $N82209000
+ Transform {
+  scale {{"(((parent.size/50) / (parent.filteranamorph>0?(1+parent.filteranamorph/2):1)) / parent.filterquality * parent.predownres)*0.3/Image.pixel_aspect"} {"(((parent.size/50) / (parent.filteranamorph<0?(1+(-parent.filteranamorph)/2):1)) / parent.filterquality * parent.predownres)*0.3"}}
+  center {{width/2} {height/2}}
+  name Transform9
+  xpos -547
+  ypos -867
+ }
+ Remove {
+  channels alpha
+  name Remove10
+  xpos -547
+  ypos -818
+ }
+ Merge2 {
+  inputs 2
+  name Merge8
+  xpos -547
+  ypos -323
+ }
+ Dot {
+  name Dot36
+  xpos -513
+  ypos 594
+ }
+push $N8226cc00
+clone $C81605400 {
+  inputs 2
+  xpos 1932
+  ypos 584
+  selected false
+ }
+ Multiply {
+  channels none
+  name Multiply8
+  xpos 1932
+  ypos 1171
+ }
+clone $C81604c00 {
+  xpos 1932
+  ypos 1209
+  selected false
+ }
+ Dot {
+  name Dot42
+  xpos 1966
+  ypos 2208
+ }
+push $N82476800
+ Grade {
+  channels alpha
+  blackpoint 0.4
+  whitepoint 0.5
+  white_clamp true
+  name Grade5
+  xpos 474
+  ypos 2090
+  disable {{parent.tsquality}}
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.4
+  whitepoint 0.6
+  white_clamp true
+  name Grade14
+  xpos 584
+  ypos 2090
+  disable {{!parent.tsquality}}
+ }
+push $N821de400
+push $N82209400
+ Transform {
+  scale {{"(((parent.size/50) / (parent.filteranamorph>0?(1+parent.filteranamorph/2):1)) / parent.filterquality * parent.predownres)*0.4/Image.pixel_aspect"} {"(((parent.size/50) / (parent.filteranamorph<0?(1+(-parent.filteranamorph)/2):1)) / parent.filterquality * parent.predownres)*0.4"}}
+  center {{width/2} {height/2}}
+  name Transform8
+  xpos -423
+  ypos -867
+ }
+ Remove {
+  channels alpha
+  name Remove9
+  xpos -423
+  ypos -818
+ }
+ Merge2 {
+  inputs 2
+  name Merge7
+  xpos -423
+  ypos -387
+ }
+ Dot {
+  name Dot34
+  xpos -389
+  ypos 533
+ }
+push $N8226d000
+clone $C81605400 {
+  inputs 2
+  xpos 1822
+  ypos 523
+  selected false
+ }
+ Multiply {
+  channels none
+  name Multiply7
+  xpos 1822
+  ypos 1172
+ }
+clone $C81604c00 {
+  xpos 1822
+  ypos 1210
+  selected false
+ }
+ Dot {
+  name Dot38
+  xpos 1856
+  ypos 2100
+ }
+push $N82476c00
+ Grade {
+  channels alpha
+  blackpoint 0.5
+  whitepoint 0.6
+  white_clamp true
+  name Grade1
+  xpos 476
+  ypos 1974
+ }
+push $N821de800
+push $N82209800
+ Transform {
+  scale {{"(((parent.size/50) / (parent.filteranamorph>0?(1+parent.filteranamorph/2):1)) / parent.filterquality * parent.predownres)*0.5/Image.pixel_aspect"} {"(((parent.size/50) / (parent.filteranamorph<0?(1+(-parent.filteranamorph)/2):1)) / parent.filterquality * parent.predownres)*0.5"}}
+  center {{width/2} {height/2}}
+  name Transform7
+  xpos -296
+  ypos -867
+ }
+ Remove {
+  channels alpha
+  name Remove8
+  xpos -296
+  ypos -818
+ }
+ Merge2 {
+  inputs 2
+  name Merge6
+  xpos -296
+  ypos -448
+ }
+ Dot {
+  name Dot32
+  xpos -262
+  ypos 469
+ }
+push $N8226d400
+clone $C81605400 {
+  inputs 2
+  xpos 1712
+  ypos 459
+  selected false
+ }
+ Multiply {
+  channels none
+  name Multiply6
+  xpos 1712
+  ypos 1171
+ }
+clone $C81604c00 {
+  xpos 1712
+  ypos 1209
+  selected false
+ }
+ Dot {
+  name Dot30
+  xpos 1746
+  ypos 1984
+ }
+push $N82477000
+ Grade {
+  channels alpha
+  blackpoint 0.6
+  whitepoint 0.7
+  white_clamp true
+  name Grade4
+  xpos 474
+  ypos 1871
+  disable {{parent.tsquality}}
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.6
+  whitepoint 0.8
+  white_clamp true
+  name Grade13
+  xpos 584
+  ypos 1871
+  disable {{!parent.tsquality}}
+ }
+push $N821dec00
+push $N82209c00
+ Transform {
+  scale {{"(((parent.size/50) / (parent.filteranamorph>0?(1+parent.filteranamorph/2):1)) / parent.filterquality * parent.predownres)*0.6/Image.pixel_aspect"} {"(((parent.size/50) / (parent.filteranamorph<0?(1+(-parent.filteranamorph)/2):1)) / parent.filterquality * parent.predownres)*0.6"}}
+  center {{width/2} {height/2}}
+  name Transform6
+  xpos -165
+  ypos -867
+ }
+ Remove {
+  channels alpha
+  name Remove7
+  xpos -165
+  ypos -818
+ }
+ Merge2 {
+  inputs 2
+  name Merge5
+  xpos -165
+  ypos -508
+ }
+ Dot {
+  name Dot26
+  xpos -131
+  ypos 409
+ }
+push $N8226d800
+clone $C81605400 {
+  inputs 2
+  xpos 1602
+  ypos 399
+  selected false
+ }
+ Multiply {
+  channels none
+  name Multiply5
+  xpos 1602
+  ypos 1171
+ }
+clone $C81604c00 {
+  xpos 1602
+  ypos 1209
+  selected false
+ }
+ Dot {
+  name Dot28
+  xpos 1636
+  ypos 1881
+ }
+push $N82477400
+ Grade {
+  channels alpha
+  blackpoint 0.7
+  whitepoint 0.8
+  white_clamp true
+  name Grade3
+  xpos 478
+  ypos 1761
+ }
+push $N821df000
+push $N821f6000
+ Transform {
+  scale {{"(((parent.size/50) / (parent.filteranamorph>0?(1+parent.filteranamorph/2):1)) / parent.filterquality * parent.predownres)*0.7/Image.pixel_aspect"} {"(((parent.size/50) / (parent.filteranamorph<0?(1+(-parent.filteranamorph)/2):1)) / parent.filterquality * parent.predownres)*0.7"}}
+  center {{width/2} {height/2}}
+  name Transform5
+  xpos -40
+  ypos -867
+ }
+ Remove {
+  channels alpha
+  name Remove6
+  xpos -40
+  ypos -818
+ }
+ Merge2 {
+  inputs 2
+  name Merge4
+  xpos -40
+  ypos -563
+ }
+ Dot {
+  name Dot21
+  xpos -6
+  ypos 351
+ }
+push $N8226dc00
+clone $C81605400 {
+  inputs 2
+  xpos 1492
+  ypos 341
+  selected false
+ }
+ Multiply {
+  channels none
+  name Multiply4
+  xpos 1492
+  ypos 1171
+ }
+clone $C81604c00 {
+  xpos 1492
+  ypos 1209
+  selected false
+ }
+ Dot {
+  name Dot24
+  xpos 1526
+  ypos 1771
+ }
+push $N82477800
+ Grade {
+  channels alpha
+  blackpoint 0.8
+  whitepoint 0.9
+  white_clamp true
+  name Grade2
+  xpos 476
+  ypos 1650
+  disable {{parent.tsquality}}
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.8
+  white_clamp true
+  name Grade12
+  xpos 586
+  ypos 1650
+  disable {{!parent.tsquality}}
+ }
+push $N821df400
+push $N821f6400
+ Transform {
+  scale {{"(((parent.size/50) / (parent.filteranamorph>0?(1+parent.filteranamorph/2):1)) / parent.filterquality * parent.predownres)*0.8/Image.pixel_aspect"} {"(((parent.size/50) / (parent.filteranamorph<0?(1+(-parent.filteranamorph)/2):1)) / parent.filterquality * parent.predownres)*0.8"}}
+  center {{width/2} {height/2}}
+  name Transform4
+  xpos 95
+  ypos -867
+ }
+ Remove {
+  channels alpha
+  name Remove5
+  xpos 95
+  ypos -818
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  xpos 95
+  ypos -614
+ }
+ Dot {
+  name Dot18
+  xpos 129
+  ypos 292
+ }
+push $N82246000
+clone $C81605400 {
+  inputs 2
+  xpos 1382
+  ypos 282
+  selected false
+ }
+ Multiply {
+  channels none
+  name Multiply3
+  xpos 1382
+  ypos 1169
+ }
+clone $C81604c00 {
+  xpos 1382
+  ypos 1207
+  selected false
+ }
+ Dot {
+  name Dot23
+  xpos 1416
+  ypos 1660
+ }
+push $N82477c00
+ Grade {
+  channels alpha
+  blackpoint 0.9
+  white_clamp true
+  name Grade11
+  xpos 479
+  ypos 1542
+ }
+push $N821df800
+push $N821f6800
+ Transform {
+  scale {{"(((parent.size/50) / (parent.filteranamorph>0?(1+parent.filteranamorph/2):1)) / parent.filterquality * parent.predownres)*0.9/Image.pixel_aspect"} {"(((parent.size/50) / (parent.filteranamorph<0?(1+(-parent.filteranamorph)/2):1)) / parent.filterquality * parent.predownres)*0.9"}}
+  center {{width/2} {height/2}}
+  name Transform3
+  xpos 227
+  ypos -864
+ }
+ Remove {
+  channels alpha
+  name Remove4
+  xpos 227
+  ypos -815
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos 227
+  ypos -669
+ }
+ Dot {
+  name Dot12
+  xpos 261
+  ypos 228
+ }
+push $N82246400
+clone $C81605400 {
+  inputs 2
+  xpos 1280
+  ypos 218
+  selected false
+ }
+ Multiply {
+  channels none
+  name Multiply2
+  xpos 1280
+  ypos 1169
+ }
+clone $C81604c00 {
+  xpos 1280
+  ypos 1207
+  selected false
+ }
+ Dot {
+  name Dot22
+  xpos 1314
+  ypos 1552
+ }
+push $N821dfc00
+push $N821b7400
+ Transform {
+  scale {{"((parent.size/50) / (parent.filteranamorph>0?(1+parent.filteranamorph/2):1)) / parent.filterquality * parent.predownres / Image.pixel_aspect"} {"((parent.size/50) / (parent.filteranamorph<0?(1+(-parent.filteranamorph)/2):1)) / parent.filterquality * parent.predownres"}}
+  center {{width/2} {height/2}}
+  name Transform2
+  xpos 360
+  ypos -864
+ }
+ Remove {
+  channels alpha
+  name Remove3
+  xpos 360
+  ypos -818
+ }
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos 360
+  ypos -722
+ }
+ Dot {
+  name Dot8
+  xpos 394
+  ypos 166
+ }
+push $N82246800
+clone $C81605400 {
+  inputs 2
+  xpos 1170
+  ypos 156
+  selected false
+ }
+ Multiply {
+  channels none
+  name Multiply1
+  xpos 1170
+  ypos 1170
+ }
+clone $C81604c00 {
+  xpos 1170
+  ypos 1208
+  selected false
+ }
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox B
+  name Keymix15
+  xpos 1170
+  ypos 1542
+  disable {{"!(parent.tiltshift*\[exists parent.input1])+parent.tsquality"}}
+ }
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox B
+  name Keymix1
+  xpos 1170
+  ypos 1650
+  disable {{"!(parent.tiltshift*\[exists parent.input1])"}}
+ }
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox B
+  name Keymix3
+  xpos 1170
+  ypos 1761
+  disable {{"!(parent.tiltshift*\[exists parent.input1])+parent.tsquality"}}
+ }
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox B
+  name Keymix4
+  xpos 1170
+  ypos 1871
+  disable {{"!(parent.tiltshift*\[exists parent.input1])"}}
+ }
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox B
+  name Keymix5
+  xpos 1170
+  ypos 1974
+  disable {{"!(parent.tiltshift*\[exists parent.input1])+parent.tsquality"}}
+ }
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox B
+  name Keymix6
+  xpos 1170
+  ypos 2090
+  disable {{"!(parent.tiltshift*\[exists parent.input1])"}}
+ }
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox B
+  name Keymix7
+  xpos 1170
+  ypos 2198
+  disable {{"!(parent.tiltshift*\[exists parent.input1])+parent.tsquality"}}
+ }
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox B
+  name Keymix12
+  xpos 1170
+  ypos 2324
+  disable {{"!(parent.tiltshift*\[exists parent.input1])"}}
+ }
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox B
+  name Keymix8
+  xpos 1170
+  ypos 2449
+  disable {{"!(parent.tiltshift*\[exists parent.input1])+parent.tsquality"}}
+ }
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox B
+  name Keymix11
+  xpos 1170
+  ypos 2570
+  disable {{"!(parent.tiltshift*\[exists parent.input1])"}}
+ }
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox B
+  name Keymix9
+  xpos 1170
+  ypos 2689
+  disable {{"!(parent.tiltshift*\[exists parent.input1])+parent.tsquality"}}
+ }
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox B
+  name Keymix13
+  xpos 1170
+  ypos 2810
+  disable {{"!(parent.tiltshift*\[exists parent.input1])"}}
+ }
+ TimeBlur {
+  divisions {{"parent.enableswirl==1 ? pow(parent.Crop1.splits,2) : 1"}}
+  shutter {{"parent.enableswirl==1 ? (pow(divisions,2)/(divisions+1)/pow(divisions,2)+1) : 0"}}
+  shuttercustomoffset 0
+  name TimeBlur1
+  xpos 1170
+  ypos 2939
+  disable {{!parent.enableswirl}}
+ }
+ Unpremult {
+  channels {{{Remove16.channels}}}
+  alpha swirl_unpremult.alpha
+  name Unpremult1
+  xpos 1170
+  ypos 2965
+  disable {{!parent.enableswirl}}
+ }
+ Remove {
+  channels swirl_unpremult
+  name Remove18
+  xpos 1170
+  ypos 3003
+  disable {{!parent.enableswirl}}
+ }
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox B
+  name Keymix10
+  xpos 1170
+  ypos 3186
+  disable {{"1*!(parent.tiltshift*\[exists parent.input1])"}}
+ }
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix14
+  xpos 1170
+  ypos 3298
+  disable {{"parent.tiltshift*\[exists parent.input1]+!\[exists parent.input1]"}}
+ }
+ Dot {
+  name Dot84
+  xpos 1204
+  ypos 3421
+ }
+set N81cc7000 [stack 0]
+ Remove {
+  name Remove19
+  xpos 1170
+  ypos 3453
+  disable {{!parent.previewsplits}}
+ }
+ Grid {
+  number {{parent.Crop1.splits}}
+  size 4
+  name Grid1
+  xpos 1170
+  ypos 3491
+  disable {{!parent.previewsplits}}
+ }
+push $N81cc7000
+ Dot {
+  name Dot95
+  xpos 1134
+  ypos 3421
+ }
+ Dot {
+  name Dot94
+  xpos 1134
+  ypos 3527
+ }
+ Invert {
+  inputs 1+1
+  name Invert2
+  xpos 1170
+  ypos 3517
+  disable {{!parent.previewsplits}}
+ }
+ Reformat {
+  type "to box"
+  box_width {{Image.width}}
+  box_height {{Image.height}}
+  box_pixel_aspect {{Image.pixel_aspect}}
+  resize none
+  pbb true
+  name Reformat22
+  label Overscan
+  xpos 1170
+  ypos 3678
+  disable {{!parent.enableswirl+!parent.preservebb}}
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  crop {{parent.blackoutside}}
+  name Crop2
+  xpos 1170
+  ypos 3716
+  disable {{parent.preservebb}}
+ }
+ Copy {
+  inputs 2
+  channels all
+  name Copy1
+  xpos 1170
+  ypos 3864
+ }
+ Switch {
+  inputs 2
+  which {{parent.preview}}
+  name Switch3
+  xpos 1171
+  ypos 3968
+ }
+ Output {
+  name Output1
+  selected true
+  xpos 1171
+  ypos 4044
+ }
+end_group

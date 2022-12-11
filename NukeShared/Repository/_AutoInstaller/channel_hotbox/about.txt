@@ -1,0 +1,15 @@
+https://www.nukepedia.com/python/ui/channel-hotbox/finishdown?mjv=2
+
+OPTION + q for popup
+
+click:
+change the viewer to the selected channel
+
+shift+click:
+shuffle out all selected channels
+
+strg+click:
+create grade node with channel set to selected
+
+alt:
+switch viewer back to rgba

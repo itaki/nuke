@@ -1,0 +1,146 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1" focus="true">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/Desktop/ParticlesAttractToSphereMY.nk
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Axis2 {
+ inputs 0
+ translate {960 940 -1650}
+ name Axis1
+ tile_color 0x9c000000
+ label "ATTRACTION POINT"
+ xpos 13997
+ ypos -1571
+}
+StickyNote {
+ inputs 0
+ name StickyNote36
+ tile_color 0xcccccc00
+ label "<b>Here there are some Attraction Points. If you have flies/bees, you can use this solution to simulate lights, bushes or flowers\nMove the Axis and adjust the Strength/Radius\nWith Negative values for the Strength, you will push away particles from the point"
+ note_font_size 20
+ xpos 14108
+ ypos -1579
+}
+Group {
+ inputs 0
+ name ParticlesAttractToSphereMY
+ selected true
+ xpos 13813
+ ypos -1548
+ addUserKnob {20 AttractToSphere}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 paPosition l position T ParticleBlinkScript1.paPosition}
+ addUserKnob {41 paStrength l strength T ParticleBlinkScript1.paStrength}
+ addUserKnob {41 geoRadius l radius T ParticleBlinkScript1.paRadius}
+ addUserKnob {41 paFalloff l falloff T ParticleBlinkScript1.paFalloff}
+ addUserKnob {41 paMinRadius l "min radius" T ParticleBlinkScript1.paMinRadius}
+ addUserKnob {26 _1 l <b>VISUALIZATION}
+ addUserKnob {41 geoUniformScale l "uniform scale" T Geometry.uniform_scale}
+ addUserKnob {6 showGeometry l "Show Sphere" +STARTLINE}
+ showGeometry true
+}
+ Sphere {
+  inputs 0
+  display {{parent.showGeometry}}
+  render_mode off
+  rows 20
+  columns 20
+  radius {{parent.geoRadius}}
+  translate {{parent.ParticleBlinkScript1.paTranslate} {parent.ParticleBlinkScript1.paTranslate} {parent.ParticleBlinkScript1.paTranslate}}
+  uniform_scale 2
+  name Geometry
+  selected true
+  xpos 730
+  ypos 50
+ }
+ Input {
+  inputs 0
+  name particles
+  xpos 829
+  ypos 1
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleSphereKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead> p_position;\n  Image<eRead> p_mass;\n  Image<eReadWrite> p_velocity;\n\n  param:\n    float3 _centre;\n    float _radius;\n    float _minRadius;\n    float _strength;\n    float _falloff;\n    float _dt;\n\n  void define() \{\n    defineParam(_centre, \"paPosition\",  float3(0.0f, 0.0f, 0.0f));\n    defineParam(_radius, \"paRadius\", 1.0f);\n    defineParam(_minRadius, \"paMinRadius\", 0.1f);\n    defineParam(_strength, \"paStrength\", 0.0f);\n    defineParam(_falloff, \"paFalloff\", 2.0f);\n    defineParam(_dt, \"_dt\", 1.0f);\n  \}\n\n  void process() \{\n    float3  d = p_position()-_centre;\n    float r = length(d);\n    if ( r != 0.0f ) \{\n      float3 rHat = d/r;\n      float3 closestPoint  = _centre + rHat*_radius;\n      float distanceFromSurface = r-_radius;\n      if (distanceFromSurface > _minRadius) \{\n        float3 force = -_strength*rHat*pow(distanceFromSurface, -_falloff);\n        p_velocity() += force*_dt/p_mass();\n      \}\n    \}\n  \}\n\};\n"
+  encodedSource "\n"
+  translate {0 0.2879999876 0}
+  name ParticleBlinkScript1
+  xpos 829
+  ypos 44
+  addUserKnob {20 User l Force}
+  addUserKnob {13 paTranslate l translate}
+  paTranslate {{paPosition} {paPosition} {paPosition}}
+  addUserKnob {13 paRotate l rotate}
+  addUserKnob {13 paScale l scale}
+  paScale {1 1 1}
+  addUserKnob {7 paUniform_scale l "uniform scale"}
+  paUniform_scale {{parent.Geometry.uniform_scale}}
+  addUserKnob {7 paRadius l radius}
+  paRadius 60
+  addUserKnob {7 paMinRadius l "min radius"}
+  paMinRadius 0.045
+  addUserKnob {7 paStrength l strength}
+  paStrength 70
+  addUserKnob {7 paFalloff l falloff}
+  paFalloff 0.64
+  addUserKnob {13 paPosition l position}
+  paPosition {{parent.parent.Axis1.translate} {parent.parent.Axis1.translate} {parent.parent.Axis1.translate}}
+ }
+set N208a400 [stack 0]
+ MergeGeo {
+  inputs 2
+  name MergeGeo1
+  xpos 730
+  ypos 111
+ }
+push $N208a400
+ Output {
+  name Output1
+  xpos 829
+  ypos 141
+ }
+end_group

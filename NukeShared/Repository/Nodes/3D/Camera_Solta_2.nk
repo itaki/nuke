@@ -1,0 +1,54 @@
+set cut_paste_input [stack 0]
+version 11.0 v2
+push $cut_paste_input
+Group {
+name Camera_Solta1
+selected true
+xpos -211
+ypos -77
+addUserKnob {20 User}
+addUserKnob {26 Instrucions l "Breakdown Controls:" T "Seed: value randomly changes the curve without modify its nature\nFrequency: value increase or reduce the amount of oscillations\nAmplitude: indicates the maximum value of your oscillation\nValueOffset: value decides where the curve sits on Y axis"}
+addUserKnob {26 ""}
+addUserKnob {26 x l X}
+addUserKnob {16 seed l "seed x"}
+addUserKnob {7 frequency_2x l "frequency x" R -1 1}
+addUserKnob {26 y}
+addUserKnob {16 seedy l "seed y"}
+addUserKnob {7 frequency_2y l "frequency y" R -1 1}
+addUserKnob {26 ""}
+addUserKnob {12 amplitude_2 l amplitude}
+addUserKnob {12 valueOffset_2 l valueOffset}
+addUserKnob {41 scale T Transform7.scale}
+addUserKnob {26 ""}
+addUserKnob {26 rotation l ROTATION}
+addUserKnob {41 center t "To reset, \"set to default\"" T Transform7.center}
+addUserKnob {26 reset l "" -STARTLINE T "  Before anything, \"Set to Default\""}
+addUserKnob {16 seedr l "seed r"}
+addUserKnob {16 frequencyr l INVISIBLE +INVISIBLE}
+addUserKnob {7 frequency_r2 l "frequency r" R -1 1}
+addUserKnob {7 amplitude_r2 l "amplitude r" R -1 1}
+addUserKnob {7 valueOffset_r2 l "valueOffset r" R -1 1}
+addUserKnob {20 Tips}
+addUserKnob {26 ""}
+addUserKnob {26 Example l Example: t "Thanks for Victor Perez\nhttp://www.nukepedia.com/written-tutorials/the-random-expression" T "If you want to generate a curve with random values between 2 and 8\nwith a (low) frequency of 1 peak every 5 frames this is the formula:\nseed=1\nfrequency = 0.2\namplitude = 6\nvalueOffset= 2\nUsing different settings for each axis bring great results\n\nThanks for Victor Perez\nhttp://www.nukepedia.com/written-tutorials/the-random-expression"}
+}
+Input {
+inputs 0
+name Input1
+xpos 70
+ypos -158
+}
+Transform {
+translate {{(random((Camera_Solta1.seed),frame*(Camera_Solta1.frequency_2x))*(Camera_Solta1.amplitude_2.x))+(Camera_Solta1.valueOffset_2.x)} {(random((Camera_Solta1.seedy),frame*(Camera_Solta1.frequency_2y))*(Camera_Solta1.amplitude_2.y))+(Camera_Solta1.valueOffset_2.y)}}
+rotate {{(random((Camera_Solta1.seedr),frame*(Camera_Solta1.frequency_r2))*(Camera_Solta1.amplitude_r2))+(Camera_Solta1.valueOffset_r2)}}
+center {960 540}
+name Transform7
+xpos 70
+ypos -91
+}
+Output {
+name Output1
+xpos 70
+ypos -18
+}
+end_group

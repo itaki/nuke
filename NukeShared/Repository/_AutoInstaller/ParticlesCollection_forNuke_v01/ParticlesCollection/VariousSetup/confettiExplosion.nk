@@ -1,0 +1,517 @@
+#! C:/Program Files/Nuke13.0v1/nuke-13.0.1.dll -nx
+#write_info Write1 file:"G:/Compositing_Pro/Confetti_Tutorial/Renders/confetti.mov" format:"1920 1080 1" chans:":rgba.red:rgba.green:rgba.blue:" framerange:"1001 1101" fps:"0" colorspace:"default" datatype:"unknown" transfer:"unknown" views:"main" colorManagement:"Nuke"
+version 13.0 v1
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "C:/Users/lgere/OneDrive/VFX/PARTICLES/VARIOUS SETUP/confetti_Tutorial_Script.nk"
+ frame 1067
+ first_frame 1001
+ last_frame 1101
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ monitorOutLUT rec709
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Camera2 {
+ inputs 0
+ translate {3.453286171 4.199999809 16.80052185}
+ rotate {0 16.08592878 0}
+ name Camera1
+ xpos 1228
+ ypos 653
+}
+set Ndc7cd800 [stack 0]
+Dot {
+ name Dot18
+ xpos 82
+ ypos 1485
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0.253511548 0.5112176538 0.3481171131 0}
+ name Constant3
+ xpos -739
+ ypos -271
+}
+Card2 {
+ scaling {0.1 0.5 1}
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card2
+ xpos -739
+ ypos 18
+}
+ProcGeo {
+ Gain 0.6
+ Speed {{curve x1001 3.85 x1101 15.40722847}}
+ name ProcGeo1
+ xpos -739
+ ypos 42
+}
+set Ndc7cc800 [stack 0]
+TransformGeo {
+ rotate {63 0 0}
+ name TransformGeo1
+ xpos -835
+ ypos 98
+}
+FrameHold {
+ firstFrame 1033
+ name FrameHold1
+ xpos -835
+ ypos 124
+ disable true
+}
+set Ndc7c9d00 [stack 0]
+Constant {
+ inputs 0
+ channels rgb
+ color {0.1698379368 0.2931909561 0.393920958 0}
+ name Constant4
+ xpos -1049
+ ypos -244
+}
+Card2 {
+ scaling {0.1 0.5 1}
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card6
+ xpos -1049
+ ypos -69
+}
+ProcGeo {
+ Gain 0.6
+ Speed {{curve x1001 3.85 x1101 15.40722847}}
+ name ProcGeo2
+ xpos -1054
+ ypos -45
+}
+TransformGeo {
+ rotate {0 {curve x1001 0 x1086 1300} {curve x1001 0 x1086 892}}
+ name TransformGeo7
+ xpos -1049
+ ypos -21
+}
+Dot {
+ name Dot1
+ xpos -1006
+ ypos 37
+}
+TransformGeo {
+ rotate {173 -160 0}
+ name TransformGeo2
+ xpos -1040
+ ypos 144
+}
+FrameHold {
+ firstFrame 1033
+ name FrameHold2
+ xpos -1045
+ ypos 173
+ disable true
+}
+set Ndc7c8800 [stack 0]
+Constant {
+ inputs 0
+ channels rgb
+ color {0.592397213 0.6163705587 0.3481171131 0}
+ color_panelDropped true
+ name Constant5
+ xpos -1369
+ ypos -257
+}
+Card2 {
+ scaling {0.1 0.5 1}
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card7
+ xpos -1369
+ ypos -85
+}
+TransformGeo {
+ rotate {0 {curve x1001 1039.210938 x1086 2339.210938} {curve x1001 1039.210938 x1086 1931.210938}}
+ name TransformGeo6
+ xpos -1369
+ ypos -61
+}
+ProcGeo {
+ x_offset 4
+ Lacunarity 1.5
+ Gain 0.7
+ Speed {{curve x1001 3.85 x1101 15.40722847}}
+ name ProcGeo3
+ xpos -1369
+ ypos -37
+}
+Dot {
+ name Dot2
+ xpos -1326
+ ypos 21
+}
+TransformGeo {
+ rotate {173 160 0}
+ name TransformGeo3
+ xpos -1377
+ ypos 199
+}
+FrameHold {
+ firstFrame 1033
+ name FrameHold3
+ xpos -1367
+ ypos 228
+ disable true
+}
+set Ndc703200 [stack 0]
+Constant {
+ inputs 0
+ channels rgb
+ color {0.500348866 0.115888916 0.1283192039 0}
+ color_panelDropped true
+ name Constant2
+ xpos -1677
+ ypos -184
+}
+Card2 {
+ scaling {0.1 0.5 1}
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card8
+ xpos -1685
+ ypos -51
+}
+TransformGeo {
+ rotate {0 {curve x1001 0 x1086 1300} {curve x1001 0 x1086 892}}
+ name TransformGeo5
+ xpos -1685
+ ypos -27
+}
+ProcGeo {
+ x_size 16
+ x_offset 27
+ Lacunarity 4.5
+ Gain 0.3
+ Speed {{curve x1001 3.85 x1101 15.40722847}}
+ name ProcGeo4
+ xpos -1685
+ ypos 46
+}
+Dot {
+ name Dot8
+ xpos -1651
+ ypos 94
+}
+TransformGeo {
+ rotate {273 -160 0}
+ name TransformGeo4
+ xpos -1685
+ ypos 274
+}
+set Ndc68b400 [stack 0]
+Card2 {
+ inputs 0
+ translate {-1.199869275 4.119992733 13.57531929}
+ rotate {0 103.4558645 0}
+ uniform_scale 9
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card3
+ xpos -2001
+ ypos 681
+}
+set Ndc68b000 [stack 0]
+push 0
+ParticleEmitter {
+ inputs 6
+ start_frame 950
+ rate {{curve x1045 0 x1045 27.0351105 x1048 0}}
+ lifetime 90
+ velocity 0.46
+ rotation_velocity 0.93
+ rotation_velocity_variation 0.46
+ size 0.315
+ size_variation 0.505
+ mass 0.425
+ spread 0.785
+ color {0.2899999917 0 0.2146451473 0.2899999917}
+ name ParticleEmitter3
+ xpos -1685
+ ypos 659
+}
+ParticleTurbulence {
+ strength {0.06 0.07 0.07}
+ name ParticleTurbulence3
+ xpos -1685
+ ypos 705
+}
+ParticleDrag {
+ drag 0.425
+ name ParticleDrag2
+ xpos -1685
+ ypos 755
+}
+set Ndc68a400 [stack 0]
+Scene {
+ name Scene3
+ xpos -593
+ ypos 740
+}
+push $Ndc7cd800
+push $Ndc68b400
+FrameHold {
+ firstFrame 1033
+ name FrameHold4
+ xpos -1685
+ ypos 291
+ disable true
+}
+push $Ndc703200
+push $Ndc7c8800
+push $Ndc7c9d00
+push $Ndc7cc800
+Card2 {
+ inputs 0
+ translate {0 3.900000095 0}
+ rotate {0 -40 0}
+ scaling {1 4 1}
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card1
+ xpos -529
+ ypos 108
+}
+set Ndc689c00 [stack 0]
+push 0
+ParticleEmitter {
+ inputs 7
+ start_frame 950
+ randomize_type "randomized direction"
+ rate {{curve x1043 0 0 x1044 227 x1047 0}}
+ lifetime 90
+ velocity 3.1
+ rotation_velocity 0.93
+ rotation_velocity_variation 0.46
+ size 0.215
+ size_variation 0.505
+ mass 0.425
+ spread 0.55
+ color {0.2899999917 0 0.2146451473 0.2899999917}
+ name ParticleEmitter1
+ xpos -529
+ ypos 297
+}
+ParticleGravity {
+ to {0 -0.01 0}
+ name ParticleGravity1
+ xpos -529
+ ypos 346
+}
+ParticleTurbulence {
+ strength {0.06 0.07 0.07}
+ name ParticleTurbulence1
+ xpos -529
+ ypos 447
+}
+ParticleDrag {
+ drag 0.935
+ name ParticleDrag1
+ xpos -529
+ ypos 497
+}
+ParticleCurve {
+ curves {r {}
+   g {}
+   b {}
+   a {}
+   size {curve 0.1549019814 0.7237744927}
+   mass {}}
+ affect_size true
+ name ParticleCurve1
+ xpos -529
+ ypos 555
+}
+ParticleMotionAlign {
+ name ParticleMotionAlign1
+ xpos -529
+ ypos 591
+}
+Dot {
+ name Dot13
+ xpos -304
+ ypos 625
+}
+Scene {
+ inputs 3
+ name Scene1
+ xpos -311
+ ypos 740
+}
+Constant {
+ inputs 0
+ channels rgb
+ name Constant1
+ xpos -688
+ ypos 1547
+}
+Dot {
+ name Dot16
+ xpos -629
+ ypos 1636
+}
+add_layer {position position.red position.green position.blue position.alpha}
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ overscan 50
+ samples 33
+ motion_vectors_type distance
+ output_shader_vectors true
+ P_channel position
+ name ScanlineRender1
+ xpos -321
+ ypos 1617
+}
+Write {
+ file G:/Compositing_Pro/Confetti_Tutorial/Renders/confetti.mov
+ file_type mov
+ mov64_codec appr
+ mov_prores_codec_profile "ProRes 4:4:4:4 12-bit"
+ mov64_pixel_format {{0}}
+ mov64_quality High
+ mov64_gop_size 12
+ mov64_b_frames 0
+ mov64_bitrate 20000
+ mov64_bitrate_tolerance 40000000
+ mov64_quality_min 2
+ mov64_quality_max 31
+ checkHashOnRead false
+ name Write1
+ xpos -321
+ ypos 1705
+}
+push $Ndc7cd800
+push $Ndc689c00
+push $Ndc68b000
+Scene {
+ inputs 3
+ name Scene4
+ xpos -2254
+ ypos 434
+}
+push $Ndc7cd800
+push $Ndc68a400
+Scene {
+ inputs 2
+ name Scene5
+ xpos -1211
+ ypos 945
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x335959ff
+ label "<b>author: Josh Park        ."
+ note_font_size 20
+ xpos -150
+ ypos -144
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x969600ff
+ label "<b>https://www.youtube.com/watch?v=nkdLIvEYtIs        ."
+ note_font_size 20
+ xpos -151
+ ypos -70
+}

@@ -1,0 +1,202 @@
+#! C:/Program Files/Nuke13.0v1/nuke-13.0.1.dll -nx
+version 13.0 v1
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1917" h="1122" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1210" stretch="1"/>
+            <splitter orientation="2">
+                <split size="634"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="446"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="659"/>
+            <splitter orientation="2">
+                <split size="540"/>
+                <dock id="" activePageId="Properties.1">
+                    <page id="Properties.1"/>
+                </dock>
+                <split size="540"/>
+                <dock id="" activePageId="uk.co.thefoundry.scripteditor.1">
+                    <page id="uk.co.thefoundry.scripteditor.1"/>
+                </dock>
+            </splitter>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name D:/YOUTUBE/CONTENT/TIMEOUT/NUKE/uberTime.nk
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ monitorOutLUT rec709
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Viewer {
+ inputs 0
+ frame 1
+ frame_range 1-100
+ name Viewer1
+ xpos 49
+ ypos 119
+}
+Group {
+ inputs 0
+ name uberTime
+ label "<center>output <font color='green'>\[value outFrame]</font>\nspeed <font color='green'>\[value speed]</font>\nelem start \[if \{\[value elem_first] <= \[value root.first_frame]\} \{return \"<font color='green'>\[value elem_first]</font>\"\} \{return \"<font color='red'>\[value elem_first]</font>\"\}]\nelem end \[if \{\[value elem_last] >= \[value root.last_frame]\} \{return \"<font color='green'>\[value elem_last]</font>\"\} \{return \"<font color='red'>\[value elem_last]</font>\"\}]\n\n<font color='green'>\[value pull_grp]</font></center>"
+ note_font Calibri
+ xpos -153
+ ypos -85
+ addUserKnob {20 timectrl l "time CTRL"}
+ addUserKnob {3 elemStart l "Element Start"}
+ elemStart 1
+ addUserKnob {3 compStart l "Comp Start"}
+ compStart 1
+ addUserKnob {26 div1 l "" +STARTLINE}
+ addUserKnob {7 speed l Speed R 0 4}
+ speed 1
+ addUserKnob {26 div2 l "" +STARTLINE}
+ addUserKnob {7 multiplier l Multiplier}
+ multiplier 1
+ addUserKnob {6 before_elem_start l "Switch off before Element Start" +STARTLINE}
+ addUserKnob {6 before l "Switch off before Comp Start" +STARTLINE}
+ addUserKnob {6 element_last l "Switch off after Element End" +STARTLINE}
+ addUserKnob {26 div3 l "" +STARTLINE}
+ addUserKnob {7 outFrame l "Output Frame"}
+ outFrame {{"speed > 0 ? ((frame - compStart) * speed) + elemStart : ((compStart - frame) * (-speed)) + elemStart"}}
+ addUserKnob {7 elem_first l "Element First"}
+ elem_first {{"compStart - ((elemStart - Framerange.elemFirst) / speed)"}}
+ addUserKnob {7 elem_last l "Element Last"}
+ elem_last {{"(Framerange.elemLast - elemStart) / speed + compStart"}}
+ addUserKnob {26 div4 l "" +STARTLINE}
+ addUserKnob {22 open_properties l Properties T "grp = nuke.thisNode()\ngrp.begin()\ngrp_input = nuke.toNode('Dot')\ngrp_input_dep = grp_input.dependent()\ngrp_time_node = grp_input_dep\[0]\ngrp_time_node.showControlPanel(forceFloat = True)\ngrp.end()" +STARTLINE}
+ addUserKnob {20 create l Create}
+ addUserKnob {41 pull_grp l Node T PullNode.pull_grp}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 0
+ }
+ NoOp {
+  name Framerange
+  xpos 0
+  ypos 52
+  addUserKnob {20 User}
+  addUserKnob {3 elemFirst l "Element First"}
+  elemFirst {{first_frame}}
+  addUserKnob {3 elemLast l "Element Last"}
+  elemLast {{last_frame}}
+ }
+ Dot {
+  name Dot
+  xpos 34
+  ypos 97
+ }
+ TimeOffset {
+  time_offset {{"(compStart - elemStart) - (frame - compStart) * speed + (frame - compStart)"}}
+  time ""
+  name TimeOffset1
+  xpos 0
+  ypos 115
+ }
+ Dot {
+  name Dot1
+  xpos 34
+  ypos 198
+ }
+set N6a01cc00 [stack 0]
+ Multiply {
+  value {{"frame < parent.elem_first ? 0:1"}}
+  name Multiply2
+  xpos -123
+  ypos 226
+ }
+push $N6a01cc00
+ Switch {
+  inputs 2
+  which {{parent.before_elem_start}}
+  name Switch1
+  xpos 0
+  ypos 282
+ }
+ Dot {
+  name Dot2
+  xpos 34
+  ypos 352
+ }
+set N69fbfc00 [stack 0]
+ Multiply {
+  value {{"frame < parent.compStart ? 0:1"}}
+  name Multiply3
+  xpos -123
+  ypos 380
+ }
+push $N69fbfc00
+ Switch {
+  inputs 2
+  which {{parent.before}}
+  name Switch2
+  xpos 0
+  ypos 436
+ }
+ Dot {
+  name Dot3
+  xpos 34
+  ypos 511
+ }
+set N69fbf000 [stack 0]
+ Multiply {
+  value {{"frame > parent.elem_last ? 0:1"}}
+  name Multiply4
+  xpos -122
+  ypos 538
+ }
+push $N69fbf000
+ Switch {
+  inputs 2
+  which {{parent.element_last}}
+  name Switch3
+  xpos 0
+  ypos 595
+ }
+ Multiply {
+  value {{parent.multiplier}}
+  name Multiply1
+  xpos 0
+  ypos 683
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 764
+ }
+ NoOp {
+  inputs 0
+  name PullNode
+  knobChanged uberTime.kc()
+  xpos 126
+  ypos 71
+  addUserKnob {20 User}
+  addUserKnob {4 pull_grp l Node M {TimeOffset Retime TimeWarp OFlow2 Kronos}}
+ }
+end_group

@@ -1,0 +1,113 @@
+Group {
+ inputs 0
+ name Point_UnitSphere
+ tile_color 0x434343ff
+ note_font_color 0x7dadf9ff
+ selected true
+ addUserKnob {20 User}
+ addUserKnob {26 info l "" +STARTLINE T "Unit Sphere Generator 1.1\n"}
+ addUserKnob {26 devider_general l "<b><font color=#7DADF9>General</font><b>"}
+ addUserKnob {3 FormatX l "Number of Points²"}
+ FormatX 200
+ addUserKnob {13 offset l Offset}
+ addUserKnob {13 scale l Scale}
+ scale {1 1 1}
+}
+ Crop {
+  inputs 0
+  box {0 0 {parent.FormatX} {parent.FormatX}}
+  reformat true
+  crop false
+  name Format
+  xpos 384
+  ypos -363
+ }
+ Expression {
+  expr0 random*2-1
+  expr1 random*2-1
+  expr2 random*2-1
+  name Expression4
+  xpos 384
+  ypos -326
+ }
+ Expression {
+  expr0 r/cos(r)
+  expr1 g/cos(g)
+  expr2 b/cos(b)
+  name Expression3
+  selected true
+  xpos 384
+  ypos -264
+ }
+ Expression {
+  temp_name3 Length
+  temp_expr3 "sqrt((Red*Red) + (Green*Green) + (Blue*Blue))+0.00000001"
+  expr0 Red/(Length*2)
+  expr1 Green/(Length*2)
+  expr2 Blue/(Length*2)
+  expr3 Length
+  name Normalize_Vector_out
+  xpos 384
+  ypos -206
+ }
+ Grade {
+  multiply {{parent.scale} {parent.scale} {parent.scale} 1}
+  multiply_panelDropped true
+  black_clamp false
+  name Grade1
+  xpos 384
+  ypos -82
+ }
+ Add {
+  value {{parent.offset} {parent.offset} {parent.offset} {curve}}
+  name Add1
+  xpos 384
+  ypos -38
+ }
+ Shuffle {
+  alpha white
+  name Shuffle4
+  xpos 384
+  ypos 7
+ }
+add_layer {pos pos.red pos.green pos.blue pos.alpha}
+ Shuffle {
+  black white
+  white white
+  red2 white
+  green2 white
+  out pos
+  out2 rgba
+  name Shuffle5
+  xpos 384
+  ypos 47
+ }
+ ModifyMetaData {
+  metadata {
+   {set pointrender/n_points "\[expr \[value parent.FormatX]*\[value parent.FormatX]]"}
+   {set pointrender/gen_type 2}
+  }
+  name SetMetaData
+  xpos 384
+  ypos 71
+ }
+ Grade {
+  white {{1/((parent.FormatX*parent.FormatX)/40000)}}
+  black_clamp false
+  name Grade9
+  xpos 384
+  ypos 95
+ }
+ Crop {
+  box {0 0 {parent.FormatX} {parent.FormatX}}
+  crop false
+  name Format1
+  xpos 384
+  ypos 119
+ }
+ Output {
+  name Output1
+  xpos 384
+  ypos 262
+ }
+end_group

@@ -1,0 +1,443 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/Downloads/Setups/PathLines.nk
+ frame 100
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+RotoPaint {
+ inputs 0
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44700000 x44070000}
+    {a}
+    {curvegroup Ellipse3 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc01aa5f8 0}
+        {x444923c7 x43cdd396}
+        {x401aa4fd 0}
+        {0 xc031f601}
+        {x444a3bc7 x43d05810}
+        {0 x4031f67f}
+        {x401aa4fd 0}
+        {x444923c7 x43d2dc8b}
+        {xc01aa5f8 0}
+        {0 x4031f67f}
+        {x44480bb6 x43d05810}
+        {0 xc031f601}}}     idem}
+     {t
+      {{1 x44412000}}
+      {{1 x43a80ccd}}     0
+      {{1 0}}
+      {{1 0}}     0 0 0
+      {{1 0}}
+      {{1 1}}
+      {{1 1}}     1
+      {{1 0}}}
+     {a opc x3e99999a spx 0 spy 0 sb 1 tt x40c00000}}
+    {curvegroup Ellipse2 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc050a401 0}
+        {x444190f6 x43cbde98}
+        {x4050a305 0}
+        {0 xc069280f}
+        {x44430ab0 x43cf2ae1}
+        {0 x4069288d}
+        {x4050a305 0}
+        {x444190f6 x43d2774c}
+        {xc050a401 0}
+        {0 x4069288d}
+        {x4440172b x43cf2ae1}
+        {0 xc069280f}}}     idem}
+     {t
+      {{1 x44412000}}
+      {{1 x43a80ccd}}     0
+      {{1 0}}
+      {{1 0}}     0 0 0
+      {{1 0}}
+      {{1 1}}
+      {{1 1}}     1
+      {{1 0}}}
+     {a opc x3e99999a spx 0 spy 0 sb 1 tt x40c00000}}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc0396e05 0}
+        {x44416b54 x43a5eb64}
+        {x40396e05 0}
+        {0 xc0402f06}
+        {x4442bb12 x43a8a354}
+        {0 x40402f06}
+        {x40396e05 0}
+        {x44416b54 x43ab5b64}
+        {xc0396e05 0}
+        {0 x40402f06}
+        {x44401b85 x43a8a354}
+        {0 xc0402f06}}}     idem}
+     {t
+      {{1 x44412000}}
+      {{1 x43a80ccd}}     0
+      {{1 0}}
+      {{1 0}}     0 0 0
+      {{1 0}}
+      {{1 1}}
+      {{1 1}}     1
+      {{1 0}}}
+     {a opc x3e99999a spx 0 spy 0 sb 1 tt x40c00000}}
+    {curvegroup Bezier3 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {x40189a02 x40bddc0a}
+        {x4449723d x43a97106}
+        {xc00c670e xc0aeaefb}
+        {x3ed37004 xc0dcd788}
+        {x44487ff0 x43ba20c5}
+        {xbed36007 x40dcd806}
+        {xbea79011 xbfd9ef20}
+        {x4448d9ba x43cb6ed9}
+        {x3ea7980f x3fd9ef20}
+        {xbe88d003 x3fde12d7}
+        {x4449eff0 x43c915c3}
+        {x3e88c804 xbfde12d7}
+        {x3cd98004 x40bfc1be}
+        {x444a2ec9 x43ba20c5}
+        {xbcd9fff1 xc0bfc101}}}     idem}
+     {t
+      {{1 x4440f5c3}}
+      {{1 x43b7cccd}}     0
+      {{1 0}}
+      {{1 0}}     0 0 0
+      {{1 0}}
+      {{1 1}}
+      {{1 1}}     1
+      {{1 0}}}
+     {a opc x3cf5c28f spx 0 spy 0 sb 1 tt x40800000}}
+    {curvegroup Bezier2 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {x401ea10e xc089c77a}
+        {x444182e1 x43c6c49c}
+        {xc011f30e x407d8812}
+        {x3edbc7f7 x40a04342}
+        {x444086fa x43baa893}
+        {xbedbbff9 xc0a04381}
+        {xbeae3001 x3f9e2728}
+        {x4440e44a x43ae19ba}
+        {x3eae3800 xbf9e2728}
+        {xbe8e3800 xbfa127e5}
+        {x44420581 x43afcdf4}
+        {x3e8e3001 x3fa127e5}
+        {x3ce27ff2 xc08b27bb}
+        {x444246d9 x43baa893}
+        {xbce27ff2 x408b277c}}}     idem}
+     {t
+      {{1 x4440f5c3}}
+      {{1 x43b7cccd}}     0
+      {{1 0}}
+      {{1 0}}     0 0 0
+      {{1 0}}
+      {{1 1}}
+      {{1 1}}     1
+      {{1 0}}}
+     {a opc x3cf5c28f spx 0 spy 0 sb 1 tt x40800000}}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {x3eee1e71 x4080bb99}
+        {x44442000 x43cbc000}
+        {xbeee1e4f xc080bb99}
+        {xbdb832c7 x403a8073}
+        {x4443e666 x43ac3333}
+        {x3db832fd xc03a8073}
+        {xc03a9739 0}
+        {x4444c000 x43a34000}
+        {x403a9739 0}
+        {xbea27350 xc0419629}
+        {x4446599a x43aa999a}
+        {x3ea2732e x40419629}
+        {x3e298dce xc0b754ca}
+        {x4446a000 x43c70000}
+        {xbe298e11 x40b754ca}
+        {x403be7c0 xc0328295}
+        {x4445e000 x43d54000}
+        {xc03be7c0 x40328295}}}     idem}
+     {t
+      {{1 x44450550}}
+      {{1 x43b88000}}     0
+      {{1 0}}
+      {{1 0}}     0 0 0
+      {{1 0}}
+      {{1 1}}
+      {{1 1}}     1
+      {{1 0}}}
+     {a opc x3cf5c28f spx 0 spy 0 sb 1 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ colorOverlay 0
+ opacity 0.03
+ lifetime_type "all frames"
+ motionblur_shutter_offset_type centred
+ source_translate_round false
+ source_black_outside true
+ name RotoPaint1
+ xpos -216
+ ypos -584
+}
+Crop {
+ box {759.5 323 817.5 428.5}
+ reformat true
+ crop false
+ name Crop1
+ xpos -216
+ ypos -560
+}
+set N67948800 [stack 0]
+Grade {
+ gamma {1 0.8599998951 -2.5 1}
+ name Grade4
+ xpos -270
+ ypos -480
+}
+Sphere {
+ inputs 0
+ translate {{(frame/10)*-1 i} {sin(frame/10)*-1 i} {sin(frame/15)*-1 i}}
+ uniform_scale 0.001
+ name Sphere4
+ xpos -566
+ ypos -507
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ rate 15
+ lifetime 100
+ velocity 0
+ size 0.2
+ name ParticleEmitter4
+ xpos -566
+ ypos -427
+}
+ParticleSettings {
+ steps_per_frame 15
+ name ParticleSettings4
+ xpos -566
+ ypos -403
+}
+Dot {
+ name Dot4
+ xpos -532
+ ypos -320
+}
+push $N67948800
+Grade {
+ gamma {1 -0.7999999523 0.6039994955 1}
+ name Grade3
+ xpos -154
+ ypos -478
+}
+Sphere {
+ inputs 0
+ translate {{(frame/10)*-1 i} {cos(frame/10) i} {cos(frame/15)*1.2 i}}
+ uniform_scale 0.001
+ name Sphere3
+ xpos 213
+ ypos -531
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ rate 15
+ lifetime 100
+ velocity 0
+ size 0.2
+ name ParticleEmitter3
+ xpos 213
+ ypos -451
+}
+ParticleSettings {
+ steps_per_frame 15
+ name ParticleSettings3
+ xpos 213
+ ypos -427
+}
+Dot {
+ name Dot3
+ xpos 247
+ ypos -323
+}
+push $N67948800
+Grade {
+ gamma {0.424000144 1 -0.7999999523 1}
+ name Grade2
+ xpos -158
+ ypos -536
+}
+Sphere {
+ inputs 0
+ translate {{(frame/10)*-1 i} {sin(frame/15)/2 i} {cos(frame/15)/2 i}}
+ uniform_scale 0.001
+ name Sphere2
+ xpos -15
+ ypos -616
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ rate 15
+ lifetime 100
+ velocity 0
+ size 0.2
+ name ParticleEmitter2
+ xpos -15
+ ypos -536
+}
+ParticleSettings {
+ steps_per_frame 15
+ name ParticleSettings2
+ xpos -15
+ ypos -512
+}
+Dot {
+ name Dot2
+ xpos 19
+ ypos -378
+}
+push $N67948800
+Grade {
+ gamma {-0.7999999523 0.6760003567 1 1}
+ name Grade1
+ xpos -294
+ ypos -536
+}
+Sphere {
+ inputs 0
+ translate {{(frame/10)*-1 i} {cos(frame/15) i} {sin(frame/15) i}}
+ uniform_scale 0.001
+ name Sphere1
+ xpos -445
+ ypos -613
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ rate 15
+ lifetime 100
+ velocity 0
+ size 0.2
+ name ParticleEmitter1
+ xpos -445
+ ypos -536
+}
+ParticleSettings {
+ steps_per_frame 15
+ name ParticleSettings1
+ xpos -445
+ ypos -512
+}
+Dot {
+ name Dot1
+ xpos -411
+ ypos -465
+}
+ParticleMerge {
+ inputs 4
+ name ParticleMerge1
+ xpos -221
+ ypos -380
+}
+Viewer {
+ frame 100
+ frame_range 1-100
+ name Viewer1
+ xpos -40
+ ypos -9
+ hide_input true
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x969600ff
+ label "<b>http://www.nukepedia.com/toolsets/particles/toolsets        ."
+ note_font_size 20
+ xpos 428
+ ypos -454
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x335959ff
+ label "<b>author: INEED MONEY        ."
+ note_font_size 20
+ xpos 430
+ ypos -516
+}

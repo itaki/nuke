@@ -1,0 +1,192 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/Downloads/Setups/ParticleSnake.nk
+ frame 53
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Radial {
+ inputs 0
+ area {1231 271.5 1435 455}
+ color {0.2900000215 0.6591999531 1 1}
+ name Radial1
+ xpos -19
+ ypos -340
+}
+Crop {
+ box {1230 272 1434 454}
+ reformat true
+ crop false
+ name Crop1
+ xpos -19
+ ypos -223
+}
+set Nd08a8800 [stack 0]
+Constant {
+ inputs 0
+ channels alpha
+ color 1
+ format "512 512 0 0 512 512 1 square_512"
+ name Constant1
+ xpos -19
+ ypos -433
+ postage_stamp false
+}
+set Nd08a8400 [stack 0]
+Dot {
+ name Dot2
+ xpos 209
+ ypos -424
+}
+Ramp {
+ p0 {134 212}
+ p1 {134 -8}
+ name Ramp1
+ xpos 175
+ ypos -336
+}
+Sphere {
+ rows 6
+ columns 6
+ translate {0 8.3 0}
+ name Sphere1
+ xpos 175
+ ypos -279
+}
+TransformGeo {
+ translate {{(frame/10)*-1} {cos(frame/15)} {sin(frame/15)}}
+ name TransformGeo1
+ xpos 285
+ ypos -279
+}
+set C9529f000 [stack 0]
+push $Nd08a8800
+Grade {
+ gamma {1.159999967 0.3480000794 -0.8700000048 5}
+ name Grade1
+ xpos -19
+ ypos -199
+}
+push $Nd08a8400
+Dot {
+ name Dot1
+ xpos -158
+ ypos -424
+}
+Ramp {
+ p0 {134 202}
+ p1 {134 510}
+ name Ramp2
+ xpos -192
+ ypos -339
+}
+Sphere {
+ rows 6
+ columns 6
+ translate {0 7.6 0}
+ rotate {0 0 -90}
+ uniform_scale 0.3
+ name Sphere2
+ xpos -192
+ ypos -282
+}
+clone $C9529f000 {
+ xpos -298
+ ypos -282
+ selected false
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ start_frame -50
+ emit_from faces
+ rate 200
+ rate_channel rgba.red
+ lifetime 440
+ velocity 0
+ size 0.09
+ name ParticleEmitter2
+ xpos -194
+ ypos -199
+}
+Dot {
+ name Dot3
+ xpos -85
+ ypos -260
+}
+Dot {
+ name Dot4
+ xpos 156
+ ypos -260
+}
+ParticleEmitter {
+ inputs 3
+ start_frame -50
+ emit_from faces
+ rate 300
+ rate_channel rgba.red
+ lifetime 270
+ velocity 0
+ size 0.09
+ name ParticleEmitter1
+ xpos 175
+ ypos -223
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x969600ff
+ label "<b>http://www.nukepedia.com/toolsets/particles/toolsets        ."
+ note_font_size 20
+ xpos 498
+ ypos -295
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x335959ff
+ label "<b>author: INEED MONEY        ."
+ note_font_size 20
+ xpos 500
+ ypos -357
+}

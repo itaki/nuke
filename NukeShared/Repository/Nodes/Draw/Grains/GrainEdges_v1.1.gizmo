@@ -1,0 +1,113 @@
+#! /Applications/Nuke8.0v5/Nuke8.0v5.app/Contents/MacOS/libnuke-8.0.v5.dylib -nx
+version 8.0 v5
+Gizmo {
+ addUserKnob {20 User}
+ addUserKnob {26 Grain l " Grain"}
+ addUserKnob {41 seed T Grain2_1.seed}
+ addUserKnob {41 presets l "" -STARTLINE T Grain2_1.presets}
+ addUserKnob {26 "" l "@b;Size"}
+ addUserKnob {41 red_size l red T Grain2_1.red_size}
+ addUserKnob {41 green_size l green T Grain2_1.green_size}
+ addUserKnob {41 blue_size l blue T Grain2_1.blue_size}
+ addUserKnob {26 "" l "@b;Irregularity"}
+ addUserKnob {41 red_i l red T Grain2_1.red_i}
+ addUserKnob {41 green_i l green T Grain2_1.green_i}
+ addUserKnob {41 blue_i l blue T Grain2_1.blue_i}
+ addUserKnob {26 "" l "@b;Intensity"}
+ addUserKnob {41 red_m l red T Grain2_1.red_m}
+ addUserKnob {41 green_m l green T Grain2_1.green_m}
+ addUserKnob {41 blue_m l blue T Grain2_1.blue_m}
+ addUserKnob {41 black T Grain2_1.black}
+ addUserKnob {41 minimum T Grain2_1.minimum}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 scaleEdgeMatte l "Scale Edge Matte" T FilterErode1.size}
+ addUserKnob {41 blurEdgeMatte l "Blur Edge Matte" T Blur1.size}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode11
+  tile_color 0x677f5201
+  label "<center><img src=\"EdgeDetect.png\"> grain edge"
+  note_font_size 30
+  xpos -808
+  ypos 134
+  bdwidth 223
+  bdheight 318
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -685
+  ypos 178
+ }
+set N5d2077a0 [stack 0]
+push $N5d2077a0
+ Merge2 {
+  inputs 2
+  operation xor
+  name Merge16
+  label "\[knob bbox]"
+  xpos -685
+  ypos 219
+ }
+ FilterErode {
+  size 0
+  name FilterErode1
+  xpos -685
+  ypos 269
+ }
+ Blur {
+  name Blur1
+  xpos -685
+  ypos 301
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  name Constant3
+  xpos -793
+  ypos 210
+ }
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy4
+  xpos -748
+  ypos 342
+ }
+ Grain2 {
+  name Grain2_1
+  label "Kodak 5248"
+  xpos -748
+  ypos 376
+  red_size 36
+  green_size 1.6
+  blue_size 1.8
+  red_m 0.82
+  green_m 0.806
+  blue_m 0.844
+  black {0 0 0}
+  minimum {0 0 0}
+ }
+ Shuffle {
+  alpha white
+  name Shuffle3
+  label "from \[knob in] + \[knob in2] to \[knob out] + \[knob out2]"
+  xpos -748
+  ypos 410
+ }
+push $N5d2077a0
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge17
+  label "\[knob bbox]"
+  xpos -328
+  ypos 410
+ }
+ Output {
+  name Output1
+  xpos -328
+  ypos 465
+ }
+end_group
