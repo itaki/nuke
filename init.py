@@ -19,7 +19,10 @@ nuke.pluginAddPath( './NukeShared' )
 # node settings
 #nuke.menu( 'Nodes' ).addCommand( 'Draw/Constant', "nuke.createNode( 'ConstantPro' )")
 #nuke.menu( 'Nodes' ).addCommand( 'Time/FrameHold', "nuke.createNode( 'FrameHold_DS' )")
-
+################################################################
+# install layer suffler
+################################################################
+nuke.pluginAddPath('./layerShuffler')
 
 
 

@@ -1,0 +1,269 @@
+#! /glassworksfs/engStuff/Foundry/Nuke_network/Nuke_linux_network_10.5v5/libnuke-10.5.5.so -nx
+version 10.5 v5
+Gizmo {
+name SD_ExpandEdge
+ inputs 2
+ addUserKnob {20 User}
+ addUserKnob {26 ExpandEdge_text l 1. T "Expand or contract edge "}
+ addUserKnob {7 expandedge l "Expand Edge" R -50 50}
+ expandedge 50
+ addUserKnob {26 ""}
+ addUserKnob {26 Erode_Text l 2. T "Erode and blur the edge to match your source plate"}
+ addUserKnob {7 erode_over l Erode R -10 10}
+ erode_over 10
+ addUserKnob {14 blur_uvs l "Blur UVs" R 0 100}
+ blur_uvs 8
+ addUserKnob {26 ""}
+ addUserKnob {26 Soften_Text l 3. T "Soften your final result"}
+ addUserKnob {7 soft_edge l "Soft Edge" R 0 50}
+ addUserKnob {26 ""}
+ addUserKnob {26 author l "" +STARTLINE T "Author - Sacha Danjou - Glassworks"}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos -205
+  ypos 750
+  number 1
+ }
+set N612f970 [stack 0]
+ ColorLookup {
+  lut {master {}
+    red {}
+    green {}
+    blue {}
+    alpha {curve C 0 x0.01498905197 1}}
+  name ColorLookup1
+  xpos -205
+  ypos 839
+ }
+ Erode {
+  channels alpha
+  size 0
+  blur 5
+  name Erode1
+  xpos -205
+  ypos 943
+ }
+push 0
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input1]"}}
+  name Switch2
+  xpos -104
+  ypos 949
+ }
+set Nb4a34800 [stack 0]
+ Input {
+  inputs 0
+  name source_with_alpha
+  xpos 0
+  ypos -49
+ }
+set N61344c0 [stack 0]
+ Dot {
+  name Dot13
+  xpos 244
+  ypos -45
+ }
+set N6139010 [stack 0]
+ Dot {
+  name Dot11
+  xpos 541
+  ypos -45
+ }
+ Blur {
+  size {{parent.blur_uvs.w} {parent.blur_uvs.h}}
+  name Blur3
+  xpos 507
+  ypos 46
+ }
+ Dot {
+  name Dot7
+  xpos 541
+  ypos 110
+ }
+set N614fd40 [stack 0]
+ Dot {
+  name Dot8
+  xpos 414
+  ypos 110
+ }
+set N61548a0 [stack 0]
+ Transform {
+  translate {1 0}
+  center {237.5 216}
+  name Transform1
+  xpos 300
+  ypos 153
+ }
+push $N61548a0
+ Transform {
+  translate {-1 0}
+  center {1024 778}
+  name Transform2
+  xpos 461
+  ypos 155
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge3
+  xpos 376
+  ypos 234
+ }
+ Dot {
+  name Dot10
+  xpos 410
+  ypos 292
+ }
+push $N614fd40
+ Dot {
+  name Dot9
+  xpos 680
+  ypos 110
+ }
+set N6189460 [stack 0]
+ Transform {
+  translate {0 1}
+  center {1024 778}
+  name Transform4
+  xpos 593
+  ypos 157
+ }
+push $N6189460
+ Transform {
+  translate {0 -1}
+  center {1024 778}
+  name Transform3
+  xpos 716
+  ypos 155
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge4
+  xpos 654
+  ypos 236
+ }
+ ShuffleCopy {
+  inputs 2
+  in rgb
+  red green
+  blue black
+  black alpha2
+  white alpha2
+  red2 alpha2
+  out rgb
+  name ShuffleCopy1
+  xpos 654
+  ypos 288
+ }
+ Dot {
+  name Dot12
+  xpos 688
+  ypos 340
+ }
+push $N6139010
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name Copy3
+  xpos 210
+  ypos 324
+ }
+ IDistort {
+  channels rgba
+  uv forward
+  uv_scale {{-(parent.expandedge)}}
+  name IDistort1
+  xpos 210
+  ypos 412
+ }
+set N61da6c0 [stack 0]
+push $N612f970
+push $N61da6c0
+ FilterErode {
+  channels alpha
+  size {{parent.erode_over+2 2}}
+  name FilterErode1
+  xpos 210
+  ypos 464
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos 210
+  ypos 539
+ }
+ Blur {
+  channels alpha
+  size {{parent.soft_edge}}
+  name Blur4
+  xpos 210
+  ypos 578
+ }
+ Premult {
+  name Premult4
+  xpos 210
+  ypos 656
+ }
+push $N61344c0
+ Merge2 {
+  inputs 2
+  maskChannelInput -depth.Z
+  name Merge5
+  xpos 210
+  ypos 750
+ }
+set N6214d50 [stack 0]
+push $N61344c0
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 0
+  ypos 744
+ }
+push $N6214d50
+ Dot {
+  name Dot2
+  xpos 244
+  ypos 864
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input1]"}}
+  name Switch1
+  xpos 0
+  ypos 860
+ }
+ Copy {
+  inputs 2+1
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 0
+  ypos 943
+ }
+ Crop {
+  box {0 0 {parent.source_with_alpha.width} {parent.source_with_alpha.height}}
+  name Crop1
+  xpos 0
+  ypos 1038
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 1090
+ }
+push $Nb4a34800
+ Viewer {
+  frame_range 0-478
+  name Viewer1
+  xpos 393
+  ypos 978
+ }
+end_group

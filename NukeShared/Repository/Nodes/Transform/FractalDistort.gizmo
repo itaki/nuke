@@ -1,0 +1,183 @@
+#! C:/Program Files/Nuke13.1v5/nuke-13.1.5.dll -nx
+Gizmo {
+ inputs 2
+ onCreate "n = nuke.thisNode()\nk = nuke.thisKnob()\nn\['mix'].setFlag(0x0000000000000010)\n\nif n.input(0):\n    n\['center'].setValue(\[n.input(0).width()/2, n.input(0).height()/2])\nelse:\n    n\['center'].setValue(\[nuke.root().width()/2, nuke.root().height()/2])"
+ tile_color 0xff5204ff
+ note_font_color 0xffffffff
+ addUserKnob {20 fractaldistort l "Fractal Distort"}
+ addUserKnob {26 title l " " T "<span style=\"font-size:18px\">Fractal Distort <sup>v1.1</sup></span><span style='font-size:32px;'>&#x1F334;</span><b><span style=\"color:#7F7F7F\">by Lundy Hu</span></b>"}
+ addUserKnob {26 fractal l "<b><span style='color:#FF5204'>Fractal</span></b>"}
+ addUserKnob {14 xy_size l "XY Size" R 1 1000}
+ xy_size 100
+ addUserKnob {7 detail l Detail R 1 10}
+ detail 2
+ addUserKnob {7 seed l Seed R 0 5}
+ addUserKnob {7 evolve l Evolve R 0 0.5}
+ evolve 0.02
+ addUserKnob {26 spacer_1 l "" +STARTLINE T " "}
+ addUserKnob {26 distort l "<b><span style='color:#FF5204'>Distort</span></b>"}
+ addUserKnob {7 scale l Scale R 0 200}
+ scale 50
+ addUserKnob {7 smooth l Smooth R 0 100}
+ addUserKnob {26 spacer_3 l "" +STARTLINE T " "}
+ addUserKnob {26 ""}
+ addUserKnob {4 effect l Mix M {Opacity Distort "" "" "" "" "" "" ""}}
+ addUserKnob {7 mix l "" -STARTLINE}
+ mix 1
+ addUserKnob {26 spacer_2 l "" +STARTLINE T " "}
+ addUserKnob {4 viewoutput l Output M {"Final Result" Fractal ""}}
+ addUserKnob {20 transform l Transform}
+ addUserKnob {41 translate T Noise1.translate}
+ addUserKnob {41 rotate T Noise1.rotate}
+ addUserKnob {41 scale_1 l scale T Noise1.scale}
+ addUserKnob {41 center T Noise1.center}
+ addUserKnob {41 xrotate T Noise1.xrotate}
+ addUserKnob {41 yrotate T Noise1.yrotate}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos -478
+  ypos -351
+  number 1
+ }
+ Invert {
+  name Invert1
+  xpos -478
+  ypos 554.6666667
+ }
+ Input {
+  inputs 0
+  name Input
+  selected true
+  xpos -75
+  ypos -351
+ }
+ Dot {
+  name Dot1
+  xpos -41
+  ypos -189
+ }
+set Ncaf89800 [stack 0]
+ Dot {
+  name Dot3
+  xpos -242
+  ypos -189
+ }
+ Dot {
+  name Dot2
+  xpos -242
+  ypos 449
+ }
+set Ncafb4000 [stack 0]
+push $Ncafb4000
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width {{Dot1.width}}
+  box_height {{Dot1.height}}
+  box_fixed true
+  name Reformat1
+  xpos 155
+  ypos -192
+ }
+ Noise {
+  size {{parent.xy_size.0} {parent.xy_size.1}}
+  zoffset {{parent.seed+parent.evolve*frame}}
+  lacunarity {{parent.detail}}
+  center {960 540}
+  name Noise1
+  xpos 155
+  ypos -117.25
+ }
+ Grade {
+  channels rgba
+  white 2
+  add -0.5
+  black_clamp false
+  name Grade2
+  xpos 155
+  ypos -42.5
+ }
+ Blur {
+  size {{parent.smooth}}
+  name Blur2
+  label "\[value size]"
+  xpos 155
+  ypos 21.25
+ }
+ Multiply {
+  value {{parent.mix}}
+  name Multiply1
+  label "\[value value]"
+  xpos 155
+  ypos 96
+  disable {{"parent.effect==1? 0:1"}}
+ }
+push $Ncaf89800
+add_layer {fractal fractal.r fractal.g}
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 fractal.r
+  from1 rgba.green
+  to1 fractal.g
+  name Copy1
+  xpos -75
+  ypos 96
+ }
+ IDistort {
+  uv {fractal.r -fractal.g}
+  uv_scale {{parent.scale}}
+  name IDistort1
+  xpos -75
+  ypos 215.1666667
+ }
+ IDistort {
+  uv {-fractal.r fractal.g}
+  uv_scale {{parent.scale}}
+  name IDistort2
+  xpos -75
+  ypos 328.3333333
+ }
+ Dissolve {
+  inputs 2
+  which {{1-parent.mix}}
+  name Dissolve1
+  xpos -75
+  ypos 441.5
+  disable {{"parent.effect==0? 0:1"}}
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -75
+  ypos 554.6666667
+  disable {{"\[exists parent.input1]? 0:1"}}
+ }
+set Ncafecc00 [stack 0]
+ Shuffle2 {
+  fromInput1 {{0} B}
+  in1 fractal
+  fromInput2 {{0} B}
+  mappings "4 fractal.r 0 0 rgba.red 0 0 fractal.r 0 0 rgba.green 0 1 fractal.r 0 0 rgba.blue 0 2 fractal.r 0 0 rgba.alpha 0 3"
+  name Shuffle1
+  label "\[value in1] > \[value out1]"
+  xpos 155
+  ypos 554.6666667
+ }
+push $Ncafecc00
+ Switch {
+  inputs 2
+  which {{parent.viewoutput}}
+  name Switch1
+  label "\[value which]"
+  xpos -75
+  ypos 708.8333333
+ }
+ Output {
+  name Output1
+  xpos -75
+  ypos 868
+ }
+end_group
