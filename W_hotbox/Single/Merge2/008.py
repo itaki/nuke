@@ -2,79 +2,30 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Convert to ChannelMerge
+# NAME: New Mask
 #
 #----------------------------------------------------------------------------------------------------------
 
-nodeClass = 'ChannelMerge'
+
+def emptySelection(selection):
+    for i in selection:
+        i.knob('selected').setValue(False)
 
 selection = nuke.selectedNodes()
 
-for node in selection:
+emptySelection(selection)
 
-    #check whether original node has a mask input
-    maskInput = None
-    for knob in node.knobs().keys():
-        if knob.startswith('maskChannel'):
-            maskInput = node.minInputs() - 1
+for i in selection:
 
-    #save inputs
-    inputs = {}
+    rotoNode = nuke.createNode('Roto')
+    dotNode = nuke.createNode('Dot', inpanel = False)
+    postion = [i.xpos()-i.screenWidth()/2,i.ypos()+i.screenHeight()/2]
 
-    counter = 0
-    for i in range(node.maxInputs()):
-        inputNode =  node.input(i)
-        if inputNode != None:
-            if i == maskInput:
-                inputs['MASK'] = inputNode
-                counter -= 1
-            else:
-                inputs[counter] = inputNode
-        counter += 1
-    
-    #save position
-    position = [node.xpos(),node.ypos()]
+    dotNode.setXpos(postion[0]+310-dotNode.screenWidth()/2)
+    dotNode.setYpos(postion[1]-dotNode.screenHeight()/2)
 
-    #make sure no nodes are selected
-    for i in nuke.selectedNodes():
-        i.knob('selected').setValue(False)
+    rotoNode.setXpos(postion[0]+310-rotoNode.screenWidth()/2)
+    rotoNode.setYpos(postion[1]-100+rotoNode.screenHeight()/2)
 
-    #create new node
-    newNode = nuke.createNode(nodeClass, inpanel = False)
-            
-    newNode.knob('selected').setValue(False)
-
-    #check whether new node has a mask input
-    maskInput = None
-    for knob in newNode.knobs().keys():
-        if knob.startswith('maskChannel'):
-            maskInput = newNode.minInputs() - 1
-
-    #reconnect inputs
-    counter = 0
-    for i in range(newNode.maxInputs()):
-        if i == maskInput:
-            try:
-                newNode.setInput(maskInput,inputs['MASK'])
-            except:
-                pass
-        else:
-            try:
-                newNode.setInput(i,inputs[counter])
-            except:
-                pass
-            counter += 1
-    #reconnect outputs
-    node.knob('selected').setValue(True)
-    tmpDotNode = nuke.createNode('Dot')
-    node.knob('selected').setValue(False)
-    
-    tmpDotNode.setInput(0,newNode)
-    nuke.delete(tmpDotNode)
-        
-    #delete original
-    nuke.delete(node)
-        
-    newNode.setXpos(position[0])
-    newNode.setYpos(position[1])
-
+    i.setInput(2,dotNode)
+    emptySelection(selection)

@@ -1,0 +1,1 @@
+MacOS = Applications/Nuke##/Nuke##/Contents/MacOS/python3.9

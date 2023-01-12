@@ -1637,11 +1637,11 @@ class LayerShuffler(QtGui.QMainWindow):
             dot.setSelected(True)
 
             # Shuffle
-            shuf = nuke.Node("Shuffle", inpanel=False)
+            shuf = nuke.Node("Shuffle2", inpanel=False)
             xpos = shuf.xpos()
             offset = ypos + 250
             shuf.setXYpos(xpos,offset)
-            shuf.knob("in").setValue(item)
+            shuf.knob("in1").setValue(item)
             shuf.knob("name").setValue(self.renamingHandler(item))
             shuf.knob("postage_stamp").setValue(True)
 
@@ -1711,7 +1711,7 @@ class LayerShuffler(QtGui.QMainWindow):
             ypos -= 150
             # Center X position of backdrop to shuffle node.
             xpos = shuf.xpos()-((222/2)-41-10)
-            backd.setXYpos(xpos, ypos)
+            backd.setXYpos(int(xpos), int(ypos))
 
             backd.knob("bdheight").setValue(backd["bdheight"].value() + 185 - 50)
             backd.knob("bdwidth").setValue(backd["bdwidth"].value() * 2)
@@ -1786,7 +1786,7 @@ class LayerShuffler(QtGui.QMainWindow):
                     # if the last Shuffled layer does only contains a Shuffle. This follow block
                     # ensures that the backdrop is extended if the last layer is only the Shuffle node.
                     for node in nuke.selectedNodes():
-                        if node.Class() == "Shuffle" and self.shuffleIndexDict[node]["shuffleIndex"] == highestIndex:
+                        if node.Class() == "Shuffle2" and self.shuffleIndexDict[node]["shuffleIndex"] == highestIndex:
                             if self.findLastConnected(node) == node:
                                 sectionBackd.knob("bdwidth").setValue(sectionBackd.knob("bdwidth").value() + 34)
                 else:
@@ -1801,7 +1801,7 @@ class LayerShuffler(QtGui.QMainWindow):
                     # if the last Shuffled layer does only contains a Shuffle. This follow block
                     # ensures that the backdrop is extended if the last layer is only the Shuffle node.
                     for node in nuke.selectedNodes():
-                        if node.Class() == "Shuffle" and self.shuffleIndexDict[node]["shuffleIndex"] == highestIndex:
+                        if node.Class() == "Shuffle2" and self.shuffleIndexDict[node]["shuffleIndex"] == highestIndex:
                             if self.findLastConnected(node) == node:
                                 sectionBackd.knob("bdwidth").setValue(sectionBackd.knob("bdwidth").value() + 34)
 
@@ -2004,7 +2004,7 @@ class LayerShuffler(QtGui.QMainWindow):
 
                 # Replace the variables above with their corresponding node pointers.
                 for n in self.shuffleIndexDict:
-                    if n.Class() == "Shuffle":
+                    if n.Class() == "Shuffle2":
                         replaceWith = self.findLastConnected(n)
 
                         if n['in'].value() == directDiffuse:
@@ -2405,7 +2405,7 @@ class LayerShuffler(QtGui.QMainWindow):
                             newMerge = nuke.Node("Merge2", inpanel = False)
                             newMerge['operation'].setValue("plus")
                             nukescripts.swapAB(newMerge)
-                            if mer.Class() == "Shuffle":
+                            if mer.Class() == "Shuffle2":
                                 newMerge.setXYpos(mer.xpos(), mer.ypos() + distanceNum*2)
                             else:
                                 newMerge.setXYpos(mer.xpos(), mer.ypos() + distanceNum)
@@ -2445,7 +2445,7 @@ class LayerShuffler(QtGui.QMainWindow):
 
                 # Replace the variables above with their corresponding node pointers.
                 for n in self.shuffleIndexDict:
-                    if n.Class() == "Shuffle":
+                    if n.Class() == "Shuffle2":
                         replaceWith = self.findLastConnected(n)
 
                         if n['in'].value() == direct:
@@ -2579,7 +2579,7 @@ class LayerShuffler(QtGui.QMainWindow):
 
                 # Replace the variables above with their corresponding node pointers.
                 for n in self.shuffleIndexDict:
-                    if n.Class() == "Shuffle":
+                    if n.Class() == "Shuffle2":
                         replaceWith = self.findLastConnected(n)
 
                         if n['in'].value() == diffuseFilter:
@@ -2960,7 +2960,7 @@ class LayerShuffler(QtGui.QMainWindow):
 
                 # Replace the variables above with their corresponding node pointers.
                 for n in self.shuffleIndexDict:
-                    if n.Class() == "Shuffle":
+                    if n.Class() == "Shuffle2":
                         replaceWith = self.findLastConnected(n)
 
                         if n['in'].value() == lighting:
@@ -4288,7 +4288,7 @@ class LayerShuffler(QtGui.QMainWindow):
             self.check_removeExrRestriction.setText(QtGui.QApplication.translate("LayerShufflerWin", "Skip EXR check", None, QtGui.QApplication.UnicodeUTF8))
             self.check_extendShuffled.setText(QtGui.QApplication.translate("LayerShufflerWin", "Extend Shuffled", None, QtGui.QApplication.UnicodeUTF8))
             self.btn_selectShuffled.setText(QtGui.QApplication.translate("LayerShufflerWin", "Select Last Shuffle", None, QtGui.QApplication.UnicodeUTF8))
-            self.btn_shuffleAction.setText(QtGui.QApplication.translate("LayerShufflerWin", "Shuffle", None, QtGui.QApplication.UnicodeUTF8))
+            self.btn_shuffleAction.setText(QtGui.QApplication.translate("LayerShufflerWin", "Shuffle2", None, QtGui.QApplication.UnicodeUTF8))
             self.btn_mainPasses_selectAll.setText(QtGui.QApplication.translate("LayerShufflerWin", "Select All", None, QtGui.QApplication.UnicodeUTF8))
             self.btn_mainPasses_clearSel.setText(QtGui.QApplication.translate("LayerShufflerWin", "Clear Selection", None, QtGui.QApplication.UnicodeUTF8))
             self.lineEdit_mainPassesTitle_input.setText(QtGui.QApplication.translate("LayerShufflerWin", "Main Passes", None, QtGui.QApplication.UnicodeUTF8))
@@ -4439,7 +4439,7 @@ class LayerShuffler(QtGui.QMainWindow):
             self.check_removeExrRestriction.setText(QtGui.QApplication.translate("LayerShufflerWin", "Skip EXR check", None))
             self.check_extendShuffled.setText(QtGui.QApplication.translate("LayerShufflerWin", "Extend Shuffled", None))
             self.btn_selectShuffled.setText(QtGui.QApplication.translate("LayerShufflerWin", "Select Last Shuffle", None))
-            self.btn_shuffleAction.setText(QtGui.QApplication.translate("LayerShufflerWin", "Shuffle", None))
+            self.btn_shuffleAction.setText(QtGui.QApplication.translate("LayerShufflerWin", "Shuffle2", None))
             self.btn_mainPasses_selectAll.setText(QtGui.QApplication.translate("LayerShufflerWin", "Select All", None))
             self.btn_mainPasses_clearSel.setText(QtGui.QApplication.translate("LayerShufflerWin", "Clear Selection", None))
             self.lineEdit_mainPassesTitle_input.setText(QtGui.QApplication.translate("LayerShufflerWin", "Main Passes", None))

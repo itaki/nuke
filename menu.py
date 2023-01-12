@@ -73,6 +73,12 @@ nuke.knobDefault("Write.exr.compression","0")
 # --------------------------------------------------------------
 # OTHER NODE SETTINGS ::::::::::::::::::::::::::::::::::::::::::
 # --------------------------------------------------------------
+# Text > Default font: Helvetica Regular (in Dropbox folder)  
+#nuke.knobDefault("Text.font",   "/Path/to/Dropbox/fonts/HelveticaRegular.   ttf")  
+
+# StickyNote > default text size: 40pt  
+nuke.knobDefault("StickyNote.note_font_size", "40")
+nuke.knobDefault("StickyNote.note_font", "Gothan-Black")  
 # RotoPaint > Set default tool to brush, set default lifetime for brush and clone to "all frames"  
 nuke.knobDefault("RotoPaint.toolbox", "brush {{brush ltt 0} {clone ltt 0}}")  
 # Invert -> set to only alpha
@@ -87,11 +93,13 @@ nuke.knobDefault("Invert.channels","alpha")
 # v = keyer
 # option ~ = scaletree
 # option q = channel hotbox
-# command shift d = backdrop preset
+# shift b = backdrop preset
+# option z = knob scripter
 
 # --------------------------------------------------------------
 # CUSTOM GIZMO SWAP ::::::::::::::::::::::::::::::::::::::::::::
 # --------------------------------------------------------------
+# NOT NEEEDED ANYMORE BECAUSE OF FAVORITES
 # #nuke.menu( 'Nodes' ).addCommand( 'Image/Constant', "nuke.createNode( 'Image/ConstantPro' )")
 
 
@@ -125,4 +133,4 @@ nuke.menu('Nodes').addMenu("CaraVR", icon="icon_toolbar_CaraVR_HighRes.png")
 
 # Add new menu items here
 nuke.menu('Nodes').addMenu("Tools", icon="toolbox_icon.png")
-nuke.menu('Nodes').addMenu("Scripts", icon="icon_toolbar_scripts_HighRes.png")
+nuke.menu('Nodes').addMenu("Scripts", icon="scripts.png")

@@ -2,10 +2,9 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Difference
+# NAME: rgb
 #
 #----------------------------------------------------------------------------------------------------------
 
 for i in nuke.selectedNodes():
-    i.knob('output').setValue('rgb')
-    i.knob('operation').setValue('differnce')
+	i.knob('output').setValue('rgb')
