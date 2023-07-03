@@ -1,4 +1,16 @@
 # Byte-compiled / optimized / DLL files
+# Ignore this stuff specifically
+_dev
+_temp
+_icon_work
+_library
+_logs
+_~.nuke
+itaki_tools/_dev
+
+# MAC crap
+**/.DS_Store
+
 __pycache__/
 *.py[cod]
 *$py.class
