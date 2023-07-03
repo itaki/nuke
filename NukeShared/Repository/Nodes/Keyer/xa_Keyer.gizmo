@@ -1,0 +1,508 @@
+#! C:/Program Files/Nuke11.1v2/nuke-11.1.2.dll -nx
+version 11.1 v2
+Gizmo {
+ knobChanged "\nn=nuke.thisNode()\nk=nuke.thisKnob()\nif k.name() == \"keyerOp\":\n    keyerOperation = n\['keyerOp'].getValue()\n\n    if keyerOperation == 6:\n        n\['customLum'].setVisible(True)\n        n\['rMult'].setVisible(True)\n        n\['gMult'].setVisible(True)\n        n\['bMult'].setVisible(True)\n        n\['chroCol'].setVisible(False)\n        n\['bumpBlur'].setVisible(False)\n        n\['bumpSub'].setVisible(False)\n        n\['bumpA'].setVisible(False)\n        with n:\n            nuke.delete(nuke.toNode('cleanplate'))\n\n    elif keyerOperation == 10:\n        n\['chroCol'].setVisible(True)\n        n\['customLum'].setVisible(False)\n        n\['rMult'].setVisible(False)\n        n\['gMult'].setVisible(False)\n        n\['bMult'].setVisible(False)\n        n\['bumpBlur'].setVisible(False)\n        n\['bumpSub'].setVisible(False)\n        n\['bumpA'].setVisible(False)\n        with n:\n            nuke.delete(nuke.toNode('cleanplate')) \n\n    elif keyerOperation == 11:\n        n\['chroCol'].setVisible(False)\n        n\['customLum'].setVisible(False)\n        n\['rMult'].setVisible(False)\n        n\['gMult'].setVisible(False)\n        n\['bMult'].setVisible(False)\n        n\['bumpBlur'].setVisible(False)\n        n\['bumpSub'].setVisible(False)\n        n\['bumpA'].setVisible(False)\n        with n:\n            iN = nuke.nodes.Input()\n            iN\['xpos'].setValue(-1140)\n            iN\['ypos'].setValue(221)\n            iN.setName('cleanplate')\n            nuke.toNode('Dot14').setInput(0, iN)\n\n    elif keyerOperation == 12:\n        n\['bumpBlur'].setVisible(True)\n        n\['bumpSub'].setVisible(True)\n        n\['bumpA'].setVisible(True)\n        n\['chroCol'].setVisible(False)\n        n\['customLum'].setVisible(False)\n        n\['rMult'].setVisible(False)\n        n\['gMult'].setVisible(False)\n        n\['bMult'].setVisible(False)\n        with n:\n            nuke.delete(nuke.toNode('cleanplate'))\n\n    else:\n        n\['customLum'].setValue(False)\n        n\['customLum'].setVisible(False)\n        n\['rMult'].setVisible(False)\n        n\['gMult'].setVisible(False)\n        n\['bMult'].setVisible(False)\n        n\['chroCol'].setVisible(False)\n        n\['bumpBlur'].setVisible(False)\n        n\['bumpSub'].setVisible(False)\n        n\['bumpA'].setVisible(False)\n        with n:\n            nuke.delete(nuke.toNode('cleanplate'))\n\n    if keyerOperation > 9:\n        with n:\n            cN = nuke.toNode('Keyer1')\n            cN\['operation'].setValue(8)\n\n    else:\n        with n:\n            cN = nuke.toNode('Keyer1')\n            cN\['operation'].setValue(int(keyerOperation))\n\n\nelif k.name() == \"rMult\" or k.name() == \"gMult\" or k.name() == \"bMult\":\n    rValue = n\['rMult'].getValue()\n    gValue = n\['gMult'].getValue()\n    bValue = n\['bMult'].getValue()\n    lumValue = rValue+ gValue + bValue\n    if lumValue != 1:\n        if k.name() == 'rMult':\n            n\['gMult'].setValue(n\['gMult'].getValue()-((lumValue-1)/2))\n            n\['bMult'].setValue(n\['bMult'].getValue()-((lumValue-1)/2))\n            gValue = n\['gMult'].getValue()\n            bValue = n\['bMult'].getValue()\n            if gValue < 0:\n                n\['gMult'].setValue(0)\n                n\['rMult'].setValue(n\['rMult'].getValue()-(abs(gValue)/2))\n                n\['bMult'].setValue(n\['bMult'].getValue()-(abs(gValue)/2))\n            if bValue < 0:\n                n\['bMult'].setValue(0)\n                n\['rMult'].setValue(n\['rMult'].getValue()-(abs(bValue)/2))\n                n\['gMult'].setValue(n\['gMult'].getValue()-(abs(bValue)/2))\n        elif k.name() == 'gMult':\n            n\['rMult'].setValue(n\['rMult'].getValue()-((lumValue-1)/2))\n            n\['bMult'].setValue(n\['bMult'].getValue()-((lumValue-1)/2))\n\n            if rValue < 0:\n                n\['rMult'].setValue(0)\n                n\['gMult'].setValue(n\['gMult'].getValue()-(abs(rValue)/2))\n                n\['bMult'].setValue(n\['bMult'].getValue()-(abs(rValue)/2))\n            if bValue < 0:\n                n\['bMult'].setValue(0)\n                n\['rMult'].setValue(n\['rMult'].getValue()-(abs(bValue)/2))\n                n\['gMult'].setValue(n\['gMult'].getValue()-(abs(bValue)/2))\n\n        else:\n            n\['rMult'].setValue(n\['rMult'].getValue()-((lumValue-1)/2))\n            n\['gMult'].setValue(n\['gMult'].getValue()-((lumValue-1)/2))\n\n            if gValue < 0:\n                n\['gMult'].setValue(0)\n                n\['rMult'].setValue(n\['rMult'].getValue()-(abs(gValue)/2))\n                n\['bMult'].setValue(n\['bMult'].getValue()-(abs(gValue)/2))\n            if rValue < 0:\n                n\['rMult'].setValue(0)\n                n\['rMult'].setValue(n\['rMult'].getValue()-(abs(rValue)/2))\n                n\['gMult'].setValue(n\['gMult'].getValue()-(abs(rValue)/2))\n"
+ tile_color 0xff00ff
+ label "\[value keyerOp]"
+ addUserKnob {20 keyerTab l Keyer}
+ addUserKnob {41 in l Input t "Which channels to calculate the key from" T Shuffle8.in}
+ addUserKnob {6 lin2log l "Enable Lin>Log preprocess" t "Converts the input from linear to log giving more space to mid tones in order to improve the chances of keying specific areas" +STARTLINE}
+ addUserKnob {4 keyerOp l Operation t "red, green, blue = use that channel\nscreen = subtract that channel from others\nluminance = use CIE luminance value\nsaturation = use color saturation\nmax, min = max or min of red,green,blue\nchrominance = sets picked color in the origin of 3d space and calculates the distance from ofther pixels to it\ndifference = compares the input with the cleanplate\nbump = generates a matte for bump details" M {"Red Keyer" "Green Keyer" "Blue Keyer" Redscreen Greenscreen Bluescreen "Luminance Key" "Saturation Key" "Max Keyer" "Min Keyer" "Chrominance Key" "Difference Key" "Bump Keyer" "" "" "" "" ""}}
+ keyerOp "Luminance Key"
+ addUserKnob {6 customLum l "Enable Custom Luminance" t "Enables the possibility to generate a custom luminance deciding how much influence R, G and B channels are going to have on it. The sum of R, G and B must be equal to 1. " +STARTLINE}
+ addUserKnob {7 rMult l "Red Amount"}
+ rMult 0.3
+ addUserKnob {7 gMult l "Green Amount"}
+ gMult 0.59
+ addUserKnob {7 bMult l "Blue Amount"}
+ bMult 0.11
+ addUserKnob {18 chroCol l color t "Set this value as origin to calculate the distance between other pixel values" +HIDDEN}
+ chroCol {0 0 0}
+ addUserKnob {6 chroCol_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 chroCol_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 chroCol_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 chroCol_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 bumpBlur l "Blur Size" t "Modify this value to decide what should be consider as bump. To pick tiny details, use a low value." +HIDDEN R 0 100}
+ bumpBlur 14.5
+ addUserKnob {7 bumpSub l "Bump Subtraction" t "Helps to filter details" +HIDDEN R 0 0.5}
+ bumpSub 0.05
+ addUserKnob {6 bumpA l "Alternative Method" t "Sometimes it helps to improve the chances of succesful keying" +HIDDEN +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {41 keyerRange l Threshold t "Specify the trapezoid used to key.  Goes linearly from (A,0) to (B,1), and then from (C,1) to (D,0).  If C and D are the same it will map everything >C to 1." T Keyer1.range}
+ addUserKnob {6 clamp l "Clamp Alpha" t "Clamp the output alpha to keep values between 0 and 1" +STARTLINE}
+ clamp true
+ addUserKnob {26 ""}
+ addUserKnob {26 about l "" +STARTLINE T "Developed by Xabier Arrieta.\nhttps://arrieta.me"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0xbababa01
+  label "<center>Custom Luminance"
+  note_font_size 50
+  xpos -292
+  ypos -5
+  bdwidth 454
+  bdheight 485
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0xbababa01
+  label <center>Keyer
+  note_font_size 50
+  xpos 209
+  ypos 874
+  bdwidth 243
+  bdheight 197
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0xbababa01
+  label "<center>Recover Original RGB"
+  note_font_size 50
+  xpos 188
+  ypos 1927
+  bdwidth 284
+  bdheight 274
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xbababa01
+  label "<center>Chrominance Key"
+  note_font_size 50
+  xpos -724
+  ypos -11
+  bdwidth 357
+  bdheight 366
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0xbababa01
+  label "<center>Difference Key"
+  note_font_size 50
+  xpos -1206
+  ypos -15
+  bdwidth 441
+  bdheight 624
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0xbababa01
+  label "<center>Bump Keyer"
+  note_font_size 50
+  xpos -504
+  ypos 1060
+  bdwidth 572
+  bdheight 740
+ }
+ Input {
+  inputs 0
+  name input
+  xpos 290
+  ypos -274
+ }
+ Shuffle {
+  name Shuffle8
+  label "\[string toupper \[value in]]\[if \{\[value out]==\"rgba\"\} \{return\} else \{return \" to \"\}]\[if \{\[value out]==\"rgba\"\} \{return\} else \{return \[string toupper \[value out]]\}]"
+  xpos 290
+  ypos -208
+ }
+ Dot {
+  name Dot8
+  xpos 324
+  ypos -102
+ }
+set N8c8e5880 [stack 0]
+ Dot {
+  name Dot9
+  xpos -1436
+  ypos -102
+ }
+ Dot {
+  name Dot10
+  xpos -1437
+  ypos 2149
+ }
+ Dot {
+  inputs 0
+  name Dot14
+  xpos -1106
+  ypos 283
+ }
+push $N8c8e5880
+ Log2Lin {
+  operation lin2log
+  black 4e-05
+  white 665
+  name Log2Lin1
+  label "\[if \{\[value operation]==\"lin2log\"\} \{return \"LIN > LOG\"\} else \{return \"LOG > LIN\"\}]"
+  xpos 290
+  ypos -23
+  disable {{!parent.lin2log}}
+ }
+ Dot {
+  name Dot6
+  xpos 324
+  ypos 152
+ }
+set N8931d180 [stack 0]
+ Dot {
+  name Dot1
+  xpos 34
+  ypos 152
+ }
+set N8c6c0e00 [stack 0]
+ Dot {
+  name Dot2
+  xpos -84
+  ypos 152
+ }
+set N94489880 [stack 0]
+ Dot {
+  name Dot3
+  xpos -204
+  ypos 152
+ }
+set N8c8fdc00 [stack 0]
+ Dot {
+  name Dot11
+  xpos -552
+  ypos 152
+ }
+set Nf526c000 [stack 0]
+ Dot {
+  name Dot13
+  xpos -957
+  ypos 152
+ }
+add_layer {cleanplate cleanplate.r cleanplate.g cleanplate.b}
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 cleanplate.r
+  from1 rgba.green
+  to1 cleanplate.g
+  from2 rgba.blue
+  to2 cleanplate.b
+  name Copy2
+  xpos -991
+  ypos 260
+ }
+ Expression {
+  expr0 abs(r-cleanplate.r)
+  expr1 abs(g-cleanplate.g)
+  expr2 abs(b-cleanplate.b)
+  name Expression2
+  label DIFFERENCE
+  xpos -991
+  ypos 344
+ }
+ Remove {
+  channels cleanplate
+  name Remove1
+  xpos -991
+  ypos 396
+ }
+ Expression {
+  expr3 r+g+b
+  name Expression3
+  label "A = R+G+B"
+  xpos -991
+  ypos 450
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle5
+  label "RGB = A"
+  xpos -991
+  ypos 503
+ }
+ Dot {
+  name Dot15
+  xpos -957
+  ypos 714
+ }
+push $Nf526c000
+ Expression {
+  expr3 ((parent.chroCol.r-r)**2+(parent.chroCol.g-g)**2+(parent.chroCol.b-b)**2)**(1/2.0)
+  name Expression1
+  label "DISTANCE MAP"
+  xpos -586
+  ypos 210
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle4
+  label "RGB = A"
+  xpos -586
+  ypos 276
+ }
+ Dot {
+  name Dot12
+  xpos -552
+  ypos 598
+ }
+push $N8c8fdc00
+ Shuffle {
+  green red
+  blue red
+  alpha black
+  name Shuffle3
+  label R
+  xpos -238
+  ypos 212
+ }
+ Multiply {
+  channels rgb
+  value {{parent.rMult}}
+  name Multiply3
+  label "\[value parent.rMult]"
+  xpos -238
+  ypos 268
+ }
+ Clamp {
+  name Clamp1
+  xpos -238
+  ypos 316
+ }
+ Dot {
+  name Dot5
+  xpos -204
+  ypos 378
+ }
+push 0
+push $N94489880
+ Shuffle {
+  red green
+  blue green
+  alpha black
+  name Shuffle2
+  label G
+  xpos -118
+  ypos 212
+ }
+ Multiply {
+  channels rgb
+  value {{parent.gMult}}
+  name Multiply2
+  label "\[value parent.gMult]"
+  xpos -118
+  ypos 268
+ }
+ Clamp {
+  name Clamp2
+  xpos -118
+  ypos 318
+ }
+ Dot {
+  name Dot4
+  xpos -84
+  ypos 378
+ }
+push $N8c6c0e00
+ Shuffle {
+  red blue
+  green blue
+  alpha black
+  name Shuffle1
+  label B
+  xpos 0
+  ypos 212
+ }
+ Multiply {
+  channels rgb
+  value {{parent.bMult}}
+  name Multiply1
+  label "\[value parent.bMult]"
+  xpos 0
+  ypos 268
+ }
+ Clamp {
+  name Clamp3
+  xpos 0
+  ypos 318
+ }
+ Merge2 {
+  inputs 3+1
+  operation plus
+  name Merge1
+  xpos 0
+  ypos 426
+ }
+ Dot {
+  name Dot7
+  xpos 34
+  ypos 511
+ }
+push $N8931d180
+ Switch {
+  inputs 2
+  which {{parent.customLum}}
+  name Switch1
+  xpos 290
+  ypos 507
+ }
+ Switch {
+  inputs 2
+  which {{"\[if \{\[value parent.keyerOp]==\"Chrominance Key\"\} \{return 1\} else \{return 0\}]"}}
+  name Switch2
+  xpos 290
+  ypos 590
+ }
+ Switch {
+  inputs 2
+  which {{"\[if \{\[value parent.keyerOp]==\"Difference Key\"\} \{return 1\} else \{return 0\}]"}}
+  name Switch3
+  xpos 290
+  ypos 710
+ }
+ Keyer {
+  operation "luminance key"
+  name Keyer1
+  xpos 289
+  ypos 981
+ }
+ Dot {
+  name Dot16
+  xpos 323
+  ypos 1194
+ }
+set N97a9a000 [stack 0]
+ Dot {
+  name Dot17
+  xpos -116
+  ypos 1190
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle6
+  label "RGB = A"
+  xpos -150
+  ypos 1252
+ }
+ Dot {
+  name Dot18
+  xpos -116
+  ypos 1338
+ }
+set N97a9ae00 [stack 0]
+ Dot {
+  name Dot19
+  xpos -264
+  ypos 1338
+ }
+set N8c27bc00 [stack 0]
+ Dot {
+  name Dot21
+  xpos -404
+  ypos 1338
+ }
+ Shuffle {
+  red white
+  green white
+  blue white
+  alpha white
+  name Shuffle7
+  label "RGBA = 1"
+  xpos -438
+  ypos 1382
+ }
+ Multiply {
+  value {{parent.bumpSub}}
+  name Multiply4
+  label "\[value parent.bumpSub]"
+  xpos -438
+  ypos 1437
+ }
+ Dot {
+  name Dot22
+  xpos -404
+  ypos 1506
+ }
+push $N8c27bc00
+ Blur {
+  size {{parent.bumpBlur}}
+  name Blur1
+  label "\[value parent.bumpBlur]"
+  xpos -298
+  ypos 1376
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge3
+  xpos -298
+  ypos 1502
+ }
+ Expression {
+  expr3 abs(a)
+  name Expression4
+  label ABS(A)
+  xpos -298
+  ypos 1550
+  disable {{!parent.bumpA}}
+ }
+ Dot {
+  name Dot20
+  xpos -264
+  ypos 1615
+ }
+push $N97a9ae00
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge2
+  xpos -150
+  ypos 1670
+ }
+ Dot {
+  name Dot23
+  xpos -116
+  ypos 1742
+ }
+push $N97a9a000
+ Switch {
+  inputs 2
+  which {{"\[if \{\[value parent.keyerOp]==\"Bump Keyer\"\} \{return 1\} else \{return 0\}]"}}
+  name Switch4
+  selected true
+  xpos 289
+  ypos 1742
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  from1 rgba.green
+  to1 rgba.green
+  from2 rgba.blue
+  to2 rgba.blue
+  name Copy1
+  xpos 289
+  ypos 2126
+  disable {{curve}}
+ }
+ Clamp {
+  channels alpha
+  name Clamp4
+  xpos 290
+  ypos 2327
+  disable {{!parent.clamp}}
+ }
+ Output {
+  name Output1
+  xpos 289
+  ypos 2470
+ }
+end_group

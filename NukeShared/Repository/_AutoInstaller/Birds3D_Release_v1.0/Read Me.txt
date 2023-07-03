@@ -1,0 +1,19 @@
+Installation:
+-------------
+
+1) Copy the Birds3D folder to your ~/.nuke folder.
+
+2) Open your ~/.nuke/init.py in a text editor and add the following line:
+
+nuke.pluginAddPath('./Birds3D')
+
+
+3) Save and close your init.py. When you open Nuke, you should see Birds3D in your toolbar.
+
+
+
+~/.nuke folder default locations:
+
+Windows: C:/Users/-YOUR USERNAME-/.nuke
+Linux:   /home/-YOUR USERNAME-/.nuke
+Mac OS:  /Users/-YOUR USERNAME-/.nuke

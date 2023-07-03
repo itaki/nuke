@@ -1,0 +1,101 @@
+#! C:/Program Files/Nuke7.0v6/Nuke7.0.exe -nx
+version 7.0 v6
+Gizmo {
+ inputs 0
+ tile_color 0xff0000ff
+ gl_color 0xff0000ff
+ addUserKnob {20 Camera}
+ addUserKnob {41 read_from_file l "read from file" T Axis2.read_from_file}
+ addUserKnob {41 display T Axis2.display}
+ addUserKnob {41 selectable T Axis2.selectable}
+ addUserKnob {41 transform T Axis2.transform}
+ addUserKnob {41 file_menu l @FolderIcon T Axis2.file_menu}
+ addUserKnob {41 snap_menu l @AxisIcon T Axis2.snap_menu}
+ addUserKnob {41 xform_order l "transform order" T Axis2.xform_order}
+ addUserKnob {41 rot_order l "rotation order" T Axis2.rot_order}
+ addUserKnob {41 translate T Axis2.translate}
+ addUserKnob {41 rotate T Axis2.rotate}
+ addUserKnob {41 scaling l scale T Axis2.scaling}
+ addUserKnob {41 uniform_scale l "uniform scale" T Axis2.uniform_scale}
+ addUserKnob {41 skew T Axis2.skew}
+ addUserKnob {41 pivot T Axis2.pivot}
+ addUserKnob {20 "" l "Local matrix" n 2}
+ addUserKnob {41 useMatrix l "specify matrix" T Axis2.useMatrix}
+ addUserKnob {41 matrix l "" -STARTLINE T Axis2.matrix}
+ addUserKnob {20 "" n -1}
+ addUserKnob {20 "" l "World matrix" n 2}
+ addUserKnob {41 world_matrix l "" -STARTLINE T Axis2.world_matrix}
+ addUserKnob {20 "" n -1}
+ addUserKnob {20 "" l File}
+ addUserKnob {41 read_from_file_link l "read from file" T Axis2.read_from_file_link}
+ addUserKnob {41 file T Axis2.file}
+ addUserKnob {41 reload T Axis2.reload}
+ addUserKnob {41 fbx_take_name l "animation stack name" T Axis2.fbx_take_name}
+ addUserKnob {41 fbx_node_name l "node name" T Axis2.fbx_node_name}
+ addUserKnob {41 fbx_load_take_node_names l "load take node names" T Axis2.fbx_load_take_node_names}
+ addUserKnob {41 frame_rate l "frame rate" T Axis2.frame_rate}
+ addUserKnob {41 use_frame_rate l "use frame rate" T Axis2.use_frame_rate}
+ addUserKnob {26 "" l " "}
+ addUserKnob {20 CameraShake}
+ addUserKnob {41 amplitude T Axis1.amplitude}
+ addUserKnob {41 rotation T Axis1.rotation}
+ addUserKnob {41 frequency T Axis1.frequency}
+ addUserKnob {41 octaves T Axis1.octaves}
+ addUserKnob {41 seed -STARTLINE T Axis1.seed}
+ addUserKnob {41 randomize_seed l "Randomize Seed" -STARTLINE T Axis1.randomize_seed}
+ addUserKnob {20 "" l Projection}
+ addUserKnob {41 projection_mode l projection T Camera1.projection_mode}
+ addUserKnob {41 focal l "focal length" T Camera1.focal}
+ addUserKnob {41 haperture l "horiz aperture" T Camera1.haperture}
+ addUserKnob {41 vaperture l "vert aperture" T Camera1.vaperture}
+ addUserKnob {41 near T Camera1.near}
+ addUserKnob {41 far T Camera1.far}
+ addUserKnob {41 win_translate l "window translate" T Camera1.win_translate}
+ addUserKnob {41 win_scale l "window scale" T Camera1.win_scale}
+ addUserKnob {41 winroll l "window roll" T Camera1.winroll}
+ addUserKnob {41 focal_point l "focal distance" T Camera1.focal_point}
+ addUserKnob {41 fstop T Camera1.fstop}
+}
+ Axis2 {
+  inputs 0
+  rot_order XYZ
+  version 4
+  name Axis2
+  label 3D_Position
+  xpos 475
+  ypos -144
+ }
+ Axis2 {
+  display off
+  selectable false
+  translate {{fBm((seed+frame)*frequency,2.5,3.5,octaves,2,.5)*amplitude.x} {fBm(frame*frequency+100,10.5,11.5,octaves,2,.5)*amplitude.y} {fBm(frame*frequency+2,2,6,octaves,2,.5)*amplitude.z}}
+  rotate {{fBm((seed+frame)*frequency,20.5,21.5,octaves,2,.5)*rotation.x} {fBm(frame*frequency+100,10.5,11.5,octaves,2,.5)*rotation.y} {fBm(frame*frequency+2,2,6,octaves,2,.5)*rotation.z}}
+  name Axis1
+  label 3D_Shake
+  selected true
+  xpos 475
+  ypos -78
+  addUserKnob {20 CameraShake}
+  addUserKnob {13 amplitude}
+  amplitude {0.1 0.1 0.05}
+  addUserKnob {13 rotation}
+  rotation {1 1 1}
+  addUserKnob {7 frequency}
+  frequency 0.02
+  addUserKnob {3 octaves}
+  addUserKnob {3 seed -STARTLINE}
+  seed 13756
+  addUserKnob {22 randomize_seed l "Randomize Seed" -STARTLINE T "import random\nnuke.thisNode().knob('seed').setValue( random.randint(1,16384) )"}
+ }
+ Camera2 {
+  selectable false
+  name Camera1
+  xpos 475
+  ypos -12
+ }
+ Output {
+  name Output1
+  xpos 475
+  ypos 88
+ }
+end_group

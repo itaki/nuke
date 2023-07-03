@@ -1,0 +1,1 @@
+nuke.pluginAddPath('./Birds3D')

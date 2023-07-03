@@ -1,0 +1,84 @@
+#! /Applications/Nuke14.0v3/Nuke14.0v3.app/Contents/MacOS/libnuke-14.0.3.dylib -nx
+version 14.0 v3
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="-2" y="873" w="2560" h="1395" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="991"/>
+            <splitter orientation="2">
+                <split size="1379"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+            </splitter>
+            <split size="830"/>
+            <splitter orientation="2">
+                <split size="404"/>
+                <dock id="" activePageId="NukeServerSocket.MainWindow">
+                    <page id="Properties.1"/>
+                    <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+                    <page id="Scenegraph.1"/>
+                    <page id="NukeServerSocket.MainWindow"/>
+                </dock>
+                <split size="971"/>
+                <dock id="" activePageId="com.adrianpueyo.KnobScripterPane">
+                    <page id="uk.co.thefoundry.scripteditor.1"/>
+                    <page id="com.adrianpueyo.KnobScripterPane"/>
+                </dock>
+            </splitter>
+            <split size="687"/>
+            <dock id="" activePageId="DAG.1">
+                <page id="DAG.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "/Volumes/panda/Dropbox (Personal)/_Library/nuke/itaki_tools/i_tools/backdrop_test.nk"
+ project_directory "\[python \{nuke.script_directory()\}]"
+ fps 23.976
+ format "4448 3096 0 0 4448 3096 1 TL_4K"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ render_mode top-down
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ monitorOutLUT rec709
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Viewer {
+ inputs 0
+ frame 1
+ frame_range 1-100
+ fps 23.97602463
+ monitorOutOutputTransform rec709
+ name Viewer1
+ xpos -40
+ ypos -9
+}
+Text2 {
+ inputs 0
+ font_size_toolbar 100
+ font_width_toolbar 100
+ font_height_toolbar 100
+ transforms {{0 2}
+   }
+ font {{ Phosphate : Inline : Supplemental/Phosphate.ttc : 0 }}
+ center {2224 1548}
+ group_animations {{0} imported: 0 selected: items: "root transform/"}
+ animation_layers {{1 11 2224 1548 0 0 1 1 0 0 0 0}
+   }
+ name Text1
+ xpos -1181
+ ypos 78
+}

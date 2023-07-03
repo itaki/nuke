@@ -1,0 +1,436 @@
+set cut_paste_input [stack 0]
+
+push $cut_paste_input
+Group {
+ name GeoMatrix
+ knobChanged "node = nuke.thisNode()\ntimeModeValue = (node\['timeMode'].getValue())\nflag = bool(int(timeModeValue))\nfor knobs in \['begin', 'end','resetTimeButRand']:\n    node\[knobs].setVisible(not flag)\nfor knobs in \['direction','reverseTime','timeStep','resetTimeButDirect']:\n    node\[knobs].setVisible(flag)\nnode\['draftType'].setEnabled(bool(node\['draftTexture'].getValue()))\nresult = 1 if node.input(0) else 0\nif result == 0:\n    node\['faceCam'].setValue(False)\n    node\['faceCam'].setEnabled(False)\nelse:\n    try:\n        if  ('Camera' in node.input(0).Class() or 'Axis' in node.input(0).Class()) and node\['matrixType'].value() not in \['ring']:           \n            node\['faceCam'].setEnabled(True)\n        else:\n            print('yes')\n            node\['faceCam'].setEnabled(False)\n    except Exception as e:\n        print(e)\n    else:\n        pass\nnode.begin()\nfor n in nuke.allNodes('TimeClip'):\n    n\['first'].setValue(n.input(0).firstFrame())\n    n\['last'].setValue(n.input(0).lastFrame())\nnode.end()\n\n"
+ tile_color 0x8f3415ff
+ selected true
+ xpos -88
+ ypos -389
+ addUserKnob {20 Parameter}
+ addUserKnob {26 title l "<h1><font color = 'cyan' size = 5>GeoMatrix 1.1</font></h1>"}
+ addUserKnob {20 texture l Texture n 1}
+ addUserKnob {3 texturesAmount l "Textures amount"}
+ texturesAmount {0}
+ addUserKnob {22 Initiate -STARTLINE T "import random\n# Initiate variables\n#------------------------------------------------------------------------------------\nthisNode = nuke.thisNode()\nthisNode.end()\n\nbegin = -1*thisNode\['begin'].getValue()\nend = -1*thisNode\['end'].getValue()\nif begin > end:\n    begin,end = end,begin\ndistance = 100\n\n\n\nthisNode.begin()\nxpos_output = int(nuke.toNode('Output1')\['xpos'].getValue())\nypos_output = int(nuke.toNode('Output1')\['ypos'].getValue()-700)\nthisNode.end()\n\n# Define functions\n#------------------------------------------------------------------------------------\n\n# Initiate the node\ndef initiateNodes():\n    for node in nuke.allNodes():\n        if node\['name'].getValue() not in \['Camera','Geo','Draft_swticher','looks','Model'] and node.Class() in \['Input','ApplyMaterial','TimeOffset','Switch','TimeClip']:\n            nuke.delete(node)\n\n# Auto align nodes inside\ndef autoalign():\n\n    for node in nuke.allNodes():\n        if node\['name'].getValue() not in \['Geo','looks','Model'] and node.Class() in \['Input','TimeOffset','TimeClip']:\n            nuke.autoplace(node)\n\n# Get how many input GeoMatrix need depends on the nodes you selected\ndef nodeGetInputNum(thisNode):\n    selectedList = \[]\n    selectedNodes = nuke.selectedNodes()\n    for node in selectedNodes:\n        if 'GeoMatrix' not in node.name():\n            selectedList.append(node)\n    selectedLength = len(selectedList)\n\n    if selectedLength > 0:\n        amount = selectedLength\n        thisNode\['texturesAmount'].setValue(amount)\n    else:\n        amount = thisNode\['texturesAmount'].getValue()\n    amount = int(amount)\n    return amount,selectedList\n\n# Set the input of GeoMatrix\ndef nodeSetInput(selectedNodes, thisNode):\n\n    counter = 3\n    for i in selectedNodes:\n        thisNode.setInput(counter, i)\n        counter += 1\n\n# Starting to Create and Connect the nodes inside\ndef connectInsideNodes(amount, distance, xpos_output, ypos_output, thisNode):\n\n    inputList = \[]\n    chooseList = \[]\n    transformGeoList = \[]\n\n    if amount != 0:\n        Draft_dots = nuke.toNode('Draft_dots')\n        for i in range(amount):\n            inputs = nuke.nodes.Input()\n            inputs.setXYpos(xpos_output + distance * i, ypos_output)\n            inputs.setSelected(True)\n            retime = nuke.createNode('TimeClip',inpanel = False)\n            retime\['after'].setExpression('\{\}.stopMode'.format(thisNode\['name'].getValue()))\n            retime.setInput(0,inputs)\n            inputList.append(retime)\n            chooseList.append(retime)\n        \n        counter = 0\n        scene = nuke.toNode('Scene')\n\n\n        for geos in nuke.allNodes('TransformGeo'):\n            if geos\['name'].getValue() not in \['TransformGeo']:\n                transformGeoList.append(geos)\n\n\n        for geos in transformGeoList:\n\n            xpos_geos = int(geos\['xpos'].getValue())\n            ypos_geos = int(geos\['ypos'].getValue() + 70)        \n\n            offsetframes = random.randint(begin,end)\n            Timeoffset = nuke.nodes.TimeOffset()\n            Timeoffset\['time_offset'].setValue(offsetframes)\n            Timeoffset\['label'].setValue('\[value time_offset]')\n            Timeoffset\['disable'].setExpression('!randomTime')\n            \n            if bool(len(chooseList)):\n                textureInput = random.choice(chooseList)\n                chooseList.remove(textureInput)\n            else:\n                textureInput = random.choice(inputList)\n            Timeoffset.setInput(0,textureInput)\n\n            swtich_draft = nuke.nodes.Switch()\n            swtich_draft.setXYpos(xpos_geos+50,ypos_geos-30)\n            swtich_draft.setInput(0,Timeoffset)     \n            swtich_draft.setInput(1,Draft_dots)\n            swtich_draft\['which'].setExpression('\{\}.draftTexture'.format(thisNode\['name'].getValue()))\n\n            applyMat = nuke.nodes.ApplyMaterial()\n            applyMat.setXYpos(xpos_geos,ypos_geos)\n            applyMat.setInput(0,geos)   \n            applyMat.setInput(1,swtich_draft)\n            scene.setInput(counter,applyMat)\n            counter = counter + 1\n\n# Main\n#------------------------------------------------------------------------------------\namount,selectedList = nodeGetInputNum(thisNode)\nthisNode.begin()\n\ninitiateNodes()\nconnectInsideNodes(amount, distance, xpos_output, ypos_output, thisNode)\nnodeSetInput(selectedList, thisNode)\nautoalign()\n\nthisNode.end()      "}
+ addUserKnob {4 timeMode l "Time mode" M {randomized directional}}
+ addUserKnob {4 direction -STARTLINE +HIDDEN M {X Y Z ""}}
+ addUserKnob {6 reverseTime l "reverse direction" -STARTLINE +HIDDEN}
+ addUserKnob {1 timeStep l "time step" +HIDDEN}
+ timeStep 0.2
+ addUserKnob {22 resetTimeButDirect l "Reset Time" -STARTLINE +HIDDEN T "import random, re\nnode = nuke.thisNode()\ndef setRandomTime():\n\tbegin = node\['begin'].getValue()\n\tend = node\['end'].getValue()\n\tif begin > end:\n\t\tbegin,end = end,begin\n\tfor timeOffsetElement in nuke.allNodes('TimeOffset'):\n\t\toffsetframes = -1 * random.randint(begin,end)\n\t\ttimeOffsetElement\['time_offset'].setValue(offsetframes)\n\n\ndef setDirectionalTime():\n\tdef sortDictByValue(sortIndex,sortOrder,dict):\n\t\t# sortIndex = 0 , sort by x value\n\t\t# sortIndex = 1 , sort by y value\n\t\t# sortIndex = 2 , sort by z value\n\t\t\n\t\t# sortOrder = False , sort from small to big\n\t\t# sortOrder = 1 , sort from big to small\n\t\tsortedDict = sorted(dict.items(), key = lambda translate:translate\[1]\[sortIndex],reverse = sortOrder)\n\t\treturn sortedDict\n\n\tdef getDict():\n\t\ttDict = \{\}\n\t\tfor i in nuke.allNodes('ApplyMaterial'):\n\t\t\ttDict\[i.input(1).input(0).name()] = i.input(0)\['translate'].getValue()\n\t\treturn tDict\n\n\tdef getTimeOffsetExist():\n\t\tflag = False\n\t\tfor i in nuke.allNodes():\n\t\t\tif i.Class() in \['TimeOffset']:\n\t\t\t\tflag = True\n\t\t\t\tbreak\n\t\treturn flag\n\n\tif getTimeOffsetExist():\n\t\taimTime = 0\n\t\ttDict = getDict()\n\t\ttimeStepString = node\['timeStep'].value()\n\t\ttimeStepMatchFlag = re.match(r'^(\\-|\\+)?\\d+(\\.\\d+)?\$',timeStepString)\n\t\tif timeStepMatchFlag:\n\t\t\ttimeStep = float(timeStepString)\n\t\t\tsortIndex = int(node\['direction'].getValue())\n\t\t\tsortOrder = node\['reverseTime'].value()\n\t\t\tsortedDict = sortDictByValue(sortIndex,sortOrder,tDict)\n\t\t\tfor timeOffsetElement in sortedDict:\n\t\t\t\ttimeOffsetNodeName = timeOffsetElement\[0]\n\t\t\t\ttimeOffsetNode = nuke.toNode(timeOffsetNodeName)\n\t\t\t\ttimeOffsetNode\['time_offset'].setValue(aimTime)\n\t\t\t\taimTime = aimTime + timeStep\n\t\telse:\n\t\t\tnuke.message('Please type in a figure in \\\"time step\\\" knob, but not string :D')\n\telse:\n\t\tnuke.message('You need to initiate the texture first!\\nPlease follow steps below:\\n\\n1. \\\"Textures amount\\\" should be over 0\\n2. Hit \\\"Initiate\\\" button')\n\nif __name__ == '__main__':\n\tsetRandomTime() if node\['timeMode'].getValue() == 0 else setDirectionalTime()"}
+ addUserKnob {3 begin}
+ begin {5}
+ addUserKnob {3 end -STARTLINE}
+ end {100}
+ addUserKnob {22 resetTimeButRand l "Reset Time" -STARTLINE T "import random, re\nnode = nuke.thisNode()\ndef setRandomTime():\n\tbegin = node\['begin'].getValue()\n\tend = node\['end'].getValue()\n\tif begin > end:\n\t\tbegin,end = end,begin\n\tfor timeOffsetElement in nuke.allNodes('TimeOffset'):\n\t\toffsetframes = -1 * random.randint(begin,end)\n\t\ttimeOffsetElement\['time_offset'].setValue(offsetframes)\n\n\ndef setDirectionalTime():\n\tdef sortDictByValue(sortIndex,sortOrder,dict):\n\t\t# sortIndex = 0 , sort by x value\n\t\t# sortIndex = 1 , sort by y value\n\t\t# sortIndex = 2 , sort by z value\n\t\t\n\t\t# sortOrder = False , sort from small to big\n\t\t# sortOrder = 1 , sort from big to small\n\t\tsortedDict = sorted(dict.items(), key = lambda translate:translate\[1]\[sortIndex],reverse = sortOrder)\n\t\treturn sortedDict\n\n\tdef getDict():\n\t\ttDict = \{\}\n\t\tfor i in nuke.allNodes('ApplyMaterial'):\n\t\t\ttDict\[i.input(1).input(0).name()] = i.input(0)\['translate'].getValue()\n\t\treturn tDict\n\n\tdef getTimeOffsetExist():\n\t\tflag = False\n\t\tfor i in nuke.allNodes():\n\t\t\tif i.Class() in \['TimeOffset']:\n\t\t\t\tflag = True\n\t\t\t\tbreak\n\t\treturn flag\n\n\tif getTimeOffsetExist():\n\t\taimTime = 0\n\t\ttDict = getDict()\n\t\ttimeStepString = node\['timeStep'].value()\n\t\ttimeStepMatchFlag = re.match(r'^(\\-|\\+)?\\d+(\\.\\d+)?\$',timeStepString)\n\t\tif timeStepMatchFlag:\n\t\t\ttimeStep = float(timeStepString)\n\t\t\tsortIndex = int(node\['direction'].getValue())\n\t\t\tsortOrder = node\['reverseTime'].value()\n\t\t\tsortedDict = sortDictByValue(sortIndex,sortOrder,tDict)\n\t\t\tfor timeOffsetElement in sortedDict:\n\t\t\t\ttimeOffsetNodeName = timeOffsetElement\[0]\n\t\t\t\ttimeOffsetNode = nuke.toNode(timeOffsetNodeName)\n\t\t\t\ttimeOffsetNode\['time_offset'].setValue(aimTime)\n\t\t\t\taimTime = aimTime + timeStep\n\t\telse:\n\t\t\tnuke.message('Please type in a figure in \\\"time step\\\" knob, but not string :D')\n\telse:\n\t\tnuke.message('You need to initiate the texture first!\\nPlease follow steps below:\\n\\n1. \\\"Textures amount\\\" should be over 0\\n2. Hit \\\"Initiate\\\" button')\n\nif __name__ == '__main__':\n\tsetRandomTime() if node\['timeMode'].getValue() == 0 else setDirectionalTime()"}
+ addUserKnob {4 stopMode l "Stop mode" M {hold loop bounce black "" ""}}
+ stopMode loop
+ addUserKnob {4 draftType l "Draft type" M {Checkerboard "Color bars" "Color wheels" Grid ""}}
+ addUserKnob {6 randomTime l "Effect time" +STARTLINE}
+ addUserKnob {6 draftTexture l "Draft texture" -STARTLINE}
+ draftTexture true
+ addUserKnob {6 faceCam l "Face Axis& Cam" -STARTLINE +DISABLED}
+ addUserKnob {20 endGroup_3 l Texture_endGroup n -1}
+ addUserKnob {20 Generate n 1}
+ addUserKnob {4 type l "Model Type" M {Card Sphere Cube Cylinder Custom "" "" "" "" ""}}
+ addUserKnob {26 text l "     " -STARTLINE T "    "}
+ addUserKnob {4 matrixType l "Matrix Type" -STARTLINE M {plane(XY) plane(XZ) ring sphere model "" "" "" "" "" "" ""}}
+ addUserKnob {3 row}
+ row {3}
+ addUserKnob {3 col -STARTLINE}
+ col {4}
+ addUserKnob {3 Amount -STARTLINE}
+ Amount {6}
+ addUserKnob {22 generate l "<h3><font color = 'cyan'>\[Generate]</font></h3>" T "# -------------------------------------------------------------------------------------------------------------------------------------------------\n# Generate\n# -------------------------------------------------------------------------------------------------------------------------------------------------\nimport random\nimport nuke\nimport math\ndef deselect():\n    for i in nuke.allNodes():\n        i.setSelected(False)\ndef clear():\n    for i in nuke.allNodes():\n        if i.Class() in \['Card','Cylinder','Sphere','Cube','Scene','TimeOffset','TransformGeo','ApplyMaterial','Switch','Axis2','Axis'] and i\['name'].getValue() not in \['Camera','Geo','Draft_swticher','TransformGeo','looks','Model']:\n            nuke.delete(i)\nclear()\ndeselect()\n\n# Init variables\nthisNode = nuke.thisNode()\nOutput = nuke.toNode('Output1')\ntransformGeos = nuke.toNode('TransformGeo')\nLooks = nuke.toNode('looks')\nrow = int(thisNode\['row'].getValue())\ncol = int(thisNode\['col'].getValue())\nxpos = int(Output\['xpos'].getValue())\nypos = int(Output\['ypos'].getValue()-500)\ntypes = thisNode\['type'].value()\nmatrixType = thisNode\['matrixType'].value()\n\n# Define objects\nif types not in \['Custom']:\n    if types in \['Card','Cube']:\n        objs = nuke.createNode(types,inpanel=False)\n        objs\['selectable'].setValue(False)\n        objs\['rows'].setValue(1)\n        objs\['columns'].setValue(1)\n        objs.setXYpos(xpos,ypos-35)\n    elif types in \['Cylinder']:\n        objs = nuke.createNode(types,inpanel=False)\n        objs\['selectable'].setValue(False)\n        objs\['rows'].setValue(1)\n        objs.setXYpos(xpos,ypos-35)\n    else:\n        objs = nuke.createNode(types,inpanel=False)\n        objs\['selectable'].setValue(False)\n        objs.setXYpos(xpos,ypos-35)\nelse:\n    objs = nuke.toNode('Geo')\n\n# Define model\nif matrixType in \['model']:\n    model = nuke.toNode('Model')\n\ndef ringCreate(obj, transformGeo):\n    count = int(nuke.thisNode()\['Amount'].value())\n    nuke.thisNode().begin() \n    scene = nuke.nodes.Scene()\n    scene\['name'].setValue('Scene')\n    scene.setXYpos(xpos+10,ypos + 200)\n    distance = 100\n    for i in range(count):\n        angleOriginal = float(360)/float(count)*float(i)\n        angle = angleOriginal * math.pi / float(180)\n        posx = '(parent.radius*sin(\{0\})*parent.radius + pos.x + (random(\{1\}*randomSeed*100)-0.5) * randomtranslateX * 10 ) + ((random(\{1\}*randomSeed*100)-0.5) * scatter * 10)'.format(angle,random.randint(-9999,9999))\n        posy = '(pos.y + (random(\{0\}*randomSeed*100)-0.5) * randomtranslateY * 10 )*(scattery+1) + ((random(\{0\}*randomSeed*100)-0.5) * scatter * 10)'.format(random.randint(-9999,9999))\n        posz = '(parent.radius*cos(\{0\})*parent.radius + pos.z + (random(\{1\}*randomSeed*100)-0.5) * randomtranslateZ * 10 ) + ((random(\{1\}*randomSeed*100)-0.5) * scatter * 10)'.format(angle,random.randint(-9999,9999))\n        objects = nuke.createNode('TransformGeo',inpanel = False)\n        objects.setInput(2,Looks)\n        objects.setXYpos(xpos + distance * i, ypos+30)\n    #Set T R S---------------------------------------------------------------------------       \n\n        objects\['translate'].setExpression(posx,0)\n        objects\['translate'].setExpression(posy,1)\n        objects\['translate'].setExpression(posz,2)\n\n        objects\['uniform_scale'].setExpression('uniformscale + random(\{0\}+randomSeed*100) * uniformscale * randomscale'.format(random.randint(-9999,9999)))\n        objects\['scaling'].setExpression('1+scale.x + random(\{0\}+randomSeed*100) * 10 * randomscaleX'.format(random.randint(-9999,9999)),0)\n        objects\['scaling'].setExpression('1+scale.y + random(\{0\}+randomSeed*100) * 10 * randomscaleY'.format(random.randint(-9999,9999)),1)\n        objects\['scaling'].setExpression('1+scale.z + random(\{0\}+randomSeed*100) * 10 * randomscaleZ'.format(random.randint(-9999,9999)),2)\n        objects\['rotate'].setExpression('rotation.x + \{0\} * randomRotationX * random(randomSeed)'.format(float(random.randint(-9999,9999))/float(9999)*float(360)),0)\n        objects\['rotate'].setExpression('\{0\} + rotation.y + \{1\} * randomRotationY * random(randomSeed)'.format(angleOriginal, float(random.randint(-9999,9999))/float(9999)*float(360)),1)\n        objects\['rotate'].setExpression('rotation.z + \{0\} * randomRotationZ * random(randomSeed)'.format(float(random.randint(-9999,9999))/float(9999)*float(360)),2)\n        objects\['pivot'].setExpression('pivot_individual.x',0)\n        objects\['pivot'].setExpression('pivot_individual.y',1)\n        objects\['pivot'].setExpression('pivot_individual.z',2)\n        objects.setInput(0,obj) \n        deselect()  \n        scene.setInput(i,objects)\n\n    transformGeo.setInput(0,scene)\n    nuke.thisNode().end()\n\ndef planeCreate(obj, transformGeo):\n    counter = 0\n    distance = 100\n    scene = nuke.nodes.Scene()\n    scene.setXYpos(xpos+10,ypos + 200)\n    scene\['name'].setValue('Scene')\n    for i in range(row):\n        for j in range(col):\n            dictTransform = \{\n\n                    \"plane(XY)_X\":'scatterx*\{0\}-(\{1\}-1)*scatterx/2 + pos.x + (random(\{2\}*randomSeed*100)-0.5) * randomtranslateX * 10 + ((random(\{2\}*randomSeed*100)-0.5) * scatter * 10)'.format(j,col,random.randint(-9999,9999)),\n                    \"plane(XY)_Y\":'scattery*\{0\}-(\{1\}-1)*scattery/2 + pos.y + (random(\{2\}*randomSeed*100)-0.5) * randomtranslateY* 10 + ((random(\{2\}*randomSeed*100)-0.5) * scatter * 10)'.format(i,row,random.randint(-9999,9999)),\n                    \"plane(XY)_Z\":'pos.z + (random(\{0\}+randomSeed*100)-0.5) * 10 * randomtranslateZ + ((random(\{0\}*randomSeed*100)-0.5) * scatter * 10)'.format(random.randint(-9999,9999)),\n\n                    \"plane(XZ)_X\":'scatterx*\{0\}-(\{1\}-1)*scatterx/2 + pos.x + (random(\{2\}*randomSeed*100)-0.5) * randomtranslateX* 10 + ((random(\{2\}*randomSeed*100)-0.5) * scatter * 10)'.format(j,col,random.randint(-9999,9999)),\n                    \"plane(XZ)_Y\":'pos.y + (random(\{0\}+randomSeed*100)-0.5) * 10 * randomtranslateY + ((random(\{0\}*randomSeed*100)-0.5) * scatter * 10)'.format(random.randint(-9999,9999)),            \n                    \"plane(XZ)_Z\":'scatterz*\{0\}-(\{1\}-1)*scatterz/2 + pos.z + (random(\{2\}*randomSeed*100)-0.5) * randomtranslateZ* 10 + ((random(\{2\}*randomSeed*100)-0.5) * scatter * 10)'.format(i,row,random.randint(-9999,9999)),\n\n                    \}\n            objects = nuke.createNode(\"TransformGeo\",inpanel=False)\n            objects.setInput(0,obj)\n            objects.setInput(2,Looks)\n            objects.setXYpos(xpos + distance * counter,ypos+30)\n            deselect()\n            scene.setInput(counter,objects)\n            counter+=1\n            objects\['look_rotate_z'].setValue(False)\n            objects\['look_strength'].setExpression('faceCam')\n            objects\['selectable'].setValue(False)     \n     \n            thisNode\['scatterx'].setEnabled(True)\n            thisNode\['scattery'].setEnabled(True)\n            thisNode\['scatterz'].setEnabled(True)\n    #Switch matrix type---------------------------------------------------------------------------\n            if matrixType in \['plane(XY)']:\n                thisNode\['scatterz'].setEnabled(False)\n                dictTransformX = dictTransform\['\{\}_X'.format(matrixType)]\n                dictTransformY = dictTransform\['\{\}_Y'.format(matrixType)]\n                dictTransformZ = dictTransform\['\{\}_Z'.format(matrixType)]\n                \n            elif matrixType in \['plane(XZ)']:\n                thisNode\['scattery'].setEnabled(False)\n                dictTransformX = dictTransform\['\{\}_X'.format(matrixType)]\n                dictTransformY = dictTransform\['\{\}_Y'.format(matrixType)]\n                dictTransformZ = dictTransform\['\{\}_Z'.format(matrixType)]\n\n    #Set T R S---------------------------------------------------------------------------\n            objects\['translate'].setExpression(dictTransformX,0)\n            objects\['translate'].setExpression(dictTransformY,1)\n            objects\['translate'].setExpression(dictTransformZ,2)\n\n            objects\['uniform_scale'].setExpression('uniformscale + random(\{0\}+randomSeed*100) * uniformscale * randomscale'.format(random.randint(-9999,9999)))\n            objects\['scaling'].setExpression('1+scale.x + random(\{0\}+randomSeed*100) * 10 * randomscaleX'.format(random.randint(-9999,9999)),0)\n            objects\['scaling'].setExpression('1+scale.y + random(\{0\}+randomSeed*100) * 10 * randomscaleY'.format(random.randint(-9999,9999)),1)\n            objects\['scaling'].setExpression('1+scale.z + random(\{0\}+randomSeed*100) * 10 * randomscaleZ'.format(random.randint(-9999,9999)),2)\n            objects\['rotate'].setExpression('rotation.x + \{0\} * randomRotationX * random(randomSeed)'.format(float(random.randint(-9999,9999))/float(9999)*float(360)),0)\n            objects\['rotate'].setExpression('rotation.y + \{0\} * randomRotationY * random(randomSeed)'.format(float(random.randint(-9999,9999))/float(9999)*float(360)),1)\n            objects\['rotate'].setExpression('rotation.z + \{0\} * randomRotationZ * random(randomSeed)'.format(float(random.randint(-9999,9999))/float(9999)*float(360)),2)\n            objects\['pivot'].setExpression('pivot_individual.x',0)\n            objects\['pivot'].setExpression('pivot_individual.y',1)\n            objects\['pivot'].setExpression('pivot_individual.z',2)\n\n    transformGeo.setInput(0,scene)\n\ndef sphereCreate(obj, transformGeo):\n    scene = nuke.nodes.Scene()\n    scene\['name'].setValue('Scene')\n    endPointScene = nuke.nodes.Scene()\n    endPointScene\['name'].setValue('End_point_Scene')\n    # Set End point sphere ---------------------------------------------------------------------------\n    startSphere = nuke.nodes.TransformGeo()\n    startSphere\['name'].setValue('startSphere')\n    startSphere\['translate'].setExpression('pos.x + (random(\{0\}*randomSeed*100)-0.5) * randomtranslateX * 10 + ((random(\{0\}*randomSeed*100)-0.5) * scatter * 10)'.format(random.randint(-9999,9999)),0)\n    startSphere\['translate'].setExpression('parent.radius * (scattery+1) + pos.y + (random(\{0\}*randomSeed*100)-0.5) * randomtranslateY * 10 + ((random(\{0\}*randomSeed*100)-0.5) * scatter * 10)'.format(random.randint(-9999,9999)),1)\n    startSphere\['translate'].setExpression('pos.z + (random(\{0\}*randomSeed*100)-0.5) * randomtranslateZ * 10 + ((random(\{0\}*randomSeed*100)-0.5) * scatter * 10)'.format(random.randint(-9999,9999)),2)\n\n    endSphere = nuke.nodes.TransformGeo()\n    endSphere\['name'].setValue('endSphere')\n    endSphere\['translate'].setExpression('pos.x + (random(\{0\}*randomSeed*100)-0.5) * randomtranslateX * 10 + ((random(\{0\}*randomSeed*100)-0.5) * scatter * 10)'.format(random.randint(-9999,9999)),0)\n    endSphere\['translate'].setExpression('-parent.radius * (scattery+1) + (random(\{0\}*randomSeed*100)-0.5) * randomtranslateY * 10 + ((random(\{0\}*randomSeed*100)-0.5) * scatter * 10)'.format(random.randint(-9999,9999)),1)\n    endSphere\['translate'].setExpression('pos.z + (random(\{0\}*randomSeed*100)-0.5) * randomtranslateZ * 10 + ((random(\{0\}*randomSeed*100)-0.5) * scatter * 10)'.format(random.randint(-9999,9999)),2)\n    index = 0\n\n    def setRS(sphere):\n        sphere\['uniform_scale'].setExpression('uniformscale + random(\{0\}+randomSeed*100) * uniformscale * randomscale'.format(random.randint(-9999, 9999)))\n        sphere\['scaling'].setExpression('1+scale.x + random(\{0\}+randomSeed*100) * 10 * randomscaleX'.format(random.randint(-9999, 9999)), 0)\n        sphere\['scaling'].setExpression('1+scale.y + random(\{0\}+randomSeed*100) * 10 * randomscaleY'.format(random.randint(-9999, 9999)), 1)\n        sphere\['scaling'].setExpression('1+scale.z + random(\{0\}+randomSeed*100) * 10 * randomscaleZ'.format(random.randint(-9999, 9999)), 2)\n        sphere\['rotate'].setExpression('rotation.x + \{0\} * randomRotationX * random(randomSeed)'.format(float(random.randint(-9999, 9999)) / float(9999) * float(360)), 0)\n        sphere\['rotate'].setExpression('rotation.y + \{0\} * randomRotationY * random(randomSeed)'.format(float(random.randint(-9999, 9999)) / float(9999) * float(360)), 1)\n        sphere\['rotate'].setExpression('rotation.z + \{0\} * randomRotationZ * random(randomSeed)'.format(float(random.randint(-9999, 9999)) / float(9999) * float(360)), 2)\n        sphere\['pivot'].setExpression('pivot_individual.x', 0)\n        sphere\['pivot'].setExpression('pivot_individual.y', 1)\n        sphere\['pivot'].setExpression('pivot_individual.z', 2)\n\n    for node in \[startSphere, endSphere]:\n        endPointScene.setInput(index,node)\n        node.setInput(0,obj)\n        node.setInput(2,Looks)\n        node\['look_rotate_z'].setValue(False)\n        node\['look_strength'].setExpression('faceCam')\n        node\['selectable'].setValue(False)\n        setRS(node)\n        index+=1\n\n    for i in range(1,row + 1):\n        for j in range(col):\n            theta = math.pi/2-((math.pi/(row+1))*i)\n            beta = math.pi*2/(col)*j\n            posx = '(parent.radius*cos(\{0\})*cos(\{1\}) + pos.x + (random(\{2\}*randomSeed*100)-0.5) * randomtranslateX * 10 )*(scatterx+1) + ((random(\{2\}*randomSeed*100)-0.5) * scatter * 10)'.format(theta,beta,random.randint(-9999,9999))\n            posy = '(parent.radius*sin(\{0\}) + pos.y + (random(\{1\}*randomSeed*100)-0.5) * randomtranslateY * 10 )*(scattery+1) + ((random(\{1\}*randomSeed*100)-0.5) * scatter * 10)'.format(theta,random.randint(-9999,9999))\n            posz = '(parent.radius*cos(\{0\})*sin(\{1\}) + pos.z + (random(\{2\}*randomSeed*100)-0.5) * randomtranslateZ* 10)*(scatterz+1) + ((random(\{2\}*randomSeed*100)-0.5) * scatter * 10)'.format(theta,beta,random.randint(-9999,9999))\n            sphere = nuke.nodes.TransformGeo()\n            sphere.setInput(0,obj)\n            sphere.setInput(2,Looks)\n            sphere\['look_rotate_z'].setValue(False)\n            sphere\['look_strength'].setExpression('faceCam')\n            sphere\['selectable'].setValue(False)\n            sphere\['uniform_scale'].setExpression('uniformscale')\n            scene.setInput(scene.inputs(),sphere)\n\n    # Set T R S---------------------------------------------------------------------------\n            sphere\['translate'].setExpression(posx, 0)\n            sphere\['translate'].setExpression(posy, 1)\n            sphere\['translate'].setExpression(posz, 2)\n            setRS(sphere)\n\n\n    scene.setInput(scene.inputs(),endPointScene)    \n    scene.setXYpos(xpos+10,ypos + 300)\n    transformGeo.setInput(0,scene)\n\n\ndef modelCreate(obj, model, transformGeo):\n    counter = 0\n    distance = 100\n    scene = nuke.nodes.Scene()\n    scene.setXYpos(xpos+10,ypos + 200)\n    scene\['name'].setValue('Scene')\n    pythonGeo = nuke.toNode('PythonGeo')\n    pythonGeo.setInput(0, model)\n\n    if not thisNode.input(2):    # See if GeoMatrix could got model in 'Model' input\n        nuke.message('You need a model for \\'Model\\' input')        \n    else:\n        PointData = pythonGeo\['geo'].getGeometry()\[0].points()\n        tempList = \[]\n        finalList = \[]\n        counter = 0\n        for i in PointData:\n            if (counter + 1) < 3:\n                tempList.append(i)\n                counter += 1\n            elif (counter + 1) == 3:\n                tempList.append(i)\n                finalList.append(tempList)\n                tempList = \[]\n                counter = 0\n        for pointPosition in finalList:\n            objects = nuke.createNode(\"TransformGeo\",inpanel=False)\n            objects.setInput(0,obj)\n            objects.setInput(2,Looks)\n            objects.setXYpos(xpos + distance * counter,ypos+30)\n            deselect()\n            scene.setInput(counter,objects)\n            counter+=1\n            objects\['look_rotate_z'].setValue(False)\n            objects\['look_strength'].setExpression('faceCam')\n            objects\['selectable'].setValue(False)\n\n    # Set T R S---------------------------------------------------------------------------\n            objects\['translate'].setExpression('\{0\} + pos.x + ((random(\{1\}*randomSeed*100)-0.5) * randomtranslateX * 10) + ((random(\{1\}*randomSeed*100)-0.5) * scatter * 10)'.format(pointPosition\[0], random.randint(-9999,9999)), 0)\n            objects\['translate'].setExpression('\{0\} + pos.y + ((random(\{1\}*randomSeed*100)-0.5) * randomtranslateY * 10) + ((random(\{1\}*randomSeed*100)-0.5) * scatter * 10)'.format(pointPosition\[1], random.randint(-9999,9999)), 1)\n            objects\['translate'].setExpression('\{0\} + pos.z + ((random(\{1\}*randomSeed*100)-0.5) * randomtranslateZ * 10) + ((random(\{1\}*randomSeed*100)-0.5) * scatter * 10)'.format(pointPosition\[2], random.randint(-9999,9999)), 2)\n            objects\['uniform_scale'].setExpression('uniformscale + random(\{0\}+randomSeed*100) * uniformscale * randomscale'.format(random.randint(-9999, 9999)))\n            objects\['scaling'].setExpression('1+scale.x + random(\{0\}+randomSeed*100) * 10 * randomscaleX'.format(random.randint(-9999, 9999)), 0)\n            objects\['scaling'].setExpression('1+scale.y + random(\{0\}+randomSeed*100) * 10 * randomscaleY'.format(random.randint(-9999, 9999)), 1)\n            objects\['scaling'].setExpression('1+scale.z + random(\{0\}+randomSeed*100) * 10 * randomscaleZ'.format(random.randint(-9999, 9999)), 2)\n            objects\['rotate'].setExpression('rotation.x + \{0\} * randomRotationX * random(randomSeed)'.format(float(random.randint(-9999, 9999)) / float(9999) * float(360)), 0)\n            objects\['rotate'].setExpression('rotation.y + \{0\} * randomRotationY * random(randomSeed)'.format(float(random.randint(-9999, 9999)) / float(9999) * float(360)), 1)\n            objects\['rotate'].setExpression('rotation.z + \{0\} * randomRotationZ * random(randomSeed)'.format(float(random.randint(-9999, 9999)) / float(9999) * float(360)), 2)\n            objects\['pivot'].setExpression('pivot_individual.x', 0)\n            objects\['pivot'].setExpression('pivot_individual.y', 1)\n            objects\['pivot'].setExpression('pivot_individual.z', 2)\n            transformGeo.setInput(0,scene)\n\nif matrixType in \['ring']:\n    thisNode\['scatterx'].setVisible(False)\n    thisNode\['scattery'].setVisible(False)\n    thisNode\['scatterz'].setVisible(False)\n    thisNode\['radius'].setVisible(True)\n    ringCreate(objs,transformGeos)\n    thisNode\['scatterx'].setValue(0)\n    thisNode\['scattery'].setValue(0)\n    thisNode\['scatterz'].setValue(0)\n\nelif matrixType in \['sphere']:\n    thisNode\['radius'].setVisible(True)\n    for scatter in \['scatterx','scattery','scatterz']:\n        thisNode\[scatter].setVisible(True)\n        thisNode\[scatter].setEnabled(True)\n        thisNode\[scatter].setValue(0)\n    sphereCreate(objs,transformGeos)\n    thisNode\['scatterx'].setValue(0)\n    thisNode\['scattery'].setValue(0)\n    thisNode\['scatterz'].setValue(0)\n    \nelif matrixType in \['model']:\n    thisNode\['radius'].setVisible(False)\n    for scatter in \['scatterx','scattery','scatterz']:\n        thisNode\[scatter].setVisible(False)\n        thisNode\[scatter].setEnabled(False)\n        thisNode\[scatter].setValue(0)\n    modelCreate(objs,model,transformGeos)\n\nelse:\n    thisNode\['scatterx'].setVisible(True)\n    thisNode\['scattery'].setVisible(True)\n    thisNode\['scatterz'].setVisible(True)\n    thisNode\['radius'].setVisible(False)\n    thisNode\['scatterx'].setValue(2)\n    thisNode\['scattery'].setValue(1)\n    thisNode\['scatterz'].setValue(2)\n    planeCreate(objs,transformGeos)" +STARTLINE}
+ addUserKnob {22 clear -STARTLINE T "def clear():\n\tfor i in nuke.allNodes():\n\t\tif i.Class() in \['Card','Cylinder','Sphere','Cube','Scene','TimeOffset','TransformGeo','ApplyMaterial','Switch','Axis2','Axis'] and i\['name'].getValue() not in \['Camera','Geo','Draft_swticher','TransformGeo','looks']:\n\t\t\tnuke.delete(i)\nclear()"}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 Position n 1}
+ addUserKnob {13 pos l Position}
+ pos {0 0 0}
+ addUserKnob {22 resetTranslate l Reset -STARTLINE T "nuke.thisNode()\['pos'].clearAnimated()\nnuke.thisNode()\['pos'].removeKey()\nnuke.thisNode()\['pos'].setValue(\[0,0,0])\n"}
+ addUserKnob {7 radius +HIDDEN R 0 10}
+ radius 1.25
+ addUserKnob {7 scatter}
+ scatter {0}
+ addUserKnob {7 scatterx l "scatter x" R 0 5}
+ scatterx {2}
+ addUserKnob {7 scattery l "scatter y" R 0 5}
+ scattery {1}
+ addUserKnob {7 scatterz l "scatter z" +DISABLED R 0 5}
+ scatterz {2}
+ addUserKnob {7 randomtranslateX l "Random translate X" R 0 10}
+ randomtranslateX {0}
+ addUserKnob {7 randomtranslateY l "Random translate Y" R 0 10}
+ randomtranslateY {0}
+ addUserKnob {7 randomtranslateZ l "Random translate Z" R 0 10}
+ randomtranslateZ {0}
+ addUserKnob {20 endGroup_1 l Position_endgroup n -1}
+ addUserKnob {20 Scale n 1}
+ addUserKnob {13 scale l "Seperate Scale"}
+ scale {0 0 0}
+ addUserKnob {22 resetSperateScale l Reset -STARTLINE T "nuke.thisNode()\['scale'].clearAnimated()\nnuke.thisNode()\['scale'].removeKey()\nnuke.thisNode()\['scale'].setValue(\[0,0,0])\n"}
+ addUserKnob {7 uniformscale l "Uniform scale" R 0 10}
+ uniformscale {1}
+ addUserKnob {7 randomscale l "Uniform Random scale" R 0 10}
+ randomscale {0}
+ addUserKnob {7 randomscaleX l "Random scale X" R 0 10}
+ randomscaleX {0}
+ addUserKnob {7 randomscaleY l "Random scale Y" R 0 10}
+ randomscaleY {0}
+ addUserKnob {7 randomscaleZ l "Random scale Z" R 0 10}
+ randomscaleZ {0}
+ addUserKnob {20 endGroup_2 l "Scale random Group" n -1}
+ addUserKnob {20 rotationGroup l Rotation n 1}
+ addUserKnob {13 rotation l "Particle Rotation"}
+ rotation {0 0 0}
+ addUserKnob {22 resetParticleRotation l Reset -STARTLINE T "nuke.thisNode()\['rotation'].clearAnimated()\nnuke.thisNode()\['rotation'].removeKey()\nnuke.thisNode()\['rotation'].setValue(\[0,0,0])\n"}
+ addUserKnob {7 randomRotationX l "Random rotation X"}
+ randomRotationX {0}
+ addUserKnob {7 randomRotationY l "Random rotation Y"}
+ randomRotationY {0}
+ addUserKnob {7 randomRotationZ l "Random rotation Z"}
+ randomRotationZ {0}
+ addUserKnob {20 rotation_endGroup_3 l endGroup n -1}
+ addUserKnob {20 ResetGroup l Reset n 1}
+ addUserKnob {22 resetPosition l "Reset P" T "properList = \['pos','scatter','scatterx','scattery','scatterz','randomtranslateX','randomtranslateY','randomtranslateZ']\nthisNode = nuke.thisNode()\nfor p in properList:\n    thisNode\[p].clearAnimated()\nthisNode\['pos'].setValue(\[0,0,0])\nif 'plane' in thisNode\['matrixType'].value():\n    thisNode\['scatterx'].setValue(2)\n    thisNode\['scattery'].setValue(1)\n    thisNode\['scatterz'].setValue(2)\nelse:   \n    thisNode\['scatterx'].setValue(0)\n    thisNode\['scattery'].setValue(0)\n    thisNode\['scatterz'].setValue(0)\nthisNode\['scatter'].setValue(0)\nthisNode\['randomtranslateX'].setValue(0)\nthisNode\['randomtranslateY'].setValue(0)\nthisNode\['randomtranslateZ'].setValue(0)" +STARTLINE}
+ addUserKnob {22 resetScale l "Reset S" -STARTLINE T "properList = \['scale','uniformscale','randomscale','randomscaleX','randomscaleY','randomscaleZ']\nthisNode = nuke.thisNode()\nfor p in properList:\n    thisNode\[p].clearAnimated()\nthisNode\['scale'].setValue(\[0,0,0])\nthisNode\['uniformscale'].setValue(1)\nthisNode\['randomscale'].setValue(0)\nthisNode\['randomscaleX'].setValue(0)\nthisNode\['randomscaleY'].setValue(0)\nthisNode\['randomscaleZ'].setValue(0)"}
+ addUserKnob {22 resetRotation l "Reset R" -STARTLINE T "properList = \['rotation','randomRotationX','randomRotationY','randomRotationZ']\nthisNode = nuke.thisNode()\nfor p in properList:\n    thisNode\[p].clearAnimated()\nthisNode\['rotation'].setValue(\[0,0,0])\nthisNode\['randomRotationX'].setValue(0)\nthisNode\['randomRotationY'].setValue(0)\nthisNode\['randomRotationZ'].setValue(0)"}
+ addUserKnob {20 Reset_endGroup_3 l endGroup n -1}
+ addUserKnob {20 Pivot n 1}
+ Pivot 0
+ addUserKnob {13 pivot_individual l pivot}
+ pivot_individual {0 0 0}
+ addUserKnob {22 reset_pivot l Reset -STARTLINE T "nuke.thisNode()\['pivot_individual'].clearAnimated()\nnuke.thisNode()\['pivot_individual'].removeKey()\nnuke.thisNode()\['pivot_individual'].setValue(\[0,0,0])\n"}
+ addUserKnob {20 endGroup_4 l endGroup n -1}
+ addUserKnob {20 worldTransform l "World Transform" n 1}
+ worldTransform 0
+ addUserKnob {41 translate T TransformGeo.translate}
+ addUserKnob {41 rotate T TransformGeo.rotate}
+ addUserKnob {41 scaling l scale T TransformGeo.scaling}
+ addUserKnob {41 uniform_scale l "uniform scale" T TransformGeo.uniform_scale}
+ addUserKnob {41 skew T TransformGeo.skew}
+ addUserKnob {41 pivot T TransformGeo.pivot}
+ addUserKnob {20 worldTransform_endGroup_3 l endGroup n -1}
+ addUserKnob {7 randomSeed l Randomseed R 0 1000}
+ randomSeed {750}
+ addUserKnob {26 divide l "" +STARTLINE}
+ addUserKnob {26 sign l "" +STARTLINE T "\tCopyright 2021 Barry Wang. All rights reserved.\n\thttps://www.youtube.com/watch?v=jWNFwyI3GdU"}
+ addUserKnob {20 surpport l Surpport}
+ addUserKnob {3 integerAmount +INVISIBLE}
+ addUserKnob {26 indexCode -STARTLINE +INVISIBLE T "import Support,importlib,platform\npythonVersion = platform.python_version()\nif pythonVersion.startswith('3'):\n\timportlib.reload(Support)\nelse:\n\treload(Support)\nSupport.Support()"}
+ addUserKnob {22 sup l "<h3><font color = 'cyan'>You really wanna support me?<br><br>你真的想支持我嘛？</font></h3>" -STARTLINE T "import Support,importlib,platform\npythonVersion = platform.python_version()\nif pythonVersion.startswith('3'):\n\timportlib.reload(Support)\nelse:\n\treload(Support)\nSupport.Support()"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0xaaaaaa00
+  label "Draft Textures"
+  note_font_size 42
+  xpos -1409
+  ypos -382
+  bdwidth 441
+  bdheight 203
+ }
+ Grid {
+  inputs 0
+  size 8.2
+  name Grid2
+  xpos -1058
+  ypos -288
+ }
+ ColorWheel {
+  inputs 0
+  gamma 0.45
+  name ColorWheel2
+  xpos -1158
+  ypos -317
+ }
+ ColorBars {
+  inputs 0
+  name ColorBars2
+  xpos -1268
+  ypos -317
+ }
+ CheckerBoard2 {
+  inputs 0
+  boxsize 146.8
+  name CheckerBoard2
+  xpos -1390
+  ypos -317
+ }
+ Switch {
+  inputs 4
+  which {{draftType}}
+  name Draft_swticher
+  xpos -1218
+  ypos -215
+ }
+ Dot {
+  name Draft_dots
+  xpos -1184
+  ypos 53
+ }
+ Input {
+  inputs 0
+  name looks
+  xpos -115
+  ypos -14
+ }
+set Nd4efc00 [stack 0]
+push 0
+ Card {
+  inputs 0
+  selectable false
+  name Card1
+  xpos 46
+  ypos -29
+ }
+set N668c6400 [stack 0]
+ TransformGeo {
+  inputs 3
+  selectable false
+  translate {{"scatterx*3-(4-1)*scatterx/2 + pos.x + (random(1455*randomSeed*100)-0.5) * randomtranslateX * 10 + ((random(1455*randomSeed*100)-0.5) * scatter * 10)"} {"scattery*2-(3-1)*scattery/2 + pos.y + (random(1495*randomSeed*100)-0.5) * randomtranslateY* 10 + ((random(1495*randomSeed*100)-0.5) * scatter * 10)"} {"pos.z + (random(-113+randomSeed*100)-0.5) * 10 * randomtranslateZ + ((random(-113*randomSeed*100)-0.5) * scatter * 10)"}}
+  rotate {{"rotation.x + -261.13411341134116 * randomRotationX * random(randomSeed)"} {"rotation.y + 80.03600360036003 * randomRotationY * random(randomSeed)"} {"rotation.z + 304.0864086408641 * randomRotationZ * random(randomSeed)"}}
+  scaling {{"1+scale.x + random(3642+randomSeed*100) * 10 * randomscaleX"} {"1+scale.y + random(441+randomSeed*100) * 10 * randomscaleY"} {"1+scale.z + random(4403+randomSeed*100) * 10 * randomscaleZ"}}
+  uniform_scale {{"uniformscale + random(-4339+randomSeed*100) * uniformscale * randomscale"}}
+  pivot {{pivot_individual.x} {pivot_individual.y} {pivot_individual.z}}
+  look_rotate_z false
+  look_strength {{faceCam}}
+  name TransformGeo12
+  xpos 1146
+  ypos 36
+ }
+push $Nd4efc00
+push 0
+push $N668c6400
+ TransformGeo {
+  inputs 3
+  selectable false
+  translate {{"scatterx*2-(4-1)*scatterx/2 + pos.x + (random(-6941*randomSeed*100)-0.5) * randomtranslateX * 10 + ((random(-6941*randomSeed*100)-0.5) * scatter * 10)"} {"scattery*2-(3-1)*scattery/2 + pos.y + (random(-6936*randomSeed*100)-0.5) * randomtranslateY* 10 + ((random(-6936*randomSeed*100)-0.5) * scatter * 10)"} {"pos.z + (random(4736+randomSeed*100)-0.5) * 10 * randomtranslateZ + ((random(4736*randomSeed*100)-0.5) * scatter * 10)"}}
+  rotate {{"rotation.x + 301.6021602160216 * randomRotationX * random(randomSeed)"} {"rotation.y + -176.7056705670567 * randomRotationY * random(randomSeed)"} {"rotation.z + -217.02970297029702 * randomRotationZ * random(randomSeed)"}}
+  scaling {{"1+scale.x + random(-4989+randomSeed*100) * 10 * randomscaleX"} {"1+scale.y + random(-667+randomSeed*100) * 10 * randomscaleY"} {"1+scale.z + random(8756+randomSeed*100) * 10 * randomscaleZ"}}
+  uniform_scale {{"uniformscale + random(-8138+randomSeed*100) * uniformscale * randomscale"}}
+  pivot {{pivot_individual.x} {pivot_individual.y} {pivot_individual.z}}
+  look_rotate_z false
+  look_strength {{faceCam}}
+  name TransformGeo11
+  xpos 1046
+  ypos 36
+ }
+push $Nd4efc00
+push 0
+push $N668c6400
+ TransformGeo {
+  inputs 3
+  selectable false
+  translate {{"scatterx*1-(4-1)*scatterx/2 + pos.x + (random(9288*randomSeed*100)-0.5) * randomtranslateX * 10 + ((random(9288*randomSeed*100)-0.5) * scatter * 10)"} {"scattery*2-(3-1)*scattery/2 + pos.y + (random(2068*randomSeed*100)-0.5) * randomtranslateY* 10 + ((random(2068*randomSeed*100)-0.5) * scatter * 10)"} {"pos.z + (random(-2259+randomSeed*100)-0.5) * 10 * randomtranslateZ + ((random(-2259*randomSeed*100)-0.5) * scatter * 10)"}}
+  rotate {{"rotation.x + -157.15571557155715 * randomRotationX * random(randomSeed)"} {"rotation.y + 350.4230423042304 * randomRotationY * random(randomSeed)"} {"rotation.z + 107.43474347434743 * randomRotationZ * random(randomSeed)"}}
+  scaling {{"1+scale.x + random(9099+randomSeed*100) * 10 * randomscaleX"} {"1+scale.y + random(5927+randomSeed*100) * 10 * randomscaleY"} {"1+scale.z + random(1688+randomSeed*100) * 10 * randomscaleZ"}}
+  uniform_scale {{"uniformscale + random(-5956+randomSeed*100) * uniformscale * randomscale"}}
+  pivot {{pivot_individual.x} {pivot_individual.y} {pivot_individual.z}}
+  look_rotate_z false
+  look_strength {{faceCam}}
+  name TransformGeo10
+  xpos 946
+  ypos 36
+ }
+push $Nd4efc00
+push 0
+push $N668c6400
+ TransformGeo {
+  inputs 3
+  selectable false
+  translate {{"scatterx*0-(4-1)*scatterx/2 + pos.x + (random(-6308*randomSeed*100)-0.5) * randomtranslateX * 10 + ((random(-6308*randomSeed*100)-0.5) * scatter * 10)"} {"scattery*2-(3-1)*scattery/2 + pos.y + (random(-9814*randomSeed*100)-0.5) * randomtranslateY* 10 + ((random(-9814*randomSeed*100)-0.5) * scatter * 10)"} {"pos.z + (random(-3774+randomSeed*100)-0.5) * 10 * randomtranslateZ + ((random(-3774*randomSeed*100)-0.5) * scatter * 10)"}}
+  rotate {{"rotation.x + 171.4851485148515 * randomRotationX * random(randomSeed)"} {"rotation.y + 152.43924392439243 * randomRotationY * random(randomSeed)"} {"rotation.z + -168.96489648964896 * randomRotationZ * random(randomSeed)"}}
+  scaling {{"1+scale.x + random(2758+randomSeed*100) * 10 * randomscaleX"} {"1+scale.y + random(-3593+randomSeed*100) * 10 * randomscaleY"} {"1+scale.z + random(-1156+randomSeed*100) * 10 * randomscaleZ"}}
+  uniform_scale {{"uniformscale + random(-6182+randomSeed*100) * uniformscale * randomscale"}}
+  pivot {{pivot_individual.x} {pivot_individual.y} {pivot_individual.z}}
+  look_rotate_z false
+  look_strength {{faceCam}}
+  name TransformGeo9
+  xpos 846
+  ypos 36
+ }
+push $Nd4efc00
+push 0
+push $N668c6400
+ TransformGeo {
+  inputs 3
+  selectable false
+  translate {{"scatterx*3-(4-1)*scatterx/2 + pos.x + (random(-5302*randomSeed*100)-0.5) * randomtranslateX * 10 + ((random(-5302*randomSeed*100)-0.5) * scatter * 10)"} {"scattery*1-(3-1)*scattery/2 + pos.y + (random(-3483*randomSeed*100)-0.5) * randomtranslateY* 10 + ((random(-3483*randomSeed*100)-0.5) * scatter * 10)"} {"pos.z + (random(-2710+randomSeed*100)-0.5) * 10 * randomtranslateZ + ((random(-2710*randomSeed*100)-0.5) * scatter * 10)"}}
+  rotate {{"rotation.x + -200.07200720072007 * randomRotationX * random(randomSeed)"} {"rotation.y + 37.695769576957694 * randomRotationY * random(randomSeed)"} {"rotation.z + 2.7362736273627366 * randomRotationZ * random(randomSeed)"}}
+  scaling {{"1+scale.x + random(6633+randomSeed*100) * 10 * randomscaleX"} {"1+scale.y + random(-3458+randomSeed*100) * 10 * randomscaleY"} {"1+scale.z + random(8829+randomSeed*100) * 10 * randomscaleZ"}}
+  uniform_scale {{"uniformscale + random(-2009+randomSeed*100) * uniformscale * randomscale"}}
+  pivot {{pivot_individual.x} {pivot_individual.y} {pivot_individual.z}}
+  look_rotate_z false
+  look_strength {{faceCam}}
+  name TransformGeo8
+  xpos 746
+  ypos 36
+ }
+push $Nd4efc00
+push 0
+push $N668c6400
+ TransformGeo {
+  inputs 3
+  selectable false
+  translate {{"scatterx*2-(4-1)*scatterx/2 + pos.x + (random(-3667*randomSeed*100)-0.5) * randomtranslateX * 10 + ((random(-3667*randomSeed*100)-0.5) * scatter * 10)"} {"scattery*1-(3-1)*scattery/2 + pos.y + (random(2367*randomSeed*100)-0.5) * randomtranslateY* 10 + ((random(2367*randomSeed*100)-0.5) * scatter * 10)"} {"pos.z + (random(-5280+randomSeed*100)-0.5) * 10 * randomtranslateZ + ((random(-5280*randomSeed*100)-0.5) * scatter * 10)"}}
+  rotate {{"rotation.x + 1.9441944194419443 * randomRotationX * random(randomSeed)"} {"rotation.y + -272.18721872187217 * randomRotationY * random(randomSeed)"} {"rotation.z + 256.3096309630963 * randomRotationZ * random(randomSeed)"}}
+  scaling {{"1+scale.x + random(890+randomSeed*100) * 10 * randomscaleX"} {"1+scale.y + random(4337+randomSeed*100) * 10 * randomscaleY"} {"1+scale.z + random(3100+randomSeed*100) * 10 * randomscaleZ"}}
+  uniform_scale {{"uniformscale + random(2587+randomSeed*100) * uniformscale * randomscale"}}
+  pivot {{pivot_individual.x} {pivot_individual.y} {pivot_individual.z}}
+  look_rotate_z false
+  look_strength {{faceCam}}
+  name TransformGeo7
+  xpos 646
+  ypos 36
+ }
+push $Nd4efc00
+push 0
+push $N668c6400
+ TransformGeo {
+  inputs 3
+  selectable false
+  translate {{"scatterx*1-(4-1)*scatterx/2 + pos.x + (random(1470*randomSeed*100)-0.5) * randomtranslateX * 10 + ((random(1470*randomSeed*100)-0.5) * scatter * 10)"} {"scattery*1-(3-1)*scattery/2 + pos.y + (random(-7710*randomSeed*100)-0.5) * randomtranslateY* 10 + ((random(-7710*randomSeed*100)-0.5) * scatter * 10)"} {"pos.z + (random(7942+randomSeed*100)-0.5) * 10 * randomtranslateZ + ((random(7942*randomSeed*100)-0.5) * scatter * 10)"}}
+  rotate {{"rotation.x + 69.5949594959496 * randomRotationX * random(randomSeed)"} {"rotation.y + 153.5913591359136 * randomRotationY * random(randomSeed)"} {"rotation.z + 268.2988298829883 * randomRotationZ * random(randomSeed)"}}
+  scaling {{"1+scale.x + random(3413+randomSeed*100) * 10 * randomscaleX"} {"1+scale.y + random(1570+randomSeed*100) * 10 * randomscaleY"} {"1+scale.z + random(8667+randomSeed*100) * 10 * randomscaleZ"}}
+  uniform_scale {{"uniformscale + random(121+randomSeed*100) * uniformscale * randomscale"}}
+  pivot {{pivot_individual.x} {pivot_individual.y} {pivot_individual.z}}
+  look_rotate_z false
+  look_strength {{faceCam}}
+  name TransformGeo6
+  xpos 546
+  ypos 36
+ }
+push $Nd4efc00
+push 0
+push $N668c6400
+ TransformGeo {
+  inputs 3
+  selectable false
+  translate {{"scatterx*0-(4-1)*scatterx/2 + pos.x + (random(-7473*randomSeed*100)-0.5) * randomtranslateX * 10 + ((random(-7473*randomSeed*100)-0.5) * scatter * 10)"} {"scattery*1-(3-1)*scattery/2 + pos.y + (random(8933*randomSeed*100)-0.5) * randomtranslateY* 10 + ((random(8933*randomSeed*100)-0.5) * scatter * 10)"} {"pos.z + (random(-3762+randomSeed*100)-0.5) * 10 * randomtranslateZ + ((random(-3762*randomSeed*100)-0.5) * scatter * 10)"}}
+  rotate {{"rotation.x + -240.25202520252026 * randomRotationX * random(randomSeed)"} {"rotation.y + 167.74077407740776 * randomRotationY * random(randomSeed)"} {"rotation.z + -333.969396939694 * randomRotationZ * random(randomSeed)"}}
+  scaling {{"1+scale.x + random(4631+randomSeed*100) * 10 * randomscaleX"} {"1+scale.y + random(8952+randomSeed*100) * 10 * randomscaleY"} {"1+scale.z + random(8134+randomSeed*100) * 10 * randomscaleZ"}}
+  uniform_scale {{"uniformscale + random(-4211+randomSeed*100) * uniformscale * randomscale"}}
+  pivot {{pivot_individual.x} {pivot_individual.y} {pivot_individual.z}}
+  look_rotate_z false
+  look_strength {{faceCam}}
+  name TransformGeo5
+  xpos 446
+  ypos 36
+ }
+push $Nd4efc00
+push 0
+push $N668c6400
+ TransformGeo {
+  inputs 3
+  selectable false
+  translate {{"scatterx*3-(4-1)*scatterx/2 + pos.x + (random(-1394*randomSeed*100)-0.5) * randomtranslateX * 10 + ((random(-1394*randomSeed*100)-0.5) * scatter * 10)"} {"scattery*0-(3-1)*scattery/2 + pos.y + (random(831*randomSeed*100)-0.5) * randomtranslateY* 10 + ((random(831*randomSeed*100)-0.5) * scatter * 10)"} {"pos.z + (random(-2016+randomSeed*100)-0.5) * 10 * randomtranslateZ + ((random(-2016*randomSeed*100)-0.5) * scatter * 10)"}}
+  rotate {{"rotation.x + -202.9162916291629 * randomRotationX * random(randomSeed)"} {"rotation.y + 348.15481548154816 * randomRotationY * random(randomSeed)"} {"rotation.z + -327.27272727272725 * randomRotationZ * random(randomSeed)"}}
+  scaling {{"1+scale.x + random(-4058+randomSeed*100) * 10 * randomscaleX"} {"1+scale.y + random(-6594+randomSeed*100) * 10 * randomscaleY"} {"1+scale.z + random(-385+randomSeed*100) * 10 * randomscaleZ"}}
+  uniform_scale {{"uniformscale + random(2177+randomSeed*100) * uniformscale * randomscale"}}
+  pivot {{pivot_individual.x} {pivot_individual.y} {pivot_individual.z}}
+  look_rotate_z false
+  look_strength {{faceCam}}
+  name TransformGeo4
+  xpos 346
+  ypos 36
+ }
+push $Nd4efc00
+push 0
+push $N668c6400
+ TransformGeo {
+  inputs 3
+  selectable false
+  translate {{"scatterx*2-(4-1)*scatterx/2 + pos.x + (random(-3718*randomSeed*100)-0.5) * randomtranslateX * 10 + ((random(-3718*randomSeed*100)-0.5) * scatter * 10)"} {"scattery*0-(3-1)*scattery/2 + pos.y + (random(236*randomSeed*100)-0.5) * randomtranslateY* 10 + ((random(236*randomSeed*100)-0.5) * scatter * 10)"} {"pos.z + (random(-4198+randomSeed*100)-0.5) * 10 * randomtranslateZ + ((random(-4198*randomSeed*100)-0.5) * scatter * 10)"}}
+  rotate {{"rotation.x + -127.95679567956795 * randomRotationX * random(randomSeed)"} {"rotation.y + 225.74257425742576 * randomRotationY * random(randomSeed)"} {"rotation.z + -290.4050405040504 * randomRotationZ * random(randomSeed)"}}
+  scaling {{"1+scale.x + random(2636+randomSeed*100) * 10 * randomscaleX"} {"1+scale.y + random(-5281+randomSeed*100) * 10 * randomscaleY"} {"1+scale.z + random(-2210+randomSeed*100) * 10 * randomscaleZ"}}
+  uniform_scale {{"uniformscale + random(887+randomSeed*100) * uniformscale * randomscale"}}
+  pivot {{pivot_individual.x} {pivot_individual.y} {pivot_individual.z}}
+  look_rotate_z false
+  look_strength {{faceCam}}
+  name TransformGeo3
+  xpos 246
+  ypos 36
+ }
+push $Nd4efc00
+push 0
+push $N668c6400
+ TransformGeo {
+  inputs 3
+  selectable false
+  translate {{"scatterx*1-(4-1)*scatterx/2 + pos.x + (random(6132*randomSeed*100)-0.5) * randomtranslateX * 10 + ((random(6132*randomSeed*100)-0.5) * scatter * 10)"} {"scattery*0-(3-1)*scattery/2 + pos.y + (random(7977*randomSeed*100)-0.5) * randomtranslateY* 10 + ((random(7977*randomSeed*100)-0.5) * scatter * 10)"} {"pos.z + (random(762+randomSeed*100)-0.5) * 10 * randomtranslateZ + ((random(762*randomSeed*100)-0.5) * scatter * 10)"}}
+  rotate {{"rotation.x + 353.66336633663366 * randomRotationX * random(randomSeed)"} {"rotation.y + 333.5733573357336 * randomRotationY * random(randomSeed)"} {"rotation.z + -49.216921692169215 * randomRotationZ * random(randomSeed)"}}
+  scaling {{"1+scale.x + random(8998+randomSeed*100) * 10 * randomscaleX"} {"1+scale.y + random(-1287+randomSeed*100) * 10 * randomscaleY"} {"1+scale.z + random(-8457+randomSeed*100) * 10 * randomscaleZ"}}
+  uniform_scale {{"uniformscale + random(-3038+randomSeed*100) * uniformscale * randomscale"}}
+  pivot {{pivot_individual.x} {pivot_individual.y} {pivot_individual.z}}
+  look_rotate_z false
+  look_strength {{faceCam}}
+  name TransformGeo2
+  xpos 146
+  ypos 36
+ }
+push $Nd4efc00
+push 0
+push $N668c6400
+ TransformGeo {
+  inputs 3
+  selectable false
+  translate {{"scatterx*0-(4-1)*scatterx/2 + pos.x + (random(4323*randomSeed*100)-0.5) * randomtranslateX * 10 + ((random(4323*randomSeed*100)-0.5) * scatter * 10)"} {"scattery*0-(3-1)*scattery/2 + pos.y + (random(4446*randomSeed*100)-0.5) * randomtranslateY* 10 + ((random(4446*randomSeed*100)-0.5) * scatter * 10)"} {"pos.z + (random(6579+randomSeed*100)-0.5) * 10 * randomtranslateZ + ((random(6579*randomSeed*100)-0.5) * scatter * 10)"}}
+  rotate {{"rotation.x + 161.11611161116113 * randomRotationX * random(randomSeed)"} {"rotation.y + -210.1890189018902 * randomRotationY * random(randomSeed)"} {"rotation.z + -54.761476147614765 * randomRotationZ * random(randomSeed)"}}
+  scaling {{"1+scale.x + random(5431+randomSeed*100) * 10 * randomscaleX"} {"1+scale.y + random(-1516+randomSeed*100) * 10 * randomscaleY"} {"1+scale.z + random(1320+randomSeed*100) * 10 * randomscaleZ"}}
+  uniform_scale {{"uniformscale + random(7349+randomSeed*100) * uniformscale * randomscale"}}
+  pivot {{pivot_individual.x} {pivot_individual.y} {pivot_individual.z}}
+  look_rotate_z false
+  look_strength {{faceCam}}
+  name TransformGeo1
+  xpos 46
+  ypos 36
+ }
+ Scene {
+  inputs 12
+  name Scene
+  xpos 56
+  ypos 206
+ }
+ TransformGeo {
+  selectable false
+  rot_order ZYX
+  translate {0 0 0}
+  rotate {0 0 0}
+  scaling {1 1 1}
+  uniform_scale {1}
+  skew {0 0 0}
+  pivot {0 0 0}
+  look_axis +Y
+  name TransformGeo
+  xpos 46
+  ypos 389
+ }
+ Output {
+  name Output1
+  xpos 46
+  ypos 506
+ }
+ Input {
+  inputs 0
+  name Geo
+  xpos -115
+  ypos -50
+  number 1
+ }
+ Input {
+  inputs 0
+  name Model
+  xpos -263
+  ypos -52
+  number 2
+ }
+ PythonGeo {
+  name PythonGeo
+  xpos -263
+  ypos -14
+ }
+end_group

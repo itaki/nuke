@@ -1,0 +1,558 @@
+Group {
+ name Gaussian_edge_extend
+ knobChanged "node = nuke.thisNode()\nkc = nuke.thisKnob()\n\nif kc.name() in \[\"iterations\"]:\n    i = nuke.toNode('In')\n    #p = nuke.toNode('Premult')\n    m = nuke.toNode('Merge')\n    b = nuke.toNode('Blur')\n    #u = nuke.toNode('Unpremult')\n    e = nuke.toNode('Expression')\n    o = nuke.toNode('Keymix')\n    #eb = p\n\n    for n in nuke.allNodes():\n        if \"static\" not in n\['label'].getValue():\n\n            nuke.delete(n)\n            o.setInput(0,m)\n        \n    slices = int(node\['iterations'].getValue())\n        \n    if slices > 1:  \n        for x in range(1,slices):  \n            p1 = nuke.nodes.Premult()\n            p1.setInput(0,e)\n            \n            b1 = nuke.nodes.Blur()\n            b1.setInput(0,p1)\n            b1\['size'].setExpression('%s.size*mult'%b.name())\n            b1\['channels'].setValue('rgba')\n            \n            u1 = nuke.nodes.Unpremult()\n            u1.setInput(0,b1)\n            \n            e1 = nuke.nodes.Expression()\n            e1\['expr0'].setValue('r*(a/a?a>0.001:r)')\n            e1\['expr1'].setValue('g*(a/a?a>0.001:g)')\n            e1\['expr2'].setValue('b*(a/a?a>0.001:b)')\n            e1\['expr3'].setValue('a/a?a>0.001:0')\n            e1.setInput(0,u1)\n            \n            eb1 = nuke.nodes.EdgeBlur()\n            eb1\['size'].setExpression('%s.size*softness'%b.name())\n            eb1.setInput(0,m)\n            \n            \n            m1 = nuke.nodes.Merge()\n            m1.setInput(0,e1)\n            m1.setInput(1,eb1)\n                        \n            b = b1\n            e = e1\n            m = m1\n            \n            o.setInput(1,i)\n            o.setInput(0,m)\n            \nif node.input(2):\n    if node\['maskChannel'].value() == 'none':\n        node\['maskChannel'].setValue(\"rgba.alpha\")\n    else:\n        pass\nelse:\n    node\['maskChannel'].setValue(\"none\")\n    \nif node.input(1):\n\n    nuke.toNode('CopyGEE')\['disable'].setValue(0)\nelse:\n\n    nuke.toNode('CopyGEE')\['disable'].setValue(1)\n    pass      \n        \nif node\['in'].getValue() == 0:\n    node\['out'].setEnabled(False)\n    node\['out'].setValue(0)\nelse:\n    node\['out'].setEnabled(True)  \n    \nif node\['onThreshold'].getValue() == 0:\n    node\['threshold'].setEnabled(False)\nelse:\n    node\['threshold'].setEnabled(True)\n                 "
+ tile_color 0xcc5f00ff
+ selected true
+ xpos 1785
+ ypos -12565
+ addUserKnob {20 User l Settings}
+ addUserKnob {26 title l "" +STARTLINE T "<b><font size=3>Gaussian edge extend</font></b><font size=1> v1.0</font><br>\n<font size=1>Iterations control</font>"}
+ addUserKnob {26 ""}
+ addUserKnob {4 in l input M {premultiply unpremultiply}}
+ in unpremultiply
+ addUserKnob {26 matte l "<b>Matte control</b>"}
+ addUserKnob {41 size l erode T Dilate1.size}
+ addUserKnob {41 value l gamma T Gamma1.value}
+ addUserKnob {6 onThreshold l "active matte threshold" +STARTLINE}
+ onThreshold true
+ addUserKnob {7 threshold -STARTLINE}
+ threshold 0.5
+ addUserKnob {26 ""}
+ addUserKnob {7 iterations R 2 20}
+ iterations 10
+ addUserKnob {26 iterinfo l "" +STARTLINE T "<font size=1>slice the extention, set the fidelity to the edge</font>"}
+ addUserKnob {7 lenght l size R 0 10}
+ lenght 1.5
+ addUserKnob {26 sizeinfo l "" +STARTLINE T "<font size=1>set the size of each slice</font>"}
+ addUserKnob {7 mult l multiply R 1 5}
+ mult 1
+ addUserKnob {26 multinfo l "" +STARTLINE T "<font size=1>multiply coefficient between slices</font>"}
+ addUserKnob {7 softness R 0 10}
+ softness 1
+ addUserKnob {26 blurinfo l "" +STARTLINE T "<font size=1>set the sofness between slices</font>"}
+ addUserKnob {26 ""}
+ addUserKnob {4 out l output M {premultiply unpremultiply}}
+ addUserKnob {41 disable_1 l "extended alpha" -STARTLINE T Copy2.disable}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannel l mask T Keymix.maskChannel}
+ addUserKnob {41 invertMask l invert -STARTLINE T Keymix.invertMask}
+}
+ Input {
+  inputs 0
+  name In
+  label static
+  xpos 1140
+  ypos -528
+ }
+set N26049090 [stack 0]
+push $N26049090
+ Unpremult {
+  name Unpremult5
+  label static
+  xpos 1140
+  ypos -433
+  disable {{in}}
+ }
+set Nd28a330 [stack 0]
+ Input {
+  inputs 0
+  name mask
+  label static
+  xpos 1527
+  ypos 1339
+  number 2
+ }
+ Invert {
+  name Invert1
+  label "static\n"
+  xpos 1527
+  ypos 1377
+ }
+push $N26049090
+ Input {
+  inputs 0
+  name matte
+  label static
+  xpos 831
+  ypos -331
+  number 1
+ }
+ Clamp {
+  channels alpha
+  name Clamp1
+  label static
+  xpos 941
+  ypos -337
+ }
+push $Nd28a330
+ Clamp {
+  channels alpha
+  name Clamp2
+  label static
+  xpos 1140
+  ypos -395
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name CopyGEE
+  label static
+  selected true
+  xpos 1140
+  ypos -337
+  disable true
+ }
+ Dilate {
+  channels alpha
+  size -2
+  name Dilate1
+  label static
+  xpos 1140
+  ypos -287
+ }
+ Gamma {
+  channels alpha
+  name Gamma1
+  label static
+  xpos 1140
+  ypos -232
+ }
+ Expression {
+  expr3 "onThreshold == 0 ? a : (a>threshold-0.00001?1:0)"
+  name Expression5
+  label static
+  xpos 1140
+  ypos -180
+ }
+ Premult {
+  name Premult
+  label static
+  xpos 1140
+  ypos -142
+ }
+set Nd6cf4d0 [stack 0]
+push $Nd6cf4d0
+ Blur {
+  size {{lenght}}
+  name Blur
+  label static
+  xpos 1140
+  ypos -104
+ }
+ Unpremult {
+  name Unpremult
+  label static
+  xpos 1140
+  ypos -54
+ }
+ Expression {
+  expr0 r*(a/a?a>0.001:r)
+  expr1 g*(a/a?a>0.001:g)
+  expr2 b*(a/a?a>0.001:b)
+  expr3 a/a?a>0.001:0
+  name Expression
+  label static
+  xpos 1140
+  ypos -16
+ }
+set N1e6ea850 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge
+  label static
+  xpos 1289
+  ypos -16
+ }
+ EdgeBlur {
+  size {{Blur.size*softness}}
+  name EdgeBlur1
+  xpos 1289
+  ypos 22
+ }
+push $N1e6ea850
+ Premult {
+  name Premult1
+  xpos 1140
+  ypos 22
+ }
+ Blur {
+  channels rgba
+  size {{Blur.size*mult}}
+  name Blur1
+  xpos 1140
+  ypos 48
+ }
+ Unpremult {
+  name Unpremult1
+  xpos 1140
+  ypos 74
+ }
+ Expression {
+  expr0 r*(a/a?a>0.001:r)
+  expr1 g*(a/a?a>0.001:g)
+  expr2 b*(a/a?a>0.001:b)
+  expr3 a/a?a>0.001:0
+  name Expression1
+  xpos 1140
+  ypos 100
+ }
+set N340f47f0 [stack 0]
+ Merge {
+  inputs 2
+  name Merge1
+  xpos 1289
+  ypos 106
+ }
+ EdgeBlur {
+  size {{Blur1.size*softness}}
+  name EdgeBlur2
+  xpos 1289
+  ypos 132
+ }
+push $N340f47f0
+ Premult {
+  name Premult2
+  xpos 1140
+  ypos 126
+ }
+ Blur {
+  channels rgba
+  size {{Blur1.size*mult}}
+  name Blur2
+  xpos 1140
+  ypos 152
+ }
+ Unpremult {
+  name Unpremult2
+  xpos 1140
+  ypos 178
+ }
+ Expression {
+  expr0 r*(a/a?a>0.001:r)
+  expr1 g*(a/a?a>0.001:g)
+  expr2 b*(a/a?a>0.001:b)
+  expr3 a/a?a>0.001:0
+  name Expression2
+  xpos 1140
+  ypos 204
+ }
+set N340a17b0 [stack 0]
+ Merge {
+  inputs 2
+  name Merge2
+  xpos 1289
+  ypos 210
+ }
+ EdgeBlur {
+  size {{Blur2.size*softness}}
+  name EdgeBlur3
+  xpos 1289
+  ypos 236
+ }
+push $N340a17b0
+ Premult {
+  name Premult3
+  xpos 1140
+  ypos 230
+ }
+ Blur {
+  channels rgba
+  size {{Blur2.size*mult}}
+  name Blur3
+  xpos 1140
+  ypos 256
+ }
+ Unpremult {
+  name Unpremult3
+  xpos 1140
+  ypos 282
+ }
+ Expression {
+  expr0 r*(a/a?a>0.001:r)
+  expr1 g*(a/a?a>0.001:g)
+  expr2 b*(a/a?a>0.001:b)
+  expr3 a/a?a>0.001:0
+  name Expression3
+  xpos 1140
+  ypos 308
+ }
+set N340d33e0 [stack 0]
+ Merge {
+  inputs 2
+  name Merge3
+  xpos 1289
+  ypos 314
+ }
+ EdgeBlur {
+  size {{Blur3.size*softness}}
+  name EdgeBlur4
+  xpos 1289
+  ypos 340
+ }
+push $N340d33e0
+ Premult {
+  name Premult4
+  xpos 1140
+  ypos 334
+ }
+ Blur {
+  channels rgba
+  size {{Blur3.size*mult}}
+  name Blur4
+  xpos 1140
+  ypos 360
+ }
+ Unpremult {
+  name Unpremult4
+  xpos 1140
+  ypos 386
+ }
+ Expression {
+  expr0 r*(a/a?a>0.001:r)
+  expr1 g*(a/a?a>0.001:g)
+  expr2 b*(a/a?a>0.001:b)
+  expr3 a/a?a>0.001:0
+  name Expression4
+  xpos 1140
+  ypos 412
+ }
+set N3413b510 [stack 0]
+ Merge {
+  inputs 2
+  name Merge4
+  xpos 1289
+  ypos 418
+ }
+ EdgeBlur {
+  size {{Blur4.size*softness}}
+  name EdgeBlur5
+  xpos 1289
+  ypos 444
+ }
+push $N3413b510
+ Premult {
+  name Premult5
+  xpos 1140
+  ypos 438
+ }
+ Blur {
+  channels rgba
+  size {{Blur4.size*mult}}
+  name Blur5
+  xpos 1140
+  ypos 464
+ }
+ Unpremult {
+  name Unpremult6
+  xpos 1140
+  ypos 490
+ }
+ Expression {
+  expr0 r*(a/a?a>0.001:r)
+  expr1 g*(a/a?a>0.001:g)
+  expr2 b*(a/a?a>0.001:b)
+  expr3 a/a?a>0.001:0
+  name Expression6
+  xpos 1140
+  ypos 516
+ }
+set N34186470 [stack 0]
+ Merge {
+  inputs 2
+  name Merge6
+  xpos 1289
+  ypos 522
+ }
+ EdgeBlur {
+  size {{Blur5.size*softness}}
+  name EdgeBlur6
+  xpos 1289
+  ypos 548
+ }
+push $N34186470
+ Premult {
+  name Premult6
+  xpos 1140
+  ypos 542
+ }
+ Blur {
+  channels rgba
+  size {{Blur5.size*mult}}
+  name Blur6
+  xpos 1140
+  ypos 568
+ }
+ Unpremult {
+  name Unpremult7
+  xpos 1140
+  ypos 594
+ }
+ Expression {
+  expr0 r*(a/a?a>0.001:r)
+  expr1 g*(a/a?a>0.001:g)
+  expr2 b*(a/a?a>0.001:b)
+  expr3 a/a?a>0.001:0
+  name Expression7
+  xpos 1140
+  ypos 620
+ }
+set N341d1640 [stack 0]
+ Merge {
+  inputs 2
+  name Merge7
+  xpos 1289
+  ypos 626
+ }
+ EdgeBlur {
+  size {{Blur6.size*softness}}
+  name EdgeBlur7
+  xpos 1289
+  ypos 652
+ }
+push $N341d1640
+ Premult {
+  name Premult7
+  xpos 1140
+  ypos 646
+ }
+ Blur {
+  channels rgba
+  size {{Blur6.size*mult}}
+  name Blur7
+  xpos 1140
+  ypos 672
+ }
+ Unpremult {
+  name Unpremult8
+  xpos 1140
+  ypos 698
+ }
+ Expression {
+  expr0 r*(a/a?a>0.001:r)
+  expr1 g*(a/a?a>0.001:g)
+  expr2 b*(a/a?a>0.001:b)
+  expr3 a/a?a>0.001:0
+  name Expression8
+  xpos 1140
+  ypos 724
+ }
+set N3421c2f0 [stack 0]
+ Merge {
+  inputs 2
+  name Merge8
+  xpos 1289
+  ypos 730
+ }
+ EdgeBlur {
+  size {{Blur7.size*softness}}
+  name EdgeBlur8
+  xpos 1289
+  ypos 756
+ }
+push $N3421c2f0
+ Premult {
+  name Premult8
+  xpos 1140
+  ypos 750
+ }
+ Blur {
+  channels rgba
+  size {{Blur7.size*mult}}
+  name Blur8
+  xpos 1140
+  ypos 776
+ }
+ Unpremult {
+  name Unpremult9
+  xpos 1140
+  ypos 802
+ }
+ Expression {
+  expr0 r*(a/a?a>0.001:r)
+  expr1 g*(a/a?a>0.001:g)
+  expr2 b*(a/a?a>0.001:b)
+  expr3 a/a?a>0.001:0
+  name Expression9
+  xpos 1140
+  ypos 828
+ }
+set N342670d0 [stack 0]
+ Merge {
+  inputs 2
+  name Merge9
+  xpos 1289
+  ypos 834
+ }
+ EdgeBlur {
+  size {{Blur8.size*softness}}
+  name EdgeBlur9
+  xpos 1289
+  ypos 860
+ }
+push $N342670d0
+ Premult {
+  name Premult9
+  xpos 1140
+  ypos 854
+ }
+ Blur {
+  channels rgba
+  size {{Blur8.size*mult}}
+  name Blur9
+  xpos 1140
+  ypos 880
+ }
+ Unpremult {
+  name Unpremult10
+  xpos 1140
+  ypos 906
+ }
+ Expression {
+  expr0 r*(a/a?a>0.001:r)
+  expr1 g*(a/a?a>0.001:g)
+  expr2 b*(a/a?a>0.001:b)
+  expr3 a/a?a>0.001:0
+  name Expression10
+  xpos 1140
+  ypos 938
+ }
+ Merge {
+  inputs 2
+  name Merge10
+  xpos 1289
+  ypos 938
+ }
+ Keymix {
+  inputs 3
+  maskChannel none
+  name Keymix
+  label static
+  xpos 1289
+  ypos 1446
+ }
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge5
+  label "static\n"
+  xpos 1289
+  ypos 1496
+  disable {{1-out}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  label static
+  xpos 1289
+  ypos 1614
+ }
+ Output {
+  name Out
+  label static
+  xpos 1289
+  ypos 1683
+ }
+end_group

@@ -1,0 +1,215 @@
+set cut_paste_input [stack 0]
+version 8.0 v5
+push $cut_paste_input
+Group {
+name heat
+tile_color 0xffb157ff
+selected true
+xpos 3631
+ypos 1536
+addUserKnob {20 main l Main}
+addUserKnob {4 preview l Operation M {"Preview Noise" "Final Result"}}
+preview "Final Result"
+addUserKnob {7 animatespeed l "Animation Speed"}
+animatespeed 0.25
+addUserKnob {41 offset l "UV Offset" T Offset.offset}
+addUserKnob {41 size_1 l PostBlur T PostBlur.size}
+addUserKnob {41 maskChannel l "mask channel" T IDistort1.maskChannel}
+addUserKnob {41 invert_mask l invert -STARTLINE T IDistort1.invert_mask}
+addUserKnob {41 filter T IDistort1.filter}
+addUserKnob {20 User l Noise}
+addUserKnob {26 Noise}
+addUserKnob {41 TrackingTranslate l Translate T Tracking.TrackingTranslate}
+addUserKnob {41 opacity T Noise_main.opacity}
+addUserKnob {41 type T Noise_main.type}
+addUserKnob {41 size l x/ysize T Noise_main.size}
+addUserKnob {41 octaves T Noise_main.octaves}
+addUserKnob {41 nyquist l "clip at Nyquist limit" T Noise_main.nyquist}
+addUserKnob {41 lacunarity T Noise_main.lacunarity}
+addUserKnob {41 gain T Noise_main.gain}
+addUserKnob {41 gamma T Noise_main.gamma}
+addUserKnob {20 Distortion}
+addUserKnob {41 channels T IDistort1.channels}
+addUserKnob {41 uv l "UV channels" T IDistort1.uv}
+addUserKnob {41 uv_offset l "UV offset" T IDistort1.uv_offset}
+addUserKnob {41 uv_scale l "UV scale" T IDistort1.uv_scale}
+addUserKnob {41 blur l "blur channel" T IDistort1.blur}
+addUserKnob {41 blur_scale l "blur scale" T IDistort1.blur_scale}
+}
+Dot {
+inputs 0
+name Tracking
+label Tracking
+xpos -257
+ypos 301
+addUserKnob {20 User}
+addUserKnob {12 TrackingTranslate l Translate}
+}
+Input {
+inputs 0
+name MASK
+xpos 86
+ypos 757
+number 1
+}
+Constant {
+inputs 0
+channels rgb
+name Constant1
+xpos -617
+ypos 183
+}
+set Ne71da400 [stack 0]
+Noise {
+cliptype none
+opacity {{parent.Noise_main.opacity}}
+size {{parent.Noise_main.size}}
+zoffset {{parent.Noise_main.zoffset}}
+octaves {{parent.Noise_main.octaves}}
+nyquist {{parent.Noise_main.nyquist x209 0}}
+lacunarity {{parent.Noise_main.lacunarity}}
+gain {{parent.Noise_main.gain}}
+gamma {{parent.Noise_main.gamma}}
+translate {{parent.Tracking.TrackingTranslate.x+(parent.Offset.offset*-1)} {parent.Tracking.TrackingTranslate.y}}
+center {960 540}
+color {{parent.Noise_main.color}}
+name Noise_U
+tile_color 0xff0000ff
+xpos -752
+ypos 415
+hide_input true
+}
+push $Ne71da400
+Noise {
+cliptype none
+size 150
+zoffset {{frame*animatespeed}}
+translate {{parent.Tracking.TrackingTranslate} {parent.Tracking.TrackingTranslate}}
+center {960 540}
+name Noise_main
+xpos -617
+ypos 324
+hide_input true
+}
+set Ndfaefc00 [stack 0]
+Merge2 {
+inputs 2
+operation minus
+name Merge1
+xpos -617
+ypos 518
+}
+push $Ndfaefc00
+push $Ne71da400
+Noise {
+cliptype none
+opacity {{parent.Noise_main.opacity}}
+size {{parent.Noise_main.size}}
+zoffset {{parent.Noise_main.zoffset}}
+octaves {{parent.Noise_main.octaves}}
+nyquist {{parent.Noise_main.nyquist}}
+lacunarity {{parent.Noise_main.lacunarity}}
+gain {{parent.Noise_main.gain}}
+gamma {{parent.Noise_main.gamma}}
+translate {{parent.Tracking.TrackingTranslate.x} {parent.Tracking.TrackingTranslate.y+parent.Offset.offset}}
+center {960 540}
+color {{parent.Noise_main.color}}
+name Noise_V
+tile_color 0xff00ff
+xpos -425
+ypos 407
+hide_input true
+}
+Merge2 {
+inputs 2
+operation minus
+name Merge2
+xpos -425
+ypos 512
+}
+ShuffleCopy {
+inputs 2
+red red
+blue black
+alpha black
+name ShuffleCopy1
+xpos -552
+ypos 558
+}
+Blur {
+channels {rgba.red rgba.green -rgba.blue none}
+size 8
+name PostBlur
+label "\[value size]"
+xpos -552
+ypos 641
+}
+set Ndfaee800 [stack 0]
+Input {
+inputs 0
+name Input1
+xpos -90
+ypos 210
+}
+Copy {
+inputs 2
+from0 rgba.red
+to0 forward.u
+from1 rgba.green
+to1 forward.v
+name Copy1
+selected true
+xpos -90
+ypos 634
+}
+IDistort {
+inputs 1+1
+channels rgba
+uv forward
+uv_scale 50
+blur_scale 0
+name IDistort1
+xpos -90
+ypos 757
+}
+push $Ndfaee800
+Switch {
+inputs 2
+which {{preview}}
+name Switch1
+xpos -90
+ypos 885
+}
+set Ndfecec00 [stack 0]
+Output {
+name Output1
+xpos -90
+ypos 1015
+}
+push $Ndfecec00
+Viewer {
+frame 5
+frame_range 63-73
+frame_range_lock true
+input_process false
+name Viewer1
+xpos -891
+ypos 854
+}
+Dot {
+inputs 0
+name Offset
+label Offset
+xpos -248
+ypos 405
+addUserKnob {20 User}
+addUserKnob {16 offset}
+offset 25
+}
+Dot {
+inputs 0
+name Dot1
+xpos -250
+ypos 497
+}
+end_group

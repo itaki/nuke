@@ -1,0 +1,521 @@
+#! C:/Program Files/Nuke11.2v3/nuke-11.2.3.dll -nx
+version 11.2 v3
+Gizmo {
+ inputs 3
+ tile_color 0xff0000
+ label "\[knob tile_color \[value sc1]]\n"
+ addUserKnob {20 parameters}
+ addUserKnob {4 screen_color l "screen color" t "select type of screen color" M {"" "" Green "" Blue "" "" "" "" "" "" "" ""}}
+ screen_color Green
+ addUserKnob {41 size_1 l size T Blur10.size}
+ addUserKnob {41 offset l blacks T Grade11.add}
+ addUserKnob {41 multiply l Lights T Grade11.multiply}
+ addUserKnob {26 ""}
+ addUserKnob {41 size_2 l erode T Erode1.size}
+ addUserKnob {26 _3 l "" +STARTLINE}
+ addUserKnob {68 patch l "patch black iterations" t "select amount of patch iterations required in your shot.\nrecommended to use small value for better performance" M {8x 32x 128x 256x "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+ addUserKnob {41 size l "extra patch" t "if you find some areas still not patched with patch black iteration option above then you can use extra patch option to fill remaining area." T Blur9.size}
+ addUserKnob {6 boolean l "view without patch black" t "turn on this switch when youre adjusting size, darks, light, erode parameters.\n\nREMEMBER TO TURN IT OFF WHEN YOURE DONE WITH ADJUSTING VALUES" +STARTLINE}
+ addUserKnob {16 sc1 +INVISIBLE}
+ sc1 {{"\[if \{\[numvalue boolean] == \"0\" \} \{return screen_color\} else \{return 1\}]"}}
+ addUserKnob {26 ""}
+ addUserKnob {26 ver l "" +STARTLINE T "<Big><B>IBK Color Master - v2.0"}
+ addUserKnob {26 credit l "" +STARTLINE T "By www.shubham-soni.com"}
+ addUserKnob {20 info}
+ addUserKnob {26 step1 l "<B>Step 1"}
+ addUserKnob {26 _1 l "" +STARTLINE T "Choose either the green or blue screen colour for the shot. Activate the \n\"view without patch black\" switch. Adjust the darks, lights, and erode \nvalues to achieve the desired outcome. If necessary, utilize the Exclude Mask \nInput feature to manually roto and remove any fine details that were not \ncaptured with the darks and lights adjustments. When finished, deactivate \nthe \"view without patch black\" switch.\n\n "}
+ addUserKnob {26 step2 l "<B>Step 2"}
+ addUserKnob {26 _2 l "" +STARTLINE T "Set the patch black iterations amount according to the shot requirements. \nIt is recommended to use a small value for better performance. If there \nare still areas that have not been patched with the \"patch black iteration\" \noption, then use the extra patch option to fill in the remaining area.\n\ndone.\nHAPPY COMPING"}
+}
+ Input {
+  inputs 0
+  name exclude_mask
+  xpos 265
+  ypos -574
+  number 1
+ }
+ Expression {
+  channel3 {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr3 a>0
+  name Expression2
+  xpos 262
+  ypos -90
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos 369
+  ypos -574
+  number 2
+ }
+ Invert {
+  name Invert1
+  xpos 369
+  ypos -134
+ }
+ Input {
+  inputs 0
+  name Img
+  xpos 107
+  ypos -574
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels1
+  xpos 107
+  ypos -530
+ }
+set Nbca9ce00 [stack 0]
+ Grade {
+  multiply {1 1 1 1}
+  add {0 0 0 0}
+  name Grade11
+  tile_color 0x7aa9ff00
+  xpos -64
+  ypos -530
+ }
+ Clamp {
+  maximum_enable false
+  name Clamp2
+  xpos -64
+  ypos -469
+ }
+set Nbca9c700 [stack 0]
+push $Nbca9c700
+push $Nbca9c700
+ IBK {
+  inputs 3
+  blue_green_weight 1
+  luma 1
+  rgbal true
+  name IBK2
+  tile_color 0xff00
+  xpos -14
+  ypos -407
+ }
+push 0
+push $Nbca9c700
+push $Nbca9c700
+push $Nbca9c700
+ IBK {
+  inputs 3
+  screen_type green
+  red_weight {{parent.IBK2.red_weight}}
+  blue_green_weight {{parent.IBK2.blue_green_weight}}
+  lm_enable {{parent.IBK2.lm_enable}}
+  level {{parent.IBK2.level}}
+  luma {{parent.IBK2.luma}}
+  ll_enable {{parent.IBK2.ll_enable}}
+  autolevels {{parent.IBK2.autolevels}}
+  yellow {{parent.IBK2.yellow}}
+  cyan {{parent.IBK2.cyan}}
+  magenta {{parent.IBK2.magenta}}
+  ss {{parent.IBK2.ss}}
+  clamp_alpha {{parent.IBK2.clamp_alpha}}
+  rgbal {{parent.IBK2.rgbal}}
+  nokey {{parent.IBK2.nokey}}
+  ubl {{parent.IBK2.ubl}}
+  ubc {{parent.IBK2.magenta}}
+  name IBK1
+  tile_color 0xff00ff
+  xpos -114
+  ypos -408
+ }
+push 0
+push 0
+ Switch {
+  inputs 5
+  which {{parent.screen_color}}
+  name screentype_switch
+  xpos -62
+  ypos -365
+ }
+ Invert {
+  channels alpha
+  name Invert2
+  tile_color 0x7aa9ff00
+  xpos -62
+  ypos -341
+ }
+ Erode {
+  size 0
+  name Erode1
+  selected true
+  xpos -62
+  ypos -303
+ }
+push $Nbca9ce00
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  channels alpha
+  name Copy3
+  tile_color 0x9e3c6300
+  xpos 107
+  ypos -309
+ }
+ Premult {
+  name Premult3
+  xpos 107
+  ypos -250
+ }
+ Blur {
+  channels rgba
+  size 0.5
+  name Blur10
+  tile_color 0xcc804e00
+  xpos 107
+  ypos -224
+ }
+ Unpremult {
+  name Unpremult10
+  xpos 107
+  ypos -188
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name In
+  label "Bbox: \[value bbox]"
+  xpos 107
+  ypos -134
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Stencil
+  label "Bbox: \[value bbox]"
+  xpos 107
+  ypos -96
+ }
+set Nbcad4000 [stack 0]
+ Expression {
+  expr3 r>0
+  name Expression1
+  xpos -24
+  ypos 1246
+ }
+push $Nbcad4000
+ Expression {
+  expr3 r>0
+  name Expression3
+  xpos 107
+  ypos -58
+ }
+set Nbcb11500 [stack 0]
+push $Nbcb11500
+ Blur {
+  channels rgba
+  size 2
+  name Blur1
+  xpos 107
+  ypos -32
+ }
+ Unpremult {
+  name Unpremult1
+  xpos 107
+  ypos -6
+ }
+ Expression {
+  expr3 r>0
+  name Expression4
+  xpos 107
+  ypos 20
+ }
+ Merge2 {
+  inputs 2
+  name Merge1
+  label "Bbox: \[value bbox]"
+  xpos 107
+  ypos 46
+ }
+ Expression {
+  expr3 r>0
+  name Expression5
+  xpos 107
+  ypos 84
+ }
+set Nbcb3fc00 [stack 0]
+push $Nbcb3fc00
+ Blur {
+  channels rgba
+  size 4
+  name Blur2
+  xpos 107
+  ypos 110
+ }
+ Unpremult {
+  name Unpremult2
+  xpos 107
+  ypos 136
+ }
+ Expression {
+  expr3 r>0
+  name Expression6
+  xpos 107
+  ypos 162
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  label "Bbox: \[value bbox]"
+  xpos 107
+  ypos 188
+ }
+ Expression {
+  expr3 r>0
+  name Expression7
+  xpos 107
+  ypos 226
+ }
+set Nbcb3e380 [stack 0]
+push $Nbcb3e380
+ Blur {
+  channels rgba
+  size 8
+  name Blur3
+  xpos 107
+  ypos 252
+ }
+ Unpremult {
+  name Unpremult3
+  xpos 107
+  ypos 278
+ }
+ Expression {
+  expr3 r>0
+  name Expression8
+  xpos 107
+  ypos 304
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  label "Bbox: \[value bbox]"
+  xpos 107
+  ypos 330
+ }
+set Nbcb66e00 [stack 0]
+ Expression {
+  expr3 r>0
+  name Expression9
+  xpos 107
+  ypos 368
+ }
+set Nbcb66a80 [stack 0]
+push $Nbcb66a80
+ Blur {
+  channels rgba
+  size 16
+  name Blur4
+  xpos 107
+  ypos 394
+ }
+ Unpremult {
+  name Unpremult4
+  xpos 107
+  ypos 420
+ }
+ Expression {
+  expr3 r>0
+  name Expression10
+  xpos 107
+  ypos 446
+ }
+ Merge2 {
+  inputs 2
+  name Merge4
+  label "Bbox: \[value bbox]"
+  xpos 107
+  ypos 472
+ }
+ Expression {
+  expr3 r>0
+  name Expression11
+  xpos 107
+  ypos 510
+ }
+set Nbcb99180 [stack 0]
+push $Nbcb99180
+ Blur {
+  channels rgba
+  size 32
+  name Blur5
+  xpos 107
+  ypos 536
+ }
+ Unpremult {
+  name Unpremult5
+  xpos 107
+  ypos 562
+ }
+ Expression {
+  expr3 r>0
+  name Expression12
+  xpos 107
+  ypos 588
+ }
+ Merge2 {
+  inputs 2
+  name Merge5
+  label "Bbox: \[value bbox]"
+  xpos 107
+  ypos 614
+ }
+set Nbcbc3c00 [stack 0]
+ Expression {
+  expr3 r>0
+  name Expression13
+  xpos 107
+  ypos 652
+ }
+set Nbcbc3880 [stack 0]
+push $Nbcbc3880
+ Blur {
+  channels rgba
+  size 64
+  name Blur6
+  xpos 107
+  ypos 678
+ }
+ Unpremult {
+  name Unpremult6
+  xpos 107
+  ypos 704
+ }
+ Expression {
+  expr3 r>0
+  name Expression14
+  xpos 107
+  ypos 730
+ }
+ Merge2 {
+  inputs 2
+  name Merge6
+  label "Bbox: \[value bbox]"
+  xpos 107
+  ypos 756
+ }
+ Expression {
+  expr3 r>0
+  name Expression15
+  xpos 107
+  ypos 794
+ }
+set Nbcbc2000 [stack 0]
+push $Nbcbc2000
+ Blur {
+  channels rgba
+  size 128
+  name Blur7
+  xpos 107
+  ypos 820
+ }
+ Unpremult {
+  name Unpremult7
+  xpos 107
+  ypos 846
+ }
+ Expression {
+  expr3 r>0
+  name Expression16
+  xpos 107
+  ypos 872
+ }
+ Merge2 {
+  inputs 2
+  name Merge7
+  label "Bbox: \[value bbox]"
+  xpos 107
+  ypos 898
+ }
+set Nbcbf0a80 [stack 0]
+ Expression {
+  expr3 r>0
+  name Expression17
+  xpos 107
+  ypos 936
+ }
+set Nbcbf0700 [stack 0]
+push $Nbcbf0700
+ Blur {
+  channels rgba
+  size 256
+  name Blur8
+  xpos 107
+  ypos 962
+ }
+ Unpremult {
+  name Unpremult8
+  xpos 107
+  ypos 988
+ }
+ Expression {
+  expr3 r>0
+  name Expression18
+  xpos 107
+  ypos 1014
+ }
+ Merge2 {
+  inputs 2
+  name Merge8
+  label "Bbox: \[value bbox]"
+  xpos 107
+  ypos 1040
+ }
+push $Nbcbf0a80
+push $Nbcbc3c00
+push $Nbcb66e00
+ Switch {
+  inputs 4
+  which {{parent.patch}}
+  name Switch
+  xpos 107
+  ypos 1078
+ }
+ Expression {
+  expr3 r>0
+  name Expression19
+  xpos 107
+  ypos 1104
+ }
+set Nbcc26a80 [stack 0]
+push $Nbcc26a80
+ Blur {
+  channels rgba
+  name Blur9
+  xpos 107
+  ypos 1130
+ }
+ Unpremult {
+  name Unpremult9
+  xpos 107
+  ypos 1156
+ }
+ Expression {
+  expr3 r>0
+  name Expression20
+  xpos 107
+  ypos 1182
+ }
+ Merge2 {
+  inputs 2
+  name Merge9
+  label "Bbox: \[value bbox]"
+  xpos 107
+  ypos 1208
+ }
+ Switch {
+  inputs 2
+  which {{parent.boolean}}
+  name view_without_patch
+  xpos 107
+  ypos 1246
+ }
+ Output {
+  name Output1
+  xpos 107
+  ypos 1272
+ }
+end_group

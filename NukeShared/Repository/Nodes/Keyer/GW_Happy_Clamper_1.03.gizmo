@@ -1,0 +1,70 @@
+version 11.00
+Group {
+ name Happy_Clamper
+ tile_color 0xc30081ff
+ label "Clamping above: \n\[value TOTAL]"
+ note_font "Verdana Bold"
+ selected true
+ xpos -392
+ ypos -343
+ addUserKnob {20 Controls}
+ addUserKnob {26 Gavin l "" +STARTLINE T "Happy Clamper V1.01\n\nAlpha Clamper which will clamp alpha values\nabove number to 1\n"}
+ addUserKnob {26 ""}
+ addUserKnob {26 Values_text l "" +STARTLINE T "Clamping Controls"}
+ addUserKnob {7 Large l "0 to 1"}
+ addUserKnob {7 Small l ".00 to 0.1" R 0 0.1}
+ addUserKnob {26 ""}
+ addUserKnob {26 output_txt l "" +STARTLINE T "Value to Clamp\n(anything above this is clamped up to 1)"}
+ addUserKnob {7 TOTAL l "Value to Clamp to 1" t "Anything above this will be clamped to 1"}
+ TOTAL {{"(Large+Small)>= 0.999? 0.999:(Large+Small)" x1 -0.1 x1012 0}}
+ addUserKnob {26 ""}
+ addUserKnob {41 size l "Expand / Choke" T FilterErode1.size}
+ addUserKnob {41 size_1 l "Blur Alpha" T Blur1.size}
+ addUserKnob {6 premult l "Premult Output?" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 ByGavin l "" +STARTLINE T "\n\nBy Gavin Whittaker\n\nwww.gavinwhittaker.info"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -505
+  ypos 72
+ }
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue none}
+  channel1 {-rgba.red rgba.green -rgba.blue none}
+  channel2 {-rgba.red -rgba.green rgba.blue none}
+  expr3 a>TOTAL?1:0
+  name Happy_Clamper
+  tile_color 0xeb20ccff
+  label " >Crunch Alpha< "
+  note_font "Verdana Bold"
+  xpos -505
+  ypos 156
+ }
+ FilterErode {
+  channels alpha
+  size 0
+  name FilterErode1
+  xpos -505
+  ypos 227
+ }
+ Blur {
+  channels alpha
+  name Blur1
+  xpos -505
+  ypos 292
+ }
+ Premult {
+  name Premult1
+  selected true
+  xpos -505
+  ypos 371
+  disable {{!premult}}
+ }
+ Output {
+  name Output1
+  xpos -505
+  ypos 471
+ }
+end_group

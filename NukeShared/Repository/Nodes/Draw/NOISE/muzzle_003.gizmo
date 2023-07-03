@@ -1,0 +1,1266 @@
+set cut_paste_input [stack 0]
+version 8.0 v5
+push $cut_paste_input
+Group {
+ name Muzzle_003
+ help "Muzzle Gizmo created by Rob Bannister and Andre Sant'Anna\n\nInput a roto shape that repesents where you would like the muzzle flash. Edit the values using the previews to help creat your muzzle flash look. Animate the rotoshape, sizes and Z values to evolve the fire look.\n\nMain noise - The main noise is used to fill the core or to erode chunks out to break it up a bit.\n\nTendrils - are the wispy strings that give the fire detail expecially on the edges.\n\nExtra Details - use these to create darker areas and further break up the consistency of the muzzle flash. It also helps to isolate color to the outside and in these finer detais.\n\nEdge - Use the 3 fractal blurs (created by Richard Frazer) to break up the edge of your roto shape. Use the previews to help you.\n\nRamp - use this to create a falloff so one end is hotter then the other.\n\nGlow - There are 3 sets of glows, small, medium and large. Use these in balance with the Core brighteness and Main noise fill."
+ selected true
+ xpos -1606
+ ypos 1966
+ addUserKnob {20 User l Noise}
+ addUserKnob {6 animation l Animation +STARTLINE}
+ animation true
+ addUserKnob {16 animationspeed l Speed}
+ animationspeed 0.2
+ addUserKnob {68 noiseselection l "Noise Preview" M {Result Tendrils Noise "Combined Noise" "Extra Details" "" ""}}
+ addUserKnob {41 white l gain T Noise_Color.white}
+ addUserKnob {41 white_1 l "Core Brightness" T NoiseCore_Color.white}
+ addUserKnob {26 ""}
+ addUserKnob {26 mainnoise l "" +STARTLINE T "Main Noise"}
+ addUserKnob {41 mix l Fill T ChannelMerge_Fill.mix}
+ addUserKnob {41 mix_1 l Erode T ChannelMerge_Erode.mix}
+ addUserKnob {41 type T Noise1.type}
+ addUserKnob {41 size l x/ysize T Noise1.size}
+ addUserKnob {41 lacunarity T Noise1.lacunarity}
+ addUserKnob {41 gain T Noise1.gain}
+ addUserKnob {41 gamma T Noise1.gamma}
+ addUserKnob {26 ""}
+ addUserKnob {26 tendrils l "" +STARTLINE T "Tendrils Detail"}
+ addUserKnob {41 size_4 l size T T_Noise.size}
+ addUserKnob {41 threshold l Threshold T T_EdgeDetect.threshold}
+ addUserKnob {41 erodesize l "Erode Size" T T_EdgeDetect.erodesize}
+ addUserKnob {41 blursize l "Blur size" T T_EdgeDetect.blursize}
+ addUserKnob {41 size_5 l Blur T T_Blur.size}
+ addUserKnob {26 ""}
+ addUserKnob {26 core l "" +STARTLINE T "Extra Details"}
+ addUserKnob {41 value_1 l Tolerance T ExtraDetails_tolerance.value}
+ addUserKnob {41 multiply l Color T NoiseEdges_Color.multiply}
+ addUserKnob {41 size_6 l Blur T C_Blur.size}
+ addUserKnob {20 translatetab l Translate}
+ addUserKnob {6 disablemattetranslate l "Move Matte with Noise" +STARTLINE}
+ disablemattetranslate true
+ addUserKnob {41 translate T Transform1.translate}
+ addUserKnob {41 rotate T Transform1.rotate}
+ addUserKnob {41 scale T Transform1.scale}
+ addUserKnob {20 Edge}
+ addUserKnob {4 edgepreview l "Edge Preview" M {Result "Fractal Blur SM" "Fractal Blur MED" "Fractal Blur LG" "Merged Fractal" ""}}
+ addUserKnob {7 edgespread l "Edge Spread" R 0 100}
+ edgespread 25
+ addUserKnob {7 edgesize l "Edge Size" R 0 100}
+ edgesize 10
+ addUserKnob {7 multiplier l Multiplier R 0 10}
+ multiplier 1.1
+ addUserKnob {7 edgecontrast l Contrast}
+ addUserKnob {7 edgegamma l Gamma}
+ edgegamma 1
+ addUserKnob {20 EdgeS l "Edge S" n 1}
+ addUserKnob {41 FractalBlur_UserDilate l Spread T Fractal_BlurSM.FractalBlur_UserDilate}
+ addUserKnob {41 FractalBlur_UserGrainSize l "Grain Size" T Fractal_BlurSM.FractalBlur_UserGrainSize}
+ addUserKnob {41 FractalBlur_UserContrast l Contrast T Fractal_BlurSM.FractalBlur_UserContrast}
+ addUserKnob {41 FractalBlur_UserGamma l Gamma T Fractal_BlurSM.FractalBlur_UserGamma}
+ addUserKnob {41 FractalBlur_UserGrainEvolve l "Grain Evolution" T Fractal_BlurSM.FractalBlur_UserGrainEvolve}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 EdgeM l "Edge M" n 1}
+ addUserKnob {41 FractalBlur_UserDilate_1 l Spread T Fractal_BlurMED.FractalBlur_UserDilate}
+ addUserKnob {41 FractalBlur_UserGrainSize_1 l "Grain Size" T Fractal_BlurMED.FractalBlur_UserGrainSize}
+ addUserKnob {41 FractalBlur_UserContrast_1 l Contrast T Fractal_BlurMED.FractalBlur_UserContrast}
+ addUserKnob {41 FractalBlur_UserGamma_1 l Gamma T Fractal_BlurMED.FractalBlur_UserGamma}
+ addUserKnob {41 FractalBlur_UserGrainEvolve_1 l "Grain Evolution" T Fractal_BlurMED.FractalBlur_UserGrainEvolve}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 EdgeL n 1}
+ addUserKnob {41 FractalBlur_UserDilate_2 l Spread T Fractal_BlurLG.FractalBlur_UserDilate}
+ addUserKnob {41 FractalBlur_UserGrainSize_2 l "Grain Size" T Fractal_BlurLG.FractalBlur_UserGrainSize}
+ addUserKnob {41 FractalBlur_UserContrast_2 l Contrast T Fractal_BlurLG.FractalBlur_UserContrast}
+ addUserKnob {41 FractalBlur_UserGamma_2 l Gamma T Fractal_BlurLG.FractalBlur_UserGamma}
+ addUserKnob {41 FractalBlur_UserGrainEvolve_2 l "Grain Evolution" T Fractal_BlurLG.FractalBlur_UserGrainEvolve}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 Ramp}
+ addUserKnob {6 enableramp l "Enable Ramp" +STARTLINE}
+ addUserKnob {41 value T Ramp_Mult.value}
+ addUserKnob {41 p0 l "point 0" T Ramp1.p0}
+ addUserKnob {41 p1 l "point 1" T Ramp1.p1}
+ addUserKnob {20 Glow}
+ addUserKnob {7 glowsize l "Glow Size" R 0 100}
+ glowsize 9.5
+ addUserKnob {7 glowmultiplier l "Glow Multiplier" R 0 10}
+ glowmultiplier 1.2
+ addUserKnob {7 glowbrightness l Brightness R 0 10}
+ glowbrightness 0.3
+ addUserKnob {7 brightnessmultiplier l "Br Multiplier" R 0 10}
+ brightnessmultiplier 1.1
+ addUserKnob {6 effectonlyglow l "Effect Only" +STARTLINE}
+ effectonlyglow true
+ addUserKnob {6 disableglow l Disable +STARTLINE}
+ addUserKnob {20 glowsm_group l "Glow SM" n 1}
+ glowsm_group 0
+ addUserKnob {41 size_1 l size T Glow_SM.size}
+ addUserKnob {41 tint T Glow_SM.tint}
+ addUserKnob {41 tolerance T Glow_SM.tolerance}
+ addUserKnob {41 brightness T Glow_SM.brightness}
+ addUserKnob {41 saturation T Glow_SM.saturation}
+ addUserKnob {41 effect_only l "effect only" T Glow_SM.effect_only}
+ addUserKnob {41 disable_1 l disable T Merge_GlowSM.disable}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {20 glowmed l "Glow MED" n 1}
+ glowmed 0
+ addUserKnob {41 size_2 l size T Glow_MED.size}
+ addUserKnob {41 tint_1 l tint T Glow_MED.tint}
+ addUserKnob {41 tolerance_1 l tolerance T Glow_MED.tolerance}
+ addUserKnob {41 brightness_1 l brightness T Glow_MED.brightness}
+ addUserKnob {41 saturation_1 l saturation T Glow_MED.saturation}
+ addUserKnob {41 effect_only_1 l "effect only" T Glow_MED.effect_only}
+ addUserKnob {41 disable_2 l disable T Merge_GlowMED.disable}
+ addUserKnob {20 endGroup_4 l endGroup n -1}
+ addUserKnob {20 glowlg l "Glow LG" n 1}
+ glowlg 0
+ addUserKnob {41 size_3 l size T Glow_LG.size}
+ addUserKnob {41 tint_2 l tint T Glow_LG.tint}
+ addUserKnob {41 tolerance_2 l tolerance T Glow_LG.tolerance}
+ addUserKnob {41 brightness_2 l brightness T Glow_LG.brightness}
+ addUserKnob {41 saturation_2 l saturation T Glow_LG.saturation}
+ addUserKnob {41 effect_only_2 l "effect only" T Glow_LG.effect_only}
+ addUserKnob {41 disable_3 l disable T Merge_GlowLG.disable}
+ addUserKnob {20 endGroup_5 l endGroup n -1}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x388e8e00
+  label Glow
+  note_font_size 42
+  xpos 302
+  ypos 346
+  bdwidth 210
+  bdheight 335
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x388e8e00
+  label "Brightness Ramp"
+  note_font_size 42
+  xpos 201
+  ypos 91
+  bdwidth 368
+  bdheight 148
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x7171c600
+  label "Main Noise"
+  note_font_size 42
+  xpos 141
+  ypos -835
+  bdwidth 226
+  bdheight 158
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0x8e388e00
+  label "Extra Details"
+  note_font_size 42
+  xpos -528
+  ypos -477
+  bdwidth 321
+  bdheight 218
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x8e8e3800
+  label Tendrils
+  note_font_size 42
+  xpos -605
+  ypos -1575
+  bdwidth 1117
+  bdheight 606
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0xaaaaaa00
+  label Edges
+  note_font_size 42
+  xpos 729
+  ypos -1578
+  bdwidth 355
+  bdheight 420
+ }
+ Input {
+  inputs 0
+  name Matte
+  xpos 841
+  ypos -1901
+ }
+set N7e18ec00 [stack 0]
+ Transform {
+  center {655 109}
+  name Transform1
+  xpos 572
+  ypos -1727
+ }
+push $N7e18ec00
+ Switch {
+  inputs 2
+  which {{"(\[string first \".a\" \[channels \[input this 0]]]>-1)*parent.disablemattetranslate"}}
+  name Switch1
+  xpos 841
+  ypos -1727
+ }
+ Constant {
+  inputs 0
+  channels alpha
+  color 1
+  name Constant1
+  xpos 1009
+  ypos -1499
+ }
+ ChannelMerge {
+  inputs 2
+  operation multiply
+  name ChannelMerge1
+  xpos 841
+  ypos -1482
+ }
+set N7e1bbc00 [stack 0]
+ Group {
+  name Fractal_BlurLG
+  xpos 940
+  ypos -1362
+  addUserKnob {20 User}
+  addUserKnob {7 FractalBlur_UserDilate l Spread R 0 200}
+  FractalBlur_UserDilate {{edgespread*(multiplier*4)}}
+  addUserKnob {7 FractalBlur_UserGrainSize l "Grain Size" R 0 100}
+  FractalBlur_UserGrainSize {{edgesize*(multiplier*4)}}
+  addUserKnob {7 FractalBlur_UserContrast l Contrast}
+  FractalBlur_UserContrast {{parent.edgecontrast}}
+  addUserKnob {7 FractalBlur_UserGamma l Gamma R 0 5}
+  FractalBlur_UserGamma {{parent.edgegamma}}
+  addUserKnob {6 FractalBlur_UserBlackWhite l "Make black and white" +STARTLINE}
+  addUserKnob {7 FractalBlur_UserThreshold l Threshold}
+  addUserKnob {6 FractalBlur_UserBW l "Clamp output" +STARTLINE}
+  addUserKnob {7 FractalBlur_UserGrainEvolve l "Grain Evolution" t "Keyframe this value to animate the grain" R 0 10}
+  FractalBlur_UserGrainEvolve {{((frame)*parent.animationspeed)*parent.animation}}
+  addUserKnob {26 ""}
+  addUserKnob {26 FractalBlur_Credit l "" +STARTLINE T "Fractal Blur v1.4 by Richard Frazer - www.richardfrazer.com"}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 1516
+   ypos -418
+  }
+  Dot {
+   name Dot3
+   xpos 1550
+   ypos -370
+  }
+set N7e1bb400 [stack 0]
+  Dot {
+   name Dot1
+   xpos 1748
+   ypos -370
+  }
+  Shuffle {
+   red black
+   green black
+   blue black
+   alpha black
+   name Shuffle10
+   xpos 1714
+   ypos -204
+  }
+  Noise {
+   cliptype none
+   size {{"\[value FractalBlur_UserGrainSize]"}}
+   zoffset {{"\[value FractalBlur_UserGrainEvolve]"}}
+   translate {{parent.parent.Transform1.translate} {parent.parent.Transform1.translate}}
+   rotate {{parent.parent.Transform1.rotate}}
+   scale {{parent.parent.Transform1.scale}}
+   center {1024 778}
+   name Noise1
+   xpos 1714
+   ypos -141
+  }
+  Invert {
+   name Invert4
+   xpos 1714
+   ypos -67
+  }
+push $N7e1bb400
+  Blur {
+   size {{"\[value FractalBlur_UserDilate]" i x101 0}}
+   name Blur1
+   xpos 1516
+   ypos -313
+  }
+  FilterErode {
+   channels rgba
+   size {{"(-\[value FractalBlur_UserDilate])/2" i x1 0}}
+   name FilterErode7
+   xpos 1516
+   ypos -216
+  }
+  Dot {
+   name Dot10
+   xpos 1550
+   ypos -133
+  }
+set N7e1f7400 [stack 0]
+  Merge2 {
+   inputs 2
+   operation minus
+   name Merge2
+   xpos 1660
+   ypos -6
+  }
+  Invert {
+   name Invert3
+   xpos 1660
+   ypos 51
+  }
+push $N7e1f7400
+  Merge2 {
+   inputs 2
+   operation multiply
+   name Merge13
+   xpos 1516
+   ypos 57
+  }
+set N7e1f6800 [stack 0]
+  Clamp {
+   name Clamp1
+   xpos 1408
+   ypos 116
+  }
+  Grade {
+   channels rgba
+   blackpoint {{FractalBlur_UserThreshold i}}
+   whitepoint {{FractalBlur_UserThreshold i}}
+   name Grade1
+   xpos 1408
+   ypos 195
+  }
+push $N7e1f6800
+  Switch {
+   inputs 2
+   which {{FractalBlur_UserBlackWhite i x47 1}}
+   name Switch1
+   xpos 1516
+   ypos 249
+  }
+  Grade {
+   channels rgba
+   blackpoint {{FractalBlur_UserContrast i}}
+   whitepoint {{1-FractalBlur_UserContrast i}}
+   gamma {{FractalBlur_UserGamma i x101 0.985}}
+   name Grade5
+   xpos 1516
+   ypos 330
+  }
+set N7e231800 [stack 0]
+  Clamp {
+   name Clamp2
+   xpos 1413
+   ypos 372
+  }
+push $N7e231800
+  Switch {
+   inputs 2
+   which {{FractalBlur_UserBW i x47 0}}
+   name Switch2
+   xpos 1517
+   ypos 464
+  }
+  Shuffle {
+   red alpha
+   green alpha
+   blue alpha
+   name Shuffle15
+   xpos 1517
+   ypos 532
+  }
+  Output {
+   name Output1
+   xpos 1517
+   ypos 611
+  }
+push $N7e1f6800
+push $N7e1f6800
+  Viewer {
+   inputs 2
+   viewerProcess None
+   input_process false
+   name Viewer1
+   xpos 1103
+   ypos 49
+  }
+ end_group
+set N7e16d180 [stack 0]
+ Dot {
+  name Dot6
+  xpos 974
+  ypos -1195
+ }
+set N7e230400 [stack 0]
+push $N7e1bbc00
+ Group {
+  name Fractal_BlurMED
+  xpos 841
+  ypos -1363
+  addUserKnob {20 User}
+  addUserKnob {7 FractalBlur_UserDilate l Spread R 0 200}
+  FractalBlur_UserDilate {{edgespread*(multiplier*2)}}
+  addUserKnob {7 FractalBlur_UserGrainSize l "Grain Size" R 0 100}
+  FractalBlur_UserGrainSize {{edgesize*(multiplier*2)}}
+  addUserKnob {7 FractalBlur_UserContrast l Contrast}
+  FractalBlur_UserContrast {{parent.edgecontrast}}
+  addUserKnob {7 FractalBlur_UserGamma l Gamma R 0 5}
+  FractalBlur_UserGamma {{parent.edgegamma}}
+  addUserKnob {6 FractalBlur_UserBlackWhite l "Make black and white" +STARTLINE}
+  addUserKnob {7 FractalBlur_UserThreshold l Threshold}
+  addUserKnob {6 FractalBlur_UserBW l "Clamp output" +STARTLINE}
+  addUserKnob {7 FractalBlur_UserGrainEvolve l "Grain Evolution" t "Keyframe this value to animate the grain" R 0 10}
+  FractalBlur_UserGrainEvolve {{((frame)*parent.animationspeed)*parent.animation}}
+  addUserKnob {26 ""}
+  addUserKnob {26 FractalBlur_Credit l "" +STARTLINE T "Fractal Blur v1.4 by Richard Frazer - www.richardfrazer.com"}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 1516
+   ypos -418
+  }
+  Dot {
+   name Dot3
+   xpos 1550
+   ypos -370
+  }
+set N7e279c00 [stack 0]
+  Dot {
+   name Dot1
+   xpos 1748
+   ypos -370
+  }
+  Shuffle {
+   red black
+   green black
+   blue black
+   alpha black
+   name Shuffle10
+   xpos 1714
+   ypos -204
+  }
+  Noise {
+   cliptype none
+   size {{"\[value FractalBlur_UserGrainSize]"}}
+   zoffset {{"\[value FractalBlur_UserGrainEvolve]"}}
+   translate {{parent.parent.Transform1.translate} {parent.parent.Transform1.translate}}
+   rotate {{parent.parent.Transform1.rotate}}
+   scale {{parent.parent.Transform1.scale}}
+   center {1024 778}
+   name Noise1
+   xpos 1714
+   ypos -141
+  }
+  Invert {
+   name Invert4
+   xpos 1714
+   ypos -67
+  }
+push $N7e279c00
+  Blur {
+   size {{"\[value FractalBlur_UserDilate]" i x101 0}}
+   name Blur1
+   xpos 1516
+   ypos -313
+  }
+  FilterErode {
+   channels rgba
+   size {{"(-\[value FractalBlur_UserDilate])/2" i x1 0}}
+   name FilterErode7
+   xpos 1516
+   ypos -216
+  }
+  Dot {
+   name Dot10
+   xpos 1550
+   ypos -133
+  }
+set N7e2adc00 [stack 0]
+  Merge2 {
+   inputs 2
+   operation minus
+   name Merge2
+   xpos 1660
+   ypos -6
+  }
+  Invert {
+   name Invert3
+   xpos 1660
+   ypos 51
+  }
+push $N7e2adc00
+  Merge2 {
+   inputs 2
+   operation multiply
+   name Merge13
+   xpos 1516
+   ypos 57
+  }
+set N7e2ad000 [stack 0]
+  Clamp {
+   name Clamp1
+   xpos 1408
+   ypos 116
+  }
+  Grade {
+   channels rgba
+   blackpoint {{FractalBlur_UserThreshold i}}
+   whitepoint {{FractalBlur_UserThreshold i}}
+   name Grade1
+   xpos 1408
+   ypos 195
+  }
+push $N7e2ad000
+  Switch {
+   inputs 2
+   which {{FractalBlur_UserBlackWhite i x47 1}}
+   name Switch1
+   xpos 1516
+   ypos 249
+  }
+  Grade {
+   channels rgba
+   blackpoint {{FractalBlur_UserContrast i}}
+   whitepoint {{1-FractalBlur_UserContrast i}}
+   gamma {{FractalBlur_UserGamma i x101 0.985}}
+   name Grade5
+   xpos 1516
+   ypos 330
+  }
+set N7e2ac000 [stack 0]
+  Clamp {
+   name Clamp2
+   xpos 1413
+   ypos 372
+  }
+push $N7e2ac000
+  Switch {
+   inputs 2
+   which {{FractalBlur_UserBW i x47 0}}
+   name Switch2
+   xpos 1517
+   ypos 464
+  }
+  Shuffle {
+   red alpha
+   green alpha
+   blue alpha
+   name Shuffle15
+   xpos 1517
+   ypos 532
+  }
+  Output {
+   name Output1
+   xpos 1517
+   ypos 611
+  }
+push $N7e2ad000
+push $N7e2ad000
+  Viewer {
+   inputs 2
+   viewerProcess None
+   input_process false
+   name Viewer1
+   xpos 1103
+   ypos 49
+  }
+ end_group
+set N7e16cd00 [stack 0]
+push $N7e1bbc00
+ Group {
+  name Fractal_BlurSM
+  xpos 739
+  ypos -1361
+  addUserKnob {20 User}
+  addUserKnob {7 FractalBlur_UserDilate l Spread R 0 200}
+  FractalBlur_UserDilate {{edgespread*(multiplier)}}
+  addUserKnob {7 FractalBlur_UserGrainSize l "Grain Size" R 0 100}
+  FractalBlur_UserGrainSize {{edgesize*(multiplier)}}
+  addUserKnob {7 FractalBlur_UserContrast l Contrast}
+  FractalBlur_UserContrast {{parent.edgecontrast}}
+  addUserKnob {7 FractalBlur_UserGamma l Gamma R 0 5}
+  FractalBlur_UserGamma {{parent.edgegamma}}
+  addUserKnob {6 FractalBlur_UserBlackWhite l "Make black and white" +STARTLINE}
+  addUserKnob {7 FractalBlur_UserThreshold l Threshold}
+  addUserKnob {6 FractalBlur_UserBW l "Clamp output" +STARTLINE}
+  addUserKnob {7 FractalBlur_UserGrainEvolve l "Grain Evolution" t "Keyframe this value to animate the grain" R 0 10}
+  FractalBlur_UserGrainEvolve {{((frame)*parent.animationspeed)*parent.animation}}
+  addUserKnob {26 ""}
+  addUserKnob {26 FractalBlur_Credit l "" +STARTLINE T "Fractal Blur v1.4 by Richard Frazer - www.richardfrazer.com"}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 1516
+   ypos -418
+  }
+  Dot {
+   name Dot3
+   xpos 1550
+   ypos -370
+  }
+set N7e2ee800 [stack 0]
+  Dot {
+   name Dot1
+   xpos 1748
+   ypos -370
+  }
+  Shuffle {
+   red black
+   green black
+   blue black
+   alpha black
+   name Shuffle10
+   xpos 1714
+   ypos -204
+  }
+  Noise {
+   cliptype none
+   size {{"\[value FractalBlur_UserGrainSize]"}}
+   zoffset {{"\[value FractalBlur_UserGrainEvolve]"}}
+   translate {{parent.parent.Transform1.translate} {parent.parent.Transform1.translate}}
+   rotate {{parent.parent.Transform1.rotate}}
+   scale {{parent.parent.Transform1.scale}}
+   center {1024 778}
+   name Noise1
+   xpos 1714
+   ypos -137
+  }
+  Invert {
+   name Invert4
+   xpos 1714
+   ypos -67
+  }
+push $N7e2ee800
+  Blur {
+   size {{"\[value FractalBlur_UserDilate]" i x101 0}}
+   name Blur1
+   xpos 1516
+   ypos -313
+  }
+  FilterErode {
+   channels rgba
+   size {{"(-\[value FractalBlur_UserDilate])/2" i x1 0}}
+   name FilterErode7
+   xpos 1516
+   ypos -216
+  }
+  Dot {
+   name Dot10
+   xpos 1550
+   ypos -133
+  }
+set N7e33a800 [stack 0]
+  Merge2 {
+   inputs 2
+   operation minus
+   name Merge2
+   xpos 1660
+   ypos -6
+  }
+  Invert {
+   name Invert3
+   xpos 1660
+   ypos 51
+  }
+push $N7e33a800
+  Merge2 {
+   inputs 2
+   operation multiply
+   name Merge13
+   xpos 1516
+   ypos 57
+  }
+set N7e37bc00 [stack 0]
+  Clamp {
+   name Clamp1
+   xpos 1408
+   ypos 116
+  }
+  Grade {
+   channels rgba
+   blackpoint {{FractalBlur_UserThreshold i}}
+   whitepoint {{FractalBlur_UserThreshold i}}
+   name Grade1
+   xpos 1408
+   ypos 195
+  }
+push $N7e37bc00
+  Switch {
+   inputs 2
+   which {{FractalBlur_UserBlackWhite i x47 1}}
+   name Switch1
+   xpos 1516
+   ypos 249
+  }
+  Grade {
+   channels rgba
+   blackpoint {{FractalBlur_UserContrast i}}
+   whitepoint {{1-FractalBlur_UserContrast i}}
+   gamma {{FractalBlur_UserGamma i x101 0.985}}
+   name Grade5
+   xpos 1516
+   ypos 330
+  }
+set N7e37ac00 [stack 0]
+  Clamp {
+   name Clamp2
+   xpos 1413
+   ypos 372
+  }
+push $N7e37ac00
+  Switch {
+   inputs 2
+   which {{FractalBlur_UserBW i x47 0}}
+   name Switch2
+   xpos 1517
+   ypos 464
+  }
+  Shuffle {
+   red alpha
+   green alpha
+   blue alpha
+   name Shuffle15
+   xpos 1517
+   ypos 532
+  }
+  Output {
+   name Output1
+   xpos 1517
+   ypos 611
+  }
+push $N7e37bc00
+push $N7e37bc00
+  Viewer {
+   inputs 2
+   viewerProcess None
+   input_process false
+   name Viewer1
+   xpos 1103
+   ypos 49
+  }
+ end_group
+set N7e16c880 [stack 0]
+ Dot {
+  name Dot5
+  xpos 773
+  ypos -1292
+ }
+set N7e3c1800 [stack 0]
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge7
+  xpos 753
+  ypos -1242
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge8
+  xpos 841
+  ypos -1047
+ }
+ Dot {
+  name Dot1
+  xpos 875
+  ypos -455
+ }
+set N7e3c0c00 [stack 0]
+ Dot {
+  name Dot3
+  xpos 875
+  ypos -294
+ }
+set N7e3c0800 [stack 0]
+ Dot {
+  name Dot15
+  xpos 875
+  ypos 981
+ }
+push $N7e16d180
+ Dot {
+  name Dot20
+  xpos 1384
+  ypos -1305
+ }
+ Dot {
+  name Dot21
+  xpos 1384
+  ypos 1029
+ }
+push $N7e16cd00
+ Dot {
+  name Dot18
+  xpos 1286
+  ypos -1282
+ }
+ Dot {
+  name Dot19
+  xpos 1286
+  ypos 1009
+ }
+push $N7e16c880
+ Dot {
+  name Dot17
+  xpos 1170
+  ypos -1283
+ }
+ Dot {
+  name Dot16
+  xpos 1170
+  ypos 997
+ }
+push $N7e3c0c00
+ Dot {
+  name Dot7
+  xpos 715
+  ypos -455
+ }
+set N7e3fc800 [stack 0]
+ Dot {
+  name Dot9
+  xpos 715
+  ypos -382
+ }
+ Multiply {
+  value 0.5
+  name ExtraDetails_tolerance
+  xpos -300
+  ypos -392
+ }
+ EdgeDetectWrapper {
+  edgedetector prewitt
+  name EdgeDetect3
+  xpos -407
+  ypos -391
+ }
+ Noise {
+  inputs 0
+  cliptype none
+  size 75
+  zoffset {{(frame*parent.animationspeed)*parent.animation}}
+  gamma 0.6
+  translate {{parent.Transform1.translate} {parent.Transform1.translate}}
+  rotate {{parent.Transform1.rotate}}
+  scale {{parent.Transform1.scale}}
+  center {960 540}
+  name T_Noise
+  xpos -517
+  ypos -1493
+ }
+set N7e41b800 [stack 0]
+ EdgeDetectWrapper {
+  threshold 0.04
+  erodesize 0.25
+  blursize 6.5
+  name T_EdgeDetect
+  xpos -595
+  ypos -1384
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos -595
+  ypos -1346
+ }
+push $N7e41b800
+ Merge2 {
+  inputs 2
+  operation from
+  mix 0.785
+  name Merge1
+  xpos -517
+  ypos -1234
+ }
+ Noise {
+  inputs 0
+  cliptype none
+  size {{parent.T_Noise.size*2.1}}
+  zoffset {{(frame*parent.animationspeed)*parent.animation}}
+  gamma 0.6
+  translate {{parent.T_Noise.translate} {parent.T_Noise.translate}}
+  rotate {{parent.T_Noise.rotate}}
+  scale {{parent.T_Noise.scale}}
+  center {960 540}
+  name T_Noise2
+  xpos -304
+  ypos -1492
+ }
+set N7e41a800 [stack 0]
+ EdgeDetectWrapper {
+  threshold {{parent.T_EdgeDetect.threshold}}
+  erodesize 0.25
+  blursize 6.5
+  name T_EdgeDetect2
+  xpos -211
+  ypos -1385
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle3
+  xpos -211
+  ypos -1347
+ }
+push $N7e41a800
+ Merge2 {
+  inputs 2
+  operation from
+  mix 0.785
+  name Merge3
+  xpos -304
+  ypos -1247
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  mix 0.5
+  name Merge4
+  xpos -517
+  ypos -1122
+ }
+set N7e467800 [stack 0]
+ ChannelMerge {
+  inputs 2
+  name ChannelMerge5
+  xpos -518
+  ypos -398
+ }
+ Blur {
+  size 3.5
+  name C_Blur
+  xpos -518
+  ypos -299
+ }
+ Dot {
+  name Dot4
+  xpos -484
+  ypos 16
+ }
+set N7e466c00 [stack 0]
+ Dot {
+  name Dot10
+  label ExtraDetails
+  xpos -484
+  ypos 1029
+ }
+push $N7e3fc800
+ Noise {
+  inputs 0
+  cliptype none
+  size 380
+  zoffset {{((frame*0.25)*parent.animationspeed)*parent.animation}}
+  lacunarity 2.1
+  gain -0.5
+  gamma 0.8
+  translate {{parent.T_Noise2.translate} {parent.T_Noise2.translate}}
+  rotate {{parent.T_Noise2.rotate}}
+  scale {{parent.T_Noise2.scale}}
+  center {960 540}
+  name Noise1
+  xpos 187
+  ypos -727
+ }
+set N7e466400 [stack 0]
+push $N7e466400
+push $N7e41b800
+push $N7e41a800
+ Merge2 {
+  inputs 2
+  operation average
+  name Merge2
+  xpos -417
+  ypos -1375
+ }
+ Dot {
+  name Dot2
+  xpos -383
+  ypos -1058
+ }
+push $N7e467800
+ Constant {
+  inputs 0
+  channels rgb
+  color 0.4
+  name Constant2
+  xpos 422
+  ypos -1521
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  mix 0.745
+  name Merge5
+  xpos 422
+  ypos -1122
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  mix 0.39
+  name Merge6
+  xpos 422
+  ypos -1061
+ }
+ Blur {
+  size 5
+  name T_Blur
+  xpos 422
+  ypos -1017
+ }
+ Shuffle {
+  alpha blue
+  name Shuffle4
+  xpos 422
+  ypos -903
+ }
+set N7e4a2800 [stack 0]
+ ChannelMerge {
+  inputs 2
+  operation in
+  bbox A
+  name ChannelMerge_Erode
+  xpos 422
+  ypos -740
+ }
+ ChannelMerge {
+  inputs 2+1
+  mix 0.15
+  name ChannelMerge_Fill
+  xpos 422
+  ypos -634
+ }
+set N7e4a2000 [stack 0]
+ Dot {
+  name Dot22
+  xpos 137
+  ypos -617
+ }
+ Dot {
+  name Dot23
+  label CombinedNoise
+  xpos 137
+  ypos 779
+ }
+push $N7e466400
+ Dot {
+  name Dot11
+  xpos -107
+  ypos -725
+ }
+ Dot {
+  name Dot12
+  label MainNoise
+  xpos -107
+  ypos 829
+ }
+push $N7e4a2800
+ Dot {
+  name Dot13
+  xpos 13
+  ypos -900
+ }
+ Dot {
+  name Dot14
+  label Tendrils
+  xpos 13
+  ypos 831
+ }
+ Ramp {
+  inputs 0
+  cliptype none
+  p0 {996 433}
+  p1 {39 435}
+  name Ramp1
+  xpos 213
+  ypos 194
+ }
+push $N7e466c00
+push $N7e3c0800
+push $N7e3fc800
+push $N7e4a2000
+ Grade {
+  inputs 1+1
+  white 20
+  black_clamp false
+  unpremult rgba.alpha
+  name NoiseCore_Color
+  xpos 422
+  ypos -465
+ }
+ ChannelMerge {
+  inputs 2
+  operation in
+  name ChannelMerge8
+  xpos 422
+  ypos -311
+ }
+ Premult {
+  name Premult1
+  xpos 422
+  ypos -227
+ }
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle2
+  xpos 422
+  ypos -148
+ }
+ Grade {
+  white {2 1.404392242 0.7999999523 20}
+  black_clamp false
+  unpremult rgba.alpha
+  name Noise_Color
+  xpos 422
+  ypos -49
+ }
+ Grade {
+  inputs 1+1
+  multiply {0.3799941838 0.3338555992 0.2523161471 1}
+  black_clamp false
+  unpremult rgba.alpha
+  name NoiseEdges_Color
+  selected true
+  xpos 422
+  ypos 6
+ }
+ Multiply {
+  inputs 1+1
+  value 2
+  unpremult rgba.alpha
+  name Ramp_Mult
+  xpos 422
+  ypos 188
+  disable {{parent.enableramp-1}}
+ }
+ Dot {
+  name Dot8
+  xpos 456
+  ypos 426
+ }
+set N7e508400 [stack 0]
+ Glow2 {
+  brightness {{glowbrightness*(brightnessmultiplier*4)}}
+  effect_only {{parent.effectonlyglow}}
+  size {{glowsize*(glowmultiplier*4)}}
+  name Glow_LG
+  xpos 312
+  ypos 653
+ }
+push $N7e508400
+ Glow2 {
+  brightness {{glowbrightness*(brightnessmultiplier*2)}}
+  effect_only {{parent.effectonlyglow}}
+  size {{glowsize*(glowmultiplier*2)}}
+  name Glow_MED
+  xpos 312
+  ypos 588
+ }
+push $N7e508400
+ Glow2 {
+  tolerance 0.1
+  brightness {{glowbrightness*(brightnessmultiplier)}}
+  effect_only {{parent.effectonlyglow}}
+  size {{glowsize*(glowmultiplier)}}
+  name Glow_SM
+  xpos 312
+  ypos 513
+ }
+push $N7e508400
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge_GlowSM
+  xpos 422
+  ypos 513
+  disable {{parent.disableglow}}
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge_GlowMED
+  xpos 422
+  ypos 588
+  disable {{parent.disableglow}}
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge_GlowLG
+  xpos 422
+  ypos 653
+  disable {{parent.disableglow}}
+ }
+set N7e54ac00 [stack 0]
+ Switch {
+  inputs 5
+  which {{parent.noiseselection}}
+  name noiseselection
+  xpos -21
+  ypos 1025
+ }
+ Switch {
+  inputs 5
+  which {{edgepreview}}
+  name EdgePreview
+  xpos 422
+  ypos 1025
+ }
+ Output {
+  name Output1
+  xpos 422
+  ypos 1182
+ }
+ Dot {
+  inputs 0
+  name Dot24
+  xpos 1037
+  ypos -1726
+  addUserKnob {20 User}
+  addUserKnob {12 d}
+  d {{parent.disablemattetranslate} 0}
+ }
+push $N7e230400
+push $N7e3c1800
+push $N7e16cd00
+ ChannelMerge {
+  inputs 2
+  name ChannelMerge4
+  xpos 841
+  ypos -1309
+ }
+ ChannelMerge {
+  inputs 2
+  name ChannelMerge3
+  xpos 841
+  ypos -1212
+ }
+push $N7e54ac00
+ Viewer {
+  frame 7
+  frame_range 1-191
+  name Viewer1
+  xpos 192
+  ypos -703
+ }
+end_group

@@ -1,0 +1,267 @@
+#! /Applications/Nuke10.5v2/Nuke10.5v2.app/Contents/MacOS/libnuke-10.5.2.dylib -nx
+version 10.5 v2
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="23" w="1440" h="835" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="777" stretch="1"/>
+            <splitter orientation="2">
+                <split size="475"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="334"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.scripteditor.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "/Users/gere/Desktop/PARTICLES/PRESETS from NUKEPEDIA/electricityBall.nk"
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Camera2 {
+ inputs 0
+ translate {-3.794429779 3.213318586 6.061733246}
+ rotate {-23.70209172 -31.97869639 0}
+ name Camera1
+ xpos 297
+ ypos -2231
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0.2 0.2 0.2 1}
+ format "640 480 0 0 640 480 1 PC_Video"
+ name Constant2
+ xpos 595
+ ypos -2625
+}
+Grid {
+ size 2
+ color 0.185
+ name Grid2
+ xpos 595
+ ypos -2514
+}
+Card2 {
+ rows 10
+ columns 10
+ translate {2.906209469 -1.839996576 -5.115668774}
+ rotate {-90.0000025 0 -24.54578742}
+ scaling {1 2 1}
+ uniform_scale 10
+ type bicubic
+ uv_position {0.5128205419 0.3807691336}
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.3798828125 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.126627624 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.3798828125 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.126627624 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.3798828125 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.126627624 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1266276091 0} 0 {0 -0.1266276091 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1266276091 0} 0 {0 -0.1266276091 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1266276091 0} 0 {0 -0.1266276091 0} 0 {1 0.5 0} 
+1 {-0.4499999881 0.2899999917 0.4920000136} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.126627624 0} 0 {0 1 0} 
+1 {0.05000000075 0.2899999917 0.4920000136} 0 {0.1666666716 -0.002999991179 0} 0 {-0.1666666754 0.002999991179 0} 0 {0 0 0} 0 {0 -0.126627624 0} 0 {0.5 1 0} 
+1 {0.5500000119 0.2899999917 0.4920000136} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.126627624 0} 0 {1 1 0} }
+ drawPosition {0.01282054186 -0.09058752656 0}
+ name Card1
+ xpos 595
+ ypos -2461
+}
+Light2 {
+ inputs 0
+ intensity 2
+ display off
+ translate {-0.4880000055 0.200000003 0.6719999909}
+ name Light1
+ xpos 300
+ ypos -2344
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0.009999999776 0.009999999776 0.009999999776 0}
+ format "640 480 0 0 640 480 1 PC_Video"
+ name Constant4
+ xpos 418
+ ypos -2793
+}
+Diffuse {
+ name Diffuse1
+ xpos 418
+ ypos -2681
+}
+Sphere {
+ rows 5
+ columns 5
+ uniform_scale 0.2
+ name Sphere1
+ xpos 418
+ ypos -2626
+}
+set N56f49b0 [stack 0]
+Constant {
+ inputs 0
+ channels rgb
+ format "640 480 0 0 640 480 1 PC_Video"
+ name Constant5
+ xpos 720
+ ypos -2505
+}
+Noise {
+ lacunarity 3.16
+ gain 0.71
+ gamma 0.38
+ center {320 240}
+ name Noise1
+ xpos 720
+ ypos -2422
+}
+Grid {
+ size 0.5
+ name Grid1
+ xpos 720
+ ypos -2385
+}
+Shuffle {
+ alpha red
+ name Shuffle1
+ xpos 720
+ ypos -2353
+}
+Sphere {
+ uniform_scale 1.03
+ name Sphere2
+ xpos 720
+ ypos -2323
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "20 20 0 0 20 20 1 tiny_1"
+ name Constant3
+ xpos 148
+ ypos -2795
+}
+Radial {
+ area {0.1000000015 0.200000003 19.79999924 19.89999962}
+ color {0.005199994892 0.08418796957 0.2599999905 1}
+ name Radial1
+ xpos 148
+ ypos -2713
+ postage_stamp true
+}
+BlendMat {
+ operation plus
+ surfaceblend modulate
+ name BlendMat1
+ xpos 148
+ ypos -2626
+}
+push $N56f49b0
+push 0
+ParticleEmitter {
+ inputs 3
+ start_frame -9
+ emit_from faces
+ emit_order "in order"
+ rate 800
+ velocity 0.1
+ uniform_scale 5
+ name ParticleEmitter1
+ xpos 286
+ ypos -2626
+}
+ParticleSettings {
+ steps_per_frame 10
+ name ParticleSettings1
+ xpos 286
+ ypos -2578
+}
+ParticleTurbulence {
+ strength {{frame*0.002 i x1 0.01 x70 0.01 x100 0.01} {frame*0.002 i x1 0.01 x70 0.01 x100 0.01} {frame*0.002 i x1 0.01 x70 0.01 x100 0.2}}
+ scale {{curve i x-9 5 x1 1 x30 1.5 x70 7 x100 3} {curve i x-9 5 x1 1 x30 1.5 x70 7 x100 3} {curve i x-9 5 x1 4 x30 1.5 x70 7 x100 3}}
+ channels {a}
+ name ParticleTurbulence1
+ xpos 286
+ ypos -2532
+}
+ParticleCurve {
+ curves {r {}
+   g {}
+   b {}
+   a {curve l 1 x0.2635964453 0.1880597472 s-0.6999999881 x1 0.02661693096}
+   size {}
+   mass {}}
+ name ParticleCurve1
+ xpos 286
+ ypos -2475
+}
+ParticleBounce {
+ out_bounce_mode none
+ in_new_channels {b}
+ in_bounce 0
+ in_friction 1
+ object sphere
+ bounceaxis_uniform_scale 2
+ uniform_scale 7
+ name ParticleBounce1
+ xpos 286
+ ypos -2419
+}
+Scene {
+ inputs 5
+ name Scene1
+ xpos 428
+ ypos -2344
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "640 480 0 0 640 480 1 PC_Video"
+ name Constant1
+ xpos 538
+ ypos -2234
+}
+ScanlineRender {
+ inputs 3
+ motion_vectors_type velocity
+ name ScanlineRender1
+ xpos 418
+ ypos -2210
+}
+Viewer {
+ frame_range 1-100
+ frame_range_lock true
+ input_process false
+ grid_display false
+ name Viewer1
+ selected true
+ xpos 418
+ ypos -2145
+}

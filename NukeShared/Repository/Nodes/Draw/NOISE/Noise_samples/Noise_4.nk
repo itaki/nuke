@@ -1,0 +1,428 @@
+#! /Applications/Nuke7.0v5/NukeX7.0v5.app/../Nuke7.0v5.app/Contents/MacOS/Nuke7.0v5 -nx
+version 7.0 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="22" w="2560" h="1574" screen="0">
+        <splitter orientation="1">
+            <split size="1619"/>
+            <splitter orientation="1">
+                <split size="61"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="1554"/>
+                <splitter orientation="2">
+                    <split size="774"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"/>
+                    </dock>
+                    <split size="774"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="937"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name /Users/robot/Downloads/Noise/Noise_4.nk
+ frame 30
+ format "1920 1080 0 0 1920 1080 1 HD"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0x7171c600
+ label "A kinda TV look derived from a stretched noise.\n"
+ note_font "Verdana Bold Bold Bold Bold Bold Bold"
+ note_font_size 20
+ xpos -632
+ ypos -276
+ bdwidth 917
+ bdheight 700
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ label " \n      Animated!    \n   "
+ note_font "Verdana Bold Bold Bold Bold Bold"
+ note_font_size 20
+ xpos -455
+ ypos -350
+}
+Roto {
+ inputs 0
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44700000 x44070000}
+    {a}
+    {curvegroup Bezier1 576 bezier
+     {{cc
+       {f 8192}
+       {p
+        {xc1000000 x40000000}
+        {x43d90000 x444b0000}
+        {x41000000 xc0000000}
+        {xc30a0000 x41600000}
+        {x44380000 x445f8000}
+        {x430a0000 xc1600000}
+        {xc1a00000 x41900000}
+        {x44850000 x444a8000}
+        {x41a00000 xc1900000}
+        {xc1b00000 x43040000}
+        {x44968000 x44168000}
+        {x41b00000 xc3040000}
+        {}
+        {x44a04000 x442e8000}
+        {}
+        {}
+        {x44994000 x44814000}
+        {}
+        {}
+        {x43970000 x4480c000}
+        {}
+        {}
+        {x43a20000 x44408000}
+        {}}}
+      {cc
+       {f 8192}
+       {p
+        {xc1000000 x40000000}
+        {}
+        {x41000000 xc0000000}
+        {xc30a0000 x41600000}
+        {}
+        {x430a0000 xc1600000}
+        {xc1a00000 x41900000}
+        {}
+        {x41a00000 xc1900000}
+        {xc1b00000 x43040000}
+        {}
+        {x41b00000 xc3040000}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}}}}
+     {t x444d6000 x444fe000}
+     {a fx x41300000 fy x41300000 spx x44700000 spy x44070000 sb 1 ltn x42c80000 ltm x42c80000 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ colorOverlay 0
+ lifetime_type "all frames"
+ lifetime_start 100
+ lifetime_end 100
+ feather 11
+ motionblur_shutter_offset_type centred
+ source_translate_round false
+ source_black_outside true
+ createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+ name Roto2
+ xpos -273
+ ypos 220
+}
+Reformat {
+ inputs 0
+ type "to box"
+ box_width 10
+ box_height 1080
+ box_fixed true
+ resize height
+ name Reformat1
+ xpos -547
+ ypos -192
+}
+Noise {
+ zoffset {{curve i x1 0 x100 1.438499928}}
+ lacunarity 2.38
+ gain 1
+ center {960 540}
+ name Noise1
+ xpos -547
+ ypos -142
+}
+Reformat {
+ type "to box"
+ box_width 1920
+ box_height 1080
+ box_fixed true
+ resize height
+ center false
+ name Reformat2
+ xpos -547
+ ypos -95
+}
+Transform {
+ scale {14 1}
+ center {15 540}
+ black_outside false
+ name Transform1
+ xpos -547
+ ypos -52
+}
+set N1323d630 [stack 0]
+push $N1323d630
+Read {
+ inputs 0
+ file /Users/robot/Downloads/Noise/Sources/soldiers.tga
+ format "1920 1080 0 0 1920 1080 1 HD"
+ origset true
+ name Read3
+ xpos -298
+ ypos -173
+}
+ShuffleCopy {
+ inputs 2
+ alpha alpha2
+ black red
+ white green
+ red2 blue
+ out2 motion
+ name ShuffleCopy1
+ xpos -383
+ ypos -52
+}
+IDistort {
+ uv motion
+ uv_scale 81
+ name IDistort1
+ xpos -383
+ ypos -28
+}
+Merge2 {
+ inputs 2
+ operation color-dodge
+ sRGB true
+ mix 0.905
+ name Merge6
+ xpos -383
+ ypos 50
+}
+LensDistortion1_0 {
+ serializeKnob ""
+ serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+ distortion1 -0.155
+ distortion2 -0.027
+ cardScale {0.8679198623 0.8679198623 1}
+ a -0.01722684316
+ b 0.1444684863
+ c 0.01372350659
+ name LensDistortion1
+ xpos -383
+ ypos 74
+}
+Shuffle {
+ alpha white
+ name Shuffle1
+ xpos -383
+ ypos 114
+}
+CornerPin2D {
+ to1 {306 301}
+ to2 {1265 154}
+ to3 {1292 985}
+ to4 {233 1040}
+ invert false
+ from1 {0 0}
+ from2 {1920 0}
+ from3 {1920 1080}
+ from4 {0 1080}
+ name CornerPin2D1
+ xpos -383
+ ypos 138
+}
+Roto {
+ output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+ replace true
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44700000 x44070000}
+    {a}
+    {curvegroup Bezier1 576 bezier
+     {{cc
+       {f 8192}
+       {p
+        {x4129d3c3 x40872b02}
+        {x4400e000 x446f8000}
+        {xc2440000 xc19c0000}
+        {xc0010b8d x43093810}
+        {x43ca8000 x442ac000}
+        {x40000000 xc3100000}
+        {xc1fada1d x41af982b}
+        {x44088000 x43bb0000}
+        {x41f00000 xc1a80000}
+        {xc2780000 x41200000}
+        {x443f0000 x439c8000}
+        {x42780000 xc1200000}
+        {xc207271e xc1c260aa}
+        {x4485c000 x439c0000}
+        {x42b20000 x42800000}
+        {xc0c00000 xc2a00000}
+        {x4495e000 x440ec000}
+        {x40c00000 x42a00000}
+        {x42e20000 xc2280000}
+        {x4482c000 x44670000}
+        {xc22524f7 x417586c2}
+        {x41f00000 xc0000000}
+        {x443d8000 x446d0000}
+        {xc1f00000 x40000000}}}
+      {cc
+       {f 8192}
+       {p
+        {x4129d3c3 x40872b02}
+        {}
+        {xc2440000 xc19c0000}
+        {xc0010b8d x43093810}
+        {}
+        {x40000000 xc3100000}
+        {xc1fada1d x41af982b}
+        {}
+        {x41f00000 xc1a80000}
+        {xc2780000 x41200000}
+        {}
+        {x42780000 xc1200000}
+        {xc207271e xc1c260aa}
+        {}
+        {x42b20000 x42800000}
+        {xc0c00000 xc2a00000}
+        {}
+        {x40c00000 x42a00000}
+        {x42e20000 xc2280000}
+        {}
+        {xc22524f7 x417586c2}
+        {x41f00000 xc0000000}
+        {}
+        {xc1f00000 x40000000}}}}
+     {t x444cae87 x44168000}
+     {a fx xc0a00000 fy xc0a00000 spx x44700000 spy x44070000 sb 1 ltn x42c80000 ltm x42c80000 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ colorOverlay 0
+ lifetime_type "all frames"
+ lifetime_start 100
+ lifetime_end 100
+ feather -5
+ motionblur_shutter_offset_type centred
+ source_translate_round false
+ source_black_outside true
+ createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+ name Roto1
+ xpos -383
+ ypos 162
+}
+Add {
+ channels rgb
+ value {0.102959998 0.1099999994 0.1011999995 0.0549999997}
+ name Add1
+ xpos -383
+ ypos 196
+}
+Multiply {
+ inputs 1+1
+ channels rgb
+ value 0.44
+ name Multiply1
+ xpos -383
+ ypos 220
+}
+Premult {
+ name Premult1
+ xpos -383
+ ypos 244
+}
+Read {
+ inputs 0
+ file /Users/robot/Downloads/Noise/Sources/Philco-TV-123-hd.jpeg
+ format "1500 1479 0 0 1500 1479 1 "
+ origset true
+ name Read1
+ xpos -100
+ ypos -15
+}
+Transform {
+ translate {4 -144}
+ center {750 739.5}
+ name Transform2
+ xpos -102
+ ypos 205
+}
+Reformat {
+ name Reformat3
+ xpos -102
+ ypos 229
+}
+Merge2 {
+ inputs 2
+ name Merge1
+ xpos -225
+ ypos 376
+}
+Viewer {
+ frame 30
+ input_process false
+ name Viewer1
+ xpos -225
+ ypos 400
+}

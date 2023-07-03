@@ -1,0 +1,1656 @@
+set cut_paste_input [stack 0]
+version 11.3 v6
+push $cut_paste_input
+Group {
+ name BlitzDefocus
+ knobChanged "\nn = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == 'OutputType':\n  n\['bokehVizPos'].setVisible(k.value() == \"Bokeh\")\n  n\['bokehVizSize'].setVisible(k.value() == \"Bokeh\")\n  n\['killSize'].setVisible(k.value() == \"Bokeh\")\n\nlens_list = \['relativeFilterSize', 'maskRadius', 'softness', 'noiseSize', 'noiseContrast']\ndiaphragm_list = \['radius', 'size_mult', 'anamorph', 'ring_color', 'ring_color_panelDropped', 'inner_color', 'inner_color_panelDropped', 'outer_falloff', 'outer_falloff_panelDropped', 'inner_falloff', 'inner_falloff_panelDropped', 'chroma_spread', 'chroma_shift', 'chroma_shift_angle', 'corners', 'flattening', 'sharpness', 'corners_angle']\n\nviz_list = \[\"vizLens\", \"vizDiaphragm\", \"vizRot\", \"vizSkew\", \"vizChroAbr\", \"vizLensOffset\", \"vizSize\"]\n\nif k.name() in viz_list:\n  disable_list = list(viz_list)\[:]\n  disable_list.remove(k.name())\n  for viz_knob in disable_list:\n    n\[viz_knob].setValue(False)\n\nif k.name() == 'inputChange':\n  for input_node in nuke.allNodes('Input', group=nuke.thisGroup()):\n    disable_list = list()\n    if input_node.name() == 'InputLens':\n      disable_list = lens_list\n    elif input_node.name() == 'InputFilter':\n      disable_list = diaphragm_list\n    for each in disable_list:\n      n\[each].setEnabled(input_node.channels()==\[])\n\n"
+ tile_color 0x4c70d6ff
+ selected true
+ xpos -5423
+ ypos 601
+ addUserKnob {20 Bokeh}
+ addUserKnob {26 name_1 l "" +STARTLINE T "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font face=\"helvetica\"\ncolor=#4b6fdb size=\"5\">blitz defocus</font>\n<font color=#4b6fdb size=\"2\">| v1.0</font>"}
+ addUserKnob {4 outputType l "           Output Type |" t "Show the result or only the filter's preview at a specific coordinate" M {Result "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+ addUserKnob {26 ""}
+ addUserKnob {26 opticsCenterTitle l "" +STARTLINE T "           Optic Center |"}
+ addUserKnob {12 opticsCenter l " " -STARTLINE}
+ opticsCenter {844 264}
+ addUserKnob {6 centerLock l "Lock to Center" -STARTLINE}
+ centerLock true
+ addUserKnob {26 ""}
+ addUserKnob {20 lensGroup l "                 Lens |" n 1}
+ addUserKnob {7 radius l "Size |" -STARTLINE R 0 30}
+ radius 40
+ addUserKnob {26 ""}
+ addUserKnob {26 astigmatismTitle l "" +STARTLINE T "           Astigmatism | "}
+ addUserKnob {22 tangentialButton l "<font color=#5b7feb >&nbsp;&nbsp;Tangential&nbsp;&nbsp;</font>" -STARTLINE T "nuke.toNode('rotAdd').knob('mix').setValue(0)\n\nnuke.thisNode().knob('tangentialButton').setLabel('<font color=#5b7feb >&nbsp;&nbsp;Tangential&nbsp;&nbsp;</font>')\n\nnuke.thisNode().knob('sagittalButton').setLabel('<font color=#999999>&nbsp;&nbsp;Sagittal&nbsp;&nbsp;</font>')\n"}
+ addUserKnob {22 sagittalButton l "<font color=#999999>&nbsp;&nbsp;Sagittal&nbsp;&nbsp;</font>" -STARTLINE T "nuke.toNode('rotAdd').knob('mix').setValue(1)\n\nnuke.thisNode().knob('sagittalButton').setLabel('<font color=#5b7feb >&nbsp;&nbsp;Sagittal&nbsp;&nbsp;</font>')\n\nnuke.thisNode().knob('tangentialButton').setLabel('<font color=#999999>&nbsp;&nbsp;Tangential&nbsp;&nbsp;</font>')\n"}
+ addUserKnob {6 visRotMap l "Visualize Map" -STARTLINE}
+ addUserKnob {7 rotAnamorph l "Anamorph Curve"}
+ rotAnamorph 0.5
+ addUserKnob {7 rotDistance l "Distance Curve" R 0.1 1}
+ rotDistance 0.5
+ addUserKnob {26 ""}
+ addUserKnob {26 catEyeTitle l "" +STARTLINE T "               Occlusion | "}
+ addUserKnob {22 verticalButton l "<font color=#999999>&nbsp;&nbsp;Vertical&nbsp;&nbsp;</font>" -STARTLINE T "nuke.toNode('occluButtons').knob('value').setValue(\[0,1,1,1])\n\nnuke.thisNode().knob('verticalButton').setLabel('<font color=#5b7feb >&nbsp;&nbsp;Vertical&nbsp;&nbsp;</font>')\n\nnuke.thisNode().knob('HorizontalButton').setLabel('<font color=#999999>&nbsp;&nbsp;Horizontal&nbsp;&nbsp;</font>')\n\nnuke.thisNode().knob('bothButton').setLabel('<font color=#999999>&nbsp;&nbsp;Both&nbsp;&nbsp;</font>')\n"}
+ addUserKnob {22 HorizontalButton l "<font color=#999999>&nbsp;&nbsp;Horizontal&nbsp;&nbsp;</font>" -STARTLINE T "nuke.toNode('occluButtons').knob('value').setValue(\[1,0,1,1])\n\nnuke.thisNode().knob('HorizontalButton').setLabel('<font color=#5b7feb >&nbsp;&nbsp;Horizontal&nbsp;&nbsp;</font>')\n\nnuke.thisNode().knob('verticalButton').setLabel('<font color=#999999>&nbsp;&nbsp;Vertical&nbsp;&nbsp;</font>')\n\nnuke.thisNode().knob('bothButton').setLabel('<font color=#999999>&nbsp;&nbsp;Both&nbsp;&nbsp;</font>')\n"}
+ addUserKnob {22 bothButton l "<font color=#5b7feb >&nbsp;&nbsp;Both&nbsp;&nbsp;</font>" -STARTLINE T "nuke.toNode('occluButtons').knob('value').setValue(\[1,1,1,1])\n\nnuke.thisNode().knob('bothButton').setLabel('<font color=#5b7feb >&nbsp;&nbsp;Both&nbsp;&nbsp;</font>')\n\nnuke.thisNode().knob('verticalButton').setLabel('<font color=#999999>&nbsp;&nbsp;Vertical&nbsp;&nbsp;</font>')\n\nnuke.thisNode().knob('HorizontalButton').setLabel('<font color=#999999>&nbsp;&nbsp;Horizontal&nbsp;&nbsp;</font>')\n"}
+ addUserKnob {7 occlusionOffset l Offset R -50 50}
+ addUserKnob {26 ""}
+ addUserKnob {26 chromaTitle l "" +STARTLINE T "                 Chroma | "}
+ addUserKnob {22 spreadButton l "<font color=#5b7feb >&nbsp;&nbsp;Spread&nbsp;&nbsp;</font>" -STARTLINE T "value = nuke.toNode('spread').knob('disable').getValue()\n\nif value==1 :\n  nuke.toNode('spread').knob('disable').setValue(0) \n  nuke.thisNode().knob('spreadButton').setLabel('<font color=#5b7feb >&nbsp;&nbsp;Spread&nbsp;&nbsp;</font>')\nelse : \n  nuke.toNode('spread').knob('disable').setValue(1)\n  nuke.thisNode().knob('spreadButton').setLabel('<font color=#999999>&nbsp;&nbsp;Spread&nbsp;&nbsp;</font>')"}
+ addUserKnob {3 spreadRed l "<font color=#a42840><b>|</font>" -STARTLINE}
+ spreadRed -20
+ addUserKnob {3 spreadGreen l "<font color=#45b898><b>|</font>" -STARTLINE}
+ spreadGreen -5
+ addUserKnob {3 spreadBlue l "<font color=#258dbf><b>|</font>" -STARTLINE}
+ spreadBlue 5
+ addUserKnob {22 lensButton l "<font color=#5b7feb >&nbsp;&nbsp;&nbsp;&nbsp;Lens&nbsp;&nbsp;&nbsp;&nbsp;</font>" T "value = nuke.toNode('abb').knob('disable').getValue()\n\nif value==1 :\n  nuke.toNode('abb').knob('disable').setValue(0) \n  nuke.thisNode().knob('lensButton').setLabel('<font color=#5b7feb >&nbsp;&nbsp;&nbsp;&nbsp;Lens&nbsp;&nbsp;&nbsp;&nbsp;</font>')\nelse : \n  nuke.toNode('abb').knob('disable').setValue(1)\n  nuke.thisNode().knob('lensButton').setLabel('<font color=#999999>&nbsp;&nbsp;&nbsp;&nbsp;Lens&nbsp;&nbsp;&nbsp;&nbsp;</font>')" +STARTLINE}
+ addUserKnob {3 lensRed l "<font color=#a42840><b>|</font>" -STARTLINE}
+ lensRed 50
+ addUserKnob {3 lensGreen l "<font color=#45b898><b>|</font>" -STARTLINE}
+ addUserKnob {3 lensBlue l "<font color=#258dbf><b>|</font>" -STARTLINE}
+ lensBlue -50
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 Filter}
+ addUserKnob {26 name_2 l "" +STARTLINE T "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font face=\"helvetica\"\ncolor=#4b6fdb size=\"5\">blitz defocus</font>\n<font color=#4b6fdb size=\"2\">| v1.0</font>"}
+ addUserKnob {3 filterResolution_x l "      Filter Resolution |"}
+ filterResolution_x 128
+ addUserKnob {3 filterResolution_y l "" -STARTLINE}
+ filterResolution_y 128
+ addUserKnob {26 ""}
+ addUserKnob {20 mainFilterGroup l "         Main Filter |" n 1}
+ addUserKnob {3 filterSize l "  Size |"}
+ filterSize 60
+ addUserKnob {6 vizDiaphragm l Visualize -STARTLINE}
+ addUserKnob {7 anamorph l Anamorph}
+ anamorph 1
+ addUserKnob {7 outerFalloff l "Falloff Strength"}
+ outerFalloff 1
+ addUserKnob {26 ""}
+ addUserKnob {26 ringShape l "" +STARTLINE T "                      Ring |"}
+ addUserKnob {7 ringBrightness l "Ring Brightness"}
+ ringBrightness 1
+ addUserKnob {7 innerBrightness l "Inner Brightness"}
+ innerBrightness 0.5
+ addUserKnob {7 innerFalloff l "Fallof Strength"}
+ innerFalloff 20
+ addUserKnob {7 falloffGamma l "Falloff Distance"}
+ falloffGamma 0.96
+ addUserKnob {26 ""}
+ addUserKnob {3 corners l "   Corners |"}
+ corners 1
+ addUserKnob {7 edgeFlattening l "Edge Flattening" R 0 100}
+ addUserKnob {7 cornerSharpness l "Corner Sharpness"}
+ addUserKnob {7 angle l Angle R 0 359}
+ addUserKnob {26 ""}
+ addUserKnob {26 filterNoise l "" +STARTLINE T "                    Noise |  "}
+ addUserKnob {22 randomButton l "<font color=#999999>&nbsp;&nbsp;Simple&nbsp;&nbsp;</font>" -STARTLINE T "nuke.toNode('simpleMerge').knob('disable').setValue(0)\nnuke.toNode('circularMerge').knob('disable').setValue(1)\n\nnuke.thisNode().knob('randomButton').setLabel('<font color=#5b7feb >&nbsp;&nbsp;Simple&nbsp;&nbsp;</font>')\nnuke.thisNode()\['simpleNoiseStrength'].setVisible(True)\nnuke.thisNode()\['simpleNoiseSize'].setVisible(True)\nnuke.thisNode()\['simpleNoiseSeed'].setVisible(True)\nnuke.thisNode()\['noiseGain'].setVisible(True)\nnuke.thisNode()\['noiseGamma'].setVisible(True)\n\nnuke.thisNode().knob('circularButton').setLabel('<font color=#999999>&nbsp;&nbsp;Circular&nbsp;&nbsp;</font>')\nnuke.thisNode()\['circularNoiseStrength'].setVisible(False)\nnuke.thisNode()\['circularNoiseSize'].setVisible(False)\nnuke.thisNode()\['circularNoiseSeed1'].setVisible(False)\nnuke.thisNode()\['circularNoiseSeed2'].setVisible(False)\nnuke.thisNode()\['noise_split'].setVisible(False)\n\n\nnuke.thisNode().knob('bothNoiseButton').setLabel('<font color=#999999>&nbsp;&nbsp;Both&nbsp;&nbsp;</font>')\n"}
+ addUserKnob {22 circularButton l "<font color=#999999>&nbsp;&nbsp;Circular&nbsp;&nbsp;</font>" -STARTLINE T "nuke.toNode('circularMerge').knob('disable').setValue(0)\nnuke.toNode('simpleMerge').knob('disable').setValue(1)\n\nnuke.thisNode().knob('circularButton').setLabel('<font color=#5b7feb >&nbsp;&nbsp;Circular&nbsp;&nbsp;</font>')\nnuke.thisNode()\['circularNoiseStrength'].setVisible(True)\nnuke.thisNode()\['circularNoiseSize'].setVisible(True)\nnuke.thisNode()\['circularNoiseSeed1'].setVisible(True)\nnuke.thisNode()\['circularNoiseSeed2'].setVisible(True)\n\nnuke.thisNode().knob('randomButton').setLabel('<font color=#999999>&nbsp;&nbsp;Simple&nbsp;&nbsp;</font>')\nnuke.thisNode()\['simpleNoiseStrength'].setVisible(False)\nnuke.thisNode()\['simpleNoiseSize'].setVisible(False)\nnuke.thisNode()\['simpleNoiseSeed'].setVisible(False)\nnuke.thisNode()\['noiseGain'].setVisible(False)\nnuke.thisNode()\['noiseGamma'].setVisible(False)\nnuke.thisNode()\['noise_split'].setVisible(False)\n\nnuke.thisNode().knob('bothNoiseButton').setLabel('<font color=#999999>&nbsp;&nbsp;Both&nbsp;&nbsp;</font>')\n"}
+ addUserKnob {22 bothNoiseButton l "<font color=#5b7feb >&nbsp;&nbsp;Both&nbsp;&nbsp;</font>" -STARTLINE T "nuke.toNode('circularMerge').knob('disable').setValue(0)\nnuke.toNode('simpleMerge').knob('disable').setValue(0)\n\nnuke.thisNode().knob('bothNoiseButton').setLabel('<font color=#5b7feb >&nbsp;&nbsp;Both&nbsp;&nbsp;</font>')\nnuke.thisNode()\['simpleNoiseStrength'].setVisible(True)\nnuke.thisNode()\['simpleNoiseSize'].setVisible(True)\nnuke.thisNode()\['simpleNoiseSeed'].setVisible(True)\nnuke.thisNode()\['noiseGain'].setVisible(True)\nnuke.thisNode()\['noiseGamma'].setVisible(True)\nnuke.thisNode()\['circularNoiseStrength'].setVisible(True)\nnuke.thisNode()\['circularNoiseSize'].setVisible(True)\nnuke.thisNode()\['circularNoiseSeed1'].setVisible(True)\nnuke.thisNode()\['circularNoiseSeed2'].setVisible(True)\nnuke.thisNode()\['noise_split'].setVisible(True)\n\nnuke.thisNode().knob('randomButton').setLabel('<font color=#999999>&nbsp;&nbsp;Simple&nbsp;&nbsp;</font>')\n\nnuke.thisNode().knob('circularButton').setLabel('<font color=#999999>&nbsp;&nbsp;Circular&nbsp;&nbsp;</font>')\n"}
+ addUserKnob {7 simpleNoiseStrength l "|S| Strength"}
+ simpleNoiseStrength 0.3
+ addUserKnob {7 simpleNoiseSize l "|S| Size" t "Size of the circular noise in the lens" R 0 5}
+ simpleNoiseSize 1.82
+ addUserKnob {7 simpleNoiseSeed l "|S| Seed"}
+ simpleNoiseSeed 0.545
+ addUserKnob {7 noiseGain l "\[S| Gain"}
+ noiseGain 1
+ addUserKnob {7 noiseGamma l "|S| Gamma"}
+ noiseGamma 1
+ addUserKnob {26 noise_split l "" +STARTLINE}
+ addUserKnob {7 circularNoiseStrength l "|C| Strength"}
+ circularNoiseStrength 0.3
+ addUserKnob {7 circularNoiseSize l "|C| Iterations"}
+ circularNoiseSize 3
+ addUserKnob {7 circularNoiseSeed1 l "|C| Seed A"}
+ circularNoiseSeed1 0.28
+ addUserKnob {7 circularNoiseSeed2 l "|C| Seed B"}
+ circularNoiseSeed2 0.375
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_4 l endGroup n -1}
+ addUserKnob {20 occlusionFilter l "          Occlusion |" n 1}
+ addUserKnob {6 secondFilterVis l Visualize -STARTLINE}
+ addUserKnob {7 secondFilterSize l "Relative Size |" R 1 3}
+ secondFilterSize 1.18
+ addUserKnob {7 secondFilterSoftness l Sharpness}
+ secondFilterSoftness 0.78
+ addUserKnob {3 secondFilterCorners l "Corners |"}
+ secondFilterCorners 1
+ addUserKnob {7 secondFilterEdgeFlattening l "Edge Flattening" R 0 100}
+ secondFilterEdgeFlattening 1
+ addUserKnob {7 secondFilterCornerSharpness l "Corner Sharpness"}
+ secondFilterCornerSharpness 0.835
+ addUserKnob {7 secondFilterAngle l Angle R 0 359}
+ secondFilterAngle 90
+ addUserKnob {20 endGroup_5 l endGroup n -1}
+ addUserKnob {20 "" l "Kernel Parameters"}
+ addUserKnob {6 useGpu l "use GPU if available" +STARTLINE}
+ useGpu true
+ addUserKnob {26 ""}
+ addUserKnob {26 version l "defokus v1.0 - Maxime Servoise - 2021" T ""}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x7171c600
+  note_font_size 42
+  xpos 1360
+  ypos 729
+  bdwidth 832
+  bdheight 870
+ }
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width {{parent.convolveParameters.resolution.x}}
+  box_height {{parent.convolveParameters.resolution.y}}
+  box_fixed true
+  resize none
+  center false
+  name mapFormat
+  xpos 1582
+  ypos 1058
+  hide_input true
+ }
+ Dot {
+  name Dot7
+  xpos 1616
+  ypos 1103
+ }
+set N70713de0 [stack 0]
+ Expression {
+  temp_name0 xCenter
+  temp_expr0 convolveParameters.opticsCenter.x
+  temp_name1 yCenter
+  temp_expr1 convolveParameters.opticsCenter.y
+  temp_name2 xRamp
+  temp_expr2 (xCenter-x)/width
+  temp_name3 yRamp
+  temp_expr3 (yCenter-y)/height
+  expr0 (atan2((xCenter-x),(yCenter-y)))
+  expr1 1-(((xRamp)*(xRamp)*anamorph_x+(yRamp)*(yRamp)*anamorph_y))
+  name rotMap
+  xpos 1582
+  ypos 1122
+  addUserKnob {20 User}
+  addUserKnob {7 anamorph_x}
+  anamorph_x {{parent.rotAnamorph}}
+  addUserKnob {7 anamorph_y}
+  anamorph_y {{1-anamorph_x}}
+ }
+ Gamma {
+  channels {-rgba.red rgba.green -rgba.blue none}
+  value {{parent.rotDistance+0.01}}
+  name rotDistanceCurve
+  xpos 1582
+  ypos 1146
+ }
+ Add {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  value 1.6
+  mix 0
+  name rotAdd
+  xpos 1582
+  ypos 1170
+ }
+ Dot {
+  name Dot8
+  xpos 1616
+  ypos 1222
+ }
+set N707297f0 [stack 0]
+ Dot {
+  name Dot15
+  xpos 1911
+  ypos 1520
+  hide_input true
+ }
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle3
+  xpos 1877
+  ypos 1538
+ }
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width {{parent.filterParameters1.filterResolution.x}}
+  box_height {{parent.filterParameters1.filterResolution.y}}
+  box_fixed true
+  resize none
+  center false
+  name filterFormat1
+  xpos 1480
+  ypos 750
+  hide_input true
+ }
+set N70736380 [stack 0]
+ Flare {
+  position {{parent.filterParameters1.filterResolution.x/2} {parent.filterParameters1.filterResolution.y/2}}
+  radius {{curve} {parent.filterSize*parent.falloffGamma*parent.secondFilterSoftness} {parent.filterSize}}
+  size_mult {{parent.mainFilter.size_mult*parent.secondFilterSize}}
+  anamorph {{parent.anamorph}}
+  inner_color 1
+  outer_falloff {{1-parent.secondFilterSoftness}}
+  chroma_shift_angle_add true
+  brightness {1 1 1}
+  vis_out 1
+  corners {{parent.secondFilterCorners}}
+  flattening {{parent.secondFilterEdgeFlattening}}
+  sharpness {{parent.secondFilterCornerSharpness}}
+  corners_angle {{parent.secondFilterAngle}}
+  name occluFilter
+  xpos 1368
+  ypos 750
+ }
+ Crop {
+  box {0 0 {parent.filterFormat1.box_width} {parent.filterFormat1.box_height}}
+  name blackOutside
+  xpos 1368
+  ypos 774
+ }
+set N70749f60 [stack 0]
+ Dot {
+  name Dot6
+  xpos 1599
+  ypos 1493
+  hide_input true
+ }
+ Input {
+  inputs 0
+  name Filter
+  xpos 1581
+  ypos 966
+  number 1
+  addUserKnob {20 User}
+ }
+ Reformat {
+  type "to box"
+  box_width {{parent.filterResolution_y}}
+  box_height {{parent.filterResolution_y}}
+  box_fixed true
+  filter Lanczos4
+  black_outside true
+  name CustomFormat
+  xpos 1581
+  ypos 990
+ }
+ Dot {
+  name Dot5
+  xpos 1615
+  ypos 1014
+ }
+push $N70736380
+ Flare {
+  position {{parent.filterParameters1.filterResolution.x/2} {parent.filterParameters1.filterResolution.y/2}}
+  radius {{curve} {parent.filterSize*parent.falloffGamma} {parent.filterSize}}
+  size_mult {{"anamorph > 1 ? 1+(1-anamorph) : 1-(1-anamorph)"}}
+  anamorph {{parent.anamorph+0.001}}
+  ring_color {{parent.ringBrightness}}
+  inner_color {{parent.innerBrightness}}
+  outer_falloff {{parent.outerFalloff}}
+  inner_falloff {{parent.innerFalloff}}
+  chroma_shift_angle_add true
+  brightness {1 1 1}
+  vis_out 1
+  corners {{parent.corners}}
+  flattening {{parent.edgeFlattening}}
+  sharpness {{parent.cornerSharpness}}
+  corners_angle {{parent.angle}}
+  name mainFilter
+  xpos 1480
+  ypos 774
+ }
+set N7075e050 [stack 0]
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name zero
+  xpos 1629
+  ypos 774
+ }
+ Expression {
+  temp_name0 xCenter
+  temp_expr0 parent.Flare.position.x
+  temp_name1 yCenter
+  temp_expr1 parent.Flare.position.y
+  temp_name2 xRamp
+  temp_expr2 (xCenter-x)/width
+  temp_name3 yRamp
+  temp_expr3 (yCenter-y)/height
+  expr0 "sin(sqrt( (xCenter -x)*(xCenter -x)/parent.Flare.anamorph/parent.Flare.anamorph*aaa+ (yCenter - y) *(yCenter - y)*parent.Flare.anamorph*parent.Flare.anamorph*aaa)*bbb)*sin(sqrt( (xCenter -x)*(xCenter -x)/parent.Flare.anamorph/parent.Flare.anamorph*ccc+ (yCenter - y) *(yCenter - y)*parent.Flare.anamorph*parent.Flare.anamorph*ccc))"
+  name circleNoise
+  xpos 1629
+  ypos 907
+  addUserKnob {20 User}
+  addUserKnob {7 ccc}
+  ccc {{parent.circularNoiseSize}}
+  addUserKnob {7 aaa R 0 10}
+  aaa {{parent.circularNoiseSeed1}}
+  addUserKnob {7 bbb R 0 10}
+  bbb {{parent.circularNoiseSeed2}}
+ }
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name noiseEveryChan
+  xpos 1629
+  ypos 931
+ }
+push $N7075e050
+push $N7075e050
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.alpha
+  name getAlpha
+  xpos 1480
+  ypos 794
+ }
+ Crop {
+  box {0 0 {parent.filterFormat1.box_width} {parent.filterFormat1.box_height}}
+  name blackOutside1
+  xpos 1480
+  ypos 826
+ }
+ Dot {
+  name Dot56
+  xpos 1514
+  ypos 850
+ }
+set N7078e9f0 [stack 0]
+ Dot {
+  name Dot55
+  xpos 1608
+  ypos 850
+ }
+ Noise {
+  replace true
+  size {{parent.filterResolution_y/10*parent.simpleNoiseSize}}
+  zoffset {{parent.simpleNoiseSeed}}
+  gain {{parent.noiseGain}}
+  gamma {{parent.noiseGamma}}
+  center {320 240}
+  name simpleNoise
+  xpos 1574
+  ypos 868
+ }
+ Dot {
+  name Dot41
+  xpos 1608
+  ypos 892
+ }
+push $N7078e9f0
+ Merge2 {
+  inputs 2
+  operation multiply
+  bbox B
+  mix {{parent.simpleNoiseStrength}}
+  name simpleMerge
+  xpos 1480
+  ypos 889
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  bbox B
+  mix {{parent.circularNoiseStrength}}
+  name circularMerge
+  xpos 1480
+  ypos 931
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input1] ? 1 : 0"}}
+  name filterSwitch
+  xpos 1480
+  ypos 1011
+ }
+ Group {
+  name spread
+  tile_color 0x5fc0ffff
+  xpos 1480
+  ypos 1197
+  addUserKnob {20 settings l Settings}
+  addUserKnob {6 crop +STARTLINE}
+  crop true
+  addUserKnob {18 offset l Offset R 0 0.1}
+  offset {{parent.spreadRed/1000} {parent.spreadGreen/1000} {parent.spreadBlue/1000}}
+  addUserKnob {6 offset_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {7 opacity}
+  opacity 1
+ }
+  Input {
+   inputs 0
+   name input
+   xpos -410
+   ypos -161
+  }
+  Dot {
+   name Dot8
+   xpos -376
+   ypos -93
+  }
+set N707b8d90 [stack 0]
+  Dot {
+   name Dot4
+   xpos -627
+   ypos -93
+  }
+set N707bb250 [stack 0]
+  NoOp {
+   name param
+   xpos -764
+   ypos -96
+   hide_input true
+   addUserKnob {20 User}
+   addUserKnob {12 resolution}
+   resolution {{input.width} {input.height}}
+   addUserKnob {12 center}
+   center {{input.width/2} {input.height/2}}
+   addUserKnob {7 offsetR}
+   offsetR {{parent.offset.r}}
+   addUserKnob {7 offsetG}
+   offsetG {{parent.offset.g}}
+   addUserKnob {7 offsetB}
+   offsetB {{parent.offset.b}}
+   addUserKnob {7 opacity}
+   opacity {{parent.opacity}}
+  }
+push $N707bb250
+  Dot {
+   name Dot1
+   xpos -627
+   ypos -61
+  }
+set N707c1780 [stack 0]
+  Dot {
+   name Dot2
+   xpos -724
+   ypos -61
+  }
+  Shuffle {
+   green black
+   blue black
+   alpha black
+   name Shuffle1
+   tile_color 0xff0000ff
+   xpos -758
+   ypos -43
+  }
+set N707c6100 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform1
+   xpos -758
+   ypos -19
+  }
+push $N707c6100
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve2
+   xpos -758
+   ypos 5
+  }
+set N707d4720 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform5
+   xpos -758
+   ypos 37
+  }
+push $N707d4720
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve5
+   xpos -758
+   ypos 61
+  }
+set N707e04c0 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform6
+   xpos -758
+   ypos 93
+  }
+push $N707e04c0
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve6
+   xpos -758
+   ypos 117
+  }
+set N707ec260 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform7
+   xpos -758
+   ypos 149
+  }
+push $N707ec260
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve8
+   xpos -758
+   ypos 173
+  }
+set N707f8000 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform13
+   xpos -758
+   ypos 205
+  }
+push $N707f8000
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve14
+   xpos -758
+   ypos 229
+  }
+set N70807d50 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform14
+   xpos -758
+   ypos 261
+  }
+push $N70807d50
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve15
+   xpos -758
+   ypos 285
+  }
+set N70813af0 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform15
+   xpos -758
+   ypos 317
+  }
+push $N70813af0
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve16
+   xpos -758
+   ypos 341
+  }
+set N7081f890 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform16
+   xpos -758
+   ypos 373
+  }
+push $N7081f890
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve17
+   xpos -758
+   ypos 397
+  }
+  Dot {
+   name Dot5
+   xpos -724
+   ypos 432
+  }
+push 0
+push $N707c1780
+  Dot {
+   name Dot3
+   xpos -529
+   ypos -61
+  }
+  Shuffle {
+   red black
+   green black
+   alpha black
+   name Shuffle3
+   tile_color 0xffff
+   xpos -563
+   ypos -43
+  }
+set N70835ac0 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform2
+   xpos -563
+   ypos -19
+  }
+push $N70835ac0
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve12
+   xpos -563
+   ypos 5
+  }
+set N708440e0 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform4
+   xpos -563
+   ypos 37
+  }
+push $N708440e0
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve4
+   xpos -563
+   ypos 61
+  }
+set N7084fe80 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform11
+   xpos -563
+   ypos 93
+  }
+push $N7084fe80
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve11
+   xpos -563
+   ypos 117
+  }
+set N7085bc20 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform12
+   xpos -563
+   ypos 149
+  }
+push $N7085bc20
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve13
+   xpos -563
+   ypos 173
+  }
+set N70867b70 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform21
+   xpos -563
+   ypos 205
+  }
+push $N70867b70
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve22
+   xpos -563
+   ypos 229
+  }
+set N70873910 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform22
+   xpos -563
+   ypos 261
+  }
+push $N70873910
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve23
+   xpos -563
+   ypos 285
+  }
+set N7087f6b0 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform23
+   xpos -563
+   ypos 317
+  }
+push $N7087f6b0
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve24
+   xpos -563
+   ypos 341
+  }
+set N7088b450 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform24
+   xpos -563
+   ypos 373
+  }
+push $N7088b450
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve25
+   xpos -563
+   ypos 397
+  }
+  Dot {
+   name Dot6
+   xpos -529
+   ypos 432
+  }
+push $N707c1780
+  Shuffle {
+   red black
+   blue black
+   alpha black
+   name Shuffle2
+   tile_color 0xff00ff
+   xpos -661
+   ypos -43
+  }
+set N7089f040 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform8
+   xpos -661
+   ypos -19
+  }
+set N708a7390 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform3
+   xpos -661
+   ypos 37
+  }
+push $N708a7390
+push $N7089f040
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve7
+   xpos -661
+   ypos 5
+  }
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve3
+   xpos -661
+   ypos 61
+  }
+set N708b9530 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform9
+   xpos -661
+   ypos 93
+  }
+set N708bf120 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform10
+   xpos -661
+   ypos 149
+  }
+push $N708bf120
+push $N708b9530
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve9
+   xpos -661
+   ypos 117
+  }
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve10
+   xpos -661
+   ypos 173
+  }
+set N708d1140 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform17
+   xpos -661
+   ypos 205
+  }
+set N708d6a20 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform18
+   xpos -661
+   ypos 261
+  }
+push $N708d6a20
+push $N708d1140
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve18
+   xpos -661
+   ypos 229
+  }
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve19
+   xpos -661
+   ypos 285
+  }
+set N708e8bc0 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform19
+   xpos -661
+   ypos 317
+  }
+set N708ee4a0 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform20
+   xpos -661
+   ypos 373
+  }
+push $N708ee4a0
+push $N708e8bc0
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve20
+   xpos -661
+   ypos 341
+  }
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve21
+   xpos -661
+   ypos 397
+  }
+  Merge2 {
+   inputs 3+1
+   bbox intersection
+   name Merge1
+   xpos -661
+   ypos 429
+  }
+  Dot {
+   name Dot7
+   xpos -627
+   ypos 479
+  }
+push $N707b8d90
+  Dot {
+   name Dot10
+   xpos -373
+   ypos 338
+  }
+  Dissolve {
+   inputs 2
+   channels rgb
+   which {{parent.param.opacity}}
+   name Dissolve1
+   xpos -410
+   ypos 476
+  }
+set N70915f90 [stack 0]
+  Crop {
+   box {0 0 {parent.param.resolution.x} {parent.param.resolution.y}}
+   reformat true
+   crop false
+   name Crop1
+   xpos -410
+   ypos 513
+  }
+push $N70915f90
+  Switch {
+   inputs 2
+   which {{parent.crop}}
+   name Switch1
+   xpos -410
+   ypos 551
+  }
+  Output {
+   name Output1
+   xpos -410
+   ypos 607
+  }
+ end_group
+ Dot {
+  name Dot2
+  xpos 1514
+  ypos 1221
+ }
+set N709270b0 [stack 0]
+ Dot {
+  name Dot1
+  xpos 1679
+  ypos 1444
+  hide_input true
+ }
+set N70929570 [stack 0]
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle6
+  xpos 1645
+  ypos 1462
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.blue
+  name Copy1
+  xpos 1645
+  ypos 1486
+ }
+push $N70929570
+push $N70713de0
+ Dot {
+  name Dot10
+  xpos 1726
+  ypos 1103
+ }
+ Expression {
+  temp_name0 xCenter
+  temp_expr0 convolveParameters.opticsCenter.x
+  temp_name1 yCenter
+  temp_expr1 convolveParameters.opticsCenter.y
+  temp_name2 xRamp
+  temp_expr2 (xCenter-x)/width
+  temp_name3 yRamp
+  temp_expr3 (yCenter-y)/height
+  expr0 xCenter/width-(x/width)
+  expr1 yCenter/height-(y/height)
+  name occluMap
+  xpos 1692
+  ypos 1121
+ }
+ Multiply {
+  channels {rgba.red rgba.green -rgba.blue none}
+  value {{parent.occlusionOffset} {parent.occlusionOffset*convolveParameters.resolution.y/convolveParameters.resolution.x} {curve} {curve}}
+  name occluMultiply
+  xpos 1692
+  ypos 1145
+ }
+ Multiply {
+  channels {rgba.red rgba.green -rgba.blue none}
+  value {1 1 1 1}
+  name occluButtons
+  xpos 1692
+  ypos 1169
+ }
+ Dot {
+  name Dot9
+  xpos 1726
+  ypos 1221
+ }
+push $N707297f0
+push $N70749f60
+ Dot {
+  name Dot3
+  xpos 1402
+  ypos 1221
+ }
+push $N709270b0
+ Input {
+  inputs 0
+  name Source
+  xpos 1767
+  ypos 674
+  addUserKnob {20 User}
+ }
+set N70954e00 [stack 0]
+ Dot {
+  name Dot13
+  xpos 1801
+  ypos 777
+ }
+ BlinkScript {
+  inputs 5
+  recompileCount 3338
+  ProgramGroup 1
+  KernelDescription "2 \"Convolution\" iterate pixelWise bf4da41cbc8330db797eba157fa75083b85319bbff390dbde249d31bbfac7cd1 6 \"src\" Read Ranged2D \"filter\" Read Random \"occluFilter\" Read Random \"rotMap\" Read Point \"occluMap\" Read Point \"dst\" Write Point 2 \"size\" Float 2 AAAAAAAAAAA= \"occlu\" Bool 1 AA== 2 \"size\" 2 1 \"occlu\" 1 1 4 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"filterBounds\" Float 2 1 AAAAAAAAAAA= \"filterRadius\" Float 2 1 AAAAAAAAAAA="
+  EncodedSource "1 3393 4BKgVSc9dWZfkzaQ4+sVmKP7BHHa9/rgrrC0txhKbOHN598Mlr5/dOBlVnj7L0JllCm0Fhvwk+8tQXskSLHF5IISzOP+B5qYSCa9RLXlzWC6/yBGp8BZDme5c+fPUgZAxlUajJ9q+D2KSV96oSDAy9SQPSXGEsdMzuLemTihqtKS2s1mO/XG2JtAk2InOkamFDipZ0isbKWM1VWF2eetIOssV2r+6pTqaAtWUwC11A0586WwTTXLSRZkFM9aMuclFMZHEPN3pwTV7e5udiZXlb5UAVGRggv1ji3KX3CiIJ6WCZC9LRdqQ7NW0pFGVOMVg6chwZrOx3lnm1AqTEsZUTLcvwxEprAS9MMAp2f23AX6P1KSfLGPZZWFQ7m3DdbhwTGO2sqcCyvSGrlZDhVEfrivObREVUhPWc3wF/ILU/SVErdqRcgZRnJ7Ee9j9nijUyUGXQoC5MYaxQTt023gAJ7U7M/Rc7N6ln25TN5ZUg+Ued9swdLSeHLijZNpblF4iPoItIZEiDe49Zo5NhG0LvUVa0Wgx33tEh3griO1iXmnwLjeIiW1c+YrBqiFOcVTIpfcDZYD41J3SzMMJ0tm0XSWrVK+ghznTuLsg+EfHB/uPehHHbfZGDPeV2ShXxEJO1Zv6aPEpdyExP8qXeSQrU9r9pM6Y89ZcpWX3aqxbWGZTGoc3qTw67Ja1qdYACUmSxmKpBeMYLgNIJjwB10jAyuI+rI4Q950YCXc0dVwUqZTd6N2fUmDtFWvNIY9TVgdVgAiakgDjV30At61C/10E567idAqd32sYpyIHJJC3rK/2Q7zXc1aZBGZIt9Pj6BZFqdY374EoNRuAUu9f9L5bP+386pOpRLgBgwWLgppfkVD/6fnrmzMIE2aExZUNOvRNowl88StGOE4wiXIutx9tSjCnpYCz9acNbPuEy9feqCHlnuzmQl8PrKbgrSLMJlkrP9fQOtAuHxqwiFtrXyuDkcpZTBJpG+iQkxErQhKi5CPpIJrCZpWV6reujMsNkSUGOxsxqJr8MHwtOog4nwRyPXfEj+LYkxwB80zmhOiInu80T7eT88iTCSxvHNfOkwmQRNKft5COKa+tf65ztijN9HF2UhC/XCYgpLSjYydfuxndjFlJ5SktfHgSObSj32e6tWlHvjfMqefJ1ou35nfCUxzeSXyIki1wj2tmhvQXUzysTFiKw2tmr2he9LzFoeZqE92dyNSk5frAT0SCVZLnMjlGFU49M4eS/9LYUTXL5oVHEXI/kePP29nhUSBDH5n8eAOACGCIAO9ejkrSE3GImpm28Gp4cGOgsMp4Bo3j0AY0QgatTvgoRwD27N7/SEa6yn6E5lG5ndZm6aZlYU+AHRX4t4faO3Nll01ynWm1x/T4LDfeC6Ko5/CJ4ss9zq4AJ1wlEfTbcOZdhlyR5SvEY/nYsI/syN2MFMy5TG+57jFiNGP9Ign4thp14dfyt04aNxmTJZtwcVck6IcRORJUCe3oHnBm3jhQxLlWpT1L56VSx1KYNDtoAd7oDCorui/Wru+OT/QeFbVzXomk//4yIYCKhpak7t4r1l9WDrl6HTKUz9PWzp5jmkOZVx4O9FI4I31xGH3+LJWZzDLlBGD6A5qKIJG3jwVX3DAME1OIhy0fDXC3AtIUkCyC/kQU3NA7qkJtzBMpAFIUJPwHN8+mRahfX+GnYJ7jtNqBmREZRbdckZs5i/9ccPN6w3v3gOMH1lkRae36wgfwqgmlN19MpF7wPG1r3c8mQCGa7yd+2tR+K2+pRObKno8nxB/YwlxD0r6vG7qv9qnPyQiZqgxsM9SCAV5Da/z8ZJsfCz90domHi6Tj6v/0K6/YVKneIehTzPrhc6rRhF/dloDgZGVu4VPRzAiS12Ih6l/zrUZsBj2o23rsPrxh6m/idxwDnsNv1f1RabZufL/EeqojhTt5aH00xljGhGbZ9bfHP7/MUSj8Yr04bpLde2KOYvfNObM2sTNVoSJ9gSXOfsvqESwQP9qMeRQIRkdznIQVgfm9oTVNXFpm7xpta5KmNCkjnsNZTw0lFgw5l0dU3ha5rXaLrJgkU4yrWQAwho8LBlZ6q9Me1IrMVoAOgTUsMGYL8nOetuU7ZFyEp9vEiS4srVRxlEzboPnAMEKcHOBf5PnEVFj+6fZPdPxo7+R2RZ5TAkZEQpwzGZGpxm7T8Rl/GjyjSDXEbi5mslDQH1QGoxKHxLJK6oRjrVT2FgOFMNhdDL8F7gnbPBUUTvFTNYBd9gTUl5maZkRWePFy+j7vavoJ+gQUU0v6MGbVLqWYW25bgAo+btZm8ONP+7rhKzwvyKoX5sWG13egNAD2hadiqN24QKQ7AZmOf1PzWYpD7SZCnm4KXSCbZh+tjHxDc3p9w2gZz1+P7vIjDGI1d43w5b3jGSc2HyeU+ZYki8vBRjz50Fwj1z2CBM5U0k/TSjPEy0XuMLE2wqbijEcUQjYYeSspHnepiQBVLKUk+j90vGvDRIpnbt4dsVPV1iK6Z+XQeqokxGRu7NAJRQTHdWzFC+ZAlgQND9j4i+Hwekd2/nbVg61fCsZAX4y9DUMLw6DLWBH+QHAPtlp4r2HjQjwHmPCpILD4S5cg6tIIly3ZKS8lP1hGlq6WX4asOFSRAEMKEtkXOtMFfu5zHY1Nc16cvEZ3foBwS/vvlGLkhMkZsP0I+zYPLmuzYpxfTd3qip7THLqecOit/L6/OOcc41S4Ln5dh1kM/MrVDBQLSibBST2p1kRiLvdhbzZWGLz/3CY9xgQgcChIUDGqpWmFN33V5mYfZNAm0y6syqlHPygk0xibZ4qToq/ZU6QpzEj6Vg3PTwbZliN7XdWMO7aX+eYDn+dp4zHH8n+EtmzQkocxgC2BvM3/XTLfUvbLkzoNUcVS7Lm0BOFYkBzv4I513M85IvxpIhMC7LyKb24Wb9GFbSIWI/fIAxUC03aXD7X9zJF59iET6IjZ1hKzXaMzsbV382IBJJW8q9y1UsJONk92EPJ19Rq7XY9tisfv8tAIVEdckLHSvUiZLoiwguhFdMGo8S2qrwrANP4bSDGjwOCsOM0gvIVJ2xtUpazRiKJMGZNAjrpLtmlj2/V11FL7pd5nsRXL94aKU0YkGTJMuFtTxreucS4hetZec5zXp/dtpOLcsCzwJzVRfMbh/9UkVE7yJDblkIqvK7ToNWleHBcgReLgxwXwnrxQwZCMsjrny8IyVuMZN3njs3MMvG02x+I6qqo41CMhTbo2kg6fIt2zUYCaNYZ/TiOZ7lyp+rnYnduWoWNmNJCMOiaIBnP2938fuNghtT9qxQluffpSa19c2Ni3eIkTPEPehxsLpLtBLqT79n85fOBV/Tzq1VmdAY0hZgTJDw/PNoaSIcQ1lXpFrbFyxL5Y7TeMn9Axgbn0Z7HOpQDHVaH8XoDX0/cZeFexMhBRhhaNmKo9922mcYOMtUxQ6L601L58bxGsKPJU6UQkaTwGD8yI2vlVJrJHm40fDTserZLW0b1dXuPdHq4nLfa38FjRUQ65tL+yRpn3hs5HHcNCueZXn67/nIplG0t4NwMigSK9sneWeJgT3MPnc/joB0ZGS/wp+EJGEqdIcouGrTfBWR/ZsacdTiEMqf7afIVgMq4CoMiV0MCKnK/RZZrd/F22tkR9KhFVESj0z+fUJA+/ywi6ClIs2ytf1VcwrpzeMFuZaNxr5CYSzcWcPRr7ngbSnX1tgHTkcaOpnRn7awDSYIH0zM1hAWLmCMADY0+6RTwCYSobWZVSd2uu6tmiPLQo1L651TG2F7a9/op0XvI/+Es+PB0WUvYGJnlSAPpoBGRMNVA/hi4o/2RK5EbGesDl9XWVvp00zj6AxQLo18K5zBmUQV3NhIcAnn9f6kmYW4Vj8RXAHm6TKhFmfIfZo8txbDiP7UQB4BVSkGR3LltJuAy9PTqyHJWR2TryXSwIzXxPXJ3z5F9gm7laENugFDAU7hh87Ej3uFeSrqqgG8yFK9PMpz+hGoIH9gWClpUAzAbsvBvOcgKyFikAw+m2ENlzYJb2uAAL3UHFwpjINd2Zv2r51Zl987ZBaaDd/r+kE8Gyqhqn+yGFjazRKJj251oH3HYjzXjgP7PVLPDU6usDiiGz4spcqwwkj0S5/YfYqtPolYZVYxPIaf9wrgJySw+szlJ8tuOjYbMvCR5TFS4fqg9pBqFgdVRbzm5xHDrTKBB5uspv6K4R3strs+9xV7f14pCPlZI6AQbqICPXPwXujwNhO/VQFNU9hZfqGN81aXQPxZrqQAlC2rO0Qp7axkGp8U41pj8QIMPgLKlCqF8fW11pupz8COFStuv+qaiQPHWn1kSS/z+i6IAdQ0ZvLrKzLmPznIKmKYiM2t7jgJMqXbqAOg20DqN26EBJVHcwwuwHPbFYai2DZt8pAtD/1jPE1O/+nlAxIFn1zrfkTogfUnMAtXtZ7UtPhHvNM0mYphDajtkHp74HCiiUb+LOPVXQbZfunIFgnFDOgE1ezp2RCW1fvJtBxF0JOYm1rHpq9PG9HOwoEn30hc5ND7yDdp4"
+  useGPUIfAvailable {{parent.convolveParameters.useGPU x1 0}}
+  rebuild ""
+  Convolution_size {{parent.radius} {parent.radius}}
+  Convolution_occlu {{parent.convolveParameters.occlu}}
+  protectKernelWhenPublishing true
+  rebuild_finalise ""
+  name BlinkScript2
+  xpos 1767
+  ypos 1215
+ }
+ Group {
+  name abb
+  tile_color 0x5babffff
+  selected true
+  xpos 1767
+  ypos 1256
+  addUserKnob {20 settings l Settings}
+  addUserKnob {18 offset l Offset R 0 0.1}
+  offset {{parent.lensRed/100000} {parent.lensGreen/100000} {parent.lensBlue/100000}}
+  addUserKnob {6 offset_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {7 opacity}
+  opacity 1
+ }
+  Input {
+   inputs 0
+   name input
+   xpos -410
+   ypos -161
+  }
+  AdjBBox {
+   numpixels 10
+   name AdjBBox1
+   selected true
+   xpos -410
+   ypos -137
+  }
+  Dot {
+   name Dot8
+   xpos -376
+   ypos -93
+  }
+set N7096c070 [stack 0]
+  Dot {
+   name Dot4
+   xpos -627
+   ypos -93
+  }
+set N7096e3f0 [stack 0]
+  Dot {
+   name Dot1
+   xpos -627
+   ypos -61
+  }
+set N709708b0 [stack 0]
+  Dot {
+   name Dot2
+   xpos -724
+   ypos -61
+  }
+  Shuffle {
+   green black
+   blue black
+   alpha black
+   name Shuffle1
+   tile_color 0xff0000ff
+   xpos -758
+   ypos -43
+  }
+set N70975230 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform1
+   xpos -758
+   ypos -19
+  }
+push $N70975230
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve2
+   xpos -758
+   ypos 5
+  }
+set N709837e0 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform5
+   xpos -758
+   ypos 37
+  }
+push $N709837e0
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve5
+   xpos -758
+   ypos 61
+  }
+set N7098f580 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform6
+   xpos -758
+   ypos 93
+  }
+push $N7098f580
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve6
+   xpos -758
+   ypos 117
+  }
+set N7099b320 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform7
+   xpos -758
+   ypos 149
+  }
+push $N7099b320
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve8
+   xpos -758
+   ypos 173
+  }
+set N709a70c0 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform13
+   xpos -758
+   ypos 205
+  }
+push $N709a70c0
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve14
+   xpos -758
+   ypos 229
+  }
+set N709b2e60 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform14
+   xpos -758
+   ypos 261
+  }
+push $N709b2e60
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve15
+   xpos -758
+   ypos 285
+  }
+set N709bec00 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform15
+   xpos -758
+   ypos 317
+  }
+push $N709bec00
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve16
+   xpos -758
+   ypos 341
+  }
+set N709ca9a0 [stack 0]
+  Transform {
+   scale {{1+param.offsetR}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform16
+   xpos -758
+   ypos 373
+  }
+push $N709ca9a0
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve17
+   xpos -758
+   ypos 397
+  }
+  Dot {
+   name Dot5
+   xpos -724
+   ypos 432
+  }
+push 0
+push $N709708b0
+  Dot {
+   name Dot3
+   xpos -529
+   ypos -61
+  }
+  Shuffle {
+   red black
+   green black
+   alpha black
+   name Shuffle3
+   tile_color 0xffff
+   xpos -563
+   ypos -43
+  }
+set N709e0bd0 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform2
+   xpos -563
+   ypos -19
+  }
+push $N709e0bd0
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve12
+   xpos -563
+   ypos 5
+  }
+set N709ef1f0 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform4
+   xpos -563
+   ypos 37
+  }
+push $N709ef1f0
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve4
+   xpos -563
+   ypos 61
+  }
+set N709faf90 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform11
+   xpos -563
+   ypos 93
+  }
+push $N709faf90
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve11
+   xpos -563
+   ypos 117
+  }
+set N70a0ac80 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform12
+   xpos -563
+   ypos 149
+  }
+push $N70a0ac80
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve13
+   xpos -563
+   ypos 173
+  }
+set N70a16ab0 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform21
+   xpos -563
+   ypos 205
+  }
+push $N70a16ab0
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve22
+   xpos -563
+   ypos 229
+  }
+set N70a22850 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform22
+   xpos -563
+   ypos 261
+  }
+push $N70a22850
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve23
+   xpos -563
+   ypos 285
+  }
+set N70a2e5f0 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform23
+   xpos -563
+   ypos 317
+  }
+push $N70a2e5f0
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve24
+   xpos -563
+   ypos 341
+  }
+set N70a3a390 [stack 0]
+  Transform {
+   scale {{1+param.offsetB}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform24
+   xpos -563
+   ypos 373
+  }
+push $N70a3a390
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve25
+   xpos -563
+   ypos 397
+  }
+  Dot {
+   name Dot6
+   xpos -529
+   ypos 432
+  }
+push $N709708b0
+  Shuffle {
+   red black
+   blue black
+   alpha black
+   name Shuffle2
+   tile_color 0xff00ff
+   xpos -661
+   ypos -43
+  }
+set N70a4df80 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform8
+   xpos -661
+   ypos -19
+  }
+set N70a562d0 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform3
+   xpos -661
+   ypos 37
+  }
+push $N70a562d0
+push $N70a4df80
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve7
+   xpos -661
+   ypos 5
+  }
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve3
+   xpos -661
+   ypos 61
+  }
+set N70a68470 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform9
+   xpos -661
+   ypos 93
+  }
+set N70a6e060 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform10
+   xpos -661
+   ypos 149
+  }
+push $N70a6e060
+push $N70a68470
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve9
+   xpos -661
+   ypos 117
+  }
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve10
+   xpos -661
+   ypos 173
+  }
+set N70a80080 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform17
+   xpos -661
+   ypos 205
+  }
+set N70a85960 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform18
+   xpos -661
+   ypos 261
+  }
+push $N70a85960
+push $N70a80080
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve18
+   xpos -661
+   ypos 229
+  }
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve19
+   xpos -661
+   ypos 285
+  }
+set N70a97b00 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform19
+   xpos -661
+   ypos 317
+  }
+set N70a9d3e0 [stack 0]
+  Transform {
+   scale {{1+param.offsetG}}
+   center {{parent.param.center} {parent.param.center}}
+   name Transform20
+   xpos -661
+   ypos 373
+  }
+push $N70a9d3e0
+push $N70a97b00
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve20
+   xpos -661
+   ypos 341
+  }
+  Dissolve {
+   inputs 2
+   which 0.5
+   name Dissolve21
+   xpos -661
+   ypos 397
+  }
+  Merge2 {
+   inputs 3+1
+   bbox intersection
+   name Merge1
+   xpos -661
+   ypos 429
+  }
+  Dot {
+   name Dot7
+   xpos -627
+   ypos 479
+  }
+push $N7096c070
+  Dot {
+   name Dot10
+   xpos -373
+   ypos 338
+  }
+  Dissolve {
+   inputs 2
+   channels rgb
+   which {{parent.param.opacity}}
+   name Dissolve1
+   xpos -410
+   ypos 476
+  }
+  Output {
+   name Output1
+   xpos -410
+   ypos 658
+  }
+push $N7096e3f0
+  NoOp {
+   name param
+   xpos -764
+   ypos -96
+   hide_input true
+   addUserKnob {20 User}
+   addUserKnob {12 center}
+   center {{input.width/2} {input.height/2}}
+   addUserKnob {7 offsetR}
+   offsetR {{parent.offset.r}}
+   addUserKnob {7 offsetG}
+   offsetG {{parent.offset.g}}
+   addUserKnob {7 offsetB}
+   offsetB {{parent.offset.b}}
+   addUserKnob {7 opacity}
+   opacity {{parent.opacity}}
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{parent.vizDiaphragm}}
+  name visBokeh
+  xpos 1767
+  ypos 1441
+ }
+ Switch {
+  inputs 2
+  which {{parent.secondFilterVis}}
+  name visBokeh1
+  xpos 1767
+  ypos 1490
+ }
+ Switch {
+  inputs 2
+  which {{parent.visRotMap}}
+  name visrotMap
+  xpos 1767
+  ypos 1538
+ }
+ Output {
+  name OutputDefocus
+  xpos 1767
+  ypos 1654
+ }
+ NoOp {
+  inputs 0
+  name filterParameters1
+  xpos 1631
+  ypos 748
+  hide_input true
+  addUserKnob {20 User}
+  addUserKnob {12 filterResolution}
+  filterResolution {{parent.filterResolution_x*parent.anamorph} {parent.filterResolution_y}}
+ }
+push $N70954e00
+ NoOp {
+  name convolveParameters
+  xpos 1375
+  ypos 1247
+  hide_input true
+  addUserKnob {20 User}
+  addUserKnob {13 u_abb}
+  u_abb {{abb==1?parent.lensRed/10:0} {abb==1?parent.lensGreen/10:0} {abb==1?parent.lensBlue/10:0}}
+  addUserKnob {13 u_spread}
+  u_spread {{spread==1?1-parent.spreadRed/100:1} {spread==1?1-parent.spreadGreen/100:1} {spread==1?1-parent.spreadBlue/100:1}}
+  addUserKnob {6 useGPU +STARTLINE}
+  useGPU {{parent.useGpu}}
+  addUserKnob {6 vectorizeCPU +STARTLINE}
+  vectorizeCPU true
+  addUserKnob {7 percentageImageHeight R 0 100}
+  percentageImageHeight 50
+  addUserKnob {7 percentageGPU R 0 100}
+  percentageGPU 10
+  addUserKnob {12 resolution}
+  resolution {{input.width} {input.height}}
+  addUserKnob {12 opticsCenter}
+  opticsCenter {{"parent.centerLock ? input.width/2 : parent.opticsCenter.x"} {"parent.centerLock ? input.height/2 : parent.opticsCenter.y"}}
+  addUserKnob {6 spread +STARTLINE}
+  spread true
+  addUserKnob {6 abb +STARTLINE}
+  addUserKnob {6 occlu +STARTLINE}
+  occlu {{parent.occlusionOffset}}
+ }
+end_group

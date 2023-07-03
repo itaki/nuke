@@ -1,0 +1,176 @@
+#! /Applications/Nuke10.5v2/Nuke10.5v2.app/Contents/MacOS/libnuke-10.5.2.dylib -nx
+version 10.5 v2
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="23" w="1440" h="835" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="777" stretch="1"/>
+            <splitter orientation="2">
+                <split size="475"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="334"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.scripteditor.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "/Users/gere/Desktop/PARTICLES/PRESETS from NUKEPEDIA/pointForce.nk"
+ frame 40
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Axis2 {
+ inputs 0
+ translate {0.5 1.549999952 0.1850000024}
+ name Axis1
+ xpos 410
+ ypos -1785
+}
+StickyNote {
+ inputs 0
+ name StickyNote4
+ tile_color 0x9b9b9bff
+ label "This example repels particles\nfrom a point in 3D space. To see the\npoint in the Viewer, open the\nParticlePointForce properties."
+ note_font_size 18
+ xpos 183
+ ypos -2098
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x9b9b9bff
+ label "Here, 'color from texture' is enabled in\nthe ParticleEmitter node."
+ note_font_size 18
+ xpos -55
+ ypos -1854
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0x9b9b9bff
+ label "The radius of the point from which \nparticles are repelled is determined by \nthe 'radius' value in the ParticlePointForce\nproperties."
+ note_font_size 18
+ xpos -72
+ ypos -1786
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x9b9b9bff
+ label "Here, the position of the point from which \nparticles are repelled is determined by \nthe Axis node, which is expression-linked \nto the 'position' value in the ParticlePointForce \nproperties."
+ note_font_size 18
+ xpos 505
+ ypos -1792
+}
+Camera2 {
+ inputs 0
+ translate {-4.041593075 3.406004429 6.260117054}
+ rotate {-17.30209541 -32.57871628 0}
+ name Camera1
+ xpos 161
+ ypos -1622
+}
+ColorWheel {
+ inputs 0
+ gamma 0.45
+ name ColorWheel1
+ xpos 271
+ ypos -1993
+}
+Card2 {
+ rows 1
+ columns 1
+ rotate {-90 0 0}
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card1
+ xpos 271
+ ypos -1893
+}
+push 0
+ParticleEmitter {
+ inputs 2
+ emit_from faces
+ rate 265
+ rate_channel rgba.alpha
+ lifetime 85
+ halflife 10
+ velocity 0.115
+ size 0.025
+ color_from_texture true
+ name ParticleEmitter1
+ xpos 271
+ ypos -1834
+}
+ParticlePointForce {
+ strength 0.01
+ radius 0.95
+ position {{parent.Axis1.translate x1 0.4099999964} {parent.Axis1.translate x1 0.9549999833} {parent.Axis1.translate x1 0.6899999976}}
+ name ParticlePointForce1
+ xpos 271
+ ypos -1770
+}
+Scene {
+ name Scene1
+ xpos 281
+ ypos -1710
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "640 480 0 0 640 480 1 PC_Video"
+ name Constant1
+ xpos 412
+ ypos -1625
+}
+ScanlineRender {
+ inputs 3
+ motion_vectors_type velocity
+ name ScanlineRender1
+ xpos 271
+ ypos -1601
+}
+Viewer {
+ frame 40
+ frame_range 1-100
+ frame_range_lock true
+ input_process false
+ name Viewer1
+ xpos 271
+ ypos -1528
+}

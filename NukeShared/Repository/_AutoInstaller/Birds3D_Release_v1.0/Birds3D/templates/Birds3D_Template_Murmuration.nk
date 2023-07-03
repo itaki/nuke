@@ -1,0 +1,234 @@
+Camera2 {
+ inputs 0
+ translate {0 3 240}
+ rotate {5 0 0}
+ focal 30
+ name Camera2
+ selected true
+ xpos 5830
+ ypos 1835
+}
+push $cut_paste_input
+Cube {
+ inputs 0
+ display wireframe
+ render_mode wireframe
+ rows 1
+ columns 1
+ cube {-1 0.6750000119 -3.25 1.379999995 1.809999943 -2.224999905}
+ uniform_scale 10
+ name Cube5
+ selected true
+ xpos 5940
+ ypos 198
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ emit_from bbox
+ rate {{(frame==start_frame)*600}}
+ rate_variation 1
+ lifetime 1000
+ velocity 0.017
+ velocity_variation 0.295
+ size 1
+ size_variation 0.3
+ mass_variation 0.5
+ spread 0.15
+ start_frame_animation random
+ max_clip_length 250
+ name ParticleEmitter9
+ selected true
+ xpos 5940
+ ypos 518
+}
+ParticleTurbulence {
+ strength {{"0.01+(random(0, frame*0.5)*0.025)"} {strength.x} {strength.x}}
+ scale {0.1 {scale.x} {scale.x}}
+ name ParticleTurbulence2
+ selected true
+ xpos 5940
+ ypos 680
+}
+ParticleDrag2 {
+ drag 0.15
+ name ParticleDrag9
+ selected true
+ xpos 5940
+ ypos 716
+}
+ParticleVortex {
+ tangential {{"-2+(random(0, frame*0.01)*4)"}}
+ tangential_falloff "inverse square"
+ name ParticleVortex4
+ selected true
+ xpos 5940
+ ypos 752
+}
+ParticleSpeedLimit {
+ minimum 0.08
+ maximum 5
+ name ParticleSpeedLimit3
+ selected true
+ xpos 5940
+ ypos 788
+}
+ParticleMotionAlign {
+ name ParticleMotionAlign2
+ selected true
+ xpos 5940
+ ypos 886
+}
+ParticleExpression {
+ frameexpr "frame > 250? 1:frame"
+ name ParticleExpression2
+ label "Loop anim"
+ selected true
+ xpos 5940
+ ypos 922
+}
+push 0
+RayRender {
+ inputs 3
+ stochastic_samples 4
+ interpolate_animation false
+ samples 0
+ uniform_distribution true
+ shutteroffset centred
+ output_shader_vectors true
+ AOV_Motion motion
+ name RayRender1
+ selected true
+ xpos 5940
+ ypos 1856
+}
+Dot {
+ name Dot48
+ selected true
+ xpos 5974
+ ypos 2370
+}
+set Ne4f3400 [stack 0]
+VectorBlur2 {
+ channels rgba
+ uv forward
+ blur_type uniform
+ scale 1
+ motion_falloff 0.35
+ normalize false
+ name VectorBlur2
+ selected true
+ xpos 5940
+ ypos 2476
+}
+Remove {
+ operation keep
+ channels rgba
+ name Remove4
+ selected true
+ xpos 5940
+ ypos 2512
+}
+Blur {
+ channels rgba
+ size 1
+ name Blur3
+ selected true
+ xpos 5940
+ ypos 2536
+}
+Dot {
+ name Dot49
+ selected true
+ xpos 5974
+ ypos 2652
+}
+push $Ne4f3400
+Dot {
+ name Dot50
+ selected true
+ xpos 6174
+ ypos 2370
+}
+add_layer {shadow shadow.a}
+Shuffle {
+ in shadow
+ name Shuffle2
+ label "\[value in]"
+ selected true
+ xpos 6140
+ ypos 2425
+}
+Remove {
+ operation keep
+ channels rgba
+ name Remove5
+ selected true
+ xpos 6140
+ ypos 2463
+}
+Ramp {
+ inputs 0
+ p0 {900 750}
+ p1 {900 40}
+ name Ramp2
+ selected true
+ xpos 6720
+ ypos 2180
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0.2350142598 0.2880505621 0.3764045238 0}
+ name Constant3
+ selected true
+ xpos 6500
+ ypos 2108
+}
+Grade {
+ multiply 0.25
+ name Grade9
+ selected true
+ xpos 6500
+ ypos 2180
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0.2308190465 0.2864827514 0.4768190384 0}
+ name Constant4
+ selected true
+ xpos 6610
+ ypos 2035
+}
+Keymix {
+ inputs 3
+ name Keymix2
+ selected true
+ xpos 6610
+ ypos 2174
+}
+Grade {
+ white {1 0.5939400196 0.2099999785 1}
+ multiply 4
+ name Grade8
+ selected true
+ xpos 6610
+ ypos 2210
+}
+Grade {
+ inputs 1+1
+ multiply 0.2
+ name Grade7
+ selected true
+ xpos 6610
+ ypos 2463
+ disable true
+}
+Merge2 {
+ inputs 2
+ name Merge7
+ selected true
+ xpos 6610
+ ypos 2648
+}

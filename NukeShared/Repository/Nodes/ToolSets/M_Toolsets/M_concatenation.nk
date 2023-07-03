@@ -1,0 +1,350 @@
+set cut_paste_input [stack 0]
+version 10.5 v3
+BackdropNode {
+ inputs 0
+ name BackdropNode35
+ tile_color 0x96adc6ff
+ label Concatenation
+ note_font_size 42
+ selected true
+ xpos 118
+ ypos 46697
+ bdwidth 2031
+ bdheight 1250
+ z_order -1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode36
+ tile_color 0xaa9c79ff
+ gl_color 0x80cc86ff
+ label downstream
+ note_font_size 42
+ selected true
+ xpos 861
+ ypos 46851
+ bdwidth 521
+ bdheight 993
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode37
+ tile_color 0x8baa86ff
+ gl_color 0x80cc86ff
+ label "up and downstream"
+ note_font_size 42
+ selected true
+ xpos 211
+ ypos 46851
+ bdwidth 521
+ bdheight 993
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode38
+ tile_color 0xba8787ff
+ gl_color 0xcc8080ff
+ label upstream
+ note_font_size 42
+ selected true
+ xpos 1505
+ ypos 46850
+ bdwidth 521
+ bdheight 993
+}
+push $cut_paste_input
+TransformMasked {
+ channels mask
+ center {2152 1076}
+ name Transform30
+ selected true
+ xpos 1712
+ ypos 46996
+}
+SphericalTransform {
+ fix true
+ name SphericalTransform2
+ selected true
+ xpos 1712
+ ypos 47088
+}
+IDistort {
+ name IDistort2
+ selected true
+ xpos 1712
+ ypos 47186
+}
+CameraShake3 {
+ name CameraShake3_6
+ label "\[value amplitude] px at \[value frequency]"
+ selected true
+ xpos 1712
+ ypos 47287
+ cs_center {1270 816.5}
+}
+GridWarp3 {
+ toolbar_visibility_src false
+ source_grid_col   {
+    1 5 5 4 1 0
+    {default }
+    {
+      { {2 0 0} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 1076 0} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 2152 0} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 3228 0} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 4304 0} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 0 538} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 1076 538} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 2152 538} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 3228 538} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 4304 538} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 0 1076} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 1076 1076} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 2152 1076} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 3228 1076} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 4304 1076} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 0 1614} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 1076 1614} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 2152 1614} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 3228 1614} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 4304 1614} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 0 2152} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 1076 2152} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 2152 2152} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 3228 2152} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 4304 2152} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+    }
+  }
+ destination_grid_col   {
+    1 5 5 4 1 0
+    {default }
+    {
+      { {2 0 0} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 1076 0} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 2152 0} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 3228 0} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 4304 0} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 0 538} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 1076 538} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 2152 538} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 3228 538} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 4304 538} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 0 1076} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 1076 1076} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 2152 1076} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 3228 1076} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 4304 1076} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 0 1614} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 1076 1614} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 2152 1614} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 3228 1614} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 4304 1614} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 0 2152} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 1076 2152} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 2152 2152} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 3228 2152} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+      { {2 4304 2152} { {2 0 179.333}  {2 0 -179.333}  {2 358.667 0}  {2 -358.667 0} } } 
+    }
+  }
+ source_grid_transform_center {2152 1076}
+ destination_grid_transform_center {2152 1076}
+ name GridWarp3_4
+ selected true
+ xpos 1712
+ ypos 47393
+}
+SplineWarp3 {
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 0}
+    {t x45068000 x44868000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}}}}}
+ toolbar_preview_mode "persistent preview"
+ name SplineWarp3_2
+ selected true
+ xpos 1712
+ ypos 47492
+}
+STMap {
+ name STMap2
+ selected true
+ xpos 1712
+ ypos 47585
+}
+Tile {
+ name Tile2
+ selected true
+ xpos 1712
+ ypos 47678
+}
+Crop {
+ inputs 0
+ box {0 0 4304 2152}
+ name Crop12
+ selected true
+ xpos 1077
+ ypos 46998
+}
+Mirror2 {
+ name Mirror2_2
+ selected true
+ xpos 1077
+ ypos 47098
+}
+Roto {
+ output {rgba.alpha none none mask_planartrack.a}
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x45068000 x44868000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {layer PlanarTrackLayer1
+     {f 2097152}
+     {t 0}
+     {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 pt 1 ptrefset 0 ptmot x40800000 ptref 0}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {2152 1076}
+ view {}
+ motionblur_on true
+ is_pt_node true
+ name Roto84
+ selected true
+ xpos 1077
+ ypos 47176
+}
+AdjBBox {
+ name AdjBBox2
+ selected true
+ xpos 1077
+ ypos 47284
+}
+BlackOutside {
+ name BlackOutside2
+ selected true
+ xpos 1077
+ ypos 47381
+}
+PointsTo3D {
+ name PointsTo3D2
+ selected true
+ xpos 1077
+ ypos 47499
+}
+Position {
+ name Position2
+ selected true
+ xpos 1077
+ ypos 47592
+}
+TVIscale {
+ name TVIscale2
+ selected true
+ xpos 1077
+ ypos 47679
+}
+Transform {
+ inputs 0
+ center {2152 1076}
+ name Transform29
+ selected true
+ xpos 413
+ ypos 46994
+}
+CornerPin2D {
+ to1 {0 0}
+ to2 {4304 0}
+ to3 {4304 2152}
+ to4 {0 2152}
+ invert false
+ from1 {0 0}
+ from2 {4304 0}
+ from3 {4304 2152}
+ from4 {0 2152}
+ name CornerPin2D2
+ selected true
+ xpos 413
+ ypos 47074
+}
+Reformat {
+ name Reformat15
+ selected true
+ xpos 413
+ ypos 47150
+}
+Stabilize2D {
+ name Stabilize2D2
+ selected true
+ xpos 413
+ ypos 47224
+}
+Reconcile3D {
+ name Reconcile3D2
+ selected true
+ xpos 413
+ ypos 47345
+}
+Tracker4 {
+ center {2152 1076}
+ name Tracker2
+ selected true
+ xpos 413
+ ypos 47430
+}
+Dot {
+ name Dot398
+ selected true
+ xpos 447
+ ypos 47511
+}
+NoOp {
+ name NoOp2
+ selected true
+ xpos 413
+ ypos 47579
+}
+Switch {
+ name Switch1
+ selected true
+ xpos 413
+ ypos 47655
+}
+Card2 {
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card4
+ selected true
+ xpos 413
+ ypos 47737
+}

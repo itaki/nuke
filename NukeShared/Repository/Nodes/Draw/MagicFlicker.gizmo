@@ -1,0 +1,52 @@
+Group {
+ inputs 0
+ name MagicFlicker
+ tile_color 0x1f1f1fff
+ addUserKnob {20 settings t "This is where all the controls for the flickering are."}
+ addUserKnob {7 freq l frequency t "Controls the speed of the flickering. When using a low value, the flickering will be slow. When using a high frequency, the flickering will be fast." R 0.001 1}
+ freq 0.2
+ addUserKnob {7 seed t "When using this slider the output of the flickering can be randomized." R 0 100000}
+ addUserKnob {26 ""}
+ addUserKnob {7 contrast t "When using a low value the flickering will be subtle, when using a high value the flickering will get a higher max value and a lower minimum value." R 0 3}
+ contrast 1
+ addUserKnob {7 center t "Changes the center of the flickering, values will be based upon this value."}
+ center 0.5
+ addUserKnob {26 ""}
+ addUserKnob {7 flickering t "The value (flickering) in this knob is the output of all the controls on this tab."}
+ flickering {{"clampneg == 0 ? noise_expression.flickering : noise_expression.flickering_clamp"}}
+ addUserKnob {6 clampneg l "clamp negative values" t "Only clamps the curve data when under under 0 to output 0. RGB and alpha (alpha to 0 and 1) are always clamped no matter this option." +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {41 resolution T Constant1.format}
+ addUserKnob {26 ""}
+ addUserKnob {26 credits l MagicFlicker T "v2.1 | <a href=\"https://vinkvfx.com/\" style=\"color: rgb(200,200,200)\">Gilles Vink</a>"}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant1
+  xpos 418
+  ypos -261
+ }
+ Expression {
+  channel0 {rgba.red rgba.green rgba.blue -rgba.alpha}
+  expr0 flickering_clamp
+  channel1 {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  expr1 flickering_alpha
+  name noise_expression
+  selected true
+  xpos 418
+  ypos -155
+  addUserKnob {20 User}
+  addUserKnob {7 flickering}
+  flickering {{((noise((frame+seed)/(2/freq))+1)/2*((contrast/2+.5)-(((contrast/2+.5)-1)*-1))+(((contrast/2+.5)-1)*-1))+(center-.5)}}
+  addUserKnob {7 flickering_clamp}
+  flickering_clamp {{"flickering < 0 ? 0 : flickering"}}
+  addUserKnob {7 flickering_alpha}
+  flickering_alpha {{"clamp(flickering, 0, 1)"}}
+ }
+ Output {
+  name Output1
+  xpos 418
+  ypos -18
+ }
+end_group

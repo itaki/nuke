@@ -1,0 +1,1330 @@
+set cut_paste_input [stack 0]
+version 10.0 v3
+push $cut_paste_input
+Group {
+ name GS_Caustics
+ tile_color 0x358eadff
+ note_font_color 0xffffffff
+ selected true
+ xpos 29
+ ypos -76
+ addUserKnob {20 Caustics}
+ addUserKnob {26 space l "" +STARTLINE T "\n\n"}
+ addUserKnob {26 GizmoName l "" +STARTLINE T "<font size=\"6\"><div><span style=\"color:#2E86C1;\">C</span><span style=\"color:#3498DB;\">a</span><span style=\"color:#5DADE2;\">u</span><span style=\"color:#85C1E9;\">s</span><span style=\"color:#AED6F1;\">t</span><span style=\"color:#D6EAF8;\">i</span><span style=\"color:#EBF5FB;\">c</span><span style=\"color:#EBF5FB;\">s</span></span><span style=\"color:#EBF5FB;\">_</span><font size=\"3\"><span style=\"color:#EBF5FB;\">v</span><span style=\"color:#EBF5FB;\">1</span><span style=\"color:#EBF5FB;\">.1"}
+ addUserKnob {26 gerardoschiavone92@gmail.com l "" +STARTLINE T "<font size=\"3\"><span style=\"color:#EBF5FB\">B</span><span style=\"color:#EBF5FB;\">y</span><span style=\"color:#EBF5FB;\"> </span><span style=\"color:#EBF5FB;\">G</span><span style=\"color:#EBF5FB;\">e</span><span style=\"color#EBF5FB;\">r</span><span style=\"color:#EBF5FB;\">a</span><span style=\"color:#EBF5FB;\">r</span><span style=\"color:#EBF5FB;\">d</span><span style=\"color:#EBF5FB;\">o</span><span style=\"color:#EBF5FB;\"> S</span><span style=\"color:#EBF5FB;\">c</span><span style=\"color:#EBF5FB;\">h</span><span style=\"color:#EBF5FB;\">iavone"}
+ addUserKnob {26 space2 l "" +STARTLINE T "\n"}
+ addUserKnob {41 usegpu l "use GPU" T Control1.usegpu}
+ addUserKnob {41 soft_caustics_size T Control1.soft_caustics_size}
+ addUserKnob {41 Caustics_Size l hard_caustics_Size T Control1.Caustics_Size}
+ addUserKnob {41 Z_speed T Control1.Caustics_Zspeed}
+ addUserKnob {26 Mix l "" +STARTLINE T "<font color=#2E86C1>Mix"}
+ addUserKnob {41 Soft_Hard_Mix T Control1.Soft_Hard_Mix}
+ addUserKnob {41 Soft_Hard_Variance l SH_Variance_Mix T Control1.Details_Variance}
+ addUserKnob {41 size l SH_Variance_size T Noise6.size}
+ addUserKnob {41 High_Freq_Override T Control1.High_Freq_Caustics}
+ addUserKnob {7 SD_Over l Soft_Details_Override}
+ SD_Over 0.1
+ addUserKnob {26 waves_1 l "" +STARTLINE T "<font color=#2E86C1>Waves"}
+ addUserKnob {41 waves T Control1.waves}
+ addUserKnob {41 waveSize T Control1.waveSize}
+ addUserKnob {41 waveSpeed T Control1.waveSpeed}
+ addUserKnob {41 waves_Variance T Control1.waves_Variance}
+ addUserKnob {41 waves_Variance_Size_1 l waves_Variance_Size T Control1.waves_Variance_Size}
+ addUserKnob {41 waves_Variance_Zspeed l waves_Variance_Speed T Control1.waves_Variance_Speed}
+ addUserKnob {41 Chroma_abb T Control1.Chroma_abb}
+ addUserKnob {26 spc l "" +STARTLINE}
+ addUserKnob {22 help_1 l "<span style=\"color:#5DADE2\">help ?" T "import webbrowser\nwebbrowser.open(\"http://www.gerardoschiavone.com/tool\")\n\n" +STARTLINE}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x7f7f7fff
+  label Waves
+  note_font_size 55
+  note_font_color 0xffffffff
+  xpos -2951
+  ypos 214
+  bdwidth 511
+  bdheight 28
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode10
+  tile_color 0x7f7f7fff
+  label Hard_Caustics
+  note_font_size 55
+  note_font_color 0xffffffff
+  xpos -685
+  ypos 159
+  bdwidth 382
+  bdheight 24
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode11
+  tile_color 0x7f7f7fff
+  label Soft_Caustics
+  note_font_size 55
+  note_font_color 0xffffffff
+  xpos -1859
+  ypos 611
+  bdwidth 511
+  bdheight 28
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode12
+  tile_color 0x7f7f7fff
+  label Out
+  note_font_size 55
+  note_font_color 0xffffffff
+  xpos -698
+  ypos 3188
+  bdwidth 261
+  bdheight 30
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x7f7f7fff
+  label ChromaAbb
+  note_font_size 55
+  note_font_color 0xffffffff
+  xpos -658
+  ypos 2743
+  bdwidth 446
+  bdheight 305
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x586793ff
+  label Waves
+  note_font_size 55
+  note_font_color 0xffffffff
+  xpos -1920
+  ypos 1551
+  bdwidth 1442
+  bdheight 197
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode7
+  tile_color 0x7f7f7fff
+  label Test
+  note_font_size 55
+  note_font_color 0xffffffff
+  xpos -143
+  ypos 3136
+  bdwidth 261
+  bdheight 30
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -1144
+  ypos 248
+ }
+set N55d63400 [stack 0]
+ PostageStamp {
+  name Input9
+  xpos -803
+  ypos 3343
+  hide_input true
+ }
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle6
+  xpos -803
+  ypos 3369
+ }
+push $N55d63400
+ PostageStamp {
+  name Input3
+  xpos -2463
+  ypos 642
+  hide_input true
+ }
+ Noise {
+  type turbulence
+  size {{(Control1.waveSize*52)/Control1.waves_Variance_Size}}
+  zoffset {{(frame/100)*(Control1.waves_Variance_Speed)}}
+  octaves 2
+  lacunarity 1.015
+  gain 1
+  gamma 0.335
+  translate {{Control1.waveSpeed-1211} -2141}
+  scale {1 3}
+  center {960 540}
+  name Noise7
+  xpos -2463
+  ypos 705
+ }
+ Blur {
+  size {{parent.Noise7.size/2}}
+  name Blur1
+  xpos -2463
+  ypos 791
+ }
+ Grade {
+  white 4
+  multiply 4
+  gamma 2.14
+  name Grade1
+  xpos -2463
+  ypos 852
+ }
+push $N55d63400
+ PostageStamp {
+  name Input
+  xpos -2827
+  ypos 373
+  hide_input true
+ }
+set N55d9bc00 [stack 0]
+ Noise {
+  type turbulence
+  size 112
+  octaves 2
+  lacunarity 1
+  gain 0.218
+  gamma 1
+  translate {-1411 -1141}
+  center {960 540}
+  name Noise2
+  xpos -2837
+  ypos 796
+ }
+ Blur {
+  size 57.5
+  name Blur19
+  xpos -2837
+  ypos 822
+ }
+set N55d9b400 [stack 0]
+push $N55d9b400
+ Dot {
+  name Dot9
+  xpos -2943
+  ypos 832
+ }
+ Transform {
+  translate {-20 -24}
+  center {960 540}
+  name Transform5
+  xpos -2977
+  ypos 923
+ }
+ ShuffleCopy {
+  inputs 2
+  red green2
+  green red
+  blue black
+  alpha black
+  name ShuffleCopy2
+  xpos -2837
+  ypos 923
+ }
+push $N55d9bc00
+ Noise {
+  type turbulence
+  size {{Control1.waveSize*52}}
+  octaves 2
+  lacunarity 1.015
+  gain 1
+  gamma 0.335
+  translate {{1100-(frame-(((frame*Control1.waveSpeed)/Control1.waveSize)*17)-frame)} -2141}
+  scale {1 3}
+  center {960 540}
+  name Noise3
+  xpos -2827
+  ypos 515
+ }
+set N55d9a400 [stack 0]
+ Blur {
+  size 700
+  name Blur18
+  xpos -2827
+  ypos 552
+ }
+ Grade {
+  white 4
+  multiply 4
+  gamma 2.14
+  name Grade5
+  xpos -2828
+  ypos 608
+ }
+set N5832fc00 [stack 0]
+push $N5832fc00
+ Dot {
+  name Dot26
+  xpos -2934
+  ypos 612
+ }
+ Transform {
+  translate {-20 -24}
+  center {960 540}
+  name Transform13
+  xpos -2968
+  ypos 677
+ }
+ ShuffleCopy {
+  inputs 2
+  red green2
+  green red
+  blue black
+  alpha black
+  name ShuffleCopy3
+  xpos -2828
+  ypos 677
+ }
+push $N55d9bc00
+ Expression {
+  expr0 ((sin((x-(frame*Control1.waveSpeed))/Control1.waveSize))+1)*5
+  expr1 ((sin((x-(frame*Control1.waveSpeed))/Control1.waveSize))+1)*5
+  expr2 ((sin((x-(frame*Control1.waveSpeed))/Control1.waveSize))+1)*5
+  expr3 ((sin((x-(frame*Control1.waveSpeed))/Control1.waveSize))+1)*5
+  mix 0.025
+  name Expression1
+  label Waves
+  xpos -2657
+  ypos 343
+  postage_stamp true
+ }
+ Grade {
+  channels rgba
+  white 3.06
+  gamma 0.46
+  name Grade6
+  xpos -2657
+  ypos 454
+ }
+ Crop {
+  box {0 0 4096 3024}
+  name Crop2
+  xpos -2657
+  ypos 520
+ }
+set N5832e000 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name Copy6
+  xpos -2657
+  ypos 664
+ }
+ IDistort {
+  uv forward
+  uv_scale 100
+  name IDistort3
+  xpos -2657
+  ypos 762
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name Copy2
+  xpos -2657
+  ypos 910
+ }
+ IDistort {
+  uv forward
+  uv_scale 65
+  name IDistort2
+  xpos -2657
+  ypos 1006
+ }
+ Transform {
+  translate {330 200}
+  scale 1.2
+  center {2048 1512}
+  name Transform14
+  xpos -2657
+  ypos 1065
+ }
+set N58368c00 [stack 0]
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge37
+  xpos -2463
+  ypos 935
+ }
+ Multiply {
+  value 5
+  name Multiply3
+  xpos -2463
+  ypos 980
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle4
+  xpos -2463
+  ypos 1018
+ }
+push $N58368c00
+ Merge2 {
+  inputs 2
+  operation copy
+  mix {{parent.Control1.waves_Variance}}
+  name Merge38
+  xpos -2463
+  ypos 1065
+ }
+ Blur {
+  size 36.5
+  name Blur6
+  xpos -2149
+  ypos 1059
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle5
+  xpos -2039
+  ypos 1065
+ }
+push $N55d63400
+ PostageStamp {
+  name Input2
+  xpos -1920
+  ypos 743
+  hide_input true
+ }
+ Noise {
+  type turbulence
+  size {{Control1.soft_caustics_size/4} {Control1.soft_caustics_size}}
+  zoffset {{(frame/25)*Control1.Caustics_Zspeed}}
+  octaves 2
+  translate {-2000 -2000}
+  center {2048 1512}
+  name Noise4
+  xpos -1920
+  ypos 769
+ }
+ Invert {
+  name Invert2
+  xpos -1920
+  ypos 951
+ }
+ Blur {
+  size 36.5
+  name Blur20
+  xpos -1920
+  ypos 989
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge7
+  xpos -1920
+  ypos 1065
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos -1920
+  ypos 1112
+ }
+ Dot {
+  name Dot2
+  xpos -1886
+  ypos 1652
+ }
+ Dot {
+  name Dot10
+  xpos -1776
+  ypos 1652
+ }
+set N583eb400 [stack 0]
+ Dot {
+  name Dot11
+  xpos -1776
+  ypos 1702
+ }
+ Group {
+  inputs 0
+  name Group5
+  onCreate "\nheight = nuke.root().format().height()\nwidth  = nuke.root().format().width()\nnuke.thisNode()\['center'].setValue(\[width/2.0, height/2.0])\n"
+  knobChanged "\nknob = nuke.thisKnob()\nif knob.name() == 'skew_order':\n    nuke.toNode('NoiseTransform')\['rot_order'].setValue('Z' + knob.value())\nif knob.name() == 'noise_type':\n    if knob.value() in \['Voronoi', 'Manhattan', 'Chebyshev', 'Euclidian']:\n        nuke.thisNode()\['range'].clearFlag(0x00040000)\n    else:\n        nuke.thisNode()\['range'].setFlag(0x00040000)\n"
+  xpos -392
+  ypos 291
+  addUserKnob {20 cellnoise l "Cell Noise"}
+  addUserKnob {41 format T WorleyNoise.format}
+  addUserKnob {6 use_gpu l "use gpu" t "Faster calculations, may not work on all computers. Disable to switch to CPU." -STARTLINE}
+  use_gpu {{parent.Control1.usegpu}}
+  addUserKnob {7 range t "Changes how much of the noise effect applies.\nOnly applies to Manhattan, Chebyshev, Euclidian and Voronoi." +HIDDEN R 0 10}
+  addUserKnob {26 ""}
+  addUserKnob {7 size R 1 1000}
+  size {{Control1.Caustics_Size/3.5}}
+  addUserKnob {7 z t "This knob must be animated if you want it to change over time."}
+  z {{((frame/7)*Control1.Caustics_Zspeed)}}
+  addUserKnob {7 gain R 0 2}
+  gain 0.9
+  addUserKnob {7 gamma R 0 2}
+  gamma 1.365
+  addUserKnob {20 transform l Transform}
+  addUserKnob {12 translate}
+  addUserKnob {7 rotate R -180 180}
+  addUserKnob {14 scale R 0 100}
+  scale 1
+  addUserKnob {7 skewX l "skew X" R -1 1}
+  addUserKnob {7 skewY l "skew Y" R -1 1}
+  addUserKnob {4 skew_order l "skew order" t "Specifies which order the skew values should be applied in.\n" M {XY YX}}
+  addUserKnob {12 center}
+  center {1024 778}
+  addUserKnob {7 xrotate t "Rotation about X axis in 3D noise space." R 0 90}
+  addUserKnob {7 yrotate t "Rotation about Y axis in 3D noise space." R 0 90}
+  addUserKnob {20 colour l Colour}
+  addUserKnob {19 colour0 l "colour 0"}
+  colour0 {0 0 0 0}
+  addUserKnob {6 colour0_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 colour1 l "colour 1"}
+  colour1 1
+  addUserKnob {6 colour1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+  Axis2 {
+   inputs 0
+   xform_order TRS
+   translate {{parent.translate.x} {parent.translate.y} {parent.z}}
+   rotate {{parent.xrotate} {parent.yrotate} {parent.rotate}}
+   scaling {{parent.scale.w} {parent.scale.h} 1}
+   uniform_scale {{parent.size}}
+   skew {{"parent.skewX * 45"} {"parent.skewY * 45"} 0}
+   pivot {{parent.center.x} {parent.center.y} 0}
+   name NoiseTransform
+   xpos 187
+   ypos -149
+   addUserKnob {20 "Ppos Locator"}
+   addUserKnob {18 pointPosition l "Point Position"}
+   pointPosition {0 0 0}
+   addUserKnob {6 pointPosition_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  }
+  BlinkScript {
+   inputs 0
+   ProgramGroup 1
+   KernelDescription "1 \"Worley\" iterate pixelWise 92b94530192011feae18a63400ce40dd1c828de463a428e45921ce9da3f88e94 1 \"dst\" Write Point 6 \"Invert\" Bool 1 AA== \"Gain\" Float 1 AACAPw== \"Gamma\" Float 1 AACAPw== \"Dark Colour\" Float 4 AAAAAAAAAAAAAAAAAACAPw== \"Light Colour\" Float 4 AACAPwAAgD8AAIA/AACAPw== \"transform\" Float 16 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+   kernelSource "// https://aftbit.com/cell-noise-2/\n\n// C++11\nconst uint rand_multiplier = 48271;\nconst uint rand_increment  = 0;\nconst uint rand_modulus    = 2147483647;\n\nstatic int lcgRandom(int seed)\n\{\n  return abs((seed * rand_multiplier + rand_increment) % rand_modulus);\n\}\n\n// FNV Hash\nconst uint OFFSET_BASIS = 2166136261;\nconst uint FNV_PRIME = 16777619;\n\nstatic uint hash(uint i, uint j, uint k)\n\{\n  return ((((((OFFSET_BASIS ^ i) * FNV_PRIME) ^ j) * FNV_PRIME) ^ k) * FNV_PRIME);\n\}\n\n// Poisson Distribution\nconst uint one   =  393325350;\nconst uint two   = 1022645910;\nconst uint three = 1861739990;\nconst uint four  = 2700834071;\nconst uint five  = 3372109335;\nconst uint six   = 3819626178;\nconst uint seven = 4075350088;\nconst uint eight = 4203212043;\n\nstatic uint probLookup(uint value)\n\{\n  if (value < one) return 1;\n  if (value < two) return 2;\n  if (value < three) return 3;\n  if (value < four) return 4;\n  if (value < five) return 5;\n  if (value < six) return 6;\n  if (value < seven) return 7;\n  if (value < eight) return 8;\n  return 9;\n\}\n\n// Distance Functions\nstatic float EuclidianDistanceFunc(float3 p1, float3 p2)\n\{\n  return (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y) + (p1.z - p2.z) * (p1.z - p2.z);\n\}\n\nstatic float ManhattanDistanceFunc(float3 p1, float3 p2)\n\{\n  return fabs(p1.x - p2.x) + fabs(p1.y - p2.y) + fabs(p1.z - p2.z);\n\}\n\nstatic float ChebyshevDistanceFunc(float3 p1, float3 p2)\n\{\n  float3 diff = p1 - p2;\n  return max(max(fabs(diff.x), fabs(diff.y)), fabs(diff.z));\n\}\n\n\n// Blink Kernel\nkernel Worley : ImageComputationKernel<ePixelWise>\n\{\n  Image<eWrite> dst;\n\n  param:\n    bool invert;\n    float gain;\n    float gamma;\n    float4 dark_col;\n    float4 light_col;\n    float4x4 transform;\n\n  local:\n    float4x4 transform_inv;\n    float z;\n\n  void define()\n  \{\n    defineParam(invert, \"Invert\", false);\n    defineParam(gain, \"Gain\", 1.0f);\n    defineParam(gamma, \"Gamma\", 1.0f);\n    defineParam(dark_col, \"Dark Colour\", float4(0.0f, 0.0f, 0.0f, 1.0f));\n    defineParam(light_col, \"Light Colour\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n  \}\n\n  void init()\n  \{\n    transform_inv = transform.invert();\n    z = transform_inv\[2]\[3];\n  \}\n\n  static float3 multVectMatrix(float3 vec, float4x4 M)\n  \{\n    float3 out = float3(\n      vec.x * M\[0]\[0] + vec.y * M\[0]\[1] + vec.z * M\[0]\[2] + M\[0]\[3],\n      vec.x * M\[1]\[0] + vec.y * M\[1]\[1] + vec.z * M\[1]\[2] + M\[1]\[3],\n      vec.x * M\[2]\[0] + vec.y * M\[2]\[1] + vec.z * M\[2]\[2] + M\[2]\[3]\n    );\n\n    return out;\n  \}\n\n  float4 getColour(float a) \{\n    return dark_col * (1 - a) + light_col * a;\n  \}\n\n  void process(int2 pos)\n  \{\n\n    //Declare some values for later use\n    int lastRandom, numberFeaturePoints;\n    float distance = 6666.0f;\n    float3 randomDiff, featurePoint;\n    int cubeX, cubeY, cubeZ;\n\n    float3 input = float3(float(pos.x), float(pos.y), z);\n    input = multVectMatrix(input, transform_inv);\n\n    // Determine which cube the evaluation point is in\n    int evalCubeX = floor(input.x);\n    int evalCubeY = floor(input.y);\n    int evalCubeZ = floor(input.z);\n\n    for (int i = -1; i < 2; ++i)\n    \{\n      for (int j = -1; j < 2; ++j)\n      \{\n        for (int k = -1; k < 2; ++k)\n        \{\n            cubeX = evalCubeX + i;\n            cubeY = evalCubeY + j;\n            cubeZ = evalCubeZ + k;\n\n            // Generate a reproducible random number generator for the cube\n            lastRandom = lcgRandom(hash(cubeX, cubeY, cubeZ));\n            // Determine how many feature points are in the cube\n            numberFeaturePoints = probLookup(lastRandom);\n            // Check each feature point\n            for (uint l = 0; l < numberFeaturePoints; ++l)\n            \{\n              lastRandom = lcgRandom(lastRandom);\n              randomDiff.x = float(lastRandom) / rand_modulus;\n\n              lastRandom = lcgRandom(lastRandom);\n              randomDiff.y = float(lastRandom) / rand_modulus;\n\n              lastRandom = lcgRandom(lastRandom);\n              randomDiff.z = float(lastRandom) / rand_modulus;\n\n              featurePoint = float3(randomDiff.x + float(cubeX), randomDiff.y + float(cubeY), randomDiff.z + float(cubeZ));\n\n              distance = min(distance, dot(input - featurePoint, input - featurePoint));\n            \}\n        \}\n      \}\n    \}\n\n    distance = sqrt(distance);\n    if (invert)\n      distance = 1.0f - distance;\n    distance = pow(distance * gain, gamma);\n    dst() = getColour(clamp(distance, 0.0f, 1.0f));\n\n  \}\n\n\};"
+   useGPUIfAvailable {{parent.use_gpu}}
+   rebuild ""
+   Worley_Invert {{"parent.noise_type == 1"}}
+   Worley_Gain {{parent.gain}}
+   Worley_Gamma {{parent.gamma}}
+   "Worley_Dark Colour" {{parent.colour0.r} {parent.colour0.g} {parent.colour0.b} {parent.colour0.a}}
+   "Worley_Light Colour" {{parent.colour1.r} {parent.colour1.g} {parent.colour1.b} {parent.colour1.a}}
+   Worley_transform {
+       {{parent.NoiseTransform.world_matrix.0} {parent.NoiseTransform.world_matrix.1} {parent.NoiseTransform.world_matrix.2} {parent.NoiseTransform.world_matrix.3}}
+       {{parent.NoiseTransform.world_matrix.4} {parent.NoiseTransform.world_matrix.5} {parent.NoiseTransform.world_matrix.6} {parent.NoiseTransform.world_matrix.7}}
+       {{parent.NoiseTransform.world_matrix.8} {parent.NoiseTransform.world_matrix.9} {parent.NoiseTransform.world_matrix.10} {parent.NoiseTransform.world_matrix.11}}
+       {{parent.NoiseTransform.world_matrix.12} {parent.NoiseTransform.world_matrix.13} {parent.NoiseTransform.world_matrix.14} {parent.NoiseTransform.world_matrix.15}}
+     }
+   rebuild_finalise ""
+   name WorleyNoise
+   xpos 177
+   ypos -52
+  }
+  Output {
+   name Output1
+   selected true
+   xpos 177
+   ypos 64
+  }
+ end_group
+ Grade {
+  white 1.86
+  gamma 0.41
+  name Grade7
+  xpos -392
+  ypos 673
+ }
+push $N55d63400
+ PostageStamp {
+  name Input6
+  xpos -247
+  ypos 423
+  hide_input true
+ }
+ Noise {
+  type turbulence
+  size {{parent.Control1.Caustics_Size}}
+  octaves 2
+  lacunarity 1.015
+  translate {-1411 -1141}
+  center {960 540}
+  name Noise1
+  xpos -247
+  ypos 455
+ }
+set N5ca82400 [stack 0]
+ Dot {
+  name Dot27
+  xpos -50
+  ypos 459
+ }
+ Transform {
+  translate {-20 -24}
+  center {960 540}
+  name Transform6
+  xpos -84
+  ypos 505
+ }
+push $N5ca82400
+ ShuffleCopy {
+  inputs 2
+  red red
+  blue black
+  alpha black
+  name ShuffleCopy1
+  xpos -247
+  ypos 505
+ }
+ Group {
+  inputs 0
+  name Group4
+  onCreate "\nheight = nuke.root().format().height()\nwidth  = nuke.root().format().width()\nnuke.thisNode()\['center'].setValue(\[width/2.0, height/2.0])\n"
+  knobChanged "\nknob = nuke.thisKnob()\nif knob.name() == 'skew_order':\n    nuke.toNode('NoiseTransform')\['rot_order'].setValue('Z' + knob.value())\nif knob.name() == 'noise_type':\n    if knob.value() in \['Voronoi', 'Manhattan', 'Chebyshev', 'Euclidian']:\n        nuke.thisNode()\['range'].clearFlag(0x00040000)\n    else:\n        nuke.thisNode()\['range'].setFlag(0x00040000)\n"
+  xpos -618
+  ypos 286
+  addUserKnob {20 cellnoise l "Cell Noise"}
+  addUserKnob {41 format T WorleyNoise.format}
+  addUserKnob {6 use_gpu l "use gpu" t "Faster calculations, may not work on all computers. Disable to switch to CPU." -STARTLINE}
+  use_gpu {{parent.Control1.usegpu}}
+  addUserKnob {7 range t "Changes how much of the noise effect applies.\nOnly applies to Manhattan, Chebyshev, Euclidian and Voronoi." +HIDDEN R 0 10}
+  addUserKnob {26 ""}
+  addUserKnob {7 size R 1 1000}
+  size {{parent.Control1.Caustics_Size}}
+  addUserKnob {7 z t "This knob must be animated if you want it to change over time."}
+  z {{((frame/22)*Control1.Caustics_Zspeed)}}
+  addUserKnob {7 gain R 0 2}
+  gain 1.075
+  addUserKnob {7 gamma R 0 2}
+  gamma 2
+  addUserKnob {20 transform l Transform}
+  addUserKnob {12 translate}
+  addUserKnob {7 rotate R -180 180}
+  addUserKnob {14 scale R 0 100}
+  scale 1
+  addUserKnob {7 skewX l "skew X" R -1 1}
+  addUserKnob {7 skewY l "skew Y" R -1 1}
+  addUserKnob {4 skew_order l "skew order" t "Specifies which order the skew values should be applied in.\n" M {XY YX}}
+  addUserKnob {12 center}
+  center {1024 778}
+  addUserKnob {7 xrotate t "Rotation about X axis in 3D noise space." R 0 90}
+  addUserKnob {7 yrotate t "Rotation about Y axis in 3D noise space." R 0 90}
+  addUserKnob {20 colour l Colour}
+  addUserKnob {19 colour0 l "colour 0"}
+  colour0 {0 0 0 0}
+  addUserKnob {6 colour0_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 colour1 l "colour 1"}
+  colour1 1
+  addUserKnob {6 colour1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+  Axis2 {
+   inputs 0
+   xform_order TRS
+   translate {{parent.translate.x} {parent.translate.y} {parent.z}}
+   rotate {{parent.xrotate} {parent.yrotate} {parent.rotate}}
+   scaling {{parent.scale.w} {parent.scale.h} 1}
+   uniform_scale {{parent.size}}
+   skew {{"parent.skewX * 45"} {"parent.skewY * 45"} 0}
+   pivot {{parent.center.x} {parent.center.y} 0}
+   name NoiseTransform
+   xpos 189
+   ypos -185
+   addUserKnob {20 "Ppos Locator"}
+   addUserKnob {18 pointPosition l "Point Position"}
+   pointPosition {0 0 0}
+   addUserKnob {6 pointPosition_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  }
+  BlinkScript {
+   inputs 0
+   ProgramGroup 1
+   KernelDescription "1 \"Worley\" iterate pixelWise 92b94530192011feae18a63400ce40dd1c828de463a428e45921ce9da3f88e94 1 \"dst\" Write Point 6 \"Invert\" Bool 1 AA== \"Gain\" Float 1 AACAPw== \"Gamma\" Float 1 AACAPw== \"Dark Colour\" Float 4 AAAAAAAAAAAAAAAAAACAPw== \"Light Colour\" Float 4 AACAPwAAgD8AAIA/AACAPw== \"transform\" Float 16 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+   kernelSource "// https://aftbit.com/cell-noise-2/\n\n// C++11\nconst uint rand_multiplier = 48271;\nconst uint rand_increment  = 0;\nconst uint rand_modulus    = 2147483647;\n\nstatic int lcgRandom(int seed)\n\{\n  return abs((seed * rand_multiplier + rand_increment) % rand_modulus);\n\}\n\n// FNV Hash\nconst uint OFFSET_BASIS = 2166136261;\nconst uint FNV_PRIME = 16777619;\n\nstatic uint hash(uint i, uint j, uint k)\n\{\n  return ((((((OFFSET_BASIS ^ i) * FNV_PRIME) ^ j) * FNV_PRIME) ^ k) * FNV_PRIME);\n\}\n\n// Poisson Distribution\nconst uint one   =  393325350;\nconst uint two   = 1022645910;\nconst uint three = 1861739990;\nconst uint four  = 2700834071;\nconst uint five  = 3372109335;\nconst uint six   = 3819626178;\nconst uint seven = 4075350088;\nconst uint eight = 4203212043;\n\nstatic uint probLookup(uint value)\n\{\n  if (value < one) return 1;\n  if (value < two) return 2;\n  if (value < three) return 3;\n  if (value < four) return 4;\n  if (value < five) return 5;\n  if (value < six) return 6;\n  if (value < seven) return 7;\n  if (value < eight) return 8;\n  return 9;\n\}\n\n// Distance Functions\nstatic float EuclidianDistanceFunc(float3 p1, float3 p2)\n\{\n  return (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y) + (p1.z - p2.z) * (p1.z - p2.z);\n\}\n\nstatic float ManhattanDistanceFunc(float3 p1, float3 p2)\n\{\n  return fabs(p1.x - p2.x) + fabs(p1.y - p2.y) + fabs(p1.z - p2.z);\n\}\n\nstatic float ChebyshevDistanceFunc(float3 p1, float3 p2)\n\{\n  float3 diff = p1 - p2;\n  return max(max(fabs(diff.x), fabs(diff.y)), fabs(diff.z));\n\}\n\n\n// Blink Kernel\nkernel Worley : ImageComputationKernel<ePixelWise>\n\{\n  Image<eWrite> dst;\n\n  param:\n    bool invert;\n    float gain;\n    float gamma;\n    float4 dark_col;\n    float4 light_col;\n    float4x4 transform;\n\n  local:\n    float4x4 transform_inv;\n    float z;\n\n  void define()\n  \{\n    defineParam(invert, \"Invert\", false);\n    defineParam(gain, \"Gain\", 1.0f);\n    defineParam(gamma, \"Gamma\", 1.0f);\n    defineParam(dark_col, \"Dark Colour\", float4(0.0f, 0.0f, 0.0f, 1.0f));\n    defineParam(light_col, \"Light Colour\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n  \}\n\n  void init()\n  \{\n    transform_inv = transform.invert();\n    z = transform_inv\[2]\[3];\n  \}\n\n  static float3 multVectMatrix(float3 vec, float4x4 M)\n  \{\n    float3 out = float3(\n      vec.x * M\[0]\[0] + vec.y * M\[0]\[1] + vec.z * M\[0]\[2] + M\[0]\[3],\n      vec.x * M\[1]\[0] + vec.y * M\[1]\[1] + vec.z * M\[1]\[2] + M\[1]\[3],\n      vec.x * M\[2]\[0] + vec.y * M\[2]\[1] + vec.z * M\[2]\[2] + M\[2]\[3]\n    );\n\n    return out;\n  \}\n\n  float4 getColour(float a) \{\n    return dark_col * (1 - a) + light_col * a;\n  \}\n\n  void process(int2 pos)\n  \{\n\n    //Declare some values for later use\n    int lastRandom, numberFeaturePoints;\n    float distance = 6666.0f;\n    float3 randomDiff, featurePoint;\n    int cubeX, cubeY, cubeZ;\n\n    float3 input = float3(float(pos.x), float(pos.y), z);\n    input = multVectMatrix(input, transform_inv);\n\n    // Determine which cube the evaluation point is in\n    int evalCubeX = floor(input.x);\n    int evalCubeY = floor(input.y);\n    int evalCubeZ = floor(input.z);\n\n    for (int i = -1; i < 2; ++i)\n    \{\n      for (int j = -1; j < 2; ++j)\n      \{\n        for (int k = -1; k < 2; ++k)\n        \{\n            cubeX = evalCubeX + i;\n            cubeY = evalCubeY + j;\n            cubeZ = evalCubeZ + k;\n\n            // Generate a reproducible random number generator for the cube\n            lastRandom = lcgRandom(hash(cubeX, cubeY, cubeZ));\n            // Determine how many feature points are in the cube\n            numberFeaturePoints = probLookup(lastRandom);\n            // Check each feature point\n            for (uint l = 0; l < numberFeaturePoints; ++l)\n            \{\n              lastRandom = lcgRandom(lastRandom);\n              randomDiff.x = float(lastRandom) / rand_modulus;\n\n              lastRandom = lcgRandom(lastRandom);\n              randomDiff.y = float(lastRandom) / rand_modulus;\n\n              lastRandom = lcgRandom(lastRandom);\n              randomDiff.z = float(lastRandom) / rand_modulus;\n\n              featurePoint = float3(randomDiff.x + float(cubeX), randomDiff.y + float(cubeY), randomDiff.z + float(cubeZ));\n\n              distance = min(distance, dot(input - featurePoint, input - featurePoint));\n            \}\n        \}\n      \}\n    \}\n\n    distance = sqrt(distance);\n    if (invert)\n      distance = 1.0f - distance;\n    distance = pow(distance * gain, gamma);\n    dst() = getColour(clamp(distance, 0.0f, 1.0f));\n\n  \}\n\n\};"
+   useGPUIfAvailable {{parent.use_gpu}}
+   rebuild ""
+   Worley_Invert {{"parent.noise_type == 1"}}
+   Worley_Gain {{parent.gain}}
+   Worley_Gamma {{parent.gamma}}
+   "Worley_Dark Colour" {{parent.colour0.r} {parent.colour0.g} {parent.colour0.b} {parent.colour0.a}}
+   "Worley_Light Colour" {{parent.colour1.r} {parent.colour1.g} {parent.colour1.b} {parent.colour1.a}}
+   Worley_transform {
+       {{parent.NoiseTransform.world_matrix.0} {parent.NoiseTransform.world_matrix.1} {parent.NoiseTransform.world_matrix.2} {parent.NoiseTransform.world_matrix.3}}
+       {{parent.NoiseTransform.world_matrix.4} {parent.NoiseTransform.world_matrix.5} {parent.NoiseTransform.world_matrix.6} {parent.NoiseTransform.world_matrix.7}}
+       {{parent.NoiseTransform.world_matrix.8} {parent.NoiseTransform.world_matrix.9} {parent.NoiseTransform.world_matrix.10} {parent.NoiseTransform.world_matrix.11}}
+       {{parent.NoiseTransform.world_matrix.12} {parent.NoiseTransform.world_matrix.13} {parent.NoiseTransform.world_matrix.14} {parent.NoiseTransform.world_matrix.15}}
+     }
+   rebuild_finalise ""
+   name WorleyNoise
+   selected true
+   xpos 177
+   ypos -53
+  }
+  Output {
+   name Output1
+   xpos 177
+   ypos 48
+  }
+ end_group
+set N6c4b680 [stack 0]
+ Invert {
+  name Invert4
+  xpos -618
+  ypos 341
+ }
+ FilterErode {
+  channels rgba
+  size -37
+  filter gaussian
+  name FilterErode1
+  xpos -618
+  ypos 384
+ }
+ Invert {
+  name Invert6
+  xpos -618
+  ypos 410
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name Copy1
+  xpos -618
+  ypos 492
+ }
+ IDistort {
+  uv forward
+  uv_scale 54.5
+  name IDistort1
+  xpos -618
+  ypos 583
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  mix {{parent.Control1.High_Freq_Caustics}}
+  name Merge10
+  xpos -618
+  ypos 673
+ }
+ Grade {
+  channels rgba
+  white 1.86
+  gamma 0.475
+  name Grade10
+  xpos -618
+  ypos 815
+ }
+ Dot {
+  name Dot12
+  xpos -584
+  ypos 968
+ }
+set N5cb65800 [stack 0]
+ Dot {
+  name Dot13
+  xpos -1491
+  ypos 968
+ }
+push $N55d63400
+ PostageStamp {
+  name Input4
+  xpos -1409
+  ypos 758
+  hide_input true
+ }
+ Noise {
+  type turbulence
+  size {{Control1.soft_caustics_size-(Control1.soft_caustics_size/5)} {Control1.soft_caustics_size-(Control1.soft_caustics_size/5)}}
+  zoffset {{(frame/25)*Control1.Caustics_Zspeed}}
+  octaves 2
+  lacunarity 1.07
+  gamma 4
+  translate {-2000 -2000}
+  center {2048 1512}
+  name Noise5
+  xpos -1409
+  ypos 784
+ }
+ Grade {
+  name Grade11
+  xpos -1409
+  ypos 843
+ }
+ Invert {
+  name Invert5
+  xpos -1409
+  ypos 888
+ }
+ Dot {
+  name Dot14
+  xpos -1375
+  ypos 1013
+ }
+set N5cb64000 [stack 0]
+ Grade {
+  channels rgba
+  white 1.9
+  gamma 0.2
+  name Grade12
+  xpos -1649
+  ypos 1009
+ }
+ FilterErode {
+  size 4
+  name FilterErode2
+  xpos -1649
+  ypos 1054
+ }
+ Blur {
+  size 10
+  name Blur7
+  xpos -1649
+  ypos 1101
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  mix 0.7
+  name Merge8
+  xpos -1525
+  ypos 1107
+ }
+set N5cba9000 [stack 0]
+ Merge2 {
+  inputs 2
+  operation multiply
+  mix {{parent.Control1.waves}}
+  name Merge36
+  xpos -1525
+  ypos 1698
+ }
+ Dot {
+  name Dot7
+  xpos -1491
+  ypos 2075
+ }
+push $N583eb400
+ Dot {
+  name Dot15
+  xpos -728
+  ypos 1652
+ }
+ Dot {
+  name Dot16
+  xpos -728
+  ypos 1695
+ }
+push $N55d63400
+ PostageStamp {
+  name Input5
+  xpos -835
+  ypos 1026
+  hide_input true
+ }
+ Noise {
+  type turbulence
+  size 200
+  zoffset {{(frame/100)*Control1.Caustics_Zspeed}}
+  octaves 2
+  lacunarity 1.035
+  gain 1
+  gamma 1
+  translate {-2000 -2000}
+  center {2048 1512}
+  name Noise6
+  xpos -835
+  ypos 1052
+ }
+push $N5cba9000
+push $N5cb64000
+ Merge2 {
+  inputs 2
+  operation plus
+  mix 0.225
+  name Merge11
+  xpos -1409
+  ypos 1107
+ }
+set N5cbe1400 [stack 0]
+ Multiply {
+  name Multiply1
+  xpos -1046
+  ypos 1101
+ }
+set N5cbe1000 [stack 0]
+ Dot {
+  name Dot1
+  xpos -1012
+  ypos 1214
+ }
+push $N5cb65800
+ Keymix {
+  inputs 3
+  name Keymix8
+  xpos -835
+  ypos 1204
+ }
+push $N5cb65800
+push $N5cbe1000
+ Merge2 {
+  inputs 2
+  operation multiply
+  mix {{Control1.Soft_Hard_Mix}}
+  name Merge12
+  xpos -618
+  ypos 1107
+ }
+ Merge2 {
+  inputs 2
+  operation copy
+  mix {{parent.Control1.Details_Variance}}
+  name Merge9
+  xpos -618
+  ypos 1210
+ }
+set N5cbe0000 [stack 0]
+ Merge2 {
+  inputs 2
+  operation multiply
+  mix {{parent.Control1.waves}}
+  name Merge13
+  xpos -618
+  ypos 1691
+ }
+ Multiply {
+  value 2.52
+  mix {{parent.Merge13.mix}}
+  name Multiply2
+  xpos -618
+  ypos 1799
+ }
+ Grade {
+  channels rgba
+  whitepoint 1.22
+  mix {{parent.Merge13.mix}}
+  name Grade13
+  xpos -618
+  ypos 1882
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  mix {{SD_Over}}
+  name SD
+  xpos -618
+  ypos 2071
+ }
+ Dot {
+  name Dot3
+  xpos -584
+  ypos 2508
+ }
+set N5cc1ac00 [stack 0]
+ Shuffle {
+  alpha blue
+  name Shuffle2
+  xpos -618
+  ypos 2893
+ }
+set N5cc1a800 [stack 0]
+ Dot {
+  name Dot29
+  xpos -406
+  ypos 2897
+ }
+set N5cc1a400 [stack 0]
+ Dot {
+  name Dot30
+  xpos -296
+  ypos 2897
+ }
+ Transform {
+  translate {{parent.Control1.Chroma_abb} {parent.Control1.Chroma_abb}}
+  center {2048 1512}
+  name Transform4
+  xpos -330
+  ypos 2987
+ }
+push $N5cc1a400
+ ShuffleCopy {
+  inputs 2
+  red alpha2
+  green alpha
+  blue alpha2
+  alpha black
+  name ShuffleCopy4
+  xpos -440
+  ypos 2987
+ }
+push $N5cc1a800
+ Switch {
+  inputs 2
+  which {{Control1.Chroma_abb==0?0:1}}
+  name Switch1
+  xpos -618
+  ypos 2987
+ }
+ Group {
+  inputs 2
+  name Bloom3
+  tile_color 0x7fff
+  note_font_color 0xff0000ff
+  xpos -618
+  ypos 3369
+  addUserKnob {20 User l Hard_Glow}
+  addUserKnob {41 size l Amount T Main.size}
+  addUserKnob {41 mix T Screen.mix}
+  addUserKnob {26 ""}
+  addUserKnob {41 range T Keyer1.range}
+ }
+  Input {
+   inputs 0
+   name Mask
+   xpos 680
+   ypos -82
+   number 1
+  }
+  Invert {
+   name Invert1
+   xpos 683
+   ypos 59
+  }
+  Dot {
+   name Dot4
+   xpos 714
+   ypos 532
+  }
+  Input {
+   inputs 0
+   name Source
+   xpos -388
+   ypos -206
+  }
+  Dot {
+   name Dot3
+   xpos -354
+   ypos -41
+  }
+set N5cc58400 [stack 0]
+  Dot {
+   name Dot2
+   xpos 316
+   ypos -41
+  }
+set N5cc58000 [stack 0]
+  Dot {
+   name Dot5
+   xpos 520
+   ypos -41
+  }
+push $N5cc58400
+  Dot {
+   name Dot1
+   xpos -584
+   ypos -41
+  }
+  Keyer {
+   operation "luminance key"
+   range {0 1.497241231 223.0444686 223.0444686}
+   name Keyer1
+   xpos -618
+   ypos 17
+  }
+  Blur {
+   size 2.3
+   name Blur1
+   xpos -618
+   ypos 63
+  }
+push $N5cc58400
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy1
+   xpos -388
+   ypos 63
+  }
+  Premult {
+   name Premult1
+   xpos -388
+   ypos 101
+  }
+  Dot {
+   name Dot7
+   xpos -354
+   ypos 130
+  }
+set N5cc8a400 [stack 0]
+  Blur {
+   size 0.4
+   mix 0
+   name Main
+   xpos 190
+   ypos 321
+  }
+push $N5cc8a400
+  Blur {
+   size {{parent.Main.size*512}}
+   mix 0.995
+   name Blur16
+   xpos 27
+   ypos 319
+  }
+push $N5cc8a400
+  Blur {
+   size {{parent.Main.size*268}}
+   name Blur15
+   xpos -83
+   ypos 319
+  }
+push $N5cc8a400
+  Blur {
+   size {{parent.Main.size*4}}
+   mix 0.825
+   name Blur9
+   xpos -852
+   ypos 345
+  }
+push $N5cc8a400
+  Blur {
+   size {{parent.Main.size*8}}
+   name Blur10
+   xpos -743
+   ypos 319
+  }
+push $N5cc8a400
+  Blur {
+   size {{parent.Main.size*16}}
+   name Blur11
+   xpos -633
+   ypos 319
+  }
+push $N5cc8a400
+  Blur {
+   size {{parent.Main.size*32}}
+   name Blur12
+   xpos -523
+   ypos 319
+  }
+push $N5cc8a400
+  Blur {
+   size {{parent.Main.size*64}}
+   name Blur13
+   xpos -413
+   ypos 319
+  }
+push 0
+push $N5cc8a400
+  Blur {
+   size {{parent.Main.size*128}}
+   name Blur14
+   xpos -193
+   ypos 319
+  }
+push $N5cc8a400
+  Blur {
+   size {{parent.Main.size*2}}
+   name Blur7
+   xpos -303
+   ypos 319
+  }
+  Merge2 {
+   inputs 10+1
+   operation screen
+   name Merge11
+   xpos -397
+   ypos 550
+  }
+push $N5cc58000
+  Merge2 {
+   inputs 2
+   operation screen
+   mix 0.382
+   name Screen
+   xpos 282
+   ypos 528
+  }
+  Keymix {
+   inputs 3
+   name Keymix1
+   xpos 486
+   ypos 522
+  }
+  Output {
+   name Output1
+   xpos 486
+   ypos 691
+  }
+ end_group
+push $N5cc1ac00
+ Constant {
+  inputs 0
+  channels rgb
+  color {0.243741 0.602185 0.894074 0}
+  color_panelDropped true
+  name Constant3
+  xpos 100
+  ypos 2481
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  mix 0.885
+  name Merge15
+  xpos -104
+  ypos 2504
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge16
+  xpos -104
+  ypos 3369
+ }
+ Crop {
+  box {0 0 {input.width} {input.height}}
+  name Crop1
+  xpos -104
+  ypos 3413
+ }
+ Output {
+  name Output1
+  xpos -104
+  ypos 3524
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant6
+  xpos -2172
+  ypos 756
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "   variance   "
+  note_font_size 33
+  xpos -882
+  ypos 1262
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote2
+  label "   variance   "
+  note_font_size 33
+  xpos -2501
+  ypos 1125
+ }
+push $N5cbe1400
+ Dot {
+  name Dot6
+  label Soft
+  note_font_size 22
+  xpos -198
+  ypos 1618
+ }
+push $N5cbe0000
+ Dot {
+  name Dot4
+  label Soft_Hard
+  note_font_size 22
+  xpos -180
+  ypos 1527
+ }
+push $N5cb65800
+ Dot {
+  name Dot5
+  label Hard
+  note_font_size 22
+  xpos -103
+  ypos 1405
+ }
+push $N55d9a400
+ Grade {
+  white 2.8
+  gamma 0.2
+  name Grade2
+  xpos -2713
+  ypos 555
+ }
+push $N5832e000
+ Merge2 {
+  inputs 2
+  operation screen
+  mix 0.9
+  name Merge1
+  xpos -2544
+  ypos 605
+ }
+push $N6c4b680
+ Viewer {
+  frame_range 1-100
+  name Viewer1
+  xpos -432
+  ypos 3561
+ }
+push $N55d63400
+ PostageStamp {
+  name Input7
+  xpos -1144
+  ypos 300
+ }
+ NoOp {
+  name Control1
+  selected true
+  xpos -1144
+  ypos 358
+  addUserKnob {20 User}
+  addUserKnob {6 usegpu l "use gpu" t "Faster calculations, may not work on all computers. Disable to switch to CPU." +STARTLINE}
+  addUserKnob {7 Soft_Details}
+  addUserKnob {26 Caustics}
+  addUserKnob {7 soft_caustics_size R 0 400}
+  soft_caustics_size 100
+  addUserKnob {7 Caustics_Size l hard_caustics_Size R 0 100}
+  Caustics_Size 50
+  addUserKnob {7 Caustics_Zspeed R 0 5}
+  Caustics_Zspeed 1
+  addUserKnob {7 Soft_Hard_Mix}
+  Soft_Hard_Mix 0.75
+  addUserKnob {7 High_Freq_Caustics}
+  High_Freq_Caustics 0.1
+  addUserKnob {7 Details_Variance}
+  Details_Variance 0.3
+  addUserKnob {26 waves_1 l waves}
+  addUserKnob {7 waves}
+  waves 0.14
+  addUserKnob {7 waveSize R 0 100}
+  waveSize 15
+  addUserKnob {7 waveSpeed R 0 10}
+  waveSpeed 6.25
+  addUserKnob {7 waves_Variance}
+  waves_Variance 0.5
+  addUserKnob {14 waves_Variance_Size R 0 100}
+  waves_Variance_Size 1.6
+  addUserKnob {7 waves_Variance_Speed R 0 10}
+  waves_Variance_Speed 8
+  addUserKnob {7 waveVariationSize R 1 3}
+  waveVariationSize 1.64
+  addUserKnob {7 Chroma_abb R 0 100}
+ }
+end_group

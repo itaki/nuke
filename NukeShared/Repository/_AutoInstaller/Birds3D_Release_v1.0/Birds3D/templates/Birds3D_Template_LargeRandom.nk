@@ -1,0 +1,275 @@
+Camera2 {
+ inputs 0
+ translate {0 4 50}
+ rotate {5 0 0}
+ focal 30
+ name Camera1
+ selected true
+ xpos 3728
+ ypos 1807
+}
+add_layer {shadow shadow.a}
+DirectLight {
+ inputs 0
+ color {1 0.9157259464 0.8098522425}
+ intensity 12
+ translate {0 10 0}
+ rotate {-90 0 0}
+ cast_shadows true
+ shadow_mode "full alpha"
+ depthmap_slope_bias 0.01
+ shadow_mask shadow.a
+ name DirectLight1
+ selected true
+ xpos 3555
+ ypos 1318
+}
+FillMat {
+ inputs 0
+ name FillMat1
+ selected true
+ xpos 3657
+ ypos 1247
+}
+Card2 {
+ image_aspect false
+ rotate {-90 0 0}
+ uniform_scale 100
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card7
+ selected true
+ xpos 3657
+ ypos 1271
+}
+push $cut_paste_input
+Cube {
+ inputs 0
+ display wireframe
+ render_mode wireframe
+ rows 1
+ columns 1
+ cube {-1.649999976 0.6750000119 -3.029999971 1.559999943 1.809999943 0.5}
+ uniform_scale 10
+ name Cube2
+ selected true
+ xpos 3838
+ ypos 149
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ start_frame -1
+ emit_from bbox
+ rate {{(frame==start_frame)*100}}
+ rate_variation 1
+ lifetime 1000
+ velocity 0
+ velocity_variation 0.3
+ size 1
+ size_variation 0.3
+ mass_variation 0.5
+ spread 0.15
+ start_frame_animation random
+ max_clip_length 250
+ name ParticleEmitter1
+ selected true
+ xpos 3838
+ ypos 469
+}
+ParticleTurbulence {
+ strength {0.055 {strength.x/15} {strength.x}}
+ scale {0.1 {scale.x} {scale.x}}
+ name ParticleTurbulence1
+ selected true
+ xpos 3838
+ ypos 574
+}
+ParticleDirectionalForce {
+ strength {0 0.0018 0}
+ region half-space
+ region_invert true
+ translate {0 10 0}
+ name ParticleDirectionalForce5
+ label "Prevent low\nflyers"
+ selected true
+ xpos 3838
+ ypos 610
+}
+ParticleDrag {
+ drag 0.08
+ name ParticleDrag1
+ selected true
+ xpos 3838
+ ypos 750
+}
+ParticleSpeedLimit {
+ minimum 0.2
+ maximum 0.8
+ name ParticleSpeedLimit1
+ selected true
+ xpos 3838
+ ypos 853
+}
+ParticleMotionAlign {
+ name ParticleMotionAlign1
+ selected true
+ xpos 3838
+ ypos 889
+}
+ParticleExpression {
+ frameexpr "frame > 250? 1:frame"
+ name ParticleExpression1
+ label "Loop anim"
+ selected true
+ xpos 3838
+ ypos 925
+}
+Scene {
+ inputs 3
+ name Scene1
+ selected true
+ xpos 3848
+ ypos 1318
+}
+push 0
+RayRender {
+ inputs 3
+ stochastic_samples 1
+ uniform_distribution true
+ shutteroffset centred
+ output_shader_vectors true
+ AOV_Motion motion
+ name RayRender2
+ selected true
+ xpos 3838
+ ypos 1828
+}
+Dot {
+ name Dot32
+ selected true
+ xpos 3872
+ ypos 2120
+}
+set Ne40e800 [stack 0]
+VectorBlur2 {
+ channels rgba
+ uv forward
+ blur_type uniform
+ scale 1
+ motion_falloff 0.35
+ normalize false
+ name VectorBlur1
+ selected true
+ xpos 3838
+ ypos 2224
+}
+Remove {
+ operation keep
+ channels rgba
+ name Remove1
+ selected true
+ xpos 3838
+ ypos 2262
+}
+Blur {
+ channels rgba
+ size 1
+ name Blur2
+ selected true
+ xpos 3838
+ ypos 2286
+}
+Dot {
+ name Dot9
+ selected true
+ xpos 3872
+ ypos 2425
+}
+push $Ne40e800
+Dot {
+ name Dot33
+ selected true
+ xpos 4072
+ ypos 2120
+}
+Shuffle {
+ in shadow
+ name Shuffle1
+ label "\[value in]"
+ selected true
+ xpos 4038
+ ypos 2224
+}
+Remove {
+ operation keep
+ channels rgba
+ name Remove2
+ selected true
+ xpos 4038
+ ypos 2262
+}
+Ramp {
+ inputs 0
+ p0 {900 750}
+ p1 {900 40}
+ name Ramp1
+ selected true
+ xpos 4490
+ ypos 1930
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0.2350142598 0.2880505621 0.3764045238 0}
+ name Constant2
+ selected true
+ xpos 4270
+ ypos 1907
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0.1344186664 0.2864827514 0.5732194185 0}
+ name Constant1
+ selected true
+ xpos 4380
+ ypos 1785
+}
+Keymix {
+ inputs 3
+ name Keymix1
+ selected true
+ xpos 4380
+ ypos 1924
+}
+Grade {
+ inputs 1+1
+ multiply 0.2
+ name Grade3
+ selected true
+ xpos 4380
+ ypos 2262
+}
+Merge2 {
+ inputs 2
+ name Merge1
+ selected true
+ xpos 4380
+ ypos 2421
+}
+Dot {
+ name Dot1
+ selected true
+ xpos 4414
+ ypos 2536
+}

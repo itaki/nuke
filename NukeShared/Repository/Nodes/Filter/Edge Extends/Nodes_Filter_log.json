@@ -1,0 +1,22 @@
+{
+    "header": {
+        "project_name": "Nodes",
+        "shot": "Filter",
+        "directory": "/Users/itakidev/nuke/NukeShared/Repository/Nodes/Filter/Edge Extends",
+        "number_of_sessions": 0,
+        "shot_clock": "0:00:02",
+        "work_time": "0:00:02",
+        "idle_time": "0:00:00"
+    },
+    "sessions": [
+        {
+            "filename": "KF_EdgeExtend.nk",
+            "artist": "itakidev",
+            "start_time": "2023-03-23T23:49:34.131423",
+            "notes": [],
+            "idle_time": 0,
+            "end_time": "2023-03-23T23:49:37.015200",
+            "status": "saved"
+        }
+    ]
+}

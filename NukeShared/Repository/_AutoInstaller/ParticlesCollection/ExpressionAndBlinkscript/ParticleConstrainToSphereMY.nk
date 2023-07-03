@@ -1,0 +1,130 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                    <page id="DAG.2"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/Desktop/ParticleConstrainToSphereMY.nk
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Group {
+ inputs 0
+ name ParticleConstrainToSphereMY
+ xpos 13959
+ ypos -1522
+ addUserKnob {20 ConstrainSphere}
+ addUserKnob {41 display T ParticleBlinkScript1.display}
+ addUserKnob {41 selectable -STARTLINE T ParticleBlinkScript1.selectable}
+ addUserKnob {41 render_mode l render T ParticleBlinkScript1.render_mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 geoTranslate l translate T ParticleBlinkScript1.paTranslate}
+ addUserKnob {41 geoRotate l rotate T ParticleBlinkScript1.paRotate}
+ addUserKnob {41 geoScale l scale T ParticleBlinkScript1.paScale}
+ addUserKnob {41 geoUniformScale l "uniform scale" T ParticleBlinkScript1.paUniformScale}
+ addUserKnob {41 geoRadius l radius T ParticleBlinkScript1.paRadius}
+ addUserKnob {41 showGeometry l "Show Geometry" T ParticleBlinkScript1.showGeometry}
+ addUserKnob {20 Conditions}
+ addUserKnob {41 probability T ParticleBlinkScript1.probability}
+ addUserKnob {41 min_age l "min age" T ParticleBlinkScript1.min_age}
+ addUserKnob {41 max_age l "max age" T ParticleBlinkScript1.max_age}
+ addUserKnob {41 seed l "random seed" T ParticleBlinkScript1.seed}
+ addUserKnob {41 channels T ParticleBlinkScript1.channels}
+ addUserKnob {20 Region}
+ addUserKnob {41 region T ParticleBlinkScript1.region}
+ addUserKnob {41 region_invert l "invert region" -STARTLINE T ParticleBlinkScript1.region_invert}
+ addUserKnob {41 file_menu l @FolderIcon T ParticleBlinkScript1.file_menu}
+ addUserKnob {41 snap_menu l @AxisIcon -STARTLINE T ParticleBlinkScript1.snap_menu}
+ addUserKnob {41 xform_order l "transform order" T ParticleBlinkScript1.xform_order}
+ addUserKnob {41 rot_order l "rotation order" T ParticleBlinkScript1.rot_order}
+ addUserKnob {41 translate T ParticleBlinkScript1.translate}
+ addUserKnob {41 rotate T ParticleBlinkScript1.rotate}
+ addUserKnob {41 scaling l scale T ParticleBlinkScript1.scaling}
+ addUserKnob {41 uniform_scale l "uniform scale" T ParticleBlinkScript1.uniform_scale}
+ addUserKnob {41 skew T ParticleBlinkScript1.skew}
+ addUserKnob {41 pivot T ParticleBlinkScript1.pivot}
+}
+ Input {
+  inputs 0
+  name particles
+  xpos 829
+  ypos 1
+ }
+ ParticleBlinkScript {
+  kernelSourceGroup 1
+  kernelSource "kernel ParticleSphereKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eReadWrite> p_conditions;\n  Image<eReadWrite> p_position;\n  Image<eReadWrite> p_velocity;\n\n  param:\n    float3 _translate;  // Origin of the sphere\n    float3 _rotate;      // Rotation of the sphere\n    float3 _scale;         // Scale of the sphere\n    float _uniformScale;  // Uniform scale of the sphere\n    float _radius;       // Radius of the sphere\n\n  local:\n    float4x4 _matrix;\n    float4x4 _imatrix;\n\n  void define() \{\n    defineParam(_translate, \"paTranslate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_rotate, \"paRotate\", float3(0.0f, 0.0f, 0.0f));\n    defineParam(_scale, \"paScale\", float3(1.0f, 1.0f, 1.0f));\n    defineParam(_uniformScale, \"paUniformScale\", 1.0f);\n    defineParam(_radius, \"paRadius\", 1.0f);\n  \}\n\n  float3 transform(float3 p ) \{\n    float4 q = _matrix*float4(p.x, p.y, p.z, 1.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 itransform(float3 p ) \{\n    float4 q = _imatrix*float4(p.x, p.y, p.z, 1.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 vtransform(float3 p ) \{\n    float4 q = _matrix*float4(p.x, p.y, p.z, 0.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float3 ivtransform(float3 p ) \{\n    float4 q = _imatrix*float4(p.x, p.y, p.z, 0.0f);\n    return float3(q.x, q.y, q.z);\n  \}\n\n  float toRadians(float a) \{\n    return a*3.141592653587f/180.0f;\n  \}\n\n  void init() \{\n    _matrix.setIdentity();\n    _matrix.scale(float4(_uniformScale*_scale.x, _uniformScale*_scale.y, _uniformScale*_scale.z, 1.0f));\n    _matrix.rotateY(toRadians(_rotate.y));\n    _matrix.rotateX(toRadians(_rotate.x));\n    _matrix.rotateZ(toRadians(_rotate.z));\n    _matrix.translate(float4(_translate.x, _translate.y, _translate.z, 1.0f));\n    _imatrix = _matrix.invert();\n  \}\n\n  void process() \{\n    if (!p_conditions().x)\n      return;\n    float3  d = itransform(p_position());\n    float r = length(d);\n     if ( r != 0.0f ) \{\n      d /= r;\n      // Move the particle to the sphere surface\n      p_position() = transform(d*_radius);\n\n      // Change the velocity to follow the surface\n      float3 v = ivtransform(p_velocity());\n      float lv = length(v);\n      if ( lv != 0.0f ) \{\n        v /= lv;\n        p_velocity() = vtransform(cross(cross(d, v), d)*lv);\n      \}\n    \}\n  \}\n\};\n"
+  encodedSource "\n"
+  name ParticleBlinkScript1
+  selected true
+  xpos 829
+  ypos 41
+  addUserKnob {20 User l Force}
+  addUserKnob {41 paTranslate T Geometry.translate}
+  addUserKnob {41 paRotate T Geometry.rotate}
+  addUserKnob {41 paScale T Geometry.scaling}
+  addUserKnob {41 paUniformScale l "uniform scale" T Geometry.uniform_scale}
+  addUserKnob {7 paRadius l radius}
+  paRadius 1
+  addUserKnob {6 showGeometry l "Show Geometry" +STARTLINE}
+  showGeometry true
+ }
+ Output {
+  name Output1
+  xpos 829
+  ypos 141
+ }
+ Sphere {
+  inputs 0
+  display {{parent.showGeometry}}
+  rows 10
+  columns 20
+  radius {{parent.geoRadius}}
+  translate {-860 1280 -1454.999878}
+  uniform_scale 5000
+  name Geometry
+  xpos 695
+  ypos 45
+ }
+ MergeGeo {
+  name MergeGeo1
+  xpos 695
+  ypos 69
+ }
+end_group

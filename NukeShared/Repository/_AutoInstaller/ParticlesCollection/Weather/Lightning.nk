@@ -1,0 +1,2345 @@
+#! C:/Program Files/Nuke13.0v1/nuke-13.0.1.dll -nx
+version 13.0 v1
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/OneDrive/VFX/PARTICLES/WEATHER/Lightning.nk
+ frame 1044
+ first_frame 1001
+ last_frame 1070
+ format "2048 1080 0 0 2048 1080 1 2K_DCP"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement OCIO
+ OCIO_config aces_1.1
+ defaultViewerLUT "OCIO LUTs"
+ workingSpaceLUT "ACES - ACEScg"
+ monitorLut "ACES/sRGB D60 sim."
+ monitorOutLUT "sRGB (ACES)"
+ int8Lut "ACES - ACEScc"
+ int16Lut "Utility - Raw"
+ logLut "ACES - ACEScc"
+ floatLut "ACES - ACEScg"
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x71c67100
+ label "Random Geo"
+ note_font_size 42
+ xpos 312
+ ypos 1154
+ bdwidth 274
+ bdheight 236
+}
+Group {
+ inputs 0
+ name WaveExpression4
+ help "Allows the easy creation of a variety of Waveform Expressions for use in manipulating knob values."
+ xpos -785
+ ypos -438
+ addUserKnob {20 main l Main}
+ addUserKnob {26 unnamed_1 l "" +STARTLINE T " "}
+ addUserKnob {68 type l "Wave Type" t "Controls what type of wave to generate." M {Random Noise Sine Triangle Square Sawtooth/Sawtooth "Sawtooth/Sawtooth (Parabolic)" "Sawtooth/Sawtooth (Parabolic reversed)" "Sawtooth/Sawtooth (Exponential)" Bounce "" "" "" "" ""}}
+ type Noise
+ addUserKnob {7 minVal l "Min Value" t "Minimum value you want the wave to reach." R 0 10}
+ minVal -10
+ addUserKnob {7 maxVal l "Max Value" t "Maximum value you want the wave to reach." -STARTLINE R 0 10}
+ maxVal 10
+ addUserKnob {7 waveLength l WaveLength t "Controls the frequency or cycle length of the wave. The number of frames before the pattern repeats." R 0 50}
+ waveLength 0.3
+ addUserKnob {7 offset l Offset t "Offsets the frame value to allow control of values at a certain frame" R 0 10}
+ addUserKnob {26 unnamed l "" +STARTLINE T " "}
+ addUserKnob {22 expButton l "Generate Expression" T "node = nuke.thisNode()\ntype = node.knob('type').getValue()\nexpText = node.knob('expText')\nexpFormula = node.knob('formula')\nexpResult = node.knob('expResult')\ndef setExp():\n    if type == 0: #Random\n        exp = 'random((frame+%s)/%s) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 1: #Noise\n        exp = '(noise((frame+%s)/%s)+1)/2 * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 2: #Sine\n        exp = '(sin(2*pi*(frame+%s)/%s)+1)/2 * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 3: #Triangle\n        exp = '(asin(sin(2*pi*(frame+%s)/%s))/pi+0.5) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 4: #Square\n        exp = 'int(sin(2*pi*(frame+%s)/%s)+1) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 5: #Sawtooth\n        exp = '((frame+%s) %% %s)/%s * (%s-%s) + %s' %(offset,waveLength,waveLength,maxVal,minVal,minVal)\n    if type == 6: #Sawtooth(Parabolic)\n        exp = 'sin((4.93480220054468*(frame+%s)/(pi*%s)) %% (pi/2)) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 7: #Sawtooth(Parabolic Reversed)\n        exp = 'cos((4.93480220054468*(frame+%s)/(pi*%s)) %% (pi/2)) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 8: #Sawtooth (Exponential)\n        exp = '(exp(2*pi*((frame+%s) %% %s)/%s)-1)/exp(2*pi) * (%s-%s) + %s' %(offset,waveLength,waveLength,maxVal,minVal,minVal)\n    if type == 9: #Bounce\n        exp = 'abs(sin(pi*(frame + %s)/%s))* (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    return exp\n\nwaveLength = 'waveLength'\noffset = 'offset'\nmaxVal = 'maxVal'\nminVal = 'minVal'\nexpResult.setExpression(setExp())\nexpFormula.setValue(setExp())\n\nwaveLength = node.knob('waveLength').getValue()\noffset = node.knob('offset').getValue()\nmaxVal = node.knob('maxVal').getValue()\nminVal = node.knob('minVal').getValue()\nexpText.setValue(setExp())" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 expResult l Result t "The calculated result of the wave at the given frame. Link to this value if you want to control the expression from this node."}
+ expResult {{"(noise((frame+offset)/waveLength)+1)/2 * (maxVal-minVal) + minVal"}}
+ addUserKnob {26 unnamed_2 l "" +STARTLINE T " "}
+ addUserKnob {1 expText l Expression t "The wave in expression form. For copying to another knobs expression value."}
+ expText "(noise((frame+0.0)/5.0)+1)/2 * (10.0--10.0) + -10.0"
+ addUserKnob {26 unnamed_3 l "" +STARTLINE T " "}
+ addUserKnob {1 formula l Formula t "The formula that generates the wave."}
+ formula "(noise((frame+offset)/waveLength)+1)/2 * (maxVal-minVal) + minVal"
+}
+end_group
+Group {
+ inputs 0
+ name WaveExpression1
+ help "Allows the easy creation of a variety of Waveform Expressions for use in manipulating knob values."
+ xpos -801
+ ypos 225
+ addUserKnob {20 main l Main}
+ addUserKnob {26 unnamed_1 l "" +STARTLINE T " "}
+ addUserKnob {68 type l "Wave Type" t "Controls what type of wave to generate." M {Random Noise Sine Triangle Square Sawtooth/Sawtooth "Sawtooth/Sawtooth (Parabolic)" "Sawtooth/Sawtooth (Parabolic reversed)" "Sawtooth/Sawtooth (Exponential)" Bounce "" "" "" "" ""}}
+ type Noise
+ addUserKnob {7 minVal l "Min Value" t "Minimum value you want the wave to reach." R 0 10}
+ minVal -10
+ addUserKnob {7 maxVal l "Max Value" t "Maximum value you want the wave to reach." -STARTLINE R 0 10}
+ maxVal 10
+ addUserKnob {7 waveLength l WaveLength t "Controls the frequency or cycle length of the wave. The number of frames before the pattern repeats." R 0 50}
+ waveLength 0.3
+ addUserKnob {7 offset l Offset t "Offsets the frame value to allow control of values at a certain frame" R 0 10}
+ offset 180
+ addUserKnob {26 unnamed l "" +STARTLINE T " "}
+ addUserKnob {22 expButton l "Generate Expression" T "node = nuke.thisNode()\ntype = node.knob('type').getValue()\nexpText = node.knob('expText')\nexpFormula = node.knob('formula')\nexpResult = node.knob('expResult')\ndef setExp():\n    if type == 0: #Random\n        exp = 'random((frame+%s)/%s) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 1: #Noise\n        exp = '(noise((frame+%s)/%s)+1)/2 * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 2: #Sine\n        exp = '(sin(2*pi*(frame+%s)/%s)+1)/2 * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 3: #Triangle\n        exp = '(asin(sin(2*pi*(frame+%s)/%s))/pi+0.5) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 4: #Square\n        exp = 'int(sin(2*pi*(frame+%s)/%s)+1) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 5: #Sawtooth\n        exp = '((frame+%s) %% %s)/%s * (%s-%s) + %s' %(offset,waveLength,waveLength,maxVal,minVal,minVal)\n    if type == 6: #Sawtooth(Parabolic)\n        exp = 'sin((4.93480220054468*(frame+%s)/(pi*%s)) %% (pi/2)) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 7: #Sawtooth(Parabolic Reversed)\n        exp = 'cos((4.93480220054468*(frame+%s)/(pi*%s)) %% (pi/2)) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 8: #Sawtooth (Exponential)\n        exp = '(exp(2*pi*((frame+%s) %% %s)/%s)-1)/exp(2*pi) * (%s-%s) + %s' %(offset,waveLength,waveLength,maxVal,minVal,minVal)\n    if type == 9: #Bounce\n        exp = 'abs(sin(pi*(frame + %s)/%s))* (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    return exp\n\nwaveLength = 'waveLength'\noffset = 'offset'\nmaxVal = 'maxVal'\nminVal = 'minVal'\nexpResult.setExpression(setExp())\nexpFormula.setValue(setExp())\n\nwaveLength = node.knob('waveLength').getValue()\noffset = node.knob('offset').getValue()\nmaxVal = node.knob('maxVal').getValue()\nminVal = node.knob('minVal').getValue()\nexpText.setValue(setExp())" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 expResult l Result t "The calculated result of the wave at the given frame. Link to this value if you want to control the expression from this node."}
+ expResult {{"(noise((frame+offset)/waveLength)+1)/2 * (maxVal-minVal) + minVal"}}
+ addUserKnob {26 unnamed_2 l "" +STARTLINE T " "}
+ addUserKnob {1 expText l Expression t "The wave in expression form. For copying to another knobs expression value."}
+ expText "(noise((frame+180.0)/0.3)+1)/2 * (10.0--10.0) + -10.0"
+ addUserKnob {26 unnamed_3 l "" +STARTLINE T " "}
+ addUserKnob {1 formula l Formula t "The formula that generates the wave."}
+ formula "(noise((frame+offset)/waveLength)+1)/2 * (maxVal-minVal) + minVal"
+}
+end_group
+Group {
+ inputs 0
+ name WaveExpression5
+ help "Allows the easy creation of a variety of Waveform Expressions for use in manipulating knob values."
+ xpos 1275
+ ypos -325
+ addUserKnob {20 main l Main}
+ addUserKnob {26 unnamed_1 l "" +STARTLINE T " "}
+ addUserKnob {68 type l "Wave Type" t "Controls what type of wave to generate." M {Random Noise Sine Triangle Square Sawtooth/Sawtooth "Sawtooth/Sawtooth (Parabolic)" "Sawtooth/Sawtooth (Parabolic reversed)" "Sawtooth/Sawtooth (Exponential)" Bounce "" "" "" "" ""}}
+ type Noise
+ addUserKnob {7 minVal l "Min Value" t "Minimum value you want the wave to reach." R 0 10}
+ minVal -10
+ addUserKnob {7 maxVal l "Max Value" t "Maximum value you want the wave to reach." -STARTLINE R 0 10}
+ maxVal 10
+ addUserKnob {7 waveLength l WaveLength t "Controls the frequency or cycle length of the wave. The number of frames before the pattern repeats." R 0 50}
+ waveLength 0.3
+ addUserKnob {7 offset l Offset t "Offsets the frame value to allow control of values at a certain frame" R 0 10}
+ addUserKnob {26 unnamed l "" +STARTLINE T " "}
+ addUserKnob {22 expButton l "Generate Expression" T "node = nuke.thisNode()\ntype = node.knob('type').getValue()\nexpText = node.knob('expText')\nexpFormula = node.knob('formula')\nexpResult = node.knob('expResult')\ndef setExp():\n    if type == 0: #Random\n        exp = 'random((frame+%s)/%s) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 1: #Noise\n        exp = '(noise((frame+%s)/%s)+1)/2 * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 2: #Sine\n        exp = '(sin(2*pi*(frame+%s)/%s)+1)/2 * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 3: #Triangle\n        exp = '(asin(sin(2*pi*(frame+%s)/%s))/pi+0.5) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 4: #Square\n        exp = 'int(sin(2*pi*(frame+%s)/%s)+1) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 5: #Sawtooth\n        exp = '((frame+%s) %% %s)/%s * (%s-%s) + %s' %(offset,waveLength,waveLength,maxVal,minVal,minVal)\n    if type == 6: #Sawtooth(Parabolic)\n        exp = 'sin((4.93480220054468*(frame+%s)/(pi*%s)) %% (pi/2)) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 7: #Sawtooth(Parabolic Reversed)\n        exp = 'cos((4.93480220054468*(frame+%s)/(pi*%s)) %% (pi/2)) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 8: #Sawtooth (Exponential)\n        exp = '(exp(2*pi*((frame+%s) %% %s)/%s)-1)/exp(2*pi) * (%s-%s) + %s' %(offset,waveLength,waveLength,maxVal,minVal,minVal)\n    if type == 9: #Bounce\n        exp = 'abs(sin(pi*(frame + %s)/%s))* (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    return exp\n\nwaveLength = 'waveLength'\noffset = 'offset'\nmaxVal = 'maxVal'\nminVal = 'minVal'\nexpResult.setExpression(setExp())\nexpFormula.setValue(setExp())\n\nwaveLength = node.knob('waveLength').getValue()\noffset = node.knob('offset').getValue()\nmaxVal = node.knob('maxVal').getValue()\nminVal = node.knob('minVal').getValue()\nexpText.setValue(setExp())" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 expResult l Result t "The calculated result of the wave at the given frame. Link to this value if you want to control the expression from this node."}
+ expResult {{"(noise((frame+offset)/waveLength)+1)/2 * (maxVal-minVal) + minVal"}}
+ addUserKnob {26 unnamed_2 l "" +STARTLINE T " "}
+ addUserKnob {1 expText l Expression t "The wave in expression form. For copying to another knobs expression value."}
+ expText "(noise((frame+0.0)/5.0)+1)/2 * (10.0--10.0) + -10.0"
+ addUserKnob {26 unnamed_3 l "" +STARTLINE T " "}
+ addUserKnob {1 formula l Formula t "The formula that generates the wave."}
+ formula "(noise((frame+offset)/waveLength)+1)/2 * (maxVal-minVal) + minVal"
+}
+end_group
+Group {
+ inputs 0
+ name WaveExpression6
+ help "Allows the easy creation of a variety of Waveform Expressions for use in manipulating knob values."
+ xpos 1259
+ ypos 361
+ addUserKnob {20 main l Main}
+ addUserKnob {26 unnamed_1 l "" +STARTLINE T " "}
+ addUserKnob {68 type l "Wave Type" t "Controls what type of wave to generate." M {Random Noise Sine Triangle Square Sawtooth/Sawtooth "Sawtooth/Sawtooth (Parabolic)" "Sawtooth/Sawtooth (Parabolic reversed)" "Sawtooth/Sawtooth (Exponential)" Bounce "" "" "" "" ""}}
+ type Noise
+ addUserKnob {7 minVal l "Min Value" t "Minimum value you want the wave to reach." R 0 10}
+ minVal -10
+ addUserKnob {7 maxVal l "Max Value" t "Maximum value you want the wave to reach." -STARTLINE R 0 10}
+ maxVal 10
+ addUserKnob {7 waveLength l WaveLength t "Controls the frequency or cycle length of the wave. The number of frames before the pattern repeats." R 0 50}
+ waveLength 0.3
+ addUserKnob {7 offset l Offset t "Offsets the frame value to allow control of values at a certain frame" R 0 10}
+ offset 180
+ addUserKnob {26 unnamed l "" +STARTLINE T " "}
+ addUserKnob {22 expButton l "Generate Expression" T "node = nuke.thisNode()\ntype = node.knob('type').getValue()\nexpText = node.knob('expText')\nexpFormula = node.knob('formula')\nexpResult = node.knob('expResult')\ndef setExp():\n    if type == 0: #Random\n        exp = 'random((frame+%s)/%s) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 1: #Noise\n        exp = '(noise((frame+%s)/%s)+1)/2 * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 2: #Sine\n        exp = '(sin(2*pi*(frame+%s)/%s)+1)/2 * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 3: #Triangle\n        exp = '(asin(sin(2*pi*(frame+%s)/%s))/pi+0.5) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 4: #Square\n        exp = 'int(sin(2*pi*(frame+%s)/%s)+1) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 5: #Sawtooth\n        exp = '((frame+%s) %% %s)/%s * (%s-%s) + %s' %(offset,waveLength,waveLength,maxVal,minVal,minVal)\n    if type == 6: #Sawtooth(Parabolic)\n        exp = 'sin((4.93480220054468*(frame+%s)/(pi*%s)) %% (pi/2)) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 7: #Sawtooth(Parabolic Reversed)\n        exp = 'cos((4.93480220054468*(frame+%s)/(pi*%s)) %% (pi/2)) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 8: #Sawtooth (Exponential)\n        exp = '(exp(2*pi*((frame+%s) %% %s)/%s)-1)/exp(2*pi) * (%s-%s) + %s' %(offset,waveLength,waveLength,maxVal,minVal,minVal)\n    if type == 9: #Bounce\n        exp = 'abs(sin(pi*(frame + %s)/%s))* (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    return exp\n\nwaveLength = 'waveLength'\noffset = 'offset'\nmaxVal = 'maxVal'\nminVal = 'minVal'\nexpResult.setExpression(setExp())\nexpFormula.setValue(setExp())\n\nwaveLength = node.knob('waveLength').getValue()\noffset = node.knob('offset').getValue()\nmaxVal = node.knob('maxVal').getValue()\nminVal = node.knob('minVal').getValue()\nexpText.setValue(setExp())" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 expResult l Result t "The calculated result of the wave at the given frame. Link to this value if you want to control the expression from this node."}
+ expResult {{"(noise((frame+offset)/waveLength)+1)/2 * (maxVal-minVal) + minVal"}}
+ addUserKnob {26 unnamed_2 l "" +STARTLINE T " "}
+ addUserKnob {1 expText l Expression t "The wave in expression form. For copying to another knobs expression value."}
+ expText "(noise((frame+180.0)/0.3)+1)/2 * (10.0--10.0) + -10.0"
+ addUserKnob {26 unnamed_3 l "" +STARTLINE T " "}
+ addUserKnob {1 formula l Formula t "The formula that generates the wave."}
+ formula "(noise((frame+offset)/waveLength)+1)/2 * (maxVal-minVal) + minVal"
+}
+end_group
+Group {
+ inputs 0
+ name WaveExpression3
+ help "Allows the easy creation of a variety of Waveform Expressions for use in manipulating knob values."
+ xpos -132
+ ypos -921
+ addUserKnob {20 main l Main}
+ addUserKnob {26 unnamed_1 l "" +STARTLINE T " "}
+ addUserKnob {68 type l "Wave Type" t "Controls what type of wave to generate." M {Random Noise Sine Triangle Square Sawtooth/Sawtooth "Sawtooth/Sawtooth (Parabolic)" "Sawtooth/Sawtooth (Parabolic reversed)" "Sawtooth/Sawtooth (Exponential)" Bounce "" "" "" "" ""}}
+ type Noise
+ addUserKnob {7 minVal l "Min Value" t "Minimum value you want the wave to reach." R 0 10}
+ minVal -10
+ addUserKnob {7 maxVal l "Max Value" t "Maximum value you want the wave to reach." -STARTLINE R 0 10}
+ maxVal 10
+ addUserKnob {7 waveLength l WaveLength t "Controls the frequency or cycle length of the wave. The number of frames before the pattern repeats." R 0 50}
+ waveLength 0.3
+ addUserKnob {7 offset l Offset t "Offsets the frame value to allow control of values at a certain frame" R 0 10}
+ addUserKnob {26 unnamed l "" +STARTLINE T " "}
+ addUserKnob {22 expButton l "Generate Expression" T "node = nuke.thisNode()\ntype = node.knob('type').getValue()\nexpText = node.knob('expText')\nexpFormula = node.knob('formula')\nexpResult = node.knob('expResult')\ndef setExp():\n    if type == 0: #Random\n        exp = 'random((frame+%s)/%s) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 1: #Noise\n        exp = '(noise((frame+%s)/%s)+1)/2 * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 2: #Sine\n        exp = '(sin(2*pi*(frame+%s)/%s)+1)/2 * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 3: #Triangle\n        exp = '(asin(sin(2*pi*(frame+%s)/%s))/pi+0.5) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 4: #Square\n        exp = 'int(sin(2*pi*(frame+%s)/%s)+1) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 5: #Sawtooth\n        exp = '((frame+%s) %% %s)/%s * (%s-%s) + %s' %(offset,waveLength,waveLength,maxVal,minVal,minVal)\n    if type == 6: #Sawtooth(Parabolic)\n        exp = 'sin((4.93480220054468*(frame+%s)/(pi*%s)) %% (pi/2)) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 7: #Sawtooth(Parabolic Reversed)\n        exp = 'cos((4.93480220054468*(frame+%s)/(pi*%s)) %% (pi/2)) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 8: #Sawtooth (Exponential)\n        exp = '(exp(2*pi*((frame+%s) %% %s)/%s)-1)/exp(2*pi) * (%s-%s) + %s' %(offset,waveLength,waveLength,maxVal,minVal,minVal)\n    if type == 9: #Bounce\n        exp = 'abs(sin(pi*(frame + %s)/%s))* (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    return exp\n\nwaveLength = 'waveLength'\noffset = 'offset'\nmaxVal = 'maxVal'\nminVal = 'minVal'\nexpResult.setExpression(setExp())\nexpFormula.setValue(setExp())\n\nwaveLength = node.knob('waveLength').getValue()\noffset = node.knob('offset').getValue()\nmaxVal = node.knob('maxVal').getValue()\nminVal = node.knob('minVal').getValue()\nexpText.setValue(setExp())" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 expResult l Result t "The calculated result of the wave at the given frame. Link to this value if you want to control the expression from this node."}
+ expResult {{"(noise((frame+offset)/waveLength)+1)/2 * (maxVal-minVal) + minVal"}}
+ addUserKnob {26 unnamed_2 l "" +STARTLINE T " "}
+ addUserKnob {1 expText l Expression t "The wave in expression form. For copying to another knobs expression value."}
+ expText "(noise((frame+0.0)/5.0)+1)/2 * (10.0--10.0) + -10.0"
+ addUserKnob {26 unnamed_3 l "" +STARTLINE T " "}
+ addUserKnob {1 formula l Formula t "The formula that generates the wave."}
+ formula "(noise((frame+offset)/waveLength)+1)/2 * (maxVal-minVal) + minVal"
+}
+end_group
+Axis2 {
+ inputs 0
+ rotate {0 {curve x1001 0 x1070 45} 0}
+ pivot {43.29999924 0 8.399999619}
+ name Axis1
+ xpos -575
+ ypos 1455
+}
+Camera2 {
+ translate {-77.10818481 9.669985771 20.75260925}
+ rotate {-0.07751080764 -82.20084855 -0.008693085747}
+ name Camera2
+ xpos -575
+ ypos 1539
+}
+set Nf76fcc00 [stack 0]
+Dot {
+ name Dot7
+ xpos -122
+ ypos 1563
+}
+set Nf76fc800 [stack 0]
+Axis2 {
+ inputs 0
+ translate {60.07483292 0.7381430268 25.55742645}
+ rotate {-0.7728474839 12.44363051 0.2445051642}
+ uniform_scale 5
+ name Axis3
+ xpos 351
+ ypos 1247
+}
+Group {
+ name RandomGeo
+ xpos 341
+ ypos 1341
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 387
+  ypos 555
+ }
+ Sphere {
+  inputs 0
+  translate {0.5 4.139999866 -4.050000191}
+  name Sphere1
+  selected true
+  xpos 725
+  ypos 347
+ }
+ Sphere {
+  inputs 0
+  translate {6.159999847 0 0}
+  name Sphere3
+  xpos 462
+  ypos 192
+ }
+ Cube {
+  inputs 0
+  rotate {45 45 0}
+  name Cube1
+  xpos 369
+  ypos 199
+ }
+ Sphere {
+  inputs 0
+  translate {-6.099999905 0 0}
+  name Sphere2
+  xpos 279
+  ypos 198
+ }
+ Scene {
+  inputs 3
+  name Scene1
+  xpos 379
+  ypos 233
+ }
+set Nf7696400 [stack 0]
+push $Nf7696400
+ TransformGeo {
+  translate {0 5.079999924 0}
+  name TransformGeo1
+  xpos 369
+  ypos 333
+ }
+ Scene {
+  inputs 2
+  name Scene2
+  xpos 479
+  ypos 313
+ }
+set Nf7695c00 [stack 0]
+ TransformGeo {
+  translate {0 0 -7.900000095}
+  name TransformGeo2
+  xpos 575
+  ypos 334
+ }
+push $Nf7695c00
+ Scene {
+  inputs 2
+  name Scene3
+  xpos 585
+  ypos 372
+ }
+set Nf7695400 [stack 0]
+push $Nf7695400
+ Scene {
+  inputs 3
+  name Scene4
+  xpos 585
+  ypos 444
+ }
+ TransformGeo {
+  inputs 2
+  name TransformGeo3
+  xpos 575
+  ypos 555
+ }
+ Output {
+  name Output1
+  xpos 575
+  ypos 627
+ }
+end_group
+set Nf76f8800 [stack 0]
+push 0
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ ztest_enabled false
+ samples 10
+ motion_vectors_type distance
+ name ScanlineRender3
+ xpos -156
+ ypos 1697
+}
+Dot {
+ name Dot5
+ xpos -122
+ ypos 1792
+}
+push $Nf76fcc00
+Dot {
+ name Dot6
+ xpos -551
+ ypos 1719
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "32 32 0 0 32 32 1 Particles"
+ name Constant1
+ xpos -1115
+ ypos 98
+}
+Roto {
+ premultiply rgba
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x41800000 x41800000}
+    {a}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x42980000
+        {xc0939210 0}
+        {x417e6666 x40ed5547}
+        {x40939210 0}
+        {0 xc08f980b}
+        {x41c20000 x4178aace}
+        {0 x408f980b}
+        {x40939210 0}
+        {x417e6666 x41bd5567}
+        {xc0939210 0}
+        {0 x408f980b}
+        {x40f1999a x4178aace}
+        {0 xc08f980b}}}     idem}
+     {t
+      {{x42980000 x41840000}}
+      {{x42980000 x41856666}}     0
+      {{x42980000 0}}
+      {{x42980000 0}}     0 0 0
+      {{x42980000 0}}
+      {{x42980000 1}}
+      {{x42980000 1}}     1
+      {{x42980000 0}}}
+     {a spx x41800000 spy x41800000 sb 1 nv x40000000 ltn x42980000 ltm x42980000 tt x40c00000 view2 x40000000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 tt 5 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ lifetime_start 76
+ lifetime_end 76
+ motionblur_shutter_offset_type centred
+ source_translate_round false
+ source_black_outside true
+ name Roto1
+ xpos -1115
+ ypos 175
+}
+ColorCorrect {
+ gain {0.8779264092 0.09879996628 2.599999905 1}
+ name ColorCorrect2
+ xpos -1115
+ ypos 201
+}
+Blur {
+ size 6
+ name Blur2
+ label "\[value size]"
+ xpos -1115
+ ypos 263
+}
+BlendMat {
+ surfaceblend modulate
+ name BlendMat2
+ xpos -1115
+ ypos 315
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "32 32 0 0 32 32 1 Particles"
+ name Constant4
+ xpos -1098
+ ypos -522
+}
+Roto {
+ premultiply rgba
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x41800000 x41800000}
+    {a}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x42980000
+        {xc0939210 0}
+        {x417e6666 x40ed5547}
+        {x40939210 0}
+        {0 xc08f980b}
+        {x41c20000 x4178aace}
+        {0 x408f980b}
+        {x40939210 0}
+        {x417e6666 x41bd5567}
+        {xc0939210 0}
+        {0 x408f980b}
+        {x40f1999a x4178aace}
+        {0 xc08f980b}}}     idem}
+     {t
+      {{x42980000 x41840000}}
+      {{x42980000 x41856666}}     0
+      {{x42980000 0}}
+      {{x42980000 0}}     0 0 0
+      {{x42980000 0}}
+      {{x42980000 1}}
+      {{x42980000 1}}     1
+      {{x42980000 0}}}
+     {a spx x41800000 spy x41800000 sb 1 nv x40000000 ltn x42980000 ltm x42980000 tt x40c00000 view2 x40000000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 tt 5 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ lifetime_start 76
+ lifetime_end 76
+ motionblur_shutter_offset_type centred
+ source_translate_round false
+ source_black_outside true
+ name Roto2
+ xpos -1098
+ ypos -445
+}
+ColorCorrect {
+ gain {0.2880000174 0.3773461878 2.400000095 1}
+ name ColorCorrect1
+ xpos -1098
+ ypos -399
+}
+Blur {
+ size 6
+ name Blur1
+ label "\[value size]"
+ xpos -1098
+ ypos -375
+}
+BlendMat {
+ surfaceblend modulate
+ name BlendMat1
+ xpos -1098
+ ypos -323
+}
+Axis2 {
+ inputs 0
+ translate {43.79999924 27.90595245 9.670757294}
+ rotate {-0.8106000739 0 0}
+ name Axis2
+ xpos -161
+ ypos -1378
+}
+Card2 {
+ inputs 0
+ rows 1
+ columns 1
+ uniform_scale 0.1
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card2
+ xpos -324
+ ypos -1417
+}
+TransformGeo {
+ inputs 2
+ name TransformGeo2
+ xpos -324
+ ypos -1358
+}
+push 0
+ParticleEmitter {
+ inputs 2
+ start_frame 1001
+ rate {{curve x1001 3 0}}
+ lifetime 100
+ velocity 0
+ size 0
+ color {1 0 0.06100654602 1}
+ name ParticleEmitter2
+ xpos -324
+ ypos -1189
+}
+ParticleWind {
+ to {0 -2 0}
+ airResistance true
+ seed 4
+ channels {a}
+ name ParticleWind3
+ xpos -324
+ ypos -1125
+}
+ParticleTurbulence {
+ strength {1 {strength.x} {strength.x}}
+ scale {0.6 {scale.x} {scale.x}}
+ offset {15 116 1}
+ seed 5
+ channels {a}
+ name ParticleTurbulence5
+ xpos -324
+ ypos -1034
+}
+ParticleWind {
+ to {{parent.WaveExpression3.expResult} 0 {to.x}}
+ airResistance true
+ channels {a}
+ name ParticleWind6
+ xpos -324
+ ypos -929
+}
+Dot {
+ name Dot1
+ xpos -290
+ ypos -621
+}
+set Nb26ce800 [stack 0]
+ParticleSpawn {
+ emit_channels {c}
+ rate 0.2
+ rate_variation 2
+ lifetime 100
+ velocity 0
+ size 0
+ mass 1
+ transfer_velocity 0
+ conserve_mass false
+ conserve_momentum false
+ velocity_direction false
+ color {0.4001329541 1 0.2308164835 1}
+ name ParticleSpawn4
+ xpos -665
+ ypos -631
+}
+ParticleWind {
+ to {0 -2 0}
+ seed 4
+ channels {c}
+ name ParticleWind7
+ xpos -665
+ ypos -584
+}
+ParticleTurbulence {
+ strength {1 {strength.x} {strength.x}}
+ scale {0.6 {scale.x} {scale.x}}
+ offset {2 13 20}
+ seed 100
+ channels {c}
+ name ParticleTurbulence4
+ xpos -665
+ ypos -511
+}
+ParticleWind {
+ to {{parent.WaveExpression4.expResult} 0 {to.x}}
+ airResistance true
+ channels {c}
+ name ParticleWind9
+ xpos -665
+ ypos -435
+}
+ParticleSpawn {
+ inputs 2
+ rate 100
+ lifetime 16
+ lifetime_variation 5
+ velocity 0
+ mass 1
+ transfer_velocity 0
+ conserve_mass false
+ conserve_momentum false
+ channels {c}
+ name ParticleSpawn8
+ xpos -665
+ ypos -329
+}
+ParticleExpression {
+ sizeexpr size*(1-(age/life/100))
+ channels {b}
+ name ParticleExpression2
+ xpos -665
+ ypos -241
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "32 32 0 0 32 32 1 Particles"
+ name Constant6
+ xpos 88
+ ypos -691
+}
+Roto {
+ premultiply rgba
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x41800000 x41800000}
+    {a}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px x42980000
+        {xc0939210 0}
+        {x417e6666 x40ed5547}
+        {x40939210 0}
+        {0 xc08f980b}
+        {x41c20000 x4178aace}
+        {0 x408f980b}
+        {x40939210 0}
+        {x417e6666 x41bd5567}
+        {xc0939210 0}
+        {0 x408f980b}
+        {x40f1999a x4178aace}
+        {0 xc08f980b}}}     idem}
+     {t
+      {{x42980000 x41840000}}
+      {{x42980000 x41856666}}     0
+      {{x42980000 0}}
+      {{x42980000 0}}     0 0 0
+      {{x42980000 0}}
+      {{x42980000 1}}
+      {{x42980000 1}}     1
+      {{x42980000 0}}}
+     {a spx x41800000 spy x41800000 sb 1 nv x40000000 ltn x42980000 ltm x42980000 tt x40c00000 view2 x40000000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 tt 5 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ lifetime_start 76
+ lifetime_end 76
+ motionblur_shutter_offset_type centred
+ source_translate_round false
+ source_black_outside true
+ name Roto4
+ xpos 88
+ ypos -614
+}
+ColorCorrect {
+ gain {0.1991811991 0.8664236069 1 1}
+ name ColorCorrect4
+ xpos 88
+ ypos -570
+}
+Blur {
+ size 6
+ name Blur3
+ label "\[value size]"
+ xpos 88
+ ypos -544
+}
+BlendMat {
+ surfaceblend modulate
+ name BlendMat4
+ xpos 88
+ ypos -477
+}
+push $Nb26ce800
+ParticleSpawn {
+ inputs 2
+ rate 100
+ lifetime 16
+ lifetime_variation 5
+ velocity 0
+ size 0.13
+ mass 1
+ transfer_velocity 0
+ conserve_mass false
+ conserve_momentum false
+ name ParticleSpawn6
+ xpos -325
+ ypos -483
+}
+ParticleExpression {
+ sizeexpr size*(1-(age/life/300))
+ channels {b}
+ name ParticleExpression4
+ xpos -325
+ ypos -397
+}
+Dot {
+ name Dot11
+ label "main lightning"
+ note_font_size 20
+ xpos -291
+ ypos -336
+}
+ParticleMerge {
+ inputs 2
+ name ParticleMerge2
+ xpos -325
+ ypos -235
+}
+Dot {
+ name Dot2
+ xpos -291
+ ypos -8
+}
+set Nb2a06400 [stack 0]
+ParticleSpawn {
+ emit_channels {f}
+ rate 0.09
+ rate_variation 2
+ lifetime 100
+ velocity 0
+ size 0
+ mass 1
+ transfer_velocity 0
+ conserve_mass false
+ conserve_momentum false
+ velocity_direction false
+ color {1 0.8875933886 0.2308164835 1}
+ channels {c}
+ name ParticleSpawn1
+ xpos -681
+ ypos -18
+}
+ParticleWind {
+ to {0 -2 0}
+ seed 4
+ channels {f}
+ name ParticleWind4
+ xpos -681
+ ypos 41
+}
+ParticleTurbulence {
+ strength {1 {strength.x} {strength.x}}
+ scale {0.1 {scale.x} {scale.x}}
+ offset {31 300 0}
+ min_age 0.006
+ max_age 0.02
+ seed 5
+ channels {f}
+ name ParticleTurbulence1
+ xpos -681
+ ypos 94
+}
+ParticleTurbulence {
+ strength {0.8 {strength.x} {strength.x}}
+ scale {0.6 {scale.x} {scale.x}}
+ offset {0 25 0}
+ seed 10
+ channels {f}
+ name ParticleTurbulence2
+ xpos -681
+ ypos 160
+}
+ParticleWind {
+ to {{parent.WaveExpression1.expResult} 0 {to.x}}
+ airResistance true
+ channels {f}
+ name ParticleWind2
+ xpos -681
+ ypos 226
+}
+ParticleSpawn {
+ inputs 2
+ rate 100
+ lifetime 16
+ lifetime_variation 5
+ velocity 0
+ mass 1
+ transfer_velocity 0
+ conserve_mass false
+ conserve_momentum false
+ channels {f}
+ name ParticleSpawn2
+ xpos -681
+ ypos 309
+}
+ParticleExpression {
+ sizeexpr size*(1-(age/life/50))
+ channels {b}
+ name ParticleExpression1
+ xpos -681
+ ypos 405
+}
+push $Nb2a06400
+ParticleMerge {
+ inputs 2
+ name ParticleMerge1
+ xpos -325
+ ypos 411
+}
+ParticleSettings {
+ steps_per_frame 16
+ name ParticleSettings2
+ xpos -325
+ ypos 526
+}
+ParticleCache {
+ name ParticleCache1
+ xpos -325
+ ypos 686
+}
+Dot {
+ name Dot12
+ label lightning
+ note_font_size 100
+ xpos -291
+ ypos 926
+}
+push 0
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ ztest_enabled false
+ samples 10
+ motion_vectors_type distance
+ name ScanlineRender2
+ xpos -325
+ ypos 1715
+}
+DeepHoldout2 {
+ inputs 2
+ name DeepHoldout1
+ xpos -325
+ ypos 1788
+}
+Grade {
+ white 2
+ name Grade4
+ xpos -325
+ ypos 1862
+}
+Group {
+ name ExponentialGlow1
+ tile_color 0xccccccff
+ note_font "Bitstream Vera Sans"
+ xpos -325
+ ypos 1934
+ mapsize {0.15 0.15}
+ addUserKnob {20 User l "Exponential Glow"}
+ addUserKnob {41 falloff l Falloff T ExpoGlow.falloff}
+ addUserKnob {7 intensity l Intensity R 0 10}
+ intensity 3
+ addUserKnob {41 blur_amount l Size T ExpoGlow.blur_amount}
+ addUserKnob {7 Tolerance}
+ addUserKnob {41 add_source l "Add Source" T ExpoGlow.add_source}
+ addUserKnob {26 info l INVISIBLE +INVISIBLE T "Ported from Shake by brad-f"}
+ addUserKnob {6 CroptoFormat l "Crop to Format" -STARTLINE}
+ CroptoFormat true
+ addUserKnob {7 AspectRatio R 0.1 2}
+ AspectRatio 1
+ addUserKnob {41 scale l Pre-Overscan T Overscan.scale}
+ addUserKnob {6 FadeAroundFormat l "Fade Around Format" +STARTLINE}
+ FadeAroundFormat true
+ addUserKnob {7 FadeSize l "Fade Size" R 0 3}
+ FadeSize 0.5
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -490
+  ypos -732
+ }
+ Reformat {
+  type scale
+  resize none
+  name Format
+  xpos -490
+  ypos -683
+ }
+ Dot {
+  name Dot1
+  label OverscanR
+  xpos -456
+  ypos -648
+ }
+ Reformat {
+  type scale
+  scale 1.1
+  resize none
+  name Overscan
+  xpos -490
+  ypos -622
+ }
+ NoOp {
+  name ExpoGlow
+  selected true
+  xpos -490
+  ypos -588
+  addUserKnob {20 User}
+  addUserKnob {7 falloff l Falloff R 0 2}
+  falloff 0.83
+  addUserKnob {7 intensity l Intensity R 0 5}
+  intensity {{parent.intensity*10}}
+  addUserKnob {7 blur_amount l Size R 0 5}
+  blur_amount 1
+  addUserKnob {6 add_source l "Add Source" +STARTLINE}
+  add_source true
+  addUserKnob {6 add_bbox l "Add original bbox" +STARTLINE}
+ }
+set Nb2974c00 [stack 0]
+ Dot {
+  name Dot12
+  xpos -371
+  ypos -584
+ }
+set Nb2974800 [stack 0]
+ Saturation {
+  saturation 0
+  mode Maximum
+  name SaturationT
+  xpos -316
+  ypos -588
+  disable true
+ }
+ Keyer {
+  operation "luminance key"
+  range {{parent.Tolerance} 1 1 1}
+  name KeyerT
+  xpos -316
+  ypos -562
+ }
+push $Nb2974800
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name CopyT
+  xpos -316
+  ypos -524
+ }
+ Premult {
+  name PremultT
+  xpos -316
+  ypos -486
+ }
+ Grade {
+  channels rgba
+  gamma 2
+  black_clamp false
+  name GradeT
+  xpos -316
+  ypos -460
+  disable true
+ }
+ Keyer {
+  operation "luminance key"
+  name Keyer1
+  xpos -316
+  ypos -427
+ }
+ Premult {
+  name Premult1
+  xpos -316
+  ypos -389
+ }
+ Remove {
+  operation keep
+  channels rgb
+  name Remove1
+  xpos -316
+  ypos -363
+ }
+ Rectangle {
+  invert true
+  area {{width} {height} 0 0}
+  softness {{parent.FadeSize*100}}
+  color 0
+  name RectangleFade
+  xpos -316
+  ypos -337
+  disable {{1-parent.FadeAroundFormat}}
+ }
+ Grade {
+  white {{ExpoGlow.intensity/100}}
+  name Grade1
+  xpos -316
+  ypos -296
+ }
+ Dot {
+  name Dot3
+  xpos -146
+  ypos -292
+ }
+set Nb2915800 [stack 0]
+ Dot {
+  name Dot2
+  xpos -36
+  ypos -292
+ }
+set Nb2915400 [stack 0]
+ Dot {
+  name Dot4
+  xpos 84
+  ypos -292
+ }
+set Nb2915000 [stack 0]
+ Dot {
+  name Dot5
+  xpos 194
+  ypos -292
+ }
+set Nb2914c00 [stack 0]
+ Dot {
+  name Dot6
+  xpos 304
+  ypos -292
+ }
+set Nb2914800 [stack 0]
+ Dot {
+  name Dot7
+  xpos 414
+  ypos -292
+ }
+set Nb2914400 [stack 0]
+ Dot {
+  name Dot8
+  xpos 524
+  ypos -292
+ }
+set Nb28bfc00 [stack 0]
+ Dot {
+  name Dot9
+  xpos 631
+  ypos -292
+ }
+set Nb28bf800 [stack 0]
+ Dot {
+  name Dot10
+  xpos 741
+  ypos -292
+ }
+ Group {
+  name Blur8
+  xpos 707
+  ypos 235
+  addUserKnob {20 percentBlur l "Percent Blur"}
+  addUserKnob {41 xpercent l xPercent T Blur120.xpercent}
+  addUserKnob {41 ypercent l yPercent T Blur120.ypercent}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 514
+   ypos -229
+  }
+  Blur {
+   channels rgb
+   size {{width/3*(xpercent/100) x1001 6.826666667e+10} {height/3*(ypercent/100)*(1/AspectRatio)}}
+   crop false
+   name Blur120
+   xpos 514
+   ypos -176
+   addUserKnob {20 User}
+   addUserKnob {7 xpercent l xPercent R 0 100}
+   xpercent {{Blur7.xpercent*2}}
+   addUserKnob {7 ypercent l yPercent R 0 100}
+   ypercent {{xpercent/format.pixel_aspect/height*width}}
+  }
+  Output {
+   name Output1
+   xpos 514
+   ypos -89
+  }
+ end_group
+ Multiply {
+  channels rgb
+  value {{Multiply8.value/ExpoGlow.falloff i}}
+  name Multiply9
+  xpos -289
+  ypos 235
+ }
+push $Nb28bf800
+ Group {
+  name Blur7
+  xpos 597
+  ypos 193
+  addUserKnob {20 percentBlur l "Percent Blur"}
+  addUserKnob {41 xpercent l xPercent T Blur120.xpercent}
+  addUserKnob {41 ypercent l yPercent T Blur120.ypercent}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 514
+   ypos -229
+  }
+  Blur {
+   channels rgb
+   size {{width/3*(xpercent/100) x1001 6.826666667e+10} {height/3*(ypercent/100)*(1/AspectRatio)}}
+   crop false
+   name Blur120
+   selected true
+   xpos 514
+   ypos -164
+   addUserKnob {20 User}
+   addUserKnob {7 xpercent l xPercent R 0 100}
+   xpercent {{Blur6.xpercent*2}}
+   addUserKnob {7 ypercent l yPercent R 0 100}
+   ypercent {{xpercent/format.pixel_aspect/height*width}}
+  }
+  Output {
+   name Output1
+   xpos 514
+   ypos -89
+  }
+ end_group
+ Multiply {
+  channels rgb
+  value {{Multiply7.value/ExpoGlow.falloff i}}
+  name Multiply8
+  xpos -289
+  ypos 194
+ }
+push $Nb28bfc00
+ Group {
+  name Blur6
+  xpos 490
+  ypos 155
+  addUserKnob {20 percentBlur l "Percent Blur"}
+  addUserKnob {41 xpercent l xPercent T Blur120.xpercent}
+  addUserKnob {41 ypercent l yPercent T Blur120.ypercent}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 514
+   ypos -229
+  }
+  Blur {
+   channels rgb
+   size {{width/3*(xpercent/100) x1001 6.826666667e+10} {height/3*(ypercent/100)*(1/AspectRatio)}}
+   crop false
+   name Blur120
+   selected true
+   xpos 514
+   ypos -185
+   addUserKnob {20 User}
+   addUserKnob {7 xpercent l xPercent R 0 100}
+   xpercent {{Blur5.xpercent*2}}
+   addUserKnob {7 ypercent l yPercent R 0 100}
+   ypercent {{xpercent/format.pixel_aspect/height*width}}
+  }
+  Output {
+   name Output1
+   xpos 514
+   ypos -89
+  }
+ end_group
+ Multiply {
+  channels rgb
+  value {{Multiply6.value/ExpoGlow.falloff i}}
+  name Multiply7
+  xpos -290
+  ypos 155
+ }
+push $Nb2914400
+ Group {
+  name Blur5
+  xpos 380
+  ypos 116
+  addUserKnob {20 percentBlur l "Percent Blur"}
+  addUserKnob {41 xpercent l xPercent T Blur120.xpercent}
+  addUserKnob {41 ypercent l yPercent T Blur120.ypercent}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 514
+   ypos -229
+  }
+  Blur {
+   channels rgb
+   size {{width/3*(xpercent/100) x1001 6.826666667e+10} {height/3*(ypercent/100)*(1/AspectRatio)}}
+   crop false
+   name Blur120
+   selected true
+   xpos 514
+   ypos -172
+   addUserKnob {20 User}
+   addUserKnob {7 xpercent l xPercent R 0 100}
+   xpercent {{Blur4.xpercent*2}}
+   addUserKnob {7 ypercent l yPercent R 0 100}
+   ypercent {{xpercent/format.pixel_aspect/height*width}}
+  }
+  Output {
+   name Output1
+   xpos 514
+   ypos -89
+  }
+ end_group
+ Multiply {
+  channels rgb
+  value {{Multiply5.value/ExpoGlow.falloff i}}
+  name Multiply6
+  xpos -290
+  ypos 116
+ }
+push $Nb2914800
+ Group {
+  name Blur4
+  xpos 270
+  ypos 77
+  addUserKnob {20 percentBlur l "Percent Blur"}
+  addUserKnob {41 xpercent l xPercent T Blur120.xpercent}
+  addUserKnob {41 ypercent l yPercent T Blur120.ypercent}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 514
+   ypos -229
+  }
+  Blur {
+   channels rgb
+   size {{width/3*(xpercent/100) x1001 6.826666667e+10} {height/3*(ypercent/100)*(1/AspectRatio)}}
+   crop false
+   name Blur120
+   selected true
+   xpos 514
+   ypos -179
+   addUserKnob {20 User}
+   addUserKnob {7 xpercent l xPercent R 0 100}
+   xpercent {{Blur3.xpercent*2}}
+   addUserKnob {7 ypercent l yPercent R 0 100}
+   ypercent {{xpercent/format.pixel_aspect/height*width}}
+  }
+  Output {
+   name Output1
+   xpos 514
+   ypos -89
+  }
+ end_group
+ Multiply {
+  channels rgb
+  value {{Multiply4.value/ExpoGlow.falloff i}}
+  name Multiply5
+  xpos -292
+  ypos 77
+ }
+push $Nb2914c00
+ Group {
+  name Blur3
+  xpos 160
+  ypos 42
+  addUserKnob {20 percentBlur l "Percent Blur"}
+  addUserKnob {41 xpercent l xPercent T Blur120.xpercent}
+  addUserKnob {41 ypercent l yPercent T Blur120.ypercent}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 514
+   ypos -229
+  }
+  Blur {
+   channels rgb
+   size {{width/3*(xpercent/100) i x1001 6.826666667e+10} {height/3*(ypercent/100)*(1/AspectRatio) i}}
+   crop false
+   name Blur120
+   selected true
+   xpos 514
+   ypos -189
+   addUserKnob {20 User}
+   addUserKnob {7 xpercent l xPercent R 0 100}
+   xpercent {{Blur2.xpercent*2 i}}
+   addUserKnob {7 ypercent l yPercent R 0 100}
+   ypercent {{xpercent/format.pixel_aspect/height*width i}}
+  }
+  Output {
+   name Output1
+   xpos 514
+   ypos -89
+  }
+ end_group
+ Multiply {
+  channels rgb
+  value {{Multiply3.value/ExpoGlow.falloff i}}
+  name Multiply4
+  xpos -291
+  ypos 42
+ }
+push $Nb2915000
+ Group {
+  name Blur2
+  xpos 50
+  ypos 5
+  addUserKnob {20 percentBlur l "Percent Blur"}
+  addUserKnob {41 xpercent l xPercent T Blur120.xpercent}
+  addUserKnob {41 ypercent l yPercent T Blur120.ypercent}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 514
+   ypos -229
+  }
+  Blur {
+   channels rgb
+   size {{width/3*(xpercent/100) i x1001 6.826666667e+10} {height/3*(ypercent/100)*(1/AspectRatio) i}}
+   crop false
+   name Blur120
+   selected true
+   xpos 514
+   ypos -184
+   addUserKnob {20 User}
+   addUserKnob {7 xpercent l xPercent R 0 100}
+   xpercent {{Blur1.xpercent*2 i}}
+   addUserKnob {7 ypercent l yPercent R 0 100}
+   ypercent {{xpercent/format.pixel_aspect/height*width i}}
+  }
+  Output {
+   name Output1
+   xpos 514
+   ypos -89
+  }
+ end_group
+ Multiply {
+  channels rgb
+  value {{Multiply2.value/ExpoGlow.falloff i}}
+  name Multiply3
+  xpos -292
+  ypos 5
+ }
+push $Nb2915400
+ Group {
+  name Blur1
+  xpos -70
+  ypos -35
+  addUserKnob {20 percentBlur l "Percent Blur"}
+  addUserKnob {41 xpercent l xPercent T Blur120.xpercent}
+  addUserKnob {41 ypercent l yPercent T Blur120.ypercent}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 514
+   ypos -229
+  }
+  Blur {
+   channels rgb
+   size {{width/3*(xpercent/100) i x1001 6.826666667e+10} {height/3*(ypercent/100)*(1/AspectRatio) i}}
+   crop false
+   name Blur120
+   selected true
+   xpos 514
+   ypos -189
+   addUserKnob {20 User}
+   addUserKnob {7 xpercent l xPercent R 0 100}
+   xpercent {{Blur.xpercent*2 i}}
+   addUserKnob {7 ypercent l yPercent R 0 100}
+   ypercent {{xpercent/format.pixel_aspect/height*width i}}
+  }
+  Output {
+   name Output1
+   xpos 514
+   ypos -89
+  }
+ end_group
+ Multiply {
+  channels rgb
+  value {{Multiply1.value/ExpoGlow.falloff i}}
+  name Multiply2
+  xpos -293
+  ypos -36
+ }
+push $Nb2974c00
+push $Nb2915800
+ Group {
+  name Blur
+  xpos -180
+  ypos -76
+  addUserKnob {20 percentBlur l "Percent Blur"}
+  addUserKnob {41 xpercent l xPercent T Blur120.xpercent}
+  addUserKnob {41 ypercent l yPercent T Blur120.ypercent}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 514
+   ypos -229
+  }
+  Blur {
+   channels rgb
+   size {{width/3*(xpercent/100) x1001 6.826666667e+10} {height/3*(ypercent/100)*(1/AspectRatio)}}
+   crop false
+   name Blur120
+   xpos 514
+   ypos -175
+   addUserKnob {20 User}
+   addUserKnob {7 xpercent l xPercent R 0 100}
+   xpercent {{ExpoGlow.blur_amount}}
+   addUserKnob {7 ypercent l yPercent R 0 100}
+   ypercent {{xpercent/format.pixel_aspect/height*width}}
+  }
+  Output {
+   name Output1
+   xpos 514
+   ypos -89
+  }
+ end_group
+ Multiply {
+  channels rgb
+  name Multiply1
+  xpos -290
+  ypos -76
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge1
+  xpos -430
+  ypos -76
+  disable {{!ExpoGlow.add_source}}
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge2
+  xpos -430
+  ypos -36
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge3
+  xpos -430
+  ypos 5
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge4
+  xpos -430
+  ypos 42
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge5
+  xpos -430
+  ypos 78
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge6
+  xpos -430
+  ypos 116
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge7
+  xpos -430
+  ypos 155
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge8
+  xpos -430
+  ypos 194
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge9
+  xpos -430
+  ypos 235
+ }
+ Grade {
+  black_clamp false
+  name breakConcatenation
+  xpos -484
+  ypos 306
+ }
+ Reformat {
+  type "to box"
+  box_width {{Format.width}}
+  box_height {{Format.height}}
+  box_pixel_aspect {{Format.pixel_aspect}}
+  resize none
+  pbb {{1-parent.CroptoFormat}}
+  name Reformat1
+  xpos -484
+  ypos 356
+ }
+ Output {
+  name Output1
+  xpos -484
+  ypos 432
+ }
+end_group
+push $Nf76f8800
+push $Nf76fc800
+Dot {
+ name Dot9
+ xpos 237
+ ypos 1563
+}
+Dot {
+ name Dot10
+ xpos 237
+ ypos 1701
+}
+Axis2 {
+ inputs 0
+ translate {43.79999924 27.90595245 9.670757294}
+ rotate {-0.8106000739 0 0}
+ name Axis4
+ xpos 1899
+ ypos -1108
+}
+Card2 {
+ inputs 0
+ rows 1
+ columns 1
+ uniform_scale 0.1
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card1
+ xpos 1736
+ ypos -1147
+}
+TransformGeo {
+ inputs 2
+ name TransformGeo1
+ xpos 1736
+ ypos -1088
+}
+push 0
+ParticleEmitter {
+ inputs 2
+ start_frame 1001
+ rate {{curve x1001 3 0}}
+ lifetime 100
+ velocity 0
+ size 0
+ color {1 0 0.06100654602 1}
+ name ParticleEmitter1
+ xpos 1736
+ ypos -1000
+}
+ParticleWind {
+ to {0 -2 0}
+ airResistance true
+ seed 4
+ channels {a}
+ name ParticleWind8
+ xpos 1736
+ ypos -936
+}
+ParticleTurbulence {
+ strength {1 {strength.x} {strength.x}}
+ scale {0.6 {scale.x} {scale.x}}
+ offset {15 116 1}
+ seed 5
+ channels {a}
+ name ParticleTurbulence7
+ xpos 1736
+ ypos -845
+}
+ParticleWind {
+ to {{parent.WaveExpression8.expResult} 0 {to.x}}
+ airResistance true
+ channels {a}
+ name ParticleWind10
+ xpos 1736
+ ypos -740
+}
+Dot {
+ name Dot3
+ xpos 1770
+ ypos -508
+}
+set Nb3dc7400 [stack 0]
+ParticleSpawn {
+ emit_channels {c}
+ rate 0.2
+ rate_variation 2
+ lifetime 100
+ velocity 0
+ size 0
+ mass 1
+ transfer_velocity 0
+ conserve_mass false
+ conserve_momentum false
+ velocity_direction false
+ color {0.4001329541 1 0.2308164835 1}
+ name ParticleSpawn3
+ xpos 1395
+ ypos -518
+}
+ParticleWind {
+ to {0 -2 0}
+ seed 4
+ channels {c}
+ name ParticleWind11
+ xpos 1395
+ ypos -471
+}
+ParticleTurbulence {
+ strength {1 {strength.x} {strength.x}}
+ scale {0.6 {scale.x} {scale.x}}
+ offset {2 13 20}
+ seed 100
+ channels {c}
+ name ParticleTurbulence8
+ xpos 1395
+ ypos -415
+}
+ParticleWind {
+ to {{parent.WaveExpression5.expResult} 0 {to.x}}
+ airResistance true
+ channels {c}
+ name ParticleWind12
+ xpos 1395
+ ypos -322
+}
+ParticleSpawn {
+ rate 5
+ lifetime 16
+ lifetime_variation 5
+ velocity 0
+ mass 1
+ transfer_velocity 0
+ conserve_mass false
+ conserve_momentum false
+ color {0.288 0.377346 2.4 1}
+ channels {c}
+ name ParticleSpawn5
+ xpos 1395
+ ypos -216
+}
+ParticleExpression {
+ sizeexpr size*(1-(age/life/100))
+ channels {b}
+ name ParticleExpression3
+ xpos 1395
+ ypos -164
+}
+push $Nb3dc7400
+ParticleSpawn {
+ rate 5
+ lifetime 16
+ lifetime_variation 5
+ velocity 0
+ size 0.13
+ mass 1
+ transfer_velocity 0
+ conserve_mass false
+ conserve_momentum false
+ color {0.199181 0.866424 1 1}
+ name ParticleSpawn7
+ xpos 1735
+ ypos -370
+}
+ParticleExpression {
+ sizeexpr size*(1-(age/life/300))
+ channels {b}
+ name ParticleExpression5
+ xpos 1735
+ ypos -284
+}
+ParticleMerge {
+ inputs 2
+ name ParticleMerge3
+ xpos 1735
+ ypos -158
+}
+Dot {
+ name Dot4
+ xpos 1769
+ ypos 105
+}
+set Nb3dc4c00 [stack 0]
+ParticleSpawn {
+ emit_channels {f}
+ rate 0.09
+ rate_variation 2
+ lifetime 100
+ velocity 0
+ size 0
+ mass 1
+ transfer_velocity 0
+ conserve_mass false
+ conserve_momentum false
+ velocity_direction false
+ color {1 0.8875933886 0.2308164835 1}
+ channels {c}
+ name ParticleSpawn9
+ xpos 1379
+ ypos 95
+}
+ParticleWind {
+ to {0 -2 0}
+ seed 4
+ channels {f}
+ name ParticleWind13
+ xpos 1379
+ ypos 154
+}
+ParticleTurbulence {
+ strength {1 {strength.x} {strength.x}}
+ scale {0.1 {scale.x} {scale.x}}
+ offset {31 300 0}
+ min_age 0.006
+ max_age 0.02
+ seed 5
+ channels {f}
+ name ParticleTurbulence9
+ xpos 1379
+ ypos 207
+}
+ParticleTurbulence {
+ strength {0.8 {strength.x} {strength.x}}
+ scale {0.6 {scale.x} {scale.x}}
+ offset {0 25 0}
+ seed 10
+ channels {f}
+ name ParticleTurbulence10
+ xpos 1379
+ ypos 273
+}
+ParticleWind {
+ to {{parent.WaveExpression6.expResult} 0 {to.x}}
+ airResistance true
+ channels {f}
+ name ParticleWind14
+ xpos 1379
+ ypos 362
+}
+ParticleSpawn {
+ rate 5
+ lifetime 16
+ lifetime_variation 5
+ velocity 0
+ mass 1
+ transfer_velocity 0
+ conserve_mass false
+ conserve_momentum false
+ color {0.877926 0.0988 2.6 1}
+ channels {f}
+ name ParticleSpawn10
+ xpos 1379
+ ypos 459
+}
+ParticleExpression {
+ sizeexpr size*(1-(age/life/50))
+ channels {b}
+ name ParticleExpression6
+ xpos 1379
+ ypos 555
+}
+push $Nb3dc4c00
+ParticleMerge {
+ inputs 2
+ name ParticleMerge4
+ xpos 1735
+ ypos 561
+}
+ParticleSettings {
+ steps_per_frame 16
+ name ParticleSettings1
+ xpos 1735
+ ypos 728
+}
+Dot {
+ name Dot13
+ label "lightning(less particle rate)"
+ note_font_size 50
+ xpos 1770
+ ypos 958
+}
+Dot {
+ name Dot8
+ xpos 1769
+ ypos 1701
+}
+Group {
+ inputs 3
+ name Particle_Lights3
+ xpos 341
+ ypos 1698
+ addUserKnob {20 User}
+ addUserKnob {26 info1 l "" +STARTLINE T "Particle Lights v1.1"}
+ addUserKnob {26 info2 l "" +STARTLINE T "by Mads Hagbarth Lund"}
+ addUserKnob {26 ""}
+ addUserKnob {41 "blinnShader_Diffuse Multiplier" l "Diffuse Multiplier" T "BlinkScript8.blinnShader_Diffuse Multiplier"}
+ addUserKnob {41 "blinnShader_Specular Power" l "Specular Power" T "BlinkScript8.blinnShader_Specular Power"}
+ addUserKnob {41 "blinnShader_Specular Hardness" l "Specular Hardness" T "BlinkScript8.blinnShader_Specular Hardness"}
+ addUserKnob {41 "blinnShader_Half Lambert" l "Half Lambert" T "BlinkScript8.blinnShader_Half Lambert"}
+}
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "A bug in the blink node means that the input size must be atleast 2x2. \nSo we fake this by adding 2 null particles."
+  xpos -847
+  ypos 354
+ }
+ Group {
+  inputs 0
+  name Light2
+  xpos -679
+  ypos 487
+  addUserKnob {20 User}
+  addUserKnob {41 color T Point.color}
+  addUserKnob {41 intensity T Point.intensity}
+  addUserKnob {41 translate T Point.translate}
+ }
+  StickyNote {
+   inputs 0
+   name StickyNote1
+   label "Ensure that we can use axis nodes\nto modify the position of the light."
+   xpos -183
+   ypos -299
+  }
+  StickyNote {
+   inputs 0
+   name StickyNote2
+   label "Dummy object to make it look like a regular light"
+   xpos -188
+   ypos -235
+  }
+  StickyNote {
+   inputs 0
+   name StickyNote4
+   label "Link positions via the world matrix to get exact position"
+   xpos -300
+   ypos -55
+  }
+  StickyNote {
+   inputs 0
+   name StickyNote3
+   label "Link RGB to color and Alpha to Intensity"
+   xpos -300
+   ypos -131
+  }
+  Constant {
+   inputs 0
+   color {{parent.Point.color} {parent.Point.color} {parent.Point.color} {parent.Point.intensity/10}}
+   format "1 1 0 0 1 1 1 hg_light"
+   name Constant2
+   xpos -399
+   ypos -148
+  }
+  Sphere {
+   display off
+   render_mode off
+   rows 1
+   columns 1
+   translate {{parent.Point.world_matrix.3 x1 11.42000103 x8 -18.5 2.000001907} {parent.Point.world_matrix.7 x1 1.620000005 x8 46.30000305 44.20000076} {parent.Point.world_matrix.11 x1 0.3999999762 x8 -50.79999924 -50.79999924}}
+   uniform_scale 0.022
+   name Lightx
+   xpos -399
+   ypos -52
+  }
+push 0
+  ParticleEmitter {
+   inputs 2
+   display off
+   render_mode off
+   start_frame -5
+   emit_channels {b}
+   emit_from bbox
+   emit_order uniformly
+   randomize_type "randomize outwards"
+   rate 4
+   lifetime 1
+   velocity 0
+   size 1
+   size_channel rgba.alpha
+   color_from_texture true
+   name ParticleEmitter1
+   xpos -399
+   ypos 46
+  }
+  Output {
+   name Output1
+   xpos -399
+   ypos 150
+  }
+  Input {
+   inputs 0
+   name Input1
+   xpos -276
+   ypos -296
+  }
+  Light {
+   color {0 0 0}
+   intensity 0
+   depthmap_slope_bias 0.01
+   name Point
+   xpos -266
+   ypos -216
+  }
+ end_group
+ Group {
+  inputs 0
+  name Light1
+  xpos -684
+  ypos 428
+  addUserKnob {20 User}
+  addUserKnob {41 color T Point.color}
+  addUserKnob {41 intensity T Point.intensity}
+  addUserKnob {41 translate T Point.translate}
+ }
+  StickyNote {
+   inputs 0
+   name StickyNote1
+   label "Ensure that we can use axis nodes\nto modify the position of the light."
+   xpos -183
+   ypos -299
+  }
+  StickyNote {
+   inputs 0
+   name StickyNote2
+   label "Dummy object to make it look like a regular light"
+   xpos -188
+   ypos -235
+  }
+  StickyNote {
+   inputs 0
+   name StickyNote4
+   label "Link positions via the world matrix to get exact position"
+   xpos -300
+   ypos -55
+  }
+  StickyNote {
+   inputs 0
+   name StickyNote3
+   label "Link RGB to color and Alpha to Intensity"
+   xpos -300
+   ypos -131
+  }
+  Constant {
+   inputs 0
+   color {{parent.Point.color} {parent.Point.color} {parent.Point.color} {parent.Point.intensity/10}}
+   format "1 1 0 0 1 1 1 hg_light"
+   name Constant2
+   xpos -399
+   ypos -148
+  }
+  Sphere {
+   display off
+   render_mode off
+   rows 1
+   columns 1
+   translate {{parent.Point.world_matrix.3 x1 11.42000103 x8 -18.5 2.000001907} {parent.Point.world_matrix.7 x1 1.620000005 x8 46.30000305 44.20000076} {parent.Point.world_matrix.11 x1 0.3999999762 x8 -50.79999924 -50.79999924}}
+   uniform_scale 0.022
+   name Lightx
+   xpos -399
+   ypos -52
+  }
+push 0
+  ParticleEmitter {
+   inputs 2
+   display off
+   render_mode off
+   start_frame -5
+   emit_channels {b}
+   emit_from bbox
+   emit_order uniformly
+   randomize_type "randomize outwards"
+   rate 4
+   lifetime 1
+   velocity 0
+   size 1
+   size_channel rgba.alpha
+   color_from_texture true
+   name ParticleEmitter1
+   selected true
+   xpos -399
+   ypos 46
+  }
+  Output {
+   name Output1
+   xpos -399
+   ypos 150
+  }
+  Input {
+   inputs 0
+   name Input1
+   xpos -276
+   ypos -296
+  }
+  Light {
+   color {0 0 0}
+   intensity 0
+   depthmap_slope_bias 0.01
+   name Point
+   xpos -266
+   ypos -216
+  }
+ end_group
+push 0
+ Input {
+  inputs 0
+  name Particles
+  xpos -452
+  ypos 324
+ }
+ ParticleMerge {
+  inputs 4
+  name ParticleMerge1
+  xpos -452
+  ypos 428
+ }
+add_layer {hag_pos hag_pos.red hag_pos.green hag_pos.blue hag_pos.alpha}
+add_layer {hag_active hag_active.a}
+ ParticleToImage {
+  pos hag_pos
+  active hag_active.a
+  name ParticleToImage1
+  xpos -452
+  ypos 511
+ }
+set Nb4057400 [stack 0]
+ Shuffle {
+  in hag_pos
+  name light_pos
+  xpos -329
+  ypos 511
+ }
+ Dot {
+  name Dot2
+  xpos -295
+  ypos 559
+ }
+push $Nb4057400
+ Shuffle {
+  in rgb
+  in2 hag_active
+  alpha red2
+  name light_color
+  xpos -452
+  ypos 581
+ }
+ Input {
+  inputs 0
+  name Camera
+  xpos -149
+  ypos 282
+  number 1
+ }
+ Camera2 {
+  name Camera1
+  xpos -136
+  ypos 320
+ }
+ Dot {
+  name Dot1
+  xpos -112
+  ypos 396
+ }
+ Input {
+  inputs 0
+  name Scene3D
+  xpos -275
+  ypos 323
+  number 2
+ }
+push 0
+add_layer {point point.red point.green point.blue point.alpha}
+add_layer {normal normal.red normal.green normal.blue normal.alpha}
+ ScanlineRender {
+  inputs 3
+  max_tessellation 2
+  samples 40
+  motion_vectors_type distance
+  output_shader_vectors true
+  P_channel point
+  N_channel normal
+  name ScanlineRender2
+  xpos -275
+  ypos 393
+ }
+ Dot {
+  name Dot10
+  xpos -241
+  ypos 421
+ }
+set Nb4055000 [stack 0]
+ Dot {
+  name Dot3
+  xpos -152
+  ypos 421
+ }
+ Shuffle {
+  in normal
+  in2 rgba
+  alpha alpha2
+  name NormalSplit
+  xpos -186
+  ypos 472
+ }
+push $Nb4055000
+ Shuffle {
+  in point
+  in2 rgba
+  alpha alpha2
+  name PointPosSplit
+  xpos -275
+  ypos 472
+ }
+ BlinkScript {
+  inputs 4
+  ProgramGroup 1
+  KernelDescription "1 \"blinnShader\" iterate pixelWise 4b6604ba5b4299095f03f9edf77da6dbf1f946c319dc7f6e6962ca67a375f9f8 5 \"pointPos\" Read Point \"normal\" Read Point \"light_color\" Read Random \"light_pos\" Read Random \"dst\" Write Point 5 \"Camera Position\" Float 3 AACAPwAAgD8AAIA/AAAAAA== \"Diffuse Multiplier\" Float 1 AACAPw== \"Specular Power\" Float 1 AAAgQQ== \"Specular Hardness\" Float 1 AADIQg== \"Half Lambert\" Bool 1 AQ=="
+  kernelSource "kernel blinnShader : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessPoint, eEdgeClamped> pointPos;  //the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> normal;  //the input image\n  Image<eRead, eAccessRandom, eEdgeClamped> light_color;  //the input image\n  Image<eRead, eAccessRandom, eEdgeClamped> light_pos;  //the input image\n\n  Image<eWrite> dst;  //the output image\n\n  param:\n    float3 cameraPosition;\n    float diffuseMultiplier;\n    float specularPower;\n    float specularHardness;\n    bool halfLambert;\n\n  local:\n    float3 lightDir;\n    float3 viewDir;\n\n  void define() \{\n    defineParam(halfLambert,\"Half Lambert\",bool(1));\n    defineParam(cameraPosition, \"Camera Position\", float3(1.0f,1.0f,1.0f));\n    defineParam(diffuseMultiplier,\"Diffuse Multiplier\",float(1.0f));\n    defineParam(specularPower,\"Specular Power\",float(10.0f));\n    defineParam(specularHardness,\"Specular Hardness\",float(100.0f));\n  \}\n\n  void init() \{\n  \}\n\n  void process() \{\n\n    SampleType(dst) sampleBase(0.0f);\n\n    float newVal = 0;\n    for(int j = 0; j < light_pos.bounds.y2; j++) \{\n      for(int i = 0; i < light_pos.bounds.x2; i++) \{\n        if (light_color(i,j).w == 1) \{        \n\n        lightDir = (float3(light_pos(i,j).x,light_pos(i,j).y,light_pos(i,j).z)-float3(pointPos(0),pointPos(1),pointPos(2)));\n        float distance = length(lightDir);\n        lightDir = normalize(lightDir);\n        distance = distance * distance;\n\n        viewDir = (cameraPosition-float3(pointPos(0),pointPos(1),pointPos(2)));\n        viewDir = normalize(viewDir);\n\n\n        //Calculating Diffuse\n        float NdotL = dot(float3(normal(0),normal(1),normal(2)),lightDir);\n        if (halfLambert) \{      \n           NdotL = NdotL * 0.5 + 0.5; //Added option for half lambert\n         \}\n        else\n        \{\n        NdotL = min(1.0f,max(0.0f,NdotL));\n        \}\n\n        float diffuse = NdotL * (light_pos(i,j).w*diffuseMultiplier) / distance;\n\n\n        //Calculating Specular\n        float3 H = normalize(lightDir+viewDir);\n        float NdotH = dot(float3(normal(0),normal(1),normal(2)),H);\n        float intensity = pow(NdotH,specularHardness);\n        float specular = intensity * specularPower / distance;\n\n\n        SampleType(dst) sample(0.0f);\n        sample.x = max(0.0f,(diffuse+specular) * light_color(i,j).x);\n        sample.y =  max(0.0f,(diffuse+specular) * light_color(i,j).y);\n        sample.z =  max(0.0f, (diffuse+specular) * light_color(i,j).z);\n        sampleBase += sample;\n        \}\n      \}\n    \}\n\n    dst() = sampleBase+float4(0,0,0,pointPos(3)); //Reaplying Alpha\n   \}\n\};"
+  useGPUIfAvailable false
+  vectorize false
+  rebuild ""
+  "blinnShader_Camera Position" {{parent.Camera1.world_matrix.3} {parent.Camera1.world_matrix.7} {parent.Camera1.world_matrix.11}}
+  "blinnShader_Diffuse Multiplier" 4
+  "blinnShader_Specular Power" 0.45
+  "blinnShader_Specular Hardness" 200
+  "blinnShader_Half Lambert" false
+  rebuild_finalise ""
+  name BlinkScript8
+  xpos -186
+  ypos 575
+ }
+ Premult {
+  name Premult1
+  xpos -189
+  ypos 696
+ }
+ Output {
+  name Output1
+  xpos -186
+  ypos 785
+ }
+end_group
+Merge2 {
+ inputs 2
+ name Merge1
+ xpos 341
+ ypos 1933
+}
+Dot {
+ name Dot14
+ label 1001-1070
+ note_font_size 40
+ xpos 375
+ ypos 2102
+}
+NoOp {
+ name VIEW_HERE
+ note_font_size 30
+ xpos 341
+ ypos 2233
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ label "          Basically, this is same set up as left lightnbing, but less particle rate to speed up          "
+ note_font_size 20
+ xpos 1665
+ ypos 1009
+}
+Group {
+ inputs 0
+ name WaveExpression8
+ help "Allows the easy creation of a variety of Waveform Expressions for use in manipulating knob values."
+ xpos 1931
+ ypos -737
+ addUserKnob {20 main l Main}
+ addUserKnob {26 unnamed_1 l "" +STARTLINE T " "}
+ addUserKnob {68 type l "Wave Type" t "Controls what type of wave to generate." M {Random Noise Sine Triangle Square Sawtooth/Sawtooth "Sawtooth/Sawtooth (Parabolic)" "Sawtooth/Sawtooth (Parabolic reversed)" "Sawtooth/Sawtooth (Exponential)" Bounce "" "" "" "" ""}}
+ type Noise
+ addUserKnob {7 minVal l "Min Value" t "Minimum value you want the wave to reach." R 0 10}
+ minVal -10
+ addUserKnob {7 maxVal l "Max Value" t "Maximum value you want the wave to reach." -STARTLINE R 0 10}
+ maxVal 10
+ addUserKnob {7 waveLength l WaveLength t "Controls the frequency or cycle length of the wave. The number of frames before the pattern repeats." R 0 50}
+ waveLength 0.3
+ addUserKnob {7 offset l Offset t "Offsets the frame value to allow control of values at a certain frame" R 0 10}
+ addUserKnob {26 unnamed l "" +STARTLINE T " "}
+ addUserKnob {22 expButton l "Generate Expression" T "node = nuke.thisNode()\ntype = node.knob('type').getValue()\nexpText = node.knob('expText')\nexpFormula = node.knob('formula')\nexpResult = node.knob('expResult')\ndef setExp():\n    if type == 0: #Random\n        exp = 'random((frame+%s)/%s) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 1: #Noise\n        exp = '(noise((frame+%s)/%s)+1)/2 * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 2: #Sine\n        exp = '(sin(2*pi*(frame+%s)/%s)+1)/2 * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 3: #Triangle\n        exp = '(asin(sin(2*pi*(frame+%s)/%s))/pi+0.5) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 4: #Square\n        exp = 'int(sin(2*pi*(frame+%s)/%s)+1) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 5: #Sawtooth\n        exp = '((frame+%s) %% %s)/%s * (%s-%s) + %s' %(offset,waveLength,waveLength,maxVal,minVal,minVal)\n    if type == 6: #Sawtooth(Parabolic)\n        exp = 'sin((4.93480220054468*(frame+%s)/(pi*%s)) %% (pi/2)) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 7: #Sawtooth(Parabolic Reversed)\n        exp = 'cos((4.93480220054468*(frame+%s)/(pi*%s)) %% (pi/2)) * (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    if type == 8: #Sawtooth (Exponential)\n        exp = '(exp(2*pi*((frame+%s) %% %s)/%s)-1)/exp(2*pi) * (%s-%s) + %s' %(offset,waveLength,waveLength,maxVal,minVal,minVal)\n    if type == 9: #Bounce\n        exp = 'abs(sin(pi*(frame + %s)/%s))* (%s-%s) + %s' %(offset,waveLength,maxVal,minVal,minVal)\n    return exp\n\nwaveLength = 'waveLength'\noffset = 'offset'\nmaxVal = 'maxVal'\nminVal = 'minVal'\nexpResult.setExpression(setExp())\nexpFormula.setValue(setExp())\n\nwaveLength = node.knob('waveLength').getValue()\noffset = node.knob('offset').getValue()\nmaxVal = node.knob('maxVal').getValue()\nminVal = node.knob('minVal').getValue()\nexpText.setValue(setExp())" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 expResult l Result t "The calculated result of the wave at the given frame. Link to this value if you want to control the expression from this node."}
+ expResult {{"(noise((frame+offset)/waveLength)+1)/2 * (maxVal-minVal) + minVal"}}
+ addUserKnob {26 unnamed_2 l "" +STARTLINE T " "}
+ addUserKnob {1 expText l Expression t "The wave in expression form. For copying to another knobs expression value."}
+ expText "(noise((frame+0.0)/5.0)+1)/2 * (10.0--10.0) + -10.0"
+ addUserKnob {26 unnamed_3 l "" +STARTLINE T " "}
+ addUserKnob {1 formula l Formula t "The formula that generates the wave."}
+ formula "(noise((frame+offset)/waveLength)+1)/2 * (maxVal-minVal) + minVal"
+}
+end_group
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x969600ff
+ label "<b>http://www.nukepedia.com/toolsets/particles/particle-lightning        ."
+ note_font_size 20
+ xpos 631
+ ypos 2274
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0x335959ff
+ label "<b>author: Jiacheng Xu"
+ note_font_size 20
+ xpos 626
+ ypos 2184
+}

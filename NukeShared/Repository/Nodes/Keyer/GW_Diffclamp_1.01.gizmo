@@ -1,0 +1,233 @@
+version 11.00
+Group {
+ name GW_DiffClamp
+ knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\nif k.name() ==\"method\":\n     ### Hide/ Unhide Clamping controls\"\n    if n\[\"method\"].value() == \"Clamp Values (Hard Alpha)\":\n                 n\[\"clamp\"].setVisible(True)                \n    else:\n        n\[\"clamp\"].setVisible(False)\n     ###-----------------###\n     ### Hide/ Unhide Gain Controls\"\n    if n\[\"method\"].value() == \"Use Gain (Softer Alpha)\":\n                   n\[\"gain\"].setVisible(True)\n    else:\n        n\[\"gain\"].setVisible(False)\n\n\n\n"
+ tile_color 0xc30081ff
+ label "Method: \n\[value method] "
+ note_font "Verdana Bold"
+ selected true
+ xpos -416
+ ypos 327
+ addUserKnob {20 Controls}
+ addUserKnob {26 Gavin l "" +STARTLINE T "GW DiffClamp V1.00\n\nDifference Keyer with controls for Alpha.\nSelect Method then use controls to clamp to\nalpha to white based on value that you set.\n\n"}
+ addUserKnob {4 method l "Alpha Clamping Method" M {"None - Dissabled" "Clamp Values (Hard Alpha)" "Use Gain (Softer Alpha)" "" "" "" ""}}
+ addUserKnob {26 ""}
+ addUserKnob {20 clamp l "Clamp Alpha Controls" +HIDDEN n 1}
+ addUserKnob {41 Large l "0 to 1" T Happy_Clamper1.Large}
+ addUserKnob {41 Small l ".00 to 0.1" T Happy_Clamper1.Small}
+ addUserKnob {26 ""}
+ addUserKnob {7 TOTAL1 l "Above this is Clamped to 1"}
+ TOTAL1 {{Happy_Clamper1.TOTAL x1 0}}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 gain l "Use Gain Controls" +HIDDEN n 1}
+ addUserKnob {7 GainAlpha l Gain R 1 100}
+ GainAlpha 1
+ addUserKnob {7 Multiplier l "Multiply Gain (X)" R 1 10}
+ Multiplier 1
+ addUserKnob {41 offset l "Offset Value" T Difference1.offset}
+ addUserKnob {7 value_mult l "Value to Gain"}
+ value_mult {{Multiplier*GainAlpha x1 0}}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {41 BlurAmount l "Blur Alpha Amount" T Blur1.size}
+ addUserKnob {41 erode l "Choke or Expand Alpha" T FilterErode1.size}
+ addUserKnob {26 ""}
+ addUserKnob {6 AlphaOnly l "Output Alpha Only?" +STARTLINE}
+ addUserKnob {6 allch l "Alpha to RGBA?" +STARTLINE}
+ addUserKnob {6 premult l "Premult Output?" +STARTLINE}
+ addUserKnob {26 calc l "" +STARTLINE}
+ addUserKnob {26 ByGavin l "" +STARTLINE T "\n\nBy Gavin Whittaker\n\nwww.gavinwhittaker.info"}
+}
+ Input {
+  inputs 0
+  name A
+  xpos -505
+  ypos -618
+ }
+ Dot {
+  name Dot1
+  label "\nAPipe"
+  note_font_size 22
+  xpos -471
+  ypos -477
+ }
+set Necc94800 [stack 0]
+ Dot {
+  name Dot7
+  xpos -385
+  ypos -533
+ }
+ Input {
+  inputs 0
+  name B
+  xpos -289
+  ypos -796
+  number 1
+ }
+ Dot {
+  name Dot2
+  label BPipe
+  note_font_size 22
+  xpos -257
+  ypos -698
+ }
+set Nebf8b800 [stack 0]
+ Dot {
+  name Dot6
+  xpos -257
+  ypos -594
+ }
+set Nebf8b400 [stack 0]
+ Dot {
+  name Dot5
+  xpos -29
+  ypos -594
+ }
+ Difference {
+  inputs 2
+  gain {{parent.GainAlpha}}
+  name Difference1
+  selected true
+  xpos -63
+  ypos -542
+ }
+ Dot {
+  name Dot4
+  xpos -29
+  ypos -316
+ }
+push $Necc94800
+push $Nebf8b400
+ Difference {
+  inputs 2
+  name Difference2
+  xpos -290
+  ypos -486
+ }
+set Nebf8a400 [stack 0]
+ Group {
+  name Happy_Clamper1
+  tile_color 0xc30081ff
+  label "Happy Clamper V1.01"
+  xpos -290
+  ypos -406
+  addUserKnob {20 Controls}
+  addUserKnob {26 Gavin l "" +STARTLINE T "Happy Clamper V1.01\n\nAlpha Clamper which will clamp alpha values\nabove set value to 1\n"}
+  addUserKnob {26 ""}
+  addUserKnob {26 Values_text l "" +STARTLINE T "Clamping Controls"}
+  addUserKnob {7 Large l "0 to 1"}
+  addUserKnob {7 Small l ".00 to 0.1" R 0 0.1}
+  addUserKnob {26 ""}
+  addUserKnob {26 output_txt l "" +STARTLINE T "Value to Output\n(anything above this is clamped up to 1)"}
+  addUserKnob {7 TOTAL l "Value to Clamp to 1" t "Anything above this will be clamped to 1"}
+  TOTAL {{"(Large+Small)>= 0.999? 0.999:(Large+Small)" x1 -0.1}}
+  addUserKnob {26 ""}
+  addUserKnob {26 ByGavin l "" +STARTLINE T "\n\nBy Gavin Whittaker\n\nwww.gavinwhittaker.info"}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos -505
+   ypos 116
+  }
+  Expression {
+   channel0 {rgba.red -rgba.green -rgba.blue none}
+   channel1 {-rgba.red rgba.green -rgba.blue none}
+   channel2 {-rgba.red -rgba.green rgba.blue none}
+   expr3 a>TOTAL?1:0
+   name Happy_Clamper
+   tile_color 0xeb20ccff
+   label " >Crunch Alpha< "
+   note_font "Verdana Bold"
+   selected true
+   xpos -505
+   ypos 156
+  }
+  Output {
+   name Output1
+   xpos -505
+   ypos 256
+  }
+ end_group
+push $Nebf8b800
+ Dot {
+  name Dot8
+  xpos -349
+  ypos -698
+ }
+ Dot {
+  name Dot9
+  xpos -349
+  ypos -316
+ }
+ Switch {
+  inputs 3
+  which {{method x1 0}}
+  name Switch1
+  xpos -290
+  ypos -319
+ }
+set Nebf88c00 [stack 0]
+ Clamp {
+  name Clamp1
+  xpos -290
+  ypos -260
+ }
+ FilterErode {
+  size 0
+  name FilterErode1
+  xpos -289
+  ypos -200
+ }
+ Blur {
+  channels alpha
+  name Blur1
+  xpos -289
+  ypos -137
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.alpha 0 3 rgba.alpha 0 3 rgba.alpha 0 3 rgba.blue 0 2 rgba.alpha 0 3 rgba.green 0 1 rgba.alpha 0 3 rgba.red 0 0"
+  name Shuffle1
+  xpos -289
+  ypos -40
+  disable {{1-allch}}
+ }
+ Remove {
+  operation keep
+  channels alpha
+  name Remove1
+  xpos -289
+  ypos 18
+  disable {{AlphaOnly+-1 x1 0}}
+ }
+ Premult {
+  name Premult1
+  xpos -289
+  ypos 113
+  disable {{!premult}}
+ }
+ Dot {
+  name Dot3
+  label OUT
+  note_font_size 22
+  xpos -255
+  ypos 184
+ }
+ Output {
+  name Output1
+  xpos -289
+  ypos 246
+ }
+push $Nebf8a400
+push $Nebf88c00
+ Viewer {
+  inputs 2
+  frame_range 1-100
+  colour_sample_bbox {-0.1223958358 0.04322916642 -0.121875003 0.04374999925}
+  name Viewer1
+  xpos -790
+  ypos 4
+ }
+end_group

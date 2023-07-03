@@ -1,0 +1,226 @@
+set cut_paste_input [stack 0]
+version 11.3 v2
+Camera2 {
+ inputs 0
+ name Camera7
+ label "render and projection cam"
+ selected true
+ xpos 14154
+ ypos 24676
+ addUserKnob {20 User}
+ addUserKnob {22 reveal l "reveal in explorer" -STARTLINE T "from nuke_utils import reveal_in_explorer;reveal_in_explorer.reveal(nuke.thisNode())"}
+}
+Dot {
+ name Dot259
+ selected true
+ xpos 14178
+ ypos 24818
+}
+set N134e1400 [stack 0]
+Dot {
+ name Dot260
+ selected true
+ xpos 14178
+ ypos 25181
+}
+set N134e1000 [stack 0]
+Dot {
+ name Dot261
+ selected true
+ xpos 14178
+ ypos 25287
+}
+push $N134e1000
+push $N134e1400
+FrameHold {
+ first_frame {{parent.FrameHold11.knob.first_frame}}
+ name FrameHold10
+ selected true
+ xpos 14238
+ ypos 24809
+}
+Dot {
+ inputs 0
+ name Dot265
+ label "projection input"
+ note_font_size 31.5
+ selected true
+ xpos 14387
+ ypos 24449
+}
+Shuffle {
+ alpha white
+ name Shuffle30
+ tile_color 0xfefefeff
+ label "Solid Alpha"
+ selected true
+ xpos 14353
+ ypos 24543
+}
+LensDistortion2 {
+ distortionModelDisplayX "xu = xd / (1 + k0 * rd^2 + k1 * rd^4)"
+ distortionModelDisplayY "yu = yd / (1 + k0 * rd^2 + k1 * rd^4)"
+ keyFrame {{curve x1006 1006}}
+ keyingInitialised true
+ output Undistort
+ outputFormat "1920 1080 0 0 1920 1080 1 HD_1080"
+ featuresKnob "
+version 1
+entries 0
+entries 0
+"
+ name LensDistortion1
+ selected true
+ xpos 14353
+ ypos 24624
+}
+FrameHold {
+ first_frame 1001
+ name FrameHold11
+ label "set reference frame here"
+ selected true
+ xpos 14353
+ ypos 24722
+}
+Project3D2 {
+ inputs 2
+ name Project3D4
+ selected true
+ xpos 14353
+ ypos 24815
+}
+Card2 {
+ inputs 0
+ rows 1
+ columns 1
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card2
+ label "projection geo"
+ selected true
+ xpos 14589
+ ypos 24759
+}
+Dot {
+ name Dot262
+ selected true
+ xpos 14623
+ ypos 24898
+}
+set N37ef4c00 [stack 0]
+FrameHold {
+ first_frame {{parent.FrameHold11.knob.first_frame}}
+ name FrameHold12
+ selected true
+ xpos 14482
+ ypos 24888
+}
+ApplyMaterial {
+ inputs 2
+ name ApplyMaterial5
+ selected true
+ xpos 14353
+ ypos 24894
+}
+push 0
+ScanlineRender {
+ inputs 2
+ conservative_shader_sampling false
+ projection_mode uv
+ shutteroffset centred
+ motion_vectors_type distance
+ name ScanlineRender4
+ label "\[if \{\[value projection_mode] != \"render camera\"\} \{ value projection_mode  \}]\n"
+ selected true
+ xpos 14353
+ ypos 24975
+}
+push $N37ef4c00
+Dot {
+ name Dot263
+ selected true
+ xpos 14623
+ ypos 25078
+}
+ApplyMaterial {
+ inputs 2
+ name ApplyMaterial6
+ selected true
+ xpos 14353
+ ypos 25074
+}
+Scene {
+ inputs 2
+ name Scene3
+ selected true
+ xpos 14363
+ ypos 25157
+}
+push $cut_paste_input
+Reformat {
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ name Reformat7
+ selected true
+ xpos 14522
+ ypos 25283
+}
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ zblend_range 0
+ shutteroffset centred
+ motion_vectors_type distance
+ name ScanlineRender5
+ selected true
+ xpos 14353
+ ypos 25283
+}
+LensDistortion2 {
+ distortionModelDisplayX "xu = xd / (1 + k0 * rd^2 + k1 * rd^4)"
+ distortionModelDisplayY "yu = yd / (1 + k0 * rd^2 + k1 * rd^4)"
+ keyFrame {{curve x1006 1006}}
+ keyingInitialised true
+ output Redistort
+ outputFormat "1920 1080 0 0 1920 1080 1 HD_1080"
+ outputBBox {0 0 1920 1080}
+ featuresKnob "
+version 1
+entries 0
+entries 0
+"
+ name LensDistortion2
+ selected true
+ xpos 14353
+ ypos 25376
+}
+Unpremult {
+ channels all
+ name Unpremult9
+ selected true
+ xpos 14353
+ ypos 25458
+}
+Shuffle {
+ alpha white
+ name Shuffle32
+ tile_color 0xfefefeff
+ label "Solid Alpha"
+ selected true
+ xpos 14353
+ ypos 25528
+}
+Dot {
+ name Dot264
+ selected true
+ xpos 14387
+ ypos 25613
+}

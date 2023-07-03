@@ -1,0 +1,357 @@
+#! /Applications/Nuke6.3v7/NukeX6.3v7.app/../Nuke6.3v7.app/Contents/MacOS/Nuke6.3v7 -nx
+version 6.3 v7
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="22" w="1600" h="1174" screen="0">
+        <splitter orientation="1">
+            <split size="63"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1533"/>
+            <splitter orientation="2">
+                <split size="1152"/>
+                <dock id="" activePageId="DAG.1">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                </dock>
+            </splitter>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "/Volumes/Data HD/School/-Mine/Learning Docs/ANI275/Wiki/assets/Noise/Noise_4.nk"
+ frame 14
+ format "1920 1080 0 0 1920 1080 1 HD"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0x7171c600
+ label "A kinda TV look derived from a stretched noise.\n"
+ note_font "Verdana Bold Bold Bold Bold Bold"
+ note_font_size 20
+ xpos -632
+ ypos -276
+ bdwidth 917
+ bdheight 700
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ label " \n      Animated!    \n   "
+ note_font "Verdana Bold Bold Bold Bold"
+ note_font_size 20
+ xpos -455
+ ypos -350
+}
+Roto {
+ inputs 0
+ curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 960 S 0 540 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "Bezier1" {
+    Flag: 576
+    NodeType: 3
+    CurveGroup: "" {
+     Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 821.5 S 0 831.5 
+     Flag: 0
+     NumOfCubicCurves: 2
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 24
+      0 S 0 -8 S 0 2 0 0 S 0 434 S 0 812 0 0 S 0 8 S 0 -2 0 0 S 0 -138 S 0 14 0 0 S 0 736 S 0 894 0 0 S 0 138 S 0 -14 0 0 S 0 -20 S 0 18 0 0 S 0 1064 S 0 810 0 0 S 0 20 S 0 -18 0 0 S 0 -22 S 0 132 0 0 S 0 1204 S 0 602 0 0 S 0 22 S 0 -132 0 0 S 0 0 S 0 0 0 0 S 0 1282 S 0 698 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 1226 S 0 1034 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 302 S 0 1030 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 324 S 0 770 0 0 S 0 0 S 0 0 0 
+     }
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 24
+      0 S 0 -8 S 0 2 0 0 S 0 0 S 0 0 0 0 S 0 8 S 0 -2 0 0 S 0 -138 S 0 14 0 0 S 0 0 S 0 0 0 0 S 0 138 S 0 -14 0 0 S 0 -20 S 0 18 0 0 S 0 0 S 0 0 0 0 S 0 20 S 0 -18 0 0 S 0 -22 S 0 132 0 0 S 0 0 S 0 0 0 0 S 0 22 S 0 -132 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+     }
+     NumOfAttributes: 44
+     "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 11 "fy" S 0 11 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 960 "spy" S 0 540 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 100 "ltm" S 0 100 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+    }
+   }
+   NumOfChildren: 0
+  }
+ }
+}
+}
+ toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_lifetime_type all
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ colorOverlay 0
+ lifetime_type "all frames"
+ lifetime_start 100
+ lifetime_end 100
+ feather 11
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+ name Roto2
+ xpos -273
+ ypos 220
+}
+Reformat {
+ inputs 0
+ type "to box"
+ box_width 10
+ box_height 1080
+ box_fixed true
+ resize height
+ name Reformat1
+ xpos -547
+ ypos -192
+}
+Noise {
+ zoffset {{curve i x1 0 x100 1.438499928}}
+ lacunarity 2.38
+ gain 1
+ center {960 540}
+ name Noise1
+ xpos -547
+ ypos -142
+}
+Reformat {
+ type "to box"
+ box_width 1920
+ box_height 1080
+ box_fixed true
+ resize height
+ center false
+ name Reformat2
+ xpos -547
+ ypos -95
+}
+Transform {
+ scale {14 1}
+ center {15 540}
+ black_outside false
+ name Transform1
+ xpos -547
+ ypos -52
+}
+set N188a0af0 [stack 0]
+push $N188a0af0
+Read {
+ inputs 0
+ file "/Volumes/Data HD/School/-Mine/Learning Docs/ANI275/Wiki/assets/Color_Improving_Good_Footage/Sources/soldiers.tga"
+ format "1920 1080 0 0 1920 1080 1 HD"
+ origset true
+ name Read1
+ xpos -383
+ ypos -162
+}
+ShuffleCopy {
+ inputs 2
+ alpha alpha2
+ black red
+ white green
+ red2 blue
+ out2 motion
+ name ShuffleCopy1
+ xpos -383
+ ypos -52
+}
+IDistort {
+ uv motion
+ uv_scale 81
+ name IDistort1
+ xpos -383
+ ypos -28
+}
+Merge2 {
+ inputs 2
+ operation color-dodge
+ sRGB true
+ mix 0.905
+ name Merge6
+ xpos -383
+ ypos 50
+}
+LensDistortion1_0 {
+ serializeKnob ""
+ serialiseKnob "22 serialization::archive 4 0 0 0 0 0 0 0 0 0 0 0 0"
+ distortion1 -0.155
+ distortion2 -0.027
+ cardScale {0.8679198623 0.8679198623 1}
+ a -0.01722684316
+ b 0.1444684863
+ c 0.01372350659
+ name LensDistortion1
+ xpos -383
+ ypos 74
+}
+Shuffle {
+ alpha white
+ name Shuffle1
+ xpos -383
+ ypos 114
+}
+CornerPin2D {
+ to1 {306 301}
+ to2 {1265 154}
+ to3 {1292 985}
+ to4 {233 1040}
+ invert false
+ from1 {0 0}
+ from2 {1920 0}
+ from3 {1920 1080}
+ from4 {0 1080}
+ name CornerPin2D1
+ xpos -383
+ ypos 138
+}
+Roto {
+ output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+ replace true
+ curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 960 S 0 540 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "Bezier1" {
+    Flag: 576
+    NodeType: 3
+    CurveGroup: "" {
+     Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 818.727 S 0 602 
+     Flag: 0
+     NumOfCubicCurves: 2
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 24
+      0 S 0 10.6142 S 0 4.224 0 0 S 0 515.5 S 0 958 0 0 S 0 -49 S 0 -19.5 0 0 S 0 -2.01633 S 0 137.219 0 0 S 0 405 S 0 683 0 0 S 0 2 S 0 -144 0 0 S 0 -31.3565 S 0 21.9493 0 0 S 0 546 S 0 374 0 0 S 0 30 S 0 -21 0 0 S 0 -62 S 0 10 0 0 S 0 764 S 0 313 0 0 S 0 62 S 0 -10 0 0 S 0 -33.7882 S 0 -24.2972 0 0 S 0 1070 S 0 312 0 0 S 0 89 S 0 64 0 0 S 0 -6 S 0 -80 0 0 S 0 1199 S 0 571 0 0 S 0 6 S 0 80 0 0 S 0 113 S 0 -42 0 0 S 0 1046 S 0 924 0 0 S 0 -41.2861 S 0 15.3454 0 0 S 0 30 S 0 -2 0 0 S 0 758 S 0 948 0 0 S 0 -30 S 0 2 0 
+     }
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 24
+      0 S 0 10.6142 S 0 4.224 0 0 S 0 0 S 0 0 0 0 S 0 -49 S 0 -19.5 0 0 S 0 -2.01633 S 0 137.219 0 0 S 0 0 S 0 0 0 0 S 0 2 S 0 -144 0 0 S 0 -31.3565 S 0 21.9493 0 0 S 0 0 S 0 0 0 0 S 0 30 S 0 -21 0 0 S 0 -62 S 0 10 0 0 S 0 0 S 0 0 0 0 S 0 62 S 0 -10 0 0 S 0 -33.7882 S 0 -24.2972 0 0 S 0 0 S 0 0 0 0 S 0 89 S 0 64 0 0 S 0 -6 S 0 -80 0 0 S 0 0 S 0 0 0 0 S 0 6 S 0 80 0 0 S 0 113 S 0 -42 0 0 S 0 0 S 0 0 0 0 S 0 -41.2861 S 0 15.3454 0 0 S 0 30 S 0 -2 0 0 S 0 0 S 0 0 0 0 S 0 -30 S 0 2 0 
+     }
+     NumOfAttributes: 44
+     "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 -5 "fy" S 0 -5 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 960 "spy" S 0 540 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 100 "ltm" S 0 100 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+    }
+   }
+   NumOfChildren: 0
+  }
+ }
+}
+}
+ toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_lifetime_type all
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ colorOverlay 0
+ lifetime_type "all frames"
+ lifetime_start 100
+ lifetime_end 100
+ feather -5
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+ name Roto1
+ xpos -383
+ ypos 162
+}
+Add {
+ channels rgb
+ value {0.102959998 0.1099999994 0.1011999995 0.0549999997}
+ name Add1
+ xpos -383
+ ypos 196
+}
+Multiply {
+ inputs 1+1
+ channels rgb
+ value 0.44
+ name Multiply1
+ xpos -383
+ ypos 220
+}
+Premult {
+ name Premult1
+ xpos -383
+ ypos 244
+}
+Read {
+ inputs 0
+ file "/Volumes/Data HD/School/-Mine/Learning Docs/ANI275/Wiki/assets/Noise/Sources/Philco-TV-123-hd.jpeg"
+ format "1500 1479 0 0 1500 1479 1 "
+ origset true
+ name Read2
+ xpos -102
+ ypos 123
+}
+Transform {
+ translate {4 -144}
+ center {750 739.5}
+ name Transform2
+ xpos -102
+ ypos 205
+}
+Reformat {
+ name Reformat3
+ xpos -102
+ ypos 229
+}
+Merge2 {
+ inputs 2
+ name Merge1
+ xpos -225
+ ypos 376
+}

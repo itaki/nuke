@@ -1,0 +1,100 @@
+#! created by mazyar sharifian from www.cubichead.com on 7/30/16 
+#! /software/nuke/9.0v9/linux.centos6.x86_64/libnuke-9.0.9.so -nx
+version 9.0 v9
+Group {
+name FQ_separator
+inputs 2
+addUserKnob {20 FrequencySeparation}
+addUserKnob {41 median t "Enables a median effect instead of a blur one" T Median.disable}
+addUserKnob {41 blur t "Defines low frequency" T Blur.size}
+addUserKnob {41 detail t "Defines high frequency" T Detail.size}
+}
+Input {
+inputs 0
+name mask
+xpos -645
+ypos 135
+number 1
+}
+set N58ad7a30 [stack 0]
+Input {
+inputs 0
+name img
+xpos -230
+ypos -75
+}
+set N986fd260 [stack 0]
+Dot {
+name Dot1
+xpos -470
+ypos -75
+}
+Blur {
+channels rgba
+name Detail
+xpos -500
+ypos 30
+}
+set Neaff8ed0 [stack 0]
+Blur {
+inputs 1+1
+channels rgba
+name Blur
+xpos -500
+ypos 135
+}
+push $N58ad7a30
+push $Neaff8ed0
+Dot {
+name Dot2
+xpos -730
+ypos 30
+}
+Dot {
+name Dot3
+xpos -730
+ypos 225
+}
+Median {
+inputs 1+1
+size {{parent.Blur.size}}
+ignore_top_line false
+name Median1
+xpos -645
+ypos 220
+}
+Dot {
+name Dot4
+xpos -330
+ypos 225
+}
+Switch {
+inputs 2
+which 1
+name Median
+xpos -365
+ypos 135
+}
+push $Neaff8ed0
+push $N986fd260
+Merge2 {
+inputs 2
+operation from
+name Merge1
+xpos -230
+ypos 30
+}
+Merge2 {
+inputs 2
+operation plus
+name Merge2
+xpos -230
+ypos 135
+}
+Output {
+name Output1
+selected true
+xpos -230
+ypos 325
+}
+end_group

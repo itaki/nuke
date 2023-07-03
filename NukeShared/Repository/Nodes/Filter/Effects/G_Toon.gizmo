@@ -1,0 +1,160 @@
+#! C:/Program Files/Nuke10.5v2/nuke-10.5.2.dll -nx
+version 10.5 v2
+Gizmo {
+ inputs 2
+ tile_color 0xffe435ff
+ gl_color 0xffe851ff
+ lock_connections true
+ addUserKnob {20 User}
+ addUserKnob {41 size l Preblur T Blur1.size}
+ addUserKnob {26 ""}
+ addUserKnob {41 MagTol l Border t "Border threshod" T ToonKernel.MagTol}
+ addUserKnob {41 Quantize T ToonKernel.Quantize}
+ addUserKnob {41 check l Mask T Switch1.check}
+}
+ Input {
+  inputs 0
+  name Mask
+  xpos -455
+  ypos 33
+  number 1
+ }
+ Blur {
+  size {{"\[python nuke.thisGroup().knob('size').getValue()]"}}
+  name Blur2
+  xpos -455
+  ypos 109
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos -455
+  ypos 147
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos -607
+  ypos 44
+ }
+ Blur {
+  name Blur1
+  xpos -607
+  ypos 111
+ }
+set N4d4ee400 [stack 0]
+ Group {
+  inputs 2
+  name ToonShader1
+  xpos -455
+  ypos 195
+  addUserKnob {20 ToonShader}
+  addUserKnob {41 "Local GPU: " T BlinkScript3.gpuName}
+  addUserKnob {41 "Use GPU if Available" T BlinkScript3.useGPUIfAvailable}
+  addUserKnob {26 ""}
+  addUserKnob {41 MagTol T BlinkScript3.ToonShader_MagTol}
+  addUserKnob {41 Quantize T BlinkScript3.ToonShader_Quantize}
+ }
+  Input {
+   inputs 0
+   name Input2
+   xpos -253
+   ypos 107
+   number 1
+  }
+  Input {
+   inputs 0
+   name Input1
+   xpos -253
+   ypos 107
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 182
+   ProgramGroup 1
+   KernelDescription "2 \"ToonShader\" iterate pixelWise 0ed12a7bdd016abd93ba6c230d00ab045eb28ee01e07308cbb0977dec8d22ac6 3 \"src\" Read Random \"alpha\" Read Random \"dst\" Write Point 2 \"MagTol\" Float 1 AAAAAA== \"Quantize\" Int 1 AAAAAA== 2 \"MagTol\" 1 1 \"Quantize\" 1 1 0"
+   EncodedSource "1 1109 l5LSIxkohUijIpLDfk12RVFJfpa8a19s1HU0pBwIh8Ml2HllH9206BFWuxzw39n39Ksn+U+ZU92VRK0fvWaICMdJvwRiNDNXy/rZBc4ZzDMs+Pz+I6ugxWjM9uhC59xU2WdEKYpBad7xAg6kTb+hRwwWi7eJXnPNjBmFBgI5Brf4RvJmrH9pD2EBcbfpi8gwjvPID6Bahj20PyQu2AV7HSIZ4PN/Yoi/WvN585P41RKIFgYRkxZi2SnkGp3ftwUAr8+zCZAyt7D6Bi5208Q1qGQq7waXSxrtpbXmFz3Ly/FAHxY17IOynLQpj6vbsrW3uSx5kySQZXr/WZck1M6yeZ7EIOo8wU64GzqW6xrQGWPUYYAXR619X51xxB0sEfPp5C6HRsgcFYfCuK5gwhczJ+GvMNFzSwZnurNbElROnMwo6fc0YRwxV3R1KTQkkEbeiKchyUgvWtS9rLomv1pVRdQumZuolevLO+Tas+ZnSIBYhi/jh6w0Jx3COwKVEz0m5rppqqiSSlLFaOqzlC+xhQY6AZRg4V3SI8MipcOT5TvBi9Nn378uL+LTl7sUdzDZQrMoGEyFX0o5WiMPPKp9jNcLVtzrHBD7bPyBF5Qu7y/tFK0GDwawC4wNaJtShBMBJ85dXXl8E6vpWC2xluHko6n1ej1taBDr4nW4WZJobQM3RINUpNYItPeovdVwAh2zR3B9W7iuGevnJr/+8tmDErTfJ7YFTRFdh8S00nQvrhbr1FT8rNqFwDyI2f+W/YB3GGwNTilqZ7zTMAVaktb0UqZlB7Ii7nlgDOnYu7GR63YlJDDaA3AKayMUJP/o94QT5q/AUi4Tc2M3v/zjkvC6jLXLIEixgMitV2I/ZbOJO0oAF+2mbbnShN1q10xV1N6vMhaZFjGgUtwZ6HO4kQlzrGdt2BorWLItokFTqxaqFcHYNV17HTs/pny6oRTXFh84mTXD9x1idlQbALtmDhOMQFYvaZlmr2EGs0IiWHBk+1DpmUdTqsqdHyuQ+dAc7pGCGdeSM2gtx4KySdSDfZ69jhA0N5c0XXC72yeAoXTPFRtGFc8sVe6ioZXbDKKqT9l8YP/r1Hq4ASr/McFwWKGJ/ekzJqKBNcnL5GERKrWuHPkuo0rvyTrEcM636I99zwc5uD/y8SsGALaZZZpb8F0yw5H1T+3DwxbQKuB9cIrCRgl1xKovWEX9jdLS0vjC1wHhmbeYrasYD9wUkofXEnj97XhU564n6E7t24hAv/fjn2N1L62lSWNHMk866L1eTH4hI7A4Yf2Xo5j+Ww7nqxjIbBGXuHWj3cZd0jrb0Y8yOYrZIpv0SUvmVYWGcs2HjyegD6B8xYWii2KoxN+fnQZXClYlS7r4QGqKIY1QVRCl153oG3H70dyKqUUdjRK+Tjq2lJdmSWo0X5xa+gh/Qs9QRXgl1nNkaChD0uC67u7mRFewFe2tUmQqqm2c/0YuB2AwQOWhlVp53BSbHRzzAZPKDg=="
+   rebuild ""
+   ToonShader_MagTol {{"\[python nuke.toNode('ToonKernel').knob('MagTol').getValue()]"}}
+   ToonShader_Quantize {{"\[python nuke.toNode('ToonKernel').knob('Quantize').getValue()]"}}
+   protectKernelWhenPublishing true
+   rebuild_finalise ""
+   maxTileLines 100
+   name BlinkScript3
+   xpos -253
+   ypos 147
+  }
+  Output {
+   name Output1
+   xpos -253
+   ypos 247
+  }
+ end_group
+push $N4d4ee400
+ Group {
+  name ToonKernel
+  xpos -607
+  ypos 191
+  addUserKnob {20 ToonKernel}
+  addUserKnob {41 "Local GPU: " T BlinkScript3.gpuName}
+  addUserKnob {41 "Use GPU if Available" T BlinkScript3.useGPUIfAvailable}
+  addUserKnob {26 ""}
+  addUserKnob {41 MagTol T BlinkScript3.ToonKernel_MagTol}
+  addUserKnob {41 Quantize T BlinkScript3.ToonKernel_Quantize}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos -837
+   ypos 155
+  }
+  BlinkScript {
+   recompileCount 185
+   ProgramGroup 1
+   KernelDescription "2 \"ToonKernel\" iterate pixelWise 9d2ca6ac26284eb78d43ff0c8998803fac640401c5e5cf2c80acb2b75bea0923 2 \"src\" Read Random \"dst\" Write Point 2 \"MagTol\" Float 1 AAAAAA== \"Quantize\" Int 1 AAAAAA== 2 \"MagTol\" 1 1 \"Quantize\" 1 1 0"
+   EncodedSource "1 1031 ZO+oJ4cRIOtIXNLmF0W00YqZdqZcZtII1JuIrGb5rkj0cG1Pxyn57fy7gT3zV7gCEG6n8VaBPtTEGEg+4V60VeWPFvcnKSHa4NM84fWk34kwpSclubIOvyqecEeTd0KMxNrykyaPNdKXCJffTgfyN2M/PoN64xuoWe4bTrsO9npIZogONBAIHsNQKzWGgFv0lAo2Rava1tJQFYmtwzLH2tUR/oYf8VmBkwgHu0QHbif/rzMsbP5PjHIei163p2Cy1koKFugC2tCcNMKoQmXVbOIuy8CCMKlTxwKF67+31A8IxqzXt6YiJy6JxVEowpe9ByOKiveXeijUlV9GzkrL1ZvBwFCD1pubULz+nuN7hD6ZCaYYCJH2LhGyGnYrGgJvyDlJxhxLb985YsakmwWDfYhyrEr3JqeLT0mFBhrdadgaocs1f/tA9xjh+Gbdy0AhyNFmHu2lbfDVGYcTWpfaVY5kZ+nnkUK0uhUZ+r+YCAKG5ZjdxdGPiSICQtGrgUpzJ7mCriNM7YRSHxpDCF63ZiuXiKPZ6COpTIGp7oJeCePnv/FJPiEGz3F+OxzRxXnOTKpsoaNEi3tQtlSPlEQAJLjrlU71JaJtKi5RAkKnsRJfKn763WW2ca21FDedgCcQeXLXCWJCiEqd/8ZC8uPVJrl6/P4Pww4khb52mfabfeXHeJiJjvQor/XayDYn6vXV1+Rdhj2VagtfCgwUvedTuz8DO1tOEgeNNysYSKQx1kvKT1XzlhinfOr1RMHO7CyU44NFzWvcC9hYXgdqVltTfRJIqu+zy99pYtdu5t7PIqLbphfvNwZSGXgE8EMCVLkoDR+76L635j9yXLmxL1MgRD3pCRcpKnhHKvNoIGPQ1k6mrrenG0E/G4ZUEtZlBDEU/hsKkDsVxbv6RU5jHaQXHZaCSXkH8OIsx31LUbnlrQGAtmyij7oW0VRMJoS/MmVbkJ6k7ZrIheW5RGD3jEhTtgv5R3zdxSxI32G2WALFYsdsKc/FtUMzDj2vbymJzdB39vB+Igl1NsCqMkepDs2ai9P9S80M13+0nakUWTUYaVGxMGv5NmXJ2a0IKuuQxPz4rvENzbefA2CsDs8TmM6pdGoO91Gns971/j7u05pjE8xEnLbuVR2VdOzuP5XXgHPWgm7RtrDCa5k9uzI64tAdMV3cF4jc3CunyzdJ/4hAA7bMYkxFZtzBhGfdcOTNmlgdjTVI4E4ZJ5645+KDY5AuhH6SHT6amlX9QQGxatlwI7jGgRyMXW4ng2zxMP8EA/0HhXMZI/hIQFxUi6I8zoXuSM4Ah/l0bXFAZXPPyflmbqtjFIzbDtFpeh98wDatJsyyEOyeFcqacpl7eqdjp37EFNNwB5cM7inrkytJBDvqnN8="
+   rebuild ""
+   ToonKernel_MagTol 0.415
+   ToonKernel_Quantize 40
+   protectKernelWhenPublishing true
+   rebuild_finalise ""
+   maxGPUMemory 80
+   maxTileLines 100
+   name BlinkScript3
+   xpos -837
+   ypos 195
+  }
+  Output {
+   name Output1
+   xpos -837
+   ypos 295
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{"\[python nuke.thisNode().knob('check').getValue()]"}}
+  name Switch1
+  xpos -607
+  ypos 283
+  addUserKnob {20 User}
+  addUserKnob {6 check l Check +STARTLINE}
+  check true
+ }
+set N3695f80 [stack 0]
+ Output {
+  name Output1
+  xpos -607
+  ypos 377
+ }
+push $N3695f80
+ Viewer {
+  frame_range 1-100
+  colour_sample_bbox {-0.207812503 -0.3562499881 -0.206249997 -0.3546875119}
+  name Viewer1
+  selected true
+  xpos -340
+  ypos 318
+ }
+end_group

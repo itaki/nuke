@@ -1,0 +1,2857 @@
+set cut_paste_input [stack 0]
+version 13.1 v3
+push $cut_paste_input
+Group {
+ name Halation_lite
+ tile_color 0xff2121ff
+ label "\[value type]"
+ selected true
+ xpos 210
+ ypos -107
+ addUserKnob {20 User}
+ addUserKnob {26 Name_and_Credit l "" +STARTLINE T "<style> a:link \{ color: #5991ff \}</style>\n<font color=#ddd680 size=\"5\">H</font><font color=#ded990 size=\"5\">a</font><font color=#dfdba0 size=\"5\">l</font><font color=#e0ddb0 size=\"5\">a</font><font color=#e1dfc0 size=\"5\">t</font><font color=#e0ddb0 size=\"5\">i</font><font color=#dfdba0 size=\"5\">on</font><font color=#ded990 size=\"3\"> v</font><font color=#ded990 size=\"2\">3.2</font>\n<font color=#ded990 size=\"2\">| by <a href=https://github.com/calvinsilly>silly calvin</font>"}
+ addUserKnob {4 type l " " -STARTLINE M {"Convo method" "Alpha method"}}
+ addUserKnob {26 ""}
+ addUserKnob {18 Halation t "Crudely mimics the sensitivity of halation from the layer based emulation of typical motion picture film.\n\nNot to be confused with the spread/radius of apparent halation. Which can be artistically controlled with \"LogBlur\"; found inside the \"Convo\" group below."}
+ Halation {0.6 0.3 0.3}
+ addUserKnob {6 Halation_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 color_rgb_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ color_rgb_panelDropped true
+ addUserKnob {22 reset l "Reset to default" T "nuke.thisNode().knob('Halation').setValue((.6, .3, 0.3))" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {20 Convo n 1}
+ addUserKnob {7 glow R 0.25 1.25}
+ glow 0.95
+ addUserKnob {7 kernel_size l "kernel size"}
+ kernel_size 1
+ addUserKnob {7 mix_1 l mix}
+ mix_1 1
+ addUserKnob {22 reset_1 l "Reset to default" T "nuke.thisNode().knob('glow').setValue(.95)\nnuke.thisNode().knob('mix_1').setValue(1)\nnuke.thisNode().knob('kernel_size').setValue(1)" +STARTLINE}
+ addUserKnob {20 LogBlur t "Will blur the halation kernel, acting as the spread/radius more so than the \"Halation\" parameters above." n 1}
+ LogBlur 0
+ addUserKnob {6 Enable_1 l Enable +STARTLINE}
+ addUserKnob {7 bias t "Multiplier on the logarithmic series of blurs. \n\nFor example with a bias of 1, the blur series will be:\n1 2 4 8 16 32 64 etc.\nWith a bias of 2 it will be \n1 4 " R 0 5}
+ bias 0.3
+ addUserKnob {7 blur_mult l size}
+ blur_mult 0.18
+ addUserKnob {7 iterations t "How many steps of the logarithmic series to use." R 0 8}
+ iterations 8
+ addUserKnob {3 quality t "Blur quality - gain some efficiency."}
+ quality 15
+ addUserKnob {7 aspect_ratio -STARTLINE R 0 2}
+ aspect_ratio 1
+ addUserKnob {7 mix t "Dissolve back to the input image"}
+ mix 1
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 Bleeding n 1}
+ Bleeding 0
+ addUserKnob {6 Enable +STARTLINE}
+ addUserKnob {41 scale +INVISIBLE T Reformat3.scale}
+ addUserKnob {7 seperation t "Acting as the spacing/seperation between frames in typical motion picture film; that as a conseqence tends to leak/bleed halation onto neighboring frames—top & bottom." R 0 100}
+ seperation 36
+ addUserKnob {6 strong_bleeding +STARTLINE}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 Input n 1}
+ addUserKnob {41 gamut l "input gamut" t "If \"8-bit\" is disabled; choose the expected gamut for your scene-linear input." T InGamut_to_XYZ.gamut}
+ addUserKnob {26 ""}
+ addUserKnob {6 display_ref l 8-bit? t "Does your input have enough information?\n\nLeaving this disbabled; it is assumed that the input is given as scene-linear, with information above \"1.0 float\". \nWhen working in ACES/TCAM or other DRT's leaving this option disabled may suffice.\n\nWhen enabled; there is an attempt to fool the script into beliving there is information greatar than 8-bit. \nHover over the eotf pulldown for more info." +STARTLINE}
+ addUserKnob {4 method l Methods M {"Method 1 — Jed's rgbDT tonescale" "Method 2 — Reinhard compression" "" "" ""}}
+ addUserKnob {41 eotf t "Choose the \"correct\" inverse EOTF to crudely convert input to scene-referred; if and only if input read node is set to \"RAW data\"/stimulus. \n\nOtherwise choose \"None\"." T InverseEOTF.eotf}
+ addUserKnob {7 limit l "Reinhard limit" t "The asymptotic maximum value. For example, a value of 1.0 becomes inf." R 1.01 1.1}
+ limit 1.1
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+}
+ Input {
+  inputs 0
+  name InputMask
+  xpos 241
+  ypos 628
+  number 1
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos 472
+  ypos -313
+ }
+set N7f66e400 [stack 0]
+ Group {
+  name InGamut_to_XYZ
+  tile_color 0x429940ff
+  xpos 473
+  ypos -263
+  disable {{parent.display_ref}}
+  addUserKnob {20 InputGamut_to_XYZ_tab l InputGamut_to_XYZ}
+  addUserKnob {4 gamut l "input gamut" M {ACES ACEScg P3D65 Rec.2020 Rec.709 "Alexa WideGamut" "Red WideGamutRGB" "Sony SGamut3" "Filmlight E-Gamut" "DaVinci Wide Gamut" "" ""}}
+  gamut Rec.709
+  addUserKnob {41 matrix T ColorMatrix.matrix}
+  addUserKnob {41 invert -STARTLINE T ColorMatrix.invert}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 290
+   ypos -610
+  }
+  Dot {
+   name Dot1
+   xpos 324
+   ypos -546
+  }
+set Nbcebe800 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{"SwitchGamut.input\[value SwitchGamut.which].matrix"} {"SwitchGamut.input\[value SwitchGamut.which].matrix"} {"SwitchGamut.input\[value SwitchGamut.which].matrix"}}
+       {{"SwitchGamut.input\[value SwitchGamut.which].matrix"} {"SwitchGamut.input\[value SwitchGamut.which].matrix"} {"SwitchGamut.input\[value SwitchGamut.which].matrix"}}
+       {{"SwitchGamut.input\[value SwitchGamut.which].matrix"} {"SwitchGamut.input\[value SwitchGamut.which].matrix"} {"SwitchGamut.input\[value SwitchGamut.which].matrix"}}
+     }
+   name ColorMatrix
+   xpos 290
+   ypos -370
+  }
+  Output {
+   name Output
+   xpos 290
+   ypos -250
+  }
+push $Nbcebe800
+  Dot {
+   name Dot391
+   label " *RGB to XYZ D65 CAT: XYZ Scaling"
+   xpos 434
+   ypos -546
+  }
+set Nbcebdc00 [stack 0]
+  ColorMatrix {
+   matrix {
+       {0.7006223202 0.1487748027 0.101058729}
+       {0.2741184831 0.8736317754 -0.1477504224}
+       {-0.09896290302 -0.1378953159 1.325916052}
+     }
+   name ColorMatrix30
+   label "DaVinci WG to XYZ D65"
+   xpos 1390
+   ypos -466
+  }
+push $Nbcebdc00
+  ColorMatrix {
+   matrix {
+       {0.705396831 0.1640413404 0.08101775497}
+       {0.2801307142 0.8202067018 -0.1003373787}
+       {-0.1037815139 -0.07290726155 1.265746593}
+     }
+   name ColorMatrix29
+   label "Filmlight E-Gamut to XYZ D65"
+   xpos 1280
+   ypos -466
+  }
+push $Nbcebdc00
+  ColorMatrix {
+   matrix {
+       {0.5990839005 0.2489254922 0.1024464965}
+       {0.2150758207 0.8850684166 -0.1001443192}
+       {-0.03206584975 -0.02765838802 1.148782015}
+     }
+   name ColorMatrix31
+   label "SonySGamut3 to XYZ D65"
+   xpos 1170
+   ypos -465
+  }
+push $Nbcebdc00
+  ColorMatrix {
+   matrix {
+       {0.735275209 0.06860940903 0.1465712786}
+       {0.2866940796 0.8429790735 -0.1296732426}
+       {-0.07968084514 -0.3473432064 1.516081929}
+     }
+   name ColorMatrix22
+   label "REDWideGamutRGB to XYZ D65"
+   xpos 1060
+   ypos -466
+  }
+push $Nbcebdc00
+  ColorMatrix {
+   matrix {
+       {0.6380076408 0.2147038132 0.09774445742}
+       {0.2919537723 0.8238408566 -0.1157948226}
+       {0.002798279049 -0.06703422219 1.153293848}
+     }
+   name ColorMatrix21
+   label "Arri AlexaWideGamut to XYZ D65"
+   xpos 950
+   ypos -466
+  }
+push $Nbcebdc00
+  ColorMatrix {
+   matrix {
+       {0.4123909175 0.3575843573 0.1804807931}
+       {0.2126390785 0.7151687145 0.07219231129}
+       {0.01933082566 0.1191947833 0.9505321383}
+     }
+   name ColorMatrix18
+   label "Rec709 to XYZ D65"
+   xpos 840
+   ypos -466
+  }
+push $Nbcebdc00
+  ColorMatrix {
+   matrix {
+       {0.6369581223 0.1446169168 0.1688809693}
+       {0.2627002299 0.6779981256 0.05930171534}
+       {4.99410725e-17 0.02807269618 1.060985088}
+     }
+   name ColorMatrix17
+   label "Rec2020 to XYZ D65"
+   xpos 730
+   ypos -466
+  }
+push $Nbcebdc00
+  ColorMatrix {
+   matrix {
+       {0.4865711331 0.2656677067 0.1982173175}
+       {0.2289746404 0.6917386055 0.07928691804}
+       {-3.972076965e-17 0.04511338845 1.043944478}
+     }
+   name ColorMatrix16
+   label "P3D65 to XYZ D65"
+   xpos 620
+   ypos -466
+  }
+push $Nbcebdc00
+  ColorMatrix {
+   matrix {
+       {0.6609312296 0.1336961389 0.1558285803}
+       {0.2722287476 0.6740817428 0.05368950963}
+       {-0.006018006243 0.004383686464 1.090692043}
+     }
+   name ColorMatrix1
+   label "ACEScg to XYZ D65"
+   xpos 510
+   ypos -466
+  }
+push $Nbcebdc00
+  ColorMatrix {
+   matrix {
+       {0.9503623843 0 9.346324805e-05}
+       {0.3439664543 0.728166163 -0.07213254273}
+       {0 0 1.089057803}
+     }
+   name ColorMatrix2
+   label "ACES to XYZ D65"
+   xpos 400
+   ypos -466
+  }
+  Switch {
+   inputs 10
+   which {{gamut}}
+   name SwitchGamut
+   xpos 400
+   ypos -370
+  }
+ end_group
+ ColorMatrix {
+  matrix {
+      {3.240968943 -1.537382722 -0.4986106157}
+      {-0.9692435861 1.875967264 0.04155508429}
+      {0.05563007668 -0.2039769441 1.056971431}
+    }
+  name XYZ_to_Rec709
+  tile_color 0x194c54ff
+  xpos 473
+  ypos -239
+  disable {{parent.display_ref}}
+ }
+ Group {
+  name EOTF
+  xpos 473
+  ypos -179
+  disable {{!parent.display_ref}}
+  addUserKnob {20 EOTF_tab l EOTF}
+  addUserKnob {4 eotf l EOTF t "Choose the inverse EOTF to apply for the target display device." M {None "sRGB Display" BT.1886 "Gamma 2.6" PQ HLG "" "" "" ""}}
+  eotf {{parent.InverseEOTF.eotf}}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 400
+   ypos -130
+  }
+set N7f66d400 [stack 0]
+  Expression {
+   expr0 r<=0.5?r*r/3:(exp((r-_c)/_a)+_b)/12
+   expr1 g<=0.5?g*g/3:(exp((g-_c)/_a)+_b)/12
+   expr2 b<=0.5?b*b/3:(exp((b-_c)/_a)+_b)/12
+   name HLG_InverseOETF
+   xpos 620
+   ypos -58
+   addUserKnob {20 CONSTANTS_tab l CONSTANTS}
+   addUserKnob {7 _a t alpha}
+   _a 0.17883277
+   addUserKnob {7 _b t beta}
+   _b {{1-4*_a}}
+   addUserKnob {7 _c}
+   _c {{0.5-_a*log(4*_a)}}
+  }
+  Expression {
+   temp_name0 Ys
+   temp_expr0 0.2627*r+0.6780*g+0.0593*b
+   expr0 pow(Ys,_g-1)*r
+   expr1 pow(Ys,_g-1)*g
+   expr2 pow(Ys,_g-1)*b
+   name HLG_OOTF
+   xpos 620
+   ypos -34
+   addUserKnob {20 CONSTANTS_tab l CONSTANTS}
+   addUserKnob {7 _g t "Gamma: Extended model for gamma variation according to peak display luminance and surround luminance: BT.2390-8 p32" R 0 2}
+   _g {{1.2*pow(1.111,log(Lp/1000)/log(2))*pow(0.98,log(max(1e-6,Lamb)/5)/log(2))}}
+   addUserKnob {7 Lp R 600 4000}
+   Lp 1000
+   addUserKnob {7 Lb}
+   addUserKnob {7 Lamb t "ambient luminance level in nits" R 0 200}
+   Lamb 5
+  }
+push $N7f66d400
+  Expression {
+   temp_name0 rp
+   temp_expr0 pow(r,1/m_2)
+   temp_name1 gp
+   temp_expr1 pow(g,1/m_2)
+   temp_name2 bp
+   temp_expr2 pow(b,1/m_2)
+   expr0 pow((rp-c_1)/(c_2-c_3*rp),1/m_1)
+   expr1 pow((gp-c_1)/(c_2-c_3*gp),1/m_1)
+   expr2 pow((bp-c_1)/(c_2-c_3*bp),1/m_1)
+   name ST2084_EOTF
+   xpos 510
+   ypos -58
+   addUserKnob {20 CONSTANTS_tab l CONSTANTS}
+   addUserKnob {7 m_1}
+   m_1 {{2610/4096*(1/4)}}
+   addUserKnob {7 m_2}
+   m_2 {{2523/4096*128}}
+   addUserKnob {7 c_1}
+   c_1 {{107/128}}
+   addUserKnob {7 c_2}
+   c_2 {{2413/128}}
+   addUserKnob {7 c_3}
+   c_3 {{2392/128}}
+  }
+push $N7f66d400
+  Expression {
+   expr0 sign(r)*pow(fabs(r),p)
+   expr1 sign(g)*pow(fabs(g),p)
+   expr2 sign(b)*pow(fabs(b),p)
+   name Power
+   xpos 400
+   ypos -58
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 p l power R 0.2 2}
+   p {{eotf?2+eotf*0.2:1}}
+  }
+  Switch {
+   inputs 3
+   which {{eotf-3}}
+   name SwitchInverseEOTF
+   xpos 400
+   ypos -10
+  }
+  Output {
+   name Output
+   xpos 400
+   ypos 62
+  }
+ end_group
+set N7f5b3900 [stack 0]
+ Dot {
+  name Dot11
+  xpos 633
+  ypos -176
+ }
+ Group {
+  name CompressionFunctions
+  xpos 599
+  ypos -43
+  disable {{!parent.display_ref}}
+  addUserKnob {20 CompressionFunctions_tab l CompressionFunctions}
+  addUserKnob {4 method t "The type of compression function to use. " M {log reinhard power exp arctan tanh}}
+  method reinhard
+  addUserKnob {7 threshold t "The minimum threshold. Values below this number will not be affected." R 0 6}
+  addUserKnob {7 limit t "The asymptotic maximum value. For example, the value that inf becomes." R 1 10}
+  limit {{parent.limit}}
+  addUserKnob {7 power t "adjust slope of power function (power method only)" R 0 4}
+  addUserKnob {4 direction M {forward inverse}}
+  direction inverse
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos -40
+   ypos -610
+  }
+  Dot {
+   name Dot6
+   xpos -6
+   ypos -510
+  }
+set N7f582c00 [stack 0]
+  Dot {
+   name Dot5
+   xpos 654
+   ypos -510
+  }
+set N7f582800 [stack 0]
+  Expression {
+   expr0 "r < t ? r : t+(l-t)*log((1+(r/(l-t)-t/(l-t)))/(1-(r/(l-t)-t/(l-t))))/2"
+   expr1 "g < t ? g : t+(l-t)*log((1+(g/(l-t)-t/(l-t)))/(1-(g/(l-t)-t/(l-t))))/2"
+   expr2 "b < t ? b : t+(l-t)*log((1+(b/(l-t)-t/(l-t)))/(1-(b/(l-t)-t/(l-t))))/2"
+   name uncompress_tanh
+   xpos 1170
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{"min(parent.threshold, parent.limit)"}}
+   addUserKnob {7 l R 1 2}
+   l {{max(t,parent.limit)}}
+  }
+push $N7f582800
+  Expression {
+   temp_name0 pi
+   temp_expr0 3.14159265359
+   expr0 "r < t ? r : t+(l-t)*2/pi*tan(pi/2*(r-t)/(l-t))"
+   expr1 "g < t ? g : t+(l-t)*2/pi*tan(pi/2*(g-t)/(l-t))"
+   expr2 "b < t ? b : t+(l-t)*2/pi*tan(pi/2*(b-t)/(l-t))"
+   name uncompress_atan
+   xpos 1060
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{"min(parent.threshold, parent.limit)"}}
+   addUserKnob {7 l R 1 2}
+   l {{max(t,parent.limit)}}
+  }
+push $N7f582800
+  Expression {
+   expr0 r<t?r:-log((r-lm)/(t-lm))*(-t+lm)/sc+t
+   expr1 g<t?g:-log((g-lm)/(t-lm))*(-t+lm)/sc+t
+   expr2 b<t?b:-log((b-lm)/(t-lm))*(-t+lm)/sc+t
+   name uncompress_exp
+   xpos 950
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{"min(parent.threshold, parent.limit)"}}
+   addUserKnob {7 lm R 1 2}
+   lm {{max(t,parent.limit)}}
+   addUserKnob {7 sc}
+   sc 1
+  }
+push $N7f582800
+  Expression {
+   expr0 r<t?r:t+(lm-t)*pow(-pow((r-t)/(lm-t),p)/(pow((r-t)/(lm-t),p)-1),1/p)
+   expr1 g<t?g:t+(lm-t)*pow(-pow((g-t)/(lm-t),p)/(pow((g-t)/(lm-t),p)-1),1/p)
+   expr2 b<t?b:t+(lm-t)*pow(-pow((b-t)/(lm-t),p)/(pow((b-t)/(lm-t),p)-1),1/p)
+   name uncompress_power
+   xpos 840
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{parent.threshold}}
+   addUserKnob {7 lm}
+   lm {{parent.limit}}
+   addUserKnob {7 p R 1 5}
+   p {{parent.power}}
+  }
+push $N7f582800
+  Expression {
+   expr0 r<t?r:t+1/(1/(r-t)-1/(lm-t))
+   expr1 g<t?g:t+1/(1/(g-t)-1/(lm-t))
+   expr2 b<t?b:t+1/(1/(b-t)-1/(lm-t))
+   name uncompress_hyperbolic
+   xpos 730
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{"min(parent.threshold, parent.limit)"}}
+   addUserKnob {7 lm R 1 2}
+   lm {{parent.limit}}
+  }
+push $N7f582800
+  Expression {
+   expr0 r<t?r:exp((r-t+t*log(1-lm)-lm*t*log(1-lm))/(t*(1-lm)))*t+lm*t
+   expr1 g<t?g:exp((g-t+t*log(1-lm)-lm*t*log(1-lm))/(t*(1-lm)))*t+lm*t
+   expr2 b<t?b:exp((b-t+t*log(1-lm)-lm*t*log(1-lm))/(t*(1-lm)))*t+lm*t
+   name uncompress_log
+   xpos 620
+   ypos -441
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{parent.threshold}}
+   addUserKnob {7 lm}
+   lm {{min(0.999999,(1-parent.limit)+1)}}
+  }
+  Switch {
+   inputs 6
+   which {{parent.method}}
+   name switch_method1
+   xpos 620
+   ypos -345
+  }
+  Dot {
+   name Dot2
+   xpos 654
+   ypos -198
+  }
+push $N7f582c00
+  Expression {
+   expr0 "r < t ? r : t+(l-t)*tanh( ( (r-t)/( l-t)))"
+   expr1 "g < t ? g : t+(l-t)*tanh( ( (g-t)/( l-t)))"
+   expr2 "b < t ? b : t+(l-t)*tanh( ( (b-t)/( l-t)))"
+   name compress_tanh
+   xpos 510
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{"min(parent.threshold, parent.limit)"}}
+   addUserKnob {7 l R 1 2}
+   l {{max(t,parent.limit)}}
+  }
+push $N7f582c00
+  Expression {
+   temp_name0 pi
+   temp_expr0 3.14159265359
+   expr0 "r < t ? r : t+(l-t)*2/pi*atan(pi/2*(r-t)/(l-t))"
+   expr1 "g < t ? g : t+(l-t)*2/pi*atan(pi/2*(g-t)/(l-t))"
+   expr2 "b < t ? b : t+(l-t)*2/pi*atan(pi/2*(b-t)/(l-t))"
+   name compress_atan
+   xpos 400
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{"min(parent.threshold, parent.limit)"}}
+   addUserKnob {7 l R 1 2}
+   l {{max(t,parent.limit)}}
+  }
+push $N7f582c00
+  Expression {
+   expr0 r<t?r:lm-(lm-t)*exp(-(((r-t)*((sc*lm)/(lm-t))/lm)))
+   expr1 g<t?g:lm-(lm-t)*exp(-(((g-t)*((sc*lm)/(lm-t))/lm)))
+   expr2 b<t?b:lm-(lm-t)*exp(-(((b-t)*((sc*lm)/(lm-t))/lm)))
+   name compress_exp
+   xpos 290
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{"min(parent.threshold, parent.limit)"}}
+   addUserKnob {7 lm R 1 2}
+   lm {{max(t,parent.limit)}}
+   addUserKnob {7 sc}
+   sc 1
+  }
+push $N7f582c00
+  Expression {
+   expr0 r<t?r:t+((r-t)*(lm-t))/pow(pow((lm-t),p)+pow((r-t),p),1/p)
+   expr1 g<t?g:t+((g-t)*(lm-t))/pow(pow((lm-t),p)+pow((g-t),p),1/p)
+   expr2 b<t?b:t+((b-t)*(lm-t))/pow(pow((lm-t),p)+pow((b-t),p),1/p)
+   name compress_power
+   xpos 180
+   ypos -443
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{parent.threshold}}
+   addUserKnob {7 lm}
+   lm {{parent.limit}}
+   addUserKnob {7 p R 1 5}
+   p {{parent.power}}
+  }
+push $N7f582c00
+  Expression {
+   expr0 r<t?r:t+1/(1/(r-t)+1/(lm-t))
+   expr1 g<t?g:t+1/(1/(g-t)+1/(lm-t))
+   expr2 b<t?b:t+1/(1/(b-t)+1/(lm-t))
+   name compress_hyperbolic
+   xpos 70
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{min(parent.threshold,parent.limit)}}
+   addUserKnob {7 lm R 1 2}
+   lm {{parent.limit}}
+  }
+push $N7f582c00
+  Expression {
+   expr0 r<t?r:t*log(r/t-lm)-lm*t*log(r/t-lm)+t-t*log(1-lm)+lm*t*log(1-lm)
+   expr1 g<t?g:t*log(g/t-lm)-lm*t*log(g/t-lm)+t-t*log(1-lm)+lm*t*log(1-lm)
+   expr2 b<t?b:t*log(b/t-lm)-lm*t*log(b/t-lm)+t-t*log(1-lm)+lm*t*log(1-lm)
+   name compress_log
+   xpos -40
+   ypos -441
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{parent.threshold}}
+   addUserKnob {7 lm}
+   lm {{min(0.999999,(1-parent.limit)+1)}}
+  }
+  Switch {
+   inputs 6
+   which {{parent.method}}
+   name switch_method
+   xpos -40
+   ypos -345
+  }
+  Switch {
+   inputs 2
+   which {{parent.direction}}
+   name switch_reverse
+   xpos -40
+   ypos -202
+  }
+  Output {
+   name Output
+   xpos -40
+   ypos -106
+  }
+  Expression {
+   inputs 0
+   expr0 r<t?r:sc*((r-t)/sc)/pow(1+pow((r-t)/sc,p),1/p)+t
+   expr1 g<t?g:sc*((g-t)/sc)/pow(1+pow((g-t)/sc,p),1/p)+t
+   expr2 b<t?b:sc*((b-t)/sc)/pow(1+pow((b-t)/sc,p),1/p)+t
+   name compress_hyperbolic_power
+   xpos 1390
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t t "threshold to start compression" R 0 2}
+   t 0.5
+   addUserKnob {7 x0 t "x coordinate to compress to" R 0 2}
+   x0 2
+   addUserKnob {7 y0 t "y coordinate to compress to" R 0 2}
+   y0 0.825
+   addUserKnob {7 p R 1 2}
+   p 1.2
+   addUserKnob {7 sc}
+   sc {{(x0-t)/pow(pow((y0-t)/(x0-t),-p)-1,1/p)}}
+  }
+  Expression {
+   inputs 0
+   expr0 r<t?r:sc*pow(-pow((r-t)/sc,p)/(pow((r-t)/sc,p)-1),1/p)+t
+   expr1 g<t?g:sc*pow(-pow((g-t)/sc,p)/(pow((g-t)/sc,p)-1),1/p)+t
+   expr2 b<t?b:sc*pow(-pow((b-t)/sc,p)/(pow((b-t)/sc,p)-1),1/p)+t
+   name uncompress_hyperbolic_power
+   xpos 1500
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t t "threshold to start compression" R 0 2}
+   t 0.5
+   addUserKnob {7 x0 t "x coordinate to compress to" R 0 2}
+   x0 2
+   addUserKnob {7 y0 t "y coordinate to compress to" R 0 2}
+   y0 0.825
+   addUserKnob {7 p R 1 2}
+   p 1.2
+   addUserKnob {7 sc}
+   sc {{(x0-t)/pow(pow((y0-t)/(x0-t),-p)-1,1/p)}}
+  }
+  StickyNote {
+   inputs 0
+   name StickyNote1
+   tile_color 0x272727ff
+   label "<left>Hyperbolic Power Compression Function with (x0, y0) intersection constraint\nhttps://www.desmos.com/calculator/ht27poixiw"
+   note_font_size 8
+   note_font_color 0xa8a8a8ff
+   xpos 1387
+   ypos -496
+  }
+  Expression {
+   inputs 0
+   expr0 r<t0?r:sc*sqrt(r-ox)+oy
+   expr1 g<t0?g:sc*sqrt(g-ox)+oy
+   expr2 b<t0?b:sc*sqrt(b-ox)+oy
+   name compress_parabolic
+   xpos 1718
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t0 t "threshold to start compression" R 0 2}
+   t0 0.3
+   addUserKnob {7 x0 t "x coordinate to compress to" R 0 2}
+   x0 1
+   addUserKnob {7 y0 t "y coordinate to compress to" R 0 2}
+   y0 0.5
+   addUserKnob {7 sc}
+   sc {{(y0-t0)/sqrt(x0-y0)}}
+   addUserKnob {7 ox R -2 2}
+   ox {{t0-sc*sc/4}}
+   addUserKnob {7 oy R -2 2}
+   oy {{t0-sc*sqrt(sc*sc/4)}}
+  }
+  Expression {
+   inputs 0
+   expr0 r<t0?r:pow((oy-r)/sc,2)+ox
+   expr1 g<t0?g:pow((oy-g)/sc,2)+ox
+   expr2 b<t0?b:pow((oy-b)/sc,2)+ox
+   name uncompress_parabolic
+   xpos 1833
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t0 t "threshold to start compression" R 0 2}
+   t0 0.3
+   addUserKnob {7 x0 t "x coordinate to compress to" R 0 2}
+   x0 1
+   addUserKnob {7 y0 t "y coordinate to compress to" R 0 2}
+   y0 0.5
+   addUserKnob {7 sc}
+   sc {{(y0-t0)/sqrt(x0-y0)}}
+   addUserKnob {7 ox R -2 2}
+   ox {{t0-sc*sc/4}}
+   addUserKnob {7 oy R -2 2}
+   oy {{t0-sc*sqrt(sc*sc/4)}}
+  }
+  StickyNote {
+   inputs 0
+   name StickyNote2
+   tile_color 0x272727ff
+   label "<left>Parabolic Compression Function with (x0, y0) intersection constraint\nhttps://www.desmos.com/calculator/khowxlu6xh"
+   note_font_size 8
+   note_font_color 0xa8a8a8ff
+   xpos 1711
+   ypos -496
+  }
+  Expression {
+   inputs 0
+   expr0 !x0?r:r>t0?r:sc*sqrt(-r-ox)+oy
+   expr1 !x0?g:g>t0?g:sc*sqrt(-g-ox)+oy
+   expr2 !x0?b:b>t0?b:sc*sqrt(-b-ox)+oy
+   name compress_toe_parabolic
+   xpos 2050
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t0 t "threshold to start compression" R 0 2}
+   t0 0.3
+   addUserKnob {7 x0 t "x coordinate to compress to" R 0 2}
+   x0 1
+   addUserKnob {7 sc}
+   sc {{-t0/sqrt(x0)}}
+   addUserKnob {7 ox R -2 2}
+   ox {{-sc*sc/4-t0}}
+   addUserKnob {7 oy R -2 2}
+   oy {{t0-sc*sqrt(sc*sc/4)}}
+  }
+  Expression {
+   inputs 0
+   expr0 r>t0?r:-pow((oy-r)/sc,2)-ox
+   expr1 g>t0?g:-pow((oy-g)/sc,2)-ox
+   expr2 b>t0?b:-pow((oy-b)/sc,2)-ox
+   name uncompress_toe_parabolic
+   xpos 2160
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t0 t "threshold to start compression" R 0 2}
+   t0 0.3
+   addUserKnob {7 x0 t "x coordinate to compress to" R 0 2}
+   x0 1
+   addUserKnob {7 sc}
+   sc {{-t0/sqrt(x0)}}
+   addUserKnob {7 ox R -2 2}
+   ox {{-sc*sc/4-t0}}
+   addUserKnob {7 oy R -2 2}
+   oy {{t0-sc*sqrt(sc*sc/4)}}
+  }
+  Expression {
+   inputs 0
+   temp_name0 n
+   temp_expr0 max(r,g,b)
+   temp_name1 s
+   temp_expr1 n<t0?1:invert?(_b-_a/(n-s1))/n:(_a/(_b-n)+s1)/n
+   expr0 r*s
+   expr1 g*s
+   expr2 b*s
+   expr3 a*s
+   name HyperbolicCompression
+   xpos 2490
+   ypos -442
+   addUserKnob {20 Params}
+   addUserKnob {7 t0}
+   t0 0.18
+   addUserKnob {7 w0 t "input x" R 0 20}
+   w0 4
+   addUserKnob {7 w1 t "output y" R 0 4}
+   w1 1
+   addUserKnob {7 s1 R 0 4}
+   s1 {{(w0*w1-t0*(2*w1-t0))/(w0-w1)}}
+   addUserKnob {7 _a R 0 4}
+   _a {{(t0-s1)**2}}
+   addUserKnob {7 _b R 0 4}
+   _b {{2*t0-s1}}
+   addUserKnob {6 invert +STARTLINE}
+  }
+  StickyNote {
+   inputs 0
+   name StickyNote3
+   tile_color 0x272727ff
+   label "<left>Parabolic Toe Compression Function with (x0, 0) intersection constraint\nhttps://www.desmos.com/calculator/wfw5rzrv5x"
+   note_font_size 8
+   note_font_color 0xa8a8a8ff
+   xpos 2033
+   ypos -502
+  }
+  StickyNote {
+   inputs 0
+   name StickyNote4
+   tile_color 0x272727ff
+   label "<left>Simpler hyperbolic compression function\nhttps://www.desmos.com/calculator/e4ik6xh0tz"
+   note_font_size 8
+   note_font_color 0xa8a8a8ff
+   xpos 2440
+   ypos -509
+  }
+ end_group
+push $N7f5b3900
+ Expression {
+  temp_name0 rt
+  temp_expr0 (r+sqrt(r*(4*fl+r)))/2
+  temp_name1 gt
+  temp_expr1 (g+sqrt(g*(4*fl+g)))/2
+  temp_name2 bt
+  temp_expr2 (b+sqrt(b*(4*fl+b)))/2
+  expr0 (pow(rt/sy,1/p)/(1-pow(rt/sy,1/p)))*sx
+  expr1 (pow(gt/sy,1/p)/(1-pow(gt/sy,1/p)))*sx
+  expr2 (pow(bt/sy,1/p)/(1-pow(bt/sy,1/p)))*sx
+  name InvToneScale
+  xpos 473
+  ypos -110
+  disable {{!parent.display_ref}}
+  addUserKnob {20 Params}
+  addUserKnob {7 p R 1 2}
+  p 1.045
+  addUserKnob {7 fl l flare R 0 0.01}
+  fl 0.01
+  addUserKnob {7 sx R 0 10}
+  sx 1.22265899
+  addUserKnob {7 sy R 0 4}
+  sy 1.04547374
+ }
+ Expression {
+  expr0 r<pv?(r/cs)**(1/p):(r-pv)/p+pv
+  expr1 g<pv?(g/cs)**(1/p):(g-pv)/p+pv
+  expr2 b<pv?(b/cs)**(1/p):(b-pv)/p+pv
+  name InvContrast_LX
+  xpos 473
+  ypos -67
+  disable {{!parent.display_ref}}
+  addUserKnob {20 Params}
+  addUserKnob {7 p R 1 1.4}
+  p 1.2
+  addUserKnob {7 pv}
+  pv 0.18
+  addUserKnob {7 cs R 0 4}
+  cs 1.409111953
+ }
+ Switch {
+  inputs 2
+  which {{parent.method}}
+  name Switch3
+  xpos 473
+  ypos -43
+ }
+ Dot {
+  name Dot5
+  xpos 507
+  ypos -11
+ }
+set N52da2000 [stack 0]
+ Dot {
+  name Dot4
+  xpos 143
+  ypos -11
+ }
+set N52da1c00 [stack 0]
+ Shuffle {
+  alpha black
+  black black
+  white black
+  red2 black
+  green2 black
+  name Shuffle7
+  xpos -162
+  ypos -14
+ }
+ Dot {
+  name Dot45
+  xpos -128
+  ypos 83
+ }
+set N52da1400 [stack 0]
+ Keyer {
+  operation "luminance key"
+  range {0.08059044111 0.5163758491 1 1}
+  name Keyer1
+  xpos -225
+  ypos 74
+ }
+ Blur {
+  channels alpha
+  size 18.5
+  name Blur5
+  xpos -225
+  ypos 141
+ }
+push $N52da1400
+ EdgeDetectWrapper {
+  channels {rgba.red rgba.green -rgba.blue rgba.alpha}
+  threshold 5
+  blursize 3
+  name EdgeDetect2
+  xpos -94
+  ypos 74
+ }
+ Blur {
+  channels alpha
+  size 30
+  maskChannelInput -rgba.alpha
+  name Blur1
+  xpos -94
+  ypos 141
+ }
+push $N52da1400
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -162
+  ypos 209
+ }
+push $N52da1c00
+ Expression {
+  expr0 "(r>=0) ? r**(1/double) : r"
+  expr1 "(g>=0) ? g**(1/double_1) : g"
+  expr2 "(b>=0) ? b**(1/double_2) : b"
+  name CONTROL
+  tile_color 0xed87c3ff
+  note_font "Verdana Bold"
+  xpos 109
+  ypos 158
+  addUserKnob {20 User}
+  addUserKnob {7 double l red R 0 2}
+  double {{lerp(2,0,Halation.r)}}
+  addUserKnob {7 double_1 l grn R 0 2}
+  double_1 {{lerp(2,0,Halation.g)}}
+  addUserKnob {7 double_2 l blu R 0 2}
+  double_2 {{lerp(2,0,Halation.b)}}
+  addUserKnob {26 ""}
+ }
+ Group {
+  inputs 2
+  name Group7
+  xpos 109
+  ypos 215
+  addUserKnob {20 User}
+  addUserKnob {41 channels T Blur2.channels}
+  addUserKnob {41 size T Blur2.size}
+  addUserKnob {26 ""}
+  addUserKnob {41 mix T Blur2.mix}
+ }
+  Input {
+   inputs 0
+   name InputMask
+   xpos 504
+   ypos 871
+   number 1
+  }
+  Input {
+   inputs 0
+   name Input1
+   xpos 827
+   ypos 197
+  }
+set N52d43000 [stack 0]
+  Blur {
+   channels rgb
+   size 1
+   name Blur2
+   xpos 827
+   ypos 237
+  }
+  Blur {
+   channels {{{parent.Blur2.channels}}}
+   size {{parent.Blur2.size}}
+   mix {{parent.Blur2.mix}}
+   name Blur3
+   xpos 827
+   ypos 305
+  }
+  Blur {
+   channels {{{parent.Blur2.channels}}}
+   size {{parent.Blur2.size+Blur3.size}}
+   mix {{parent.Blur3.mix/2}}
+   name Blur4
+   xpos 827
+   ypos 365
+  }
+  Blur {
+   channels {{{parent.Blur2.channels}}}
+   size {{parent.Blur3.size+Blur4.size}}
+   mix {{parent.Blur3.mix/3}}
+   name Blur5
+   xpos 827
+   ypos 447
+  }
+  Blur {
+   channels {{{parent.Blur5.channels}}}
+   size {{parent.Blur4.size+Blur5.size}}
+   mix {{parent.Blur3.mix/5}}
+   name Blur6
+   xpos 827
+   ypos 532
+  }
+  Blur {
+   channels {{{parent.Blur6.channels}}}
+   size {{parent.Blur5.size+Blur6.size}}
+   mix {{parent.Blur3.mix/8}}
+   name Blur7
+   xpos 827
+   ypos 614
+  }
+  Blur {
+   channels {{{parent.Blur7.channels}}}
+   size {{parent.Blur6.size+Blur7.size}}
+   mix {{parent.Blur3.mix/13}}
+   name Blur8
+   xpos 827
+   ypos 708
+  }
+  Blur {
+   channels {{{parent.Blur8.channels}}}
+   size {{parent.Blur7.size+Blur8.size}}
+   mix {{parent.Blur3.mix/21}}
+   name Blur9
+   xpos 827
+   ypos 798
+  }
+  Blur {
+   channels {{{parent.Blur9.channels}}}
+   size {{parent.Blur8.size+Blur9.size}}
+   mix {{parent.Blur3.mix/34}}
+   name Blur10
+   xpos 827
+   ypos 894
+  }
+  Blur {
+   channels {{{parent.Blur10.channels}}}
+   size {{parent.Blur9.size+Blur10.size}}
+   mix {{parent.Blur3.mix/55}}
+   name Blur11
+   xpos 827
+   ypos 994
+  }
+  Blur {
+   channels {{{parent.Blur11.channels}}}
+   size {{parent.Blur10.size+Blur11.size}}
+   mix {{parent.Blur3.mix/89}}
+   name Blur12
+   xpos 827
+   ypos 1078
+  }
+push $N52d43000
+  Dot {
+   name Dot1
+   xpos 698
+   ypos 936
+  }
+  Merge2 {
+   inputs 2+1
+   operation copy
+   name Merge1
+   xpos 821
+   ypos 1156
+  }
+  Output {
+   name Output1
+   xpos 841
+   ypos 1230
+  }
+ end_group
+ Expression {
+  expr0 "(r>=0) ? r**(1/double) : r"
+  expr1 "(g>=0) ? g**(1/double_1) : g"
+  expr2 "(b>=0) ? b**(1/double_2) : b"
+  name Expression2
+  xpos 109
+  ypos 267
+  addUserKnob {20 User}
+  addUserKnob {7 double l red R 0 2}
+  double {{parent.CONTROL.double**-1}}
+  addUserKnob {7 double_1 l grn R 0 2}
+  double_1 {{parent.CONTROL.double_1**-1}}
+  addUserKnob {7 double_2 l blu R 0 2}
+  double_2 {{parent.CONTROL.double_2**-1}}
+ }
+push $N52da2000
+ Dot {
+  name Dot1
+  xpos 507
+  ypos 127
+ }
+set N52ccac00 [stack 0]
+ Group {
+  name Group1
+  xpos 473
+  ypos 155
+ }
+  BackdropNode {
+   inputs 0
+   name BackdropNode1
+   tile_color 0xaaaaaa00
+   label FCH
+   note_font_size 42
+   xpos 495
+   ypos -463
+   bdwidth 189
+   bdheight 430
+  }
+  Input {
+   inputs 0
+   name Input1
+   xpos 557
+   ypos -633
+  }
+  Expression {
+   expr0 "(r>=0) ? r**(1/double) : r"
+   expr1 "(g>=0) ? g**(1/double_1) : g"
+   expr2 "(b>=0) ? b**(1/double_2) : b"
+   name CONTROL1
+   tile_color 0xed87c3ff
+   note_font "Verdana Bold"
+   xpos 557
+   ypos -589
+   cached true
+   addUserKnob {20 User}
+   addUserKnob {7 double l red R 0 2}
+   double 0.925
+   addUserKnob {7 double_1 l grn R 0 2}
+   double_1 1.125
+   addUserKnob {7 double_2 l blu R 0 2}
+   double_2 1.26
+   addUserKnob {26 ""}
+  }
+  Group {
+   name Mist
+   xpos 557
+   ypos -544
+   addUserKnob {20 Mist}
+   addUserKnob {7 m l soft}
+   m 0.34
+   addUserKnob {7 pw l contrast R -1 1}
+   pw 1.3
+   addUserKnob {7 s l size t "convolution kernel size : range 128 to 2048"}
+   s 1
+   addUserKnob {26 ""}
+   addUserKnob {41 useGPUIfAvailable l "Use GPU if available" T Convolve.useGPUIfAvailable}
+   addUserKnob {41 maskChannelMask l mask -STARTLINE T Convolve.maskChannelMask}
+   addUserKnob {41 invert_mask l invert -STARTLINE T Convolve.invert_mask}
+   addUserKnob {41 mix T Convolve.mix}
+  }
+   Input {
+    inputs 0
+    name Inputmask
+    xpos 180
+    ypos -705
+    number 1
+   }
+   Input {
+    inputs 0
+    name Input
+    xpos 70
+    ypos -802
+   }
+   Dot {
+    name Dot1
+    xpos 104
+    ypos -750
+   }
+set N52cc9400 [stack 0]
+   Reformat {
+    type "to box"
+    box_width {{rint(s*960+64)*2}}
+    box_height {{box_width}}
+    box_fixed true
+    resize distort
+    black_outside true
+    name Reformat3
+    xpos -40
+    ypos -753
+   }
+   Expression {
+    temp_name0 d0
+    temp_expr0 hypot(x/width-0.5,y/height-0.5)+mn
+    temp_name1 d
+    temp_expr1 pow(d0,p)
+    channel0 {rgba.red rgba.green rgba.blue none}
+    expr0 max(0,1/(d*d)-4*(1-s))
+    channel3 none
+    name inverse_square
+    xpos -40
+    ypos -705
+    addUserKnob {20 User}
+    addUserKnob {7 mn}
+    mn {{max(1e-8,pow(m,1.8)*10/width)}}
+    addUserKnob {7 p R 0 4}
+    p {{pow(2,pw)}}
+   }
+push $N52cc9400
+   Convolve2 {
+    inputs 2+1
+    channels rgba
+    filter_channel rgba.red
+    filter_bounds format
+    name Convolve
+    xpos 70
+    ypos -705
+   }
+   Reformat {
+    type "to box"
+    box_width {{"\[exists input] ? input.width : root.width"}}
+    box_height {{"\[exists input] ? input.height : root.height"}}
+    box_fixed true
+    box_pixel_aspect {{"\[exists input] ? input.pixel_aspect : root.pixel_aspect"}}
+    resize none
+    black_outside true
+    name BboxRemove
+    xpos 70
+    ypos -634
+   }
+   Output {
+    name Output
+    xpos 70
+    ypos -601
+   }
+  end_group
+  Expression {
+   expr0 "(r>=0) ? r**(1/double) : r"
+   expr1 "(g>=0) ? g**(1/double_1) : g"
+   expr2 "(b>=0) ? b**(1/double_2) : b"
+   name Expression1
+   xpos 561
+   ypos -502
+   addUserKnob {20 User}
+   addUserKnob {7 double l red R 0 2}
+   double {{parent.CONTROL1.double**-1}}
+   addUserKnob {7 double_1 l grn R 0 2}
+   double_1 {{parent.CONTROL1.double_1**-1}}
+   addUserKnob {7 double_2 l blu R 0 2}
+   double_2 {{parent.CONTROL1.double_2**-1}}
+  }
+  Expression {
+   expr0 "(r>=0) ? r**(1/double) : r"
+   expr1 "(g>=0) ? g**(1/double_1) : g"
+   expr2 "(b>=0) ? b**(1/double_2) : b"
+   name CONTROL
+   tile_color 0xed87c3ff
+   note_font "Verdana Bold"
+   xpos 557
+   ypos -371
+   cached true
+   addUserKnob {20 User}
+   addUserKnob {7 double l red R 0 2}
+   double {{lerp(2,0,Halation.r)}}
+   addUserKnob {7 double_1 l grn R 0 2}
+   double_1 {{lerp(2,0,Halation.g)}}
+   addUserKnob {7 double_2 l blu R 0 2}
+   double_2 {{lerp(2,0,Halation.b)}}
+   addUserKnob {26 ""}
+  }
+  Group {
+   name Mist1
+   xpos 557
+   ypos -230
+   addUserKnob {20 Mist}
+   addUserKnob {7 m l soft}
+   m 0.35
+   addUserKnob {7 pw l contrast R -1 1}
+   pw {{min(lerp(2.7,0.7,parent.parent.glow-.25),2.0)}}
+   addUserKnob {7 s l size t "convolution kernel size : range 128 to 2048"}
+   s {{parent.parent.kernel_size}}
+   addUserKnob {26 ""}
+   addUserKnob {41 useGPUIfAvailable l "Use GPU if available" T Convolve.useGPUIfAvailable}
+   addUserKnob {41 maskChannelMask l mask -STARTLINE T Convolve.maskChannelMask}
+   addUserKnob {41 invert_mask l invert -STARTLINE T Convolve.invert_mask}
+   addUserKnob {41 mix T Convolve.mix}
+  }
+   Input {
+    inputs 0
+    name Inputmask
+    xpos 180
+    ypos -705
+    number 1
+   }
+   Input {
+    inputs 0
+    name Input
+    xpos 70
+    ypos -802
+   }
+   Dot {
+    name Dot1
+    xpos 104
+    ypos -750
+   }
+set N52c65c00 [stack 0]
+   Reformat {
+    type "to box"
+    box_width {{rint(s*960+64)*2}}
+    box_height {{box_width}}
+    box_fixed true
+    resize distort
+    black_outside true
+    name Reformat3
+    xpos -40
+    ypos -753
+   }
+   Expression {
+    temp_name0 d0
+    temp_expr0 hypot(x/width-0.5,y/height-0.5)+mn
+    temp_name1 d
+    temp_expr1 pow(d0,p)
+    channel0 {rgba.red rgba.green rgba.blue none}
+    expr0 max(0,1/(d*d)-4*(1-s))
+    channel3 none
+    name inverse_square
+    xpos -40
+    ypos -705
+    addUserKnob {20 User}
+    addUserKnob {7 mn}
+    mn {{max(1e-8,pow(m,1.8)*10/width)}}
+    addUserKnob {7 p R 0 4}
+    p {{pow(2,pw)}}
+   }
+   Group {
+    name LogBlur
+    tile_color 0xcc804eff
+    xpos -40
+    ypos -652
+    disable {{!parent.parent.parent.Enable_1}}
+    addUserKnob {20 LogBlur}
+    addUserKnob {7 bias t "Multiplier on the logarithmic series of blurs. \n\nFor example with a bias of 1, the blur series will be:\n1 2 4 8 16 32 64 etc.\nWith a bias of 2 it will be \n1 4 " R 0 5}
+    bias {{parent.parent.parent.bias}}
+    addUserKnob {7 blur_mult l size}
+    blur_mult {{parent.parent.parent.blur_mult}}
+    addUserKnob {14 size l INVISIBLE t "Multiplier on the blur size." +INVISIBLE R 0 100}
+    size {{blur_mult} {blur_mult/aspect_ratio}}
+    addUserKnob {7 iterations t "How many steps of the logarithmic series to use." R 0 8}
+    iterations {{parent.parent.parent.iterations}}
+    addUserKnob {3 quality t "Blur quality - gain some efficiency."}
+    quality {{parent.parent.parent.quality}}
+    addUserKnob {7 aspect_ratio -STARTLINE R 0 2}
+    aspect_ratio {{parent.parent.parent.aspect_ratio}}
+    addUserKnob {26 ""}
+    addUserKnob {7 mix t "Dissolve back to the input image"}
+    mix {{parent.parent.parent.mix}}
+   }
+    Input {
+     inputs 0
+     name Inputmask
+     xpos 448
+     ypos 123
+     number 1
+    }
+    Input {
+     inputs 0
+     name Input
+     xpos 280
+     ypos -297
+    }
+    Dot {
+     name Dot188
+     label " "
+     note_font "Helvetica Bold"
+     note_font_size 24
+     note_font_color 0xff000000
+     xpos 314
+     ypos -222
+    }
+set N52c64400 [stack 0]
+    Dot {
+     name Dot2
+     label " "
+     note_font "Helvetica Bold"
+     note_font_size 24
+     note_font_color 0xa5a5a501
+     xpos 154
+     ypos -222
+    }
+    Dot {
+     name Dot1
+     label " "
+     note_font "Helvetica Bold"
+     note_font_size 24
+     note_font_color 0xa5a5a501
+     xpos 154
+     ypos 66
+    }
+set N52c17800 [stack 0]
+push $N52c64400
+    Group {
+     name BlurPercent7
+     tile_color 0xcc804eff
+     xpos 1400
+     ypos -117
+     addUserKnob {20 percentBlur l "Percent Blur"}
+     addUserKnob {7 blurnum R 0 100}
+     blurnum 128
+     addUserKnob {41 channels T _BLUR_.channels}
+     addUserKnob {14 percent R 0 100}
+     percent {{parent.BlurPercent.percent*blurnum*(bias)} {parent.BlurPercent.percent*blurnum*(bias) x1064 inf}}
+     addUserKnob {41 filter T _BLUR_.filter}
+     addUserKnob {41 quality l "" -STARTLINE T _BLUR_.quality}
+     addUserKnob {41 crop l "crop to format" -STARTLINE T _BLUR_.crop}
+     addUserKnob {41 mix T _BLUR_.mix}
+    }
+     Input {
+      inputs 0
+      name Input
+      xpos 514
+      ypos -229
+     }
+     Blur {
+      channels rgba
+      size {{width/3*(percent/100) x1001 6.826666667e+10} {width/3*(percent/100)*(1/pixel_aspect)}}
+      quality {{parent.parent.quality}}
+      name _BLUR_
+      xpos 514
+      ypos -154
+      addUserKnob {20 User}
+      addUserKnob {7 xpercent l xPercent R 0 100}
+      xpercent 25.5
+      addUserKnob {7 ypercent l yPercent R 0 100}
+      ypercent {{xpercent}}
+     }
+     Output {
+      name Output1
+      xpos 514
+      ypos -89
+     }
+    end_group
+push $N52c64400
+    Group {
+     name BlurPercent6
+     tile_color 0xcc804eff
+     xpos 1240
+     ypos -117
+     addUserKnob {20 percentBlur l "Percent Blur"}
+     addUserKnob {7 blurnum R 0 100}
+     blurnum 64
+     addUserKnob {41 channels T _BLUR_.channels}
+     addUserKnob {14 percent R 0 100}
+     percent {{parent.BlurPercent.percent*blurnum*(bias)} {parent.BlurPercent.percent*blurnum*(bias)}}
+     addUserKnob {41 filter T _BLUR_.filter}
+     addUserKnob {41 quality l "" -STARTLINE T _BLUR_.quality}
+     addUserKnob {41 crop l "crop to format" -STARTLINE T _BLUR_.crop}
+     addUserKnob {41 mix T _BLUR_.mix}
+    }
+     Input {
+      inputs 0
+      name Input
+      xpos 514
+      ypos -229
+     }
+     Blur {
+      channels rgba
+      size {{width/3*(percent/100) x1001 6.826666667e+10} {width/3*(percent/100)*(1/pixel_aspect)}}
+      quality {{parent.parent.quality}}
+      name _BLUR_
+      xpos 514
+      ypos -154
+      addUserKnob {20 User}
+      addUserKnob {7 xpercent l xPercent R 0 100}
+      xpercent 25.5
+      addUserKnob {7 ypercent l yPercent R 0 100}
+      ypercent {{xpercent}}
+     }
+     Output {
+      name Output1
+      xpos 514
+      ypos -89
+     }
+    end_group
+push $N52c64400
+    Group {
+     name BlurPercent5
+     tile_color 0xcc804eff
+     xpos 1080
+     ypos -117
+     addUserKnob {20 percentBlur l "Percent Blur"}
+     addUserKnob {7 blurnum R 0 100}
+     blurnum 32
+     addUserKnob {41 channels T _BLUR_.channels}
+     addUserKnob {14 percent R 0 100}
+     percent {{parent.BlurPercent.percent*blurnum*(bias)} {parent.BlurPercent.percent*blurnum*(bias)}}
+     addUserKnob {41 filter T _BLUR_.filter}
+     addUserKnob {41 quality l "" -STARTLINE T _BLUR_.quality}
+     addUserKnob {41 crop l "crop to format" -STARTLINE T _BLUR_.crop}
+     addUserKnob {41 mix T _BLUR_.mix}
+    }
+     Input {
+      inputs 0
+      name Input
+      xpos 514
+      ypos -229
+     }
+     Blur {
+      channels rgba
+      size {{width/3*(percent/100) x1001 6.826666667e+10} {width/3*(percent/100)*(1/pixel_aspect)}}
+      quality {{parent.parent.quality}}
+      name _BLUR_
+      xpos 514
+      ypos -154
+      addUserKnob {20 User}
+      addUserKnob {7 xpercent l xPercent R 0 100}
+      xpercent 25.5
+      addUserKnob {7 ypercent l yPercent R 0 100}
+      ypercent {{xpercent}}
+     }
+     Output {
+      name Output1
+      xpos 514
+      ypos -89
+     }
+    end_group
+push $N52c64400
+    Group {
+     name BlurPercent4
+     tile_color 0xcc804eff
+     xpos 920
+     ypos -117
+     addUserKnob {20 percentBlur l "Percent Blur"}
+     addUserKnob {7 blurnum R 0 100}
+     blurnum 16
+     addUserKnob {41 channels T _BLUR_.channels}
+     addUserKnob {14 percent R 0 100}
+     percent {{parent.BlurPercent.percent*blurnum*(bias)} {parent.BlurPercent.percent*blurnum*(bias)}}
+     addUserKnob {41 filter T _BLUR_.filter}
+     addUserKnob {41 quality l "" -STARTLINE T _BLUR_.quality}
+     addUserKnob {41 crop l "crop to format" -STARTLINE T _BLUR_.crop}
+     addUserKnob {41 mix T _BLUR_.mix}
+    }
+     Input {
+      inputs 0
+      name Input
+      xpos 514
+      ypos -229
+     }
+     Blur {
+      channels rgba
+      size {{width/3*(percent/100) x1001 6.826666667e+10} {width/3*(percent/100)*(1/pixel_aspect)}}
+      quality {{parent.parent.quality}}
+      name _BLUR_
+      xpos 514
+      ypos -154
+      addUserKnob {20 User}
+      addUserKnob {7 xpercent l xPercent R 0 100}
+      xpercent 25.5
+      addUserKnob {7 ypercent l yPercent R 0 100}
+      ypercent {{xpercent}}
+     }
+     Output {
+      name Output1
+      xpos 514
+      ypos -89
+     }
+    end_group
+push $N52c64400
+    Group {
+     name BlurPercent3
+     tile_color 0xcc804eff
+     xpos 760
+     ypos -117
+     addUserKnob {20 percentBlur l "Percent Blur"}
+     addUserKnob {7 blurnum R 0 100}
+     blurnum 8
+     addUserKnob {41 channels T _BLUR_.channels}
+     addUserKnob {14 percent R 0 100}
+     percent {{parent.BlurPercent.percent*blurnum*(bias)} {parent.BlurPercent.percent*blurnum*(bias)}}
+     addUserKnob {41 filter T _BLUR_.filter}
+     addUserKnob {41 quality l "" -STARTLINE T _BLUR_.quality}
+     addUserKnob {41 crop l "crop to format" -STARTLINE T _BLUR_.crop}
+     addUserKnob {41 mix T _BLUR_.mix}
+    }
+     Input {
+      inputs 0
+      name Input
+      xpos 514
+      ypos -229
+     }
+     Blur {
+      channels rgba
+      size {{width/3*(percent/100) x1001 6.826666667e+10} {width/3*(percent/100)*(1/pixel_aspect)}}
+      quality {{parent.parent.quality}}
+      name _BLUR_
+      xpos 514
+      ypos -154
+      addUserKnob {20 User}
+      addUserKnob {7 xpercent l xPercent R 0 100}
+      xpercent 25.5
+      addUserKnob {7 ypercent l yPercent R 0 100}
+      ypercent {{xpercent}}
+     }
+     Output {
+      name Output1
+      xpos 514
+      ypos -89
+     }
+    end_group
+push $N52c64400
+    Group {
+     name BlurPercent1
+     tile_color 0xcc804eff
+     xpos 600
+     ypos -117
+     addUserKnob {20 percentBlur l "Percent Blur"}
+     addUserKnob {7 blurnum R 0 100}
+     blurnum 4
+     addUserKnob {41 channels T _BLUR_.channels}
+     addUserKnob {14 percent R 0 100}
+     percent {{parent.BlurPercent.percent*blurnum*(bias)} {parent.BlurPercent.percent*blurnum*(bias)}}
+     addUserKnob {41 filter T _BLUR_.filter}
+     addUserKnob {41 quality l "" -STARTLINE T _BLUR_.quality}
+     addUserKnob {41 crop l "crop to format" -STARTLINE T _BLUR_.crop}
+     addUserKnob {41 mix T _BLUR_.mix}
+    }
+     Input {
+      inputs 0
+      name Input
+      xpos 514
+      ypos -229
+     }
+     Blur {
+      channels rgba
+      size {{width/3*(percent/100) x1001 6.826666667e+10} {width/3*(percent/100)*(1/pixel_aspect)}}
+      quality {{parent.parent.quality}}
+      name _BLUR_
+      xpos 514
+      ypos -154
+      addUserKnob {20 User}
+      addUserKnob {7 xpercent l xPercent R 0 100}
+      xpercent 25.5
+      addUserKnob {7 ypercent l yPercent R 0 100}
+      ypercent {{xpercent}}
+     }
+     Output {
+      name Output1
+      xpos 514
+      ypos -89
+     }
+    end_group
+push 0
+push $N52c64400
+    Group {
+     name BlurPercent2
+     tile_color 0xcc804eff
+     xpos 440
+     ypos -117
+     addUserKnob {20 percentBlur l "Percent Blur"}
+     addUserKnob {7 blurnum R 0 100}
+     blurnum 2
+     addUserKnob {41 channels T _BLUR_.channels}
+     addUserKnob {14 percent R 0 100}
+     percent {{parent.BlurPercent.percent*blurnum*(bias)} {parent.BlurPercent.percent*blurnum*(bias)}}
+     addUserKnob {41 filter T _BLUR_.filter}
+     addUserKnob {41 quality l "" -STARTLINE T _BLUR_.quality}
+     addUserKnob {41 crop l "crop to format" -STARTLINE T _BLUR_.crop}
+     addUserKnob {41 mix T _BLUR_.mix}
+    }
+     Input {
+      inputs 0
+      name Input
+      xpos 514
+      ypos -229
+     }
+     Blur {
+      channels rgba
+      size {{width/3*(percent/100) x1001 6.826666667e+10} {width/3*(percent/100)*(1/pixel_aspect)}}
+      quality {{parent.parent.quality}}
+      name _BLUR_
+      xpos 514
+      ypos -154
+      addUserKnob {20 User}
+      addUserKnob {7 xpercent l xPercent R 0 100}
+      xpercent 25.5
+      addUserKnob {7 ypercent l yPercent R 0 100}
+      ypercent {{xpercent}}
+     }
+     Output {
+      name Output1
+      xpos 514
+      ypos -89
+     }
+    end_group
+push $N52c64400
+    Group {
+     name BlurPercent
+     tile_color 0xc4814dff
+     xpos 280
+     ypos -117
+     addUserKnob {20 percentBlur l "Percent Blur"}
+     addUserKnob {41 channels T _BLUR_.channels}
+     addUserKnob {14 percent R 0 100}
+     percent {{parent.size*parent.bias} {parent.size*parent.bias*pixel_aspect}}
+     addUserKnob {41 filter T _BLUR_.filter}
+     addUserKnob {41 quality l "" -STARTLINE T _BLUR_.quality}
+     addUserKnob {41 crop l "crop to format" -STARTLINE T _BLUR_.crop}
+     addUserKnob {41 mix T _BLUR_.mix}
+    }
+     Input {
+      inputs 0
+      name Input
+      xpos 514
+      ypos -229
+     }
+     Blur {
+      channels rgba
+      size {{width/3*(percent/100) x1001 6.826666667e+10} {width/3*(percent/100)*(1/pixel_aspect)}}
+      quality {{parent.parent.quality}}
+      name _BLUR_
+      xpos 514
+      ypos -154
+      addUserKnob {20 User}
+      addUserKnob {7 xpercent l xPercent R 0 100}
+      xpercent 25.5
+      addUserKnob {7 ypercent l yPercent R 0 100}
+      ypercent {{xpercent}}
+     }
+     Output {
+      name Output1
+      xpos 514
+      ypos -89
+     }
+    end_group
+    Blend {
+     inputs 8+1
+     channels rgb
+     weight0 {{"iterations > 1? 1 : iterations"}}
+     weight1 {{"clamp((iterations < 1 ? 0 : iterations-1))"}}
+     weight2 {{"clamp((iterations < 2 ? 0 : iterations-2))"}}
+     weight3 {{"clamp((iterations < 3 ? 0 : iterations-3))"}}
+     weight4 {{"clamp((iterations < 4 ? 0 : iterations-4))"}}
+     weight5 {{"clamp((iterations < 5 ? 0 : iterations-5))"}}
+     weight6 {{"clamp((iterations < 6 ? 0 : iterations-6))"}}
+     weight7 {{"clamp((iterations < 7 ? 0 : iterations-7))"}}
+     name Blend1
+     xpos 280
+     ypos -9
+    }
+push $N52c17800
+    Dissolve {
+     inputs 2
+     channels {{{parent.BlurPercent._BLUR_.channels}}}
+     which {{parent.mix}}
+     name Dissolve1
+     xpos 280
+     ypos 63
+    }
+    Keymix {
+     inputs 3
+     channels rgba
+     invertMask true
+     bbox B
+     name Keymix1
+     xpos 280
+     ypos 135
+     disable {{"!\[exists parent.input1]"}}
+    }
+    Output {
+     name Output
+     xpos 277
+     ypos 204
+    }
+   end_group
+push $N52c65c00
+   Convolve2 {
+    inputs 2+1
+    channels rgba
+    filter_channel rgba.red
+    filter_bounds format
+    mix {{parent.parent.parent.mix_1}}
+    name Convolve
+    xpos 70
+    ypos -705
+   }
+   Reformat {
+    type "to box"
+    box_width {{"\[exists input] ? input.width : root.width"}}
+    box_height {{"\[exists input] ? input.height : root.height"}}
+    box_fixed true
+    box_pixel_aspect {{"\[exists input] ? input.pixel_aspect : root.pixel_aspect"}}
+    resize none
+    black_outside true
+    name BboxRemove
+    xpos 70
+    ypos -634
+   }
+   Output {
+    name Output
+    xpos 70
+    ypos -601
+   }
+  end_group
+  Expression {
+   expr0 "(r>=0) ? r**(1/double) : r"
+   expr1 "(g>=0) ? g**(1/double_1) : g"
+   expr2 "(b>=0) ? b**(1/double_2) : b"
+   name Expression2
+   xpos 557
+   ypos -81
+   addUserKnob {20 User}
+   addUserKnob {7 double l red R 0 2}
+   double {{parent.CONTROL.double**-1}}
+   addUserKnob {7 double_1 l grn R 0 2}
+   double_1 {{parent.CONTROL.double_1**-1}}
+   addUserKnob {7 double_2 l blu R 0 2}
+   double_2 {{parent.CONTROL.double_2**-1}}
+  }
+  Reformat {
+   type scale
+   name Reformat1
+   xpos 557
+   ypos 19
+  }
+  Output {
+   name Output1
+   xpos 566
+   ypos 141
+  }
+ end_group
+set N7f5b2400 [stack 0]
+push $N52ccac00
+ Reformat {
+  type scale
+  scale {{parent.Reformat3.scale}}
+  resize none
+  name Reformat5
+  xpos 319
+  ypos 124
+ }
+ Transform {
+  translate {0 {-height*1/Reformat5.scale+double}}
+  center {1440 810}
+  name Transform2
+  xpos 319
+  ypos 182
+  addUserKnob {20 User}
+  addUserKnob {7 double}
+  double {{-parent.Transform1.double}}
+ }
+ Grade {
+  white 10
+  black_clamp false
+  name Grade1
+  xpos 319
+  ypos 206
+  disable {{!parent.strong_bleeding}}
+ }
+ Group {
+  name Group2
+  xpos 319
+  ypos 246
+  disable {{!parent.Enable}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 189
+   ypos 30
+  }
+  Glint {
+   repeat 1
+   length 135
+   aspect 1.42
+   oddlen 0.72
+   steps 8
+   name Glint1
+   xpos 189
+   ypos 82
+  }
+  Blur {
+   size 60.5
+   name Blur2
+   xpos 189
+   ypos 118
+  }
+  Dot {
+   name Dot6
+   xpos 223
+   ypos 195
+  }
+set N52aff800 [stack 0]
+  VolumeRays {
+   name VolumeRays4
+   label "Mar 20 2005"
+   xpos 284
+   ypos 274
+   vol_pos {{width/5} -200}
+   raylength 1.6
+   pre_blur 9.5
+   quality Low
+   flicker_size 26
+   xform_flicker true
+   CCorrect1_gamma_panelDropped true
+   CCorrect1_gain 0.28
+   initcolor {0.2 0.11 0.1 1}
+   volume_end_color {0.005 0 0 0}
+  }
+push $N52aff800
+  VolumeRays {
+   name VolumeRays3
+   label "Mar 20 2005"
+   xpos 175
+   ypos 275
+   vol_pos {{"width - 3*width/5"} -200}
+   raylength 1.6
+   pre_blur 9.5
+   quality Low
+   flicker_size 33
+   CCorrect1_gamma_panelDropped true
+   CCorrect1_gain 0.28
+   initcolor {0.2 0.11 0.1 1}
+   volume_end_color {0.005 0 0 0}
+  }
+push $N52aff800
+  VolumeRays {
+   name VolumeRays2
+   label "Mar 20 2005"
+   xpos 66
+   ypos 274
+   vol_pos {{"width - 2*width/5"} -200}
+   raylength 1.6
+   pre_blur 9.5
+   quality Low
+   flicker_size 30
+   xform_flicker true
+   CCorrect1_gamma_panelDropped true
+   CCorrect1_gain 0.28
+   initcolor {0.2 0.11 0.1 1}
+   volume_end_color {0.005 0 0 0}
+  }
+push 0
+push $N52aff800
+  VolumeRays {
+   name VolumeRays1
+   label "Mar 20 2005"
+   xpos -46
+   ypos 274
+   vol_pos {{"width - width/5"} -200}
+   raylength 1.6
+   pre_blur 9.5
+   quality Low
+   flicker_size 30
+   CCorrect1_gamma_panelDropped true
+   CCorrect1_gain 0.28
+   initcolor {0.2 0.11 0.1 1}
+   volume_end_color {0.005 0 0 0}
+  }
+push $N52aff800
+  VolumeRays {
+   name VolumeRays5
+   label "Mar 20 2005"
+   xpos 394
+   ypos 274
+   vol_pos {0 -200}
+   raylength 1.6
+   pre_blur 9.5
+   quality Low
+   flicker_size 30
+   CCorrect1_gamma_panelDropped true
+   CCorrect1_gain 0.28
+   initcolor {0.2 0.11 0.1 1}
+   volume_end_color {0.005 0 0 0}
+  }
+  Merge2 {
+   inputs 5+1
+   operation plus
+   name Merge3
+   xpos 181
+   ypos 355
+  }
+  Grade {
+   white {1 0.31 0.19 1}
+   white_panelDropped true
+   black_clamp false
+   name Grade5
+   xpos 181
+   ypos 379
+  }
+  Output {
+   name Output1
+   xpos 181
+   ypos 407
+  }
+ end_group
+ Dot {
+  name Dot2
+  xpos 353
+  ypos 306
+ }
+push 0
+push $N7f5b2400
+ Reformat {
+  type scale
+  scale 1.125
+  resize none
+  black_outside true
+  name Reformat3
+  xpos 473
+  ypos 186
+ }
+push $N52ccac00
+ Reformat {
+  type scale
+  scale {{parent.Reformat3.scale}}
+  resize none
+  name Reformat2
+  xpos 603
+  ypos 124
+ }
+ Transform {
+  translate {0 {height*1/Reformat2.scale+double}}
+  center {1440 810}
+  name Transform1
+  xpos 603
+  ypos 187
+  addUserKnob {20 User}
+  addUserKnob {7 double R 0 10}
+  double {{parent.seperation}}
+ }
+ Grade {
+  white 10
+  black_clamp false
+  name Grade2
+  xpos 603
+  ypos 211
+  disable {{!parent.strong_bleeding}}
+ }
+ Group {
+  name Group3
+  xpos 603
+  ypos 251
+  disable {{!parent.Enable}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 182
+   ypos 56
+  }
+  Glint {
+   repeat 1
+   length 135
+   aspect 1.42
+   oddlen 0.72
+   rotation 180
+   from_color 2
+   steps 8
+   name Glint2
+   xpos 189
+   ypos 100
+  }
+  Blur {
+   size 60.5
+   name Blur3
+   xpos 189
+   ypos 143
+  }
+  Dot {
+   name Dot6
+   xpos 223
+   ypos 195
+  }
+set N535ed400 [stack 0]
+  VolumeRays {
+   name VolumeRays4
+   label "Mar 20 2005"
+   xpos 284
+   ypos 274
+   vol_pos {{width/5} {height+200}}
+   raylength 1.6
+   pre_blur 9.5
+   quality Low
+   flicker_size 30
+   CCorrect1_gamma_panelDropped true
+   CCorrect1_gain 0.28
+   initcolor {0.2 0.11 0.1 1}
+   volume_end_color {0.005 0 0 0}
+  }
+push $N535ed400
+  VolumeRays {
+   name VolumeRays3
+   label "Mar 20 2005"
+   xpos 181
+   ypos 274
+   vol_pos {{"width - 3*width/5"} {height+200}}
+   raylength 1.6
+   pre_blur 9.5
+   quality Low
+   flicker_size 30
+   xform_flicker true
+   CCorrect1_gamma_panelDropped true
+   CCorrect1_gain 0.28
+   initcolor {0.2 0.11 0.1 1}
+   volume_end_color {0.005 0 0 0}
+  }
+push $N535ed400
+  VolumeRays {
+   name VolumeRays2
+   label "Mar 20 2005"
+   xpos 65
+   ypos 274
+   vol_pos {{"width - 2*width/5"} {height+200}}
+   raylength 1.6
+   pre_blur 9.5
+   quality Low
+   flicker_size 30
+   CCorrect1_gamma_panelDropped true
+   CCorrect1_gain 0.28
+   initcolor {0.2 0.11 0.1 1}
+   volume_end_color {0.005 0 0 0}
+  }
+push 0
+push $N535ed400
+  VolumeRays {
+   name VolumeRays1
+   label "Mar 20 2005"
+   xpos -46
+   ypos 274
+   vol_pos {{"width - width/5"} {height+200}}
+   raylength 2.5
+   pre_blur 9.5
+   quality Low
+   flicker_size 30
+   xform_flicker true
+   CCorrect1_gamma_panelDropped true
+   CCorrect1_gain 0.28
+   initcolor {0.2 0.11 0.1 1}
+   volume_end_color {0.005 0 0 0}
+  }
+push $N535ed400
+  VolumeRays {
+   name VolumeRays5
+   label "Mar 20 2005"
+   xpos 394
+   ypos 274
+   vol_pos {0 {height+200}}
+   raylength 1.6
+   pre_blur 9.5
+   quality Low
+   flicker_size 30
+   xform_flicker true
+   CCorrect1_gamma_panelDropped true
+   CCorrect1_gain 0.28
+   initcolor {0.2 0.11 0.1 1}
+   volume_end_color {0.005 0 0 0}
+  }
+  Merge2 {
+   inputs 5+1
+   operation plus
+   name Merge3
+   xpos 181
+   ypos 355
+  }
+  Grade {
+   white {1 0.31 0.19 1}
+   white_panelDropped true
+   black_clamp false
+   name Grade5
+   xpos 181
+   ypos 395
+  }
+  Output {
+   name Output1
+   xpos 181
+   ypos 464
+  }
+ end_group
+ Dot {
+  name Dot3
+  xpos 637
+  ypos 306
+ }
+ Merge2 {
+  inputs 3+1
+  operation plus
+  name Merge1
+  xpos 473
+  ypos 303
+ }
+ Reformat {
+  type scale
+  scale {{1/parent.Reformat2.scale}}
+  resize none
+  name Reformat4
+  xpos 473
+  ypos 335
+ }
+ Switch {
+  inputs 2
+  which {{!Enable}}
+  name Switch1
+  xpos 473
+  ypos 369
+ }
+ Switch {
+  inputs 2
+  which {{type}}
+  name Switch2
+  xpos 109
+  ypos 369
+ }
+set N530e4400 [stack 0]
+ Dot {
+  name Dot10
+  xpos -9
+  ypos 376
+ }
+ Group {
+  name CompressionFunctions1
+  xpos -43
+  ypos 468
+  disable {{parent.CompressionFunctions.disable}}
+  addUserKnob {20 CompressionFunctions_tab l CompressionFunctions}
+  addUserKnob {4 method t "The type of compression function to use. " M {log reinhard power exp arctan tanh}}
+  method reinhard
+  addUserKnob {7 threshold t "The minimum threshold. Values below this number will not be affected." R 0 6}
+  threshold {{parent.CompressionFunctions.threshold}}
+  addUserKnob {7 limit t "The asymptotic maximum value. For example, the value that inf becomes." R 1 10}
+  limit {{parent.CompressionFunctions.limit}}
+  addUserKnob {7 power t "adjust slope of power function (power method only)" R 0 4}
+  power {{parent.CompressionFunctions.power}}
+  addUserKnob {4 direction M {forward inverse}}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos -40
+   ypos -610
+  }
+  Dot {
+   name Dot6
+   xpos -6
+   ypos -510
+  }
+set N5307f400 [stack 0]
+  Dot {
+   name Dot5
+   xpos 654
+   ypos -510
+  }
+set N5307f000 [stack 0]
+  Expression {
+   expr0 "r < t ? r : t+(l-t)*log((1+(r/(l-t)-t/(l-t)))/(1-(r/(l-t)-t/(l-t))))/2"
+   expr1 "g < t ? g : t+(l-t)*log((1+(g/(l-t)-t/(l-t)))/(1-(g/(l-t)-t/(l-t))))/2"
+   expr2 "b < t ? b : t+(l-t)*log((1+(b/(l-t)-t/(l-t)))/(1-(b/(l-t)-t/(l-t))))/2"
+   name uncompress_tanh
+   xpos 1170
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{"min(parent.threshold, parent.limit)"}}
+   addUserKnob {7 l R 1 2}
+   l {{max(t,parent.limit)}}
+  }
+push $N5307f000
+  Expression {
+   temp_name0 pi
+   temp_expr0 3.14159265359
+   expr0 "r < t ? r : t+(l-t)*2/pi*tan(pi/2*(r-t)/(l-t))"
+   expr1 "g < t ? g : t+(l-t)*2/pi*tan(pi/2*(g-t)/(l-t))"
+   expr2 "b < t ? b : t+(l-t)*2/pi*tan(pi/2*(b-t)/(l-t))"
+   name uncompress_atan
+   xpos 1060
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{"min(parent.threshold, parent.limit)"}}
+   addUserKnob {7 l R 1 2}
+   l {{max(t,parent.limit)}}
+  }
+push $N5307f000
+  Expression {
+   expr0 r<t?r:-log((r-lm)/(t-lm))*(-t+lm)/sc+t
+   expr1 g<t?g:-log((g-lm)/(t-lm))*(-t+lm)/sc+t
+   expr2 b<t?b:-log((b-lm)/(t-lm))*(-t+lm)/sc+t
+   name uncompress_exp
+   xpos 950
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{"min(parent.threshold, parent.limit)"}}
+   addUserKnob {7 lm R 1 2}
+   lm {{max(t,parent.limit)}}
+   addUserKnob {7 sc}
+   sc 1
+  }
+push $N5307f000
+  Expression {
+   expr0 r<t?r:t+(lm-t)*pow(-pow((r-t)/(lm-t),p)/(pow((r-t)/(lm-t),p)-1),1/p)
+   expr1 g<t?g:t+(lm-t)*pow(-pow((g-t)/(lm-t),p)/(pow((g-t)/(lm-t),p)-1),1/p)
+   expr2 b<t?b:t+(lm-t)*pow(-pow((b-t)/(lm-t),p)/(pow((b-t)/(lm-t),p)-1),1/p)
+   name uncompress_power
+   xpos 840
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{parent.threshold}}
+   addUserKnob {7 lm}
+   lm {{parent.limit}}
+   addUserKnob {7 p R 1 5}
+   p {{parent.power}}
+  }
+push $N5307f000
+  Expression {
+   expr0 r<t?r:t+1/(1/(r-t)-1/(lm-t))
+   expr1 g<t?g:t+1/(1/(g-t)-1/(lm-t))
+   expr2 b<t?b:t+1/(1/(b-t)-1/(lm-t))
+   name uncompress_hyperbolic
+   xpos 730
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{"min(parent.threshold, parent.limit)"}}
+   addUserKnob {7 lm R 1 2}
+   lm {{parent.limit}}
+  }
+push $N5307f000
+  Expression {
+   expr0 r<t?r:exp((r-t+t*log(1-lm)-lm*t*log(1-lm))/(t*(1-lm)))*t+lm*t
+   expr1 g<t?g:exp((g-t+t*log(1-lm)-lm*t*log(1-lm))/(t*(1-lm)))*t+lm*t
+   expr2 b<t?b:exp((b-t+t*log(1-lm)-lm*t*log(1-lm))/(t*(1-lm)))*t+lm*t
+   name uncompress_log
+   xpos 620
+   ypos -441
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{parent.threshold}}
+   addUserKnob {7 lm}
+   lm {{min(0.999999,(1-parent.limit)+1)}}
+  }
+  Switch {
+   inputs 6
+   which {{parent.method}}
+   name switch_method1
+   xpos 620
+   ypos -345
+  }
+  Dot {
+   name Dot2
+   xpos 654
+   ypos -198
+  }
+push $N5307f400
+  Expression {
+   expr0 "r < t ? r : t+(l-t)*tanh( ( (r-t)/( l-t)))"
+   expr1 "g < t ? g : t+(l-t)*tanh( ( (g-t)/( l-t)))"
+   expr2 "b < t ? b : t+(l-t)*tanh( ( (b-t)/( l-t)))"
+   name compress_tanh
+   xpos 510
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{"min(parent.threshold, parent.limit)"}}
+   addUserKnob {7 l R 1 2}
+   l {{max(t,parent.limit)}}
+  }
+push $N5307f400
+  Expression {
+   temp_name0 pi
+   temp_expr0 3.14159265359
+   expr0 "r < t ? r : t+(l-t)*2/pi*atan(pi/2*(r-t)/(l-t))"
+   expr1 "g < t ? g : t+(l-t)*2/pi*atan(pi/2*(g-t)/(l-t))"
+   expr2 "b < t ? b : t+(l-t)*2/pi*atan(pi/2*(b-t)/(l-t))"
+   name compress_atan
+   xpos 400
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{"min(parent.threshold, parent.limit)"}}
+   addUserKnob {7 l R 1 2}
+   l {{max(t,parent.limit)}}
+  }
+push $N5307f400
+  Expression {
+   expr0 r<t?r:lm-(lm-t)*exp(-(((r-t)*((sc*lm)/(lm-t))/lm)))
+   expr1 g<t?g:lm-(lm-t)*exp(-(((g-t)*((sc*lm)/(lm-t))/lm)))
+   expr2 b<t?b:lm-(lm-t)*exp(-(((b-t)*((sc*lm)/(lm-t))/lm)))
+   name compress_exp
+   xpos 290
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{"min(parent.threshold, parent.limit)"}}
+   addUserKnob {7 lm R 1 2}
+   lm {{max(t,parent.limit)}}
+   addUserKnob {7 sc}
+   sc 1
+  }
+push $N5307f400
+  Expression {
+   expr0 r<t?r:t+((r-t)*(lm-t))/pow(pow((lm-t),p)+pow((r-t),p),1/p)
+   expr1 g<t?g:t+((g-t)*(lm-t))/pow(pow((lm-t),p)+pow((g-t),p),1/p)
+   expr2 b<t?b:t+((b-t)*(lm-t))/pow(pow((lm-t),p)+pow((b-t),p),1/p)
+   name compress_power
+   xpos 180
+   ypos -443
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{parent.threshold}}
+   addUserKnob {7 lm}
+   lm {{parent.limit}}
+   addUserKnob {7 p R 1 5}
+   p {{parent.power}}
+  }
+push $N5307f400
+  Expression {
+   expr0 r<t?r:t+1/(1/(r-t)+1/(lm-t))
+   expr1 g<t?g:t+1/(1/(g-t)+1/(lm-t))
+   expr2 b<t?b:t+1/(1/(b-t)+1/(lm-t))
+   name compress_hyperbolic
+   xpos 70
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{min(parent.threshold,parent.limit)}}
+   addUserKnob {7 lm R 1 2}
+   lm {{parent.limit}}
+  }
+push $N5307f400
+  Expression {
+   expr0 r<t?r:t*log(r/t-lm)-lm*t*log(r/t-lm)+t-t*log(1-lm)+lm*t*log(1-lm)
+   expr1 g<t?g:t*log(g/t-lm)-lm*t*log(g/t-lm)+t-t*log(1-lm)+lm*t*log(1-lm)
+   expr2 b<t?b:t*log(b/t-lm)-lm*t*log(b/t-lm)+t-t*log(1-lm)+lm*t*log(1-lm)
+   name compress_log
+   xpos -40
+   ypos -441
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t}
+   t {{parent.threshold}}
+   addUserKnob {7 lm}
+   lm {{min(0.999999,(1-parent.limit)+1)}}
+  }
+  Switch {
+   inputs 6
+   which {{parent.method}}
+   name switch_method
+   xpos -40
+   ypos -345
+  }
+  Switch {
+   inputs 2
+   which {{parent.direction}}
+   name switch_reverse
+   xpos -40
+   ypos -202
+  }
+  Output {
+   name Output
+   xpos -40
+   ypos -106
+  }
+  Expression {
+   inputs 0
+   expr0 r<t?r:sc*((r-t)/sc)/pow(1+pow((r-t)/sc,p),1/p)+t
+   expr1 g<t?g:sc*((g-t)/sc)/pow(1+pow((g-t)/sc,p),1/p)+t
+   expr2 b<t?b:sc*((b-t)/sc)/pow(1+pow((b-t)/sc,p),1/p)+t
+   name compress_hyperbolic_power
+   xpos 1390
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t t "threshold to start compression" R 0 2}
+   t 0.5
+   addUserKnob {7 x0 t "x coordinate to compress to" R 0 2}
+   x0 2
+   addUserKnob {7 y0 t "y coordinate to compress to" R 0 2}
+   y0 0.825
+   addUserKnob {7 p R 1 2}
+   p 1.2
+   addUserKnob {7 sc}
+   sc {{(x0-t)/pow(pow((y0-t)/(x0-t),-p)-1,1/p)}}
+  }
+  Expression {
+   inputs 0
+   expr0 r<t?r:sc*pow(-pow((r-t)/sc,p)/(pow((r-t)/sc,p)-1),1/p)+t
+   expr1 g<t?g:sc*pow(-pow((g-t)/sc,p)/(pow((g-t)/sc,p)-1),1/p)+t
+   expr2 b<t?b:sc*pow(-pow((b-t)/sc,p)/(pow((b-t)/sc,p)-1),1/p)+t
+   name uncompress_hyperbolic_power
+   xpos 1500
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t t "threshold to start compression" R 0 2}
+   t 0.5
+   addUserKnob {7 x0 t "x coordinate to compress to" R 0 2}
+   x0 2
+   addUserKnob {7 y0 t "y coordinate to compress to" R 0 2}
+   y0 0.825
+   addUserKnob {7 p R 1 2}
+   p 1.2
+   addUserKnob {7 sc}
+   sc {{(x0-t)/pow(pow((y0-t)/(x0-t),-p)-1,1/p)}}
+  }
+  StickyNote {
+   inputs 0
+   name StickyNote1
+   tile_color 0x272727ff
+   label "<left>Hyperbolic Power Compression Function with (x0, y0) intersection constraint\nhttps://www.desmos.com/calculator/ht27poixiw"
+   note_font_size 8
+   note_font_color 0xa8a8a8ff
+   xpos 1387
+   ypos -496
+  }
+  Expression {
+   inputs 0
+   expr0 r<t0?r:sc*sqrt(r-ox)+oy
+   expr1 g<t0?g:sc*sqrt(g-ox)+oy
+   expr2 b<t0?b:sc*sqrt(b-ox)+oy
+   name compress_parabolic
+   xpos 1718
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t0 t "threshold to start compression" R 0 2}
+   t0 0.3
+   addUserKnob {7 x0 t "x coordinate to compress to" R 0 2}
+   x0 1
+   addUserKnob {7 y0 t "y coordinate to compress to" R 0 2}
+   y0 0.5
+   addUserKnob {7 sc}
+   sc {{(y0-t0)/sqrt(x0-y0)}}
+   addUserKnob {7 ox R -2 2}
+   ox {{t0-sc*sc/4}}
+   addUserKnob {7 oy R -2 2}
+   oy {{t0-sc*sqrt(sc*sc/4)}}
+  }
+  Expression {
+   inputs 0
+   expr0 r<t0?r:pow((oy-r)/sc,2)+ox
+   expr1 g<t0?g:pow((oy-g)/sc,2)+ox
+   expr2 b<t0?b:pow((oy-b)/sc,2)+ox
+   name uncompress_parabolic
+   xpos 1833
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t0 t "threshold to start compression" R 0 2}
+   t0 0.3
+   addUserKnob {7 x0 t "x coordinate to compress to" R 0 2}
+   x0 1
+   addUserKnob {7 y0 t "y coordinate to compress to" R 0 2}
+   y0 0.5
+   addUserKnob {7 sc}
+   sc {{(y0-t0)/sqrt(x0-y0)}}
+   addUserKnob {7 ox R -2 2}
+   ox {{t0-sc*sc/4}}
+   addUserKnob {7 oy R -2 2}
+   oy {{t0-sc*sqrt(sc*sc/4)}}
+  }
+  StickyNote {
+   inputs 0
+   name StickyNote2
+   tile_color 0x272727ff
+   label "<left>Parabolic Compression Function with (x0, y0) intersection constraint\nhttps://www.desmos.com/calculator/khowxlu6xh"
+   note_font_size 8
+   note_font_color 0xa8a8a8ff
+   xpos 1711
+   ypos -496
+  }
+  Expression {
+   inputs 0
+   expr0 !x0?r:r>t0?r:sc*sqrt(-r-ox)+oy
+   expr1 !x0?g:g>t0?g:sc*sqrt(-g-ox)+oy
+   expr2 !x0?b:b>t0?b:sc*sqrt(-b-ox)+oy
+   name compress_toe_parabolic
+   xpos 2050
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t0 t "threshold to start compression" R 0 2}
+   t0 0.3
+   addUserKnob {7 x0 t "x coordinate to compress to" R 0 2}
+   x0 1
+   addUserKnob {7 sc}
+   sc {{-t0/sqrt(x0)}}
+   addUserKnob {7 ox R -2 2}
+   ox {{-sc*sc/4-t0}}
+   addUserKnob {7 oy R -2 2}
+   oy {{t0-sc*sqrt(sc*sc/4)}}
+  }
+  Expression {
+   inputs 0
+   expr0 r>t0?r:-pow((oy-r)/sc,2)-ox
+   expr1 g>t0?g:-pow((oy-g)/sc,2)-ox
+   expr2 b>t0?b:-pow((oy-b)/sc,2)-ox
+   name uncompress_toe_parabolic
+   xpos 2160
+   ypos -442
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 t0 t "threshold to start compression" R 0 2}
+   t0 0.3
+   addUserKnob {7 x0 t "x coordinate to compress to" R 0 2}
+   x0 1
+   addUserKnob {7 sc}
+   sc {{-t0/sqrt(x0)}}
+   addUserKnob {7 ox R -2 2}
+   ox {{-sc*sc/4-t0}}
+   addUserKnob {7 oy R -2 2}
+   oy {{t0-sc*sqrt(sc*sc/4)}}
+  }
+  Expression {
+   inputs 0
+   temp_name0 n
+   temp_expr0 max(r,g,b)
+   temp_name1 s
+   temp_expr1 n<t0?1:invert?(_b-_a/(n-s1))/n:(_a/(_b-n)+s1)/n
+   expr0 r*s
+   expr1 g*s
+   expr2 b*s
+   expr3 a*s
+   name HyperbolicCompression
+   xpos 2490
+   ypos -442
+   addUserKnob {20 Params}
+   addUserKnob {7 t0}
+   t0 0.18
+   addUserKnob {7 w0 t "input x" R 0 20}
+   w0 4
+   addUserKnob {7 w1 t "output y" R 0 4}
+   w1 1
+   addUserKnob {7 s1 R 0 4}
+   s1 {{(w0*w1-t0*(2*w1-t0))/(w0-w1)}}
+   addUserKnob {7 _a R 0 4}
+   _a {{(t0-s1)**2}}
+   addUserKnob {7 _b R 0 4}
+   _b {{2*t0-s1}}
+   addUserKnob {6 invert +STARTLINE}
+  }
+  StickyNote {
+   inputs 0
+   name StickyNote3
+   tile_color 0x272727ff
+   label "<left>Parabolic Toe Compression Function with (x0, 0) intersection constraint\nhttps://www.desmos.com/calculator/wfw5rzrv5x"
+   note_font_size 8
+   note_font_color 0xa8a8a8ff
+   xpos 2033
+   ypos -502
+  }
+  StickyNote {
+   inputs 0
+   name StickyNote4
+   tile_color 0x272727ff
+   label "<left>Simpler hyperbolic compression function\nhttps://www.desmos.com/calculator/e4ik6xh0tz"
+   note_font_size 8
+   note_font_color 0xa8a8a8ff
+   xpos 2440
+   ypos -509
+  }
+ end_group
+push $N530e4400
+ Expression {
+  expr0 r<pv?s0*r**p:p*(r-pv)+pv
+  expr1 g<pv?s0*g**p:p*(g-pv)+pv
+  expr2 b<pv?s0*b**p:p*(b-pv)+pv
+  name Contrast_LX
+  xpos 109
+  ypos 393
+  disable {{!parent.display_ref}}
+  addUserKnob {20 Params}
+  addUserKnob {7 p R 1 1.4}
+  p 1.2
+  addUserKnob {7 pv}
+  pv 0.18
+  addUserKnob {7 s0 R 0 4}
+  s0 1.409111953
+ }
+ Expression {
+  temp_name0 rs
+  temp_expr0 sy*pow(r/(r+sx),p)
+  temp_name1 gs
+  temp_expr1 sy*pow(g/(g+sx),p)
+  temp_name2 bs
+  temp_expr2 sy*pow(b/(b+sx),p)
+  expr0 rs*rs/(rs+fl)
+  expr1 gs*gs/(gs+fl)
+  expr2 bs*bs/(bs+fl)
+  name ToneScale
+  xpos 109
+  ypos 412
+  disable {{!parent.display_ref}}
+  addUserKnob {20 Params}
+  addUserKnob {7 Lp R 100 4000}
+  Lp 100
+  addUserKnob {7 c l contrast R 0.8 2}
+  c 1.1
+  addUserKnob {4 su l surround t "dark = 1.0\ndim = 0.95\naverage = 0.90" M {average dim dark}}
+  su dim
+  addUserKnob {7 p R 1 2}
+  p 1.045
+  addUserKnob {7 fl l flare R 0 0.01}
+  fl 0.01
+  addUserKnob {7 w1 R 1 1.4}
+  w1 1.045473743
+  addUserKnob {7 sy R 0 4}
+  sy 1.045473743
+  addUserKnob {7 ex R -2 2}
+  ex -0.26
+  addUserKnob {7 eb R 0 0.2}
+  eb 0.08
+  addUserKnob {7 e0 R 0 4}
+  e0 0.8380641275
+  addUserKnob {7 sx R 0 10}
+  sx 1.222658986
+ }
+ Switch {
+  inputs 2
+  which {{parent.method}}
+  name Switch4
+  xpos 109
+  ypos 468
+ }
+ Group {
+  name InverseEOTF
+  xpos 109
+  ypos 492
+  disable {{!parent.display_ref}}
+  addUserKnob {20 EOTF_tab l EOTF}
+  addUserKnob {4 eotf t "Choose the inverse EOTF to apply for the target display device." M {None "sRGB Display" BT.1886 "Gamma 2.6" PQ HLG "" "" "" "" ""}}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 400
+   ypos -160
+  }
+  Dot {
+   name Dot1
+   xpos 434
+   ypos -96
+  }
+set N52f9a400 [stack 0]
+  Dot {
+   name Dot3
+   xpos 544
+   ypos -96
+  }
+set N52f9a000 [stack 0]
+  Dot {
+   name Dot4
+   xpos 654
+   ypos -96
+  }
+  Expression {
+   temp_name0 Yd
+   temp_expr0 0.2627*r+0.6780*g+0.0593*b
+   expr0 r*pow(Yd,(1-_g)/_g)
+   expr1 g*pow(Yd,(1-_g)/_g)
+   expr2 b*pow(Yd,(1-_g)/_g)
+   name HLG_InverseOOTF
+   xpos 620
+   ypos -70
+   addUserKnob {20 CONSTANTS_tab l CONSTANTS}
+   addUserKnob {7 _g t "Gamma: Extended model for gamma variation according to peak display luminance and surround luminance: BT.2390-8 p32" R 0 2}
+   _g {{1.2*pow(1.111,log(Lp/1000)/log(2))*pow(0.98,log(max(1e-6,Lamb)/5)/log(2))}}
+   addUserKnob {7 Lp R 600 4000}
+   Lp {{parent.parent.Lp}}
+   addUserKnob {7 Lamb t "ambient luminance level in nits" R 0 200}
+   Lamb 5
+  }
+  Expression {
+   expr0 r<=1/12?sqrt(3*r):_a*log(12*r-_b)+_c
+   expr1 g<=1/12?sqrt(3*g):_a*log(12*g-_b)+_c
+   expr2 b<=1/12?sqrt(3*b):_a*log(12*b-_b)+_c
+   name HLG_OETF
+   xpos 620
+   ypos -38
+   addUserKnob {20 CONSTANTS_tab l CONSTANTS}
+   addUserKnob {7 _a t alpha}
+   _a 0.17883277
+   addUserKnob {7 _b t beta}
+   _b {{1-4*_a}}
+   addUserKnob {7 _c}
+   _c {{0.5-_a*log(4*_a)}}
+  }
+push $N52f9a000
+  Expression {
+   expr0 pow((c_1+c_2*pow(r*Lp/10000,m_1))/(1+c_3*pow(r*Lp/10000,m_1)),m_2)
+   expr1 pow((c_1+c_2*pow(g*Lp/10000,m_1))/(1+c_3*pow(g*Lp/10000,m_1)),m_2)
+   expr2 pow((c_1+c_2*pow(b*Lp/10000,m_1))/(1+c_3*pow(b*Lp/10000,m_1)),m_2)
+   name ST2084_InverseEOTF
+   xpos 510
+   ypos -70
+   addUserKnob {20 CONSTANTS_tab l CONSTANTS}
+   addUserKnob {7 m_1}
+   m_1 {{2610/4096*(1/4)}}
+   addUserKnob {7 m_2}
+   m_2 {{2523/4096*128}}
+   addUserKnob {7 c_1}
+   c_1 {{107/128}}
+   addUserKnob {7 c_2}
+   c_2 {{2413/128}}
+   addUserKnob {7 c_3}
+   c_3 {{2392/128}}
+   addUserKnob {7 Lp t "Display peak luminance in nits" R 600 4000}
+   Lp 10000
+  }
+push $N52f9a400
+  Expression {
+   expr0 sign(r)*pow(fabs(r),1/p)
+   expr1 sign(g)*pow(fabs(g),1/p)
+   expr2 sign(b)*pow(fabs(b),1/p)
+   name power
+   xpos 400
+   ypos -70
+   addUserKnob {20 Params_tab l Params}
+   addUserKnob {7 p l power R 0.2 2}
+   p {{eotf?2+eotf*0.2:1}}
+  }
+  Switch {
+   inputs 3
+   which {{eotf-3}}
+   name SwitchInverseEOTF
+   xpos 400
+   ypos -10
+  }
+  Output {
+   name Output
+   xpos 400
+   ypos 50
+  }
+ end_group
+ ColorMatrix {
+  matrix {
+      {3.240968943 -1.537382722 -0.4986106157}
+      {-0.9692435861 1.875967264 0.04155508429}
+      {0.05563007668 -0.2039769441 1.056971431}
+    }
+  invert true
+  name Rec709_to_XYZ
+  tile_color 0x194c54ff
+  xpos 109
+  ypos 536
+  disable {{parent.display_ref}}
+ }
+ ColorMatrix {
+  matrix {
+      {{parent.InGamut_to_XYZ.ColorMatrix.matrix} {parent.InGamut_to_XYZ.ColorMatrix.matrix} {parent.InGamut_to_XYZ.ColorMatrix.matrix}}
+      {{parent.InGamut_to_XYZ.ColorMatrix.matrix} {parent.InGamut_to_XYZ.ColorMatrix.matrix} {parent.InGamut_to_XYZ.ColorMatrix.matrix}}
+      {{parent.InGamut_to_XYZ.ColorMatrix.matrix} {parent.InGamut_to_XYZ.ColorMatrix.matrix} {parent.InGamut_to_XYZ.ColorMatrix.matrix}}
+    }
+  invert true
+  name XYZ_to_InGamut
+  xpos 109
+  ypos 572
+  disable {{parent.display_ref}}
+ }
+push $N7f66e400
+ Merge2 {
+  inputs 2+1
+  operation copy
+  name Merge2
+  xpos 109
+  ypos 628
+ }
+ Output {
+  name Output1
+  xpos 109
+  ypos 668
+ }
+end_group

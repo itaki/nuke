@@ -1,0 +1,11 @@
+
+to run nuke from terminal
+/Applications/Nuke14*/Nuke14*.app/Contents/MacOS/Nuke14* --nukex 
+
+location of nukes python - change to the current version
+/Applications/Nuke14.0v4/Nuke14.0v4.app/Contents/Frameworks/Python.framework/Versions/3.9/bin/python3.9
+
+to install stuff in that version of python (MAKE SURE TO TURN OFF LULU)
+/Applications/Nuke14.0v2/Nuke14.0v2.app/Contents/Frameworks/Python.framework/Versions/3.9/bin/python3.9 -m pip install numpy
+
+RED GIANT Universe plugins will break nuke. To fix this move them out of /Library/OFX

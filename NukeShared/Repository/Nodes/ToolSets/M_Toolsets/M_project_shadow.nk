@@ -1,0 +1,153 @@
+set cut_paste_input [stack 0]
+version 11.3 v2
+Camera2 {
+ inputs 0
+ translate {0 71.59999847 297}
+ rotate {-3.529807612 0 0}
+ focal 20
+ name Camera4
+ label "render cam"
+ selected true
+ xpos 18138
+ ypos 23287
+ addUserKnob {20 User}
+ addUserKnob {22 reveal l "reveal in explorer" -STARTLINE T "from nuke_utils import reveal_in_explorer;reveal_in_explorer.reveal(nuke.thisNode())"}
+}
+Dot {
+ name Dot259
+ selected true
+ xpos 18162
+ ypos 23454
+}
+set Na1938c00 [stack 0]
+Dot {
+ name Dot260
+ selected true
+ xpos 18162
+ ypos 23596
+}
+Camera2 {
+ inputs 0
+ translate {-472.9863586 277.1516724 32.02655029}
+ rotate {-30.09259088 -88.50864436 5.821135869}
+ name Camera5
+ label "\"light\" projection\ncam"
+ selected true
+ xpos 18134
+ ypos 22763
+ addUserKnob {20 User}
+ addUserKnob {22 reveal l "reveal in explorer" -STARTLINE T "from nuke_utils import reveal_in_explorer;reveal_in_explorer.reveal(nuke.thisNode())"}
+}
+Dot {
+ name Dot261
+ selected true
+ xpos 18158
+ ypos 22933
+}
+set N21511800 [stack 0]
+Dot {
+ name Dot262
+ selected true
+ xpos 18158
+ ypos 23060
+}
+push $N21511800
+Constant {
+ inputs 0
+ channels rgb
+ color 1
+ name Constant2
+ selected true
+ xpos 18414
+ ypos 22587
+}
+Sphere {
+ rows 15
+ columns 15
+ translate {-116 71.19997406 0}
+ uniform_scale 25
+ name Sphere1
+ label "geo that should\ncast a shadow"
+ note_font_size 16
+ selected true
+ xpos 18414
+ ypos 22755
+}
+push 0
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ shutteroffset centred
+ motion_vectors_type distance
+ name ScanlineRender4
+ label "\[if \{\[value samples]>1\} \{ value samples \} ] \[if \{\[value samples]>1\} \{ return samples \} ]\n\[if \{\[value projection_mode] != \"render camera\"\} \{ value projection_mode  \}]\n"
+ selected true
+ xpos 18414
+ ypos 22929
+}
+Project3D2 {
+ inputs 2
+ project_on front
+ name Project3D2
+ selected true
+ xpos 18414
+ ypos 23056
+}
+Card2 {
+ rows 5
+ columns 5
+ rotate {90 0 0}
+ scaling {-4.489442825 -4.489442825 -4.489442825}
+ uniform_scale 100
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card2
+ label "geo that is\ncatching the shadow"
+ note_font_size 13
+ selected true
+ xpos 18414
+ ypos 23202
+}
+push $Na1938c00
+Scene {
+ inputs 2
+ name Scene3
+ selected true
+ xpos 18424
+ ypos 23430
+}
+push $cut_paste_input
+Reformat {
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ resize none
+ name Reformat7
+ selected true
+ xpos 18595
+ ypos 23592
+}
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ antialiasing low
+ shutteroffset centred
+ motion_vectors_type distance
+ name ScanlineRender5
+ selected true
+ xpos 18414
+ ypos 23592
+}
+Dot {
+ name Dot263
+ selected true
+ xpos 18448
+ ypos 23732
+}

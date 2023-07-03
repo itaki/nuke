@@ -1,0 +1,314 @@
+set cut_paste_input [stack 0]
+version 9.0 v7b66
+push $cut_paste_input
+Group {
+ name BurnIn
+ help "Applies a text burn-in to the media.\n\nUp to 6 pieces of metadata can be added to the shot"
+ selected true
+ xpos 180
+ ypos -57
+ addUserKnob {20 burnIn_tab l BurnIn}
+ addUserKnob {19 burnIn_color l color t "The text color"}
+ burnIn_color 1
+ addUserKnob {6 burnIn_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 burnIn_opacity l opacity t "The text opacity"}
+ burnIn_opacity 1
+ addUserKnob {7 burnIn_xPadding l x-padding t "The distance between the Burn-in text and the left and right image borders" R 10 100}
+ burnIn_xPadding 30
+ addUserKnob {7 burnIn_yPadding l y-padding t "The distance between the Burn-in text and the top and bottom image borders" R 10 100}
+ burnIn_yPadding 30
+ addUserKnob {84 burnIn_font l font}
+ addUserKnob {7 burnIn_textScale l "text scale" R 0 2}
+ burnIn_textScale 0.5
+ addUserKnob {26 divider1 l "" +STARTLINE}
+ addUserKnob {6 disableMetadata l "Disable Metadata Tab" +STARTLINE}
+ addUserKnob {26 divider2 l "" +STARTLINE}
+ addUserKnob {4 burnIn_topLeft l "top left" t "The tag of the metadata which is to be diplayed at this position of the burn-in" -STARTLINE M {input/filename input/frame input/framerange input/frame_rate input/timecode input/edgecode input/frame_dimensions input/date input/time input/data_time input/nuke_filename input/shot_name input/project_name input/company_name "" "" "" "" "" ""}}
+ burnIn_topLeft input/project_name
+ addUserKnob {6 enable_topLeft l "" -STARTLINE}
+ addUserKnob {4 burnIn_topCenter l "top center" t "The tag of the metadata which is to be diplayed at this position of the burn-in" M {input/filename input/frame input/framerange input/frame_rate input/timecode input/edgecode input/frame_dimensions input/date input/time input/data_time input/nuke_filename input/shot_name input/project_name input/company_name "" "" "" "" "" "" ""}}
+ burnIn_topCenter input/shot_name
+ addUserKnob {6 enable_topCenter l "" -STARTLINE}
+ enable_topCenter true
+ addUserKnob {4 burnIn_topRight l "top right" t "The tag of the metadata which is to be diplayed at this position of the burn-in" M {input/filename input/frame input/framerange input/frame_rate input/timecode input/edgecode input/frame_dimensions input/date input/time input/data_time input/nuke_filename input/shot_name input/project_name input/company_name ""}}
+ addUserKnob {6 enable_topRight l "" -STARTLINE}
+ addUserKnob {4 burnIn_bottomLeft l "bottom left" t "The tag of the metadata which is to be diplayed at this position of the burn-in" M {input/filename input/frame input/framerange input/frame_rate input/timecode input/edgecode input/frame_dimensions input/date input/time input/data_time input/nuke_filename input/shot_name input/project_name input/company_name ""}}
+ burnIn_bottomLeft input/project_name
+ addUserKnob {6 enable_bottomLeft l "" -STARTLINE}
+ enable_bottomLeft true
+ addUserKnob {4 burnIn_bottomCenter l "bottom center" t "The tag of the metadata which is to be diplayed at this position of the burn-in" M {input/filename input/frame input/framerange input/frame_rate input/timecode input/edgecode input/frame_dimensions input/date input/time input/data_time input/nuke_filename input/shot_name input/project_name input/company_name "" "" "" ""}}
+ burnIn_bottomCenter input/company_name
+ addUserKnob {6 enable_bottomCenter l "" -STARTLINE}
+ enable_bottomCenter true
+ addUserKnob {4 burnIn_bottomRight l "bottom right" t "The tag of the metadata which is to be diplayed at this position of the burn-in" M {input/filename input/frame input/framerange input/frame_rate input/timecode input/edgecode input/frame_dimensions input/date input/time input/data_time input/nuke_filename input/shot_name input/project_name input/company_name ""}}
+ burnIn_bottomRight input/data_time
+ addUserKnob {6 enable_bottomRight l "" -STARTLINE}
+ enable_bottomRight true
+ addUserKnob {20 metadata l Metadata}
+ addUserKnob {41 metadata_1 l "" -STARTLINE T ModifyMetaData1.metadata}
+ addUserKnob {20 Background}
+ addUserKnob {6 burnIn_backgroundEnable l enable t "Enable a background for the Burn-in text. A background will be applied to each Burn-in field" -STARTLINE}
+ addUserKnob {19 burnIn_backgroundColor l color t "The background color"}
+ burnIn_backgroundColor {0 0 0 1}
+ addUserKnob {6 burnIn_backgroundColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 burnIn_backgroundOpacity l opacity t "The background opacity"}
+ burnIn_backgroundOpacity 1
+ addUserKnob {7 burnIn_backgroundXBorder l x-border t "The distance between the background and the left and right edges of the text. This can be used to adjust the size of the background in the x-direction" R 0 50}
+ burnIn_backgroundXBorder 10
+ addUserKnob {7 burnIn_backgroundYBorder l y-border t "The distance between the background and the top and bottom edges of the text. This can be used to adjust the size of the background in the y-direction" R 0 50}
+ burnIn_backgroundYBorder 5
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -217
+  ypos 10
+ }
+ Dot {
+  name Dot2
+  xpos -183
+  ypos 61
+ }
+ ModifyMetaData {
+  metadata {
+   {set input/filename "\[file tail \[value \[topnode this.parent.input].file]]"}
+   {set input/frame_dimensions "\[metadata input/width]x\[metadata input/height]"}
+   {set input/nuke_filename "\[value root.name]"}
+   {set input/shot_name myShotName}
+   {set input/project_name myProjectName}
+   {set input/company_name myCompanyName}
+   {set input/format "\[value root.format]"}
+   {set input/framerange "\[value root.first_frame]-\[value root.last_frame]"}
+   {set input/data_time "\[date]"}
+   {set input/date "\[date %D]"}
+   {set input/time "\[date %T]"}
+  }
+  name ModifyMetaData1
+  xpos -217
+  ypos 92
+  disable {{parent.disableMetadata}}
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{parent.burnIn_opacity}}
+  message "\[metadata \[value burnIn_topLeft]]"
+  old_message {{109 121 80 114 111 106 101 99 116 78 97 109 101}
+    }
+  old_expression_markers {{0 12}
+    }
+  box {{parent.burnIn_xPadding} {parent.burnIn_yPadding} {"width - parent.burnIn_xPadding"} {"height - parent.burnIn_yPadding"}}
+  transforms {{0 2}
+    }
+  font {[value parent.burnIn_font]}
+  global_font_scale {{parent.burnIn_textScale}}
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  color {{parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color}}
+  enable_background {{parent.burnIn_backgroundEnable}}
+  background_color {{parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor}}
+  background_opacity {{burnIn_backgroundOpacity}}
+  background_border_x {{parent.burnIn_backgroundXBorder}}
+  background_border_y {{parent.burnIn_backgroundYBorder}}
+  name Text_TL
+  xpos -217
+  ypos 148
+  disable {{enable_topLeft==0?1:0}}
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{parent.burnIn_opacity}}
+  message "\[metadata \[value burnIn_topCenter]]"
+  old_message {{109 121 83 104 111 116 78 97 109 101}
+    }
+  old_expression_markers {{0 9}
+    }
+  box {{parent.burnIn_xPadding} {parent.burnIn_yPadding} {"width - parent.burnIn_xPadding"} {"height - parent.burnIn_yPadding"}}
+  xjustify center
+  transforms {{0 2}
+    }
+  cursor_position 33
+  font {[value parent.burnIn_font]}
+  global_font_scale {{parent.burnIn_textScale}}
+  scale {1 1}
+  center {1024 778}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  color {{parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color}}
+  enable_background {{parent.burnIn_backgroundEnable}}
+  background_color {{parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor}}
+  background_opacity {{burnIn_backgroundOpacity}}
+  background_border_x {{parent.burnIn_backgroundXBorder}}
+  background_border_y {{parent.burnIn_backgroundYBorder}}
+  name Text_TC
+  selected true
+  xpos -53
+  ypos 148
+  disable {{enable_topCenter==0?1:0}}
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{parent.burnIn_opacity}}
+  message "\[metadata \[value burnIn_topRight]]"
+  old_message {{75 48 48 49 67 48 48 54 95 49 52 48 49 49 48 95 82 54 77 83 46 109 111 118}
+    }
+  old_expression_markers {{0 23}
+    }
+  box {{parent.burnIn_xPadding} {parent.burnIn_yPadding} {"width - parent.burnIn_xPadding"} {"height - parent.burnIn_yPadding"}}
+  xjustify right
+  transforms {{0 2}
+    }
+  font {[value parent.burnIn_font]}
+  global_font_scale {{parent.burnIn_textScale}}
+  scale {1 1}
+  center {1024 778}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  color {{parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color}}
+  enable_background {{parent.burnIn_backgroundEnable}}
+  background_color {{parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor}}
+  background_opacity {{burnIn_backgroundOpacity}}
+  background_border_x {{parent.burnIn_backgroundXBorder}}
+  background_border_y {{parent.burnIn_backgroundYBorder}}
+  name Text_TR
+  xpos 123
+  ypos 148
+  disable {{enable_topRight==0?1:0}}
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{parent.burnIn_opacity}}
+  message "\[metadata \[value burnIn_bottomLeft]]"
+  old_message {{109 121 80 114 111 106 101 99 116 78 97 109 101}
+    }
+  old_expression_markers {{0 12}
+    }
+  box {{parent.burnIn_xPadding} {parent.burnIn_yPadding} {"width - parent.burnIn_xPadding"} {"height - parent.burnIn_yPadding"}}
+  yjustify bottom
+  transforms {{0 2}
+    }
+  font {[value parent.burnIn_font]}
+  global_font_scale {{parent.burnIn_textScale}}
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  color {{parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color}}
+  enable_background {{parent.burnIn_backgroundEnable}}
+  background_color {{parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor}}
+  background_opacity {{burnIn_backgroundOpacity}}
+  background_border_x {{parent.burnIn_backgroundXBorder}}
+  background_border_y {{parent.burnIn_backgroundYBorder}}
+  name Text_BL
+  xpos -218
+  ypos 244
+  disable {{enable_bottomLeft==0?1:0}}
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{parent.burnIn_opacity}}
+  message "\[metadata \[value burnIn_bottomCenter]]"
+  old_message {{109 121 67 111 109 112 97 110 121 78 97 109 101}
+    }
+  old_expression_markers {{0 12}
+    }
+  box {{parent.burnIn_xPadding} {parent.burnIn_yPadding} {"width - parent.burnIn_xPadding"} {"height - parent.burnIn_yPadding"}}
+  xjustify center
+  yjustify bottom
+  transforms {{0 2}
+    }
+  cursor_position 36
+  font {[value parent.burnIn_font]}
+  global_font_scale {{parent.burnIn_textScale}}
+  scale {1 1}
+  center {1024 778}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  color {{parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color}}
+  enable_background {{parent.burnIn_backgroundEnable}}
+  background_color {{parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor}}
+  background_opacity {{burnIn_backgroundOpacity}}
+  background_border_x {{parent.burnIn_backgroundXBorder}}
+  background_border_y {{parent.burnIn_backgroundYBorder}}
+  name Text_BC
+  xpos -53
+  ypos 244
+  disable {{enable_bottomCenter==0?1:0}}
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{parent.burnIn_opacity}}
+  message "\[metadata \[value burnIn_bottomRight]]"
+  old_message {{87 101 100 32 74 117 108 32 48 56 32 49 51 58 51 53 58 51 55 32 80 68 84 32 50 48 49 53}
+    }
+  old_expression_markers {{0 27}
+    }
+  box {{parent.burnIn_xPadding} {parent.burnIn_yPadding} {"width - parent.burnIn_xPadding"} {"height - parent.burnIn_yPadding"}}
+  xjustify right
+  yjustify bottom
+  transforms {{0 2}
+    }
+  font {[value parent.burnIn_font]}
+  global_font_scale {{parent.burnIn_textScale}}
+  scale {1 1}
+  center {1024 778}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  color {{parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color}}
+  enable_background {{parent.burnIn_backgroundEnable}}
+  background_color {{parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor}}
+  background_opacity {{burnIn_backgroundOpacity}}
+  background_border_x {{parent.burnIn_backgroundXBorder}}
+  background_border_y {{parent.burnIn_backgroundYBorder}}
+  name Text_BR
+  xpos 128
+  ypos 244
+  disable {{enable_bottomRight==0?1:0}}
+ }
+ Output {
+  name Output1
+  xpos 128
+  ypos 330
+ }
+end_group

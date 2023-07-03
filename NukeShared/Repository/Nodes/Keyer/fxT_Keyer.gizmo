@@ -1,0 +1,347 @@
+Group {
+ name fxT_Keyer
+ help "Nukes default keyer with added functionality of masking off the key and keying on different colorspaces for a better keying result.\n\nThe colorspace dropdown lets you choose between different colorspaces, or choose a custom colorspace which is basicly all colorspaces available in the colorspace node\n\nDevloped by Tor Andreassen - fxtor.net"
+ tile_color 0xf8ff00ff
+ selected true
+ xpos -428
+ ypos 453
+ addUserKnob {20 fxT_Keyer}
+ addUserKnob {41 output T Keyer1.output}
+ addUserKnob {41 input T Keyer1.input}
+ addUserKnob {41 combine l "" -STARTLINE T Keyer1.combine}
+ addUserKnob {41 operation T Keyer1.operation}
+ addUserKnob {41 range T Keyer1.range}
+ addUserKnob {26 ""}
+ addUserKnob {41 invert T Keyer1.invert}
+ addUserKnob {4 colorspace l colorspace: t "choose what colorspace you want to key on.\nPS: linear is the same as nuke's default keyer" M {log HSV linear custom "" ""}}
+ addUserKnob {4 clampedkeyer l "clamped keyer?" M {yes no ""}}
+ addUserKnob {4 shuffleOutput l "Channel Output:" t "choose what channels you want to output from the Keyer" M {rgba alpha "" "" "" ""}}
+ shuffleOutput alpha
+ addUserKnob {26 ""}
+ addUserKnob {20 advancedGROUP l "custom colorspace" n 1}
+ addUserKnob {41 colorspace_out l "custom colorSpace" t "pick a costom colorspace to key on. This will override the above colorspace dropdown\n\n_________________________________________\nThis is an additional future in case any of the above colorspaces is not working for keying the plate." T ColorspaceCUSTOM.colorspace_out}
+ addUserKnob {6 previewColorSpace l "preview colorspace" t "check this box to preview the custom colorspace and channel shuffling. This is so one can see easily which colorspace is best to key on.\n\nPS: this makes more sense when you shuffle out to one channel in the dropdown below to see what channel is better to key on.\n\nUncheck this when you have chosen the prefered colorspace, and are ready to use the keyer with the custom colorspace." -STARTLINE}
+ addUserKnob {4 shuffleOutCustom l "shuffle colorspace to:" t "if there is a colorspace that works good but only in one channel, you can choose to shuffle the colorspace to r,g,b channles only. \n_________________________________________\nDeault is \"don't shuffle channels\", this means that you will be keying on rgb/no shuffle applied" M {"don't shuffle channels" "all channals to red" "all channals to green" "all channals to blue" "" "" ""}}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 copyright l "" +STARTLINE T "<font color='#454545'>// fxT_Keyer v1.5 © Tor Andreassen - www.fxtor.net</font>"}
+ addUserKnob {26 ""}
+}
+ Input {
+  inputs 0
+  name rgb
+  label "\[value number]"
+  xpos -721
+  ypos -578
+ }
+ Dot {
+  name Dot3
+  note_font_size 50
+  xpos -696
+  ypos -472
+ }
+set Nd7a76000 [stack 0]
+ Dot {
+  name Dot6
+  note_font_size 50
+  xpos -993
+  ypos -472
+ }
+ Colorspace {
+  colorspace_out YCbCr
+  name ColorspaceCUSTOM
+  xpos -1018
+  ypos -378
+ }
+set N2fa91800 [stack 0]
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle6
+  tile_color 0xffff
+  label blueOnly
+  xpos -929
+  ypos -233
+ }
+push $N2fa91800
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle4
+  tile_color 0xff00ff
+  label greenOnly
+  xpos -1018
+  ypos -234
+ }
+push $N2fa91800
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle2
+  tile_color 0xff0000ff
+  label redOnly
+  xpos -1105
+  ypos -232
+ }
+push $N2fa91800
+ Dot {
+  name Dot7
+  note_font_size 50
+  xpos -1225
+  ypos -384
+ }
+ Dot {
+  name Dot8
+  note_font_size 50
+  xpos -1225
+  ypos -132
+ }
+ Switch {
+  inputs 4
+  which {{parent.shuffleOutCustom}}
+  name shuffleSwitch
+  xpos -1018
+  ypos -126
+ }
+ Dot {
+  name Dot10
+  note_font_size 50
+  xpos -993
+  ypos -90
+ }
+set N2a00dc00 [stack 0]
+ Dot {
+  name Dot11
+  note_font_size 50
+  xpos -1228
+  ypos -90
+ }
+ Dot {
+  name Dot9
+  note_font_size 50
+  xpos -1228
+  ypos 883
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -836
+  ypos 459
+  number 1
+ }
+set N2a00d000 [stack 0]
+ Shuffle {
+  alpha white
+  name Shuffle1
+  tile_color 0xffffffff
+  label "solid alpha"
+  xpos -973
+  ypos 577
+ }
+push $N2a00d000
+ Switch {
+  inputs 2
+  which {{!parent.autoAlphaCheck2.a}}
+  name Switch1
+  label AutoMaskCheck
+  xpos -836
+  ypos 577
+ }
+ Dot {
+  name Dot1
+  note_font_size 50
+  xpos -811
+  ypos 696
+ }
+push $N2a00dc00
+ Keyer {
+  input {{{Keyer1.input}}}
+  output {{{Keyer1.output}}}
+  combine {{Keyer1.combine}}
+  invert {{Keyer1.invert}}
+  operation {{Keyer1.operation}}
+  range {{Keyer1.range} {Keyer1.range} {Keyer1.range} {Keyer1.range}}
+  name Keyer4
+  label linked
+  xpos -1018
+  ypos -39
+ }
+ Clamp {
+  name Clamp5
+  label linked
+  xpos -1018
+  ypos 37
+  disable {{Clamp1.disable}}
+ }
+set N29e0fc00 [stack 0]
+push $N29e0fc00
+push $Nd7a76000
+ Dot {
+  name Dot2
+  note_font_size 50
+  xpos -553
+  ypos -472
+ }
+set N29e0f800 [stack 0]
+ Dot {
+  name Dot4
+  label "linear (no colorspace applied)"
+  note_font_size 20
+  xpos -422
+  ypos -472
+ }
+ Keyer {
+  input {{{Keyer1.input}}}
+  output {{{Keyer1.output}}}
+  combine {{Keyer1.combine}}
+  invert {{Keyer1.invert}}
+  operation {{Keyer1.operation}}
+  range {{Keyer1.range} {Keyer1.range} {Keyer1.range} {Keyer1.range}}
+  name Keyer2
+  label linked
+  xpos -447
+  ypos -177
+ }
+ Clamp {
+  name Clamp3
+  label linked
+  xpos -447
+  ypos -104
+  disable {{Clamp1.disable}}
+ }
+push $N29e0f800
+ Colorspace {
+  colorspace_out HSV
+  name Colorspace2
+  label HSV
+  xpos -587
+  ypos -369
+ }
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle3
+  tile_color 0xffff
+  label blueOnly
+  xpos -587
+  ypos -230
+ }
+ Keyer {
+  input {{{Keyer1.input}}}
+  output {{{Keyer1.output}}}
+  combine {{Keyer1.combine}}
+  invert {{Keyer1.invert}}
+  operation {{Keyer1.operation}}
+  range {{Keyer1.range} {Keyer1.range} {Keyer1.range} {Keyer1.range}}
+  name Keyer3
+  label linked
+  xpos -587
+  ypos -175
+ }
+ Clamp {
+  name Clamp2
+  label linked
+  xpos -587
+  ypos -107
+  disable {{Clamp1.disable}}
+ }
+push $Nd7a76000
+ Log2Lin {
+  operation lin2log
+  black 0
+  name Log2Lin1
+  xpos -730
+  ypos -364
+ }
+ Keyer {
+  operation "luminance key"
+  name Keyer1
+  label linked
+  xpos -730
+  ypos -177
+ }
+ Clamp {
+  name Clamp1
+  xpos -730
+  ypos -106
+  disable {{parent.clampedkeyer}}
+ }
+ Log2Lin {
+  black 0
+  name Log2Lin2
+  xpos -730
+  ypos -34
+ }
+ Switch {
+  inputs 4
+  which {{parent.colorspace}}
+  name colorSpaceTypeSwitch
+  xpos -587
+  ypos 49
+ }
+ Switch {
+  inputs 2
+  which {{"colorSpaceTypeSwitch.which ==3?1:0"}}
+  name colorSpaceCustomSwitch
+  xpos -587
+  ypos 132
+ }
+ Dot {
+  name Dot5
+  note_font_size 50
+  xpos -553
+  ypos 187
+ }
+set N298cc000 [stack 0]
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle5
+  tile_color 0xffffffff
+  label alphaOnly
+  xpos -427
+  ypos 282
+ }
+push $N298cc000
+ Switch {
+  inputs 2
+  which {{parent.shuffleOutput}}
+  name onlyAlphaSwitch
+  xpos -587
+  ypos 288
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge1
+  label "mix:\[value mix]"
+  xpos -587
+  ypos 698
+ }
+ Switch {
+  inputs 2
+  which {{parent.previewColorSpace}}
+  name displayCustomColorspace
+  xpos -587
+  ypos 888
+ }
+ Output {
+  name Output1
+  xpos -587
+  ypos 1009
+ }
+push $N2a00d000
+ NoOp {
+  name autoAlphaCheck2
+  xpos -676
+  ypos 459
+  addUserKnob {20 autoAlphaCheck}
+  addUserKnob {6 a +STARTLINE}
+  a {{"clamp(\[lsearch \[channels this] rgba.alpha]+1, 0, 1)"}}
+ }
+end_group

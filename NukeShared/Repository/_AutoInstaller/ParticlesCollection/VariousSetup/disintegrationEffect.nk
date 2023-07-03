@@ -1,0 +1,198 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/.nuke/Particles/VariousSetup/disintegrationEffect.nk
+ frame 79
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ label "<b>Region is animated        ."
+ note_font_size 20
+ xpos -282
+ ypos 77
+}
+Camera2 {
+ inputs 0
+ translate {9.74874952 26.54834843 107.5456772}
+ rotate {-9.32186059 1.399960182 0}
+ focal 35
+ name Camera1
+ xpos -572
+ ypos 245
+}
+Read {
+ inputs 0
+ file_type jpeg
+ file "\[python \{Particles_path\} ]/VariousSetup/skull/skull.jpg"
+ format "1024 1024 0 0 1024 1024 1 square_1K"
+ origset true
+ auto_alpha true
+ name Read1
+ xpos -243
+ ypos -167
+}
+ReadGeo2 {
+ inputs 0
+ file "\[python \{Particles_path\} ]/VariousSetup/skull/skull.obj"
+ rotate {-90 0 0}
+ name ReadGeo2
+ xpos -401
+ ypos -270
+}
+ApplyMaterial {
+ inputs 2
+ name ApplyMaterial1
+ xpos -401
+ ypos -137
+}
+push 0
+ParticleEmitter {
+ inputs 2
+ start_frame -50
+ emit_from faces
+ rate {{curve x1 900 x20 900 x21 0}}
+ lifetime 250
+ velocity 0
+ mass 0.395
+ color {1 0 0 1}
+ color_from_texture true
+ name ParticleEmitter1
+ xpos -401
+ ypos -19
+}
+ParticleGravity {
+ to {0.75 -0.9 0}
+ probability 0.34
+ region box
+ translate {50 7 0}
+ scaling {{curve x20 4 x100 8} 3 3}
+ uniform_scale 17
+ name ParticleGravity1
+ xpos -401
+ ypos 62
+}
+ParticleTurbulence {
+ strength {{strength.z} {strength.z} 0.6}
+ scale {{scale.z} {scale.z} 500}
+ probability 0.465
+ region box
+ translate {50 7 0}
+ scaling {{parent.ParticleGravity1.scaling} {parent.ParticleGravity1.scaling} {parent.ParticleGravity1.scaling}}
+ uniform_scale 17
+ name ParticleTurbulence1
+ xpos -401
+ ypos 98
+}
+ParticleBounce {
+ out_bounce 0.825
+ out_friction 0.285
+ in_bounce 0.76
+ in_friction 0.385
+ bounceaxis_uniform_scale 600
+ name ParticleBounce1
+ xpos -401
+ ypos 199
+}
+push 0
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ motion_vectors_type distance
+ name ScanlineRender1
+ xpos -401
+ ypos 266
+}
+Dot {
+ name Dot1
+ xpos -367
+ ypos 318
+}
+set N1994cc00 [stack 0]
+Dot {
+ name Dot2
+ xpos -131
+ ypos 318
+}
+TimeOffset {
+ time_offset 2
+ time ""
+ name TimeOffset1
+ label "\[value time_offset]"
+ xpos -165
+ ypos 400
+}
+Grade {
+ white 1.3
+ name Grade1
+ xpos -165
+ ypos 436
+}
+push $N1994cc00
+Merge2 {
+ inputs 2
+ operation max
+ name Merge1
+ label "\[ expr \{ \[value mix] == 1 ? \" \" : \[value mix] \}]"
+ xpos -401
+ ypos 436
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x969600ff
+ label "<b>https://www.youtube.com/watch?v=4ic_r9XVptI&ab_channel=TopicRoomsVfx        ."
+ note_font_size 20
+ xpos 195
+ ypos 322
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0x335959ff
+ label "<b>author: Topic Rooms Vfx        ."
+ note_font_size 20
+ xpos 189
+ ypos 234
+}

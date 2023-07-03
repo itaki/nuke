@@ -1,0 +1,192 @@
+Group {
+ inputs 0
+ name Bird3D_Crow1
+ onCreate "\nfor node in nuke.allNodes():\n    if node.name().startswith('ReadGeo'):\n        b3d_assetname = node.knob('label').getValue()\n        b3d_filepath = birds3d_assets_path + '/' + b3d_assetname\n        node.knob('file').setValue(b3d_filepath)\n        node.knob('reload').execute()\n        node.knob('read_on_each_frame').setValue(0)\n"
+ tile_color 0x222222ff
+ note_font_color 0xffffffff
+ addUserKnob {20 User l Crow}
+ addUserKnob {26 div1 l <b>Wings</b>}
+ addUserKnob {7 flapSpeed l "Flap Speed" t "Frequency or speed at which the wings flap" R 0 2}
+ flapSpeed 0.7
+ addUserKnob {7 flapAmp l "Flap Range" t "Amplitude or range of the flaps, greater values = bigger flaps" R 0 100}
+ flapAmp 65
+ addUserKnob {7 flapRand l "Flap Randomness" t "Adds speed variation into the flap animation" R 0 10}
+ flapRand 4
+ addUserKnob {26 div2 l "" +STARTLINE T " "}
+ addUserKnob {26 div3 l <b>Material</b>}
+ addUserKnob {18 diffAmnt l Diffuse t "Additional diffuse lighting to act as a fake bouce light if using 3D lights\n\nSet to 1 if not using 3D lights!"}
+ diffAmnt 0.25
+ addUserKnob {6 diffAmnt_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 div4 l "" +STARTLINE}
+ addUserKnob {26 bottomText l "" +STARTLINE T "Birds_3D | John Clayton"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x7171c600
+  label Crow
+  note_font_size 42
+  xpos -468
+  ypos -564
+  bdwidth 672
+  bdheight 802
+ }
+ Read {
+  inputs 0
+  file_type png
+  file "\[python \{birds3d_assets_path+'/crow_wing.png'\}]"
+  origset true
+  name Read2
+  xpos -245
+  ypos -477
+ }
+ Premult {
+  name Premult1
+  xpos -245
+  ypos -393
+ }
+ Dot {
+  name Dot26
+  xpos -211
+  ypos -344
+ }
+set N58689400 [stack 0]
+push $N58689400
+ Dot {
+  name Dot30
+  xpos -306
+  ypos -344
+ }
+ Multiply {
+  channels rgb
+  value {{parent.diffAmnt} {parent.diffAmnt} {parent.diffAmnt} {parent.diffAmnt}}
+  name Multiply1
+  xpos -340
+  ypos -326
+ }
+ set C58688c00 [stack 0]
+ Dot {
+  name Dot31
+  xpos -306
+  ypos -264
+ }
+ Diffuse {
+  inputs 2
+  name Diffuse2
+  xpos -245
+  ypos -267
+ }
+ ReadGeo2 {
+  name ReadGeo2
+  label crow_wing.abc
+  xpos -245
+  ypos -183
+ }
+ TransformGeo {
+  rotate {{parent.NoOp1.flapRetime/2} {parent.NoOp1.flapRetime/10+8} 0}
+  pivot {0 0.06 -0.04}
+  name TransformGeo4
+  xpos -245
+  ypos -99
+ }
+ Dot {
+  name Dot28
+  xpos -211
+  ypos -22
+ }
+set N582db000 [stack 0]
+ Dot {
+  name Dot29
+  xpos -321
+  ypos -22
+ }
+ TransformGeo {
+  scaling {1 1 -1}
+  name TransformGeo2
+  xpos -355
+  ypos 35
+ }
+push $N582db000
+ MergeGeo {
+  inputs 2
+  name MergeGeo2
+  xpos -245
+  ypos 35
+ }
+ Dot {
+  name Dot27
+  xpos -211
+  ypos 99
+ }
+ Read {
+  inputs 0
+  file_type png
+  file "\[python \{birds3d_assets_path+'/crow_body.png'\}]"
+  origset true
+  name Read1
+  xpos 0
+  ypos -479
+ }
+ Dot {
+  name Dot23
+  xpos 34
+  ypos -345
+ }
+set N582d9400 [stack 0]
+push $N582d9400
+ Dot {
+  name Dot24
+  xpos -61
+  ypos -345
+ }
+clone $C58688c00 {
+  xpos -95
+  ypos -327
+  selected false
+ }
+ Dot {
+  name Dot25
+  xpos -61
+  ypos -253
+ }
+ Diffuse {
+  inputs 2
+  name Diffuse1
+  xpos 0
+  ypos -256
+ }
+ ReadGeo2 {
+  name ReadGeo1
+  label crow_body.abc
+  xpos 0
+  ypos -182
+ }
+ MergeGeo {
+  inputs 2
+  name MergeGeo1
+  xpos 0
+  ypos 95
+ }
+ TransformGeo {
+  rotate {0 -90 {parent.NoOp1.flapRetime/20}}
+  name TransformGeo3
+  xpos 0
+  ypos 170
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 300
+ }
+ NoOp {
+  inputs 0
+  name NoOp1
+  xpos -121
+  ypos -99
+  addUserKnob {20 User}
+  addUserKnob {7 flap}
+  flap {{sin(frame*flapSpeed)*flapAmp}}
+  addUserKnob {7 flapRetime}
+  flapRetime {{"flap(frame+random(1, frame/12)*flapRand)"}}
+ }
+end_group

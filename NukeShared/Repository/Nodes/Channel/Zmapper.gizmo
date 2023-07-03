@@ -1,0 +1,201 @@
+Group {
+ name Zmapper
+ tile_color 0x444444ff
+ selected true
+ addUserKnob {20 Controls}
+ addUserKnob {41 useGPUIfAvailable l "Use GPU if available" -STARTLINE T C_Bilateral1.useGPUIfAvailable}
+ addUserKnob {26 sep00 l "  " T ""}
+ addUserKnob {7 erodeMap l erode t "Erodes detail out of the depth map." R 0 100}
+ erodeMap 30
+ addUserKnob {7 blurMap l blur t "Blurs the generated depth map. Use with caution, only meant to take off the edge :)" R 0 5}
+ blurMap 2
+ addUserKnob {26 sep01 l "  " T ""}
+ addUserKnob {3 sizeBil l "bilateral size" t "Sets the general size of the bilateral operation."}
+ sizeBil 20
+ addUserKnob {41 positionalSigma l "bilaterial positional Σ" T C_Bilateral1.positionalSigma}
+ addUserKnob {41 colourSigma l "bilateral colour Σ" T C_Bilateral1.colourSigma}
+ addUserKnob {26 sep02 l "  " T ""}
+ addUserKnob {41 go l "analyze normalization" t "When pressing this, the input gets analyzed for the brightest and darkest point which is needed for the normalization process." T CurveTool1.go}
+ addUserKnob {6 normalize l "normalize output" t "Normalizes the output to values between 0 and 1.\nRequires the use of the \"Go!\"" -STARTLINE}
+ addUserKnob {6 shuffleZ l "shuffle depth map to Z" t "By activating this, the generated depth map will be shuffled into the Z-channel instead of outputting it into the RGBA." +STARTLINE}
+ addUserKnob {26 credit t "lp_Zmapper v1.0\n(c)2020 lucas pfaff\nbased on a technique from a tutorial by Mads Hagbarth Damsbo: https://vimeo.com/377653826" +INVISIBLE T "lp_Zmapper v1.0\n(c)2020 lucas pfaff\nbased on a technique from a tutorial by Mads Hagbarth Damsbo: https://vimeo.com/377653826"}
+}
+ Input {
+  inputs 0
+  name img
+  xpos 829
+  ypos 176
+ }
+ AddChannels {
+  channels rgb
+  name AddChannels1
+  selected true
+  xpos 829
+  ypos 251
+ }
+ Dot {
+  name Dot3
+  xpos 863
+  ypos 332
+ }
+set N6e7ef000 [stack 0]
+ Dot {
+  name Dot2
+  xpos 1192
+  ypos 332
+ }
+ Dot {
+  name Dot1
+  xpos 1192
+  ypos 615
+ }
+set N6e7ee800 [stack 0]
+ Dot {
+  name Dot15
+  xpos 1192
+  ypos 874
+ }
+set N8679d800 [stack 0]
+push $N6e7ee800
+push 0
+push $N6e7ef000
+ Remove {
+  operation keep
+  channels {rgba.red -rgba.green -rgba.blue none}
+  name Remove1
+  xpos 829
+  ypos 365
+ }
+ Invert {
+  channels rgb
+  name Invert1
+  xpos 829
+  ypos 403
+ }
+ Saturation {
+  saturation 0
+  mode Maximum
+  name Saturation1
+  xpos 829
+  ypos 448
+ }
+ FilterErode {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  size {{erodeMap*-1}}
+  name FilterErode1
+  xpos 829
+  ypos 517
+ }
+ FilterErode {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  size {{FilterErode1.size*-1}}
+  filter {{FilterErode1.filter x26 1}}
+  name FilterErode2
+  xpos 829
+  ypos 549
+ }
+ C_Bilateral2_1 {
+  inputs 2+1
+  channels {rgba.red -rgba.green -rgba.blue none}
+  size {{sizeBil}}
+  positionalSigma 40
+  colourSigma 0.15
+  name C_Bilateral1
+  xpos 829
+  ypos 608
+ }
+ Dot {
+  name Dot8
+  xpos 863
+  ypos 682
+ }
+set N6e80c800 [stack 0]
+ Grade {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  blackpoint {{parent.CurveTool1.minlumapixvalue.r}}
+  whitepoint {{parent.CurveTool1.maxlumapixvalue.r}}
+  black_clamp false
+  name Grade2
+  label "\[value channels]"
+  xpos 829
+  ypos 748
+  disable {{1-normalize}}
+ }
+ Transform {
+  filter Parzen
+  black_outside false
+  shutteroffset centred
+  name Transform1
+  xpos 829
+  ypos 780
+ }
+ Blur {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  size {{blurMap}}
+  name Blur1
+  label "\[value size]"
+  xpos 829
+  ypos 804
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 829
+  ypos 871
+ }
+ Dot {
+  name Dot14
+  xpos 863
+  ypos 979
+ }
+set N6e843400 [stack 0]
+push $N8679d800
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 depth.Z
+  name Copy1
+  xpos 1158
+  ypos 972
+ }
+ Dot {
+  name Dot13
+  xpos 1192
+  ypos 1130
+ }
+push $N6e843400
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle1
+  label "\[value red]/\[value green]/\[value blue]/\[value alpha]"
+  xpos 829
+  ypos 1023
+ }
+ Switch {
+  inputs 2
+  which {{shuffleZ}}
+  name Switch1
+  xpos 829
+  ypos 1127
+ }
+ Output {
+  name Output1
+  xpos 829
+  ypos 1236
+ }
+push $N6e80c800
+ CurveTool {
+  operation "Max Luma Pixel"
+  ROI {0 0 {input.width} {input.height}}
+  autocropdata {{0} {0} {input.width} {input.height}}
+  maxlumapixdata {{curve} {curve}}
+  maxlumapixvalue {{curve}}
+  minlumapixdata {{curve} {curve}}
+  minlumapixvalue {{curve}}
+  name CurveTool1
+  xpos 691
+  ypos 679
+ }
+end_group

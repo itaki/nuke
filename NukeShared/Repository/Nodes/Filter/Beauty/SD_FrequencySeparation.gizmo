@@ -1,0 +1,178 @@
+#! /londonfs/engStuff/Foundry/Nuke_network/Nuke_linux_network_11.2v1/libnuke-11.2.1.so -nx
+version 11.2 v1
+Group {
+name SD_FrequencySeparation
+ inputs 2
+ addUserKnob {20 SD_FrequencySeparation}
+ addUserKnob {26 low_frequency l 1. T "Find the right balance between Blur/Median to smooth the input (Low frequencies)"}
+ addUserKnob {7 blur l Blur t "Amount of blur get rid of details." R 0 100}
+ blur 30
+ addUserKnob {7 median l Median t "Median amount to get rid of details." R 0 50}
+ addUserKnob {26 high_frequency l 2. T "Bring back details on top of your smoothed plate (High frequencies)"}
+ addUserKnob {7 details l Details t "Level of detail from the original plate to bring back." R 0 50}
+ details 5
+ addUserKnob {7 highlights l Highlights t "Level of highlights to bring back from the original plate."}
+ addUserKnob {7 shadows l Shadows t "Level of shadows to bring back from the original plate."}
+ addUserKnob {26 matte_softness_1 l 3. t "Connect the matte and adjust its softness." T "Connect the matte and adjust its softness"}
+ addUserKnob {7 matte_softness l "Matte softness" t "Level of blur to adjust the matte you created." R 0 200}
+ addUserKnob {68 final_output l Output M {"Original Plate" "High Frequencies" "Low Frequencies" Matte Result ""}}
+ final_output Result
+ addUserKnob {26 ""}
+ addUserKnob {26 author l "" +STARTLINE T "Author - Sacha Danjou - Glassworks"}
+}
+ Input {
+  inputs 0
+  name source_input
+  xpos 380
+  ypos 154
+  number 1
+ }
+set N599dd90 [stack 0]
+ Dot {
+  name Dot1
+  xpos 414
+  ypos 323
+ }
+set N59a24a0 [stack 0]
+ Dot {
+  name Dot5
+  xpos 558
+  ypos 323
+ }
+ Dot {
+  name Dot6
+  xpos 558
+  ypos 789
+ }
+set N59ab5c0 [stack 0]
+ Dot {
+  name Dot7
+  xpos 558
+  ypos 905
+ }
+push $N59ab5c0
+ Input {
+  inputs 0
+  name mask_input
+  xpos -25
+  ypos 356
+ }
+ Crop {
+  box {0 0 {parent.source_input.width} {parent.source_input.height}}
+  reformat true
+  crop false
+  name Crop1
+  xpos -25
+  ypos 380
+ }
+ Blur {
+  size {{parent.matte_softness}}
+  name Blur3
+  xpos -25
+  ypos 404
+ }
+ Shuffle {
+  in alpha
+  green red
+  name Shuffle1
+  xpos -25
+  ypos 497
+ }
+ Dot {
+  name Dot4
+  xpos 9
+  ypos 556
+ }
+set N59e18e0 [stack 0]
+ Dot {
+  name Dot3
+  xpos 9
+  ypos 628
+ }
+set N59e6110 [stack 0]
+push $N59e18e0
+push $N59e18e0
+push $N59a24a0
+ Dot {
+  name Dot2
+  xpos 201
+  ypos 323
+ }
+ Blur {
+  inputs 1+1
+  size {{parent.details}}
+  name Blur1
+  xpos 167
+  ypos 365
+ }
+set N59ef240 [stack 0]
+ Blur {
+  inputs 1+1
+  size {{parent.blur}}
+  name Blur2
+  xpos 167
+  ypos 547
+ }
+ Median {
+  inputs 1+1
+  size {{parent.median}}
+  ignore_top_line false
+  name Median1
+  xpos 167
+  ypos 625
+ }
+set N5a0a100 [stack 0]
+push $N59ef240
+push $N59a24a0
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge1
+  xpos 380
+  ypos 371
+ }
+set N5a15f10 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos 380
+  ypos 625
+ }
+ Merge2 {
+  inputs 2
+  operation max
+  mix {{parent.highlights}}
+  name Merge3
+  xpos 380
+  ypos 786
+ }
+ Merge2 {
+  inputs 2
+  operation min
+  mix {{parent.shadows}}
+  name Merge4
+  xpos 380
+  ypos 902
+ }
+push $N59e6110
+ Dot {
+  name Dot8
+  xpos 9
+  ypos 905
+ }
+push $N5a0a100
+push $N5a15f10
+push $N599dd90
+ Switch {
+  inputs 5
+  which {{parent.final_output}}
+  name Switch1
+  xpos 167
+  ypos 902
+ }
+ Output {
+  name source_output
+  xpos 167
+  ypos 1065
+ }
+end_group

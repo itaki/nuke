@@ -1,0 +1,1119 @@
+set cut_paste_input [stack 0]
+version 10.0 v3
+push 0
+push $cut_paste_input
+Group {
+ inputs 2
+ name GS_Fire
+ knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() in ('showHide', 'showPanel'):\n   showHide = n\['showHide'].value()\n   if showHide == 'Show':\n     n\['particle_light_geo'].setVisible(True)\n     n\['camera'].setVisible(True)\n     n\['focal'].setVisible(True)\n     n\['haperture'].setVisible(True)\n     n\['vaperture'].setVisible(True)\n     n\['kernel'].setVisible(True)\n     n\['diffuse'].setVisible(True)\n     n\['specular_power'].setVisible(True)\n     n\['specular_hardness'].setVisible(True)\n     n\['half_lambert'].setVisible(True)\n     n\['geo'].setVisible(True)\n   else:\n     n\['particle_light_geo'].setVisible(False)\n     n\['camera'].setVisible(False)\n     n\['focal'].setVisible(False)\n     n\['haperture'].setVisible(False)\n     n\['vaperture'].setVisible(False)\n     n\['kernel'].setVisible(False)\n     n\['diffuse'].setVisible(False)\n     n\['specular_power'].setVisible(False)\n     n\['specular_hardness'].setVisible(False)\n     n\['half_lambert'].setVisible(False)\n     n\['geo'].setVisible(False)\n\nif k.name() in ('switch', 'showPanel'):\n   switch = n\['switch'].value()\n   if switch:\n     n\['particle_light_geo'].setEnabled(True)\n     n\['camera'].setEnabled(True)\n     n\['focal'].setEnabled(True)\n     n\['haperture'].setEnabled(True)\n     n\['vaperture'].setEnabled(True)\n     n\['kernel'].setEnabled(True)\n     n\['diffuse'].setEnabled(True)\n     n\['specular_power'].setEnabled(True)\n     n\['specular_hardness'].setEnabled(True)\n     n\['half_lambert'].setEnabled(True)\n     n\['geo'].setEnabled(True)\n   else:\n     n\['particle_light_geo'].setEnabled(False)\n     n\['camera'].setEnabled(False)\n     n\['focal'].setEnabled(False)\n     n\['haperture'].setEnabled(False)\n     n\['vaperture'].setEnabled(False)\n     n\['kernel'].setEnabled(False)\n     n\['diffuse'].setEnabled(False)\n     n\['specular_power'].setEnabled(False)\n     n\['specular_hardness'].setEnabled(False)\n     n\['half_lambert'].setEnabled(False)\n     n\['geo'].setEnabled(False)"
+ tile_color 0xb71400ff
+ note_font Verdana
+ note_font_color 0xffb735ff
+ selected true
+ xpos 134
+ ypos 1015
+ addUserKnob {20 FireSparks}
+ addUserKnob {26 space0 l "" +STARTLINE T "\n\n"}
+ addUserKnob {26 firesparksname l "" t "The fire is not included! :P " +STARTLINE T "<font size=\"6\"><div><span style=\"color:#ff0000;\">F</span><span style=\"color:#ff1200;\">i</span><span style=\"color:#ff2400;\">r</span><span style=\"color:#ff4000;\">e</span><span style=\"color:#ff5200;\">S</span><span style=\"color:#ff6d00;\">p</span><span style=\"color:#ff7f00;\">a</span><span style=\"color:#ff9200;\">r</span><span style=\"color:#ffa400;\">k</span><span style=\"color:#ffb600;\">s</span></div><font size=\"3\"></span><span style=\"color:#ffb600;\"> </span><span style=\"color:#ffa400;\">v</span><span style=\"color:#ff9b00;\">1</span><span style=\"color:#ff8800;\">.1"}
+ addUserKnob {26 gerardoschiavone92@gmail.com l "" +STARTLINE T "<font size=\"3\"><span style=\"color:#ff0000\">B</span><span style=\"color:#ff1b00;\">y</span><span style=\"color:#ff0900;\"> </span><span style=\"color:#ff3700;\">G</span><span style=\"color:#ff5200;\">e</span><span style=\"color:#ff6d00;\">r</span><span style=\"color:#ff8800;\">a</span><span style=\"color:#ff9200;\">r</span><span style=\"color:#ffa400;\">d</span><span style=\"color:#ffb600;\">o</span><span style=\"color:#ffb600;\"> S</span><span style=\"color:#ffad00;\">c</span><span style=\"color:#ffa400;\">h</span><span style=\"color:#ff8800;\">iavone"}
+ addUserKnob {26 space l "" +STARTLINE T "\n\n\n\n\n\n\n\n"}
+ addUserKnob {26 info l "" +STARTLINE T "<span style=\"color:#ff9200\"><p>1. Connect a Camera. </p>\n<p>2. Connect the input \"Particles\" to \"GS_Particles\" or to your custom particles system.</p> \n<p>3. Follow the steps in tabs order (left to right). </p>\n<p>Cache a sequence file to speedup tuning operations.</p>"}
+ addUserKnob {26 ""}
+ addUserKnob {22 help_1 l "<span style=\"color:#ff9200\">help ?" -STARTLINE T "import webbrowser\nwebbrowser.open(\"http://www.gerardoschiavone.com\")\n\n"}
+ addUserKnob {20 curves_1 l curves}
+ addUserKnob {26 particlecurves l "<span style=\"color:#ff9200\">particle curves"}
+ addUserKnob {6 viewparticles l "view particles" +STARTLINE}
+ addUserKnob {41 curves l "" +STARTLINE T ParticleCurve4.curves}
+ addUserKnob {41 affect_rgb l rgb T ParticleCurve4.affect_rgb}
+ addUserKnob {41 affect_alpha l alpha -STARTLINE T ParticleCurve4.affect_alpha}
+ addUserKnob {41 affect_size l size -STARTLINE T ParticleCurve4.affect_size}
+ addUserKnob {41 affect_mass l mass -STARTLINE T ParticleCurve4.affect_mass}
+ addUserKnob {20 Write_Read l write/read}
+ addUserKnob {26 WriteFire l "<span style=\"color:#ff9200\">write fire"}
+ addUserKnob {41 channels T Write_fire.channels}
+ addUserKnob {41 file T Write_fire.file}
+ addUserKnob {41 frame_mode l frame T Write_fire.frame_mode}
+ addUserKnob {41 frame l "" -STARTLINE T Write_fire.frame}
+ addUserKnob {41 colorspace T Write_fire.colorspace}
+ addUserKnob {41 premultiplied T Write_fire.premultiplied}
+ addUserKnob {41 file_type l "file type" T Write_fire.file_type}
+ addUserKnob {26 ""}
+ addUserKnob {41 render_order l "render order" T Write_fire.render_order}
+ addUserKnob {41 Render T Write_fire.Render}
+ addUserKnob {41 first l "frame range" T Write_fire.first}
+ addUserKnob {41 last l "" -STARTLINE T Write_fire.last}
+ addUserKnob {41 use_limit l "limit to range" T Write_fire.use_limit}
+ addUserKnob {26 read_fire l "<span style=\"color:#ff9200\">Read fire"}
+ addUserKnob {22 create_read_fire l "create read" t "Create read node of writed smoke. \n" T "### deselect nodes ###\nif nuke.selectedNodes():\n    for i in nuke.selectedNodes():\n        i\['selected'].setValue(False)\n\n\n### select write node ###\nfor n in nuke.thisNode().nodes():\n    if n.name() == \"Write_fire\":\n        n\['selected'].setValue(True)\n\n### read from write ###\n\nsel = nuke.selectedNode()\n   \nnuke.root().begin()\nread = nuke.createNode(\"Read\")\nread\[\"file\"].setValue(sel\[\"file\"].getValue())\nread\[\"first\"].setValue(int(nuke.root()\[\"first_frame\"].getValue()))\nread\[\"last\"].setValue(int(nuke.root()\[\"last_frame\"].getValue()))\nread\[\"origfirst\"].setValue(int(nuke.root()\[\"first_frame\"].getValue()))\nread\[\"origlast\"].setValue(int(nuke.root()\[\"last_frame\"].getValue()))\nread\[\"colorspace\"].setValue(int(sel\[\"colorspace\"].getValue()))\n\n\n" +STARTLINE}
+ addUserKnob {6 readfire l "disable fire particle rendering" t "Check this box to disable fire paticle rendering  to increase speed.\nRemember to connect rendered particles to ReadFire input.\n" -STARTLINE}
+ addUserKnob {20 fire}
+ addUserKnob {26 fire_1 l "<span style=\"color:#ff9200\">fire"}
+ addUserKnob {41 size_2 l erode T Dilate1.size}
+ addUserKnob {41 size_1 l blur T Blur4.size}
+ addUserKnob {41 white l gain T Grade1.white}
+ addUserKnob {41 gamma_1 l gamma T Grade1.gamma}
+ addUserKnob {41 tolerance_1 l tolerance T Glow2.tolerance}
+ addUserKnob {41 brightness_1 l brightness T Glow2.brightness}
+ addUserKnob {41 bloomtolerance l "bloom tolerance" T Bloom2.bloomtolerance}
+ addUserKnob {41 size_3 l "bloom  amount" T Bloom2.size}
+ addUserKnob {26 s l "" +STARTLINE T "\n"}
+ addUserKnob {26 distortion l "<span style=\"color:#ff9200\">distortion"}
+ addUserKnob {41 size l x/ysize T Noise1.size}
+ addUserKnob {41 UV_scale l "distortion scale" T IDistort.uv_scale}
+ addUserKnob {41 zspeed l "z speed" T NoOp1.zspeed}
+ addUserKnob {41 ascentspeed l "ascent speed" T NoOp1.ascentspeed}
+ addUserKnob {20 flametuning l "frame tuning"}
+ addUserKnob {26 finetuning l "<span style=\"color:#ff9200\">flame tuning"}
+ addUserKnob {41 finetuning_1 l samples t "difference (in frame) between peak and core. I recommend values between 2 and 5, higher values slow down the process" T TimeOffsetMain.finetuning}
+ addUserKnob {6 enablepeak l "peak flame" +STARTLINE}
+ enablepeak true
+ addUserKnob {41 peakmix l "peak mix" T peak_mix.mix}
+ addUserKnob {41 peakerode l "peak erode" T peakdetails.size}
+ addUserKnob {41 peakdetailsmix l "peak details mix" T littlescreen.mix}
+ addUserKnob {41 gamma_2 l "peak  gamma" T peakgrade.gamma}
+ addUserKnob {6 enablecore l "core flame" +STARTLINE}
+ enablecore true
+ addUserKnob {41 coremix l "core mix" T Scrn.mix}
+ addUserKnob {41 coreerode l "core erode" T coredetails.size}
+ addUserKnob {41 coredetailsmix l "core details mix" T core_mix.mix}
+ addUserKnob {41 white_2 l "core gain" T coregrade.white}
+ addUserKnob {41 gamma_3 l "core gamma" T coregrade.gamma}
+ addUserKnob {6 detail +STARTLINE}
+ detail true
+ addUserKnob {41 size_big T Noise1.size}
+ addUserKnob {41 blur T Blur1.size}
+ addUserKnob {41 detailamount l amount T Dilate2.size}
+ addUserKnob {41 size_small T Noise3.size}
+ addUserKnob {41 amount2 T Dilate3.size}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x8e3823ff
+  label Fire
+  note_font_size 66
+  xpos 1833
+  ypos 804
+  bdwidth 1241
+  bdheight 2199
+ }
+ Input {
+  inputs 0
+  name cam
+  xpos 1863
+  ypos 588
+  number 1
+  addUserKnob {20 User}
+ }
+ Input {
+  inputs 0
+  name particle
+  xpos 2152
+  ypos 106
+ }
+ ParticleExpression {
+  colexpr "v(1+(age/100)+(random/8)-0.125, 0.5-((age/100)+(random/8)-0.125), 0.2-((age/100)+(random/8)-0.125))"
+  name ParticleExpression8
+  xpos 2152
+  ypos 176
+  addUserKnob {20 User}
+  addUserKnob {18 color}
+  color {0.9 0 0}
+  addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  color_panelDropped true
+ }
+ ParticleCurve {
+  curves {r {curve l x0.8822693825 0.9952700734}
+    g {curve l 1.00074625 1}
+    b {curve l x1 1}
+    a {curve x0.0008307993412 0.003355026245 s0 v1.899285316 x0.07105499506 0.9698335528 s0 x0.1247946471 0.6006602049 s-5.5 u0.5140602589 v0.314607054 x0.2404062003 0.0007374286652 s-0 u2.886076689}
+    size {curve 0.01726341248 s0 x0.03874617815 18.13863182 x0.14476794 8.658246994 x0.5819559097 0.005838394165 s-0.200000003 u2.163327694}
+    mass {curve 1.050838709 s0 x0.2996224761 1.145650029 s0}}
+  affect_rgb false
+  affect_size true
+  affect_mass true
+  name ParticleCurve4
+  xpos 2152
+  ypos 258
+  addUserKnob {20 User}
+  addUserKnob {7 a}
+ }
+ Switch {
+  which 0.004
+  name Switch2
+  xpos 2152
+  ypos 359
+ }
+ Scene {
+  name Scene5
+  xpos 2162
+  ypos 462
+ }
+push 0
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  ztest_enabled false
+  motion_vectors_type distance
+  drop_zero_alpha_samples false
+  name ScanlineRender4
+  xpos 2152
+  ypos 588
+  addUserKnob {20 User}
+ }
+set N55fb7400 [stack 0]
+ Write {
+  channels rgba
+  file D:/5_MY_VFX/CFG/.00_Gerry/02_GS_Gizmo/01_Tools/GS_FireSparks/FireDemoPrc/FireDemoPrc_%03d.exr
+  file_type exr
+  on_error checkerboard
+  version 18
+  name Write_fire
+  xpos 2340
+  ypos 565
+  postage_stamp true
+  addUserKnob {20 caravr l CaraVR}
+  addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
+  addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote2
+  label "Flame tuning"
+  xpos 1851
+  ypos 1260
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label Fire
+  xpos 1851
+  ypos 2527
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote3
+  label "   Default Color\n   Increase size for fire    "
+  xpos 2316
+  ypos 257
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote9
+  label "   Size"
+  xpos 2316
+  ypos 296
+ }
+ NoOp {
+  inputs 0
+  name NoOp1
+  xpos 2568
+  ypos 925
+  addUserKnob {20 User}
+  addUserKnob {7 ascentspeed l "ascent speed" R 0 10}
+  ascentspeed 4
+  addUserKnob {7 zspeed l "z speed" R 0 100}
+  zspeed 2
+ }
+ Input {
+  inputs 0
+  name ReadFire
+  xpos 2338
+  ypos 668
+  number 2
+ }
+push $N55fb7400
+ Switch {
+  inputs 2
+  which {{parent.readfire}}
+  name Switch1
+  xpos 2152
+  ypos 668
+ }
+ Dot {
+  name Dot16
+  xpos 2186
+  ypos 734
+ }
+set N55ff9400 [stack 0]
+ Dot {
+  name Dot15
+  xpos 1609
+  ypos 734
+ }
+ Dot {
+  name Dot14
+  xpos 1609
+  ypos 2945
+ }
+ Noise {
+  inputs 0
+  output {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  size {200 250}
+  zoffset {{parent.Noise9Main.zoffset}}
+  octaves 15
+  lacunarity 1
+  gamma 0.685
+  translate {0 {frame*NoOp1.ascentspeed}}
+  scale 0.3
+  center {960 540}
+  name Noise7
+  xpos 2488
+  ypos 1053
+ }
+ Noise {
+  output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  size {200 250}
+  zoffset {{(frame/400)*NoOp1.zspeed}}
+  octaves 15
+  lacunarity 1
+  gain {{parent.Noise7.gain}}
+  gamma {{parent.Noise7.gamma}}
+  translate {15 {frame*NoOp1.ascentspeed}}
+  scale 0.3
+  center {960 540}
+  name Noise9Main
+  xpos 2488
+  ypos 1136
+ }
+push $N55ff9400
+ FrameBlend {
+  name FrameBlend3
+  xpos 2152
+  ypos 829
+ }
+ Blur {
+  size {5 10}
+  name Blur4
+  xpos 2152
+  ypos 929
+ }
+ Dilate {
+  size -4
+  name Dilate1
+  xpos 2152
+  ypos 1019
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name Copy1
+  xpos 2152
+  ypos 1129
+ }
+ IDistort {
+  channels rgba
+  uv forward
+  uv_offset 0.23
+  uv_scale 20
+  blur_scale 0
+  name IDistort
+  xpos 2152
+  ypos 1238
+ }
+ Dot {
+  name Dot23
+  xpos 2186
+  ypos 1305
+ }
+set N56038c00 [stack 0]
+ Dot {
+  name Dot29
+  xpos 2002
+  ypos 1305
+ }
+set N56038800 [stack 0]
+ Dot {
+  name Dot31
+  xpos 1871
+  ypos 1305
+ }
+ TimeOffset {
+  time_offset {{1-(parent.TimeOffsetMain.time_offset*2)}}
+  time ""
+  name TimeOffset2
+  xpos 1837
+  ypos 1352
+ }
+ Grade {
+  white {0.73 0.73 0.836111 1}
+  white_panelDropped true
+  gamma 0.7
+  name coregrade
+  xpos 1837
+  ypos 1457
+ }
+ Dot {
+  name Dot9
+  xpos 1871
+  ypos 1772
+ }
+set N5606fc00 [stack 0]
+ Dot {
+  name Dot17
+  xpos 1871
+  ypos 2428
+ }
+ Expression {
+  expr3 max(r,g,b)
+  name Expression1
+  xpos 2234
+  ypos 2424
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle2
+  xpos 2234
+  ypos 2450
+ }
+ Noise {
+  inputs 0
+  output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  size {55 500}
+  zoffset {{parent.Noise9Main.zoffset}}
+  octaves 15
+  lacunarity 1
+  gain 0.59
+  gamma 0.72
+  translate {30 {frame*NoOp1.ascentspeed}}
+  scale 0.3
+  center {960 540}
+  name Noise3
+  xpos 2842
+  ypos 1335
+ }
+ Dot {
+  name Dot18
+  xpos 2876
+  ypos 1422
+ }
+ Noise {
+  inputs 0
+  output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  size {{parent.Noise3.size} {parent.Noise3.size}}
+  zoffset {{parent.Noise9Main.zoffset+1000}}
+  octaves 15
+  lacunarity 1
+  gain 0.428
+  gamma 0.86
+  translate {30 {frame*NoOp1.ascentspeed}}
+  scale 0.2
+  center {960 540}
+  name Noise4
+  xpos 2719
+  ypos 1333
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge2
+  xpos 2719
+  ypos 1418
+ }
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle3
+  xpos 2719
+  ypos 1474
+ }
+ Dot {
+  name Dot20
+  xpos 2753
+  ypos 1589
+ }
+set N560ab400 [stack 0]
+ Dot {
+  name Dot19
+  xpos 2753
+  ypos 2110
+ }
+ Noise {
+  inputs 0
+  output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  size 114
+  zoffset {{parent.Noise9Main.zoffset}}
+  octaves 15
+  lacunarity 1.46
+  gain 0.59
+  gamma 0.626
+  translate {30 {frame*NoOp1.ascentspeed}}
+  scale 0.3
+  center {960 540}
+  name Noise1
+  xpos 2614
+  ypos 1343
+ }
+ Dot {
+  name Dot3
+  xpos 2648
+  ypos 1430
+ }
+ Noise {
+  inputs 0
+  output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  size {{parent.Noise1.size} {parent.Noise1.size}}
+  zoffset {{parent.Noise9Main.zoffset}}
+  octaves 15
+  lacunarity 1
+  gain 0.428
+  gamma 0.86
+  translate {30 {frame*NoOp1.ascentspeed}}
+  scale 0.2
+  center {960 540}
+  name Noise2
+  xpos 2491
+  ypos 1341
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge1
+  xpos 2491
+  ypos 1426
+ }
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle1
+  xpos 2491
+  ypos 1482
+ }
+ Dot {
+  name Dot2
+  xpos 2525
+  ypos 1772
+ }
+set N560e5800 [stack 0]
+ Dot {
+  name Dot12
+  xpos 2525
+  ypos 1904
+ }
+set N560e5400 [stack 0]
+ Dot {
+  name Dot10
+  xpos 2525
+  ypos 1975
+ }
+push $N560e5400
+push $N560e5800
+ Dilate {
+  name coredetails
+  xpos 2374
+  ypos 1762
+ }
+ Constant {
+  inputs 0
+  color 1
+  name Constant1
+  xpos 2250
+  ypos 1459
+ }
+set N560e4800 [stack 0]
+ Merge2 {
+  inputs 2
+  operation copy
+  mix 0.5
+  name core_mix
+  xpos 2253
+  ypos 1766
+ }
+push $N5606fc00
+push $N560e4800
+push $N560ab400
+ Dilate {
+  size -6
+  name peakdetails
+  xpos 2395
+  ypos 1579
+ }
+ Merge2 {
+  inputs 2
+  operation copy
+  mix 0.14
+  name peak_mix
+  xpos 2292
+  ypos 1585
+ }
+push $N56038800
+ TimeOffset {
+  time_offset {{1-(parent.TimeOffsetMain.finetuning)}}
+  time ""
+  name TimeOffsetMain
+  xpos 1968
+  ypos 1354
+  addUserKnob {20 User}
+  addUserKnob {3 finetuning l "fine tuning"}
+  finetuning 6
+ }
+ Grade {
+  white {1.02 0.345 0.084 2.35}
+  white_panelDropped true
+  gamma {1.8 1.09 1.09 1.09}
+  gamma_panelDropped true
+  name peakgrade
+  xpos 1968
+  ypos 1453
+ }
+ Dot {
+  name Dot30
+  xpos 2002
+  ypos 1589
+ }
+push $N56038c00
+ Grade {
+  white {0.63 0.63 0.003 0.455}
+  white_panelDropped true
+  gamma 0.5
+  white_clamp true
+  name Grade1
+  xpos 2152
+  ypos 1454
+ }
+ Dot {
+  name Dot8
+  xpos 2186
+  ypos 1527
+ }
+set N56116c00 [stack 0]
+ Dot {
+  name Dot1
+  xpos 2094
+  ypos 1527
+ }
+ Merge2 {
+  inputs 2+1
+  operation plus
+  mix 0.535
+  name littlescreen
+  xpos 2060
+  ypos 1585
+ }
+ Dot {
+  name Dot4
+  xpos 2094
+  ypos 1659
+ }
+push $N56116c00
+ Switch {
+  inputs 2
+  which {{parent.enablepeak}}
+  name peak
+  xpos 2152
+  ypos 1655
+ }
+ Dot {
+  name Dot5
+  xpos 2186
+  ypos 1731
+ }
+set N56155c00 [stack 0]
+ Dot {
+  name Dot6
+  xpos 2094
+  ypos 1731
+ }
+ Merge2 {
+  inputs 2+1
+  operation plus
+  name Scrn
+  xpos 2060
+  ypos 1768
+ }
+ Dot {
+  name Dot7
+  xpos 2094
+  ypos 1836
+ }
+push $N56155c00
+ Switch {
+  inputs 2
+  which {{parent.enablecore}}
+  name core
+  xpos 2152
+  ypos 1832
+ }
+ Dot {
+  name Dot13
+  xpos 2186
+  ypos 1903
+ }
+set N56154c00 [stack 0]
+ Dilate {
+  inputs 1+1
+  size 6
+  name Dilate2
+  xpos 2360
+  ypos 1893
+ }
+ Blur {
+  inputs 1+1
+  name Blur1
+  xpos 2360
+  ypos 1965
+ }
+ Dilate {
+  inputs 1+1
+  size 8
+  name Dilate3
+  xpos 2360
+  ypos 2100
+ }
+ Dot {
+  name Dot11
+  xpos 2394
+  ypos 2354
+ }
+push $N56154c00
+ Switch {
+  inputs 2
+  which {{parent.detail}}
+  name Switch3
+  xpos 2152
+  ypos 2350
+ }
+ Dot {
+  name Dot35
+  xpos 2186
+  ypos 2553
+ }
+set N5618b800 [stack 0]
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge7
+  xpos 2234
+  ypos 2549
+ }
+ Dot {
+  name Dot37
+  xpos 2366
+  ypos 2553
+ }
+ Group {
+  name Bloom2
+  tile_color 0x7fff
+  note_font_color 0xff0000ff
+  xpos 2332
+  ypos 2611
+  addUserKnob {20 User l Hard_Glow}
+  addUserKnob {7 bloomtolerance l "bloom tolerance"}
+  bloomtolerance 0.608
+  addUserKnob {41 size l Amount T Main.size}
+  addUserKnob {41 mix T Screen.mix}
+  addUserKnob {26 ""}
+  addUserKnob {41 range T Keyer1.range}
+ }
+  Input {
+   inputs 0
+   name Source
+   xpos -388
+   ypos -206
+  }
+  Dot {
+   name Dot3
+   xpos -354
+   ypos -41
+  }
+set N5618a800 [stack 0]
+  Dot {
+   name Dot2
+   xpos 316
+   ypos -41
+  }
+set N5618a400 [stack 0]
+  Dot {
+   name Dot5
+   xpos 520
+   ypos -41
+  }
+push $N5618a800
+  Dot {
+   name Dot1
+   xpos -584
+   ypos -41
+  }
+  Keyer {
+   operation "luminance key"
+   range {0 {parent.bloomtolerance} 1 1}
+   name Keyer1
+   xpos -618
+   ypos 17
+  }
+  Blur {
+   size 2.3
+   name Blur1
+   xpos -618
+   ypos 63
+  }
+push $N5618a800
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy1
+   xpos -388
+   ypos 63
+  }
+  Premult {
+   name Premult1
+   xpos -388
+   ypos 101
+  }
+  Dot {
+   name Dot7
+   xpos -354
+   ypos 130
+  }
+set N561b4800 [stack 0]
+  Blur {
+   size 0.3
+   mix 0
+   name Main
+   xpos 190
+   ypos 321
+  }
+push $N561b4800
+  Blur {
+   size {{parent.Main.size*512}}
+   mix 0.995
+   name Blur16
+   xpos 27
+   ypos 319
+  }
+push $N561b4800
+  Blur {
+   size {{parent.Main.size*268}}
+   name Blur15
+   xpos -83
+   ypos 319
+  }
+push $N561b4800
+  Blur {
+   size {{parent.Main.size*4}}
+   mix 0.825
+   name Blur9
+   xpos -852
+   ypos 345
+  }
+push $N561b4800
+  Blur {
+   size {{parent.Main.size*8}}
+   name Blur10
+   xpos -743
+   ypos 319
+  }
+push $N561b4800
+  Blur {
+   size {{parent.Main.size*16}}
+   name Blur11
+   xpos -633
+   ypos 319
+  }
+push $N561b4800
+  Blur {
+   size {{parent.Main.size*32}}
+   name Blur12
+   xpos -523
+   ypos 319
+  }
+push $N561b4800
+  Blur {
+   size {{parent.Main.size*64}}
+   name Blur13
+   xpos -413
+   ypos 319
+  }
+push 0
+push $N561b4800
+  Blur {
+   size {{parent.Main.size*128}}
+   name Blur14
+   xpos -193
+   ypos 319
+  }
+push $N561b4800
+  Blur {
+   size {{parent.Main.size*2}}
+   name Blur7
+   xpos -303
+   ypos 319
+  }
+  Merge2 {
+   inputs 10+1
+   operation screen
+   name Merge11
+   xpos -397
+   ypos 550
+  }
+push $N5618a400
+  Merge2 {
+   inputs 2
+   operation screen
+   mix 0.5
+   name Screen
+   xpos 282
+   ypos 550
+  }
+  Keymix {
+   inputs 2
+   name Keymix1
+   xpos 486
+   ypos 544
+  }
+  Output {
+   name Output1
+   xpos 486
+   ypos 691
+  }
+ end_group
+ Dot {
+  name Dot36
+  xpos 2366
+  ypos 2749
+ }
+push $N5618b800
+ Dot {
+  name Dot33
+  xpos 2026
+  ypos 2553
+ }
+ Glow2 {
+  tint {1 1 1 1}
+  tint_panelDropped true
+  tolerance 0.324
+  brightness 0.76
+  size 1
+  name Glow2
+  xpos 1992
+  ypos 2608
+ }
+ Dot {
+  name Dot34
+  xpos 2026
+  ypos 2686
+ }
+push $N5618b800
+ Glow2 {
+  tint {1 1 1 1}
+  tolerance {{parent.Glow2.tolerance*2}}
+  brightness {{parent.Glow2.brightness}}
+  size {{parent.Glow2.size*50}}
+  mix 0.2
+  name Glow3
+  xpos 2152
+  ypos 2608
+ }
+ Merge2 {
+  inputs 2
+  operation hypot
+  name Merge4
+  xpos 2152
+  ypos 2682
+ }
+ Merge2 {
+  inputs 2
+  operation hypot
+  bbox B
+  name Merge6
+  xpos 2152
+  ypos 2745
+ }
+ Group {
+  name Bloom1
+  tile_color 0x7fff
+  note_font_color 0xff0000ff
+  xpos 2152
+  ypos 2786
+  addUserKnob {20 User l Hard_Glow}
+  addUserKnob {7 bloomtolerance l "bloom tolerance"}
+  bloomtolerance 0.3
+  addUserKnob {41 size l Amount T Main.size}
+  addUserKnob {41 mix T Screen.mix}
+  addUserKnob {26 ""}
+  addUserKnob {41 range T Keyer1.range}
+ }
+  Input {
+   inputs 0
+   name Source
+   xpos -388
+   ypos -206
+  }
+  Dot {
+   name Dot3
+   xpos -354
+   ypos -41
+  }
+set N57236c00 [stack 0]
+  Dot {
+   name Dot2
+   xpos 316
+   ypos -41
+  }
+set N57236800 [stack 0]
+  Dot {
+   name Dot5
+   xpos 520
+   ypos -41
+  }
+push $N57236c00
+  Dot {
+   name Dot1
+   xpos -584
+   ypos -41
+  }
+  Keyer {
+   operation "luminance key"
+   range {0 {parent.bloomtolerance x101 0.3} 1 1}
+   name Keyer1
+   xpos -618
+   ypos 17
+  }
+  Blur {
+   size 2.3
+   name Blur1
+   xpos -618
+   ypos 63
+  }
+push $N57236c00
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy1
+   xpos -388
+   ypos 63
+  }
+  Premult {
+   name Premult1
+   xpos -388
+   ypos 101
+  }
+  Dot {
+   name Dot7
+   xpos -354
+   ypos 130
+  }
+set N5726ac00 [stack 0]
+  Blur {
+   size 1.5
+   mix 0
+   name Main
+   xpos 190
+   ypos 321
+  }
+push $N5726ac00
+  Blur {
+   size {{parent.Main.size*512}}
+   mix 0.995
+   name Blur16
+   xpos 27
+   ypos 319
+  }
+push $N5726ac00
+  Blur {
+   size {{parent.Main.size*268}}
+   name Blur15
+   xpos -83
+   ypos 319
+  }
+push $N5726ac00
+  Blur {
+   size {{parent.Main.size*4}}
+   mix 0.825
+   name Blur9
+   xpos -852
+   ypos 345
+  }
+push $N5726ac00
+  Blur {
+   size {{parent.Main.size*8}}
+   name Blur10
+   xpos -743
+   ypos 319
+  }
+push $N5726ac00
+  Blur {
+   size {{parent.Main.size*16}}
+   name Blur11
+   xpos -633
+   ypos 319
+  }
+push $N5726ac00
+  Blur {
+   size {{parent.Main.size*32}}
+   name Blur12
+   xpos -523
+   ypos 319
+  }
+push $N5726ac00
+  Blur {
+   size {{parent.Main.size*64}}
+   name Blur13
+   xpos -413
+   ypos 319
+  }
+push 0
+push $N5726ac00
+  Blur {
+   size {{parent.Main.size*128}}
+   name Blur14
+   xpos -193
+   ypos 319
+  }
+push $N5726ac00
+  Blur {
+   size {{parent.Main.size*2}}
+   name Blur7
+   xpos -303
+   ypos 319
+  }
+  Merge2 {
+   inputs 10+1
+   operation screen
+   name Merge11
+   xpos -397
+   ypos 550
+  }
+push $N57236800
+  Merge2 {
+   inputs 2
+   operation screen
+   mix 0.1
+   name Screen
+   xpos 282
+   ypos 550
+  }
+  Keymix {
+   inputs 2
+   name Keymix1
+   xpos 486
+   ypos 544
+  }
+  Output {
+   name Output1
+   xpos 486
+   ypos 691
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{parent.viewparticles}}
+  name Switch4
+  xpos 2152
+  ypos 2941
+ }
+ Output {
+  name Output2
+  xpos 2152
+  ypos 3041
+ }
+end_group

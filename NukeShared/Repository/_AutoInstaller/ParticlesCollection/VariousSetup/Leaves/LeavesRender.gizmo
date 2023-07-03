@@ -1,0 +1,485 @@
+Group {
+ name LeavesRender
+ inputs 4
+ knobChanged "\nif nuke.thisNode()\['shadow_on'].getValue() == 0:\n    nuke.thisNode()\['ground_type_render'].setEnabled(False)\n    nuke.thisNode()\['light_translate'].setEnabled(False)\n    nuke.thisNode()\['light_rotate'].setEnabled(False)\n    nuke.thisNode()\['light_scale'].setEnabled(False)\n    nuke.thisNode()\['shadow_erode'].setEnabled(False)\n    nuke.thisNode()\['erodefilter'].setEnabled(False)\n    nuke.thisNode()\['shadow_blur'].setEnabled(False)\n    nuke.thisNode()\['shadow_opacity'].setEnabled(False)\n    nuke.thisNode()\['shadow_only'].setEnabled(False)\nelse:\n    nuke.thisNode()\['ground_type_render'].setEnabled(True)\n    nuke.thisNode()\['light_translate'].setEnabled(True)\n    nuke.thisNode()\['light_rotate'].setEnabled(True)\n    nuke.thisNode()\['light_scale'].setEnabled(True)\n    nuke.thisNode()\['shadow_erode'].setEnabled(True)\n    nuke.thisNode()\['erodefilter'].setEnabled(True)\n    nuke.thisNode()\['shadow_blur'].setEnabled(True)\n    nuke.thisNode()\['shadow_opacity'].setEnabled(True)\n    nuke.thisNode()\['shadow_only'].setEnabled(True)\n\nif nuke.thisNode()\['mb_on'].getValue() == 0:\n    nuke.thisNode()\['mb_samples'].setEnabled(False)\n    nuke.thisNode()\['mb_shutter'].setEnabled(False)\n\nelse:\n    nuke.thisNode()\['mb_samples'].setEnabled(True)\n    nuke.thisNode()\['mb_shutter'].setEnabled(True)\n"
+ tile_color 0x151515ff
+ note_font_color 0xff8565ff
+ addUserKnob {20 leavesrender l FLeavesRender}
+ addUserKnob {26 fleavesrender l "" +STARTLINE T "<font size=\"5\"><div><span style=\"color:#f06e55;\">F</span><span style=\"color:#f3775e;\">L</span><span style=\"color:#f58066;\">e</span><span style=\"color:#f8896f;\">a</span><span style=\"color:#fa9177;\">v</span><span style=\"color:#fd9a80;\">e</span><span style=\"color:#ffa388;\">s</span><span style=\"color:#fd9a80;\">R</span><span style=\"color:#fa9177;\">e</span><span style=\"color:#f8886f;\">n</span><span style=\"color:#f58066;\">d</span><span style=\"color:#f3775e;\">e</span><span style=\"color:#f06e55;\">r</span></div><font size=\"2\"></span><span style=\"color:#ba6d00;\"> </span><span style=\"color:#fd9c82;\">v2.0"}
+ addUserKnob {26 bydamianbinder l "" +STARTLINE T "<font size=\"2\"><span style=\"color:#fd9c82\">By Damian Binder"}
+ addUserKnob {26 bgline l "<b><span style=\"color:#F37961\">Background"}
+ addUserKnob {68 bg_type l "BG Type" M {"Default BG" "Custom BG " "No BG" "" ""}}
+ addUserKnob {26 shadow1 l "<b><span style=\"color:#F37961\">Shadow"}
+ addUserKnob {6 shadow_on l "Shadow On" +STARTLINE}
+ addUserKnob {68 ground_type_render l "Ground Type" +DISABLED M {"Default (Flat)" "Custom Mesh " "" ""}}
+ addUserKnob {20 light_options l "Light Options" n 1}
+ addUserKnob {13 light_translate l Translate +DISABLED}
+ light_translate {0 30 0}
+ addUserKnob {13 light_rotate l Rotate +DISABLED}
+ light_rotate {-90 0 0}
+ addUserKnob {7 light_scale l Scale +DISABLED R 1 100}
+ light_scale 10
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 shadow_options l "Shadow Options" n 1}
+ addUserKnob {7 shadow_erode l Erode +DISABLED R 0 10}
+ shadow_erode 0.5
+ addUserKnob {68 erodefilter l "Erode Filter" +DISABLED M {Box Triangle Cuadratic Gaussian}}
+ erodefilter Gaussian
+ addUserKnob {7 shadow_blur l Blur +DISABLED R 0 20}
+ shadow_blur 1
+ addUserKnob {7 shadow_opacity l Opacity +DISABLED}
+ shadow_opacity 0.8
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {6 shadow_only l "Shadow Only" +DISABLED +STARTLINE}
+ addUserKnob {20 light_help l Help n 1}
+ light_help 0
+ addUserKnob {26 help_text l "" +STARTLINE T "If shadows dont work:\n\n-Light may be inside the guide box. It needs to be outside. \n\n-Light needs to face the leaves. View the scene through the light (using the Viewer's \n camera dropdown menu) and adjust the light's translate and scale so that the \n part of the scene that should cast shadows fits within the view.\n\n\nIf you are using a custom object or mesh for the ground remember to disable\nthe \"cast shadow\" option and enable \"receive shadow\".\n\n\nIf shadows are working but look pixelated, change the lights scale and play around\nwith the erode and blur settings in the shadow options.\nRemember: High project settings resolution = High quality shadows.\n\nOnce you turn on Motion Blur shadows look much much better.\n"}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 MotionBlur l "<b><span style=\"color:#F37961\">MotionBlur"}
+ addUserKnob {6 mb_on l "Motion Blur On" +STARTLINE}
+ addUserKnob {7 mb_samples l Samples +DISABLED R 1 50}
+ mb_samples 10
+ addUserKnob {7 mb_shutter l Shutter +DISABLED R 0 2}
+ mb_shutter 0.8
+ addUserKnob {52 python T "nuke.thisNode()\['knobChanged'].setValue('''\nif nuke.thisNode()\['shadow_on'].getValue() == 0:\n    nuke.thisNode()\['ground_type_render'].setEnabled(False)\n    nuke.thisNode()\['light_translate'].setEnabled(False)\n    nuke.thisNode()\['light_rotate'].setEnabled(False)\n    nuke.thisNode()\['light_scale'].setEnabled(False)\n    nuke.thisNode()\['shadow_erode'].setEnabled(False)\n    nuke.thisNode()\['erodefilter'].setEnabled(False)\n    nuke.thisNode()\['shadow_blur'].setEnabled(False)\n    nuke.thisNode()\['shadow_opacity'].setEnabled(False)\n    nuke.thisNode()\['shadow_only'].setEnabled(False)\nelse:\n    nuke.thisNode()\['ground_type_render'].setEnabled(True)\n    nuke.thisNode()\['light_translate'].setEnabled(True)\n    nuke.thisNode()\['light_rotate'].setEnabled(True)\n    nuke.thisNode()\['light_scale'].setEnabled(True)\n    nuke.thisNode()\['shadow_erode'].setEnabled(True)\n    nuke.thisNode()\['erodefilter'].setEnabled(True)\n    nuke.thisNode()\['shadow_blur'].setEnabled(True)\n    nuke.thisNode()\['shadow_opacity'].setEnabled(True)\n    nuke.thisNode()\['shadow_only'].setEnabled(True)\n\nif nuke.thisNode()\['mb_on'].getValue() == 0:\n    nuke.thisNode()\['mb_samples'].setEnabled(False)\n    nuke.thisNode()\['mb_shutter'].setEnabled(False)\n\nelse:\n    nuke.thisNode()\['mb_samples'].setEnabled(True)\n    nuke.thisNode()\['mb_shutter'].setEnabled(True)\n''')" +STARTLINE}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0xc6c6c6ff
+  label "Default BG"
+  note_font_size 30
+  xpos 738
+  ypos 191
+  bdwidth 219
+  bdheight 338
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x507f8eff
+  label "Shadow Generator"
+  note_font_size 42
+  xpos 39
+  ypos 644
+  bdwidth 662
+  bdheight 538
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x5b5842ff
+  label Shadow
+  note_font_size 42
+  xpos 337
+  ypos 1425
+  bdwidth 606
+  bdheight 387
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  label Light
+  xpos 112
+  ypos 741
+  bdwidth 125
+  bdheight 121
+ }
+ Input {
+  inputs 0
+  name camera
+  xpos 52
+  ypos 931
+  number 1
+ }
+ Dot {
+  name Dot2
+  xpos 86
+  ypos 1022
+ }
+set N886fa0c0 [stack 0]
+ Diffuse {
+  inputs 0
+  white 0.04
+  name Diffuse3
+  xpos 433
+  ypos 774
+ }
+set N88902510 [stack 0]
+ Input {
+  inputs 0
+  name mesh
+  xpos 599
+  ypos 774
+  number 2
+ }
+ ApplyMaterial {
+  inputs 2
+  name ApplyMaterial1
+  xpos 599
+  ypos 845
+ }
+ Dot {
+  name Dot5
+  xpos 633
+  ypos 936
+ }
+push $N88902510
+ Card2 {
+  display off
+  selectable false
+  cast_shadow false
+  image_aspect false
+  rows 1
+  columns 1
+  rotate {-90 0 0}
+  uniform_scale 100
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Card7
+  xpos 433
+  ypos 848
+ }
+ Switch {
+  inputs 2
+  which {{parent.ground_type_render}}
+  name Switch4
+  label "\[value which]"
+  xpos 433
+  ypos 929
+ }
+add_layer {shadow shadow.a}
+ Light2 {
+  inputs 0
+  light_type directional
+  intensity 7.6
+  selectable false
+  translate {{parent.light_translate} {parent.light_translate} {parent.light_translate}}
+  rotate {{parent.light_rotate} {parent.light_rotate} {parent.light_rotate}}
+  uniform_scale {{parent.light_scale}}
+  cast_shadows true
+  shadow_mode "clipped alpha"
+  scene_epsilon 0
+  samples 3.6
+  sample_width 3
+  depthmap_bias 0
+  depthmap_slope_bias 0.07
+  clipping_threshold 0
+  shadow_jitter_scale 0
+  depthmap_width 8192
+  shadow_mask shadow.a
+  name Default_Light1
+  xpos 145
+  ypos 780
+ }
+ Input {
+  inputs 0
+  name leaves
+  xpos 267
+  ypos 5
+ }
+ Dot {
+  name Dot29
+  xpos 301
+  ypos 145
+ }
+set N8896e950 [stack 0]
+ Scene {
+  inputs 3
+  name Scene4
+  xpos 277
+  ypos 912
+ }
+push 0
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  samples {{"parent.mb_samples * parent.mb_on"}}
+  shutter {{parent.mb_shutter}}
+  motion_vectors_type off
+  MB_channel none
+  name ScanlineRenderSHADOW
+  xpos 267
+  ypos 1018
+ }
+set N88846a00 [stack 0]
+ Shuffle {
+  in shadow
+  name Shuffle3
+  xpos 267
+  ypos 1495
+ }
+set N88857b30 [stack 0]
+ Dot {
+  name Dot31
+  xpos 301
+  ypos 2068
+ }
+push $N886fa0c0
+ Dot {
+  name Dot1
+  xpos 86
+  ypos 1145
+ }
+push $N8896e950
+ Dot {
+  name Dot32
+  xpos 992
+  ypos 145
+ }
+push 0
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  samples {{"parent.mb_samples * parent.mb_on"}}
+  shutter {{parent.mb_shutter}}
+  motion_vectors_type off
+  MB_channel none
+  name ScanlineRender8
+  xpos 958
+  ypos 1141
+ }
+ Switch {
+  which {{parent.shadow_only}}
+  name Switch3
+  label "\[value which]"
+  xpos 958
+  ypos 1193
+ }
+push $N88857b30
+ Dot {
+  name Dot33
+  xpos 538
+  ypos 1498
+ }
+set N88889270 [stack 0]
+ FilterErode {
+  channels all
+  size {{-parent.shadow_erode}}
+  filter gaussian
+  name FilterErode5
+  xpos 658
+  ypos 1549
+ }
+push $N88889270
+ FilterErode {
+  size {{-parent.shadow_erode}}
+  filter quadratic
+  name FilterErode4
+  xpos 557
+  ypos 1549
+ }
+push $N88889270
+ FilterErode {
+  size {{-parent.shadow_erode}}
+  filter triangle
+  name FilterErode3
+  xpos 453
+  ypos 1545
+ }
+push $N88889270
+ FilterErode {
+  size {{-parent.shadow_erode}}
+  name FilterErode2
+  xpos 352
+  ypos 1544
+ }
+ Switch {
+  inputs 4
+  which {{parent.erodefilter}}
+  name Switch5
+  label "\[value which]"
+  xpos 506
+  ypos 1601
+ }
+ FilterErode {
+  size {{parent.shadow_blur/-5}}
+  name FilterErode1
+  xpos 506
+  ypos 1646
+ }
+ Blur {
+  channels alpha
+  size {{parent.shadow_blur}}
+  name Blur12
+  xpos 506
+  ypos 1684
+ }
+ Dot {
+  name Dot34
+  xpos 540
+  ypos 1735
+ }
+ Constant {
+  inputs 0
+  color {0 0 0 1}
+  color_panelDropped true
+  name Constant5
+  xpos 774
+  ypos 1507
+ }
+push 0
+ Merge2 {
+  inputs 2
+  mix {{parent.shadow_opacity}}
+  name Merge23
+  xpos 774
+  ypos 1601
+ }
+ Dot {
+  name Dot35
+  xpos 808
+  ypos 1736
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge24
+  xpos 643
+  ypos 1762
+ }
+push 0
+ Switch {
+  inputs 2
+  which {{parent.shadow_on}}
+  name Switch1
+  label "\[value which]"
+  xpos 831
+  ypos 1756
+ }
+ Merge2 {
+  inputs 2
+  name Merge25
+  xpos 958
+  ypos 1763
+ }
+ Dot {
+  inputs 0
+  name Dot3
+  xpos 849
+  ypos 553
+  hide_input true
+ }
+ Input {
+  inputs 0
+  name bg
+  xpos 536
+  ypos 301
+  number 3
+ }
+ Dot {
+  name Dot4
+  xpos 570
+  ypos 553
+ }
+ Ramp {
+  inputs 0
+  invert true
+  opacity 0.675
+  p0 {130 -3240}
+  p1 {128 1638}
+  type plinear
+  color {0 0 0 1}
+  color_panelDropped true
+  name Ramp3
+  xpos 870
+  ypos 414
+ }
+ Ramp {
+  inputs 0
+  opacity 0.29
+  p0 {105 -76}
+  p1 {106 2176}
+  type plinear
+  name Ramp4
+  xpos 874
+  ypos 374
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 0.3
+  name Constant4
+  xpos 748
+  ypos 271
+ }
+ Merge2 {
+  inputs 2
+  mix 0.8
+  name Merge21
+  xpos 748
+  ypos 374
+ }
+ Merge2 {
+  inputs 2
+  name Merge22
+  xpos 748
+  ypos 414
+ }
+ Shuffle {
+  alpha black
+  name Shuffle1
+  label "\[value in]"
+  xpos 748
+  ypos 486
+ }
+ Switch {
+  inputs 3
+  which {{parent.bg_type}}
+  name Switch2
+  label "\[value which]"
+  xpos 748
+  ypos 543
+ }
+ Dot {
+  name Dot28
+  xpos 782
+  ypos 724
+ }
+ Dot {
+  name Dot36
+  xpos 1282
+  ypos 724
+ }
+ Dot {
+  name Dot37
+  xpos 1282
+  ypos 1921
+ }
+ Merge2 {
+  inputs 2
+  name Merge26
+  xpos 958
+  ypos 1917
+ }
+ Copy {
+  inputs 2
+  from0 depth.Z
+  to0 depth.Z
+  name Copy2
+  xpos 958
+  ypos 2058
+ }
+ Output {
+  name Output1
+  xpos 958
+  ypos 2246
+ }
+push $N88846a00
+ Viewer {
+  frame_range 1-100
+  channels shadow
+  name Viewer1
+  xpos 958
+  ypos 2290
+ }
+end_group

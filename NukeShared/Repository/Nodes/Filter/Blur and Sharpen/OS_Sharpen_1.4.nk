@@ -1,0 +1,439 @@
+set cut_paste_input [stack 0]
+version 12.2 v3
+push $cut_paste_input
+Group {
+ name OS_Sharpen
+ tile_color 0xff9455ff
+ selected true
+ xpos -590
+ ypos 1641
+ addUserKnob {20 Settings}
+ addUserKnob {26 Space111 l " " T " "}
+ addUserKnob {26 title l "" +STARTLINE T "<font size=6 face=arial color=#f09967>&nbsp;Sharpen<font size=2>&nbsp;&nbsp;1.4 <font size=6 color=#A4A4A4 face=arial size=6>&nbsp;Outil Stupide "}
+ addUserKnob {26 Space02 l "" +STARTLINE T "\n"}
+ addUserKnob {41 colorspace_out l Colorspace T Colorspace1.colorspace_out}
+ addUserKnob {7 Balance R 0 2}
+ Balance 1
+ addUserKnob {6 Preview -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 double l Contrast R 0 20}
+ double 5
+ addUserKnob {7 BlackClamp l "Black Clamp"}
+ addUserKnob {26 ""}
+ addUserKnob {41 which l Mix T MIX.which}
+ addUserKnob {6 Premult -STARTLINE}
+ addUserKnob {20 Advanced_1 l Advanced}
+ addUserKnob {26 Denoise}
+ addUserKnob {41 profile l Profile T Denoise1.profile}
+ addUserKnob {41 type l "" -STARTLINE T Denoise1.type}
+ addUserKnob {41 analyze l "Analyze Noise" -STARTLINE T Denoise1.analyze}
+ addUserKnob {41 analysisRegion l " " T Denoise1.analysisRegion}
+ addUserKnob {41 lockNoiseAnalysis l Lock -STARTLINE T Denoise1.lockNoiseAnalysis}
+ addUserKnob {26 FilterSize l "Filter Size"}
+ addUserKnob {41 highAmount l High T Denoise1.highAmount}
+ addUserKnob {41 processHigh l Use -STARTLINE T Denoise1.processHigh}
+ addUserKnob {41 mediumAmount l Medium T Denoise1.mediumAmount}
+ addUserKnob {41 processMedium l Use -STARTLINE T Denoise1.processMedium}
+ addUserKnob {41 lowAmount l Low T Denoise1.lowAmount}
+ addUserKnob {41 processLow l Use -STARTLINE T Denoise1.processLow}
+ addUserKnob {41 veryLowAmount l "Very Low" T Denoise1.veryLowAmount}
+ addUserKnob {41 processVeryLow l Use -STARTLINE T Denoise1.processVeryLow}
+ addUserKnob {26 ""}
+ addUserKnob {26 Bypass -STARTLINE T " "}
+ addUserKnob {6 red l Red -STARTLINE}
+ addUserKnob {6 green l Green -STARTLINE}
+ addUserKnob {6 blue l Blue -STARTLINE}
+ addUserKnob {20 Help}
+ addUserKnob {26 text l "" +STARTLINE T "\n<br>\n<font color=#f09967>1.</font> Apply it directly to the denoised plate<br> &nbsp;&nbsp;&nbsp;&nbsp;(recommanded) <br><br>\n\n<font color=#f09967>2.</font> Click on Analyse Noise button<br><br>\n\n<font color=#f09967>3.</font> Play with \"profile\" and \"balance\" settings.<br>\n&nbsp;&nbsp;&nbsp;&nbsp;You can use the \"preview\" to check your result.<br><br>\n\n<font color=#f09967>4.</font> Adjust contrast<br>\n"}
+ addUserKnob {26 ""}
+ addUserKnob {26 credit l "" +STARTLINE T "<font color=#f09967>OS_Sharpen 1.4</font color=#f09967> / Erwan Andrieux / 2021"}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 730
+  ypos -1219
+ }
+ Unpremult {
+  name Unpremult1
+  xpos 730
+  ypos -1109
+  disable {{parent.Premult==1?0:1}}
+ }
+ Dot {
+  name Dot20
+  xpos 764
+  ypos -996
+ }
+set Nefdc3c00 [stack 0]
+ Dot {
+  name Dot16
+  xpos 654
+  ypos -996
+ }
+set Nefdc3800 [stack 0]
+ Dot {
+  name Dot17
+  xpos 544
+  ypos -996
+ }
+set Nefdc3400 [stack 0]
+ Dot {
+  name Dot19
+  xpos 434
+  ypos -996
+ }
+set Nefdc3000 [stack 0]
+ Dot {
+  name Dot7
+  xpos 324
+  ypos -996
+ }
+set Nefcc2000 [stack 0]
+ Dot {
+  name Dot12
+  xpos -6
+  ypos -996
+ }
+ Dot {
+  name Dot4
+  xpos -4
+  ypos 2194
+ }
+push $Nefdc3000
+ Shuffle {
+  red black
+  green black
+  alpha black
+  name Shuffle4
+  xpos 400
+  ypos -889
+ }
+ Dot {
+  name Dot23
+  xpos 434
+  ypos -556
+ }
+push $Nefdc3400
+ Shuffle {
+  red black
+  blue black
+  alpha black
+  name Shuffle3
+  xpos 510
+  ypos -889
+ }
+ Dot {
+  name Dot22
+  xpos 544
+  ypos -666
+ }
+push $Nefdc3800
+ Shuffle {
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  xpos 620
+  ypos -889
+ }
+ Dot {
+  name Dot21
+  xpos 654
+  ypos -776
+ }
+push $Nefdc3c00
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle5
+  xpos 730
+  ypos -889
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  mix {{parent.red==1?0:1}}
+  name Merge3
+  xpos 730
+  ypos -779
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  mix {{parent.green==1?0:1}}
+  name Merge5
+  xpos 730
+  ypos -669
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  mix {{parent.blue==1?0:1}}
+  name Merge6
+  xpos 730
+  ypos -559
+ }
+ Shuffle {
+  alpha white
+  name Shuffle2
+  xpos 730
+  ypos -339
+ }
+ Dot {
+  name Dot6
+  xpos 766
+  ypos -116
+ }
+ Grade {
+  gamma {{parent.Balance}}
+  black_clamp false
+  name Grade4
+  xpos 732
+  ypos -9
+ }
+ Colorspace {
+  colorspace_out Cineon
+  name Colorspace1
+  xpos 732
+  ypos 101
+ }
+ Saturation {
+  saturation 0
+  name Saturation1
+  xpos 732
+  ypos 211
+ }
+set Nefd76800 [stack 0]
+push $Nefd76800
+ Dot {
+  name Dot1
+  xpos 656
+  ypos 214
+ }
+ Denoise2 {
+  type Film
+  amount 4
+  rolloff 5
+  smoothness 100
+  "Noise Analysis" 1
+  analysisRegion {0 0 150 150}
+  analysisFrame 0
+  "Tune Frequencies" 1
+  highAmount 10
+  mediumAmount 10
+  lowAmount 10
+  processVeryLow true
+  veryLowAmount 10
+  "Tune Channels" 1
+  needsAnalyzing false
+  profileCurve {profile {curve 0 x0.125 0 0 0 0 0 0 0 0}}
+  profileFrame 0
+  serializeKnob "3.515374362e-01 5.000000000e-01 5.000000000e-01
+3.552109934e-03 1.105204284e-08 1.105204284e-08
+3.552109934e-03 1.105204284e-08 1.105204284e-08
+2.067094203e-03 1.105865266e-08 1.105865266e-08
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+3.756771563e-03 4.418431843e-08 4.418431843e-08
+3.756771563e-03 4.418431843e-08 4.418431843e-08
+1.533385017e-03 1.906851033e-08 1.906851033e-08
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+1.875977730e-03 4.418431843e-08 4.418431843e-08
+1.875977730e-03 4.418431843e-08 4.418431843e-08
+9.943499463e-04 2.061390525e-08 2.061390525e-08
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+3.177736071e-04 4.418431843e-08 4.418431843e-08
+3.177736071e-04 4.418431843e-08 4.418431843e-08
+2.558796259e-04 1.864876076e-08 1.864876076e-08
+0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 
+2228106311526396237"
+  name Denoise1
+  xpos 622
+  ypos 315
+ }
+ Dot {
+  name Dot3
+  xpos 656
+  ypos 434
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  xpos 732
+  ypos 431
+ }
+ Grade {
+  add 0.5
+  black_clamp false
+  name Grade1
+  xpos 732
+  ypos 541
+ }
+ Saturation {
+  saturation 0
+  name Saturation2
+  xpos 732
+  ypos 651
+ }
+ RolloffContrast {
+  contrast {{parent.double}}
+  slope_mag_low1 0.8000000119
+  black_low 1
+  slope_mag_high2 0.8000000119
+  white_high 1
+  name RolloffContrast1
+  xpos 732
+  ypos 761
+ }
+ Clamp {
+  minimum {{parent.BlackClamp}}
+  name Clamp1
+  xpos 732
+  ypos 865
+ }
+set Nefd74800 [stack 0]
+ Dot {
+  name Dot25
+  xpos 986
+  ypos 874
+ }
+ Dot {
+  name Dot15
+  xpos 984
+  ypos 1424
+ }
+push $Nefdc3c00
+ Dot {
+  name Dot24
+  xpos 1206
+  ypos -996
+ }
+ Dot {
+  name Dot2
+  xpos 1206
+  ypos 1094
+ }
+push $Nefd74800
+ Grade {
+  white 1e-06
+  name Grade2
+  xpos 732
+  ypos 981
+ }
+ Merge2 {
+  inputs 2
+  operation overlay
+  name Merge2
+  xpos 732
+  ypos 1091
+ }
+ Grade {
+  white 1e-06
+  reverse true
+  name Grade3
+  xpos 732
+  ypos 1201
+ }
+push $Nefcc2000
+ Dot {
+  name Dot5
+  xpos 326
+  ypos 1314
+ }
+set Nefcfe000 [stack 0]
+ Dissolve {
+  inputs 2
+  which 1
+  name MIX
+  xpos 731
+  ypos 1305
+ }
+ Switch {
+  inputs 2
+  which {{parent.Preview}}
+  name Preview
+  xpos 732
+  ypos 1421
+ }
+ Dot {
+  name Dot14
+  xpos 766
+  ypos 1534
+ }
+set Nefcfd400 [stack 0]
+ Dot {
+  name Dot18
+  xpos 546
+  ypos 1534
+ }
+ Dot {
+  name Dot11
+  xpos 546
+  ypos 1974
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos 952
+  ypos 1531
+  number 1
+ }
+set Nefcfc800 [stack 0]
+ Dot {
+  name Dot10
+  xpos 988
+  ypos 1754
+ }
+push $Nefcfd400
+push $Nefcfe000
+ Dot {
+  name Dot9
+  xpos 326
+  ypos 1754
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 732
+  ypos 1745
+ }
+ Switch {
+  inputs 2
+  which {{parent.Switch1.which}}
+  name USE_ALPHA
+  xpos 732
+  ypos 1971
+  addUserKnob {20 User}
+  addUserKnob {6 UseAlpha l "Use Alpha" +STARTLINE}
+ }
+ ChannelMerge {
+  inputs 2
+  B -rgba.alpha
+  name ChannelMerge1
+  xpos 732
+  ypos 2179
+ }
+ Premult {
+  name Premult1
+  xpos 732
+  ypos 2411
+  disable {{parent.Premult==1?0:1}}
+ }
+ Output {
+  name Output1
+  xpos 732
+  ypos 2631
+ }
+push $Nefcfc800
+push 0
+ Switch {
+  inputs 2
+  which {{"!\[exists parent.input1]"}}
+  name Switch1
+  xpos 1062
+  ypos 1531
+ }
+end_group

@@ -1,0 +1,699 @@
+Gizmo {
+ inputs 3
+ tile_color 0x44ffffff
+ addUserKnob {20 Edge}
+ addUserKnob {6 edgeToggle l "Edge Distort On/Off" +STARTLINE}
+ edgeToggle true
+ addUserKnob {26 edgeSizeText l "Edge Size Controls"}
+ addUserKnob {41 erodeSize l size T Erode1.size}
+ addUserKnob {41 blur T Erode1.blur}
+ addUserKnob {26 edgeDistortText l "Edge Distort Controls"}
+ addUserKnob {41 uv_scale l "Distort scale" T IDistort1.uv_scale}
+ addUserKnob {41 scale l "Blur amount" T VectorBlur1.scale}
+ addUserKnob {26 highlightCtrlText l "Highlight Controls"}
+ addUserKnob {7 edgeGammaCtrl l Highlights R 1 5}
+ edgeGammaCtrl 1.06
+ addUserKnob {7 edgeGammaBlur l "Highlight Blur" R 0 50}
+ edgeGammaBlur 2
+ addUserKnob {20 Core}
+ addUserKnob {6 coreToggle l "Core Distort On/Off" +STARTLINE}
+ coreToggle true
+ addUserKnob {26 noiseCtrlTEXT l "Noise Controls"}
+ addUserKnob {6 showNoise l "Show Noise" +STARTLINE}
+ addUserKnob {7 intensity R 20 100}
+ intensity 52
+ addUserKnob {7 speed}
+ speed 1
+ addUserKnob {41 size_1 l "X/Y Size" T Noise_Main.size}
+ addUserKnob {41 size l "Noise Blur" T Blur_Noise.size}
+ addUserKnob {26 coreDistortionTEXT l "Core Distortion Controls"}
+ addUserKnob {41 uv_scale_1 l "Distort Scale" T IDistort2.uv_scale}
+ addUserKnob {41 scale_1 l "Blur Amount" T VectorBlur2.scale}
+ addUserKnob {7 l_effectCtrl l "Luminance Effect Amount"}
+ l_effectCtrl 0.5
+ addUserKnob {20 Misc}
+ addUserKnob {6 premultBox l Premultiply +STARTLINE}
+ addUserKnob {7 totalMix l "BG Override"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x388e8e00
+  label "Edge UVs"
+  note_font "Verdana Bold Bold Bold"
+  note_font_size 36
+  xpos -1040
+  ypos 274
+  bdwidth 430
+  bdheight 325
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x8e388e00
+  label edgeMatte
+  note_font "Verdana Bold Bold Bold"
+  note_font_size 36
+  xpos -930
+  ypos -62
+  bdwidth 210
+  bdheight 321
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x16298eff
+  label "Core Noise Gen"
+  note_font "Verdana Bold Bold"
+  note_font_size 38
+  xpos -1040
+  ypos 799
+  bdwidth 320
+  bdheight 208
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xa33064ff
+  label "Edge Distortion"
+  note_font "Verdana Bold Bold"
+  note_font_size 28
+  xpos -566
+  ypos 562
+  bdwidth 252
+  bdheight 394
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x7171c600
+  label "Core Distortion"
+  note_font "Verdana Bold Bold"
+  note_font_size 22
+  xpos -566
+  ypos 1210
+  bdwidth 176
+  bdheight 273
+ }
+ Input {
+  inputs 0
+  name BG
+  xpos -480
+  ypos -153
+  number 2
+ }
+ Dot {
+  name Dot12
+  xpos -446
+  ypos -54
+ }
+set N1285bef0 [stack 0]
+ Dot {
+  name Dot25
+  xpos -226
+  ypos -54
+ }
+ Dot {
+  name Dot26
+  xpos -226
+  ypos 1602
+ }
+ Input {
+  inputs 0
+  name Mask
+  xpos -590
+  ypos -153
+  number 1
+ }
+ Remove {
+  operation keep
+  channels alpha
+  name Remove1
+  xpos -590
+  ypos -85
+ }
+set N12864170 [stack 0]
+ Dot {
+  name Dot1
+  xpos -556
+  ypos -30
+ }
+ Input {
+  inputs 0
+  name FG
+  xpos -700
+  ypos -153
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  channels alpha
+  name Copy1
+  xpos -700
+  ypos -42
+ }
+ Dot {
+  name Dot2
+  xpos -666
+  ypos 18
+ }
+set N12870000 [stack 0]
+push $N1285bef0
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  channels alpha
+  name Copy6
+  xpos -480
+  ypos 6
+ }
+ Dot {
+  name Dot13
+  xpos -446
+  ypos 426
+ }
+set N12876810 [stack 0]
+ Dot {
+  name Dot14
+  xpos -336
+  ypos 426
+ }
+ Dot {
+  name Dot15
+  label "Alpha Distort\nBypass"
+  note_font "Verdana Bold Bold Bold"
+  note_font_size 20
+  xpos -336
+  ypos 883
+ }
+set N1287a840 [stack 0]
+ Dot {
+  name Dot16
+  xpos -336
+  ypos 1026
+ }
+set N1287cb80 [stack 0]
+ Dot {
+  name Dot24
+  xpos -336
+  ypos 1554
+ }
+ Noise {
+  inputs 0
+  opacity {{parent.Noise_Main.opacity}}
+  size {{parent.Noise_Main.size}}
+  zoffset {{parent.Noise_Main.zoffset}}
+  octaves {{parent.Noise_Main.octaves}}
+  nyquist {{parent.Noise_Main.nyquist}}
+  lacunarity {{parent.Noise_Main.lacunarity}}
+  gain {{parent.Noise_Main.gain}}
+  gamma {{parent.Noise_Main.gamma}}
+  translate {{"intensity *-1"} 0}
+  center {1024 778}
+  name Noise_U
+  tile_color 0xff0000ff
+  xpos -1030
+  ypos 879
+  hide_input true
+ }
+ Noise {
+  inputs 0
+  size 50
+  zoffset {{(frame*speed)/10}}
+  center {1024 778}
+  name Noise_Main
+  xpos -920
+  ypos 879
+  hide_input true
+ }
+ Dot {
+  name Dot6
+  xpos -886
+  ypos 906
+ }
+set N1288e550 [stack 0]
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge4
+  xpos -1030
+  ypos 903
+ }
+ Dot {
+  name Dot7
+  xpos -996
+  ypos 930
+ }
+push $N1288e550
+ Noise {
+  inputs 0
+  opacity {{parent.Noise_Main.opacity}}
+  size {{parent.Noise_Main.size}}
+  zoffset {{parent.Noise_Main.zoffset}}
+  octaves {{parent.Noise_Main.octaves}}
+  nyquist {{parent.Noise_Main.nyquist}}
+  lacunarity {{parent.Noise_Main.lacunarity}}
+  gain {{parent.Noise_Main.gain}}
+  gamma {{parent.Noise_Main.gamma}}
+  translate {0 {intensity}}
+  center {1024 778}
+  name Noise_V
+  tile_color 0xff00ff
+  xpos -810
+  ypos 879
+  hide_input true
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge5
+  xpos -810
+  ypos 903
+ }
+ Dot {
+  name Dot8
+  xpos -776
+  ypos 930
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  blue black
+  alpha black
+  name ShuffleCopy2
+  xpos -920
+  ypos 927
+ }
+ Blur {
+  size 2
+  name Blur_Noise
+  xpos -920
+  ypos 971
+ }
+set N128ac9f0 [stack 0]
+ Dot {
+  name Dot17
+  xpos -886
+  ypos 1506
+ }
+push $N12870000
+ Dot {
+  name Dot10
+  xpos -776
+  ypos 18
+ }
+set Nd31bfe0 [stack 0]
+ Erode {
+  size 3
+  blur 1
+  name Erode1
+  xpos -810
+  ypos 35
+ }
+ Dot {
+  name Dot11
+  xpos -776
+  ypos 138
+ }
+push $Nd31bfe0
+ Dot {
+  name Dot9
+  xpos -886
+  ypos 18
+ }
+ Erode {
+  size {{-Erode1.size}}
+  blur {{Erode1.blur}}
+  name Erode2
+  xpos -920
+  ypos 36
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos -920
+  ypos 83
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge3
+  xpos -920
+  ypos 135
+ }
+ Invert {
+  name Invert2
+  xpos -920
+  ypos 159
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos -920
+  ypos 191
+ }
+add_layer {edgeMatte edgeMatte.edge}
+ Shuffle {
+  red alpha
+  out edgeMatte
+  name Shuffle2
+  xpos -920
+  ypos 231
+ }
+push $N12870000
+ Copy {
+  inputs 2
+  from0 edgeMatte.edge
+  to0 edgeMatte.edge
+  name Copy2
+  xpos -700
+  ypos 227
+ }
+ Dot {
+  name Dot3
+  xpos -666
+  ypos 354
+ }
+set Nd34a040 [stack 0]
+ Dot {
+  name Dot4
+  xpos -886
+  ypos 354
+ }
+ Dot {
+  name Dot5
+  xpos -886
+  ypos 378
+ }
+set Nd34e070 [stack 0]
+ Transform {
+  translate {-10 0}
+  center {640 360}
+  name Transform_U
+  xpos -1030
+  ypos 375
+ }
+push $Nd34e070
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  xpos -1030
+  ypos 423
+ }
+push $Nd34e070
+push $Nd34e070
+ Transform {
+  translate {0 10}
+  center {640 360}
+  name Transform_V
+  xpos -810
+  ypos 375
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge2
+  xpos -810
+  ypos 423
+ }
+add_layer {distort distort.u distort.v}
+ ShuffleCopy {
+  inputs 2
+  red red
+  blue black
+  alpha black
+  out distort
+  name ShuffleCopy1
+  xpos -920
+  ypos 471
+ }
+push $Nd34a040
+ Copy {
+  inputs 2
+  from0 distort.u
+  to0 distort.u
+  from1 distort.v
+  to1 distort.v
+  name Copy3
+  xpos -700
+  ypos 462
+ }
+ Premult {
+  channels distort
+  alpha edgeMatte.edge
+  name Premult1
+  xpos -700
+  ypos 515
+ }
+set N14d85b10 [stack 0]
+ Saturation {
+  saturation 0
+  name Saturation1
+  xpos -700
+  ypos 1115
+ }
+ Shuffle {
+  alpha red
+  name Shuffle3
+  xpos -700
+  ypos 1143
+ }
+ Grade {
+  channels rgba
+  gamma 0.5
+  name Grade3
+  xpos -700
+  ypos 1167
+ }
+push $N1287cb80
+push $N128ac9f0
+push $N1287a840
+push $N14d85b10
+push $N12876810
+add_layer {edgeDistort edgeDistort.u edgeDistort.v}
+ Copy {
+  inputs 2
+  from0 distort.u
+  to0 edgeDistort.u
+  from1 distort.v
+  to1 edgeDistort.v
+  from2 edgeMatte.edge
+  to2 edgeMatte.edge
+  name Copy4
+  xpos -480
+  ypos 505
+ }
+ Dot {
+  name Dot18
+  xpos -446
+  ypos 642
+ }
+set N14d98450 [stack 0]
+ IDistort {
+  uv edgeDistort
+  uv_scale 5
+  name IDistort1
+  xpos -480
+  ypos 660
+ }
+ VectorBlur {
+  uv edgeDistort
+  scale 7.5
+  name VectorBlur1
+  xpos -480
+  ypos 692
+ }
+ Grade {
+  gamma {{parent.edgeGammaCtrl}}
+  maskChannelInput edgeDistort.u
+  name Grade1
+  xpos -480
+  ypos 724
+ }
+ Grade {
+  gamma {{Grade1.gamma}}
+  maskChannelInput edgeDistort.v
+  name Grade2
+  xpos -480
+  ypos 756
+ }
+ Blur {
+  channels rgba
+  size {{parent.edgeGammaBlur}}
+  maskChannelInput edgeDistort.u
+  name Blur1
+  xpos -480
+  ypos 788
+ }
+ Blur {
+  channels rgba
+  size {{Blur1.size}}
+  maskChannelInput edgeDistort.v
+  name Blur2
+  xpos -480
+  ypos 820
+ }
+ ChannelMerge {
+  inputs 2
+  operation out
+  B edgeMatte.edge
+  name ChannelMerge1
+  xpos -480
+  ypos 871
+ }
+push $N14d98450
+ Dot {
+  name Dot19
+  xpos -556
+  ypos 643
+ }
+ Dot {
+  name Dot20
+  xpos -556
+  ypos 931
+ }
+ Switch {
+  inputs 2
+  which {{parent.edgeToggle}}
+  name Edge_Toggle
+  xpos -480
+  ypos 928
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 distort.u
+  from1 rgba.green
+  to1 distort.v
+  name Copy5
+  xpos -480
+  ypos 966
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  channels alpha
+  name Copy7
+  xpos -480
+  ypos 1014
+ }
+ FilterErode {
+  size {{Erode1.size}}
+  name FilterErode1
+  xpos -480
+  ypos 1067
+ }
+ Premult {
+  channels distort
+  name Premult2
+  xpos -480
+  ypos 1115
+ }
+ ChannelMerge {
+  inputs 2
+  operation in
+  mix {{parent.l_effectCtrl}}
+  name ChannelMerge2
+  xpos -480
+  ypos 1158
+ }
+ Dot {
+  name Dot21
+  xpos -446
+  ypos 1290
+ }
+set N14ddc180 [stack 0]
+ Premult {
+  channels distort
+  name Premult3
+  xpos -480
+  ypos 1307
+ }
+ IDistort {
+  uv distort
+  uv_scale 50
+  name IDistort2
+  xpos -480
+  ypos 1355
+ }
+ VectorBlur {
+  uv distort
+  scale 50
+  name VectorBlur2
+  xpos -480
+  ypos 1403
+ }
+push $N14ddc180
+ Dot {
+  name Dot22
+  xpos -556
+  ypos 1290
+ }
+ Dot {
+  name Dot23
+  xpos -556
+  ypos 1458
+ }
+ Switch {
+  inputs 2
+  which {{parent.coreToggle}}
+  name Core_Toggle
+  xpos -480
+  ypos 1455
+ }
+ Switch {
+  inputs 2
+  which {{parent.showNoise}}
+  name showNoise
+  xpos -480
+  ypos 1503
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  channels alpha
+  name Copy8
+  xpos -480
+  ypos 1542
+ }
+ Merge2 {
+  inputs 2
+  mix {{parent.totalMix}}
+  name Merge6
+  xpos -480
+  ypos 1599
+ }
+ Premult {
+  name Premult
+  xpos -480
+  ypos 1647
+  disable {{-(parent.premultBox)+1}}
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove2
+  xpos -480
+  ypos 1695
+ }
+ Output {
+  name Output1
+  xpos -480
+  ypos 1743
+ }
+push $N12864170
+ Viewer {
+  frame 0
+  input_process false
+  name Viewer1
+  xpos 48
+  ypos 1839
+ }
+end_group

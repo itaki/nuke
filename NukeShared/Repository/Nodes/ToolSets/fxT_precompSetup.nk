@@ -1,0 +1,84 @@
+set cut_paste_input [stack 0]
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x505a61ff
+ gl_color 0x505a61ff
+ label "precomp "
+ note_font "Arial Black"
+ note_font_size 50
+ note_font_color 0xffffff01
+ selected true
+ xpos -709
+ ypos -727
+ bookmark false
+ bdwidth 971
+ bdheight 562
+ z_order 1000
+}
+push $cut_paste_input
+Dot {
+ name Dot1
+ label "comp input"
+ note_font_size 25
+ selected true
+ xpos 44
+ ypos -619
+}
+Dot {
+ name Dot3
+ note_font_size 50
+ selected true
+ xpos 44
+ ypos -554
+}
+set N63f99000 [stack 0]
+Dot {
+ name Dot4
+ label "\n\n\nwrite node goes here"
+ note_font_size 12
+ selected true
+ xpos -364
+ ypos -554
+}
+Dot {
+ inputs 0
+ name Dot2
+ note_font_size 50
+ selected true
+ xpos -370
+ ypos -253
+}
+push $N63f99000
+Switch {
+ inputs 2
+ name fxT_precompSwitch
+ help "modified switch node to easily keep track of if a precomps is used or not.\n\nWorks together with the fxT_precompController\n\nversion: 1.3\nDeveloper: Tor Andreassen - fxtor.net"
+ onCreate "n = nuke.thisNode()\ninitKnob = n.knob('initialized')\n\nif  initKnob.value() == False:\n    initKnob.setValue(True)\n    nuke.show(n)\n    n.knob(\"controlsTAB\").setFlag(0)\nelse:\n    pass"
+ label "\[value which]"
+ selected true
+ xpos 16
+ ypos -254
+ addUserKnob {20 controlsTAB l controls}
+ addUserKnob {26 ""}
+ addUserKnob {22 usePrecomp l "<font color='light green'><b>use precomp</b></font>" t "click to use precomp-pipe" T "try:\n    fxT_precompTool.usePrecomp()\nexcept NameError:\n    pass" +STARTLINE}
+ addUserKnob {22 useComp l "<font color='dark red'><b>use comp</b></font>" t "click to use comp-pipe" -STARTLINE T "try:\n    fxT_precompTool.useComp()\nexcept NameError:\n    pass"}
+ addUserKnob {22 zoom l "<font color='light grey'><b>zoom</b></font>" t "click to go to this node in the node graph" -STARTLINE T "def zoom():\n\tmee = nuke.thisNode()\n\tnuke.zoom( 0.9, \[ mee.xpos(), mee.ypos() ])\nzoom()"}
+ addUserKnob {26 ""}
+ addUserKnob {26 status -STARTLINE +INVISIBLE T "\[<font color='dark red'>x</font>]"}
+ addUserKnob {1 precompName l "<font color=\"grey\">precompName</font>" +DISABLED}
+ addUserKnob {26 ""}
+ addUserKnob {22 makeSticky l "toggle 'on farm' sticky" t "click to make 'on farm note', to easily see that a render for the precomp has been sent to the farm" T "try:\n    fxT_precompTool.makeSticky()\nexcept NameError:\n    pass" +STARTLINE}
+ addUserKnob {26 info l "" -STARTLINE T "<font color='grey'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PS</b>: make sure comp is input 0,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and precomp-read is input 1</font>"}
+ addUserKnob {26 ""}
+ addUserKnob {6 initialized l INVISIBLE -STARTLINE +INVISIBLE}
+ addUserKnob {20 globalSettingsTAB l globalSettings}
+ addUserKnob {26 ""}
+ addUserKnob {26 globalInfo l "" +STARTLINE T "<font color='grey'>Click button to decide if this node should be part of the global control panel</font>"}
+ addUserKnob {26 ""}
+ addUserKnob {6 isLegal l "" +STARTLINE +INVISIBLE +STARTLINE}
+ isLegal true
+ addUserKnob {22 toggleControllerStatus l "toggle controller status" t "click to decide if this precompSwitch should be part of the fxT_precompController" T "try:\n    fxT_precompTool.toggleControllerStatus()\nexcept NameError:\n    pass" +STARTLINE}
+ addUserKnob {26 legalStatus l "" -STARTLINE T "<font color ='green'>&nbsp;&nbsp;&nbsp;&nbsp; This precomp is part of the precompController</font>"}
+ addUserKnob {26 ""}
+}

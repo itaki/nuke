@@ -1,0 +1,760 @@
+set cut_paste_input [stack 0]
+version 10.0 v3
+push 0
+push $cut_paste_input
+Group {
+ inputs 2
+ name GS_Sparks
+ knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() in ('showHide', 'showPanel'):\n   showHide = n\['showHide'].value()\n   if showHide == 'Show':\n     n\['particle_light_geo'].setVisible(True)\n     n\['camera'].setVisible(True)\n     n\['focal'].setVisible(True)\n     n\['haperture'].setVisible(True)\n     n\['vaperture'].setVisible(True)\n     n\['kernel'].setVisible(True)\n     n\['diffuse'].setVisible(True)\n     n\['specular_power'].setVisible(True)\n     n\['specular_hardness'].setVisible(True)\n     n\['half_lambert'].setVisible(True)\n     n\['geo'].setVisible(True)\n   else:\n     n\['particle_light_geo'].setVisible(False)\n     n\['camera'].setVisible(False)\n     n\['focal'].setVisible(False)\n     n\['haperture'].setVisible(False)\n     n\['vaperture'].setVisible(False)\n     n\['kernel'].setVisible(False)\n     n\['diffuse'].setVisible(False)\n     n\['specular_power'].setVisible(False)\n     n\['specular_hardness'].setVisible(False)\n     n\['half_lambert'].setVisible(False)\n     n\['geo'].setVisible(False)\n\nif k.name() in ('switch', 'showPanel'):\n   switch = n\['switch'].value()\n   if switch:\n     n\['particle_light_geo'].setEnabled(True)\n     n\['camera'].setEnabled(True)\n     n\['focal'].setEnabled(True)\n     n\['haperture'].setEnabled(True)\n     n\['vaperture'].setEnabled(True)\n     n\['kernel'].setEnabled(True)\n     n\['diffuse'].setEnabled(True)\n     n\['specular_power'].setEnabled(True)\n     n\['specular_hardness'].setEnabled(True)\n     n\['half_lambert'].setEnabled(True)\n     n\['geo'].setEnabled(True)\n   else:\n     n\['particle_light_geo'].setEnabled(False)\n     n\['camera'].setEnabled(False)\n     n\['focal'].setEnabled(False)\n     n\['haperture'].setEnabled(False)\n     n\['vaperture'].setEnabled(False)\n     n\['kernel'].setEnabled(False)\n     n\['diffuse'].setEnabled(False)\n     n\['specular_power'].setEnabled(False)\n     n\['specular_hardness'].setEnabled(False)\n     n\['half_lambert'].setEnabled(False)\n     n\['geo'].setEnabled(False)"
+ tile_color 0xbf5c00ff
+ note_font Verdana
+ note_font_color 0xffb735ff
+ selected true
+ xpos -253
+ ypos 944
+ addUserKnob {20 FireSparks}
+ addUserKnob {26 space0 l "" +STARTLINE T "\n\n"}
+ addUserKnob {26 firesparksname l "" t "The fire is not included! :P " +STARTLINE T "<font size=\"6\"><div><span style=\"color:#ff0000;\">F</span><span style=\"color:#ff1200;\">i</span><span style=\"color:#ff2400;\">r</span><span style=\"color:#ff4000;\">e</span><span style=\"color:#ff5200;\">S</span><span style=\"color:#ff6d00;\">p</span><span style=\"color:#ff7f00;\">a</span><span style=\"color:#ff9200;\">r</span><span style=\"color:#ffa400;\">k</span><span style=\"color:#ffb600;\">s</span></div><font size=\"3\"></span><span style=\"color:#ffb600;\"> </span><span style=\"color:#ffa400;\">v</span><span style=\"color:#ff9b00;\">1</span><span style=\"color:#ff8800;\">.1"}
+ addUserKnob {26 gerardoschiavone92@gmail.com l "" +STARTLINE T "<font size=\"3\"><span style=\"color:#ff0000\">B</span><span style=\"color:#ff1b00;\">y</span><span style=\"color:#ff0900;\"> </span><span style=\"color:#ff3700;\">G</span><span style=\"color:#ff5200;\">e</span><span style=\"color:#ff6d00;\">r</span><span style=\"color:#ff8800;\">a</span><span style=\"color:#ff9200;\">r</span><span style=\"color:#ffa400;\">d</span><span style=\"color:#ffb600;\">o</span><span style=\"color:#ffb600;\"> S</span><span style=\"color:#ffad00;\">c</span><span style=\"color:#ffa400;\">h</span><span style=\"color:#ff8800;\">iavone"}
+ addUserKnob {26 aaa l "" +STARTLINE T "\n\n\n\n\n"}
+ addUserKnob {26 space l "" +STARTLINE T "\n"}
+ addUserKnob {26 info l "" +STARTLINE T "<span style=\"color:#ff9200\">\n\n<p>1. Connect a Camera. </p>\n<p>2. Connect the input \"Particles\" to \"GS_Particles\" or to your custom particles system. </p>\n<p>3. Follow the steps in tabs order (left to right). </p>\n<p>Cache a sequence file to speedup tuning operations.</p>"}
+ addUserKnob {26 ddd l "" +STARTLINE}
+ addUserKnob {22 help_1 l "<span style=\"color:#ff9200\"> help ?" -STARTLINE T "import webbrowser\nwebbrowser.open(\"http://www.gerardoschiavone.com\")\n\n"}
+ addUserKnob {20 curves}
+ addUserKnob {26 particlescurves l "<span style=\"color:#ff9200\">particle curves"}
+ addUserKnob {41 curves_1 l "" -STARTLINE T ParticleCurve1.curves}
+ addUserKnob {41 affect_rgb l rgb T ParticleCurve1.affect_rgb}
+ addUserKnob {41 affect_alpha l alpha -STARTLINE T ParticleCurve1.affect_alpha}
+ addUserKnob {41 affect_size l size -STARTLINE T ParticleCurve1.affect_size}
+ addUserKnob {41 affect_mass l mass -STARTLINE T ParticleCurve1.affect_mass}
+ addUserKnob {20 cachesparks l "cache sparks"}
+ addUserKnob {26 scanline_render l "<span style=\"color:#ff9200\">motion blur"}
+ addUserKnob {41 shutter T ScanlineRender2.shutter}
+ addUserKnob {41 samples T ScanlineRender2.samples}
+ addUserKnob {26 WriteSparks_1 l "<span style=\"color:#ff9200\">write sparks"}
+ addUserKnob {41 channels T WriteSparks.channels}
+ addUserKnob {41 file T WriteSparks.file}
+ addUserKnob {41 colorspace T WriteSparks.colorspace}
+ addUserKnob {41 raw l "raw data" T WriteSparks.raw}
+ addUserKnob {41 premultiplied -STARTLINE T WriteSparks.premultiplied}
+ addUserKnob {41 file_type l "file type" T WriteSparks.file_type}
+ addUserKnob {41 render_order l "render order" T WriteSparks.render_order}
+ addUserKnob {41 Render T WriteSparks.Render}
+ addUserKnob {41 first l "frame range" T WriteSparks.first}
+ addUserKnob {41 last l "" -STARTLINE T WriteSparks.last}
+ addUserKnob {41 use_limit l "limit to range" -STARTLINE T WriteSparks.use_limit}
+ addUserKnob {26 ReadSparks_1 l "<span style=\"color:#ff9200\">read sparks"}
+ addUserKnob {22 create_read_sparks l "create read " t "Create read node of writed sparks. " T "### deselect nodes ###\nif nuke.selectedNodes():\n    for i in nuke.selectedNodes():\n        i\['selected'].setValue(False)\n\n\n### select write node ###\nfor n in nuke.thisNode().nodes():\n    if n.name() == \"WriteSparks\":\n        n\['selected'].setValue(True)\n\n### read from write ###\nsel = nuke.selectedNode()\n   \nnuke.root().begin()\nread = nuke.createNode(\"Read\")\nread\[\"file\"].setValue(sel\[\"file\"].getValue())\nread\[\"first\"].setValue(int(nuke.root()\[\"first_frame\"].getValue()))\nread\[\"last\"].setValue(int(nuke.root()\[\"last_frame\"].getValue()))\nread\[\"origfirst\"].setValue(int(nuke.root()\[\"first_frame\"].getValue()))\nread\[\"origlast\"].setValue(int(nuke.root()\[\"last_frame\"].getValue()))\nread\[\"colorspace\"].setValue(int(sel\[\"colorspace\"].getValue()))\n\nif nuke.selectedNodes():\n    for i in nuke.selectedNodes():\n        i\['selected'].setValue(False)" +STARTLINE}
+ addUserKnob {6 read_sparks l "read sparks from file" t "Check this box to disable sparks rendering.\nRemember to connect rendered sparks to ReadSparks input.\n" -STARTLINE}
+ addUserKnob {26 g l "" +STARTLINE T "\n\n"}
+ addUserKnob {20 sparks}
+ addUserKnob {41 read_smoke_1 l "view only sparks" T GS_Sparks.read_smoke}
+ addUserKnob {41 range l "bloom range" T Bloom1.range}
+ addUserKnob {26 h l "" +STARTLINE T "\n"}
+ addUserKnob {41 size_2 l "bloom amount" T Bloom1.size}
+ addUserKnob {41 mix l "bloom mix" T Bloom1.mix}
+ addUserKnob {41 brightness T Glow1.brightness}
+ addUserKnob {41 tolerance T Glow1.tolerance}
+ addUserKnob {20 cachesmoke}
+ addUserKnob {26 WriteSmoke l "<span style=\"color:#ff9200\">write smoke"}
+ addUserKnob {41 channels_1 l channels T Write2.channels}
+ addUserKnob {41 file_1 l file T Write2.file}
+ addUserKnob {41 file_type_1 l "file type" T Write2.file_type}
+ addUserKnob {41 raw_1 l "raw data" T Write2.raw}
+ addUserKnob {41 premultiplied_1 l premultiplied -STARTLINE T Write2.premultiplied}
+ addUserKnob {41 Render_3 l Render T Write2.Render}
+ addUserKnob {41 first_1 l "frame range" T Write2.first}
+ addUserKnob {41 last_1 l "" -STARTLINE T Write2.last}
+ addUserKnob {41 use_limit_1 l "limit to range" -STARTLINE T Write2.use_limit}
+ addUserKnob {26 read_smoke1 l "<span style=\"color:#ff9200\">read smoke"}
+ addUserKnob {22 create_read_smoke l "create read" t "Create read node of writed smoke. \n" T "### deselect nodes ###\nif nuke.selectedNodes():\n    for i in nuke.selectedNodes():\n        i\['selected'].setValue(False)\n\n\n### select write node ###\nfor n in nuke.thisNode().nodes():\n    if n.name() == \"Write2\":\n        n\['selected'].setValue(True)\n\n### read from write ###\n\nsel = nuke.selectedNode()\n   \nnuke.root().begin()\nread = nuke.createNode(\"Read\")\nread\[\"file\"].setValue(sel\[\"file\"].getValue())\nread\[\"first\"].setValue(int(nuke.root()\[\"first_frame\"].getValue()))\nread\[\"last\"].setValue(int(nuke.root()\[\"last_frame\"].getValue()))\nread\[\"origfirst\"].setValue(int(nuke.root()\[\"first_frame\"].getValue()))\nread\[\"origlast\"].setValue(int(nuke.root()\[\"last_frame\"].getValue()))\nread\[\"colorspace\"].setValue(int(sel\[\"colorspace\"].getValue()))\n\n\n" +STARTLINE}
+ addUserKnob {6 read_smoke l "read smoke from file" t "Check this box to disable smoke rendering.\nRemember to connect rendered sparks to ReadSparks input.\n" -STARTLINE}
+ addUserKnob {20 smoke}
+ addUserKnob {41 read_sparks_1 l "view only smoke" T GS_Sparks.read_sparks}
+ addUserKnob {41 multiply T Multiply1.value}
+ addUserKnob {41 saturation_1 l saturation T ColorCorrect1.saturation}
+ addUserKnob {41 gain T ColorCorrect1.gain}
+ addUserKnob {41 gamma T ColorCorrect1.gamma}
+ addUserKnob {41 blurscale l "blur scale" T Blur3.blurscale}
+ addUserKnob {41 smokedilate l dilate T Dilate2.smokedilate}
+ addUserKnob {41 scale_1 l "noise scale" T Noise3.scale}
+ addUserKnob {41 lacunarity T Noise3.lacunarity}
+ addUserKnob {41 size_1 l x/ysize T Noise3.size}
+ addUserKnob {41 ascentspeed l "ascen tspeed" T NoOp2.ascentspeed}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x8e6322ff
+  label FireSpark
+  note_font_size 66
+  xpos -265
+  ypos -391
+  bdwidth 1341
+  bdheight 669
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x7b732cff
+  label Write/read
+  note_font_size 66
+  xpos -259
+  ypos 484
+  bdwidth 1338
+  bdheight 401
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode7
+  tile_color 0x4e7b3aff
+  label "After Render"
+  note_font_size 66
+  xpos -256
+  ypos 1136
+  bdwidth 1325
+  bdheight 462
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x3b3838ff
+  label Smoke
+  note_font_size 42
+  note_font_color 0xffffffff
+  xpos 476
+  ypos -267
+  bdwidth 467
+  bdheight 1866
+  z_order 1
+ }
+ Input {
+  inputs 0
+  name cam
+  label input2
+  xpos 351
+  ypos 545
+  number 1
+  addUserKnob {20 User}
+ }
+ Dot {
+  name Dot6
+  xpos 385
+  ypos 643
+ }
+set N55d02000 [stack 0]
+ Input {
+  inputs 0
+  name Particle
+  xpos 70
+  ypos -474
+ }
+ ParticleCurve {
+  curves {r {curve l x4.920398351e-005 0.9962185621 x0.8751387596 0.03507328033}
+    g {curve l 0.04519724846 0.9883886576}
+    b {curve x0.002150836401 0.3015620708 s0 x1 0.9911360145 s0}
+    a {curve x0.007278352976 0.002217531204 s0 v0.6585911512 l x0.2850780487 0.9921953082 k x1.000273108 -0.002659201622 s0}
+    size {curve x0.03664885834 0.00199007988 s0 x0.2018314749 0.7824956179 x0.3905036449 0.3380336761 x0.4660228491 0.5553219318 s0 v0.3915576935 x1 0.008417129517 s-0 u2.376511335}
+    mass {curve x0.01359069347 0.9782955647 s0 t-0.5500000119 x1 0.3194029927 s-0 t0}}
+  affect_rgb false
+  affect_size true
+  affect_mass true
+  name ParticleCurve1
+  xpos 70
+  ypos -242
+  addUserKnob {20 User}
+  addUserKnob {7 a}
+ }
+ Dot {
+  name Dot24
+  xpos 104
+  ypos -181
+ }
+set N55d39400 [stack 0]
+ Dot {
+  name Dot27
+  xpos 654
+  ypos -181
+ }
+set N55d39000 [stack 0]
+ Dot {
+  name Dot5
+  xpos 852
+  ypos -181
+ }
+ Dot {
+  name Dot4
+  xpos 852
+  ypos 200
+ }
+push $N55d39000
+ ParticleExpression {
+  colexpr "v(0.9+(age/100)+(random/8)-0.125, 0.6-((age/100)+(random/8)-0.125), 0.1-((age/100)+(random/8)-0.125))"
+  name ParticleExpression9
+  xpos 620
+  ypos -44
+ }
+ set C55d38400 [stack 0]
+ ParticleExpression {
+  sizeexpr (size+10)*(age/30)+15
+  name ParticleExpression3
+  xpos 620
+  ypos 61
+ }
+ Switch {
+  inputs 2
+  which {{parent.affect_rgb}}
+  name Switch3
+  xpos 620
+  ypos 196
+ }
+ set C55ad7f80 [stack 0]
+ Scene {
+  display off
+  selectable false
+  name Scene1
+  xpos 630
+  ypos 444
+ }
+push 0
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  ztest_enabled false
+  shutter 0
+  motion_vectors_type off
+  MB_channel none
+  drop_zero_alpha_samples false
+  name ScanlineRender1
+  xpos 618
+  ypos 639
+  disable {{parent.read_smoke}}
+ }
+set N55d5d000 [stack 0]
+ Write {
+  channels rgba
+  render_order 0
+  first 0
+  last 0
+  in_colorspace linear
+  out_colorspace linear
+  name Write2
+  xpos 841
+  ypos 609
+  postage_stamp true
+  addUserKnob {20 caravr l CaraVR}
+  addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
+  addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote6
+  label "   Size "
+  xpos 117
+  ypos -157
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote8
+  label "   Rgb "
+  xpos 117
+  ypos -136
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote2
+  label "     Default color\n     Increase size for smoke   "
+  xpos 662
+  ypos 8
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote7
+  label "   Default color "
+  xpos 121
+  ypos -5
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "   Switch default color to rgb curves    "
+  xpos 709
+  ypos 229
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote4
+  label "   Switch default color to rgb curves    "
+  xpos -119
+  ypos 225
+ }
+ Dot {
+  inputs 0
+  name Dot23
+  tile_color 0xfff600ff
+  xpos -243
+  ypos -275
+  hide_input true
+ }
+ Dot {
+  name Dot25
+  tile_color 0xffa200ff
+  xpos -222
+  ypos -275
+ }
+ Dot {
+  name Dot26
+  tile_color 0xff8500ff
+  xpos -201
+  ypos -275
+ }
+ Dot {
+  name Dot28
+  tile_color 0xff7000ff
+  xpos -180
+  ypos -275
+ }
+ Dot {
+  name Dot29
+  tile_color 0xff6400ff
+  xpos -159
+  ypos -275
+ }
+ Dot {
+  name Dot30
+  tile_color 0xff3e00ff
+  xpos -140
+  ypos -275
+ }
+ Dot {
+  name Dot31
+  tile_color 0xff2c00ff
+  xpos -119
+  ypos -275
+ }
+ Dot {
+  name Dot33
+  tile_color 0xff1b00ff
+  xpos -99
+  ypos -275
+ }
+ NoOp {
+  inputs 0
+  name NoOp2
+  xpos 823
+  ypos 1406
+  addUserKnob {20 User}
+  addUserKnob {7 ascentspeed l "ascent speed" R 0 10}
+  ascentspeed 5
+ }
+push $N55d02000
+push $N55d39400
+ Dot {
+  name Dot1
+  xpos -67
+  ypos -181
+ }
+ Dot {
+  name Dot2
+  xpos -67
+  ypos 202
+ }
+push $N55d39400
+clone $C55d38400 {
+  xpos 70
+  ypos -44
+  selected false
+ }
+clone $C55ad7f80 {
+  inputs 2
+  xpos 70
+  ypos 198
+  selected false
+ }
+ Scene {
+  name Scene2
+  xpos 80
+  ypos 535
+ }
+push 0
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  ztest_enabled false
+  samples 10.8
+  shutter 0.7
+  motion_vectors_type distance
+  name ScanlineRender2
+  xpos 70
+  ypos 639
+  disable {{parent.read_sparks}}
+  addUserKnob {20 User}
+ }
+set N55df3800 [stack 0]
+ Write {
+  channels rgba
+  file sp
+  file_type jpeg
+  checkHashOnRead false
+  on_error checkerboard
+  version 8
+  in_colorspace linear
+  out_colorspace linear
+  name WriteSparks
+  xpos -136
+  ypos 609
+  postage_stamp true
+  addUserKnob {20 caravr l CaraVR}
+  addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
+  addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
+ }
+ Noise {
+  inputs 0
+  type turbulence
+  size 1000
+  zoffset {{t/40}}
+  lacunarity 1.95
+  gain 0.57
+  gamma 0.8
+  translate {0 {frame*NoOp2.ascentspeed}}
+  scale 0.3
+  center {1024 778}
+  name Noise3
+  xpos 741
+  ypos 1537
+ }
+ Input {
+  inputs 0
+  name ReadSmoke
+  xpos 836
+  ypos 801
+  number 3
+ }
+push $N55d5d000
+ Clamp {
+  name Clamp2
+  xpos 618
+  ypos 701
+ }
+ Switch {
+  inputs 2
+  which {{parent.read_smoke}}
+  name Switch7
+  xpos 618
+  ypos 801
+ }
+ Blur {
+  size 10
+  quality 3
+  name Blur2
+  xpos 620
+  ypos 1186
+ }
+ Dilate {
+  size {{parent.Dilate2.smokedilate}}
+  name Dilate2
+  xpos 620
+  ypos 1273
+  addUserKnob {20 User}
+  addUserKnob {7 smokedilate l dilate R -50 50}
+  smokedilate -50
+ }
+ Blur {
+  size {{parent.Blur3.blurscale}}
+  name Blur3
+  xpos 620
+  ypos 1343
+  addUserKnob {20 User}
+  addUserKnob {7 blurscale l "blur scale" R 0 500}
+  blurscale 190
+ }
+ ColorCorrect {
+  saturation 0.205
+  gamma 0.375
+  gain 3.34
+  name ColorCorrect1
+  xpos 620
+  ypos 1418
+ }
+ Clamp {
+  channels rgba
+  name Clamp1
+  xpos 620
+  ypos 1461
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge1
+  xpos 620
+  ypos 1537
+ }
+ Multiply {
+  value 0.115
+  name Multiply1
+  xpos 510
+  ypos 1531
+ }
+ Crop {
+  box {0 0 2048 1556}
+  name Crop1
+  xpos 353
+  ypos 1537
+ }
+ Input {
+  inputs 0
+  name ReadSparks
+  xpos -134
+  ypos 806
+  number 2
+ }
+push $N55df3800
+ Switch {
+  inputs 2
+  which {{parent.read_sparks}}
+  name Switch6
+  xpos 70
+  ypos 806
+ }
+ Grade {
+  blackpoint 0.002
+  whitepoint 0.94
+  white 0.74
+  gamma 0.87
+  name Grade2
+  xpos 70
+  ypos 1243
+ }
+set N55e48000 [stack 0]
+ Dot {
+  name Dot21
+  xpos 268
+  ypos 1247
+ }
+ Glow2 {
+  tint {1 1 1 1}
+  tint_panelDropped true
+  tolerance 0.09
+  brightness 1.88
+  size 1
+  name Glow1
+  xpos 234
+  ypos 1332
+ }
+ Dot {
+  name Dot3
+  xpos 268
+  ypos 1421
+ }
+push $N55e48000
+ Group {
+  name Bloom1
+  tile_color 0x7fff
+  note_font_color 0xff0000ff
+  xpos 70
+  ypos 1333
+  addUserKnob {20 User l Hard_Glow}
+  addUserKnob {41 size l Amount T Main.size}
+  addUserKnob {41 mix T Screen.mix}
+  addUserKnob {26 ""}
+  addUserKnob {41 range T Keyer1.range}
+ }
+  Input {
+   inputs 0
+   name Mask
+   xpos 680
+   ypos -82
+   number 1
+  }
+  Invert {
+   name Invert1
+   xpos 683
+   ypos 59
+  }
+  Dot {
+   name Dot4
+   xpos 714
+   ypos 532
+  }
+  Input {
+   inputs 0
+   name Source
+   xpos -388
+   ypos -206
+  }
+  Dot {
+   name Dot3
+   xpos -354
+   ypos -41
+  }
+set N55e96000 [stack 0]
+  Dot {
+   name Dot2
+   xpos 316
+   ypos -41
+  }
+set N55ec3c00 [stack 0]
+  Dot {
+   name Dot5
+   xpos 520
+   ypos -41
+  }
+push $N55e96000
+  Dot {
+   name Dot1
+   xpos -584
+   ypos -41
+  }
+  Keyer {
+   operation "luminance key"
+   range {0 0.0643986263 1 1}
+   name Keyer1
+   xpos -618
+   ypos 17
+  }
+  Blur {
+   size 2.3
+   name Blur1
+   xpos -618
+   ypos 63
+  }
+push $N55e96000
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy1
+   xpos -388
+   ypos 63
+  }
+  Premult {
+   name Premult1
+   xpos -388
+   ypos 101
+  }
+  Dot {
+   name Dot7
+   xpos -354
+   ypos 130
+  }
+set N55ec2000 [stack 0]
+  Blur {
+   size 1.15
+   mix 0
+   name Main
+   xpos 190
+   ypos 321
+  }
+push $N55ec2000
+  Blur {
+   size {{parent.Main.size*512}}
+   mix 0.995
+   name Blur16
+   xpos 27
+   ypos 319
+  }
+push $N55ec2000
+  Blur {
+   size {{parent.Main.size*268}}
+   name Blur15
+   xpos -83
+   ypos 319
+  }
+push $N55ec2000
+  Blur {
+   size {{parent.Main.size*4}}
+   mix 0.825
+   name Blur9
+   xpos -852
+   ypos 345
+  }
+push $N55ec2000
+  Blur {
+   size {{parent.Main.size*8}}
+   name Blur10
+   xpos -743
+   ypos 319
+  }
+push $N55ec2000
+  Blur {
+   size {{parent.Main.size*16}}
+   name Blur11
+   xpos -633
+   ypos 319
+  }
+push $N55ec2000
+  Blur {
+   size {{parent.Main.size*32}}
+   name Blur12
+   xpos -523
+   ypos 319
+  }
+push $N55ec2000
+  Blur {
+   size {{parent.Main.size*64}}
+   name Blur13
+   xpos -413
+   ypos 319
+  }
+push 0
+push $N55ec2000
+  Blur {
+   size {{parent.Main.size*128}}
+   name Blur14
+   xpos -193
+   ypos 319
+  }
+push $N55ec2000
+  Blur {
+   size {{parent.Main.size*2}}
+   name Blur7
+   xpos -303
+   ypos 319
+  }
+  Merge2 {
+   inputs 10+1
+   operation screen
+   name Merge11
+   xpos -397
+   ypos 550
+  }
+push $N55ec3c00
+  Merge2 {
+   inputs 2
+   operation screen
+   name Screen
+   xpos 282
+   ypos 528
+  }
+  Keymix {
+   inputs 3
+   name Keymix1
+   xpos 486
+   ypos 522
+  }
+  Output {
+   name Output1
+   xpos 486
+   ypos 691
+  }
+ end_group
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge3
+  xpos 70
+  ypos 1417
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos 70
+  ypos 1537
+ }
+ Output {
+  name Output1
+  xpos 70
+  ypos 1865
+ }
+end_group

@@ -1,0 +1,84 @@
+set cut_paste_input [stack 0]
+version 11.3 v2
+BackdropNode {
+ inputs 0
+ name BackdropNode69
+ tile_color 0x59543eff
+ label prerender
+ note_font_size 42
+ selected true
+ xpos 3569
+ ypos -550
+ bdwidth 1033
+ bdheight 1023
+}
+push $cut_paste_input
+Dot {
+ name Dot79
+ selected true
+ xpos 4337
+ ypos -432
+}
+Remove {
+ operation keep
+ channels rgba
+ name Remove22
+ selected true
+ xpos 4303
+ ypos -322
+}
+Dot {
+ name Dot741
+ selected true
+ xpos 4337
+ ypos -209
+}
+set N8193dc00 [stack 0]
+Dot {
+ name Dot742
+ selected true
+ xpos 3762
+ ypos -209
+}
+Dot {
+ name Dot743
+ selected true
+ xpos 3762
+ ypos -49
+}
+Write {
+ channels rgba
+ raw true
+ file_type exr
+ metadata "all metadata"
+ first_part rgba
+ name Write1
+ selected true
+ xpos 3728
+ ypos 30
+ bookmark true
+}
+Dot {
+ inputs 0
+ name Dot744
+ selected true
+ xpos 4148
+ ypos 208
+}
+Dot {
+ name Dot745
+ selected true
+ xpos 4148
+ ypos 322
+}
+push $N8193dc00
+Switch {
+ inputs 2
+ which 1
+ name Switch14
+ label "\[value which]"
+ selected true
+ xpos 4303
+ ypos 312
+ disable true
+}

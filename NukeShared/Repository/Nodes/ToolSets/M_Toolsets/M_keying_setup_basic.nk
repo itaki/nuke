@@ -1,0 +1,3069 @@
+set cut_paste_input [stack 0]
+version 11.3 v2
+BackdropNode {
+ inputs 0
+ name BackdropNode12
+ tile_color 0x7a4b75ff
+ label "garbage matte"
+ note_font_size 42
+ selected true
+ xpos 12710
+ ypos 15648
+ bdwidth 504
+ bdheight 494
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode14
+ tile_color 0x388e8e00
+ label premult
+ note_font_size 42
+ selected true
+ xpos 11746
+ ypos 16698
+ bdwidth 306
+ bdheight 320
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode15
+ tile_color 0x8e8560ff
+ label Reference
+ note_font_size 42
+ selected true
+ xpos 14920
+ ypos 17907
+ bdwidth 324
+ bdheight 272
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode29
+ tile_color 0x375f8eff
+ label "foreground plate"
+ note_font_size 29.55
+ selected true
+ xpos 11313
+ ypos 12452
+ bdwidth 284
+ bdheight 316
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode30
+ tile_color 0xc66a6aff
+ label "core despill"
+ note_font_size 42
+ selected true
+ xpos 11210
+ ypos 13989
+ bdwidth 405
+ bdheight 497
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode33
+ tile_color 0x7fc982ff
+ label "edge despill"
+ note_font_size 42
+ selected true
+ xpos 11664
+ ypos 13994
+ bdwidth 499
+ bdheight 917
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode36
+ tile_color 0xc46b6bff
+ label "core matte"
+ note_font_size 42
+ selected true
+ xpos 12232
+ ypos 13996
+ bdwidth 504
+ bdheight 494
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode38
+ tile_color 0x7171c600
+ label "denoised foreground \nplate"
+ note_font_size 24.7
+ selected true
+ xpos 11752
+ ypos 13288
+ bdwidth 246
+ bdheight 253
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode39
+ tile_color 0x68878eff
+ label Regrain
+ note_font_size 42
+ selected true
+ xpos 10554
+ ypos 16278
+ bdwidth 727
+ bdheight 731
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode40
+ tile_color 0x7171c6ff
+ label Degrain
+ note_font_size 42
+ selected true
+ xpos 11304
+ ypos 12947
+ bdwidth 277
+ bdheight 304
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode42
+ tile_color 0x7171c600
+ label "Degrain out"
+ note_font_size 24.7
+ selected true
+ xpos 11037
+ ypos 13279
+ bdwidth 224
+ bdheight 240
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode67
+ tile_color 0x678e5fff
+ label "Grain Switch"
+ note_font_size 42
+ selected true
+ xpos 13895
+ ypos 17343
+ bdwidth 658
+ bdheight 496
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode68
+ tile_color 0x388e8e00
+ label Versions
+ note_font_size 42
+ selected true
+ xpos 14285
+ ypos 18282
+ bdwidth 555
+ bdheight 276
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode70
+ tile_color 0x8e8e61ff
+ label "Comp out"
+ note_font_size 42
+ selected true
+ xpos 13893
+ ypos 18275
+ bdwidth 257
+ bdheight 279
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode71
+ tile_color 0x793f46ff
+ label "Cut Ref"
+ note_font_size 42.5
+ selected true
+ xpos 14527
+ ypos 17908
+ bdwidth 281
+ bdheight 275
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode41
+ tile_color 0x69b274ff
+ label "edge matte "
+ note_font_size 42
+ selected true
+ xpos 12779
+ ypos 13997
+ bdwidth 637
+ bdheight 1260
+ z_order 2
+}
+push $cut_paste_input
+Dot {
+ name Dot243
+ label input
+ selected true
+ xpos 11440
+ ypos 12732
+}
+Dot {
+ name Dot244
+ selected true
+ xpos 11440
+ ypos 12897
+}
+set N26f01000 [stack 0]
+Colorspace {
+ colorspace_out AlexaV3LogC
+ name Colorspace2
+ selected true
+ xpos 11406
+ ypos 13057
+}
+Denoise2 {
+ userMessage "Move the analysis region to analyse noise or press Lock Noise Analysis to disable this message."
+ profileCurve {profile {curve 0 x0.125 0 0 0 0 0 0 0 0}}
+ serializeKnob "0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 
+18446744073709551615"
+ name Denoise1
+ selected true
+ xpos 11406
+ ypos 13097
+ disable true
+}
+Colorspace {
+ colorspace_in AlexaV3LogC
+ name Colorspace3
+ selected true
+ xpos 11406
+ ypos 13154
+}
+Dot {
+ name Dot245
+ selected true
+ xpos 11440
+ ypos 13333
+}
+set N26f00000 [stack 0]
+Dot {
+ name Dot246
+ label "\n\nDegrain Render"
+ note_font_size 22
+ selected true
+ xpos 11128
+ ypos 13333
+}
+Dot {
+ inputs 0
+ name Dot253
+ label "Regrain Mask input"
+ note_font_size 27.5
+ selected true
+ xpos 14413
+ ypos 17432
+}
+Dot {
+ name Dot254
+ selected true
+ xpos 14413
+ ypos 17613
+}
+Dot {
+ inputs 0
+ name Dot255
+ label "Background Input"
+ note_font_size 78.5
+ selected true
+ xpos 14008
+ ypos 16717
+}
+Roto {
+ inputs 0
+ output alpha
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 0}
+    {t x44c80000 x44610000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}}}}}
+ toolbox {createBezier {
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {960 540}
+ name Roto33
+ label "include area"
+ selected true
+ xpos 12985
+ ypos 15842
+}
+Dot {
+ name Dot261
+ selected true
+ xpos 13019
+ ypos 15971
+}
+Dot {
+ inputs 0
+ name Dot247
+ label "Degrain Input"
+ note_font_size 18
+ selected true
+ xpos 11867
+ ypos 13508
+}
+Dot {
+ name Dot248
+ selected true
+ xpos 11867
+ ypos 13631
+}
+push $N26f00000
+Switch {
+ inputs 2
+ which 1
+ name Switch7
+ selected true
+ xpos 11406
+ ypos 13627
+ disable true
+}
+set Ne52d000 [stack 0]
+Dot {
+ name Dot249
+ selected true
+ xpos 11440
+ ypos 13741
+}
+set Ne52cc00 [stack 0]
+Dot {
+ name Dot250
+ selected true
+ xpos 11835
+ ypos 13741
+}
+set Ne52c800 [stack 0]
+Dot {
+ name Dot262
+ selected true
+ xpos 12526
+ ypos 13741
+}
+set N98610400 [stack 0]
+Dot {
+ name Dot263
+ selected true
+ xpos 12526
+ ypos 14067
+}
+OFXuk.co.thefoundry.keylight.keylight_v201 {
+ show "Final Result"
+ unPreMultiply false
+ screenColour 0
+ screenGain 1
+ screenBalance 0.5
+ alphaBias 0.5
+ despillBias 0.5
+ gangBiases true
+ preBlur 0
+ "Screen Matte" 1
+ screenClipMin 0
+ screenClipMax 1
+ screenClipRollback 0
+ screenGrowShrink 0
+ screenSoftness 0
+ screenDespotBlack 0
+ screenDespotWhite 0
+ screenReplaceMethod "Soft Colour"
+ screenReplaceColour 0.5
+ Tuning 1
+ midPoint 0.5
+ lowGain 1
+ midGain 1
+ highGain 1
+ "Inside Mask" 0
+ sourceAlphaHandling Ignore
+ insideReplaceMethod "Soft Colour"
+ insideReplaceColour 0.5
+ Crops 0
+ SourceXMethod Colour
+ SourceYMethod Colour
+ SourceEdgeColour 0
+ SourceCropL 0
+ SourceCropR 1
+ SourceCropB 0
+ SourceCropT 1
+ balanceSet false
+ insideComponent None
+ outsideComponent None
+ cacheBreaker true
+ name Keylight1
+ selected true
+ xpos 12492
+ ypos 14158
+ disable true
+}
+Group {
+ name Feather1
+ selected true
+ xpos 12492
+ ypos 14404
+ disable true
+ addUserKnob {20 User}
+ addUserKnob {41 channels T Blur1.channels}
+ addUserKnob {7 amount R -100 100}
+ addUserKnob {41 filter T Blur1.filter}
+ addUserKnob {26 ""}
+ addUserKnob {4 fallOff M {linear smooth smooth0 smooth1 "" "" "" ""}}
+ addUserKnob {41 value l gamma T Gamma1.value}
+ addUserKnob {26 ""}
+ addUserKnob {7 mix}
+ mix 1
+ addUserKnob {6 cropBBox l "crop BBox?" +STARTLINE}
+ addUserKnob {6 intersect l intersect? -STARTLINE}
+ addUserKnob {6 blackoutside l "Black Outside" -STARTLINE}
+}
+ Input {
+  inputs 0
+  name InputMask
+  xpos 351
+  ypos 73
+  number 1
+ }
+ Invert {
+  name Invert1
+  xpos 351
+  ypos 121
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels1
+  xpos 351
+  ypos 157
+ }
+ Invert {
+  name Invert2
+  xpos 351
+  ypos 193
+ }
+ Dot {
+  name Dot5
+  xpos 385
+  ypos 305
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos 181
+  ypos -506
+ }
+ Dot {
+  name Dot6
+  xpos 215
+  ypos -446
+ }
+set Nbcee6000 [stack 0]
+ Blur {
+  channels rgba
+  size {{parent.amount*2 i}}
+  name Blur1
+  label "\[value size]"
+  xpos 181
+  ypos -360
+ }
+set Naab0bc00 [stack 0]
+ Grade {
+  channels {{{parent.Blur1.channels}}}
+  whitepoint 0.47
+  white_clamp true
+  name Grade2
+  xpos 287
+  ypos -280
+ }
+push $Naab0bc00
+ Grade {
+  channels {{{parent.Blur1.channels}}}
+  blackpoint 0.52
+  white_clamp true
+  name Grade1
+  xpos 181
+  ypos -280
+ }
+ Switch {
+  inputs 2
+  which {{"parent.amount < 0 ? 0 : 1" i}}
+  name Switch1
+  xpos 181
+  ypos -234
+ }
+ Dot {
+  name Dot1
+  xpos 215
+  ypos -188
+ }
+set Naab0ac00 [stack 0]
+ Dot {
+  name Dot4
+  xpos 310
+  ypos -188
+ }
+set Naab0a800 [stack 0]
+ Dot {
+  name Dot2
+  xpos 434
+  ypos -188
+ }
+set Naab0a400 [stack 0]
+ Dot {
+  name Dot3
+  xpos 544
+  ypos -188
+ }
+ ColorLookup {
+  channels {{{parent.Blur1.channels}}}
+  lut {master {curve L 0 C k 1 s0}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name ColorLookup2
+  label smooth1
+  xpos 510
+  ypos -147
+ }
+push $Naab0a400
+ ColorLookup {
+  channels {{{parent.Blur1.channels}}}
+  lut {master {curve C k 0 s0 L 1}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name ColorLookup1
+  label smooth0
+  xpos 400
+  ypos -148
+ }
+push $Naab0a800
+ ColorLookup {
+  channels {{{parent.Blur1.channels}}}
+  lut {master {curve C k 0 s0 1 s0}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name ColorLookup3
+  label smooth
+  xpos 276
+  ypos -146
+ }
+push $Naab0ac00
+ Switch {
+  inputs 4
+  which {{parent.fallOff i}}
+  name Switch2
+  xpos 181
+  ypos -75
+ }
+ Clamp {
+  channels {{{parent.Blur1.channels}}}
+  name Clamp1
+  xpos 181
+  ypos -38
+ }
+ Gamma {
+  channels {{{parent.Blur1.channels}}}
+  name Gamma1
+  xpos 181
+  ypos 22
+ }
+push $Nbcee6000
+ Dot {
+  name Dot7
+  xpos 72
+  ypos -446
+ }
+ Dot {
+  name Dot8
+  xpos 71
+  ypos 305
+ }
+ Keymix {
+  inputs 3
+  mix {{parent.mix i}}
+  name Keymix1
+  xpos 181
+  ypos 296
+ }
+ Crop {
+  box {0 0 {input.width i} {input.height i}}
+  intersect {{parent.intersect i}}
+  crop {{parent.blackoutside i}}
+  name Crop1
+  xpos 181
+  ypos 379
+  disable {{!parent.cropBBox i}}
+ }
+set N8a8b9800 [stack 0]
+ Output {
+  name Output1
+  xpos 181
+  ypos 476
+ }
+push $N8a8b9800
+ Viewer {
+  frame_increment 8
+  input_process false
+  far 1000000
+  name Viewer1
+  xpos -313
+  ypos 148
+ }
+end_group
+Dot {
+ name Dot264
+ selected true
+ xpos 12526
+ ypos 15038
+}
+set N8a8b9000 [stack 0]
+Dot {
+ name Dot265
+ selected true
+ xpos 12526
+ ypos 15465
+}
+Roto {
+ inputs 0
+ output alpha
+ cliptype none
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x44800000 x44428000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {1024 778}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ view {}
+ motionblur_on true
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ name Roto35
+ label "Additional cutout"
+ selected true
+ xpos 13186
+ ypos 14180
+}
+Clamp {
+ minimum 1
+ MinClampTo_enable true
+ name Clamp2
+ selected true
+ xpos 13186
+ ypos 14270
+}
+push $N98610400
+Dot {
+ name Dot267
+ selected true
+ xpos 12871
+ ypos 13741
+}
+Clamp {
+ maximum 10000
+ name Clamp5
+ label "clamp negative"
+ note_font_size 20
+ selected true
+ xpos 12837
+ ypos 13818
+}
+Dot {
+ name Dot268
+ selected true
+ xpos 12871
+ ypos 13942
+}
+Dot {
+ name Dot269
+ selected true
+ xpos 12871
+ ypos 14119
+}
+set N86e09400 [stack 0]
+Dot {
+ name Dot271
+ selected true
+ xpos 13092
+ ypos 14119
+}
+IBKColourV3 {
+ name IBKColourV3_13
+ selected true
+ xpos 13058
+ ypos 14195
+ screen_type green
+ Size 0
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+Merge2 {
+ inputs 2
+ operation stencil
+ name Merge22
+ selected true
+ xpos 13058
+ ypos 14276
+ disable true
+}
+IBKColourV3 {
+ name IBKColourV3_14
+ selected true
+ xpos 13058
+ ypos 14348
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_13.off.r} {parent.IBKColourV3_13.off.g} {parent.IBKColourV3_13.off.b}}
+ mult {{parent.IBKColourV3_13.mult.r} {parent.IBKColourV3_13.mult.g} {parent.IBKColourV3_13.mult.b}}
+ multi 1
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_15
+ selected true
+ xpos 13058
+ ypos 14404
+ screen_type green
+ Size 1
+ off {{parent.IBKColourV3_14.off.r} {parent.IBKColourV3_14.off.g} {parent.IBKColourV3_14.off.b}}
+ mult {{parent.IBKColourV3_14.mult.r} {parent.IBKColourV3_14.mult.g} {parent.IBKColourV3_14.mult.b}}
+ erode 0.195
+ multi {{(parent.IBKColourV3_14.multi)*2}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_16
+ selected true
+ xpos 13058
+ ypos 14440
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_15.off.r} {parent.IBKColourV3_15.off.g} {parent.IBKColourV3_15.off.b}}
+ mult {{parent.IBKColourV3_15.mult.r} {parent.IBKColourV3_15.mult.g} {parent.IBKColourV3_15.mult.b}}
+ multi {{(parent.IBKColourV3_15.multi)*2 x132 1.885}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_17
+ selected true
+ xpos 13058
+ ypos 14477
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_16.off.r} {parent.IBKColourV3_16.off.g} {parent.IBKColourV3_16.off.b}}
+ mult {{parent.IBKColourV3_16.mult.r} {parent.IBKColourV3_16.mult.g} {parent.IBKColourV3_16.mult.b}}
+ multi {{(parent.IBKColourV3_16.multi)*2}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_18
+ selected true
+ xpos 13058
+ ypos 14509
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_17.off.r} {parent.IBKColourV3_17.off.g} {parent.IBKColourV3_17.off.b}}
+ mult {{parent.IBKColourV3_17.mult.r} {parent.IBKColourV3_17.mult.g} {parent.IBKColourV3_17.mult.b}}
+ multi {{(parent.IBKColourV3_17.multi)*2}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_19
+ selected true
+ xpos 13058
+ ypos 14546
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_18.off.r} {parent.IBKColourV3_18.off.g} {parent.IBKColourV3_18.off.b}}
+ mult {{parent.IBKColourV3_18.mult.r} {parent.IBKColourV3_18.mult.g} {parent.IBKColourV3_18.mult.b}}
+ multi {{(parent.IBKColourV3_18.multi)*2}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_20
+ selected true
+ xpos 13058
+ ypos 14582
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_19.off.r} {parent.IBKColourV3_19.off.g} {parent.IBKColourV3_19.off.b}}
+ mult {{parent.IBKColourV3_19.mult.r} {parent.IBKColourV3_19.mult.g} {parent.IBKColourV3_19.mult.b}}
+ multi {{(parent.IBKColourV3_19.multi)*2}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_21
+ selected true
+ xpos 13058
+ ypos 14617
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_20.off.r} {parent.IBKColourV3_20.off.g} {parent.IBKColourV3_20.off.b}}
+ mult {{parent.IBKColourV3_20.mult.r} {parent.IBKColourV3_20.mult.g} {parent.IBKColourV3_20.mult.b}}
+ multi {{(parent.IBKColourV3_20.multi)*2}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_22
+ selected true
+ xpos 13058
+ ypos 14658
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_21.off.r} {parent.IBKColourV3_21.off.g} {parent.IBKColourV3_21.off.b}}
+ mult {{parent.IBKColourV3_21.mult.r} {parent.IBKColourV3_21.mult.g} {parent.IBKColourV3_21.mult.b}}
+ multi {{(parent.IBKColourV3_21.multi)*2}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_23
+ selected true
+ xpos 13058
+ ypos 14695
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_21.off.r} {parent.IBKColourV3_21.off.g} {parent.IBKColourV3_21.off.b}}
+ mult {{parent.IBKColourV3_21.mult.r} {parent.IBKColourV3_21.mult.g} {parent.IBKColourV3_21.mult.b}}
+ multi 512
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_24
+ selected true
+ xpos 13058
+ ypos 14747
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_21.off.r} {parent.IBKColourV3_21.off.g} {parent.IBKColourV3_21.off.b}}
+ mult {{parent.IBKColourV3_21.mult.r} {parent.IBKColourV3_21.mult.g} {parent.IBKColourV3_21.mult.b}}
+ multi 1024
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+Dot {
+ name Dot272
+ selected true
+ xpos 13092
+ ypos 14842
+}
+push $N86e09400
+IBKGizmoV3 {
+ inputs 2
+ name IBKGizmoV3_2
+ xpos 12838
+ ypos 14838
+ st C-green
+ colour {0 1 0}
+ lm_enable true
+}
+Expression {
+ expr3 "a < 0.006 ? 0 : a"
+ name Expression3
+ label "remove micro noise"
+ selected true
+ xpos 12838
+ ypos 14923
+ disable true
+}
+ChannelMerge {
+ inputs 2
+ name ChannelMerge26
+ selected true
+ xpos 12836
+ ypos 15448
+}
+Multiply {
+ inputs 1+1
+ channels rgba
+ value 0
+ invert_mask true
+ name Multiply25
+ label "by 0"
+ selected true
+ xpos 12836
+ ypos 15961
+ disable true
+}
+Dot {
+ name Dot273
+ selected true
+ xpos 12870
+ ypos 16431
+}
+push $N8a8b9000
+push $Ne52cc00
+Dot {
+ name Dot274
+ selected true
+ xpos 11440
+ ypos 14074
+}
+set N9b032000 [stack 0]
+Group {
+ name DespillMadness1
+ note_font "Bitstream Vera Sans"
+ selected true
+ xpos 11406
+ ypos 14163
+ mapsize {0.15 0.15}
+ addUserKnob {20 DespillMadness l "Despill Settings"}
+ addUserKnob {41 screenType l "screen type" T GizmoControl.screenType}
+ addUserKnob {41 algorithm l "despill algorithm" T GizmoControl.algorithm}
+ addUserKnob {41 LimitPercentage l "fine tune" T RedLimitsGreen.LimitPercentage}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_2 l "" +STARTLINE T "spill area correction"}
+ addUserKnob {26 spacer l " " T " "}
+ addUserKnob {6 sourceLuma l "restore source luminance" t "Restores luminance of original image." +STARTLINE}
+ sourceLuma true
+ addUserKnob {41 saturation T CC_SpillMap.saturation}
+ addUserKnob {41 gamma T CC_SpillMap.gamma}
+ addUserKnob {41 offset T CC_SpillMap.offset}
+ addUserKnob {26 ""}
+ addUserKnob {41 spillMatteOut l "output spill matte in alpha" T GizmoControl.spillMatteOut}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannel l mask T KeymixMask.maskChannel}
+ addUserKnob {6 invmsk l invert -STARTLINE}
+ addUserKnob {41 which l mix T mix.which}
+}
+ Input {
+  inputs 0
+  name img
+  xpos 262
+  ypos -342
+ }
+ Dot {
+  name Dot6
+  xpos 296
+  ypos -186
+ }
+set Ne3bd800 [stack 0]
+ Dot {
+  name Dot2
+  xpos 296
+  ypos -71
+ }
+set Ne3bd400 [stack 0]
+ Dot {
+  name Dot3
+  xpos 626
+  ypos -71
+ }
+set Ne3bd000 [stack 0]
+ Expression {
+  expr2 b>g*LimitPercentage?g*LimitPercentage:b
+  expr3 b-g*LimitPercentage
+  name GreenLimitsBlue1
+  xpos 728
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $Ne3bd000
+ Expression {
+  expr2 b>r*LimitPercentage?r*LimitPercentage:b
+  expr3 b-r*LimitPercentage
+  name RedLimitsBlue
+  xpos 592
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $Ne3bd000
+ Expression {
+  expr2 b>(g+2*r)/2*LimitPercentage?(g+2*r)/2*LimitPercentage:b
+  expr3 b-(2*r+g)*LimitPercentage/2
+  name DoubleRedAve2
+  xpos 1125
+  ypos 43
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $Ne3bd000
+ Expression {
+  expr2 b>(2*g+r)/2*LimitPercentage?(2*g+r)/2*LimitPercentage:b
+  expr3 b-(r+2*g)*LimitPercentage/2
+  name DoubleGreenAve
+  xpos 998
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage}}
+ }
+push $Ne3bd000
+ Expression {
+  expr2 b>(g+r)/2*LimitPercentage?(g+r)/2*LimitPercentage:b
+  expr3 b-(r+g)*LimitPercentage/2
+  name RedAndGreenLimitBlue
+  xpos 862
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+ Switch {
+  inputs 5
+  which {{GizmoControl.algorithm i}}
+  name SwitchBlue
+  xpos 728
+  ypos 190
+ }
+ Dot {
+  name Dot5
+  xpos 762
+  ypos 370
+ }
+push $Ne3bd400
+ Dot {
+  name Dot1
+  xpos 164
+  ypos -71
+ }
+set N82b39000 [stack 0]
+ Expression {
+  expr1 g>b*LimitPercentage?b*LimitPercentage:g
+  expr3 g-b*LimitPercentage
+  name BlueLimitsGreen
+  xpos -15
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $N82b39000
+ Expression {
+  expr1 g>r*LimitPercentage?r*LimitPercentage:g
+  expr3 g-r*LimitPercentage
+  name RedLimitsGreen
+  xpos -160
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage 0.94
+ }
+push $N82b39000
+ Expression {
+  expr1 g>(b+2*r)/3*LimitPercentage?(b+2*r)/3*LimitPercentage:g
+  expr3 g-(r+b)*LimitPercentage/2
+  name DoubleRedAve
+  xpos 370
+  ypos 42
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $N82b39000
+ Expression {
+  expr1 g>(2*b+r)/3*LimitPercentage?(2*b+r)/3*LimitPercentage:g
+  expr3 g-(r+b)*LimitPercentage/2
+  name DoubleBlueAve
+  xpos 257
+  ypos 42
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $N82b39000
+ Expression {
+  expr1 g>(b+r)/2*LimitPercentage?(b+r)/2*LimitPercentage:g
+  expr3 g-(r+b)*LimitPercentage/2
+  name RedAveBlueLimitsGreen
+  xpos 130
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+ Switch {
+  inputs 5
+  which {{GizmoControl.algorithm i}}
+  name SwitchGreen
+  xpos -15
+  ypos 199
+ }
+ Dot {
+  name Dot4
+  xpos 19
+  ypos 370
+ }
+ Switch {
+  inputs 2
+  which {{GizmoControl.screenType i}}
+  name SwitchMain
+  xpos 257
+  ypos 366
+ }
+ Clamp {
+  channels alpha
+  name Clamp1
+  xpos 257
+  ypos 408
+ }
+ ColorCorrect {
+  maskChannelInput rgba.alpha
+  name CC_SpillMap
+  note_font Verdana
+  xpos 257
+  ypos 468
+ }
+set Nb6efe800 [stack 0]
+ Dot {
+  name Dot9
+  xpos 440
+  ypos 478
+ }
+ Dot {
+  name Dot10
+  xpos 440
+  ypos 1389
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -696
+  ypos -348
+  number 1
+ }
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue none}
+  expr0 0
+  channel1 {-rgba.red -rgba.green -rgba.blue none}
+  expr1 0
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  expr2 0
+  channel3 {rgba.alpha none none rgba.alpha}
+  expr3 a==0?0:a
+  name AlphaError1
+  label "To avid Gizmo being in state of\nerror without something plugged in input."
+  xpos -696
+  ypos 861
+ }
+set N8ddf7800 [stack 0]
+push $N8ddf7800
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name CopyMask
+  xpos -296
+  ypos 867
+ }
+ Invert {
+  name Invert1
+  xpos -296
+  ypos 943
+  disable {{parent.invmsk i}}
+ }
+push $Ne3bd800
+ Dot {
+  name Dot7
+  xpos -345
+  ypos -186
+ }
+ Dot {
+  name Dot8
+  xpos -345
+  ypos 551
+ }
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue none}
+  expr0 0
+  channel1 {-rgba.red -rgba.green -rgba.blue none}
+  expr1 0
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  expr2 0
+  channel3 {rgba.alpha none none rgba.alpha}
+  expr3 a==0?0:a
+  name AlphaError
+  label "To avid Gizmo being in state of\nerror without something plugged in input."
+  xpos -27
+  ypos 534
+ }
+set N8ddf6400 [stack 0]
+ Dot {
+  name Dot11
+  xpos -113
+  ypos 614
+ }
+ Dot {
+  name Dot12
+  xpos -113
+  ypos 818
+ }
+set Nba72dc00 [stack 0]
+push $N8ddf6400
+push $N8ddf6400
+push $Nb6efe800
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  from3 rgba.alpha
+  to3 rgba.alpha
+  name CopyAlpha
+  xpos 257
+  ypos 534
+ }
+set Nba72d800 [stack 0]
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge3
+  xpos -27
+  ypos 672
+ }
+ Clamp {
+  name Clamp2
+  xpos -27
+  ypos 698
+ }
+ Saturation {
+  saturation 0
+  name Saturation2
+  xpos -27
+  ypos 736
+ }
+push $Nba72d800
+ Merge2 {
+  inputs 2
+  operation plus
+  name RestoreLuma
+  xpos 257
+  ypos 736
+  disable {{!parent.sourceLuma i}}
+ }
+ Keymix {
+  inputs 3
+  maskChannel -rgba.alpha
+  name KeymixMask
+  xpos 257
+  ypos 943
+ }
+push $Nba72dc00
+ Dot {
+  name Dot13
+  xpos -113
+  ypos 1087
+ }
+ Dissolve {
+  inputs 2
+  which 1
+  name mix
+  xpos 257
+  ypos 1077
+ }
+ Switch {
+  inputs 2
+  which {{GizmoControl.spillMatteOut i}}
+  name SwitchSpillMap
+  xpos 257
+  ypos 1385
+ }
+ Output {
+  name Output1
+  xpos 257
+  ypos 1485
+ }
+ NoOp {
+  inputs 0
+  name GizmoControl
+  selected true
+  xpos 875
+  ypos 414
+  addUserKnob {20 User}
+  addUserKnob {26 version l v1.0}
+  addUserKnob {4 screenType l "screen type" M {green blue}}
+  addUserKnob {4 algorithm l "despill algorithm" M {average "double green/blue average" "double red average" "red limit" "green/blue limit" ""}}
+  algorithm "double green/blue average"
+  addUserKnob {6 spillMatteOut l "output spill matte in alpha" +STARTLINE}
+ }
+end_group
+Dot {
+ name Dot275
+ selected true
+ xpos 11440
+ ypos 15038
+}
+push $Ne52c800
+Dot {
+ name Dot251
+ selected true
+ xpos 11835
+ ypos 14079
+}
+Group {
+ name DespillMadness2
+ note_font "Bitstream Vera Sans"
+ selected true
+ xpos 11801
+ ypos 14158
+ disable true
+ mapsize {0.15 0.15}
+ addUserKnob {20 DespillMadness l "Despill Settings"}
+ addUserKnob {41 screenType l "screen type" T GizmoControl.screenType}
+ addUserKnob {41 algorithm l "despill algorithm" T GizmoControl.algorithm}
+ addUserKnob {41 LimitPercentage l "fine tune" T RedLimitsGreen.LimitPercentage}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_2 l "" +STARTLINE T "spill area correction"}
+ addUserKnob {26 spacer l " " T " "}
+ addUserKnob {6 sourceLuma l "restore source luminance" t "Restores luminance of original image." +STARTLINE}
+ addUserKnob {41 saturation T CC_SpillMap.saturation}
+ addUserKnob {41 gamma T CC_SpillMap.gamma}
+ addUserKnob {41 offset T CC_SpillMap.offset}
+ addUserKnob {26 ""}
+ addUserKnob {41 spillMatteOut l "output spill matte in alpha" T GizmoControl.spillMatteOut}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannel l mask T KeymixMask.maskChannel}
+ addUserKnob {6 invmsk l invert -STARTLINE}
+ addUserKnob {41 which l mix T mix.which}
+}
+ Input {
+  inputs 0
+  name img
+  xpos 262
+  ypos -342
+ }
+ Dot {
+  name Dot6
+  xpos 296
+  ypos -186
+ }
+set Nb73e8400 [stack 0]
+ Dot {
+  name Dot2
+  xpos 296
+  ypos -71
+ }
+set Nb73e8000 [stack 0]
+ Dot {
+  name Dot3
+  xpos 626
+  ypos -71
+ }
+set Nb6f8fc00 [stack 0]
+ Expression {
+  expr2 b>g*LimitPercentage?g*LimitPercentage:b
+  expr3 b-g*LimitPercentage
+  name GreenLimitsBlue1
+  xpos 728
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $Nb6f8fc00
+ Expression {
+  expr2 b>r*LimitPercentage?r*LimitPercentage:b
+  expr3 b-r*LimitPercentage
+  name RedLimitsBlue
+  xpos 592
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $Nb6f8fc00
+ Expression {
+  expr2 b>(g+2*r)/2*LimitPercentage?(g+2*r)/2*LimitPercentage:b
+  expr3 b-(2*r+g)*LimitPercentage/2
+  name DoubleRedAve2
+  xpos 1125
+  ypos 43
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $Nb6f8fc00
+ Expression {
+  expr2 b>(2*g+r)/2*LimitPercentage?(2*g+r)/2*LimitPercentage:b
+  expr3 b-(r+2*g)*LimitPercentage/2
+  name DoubleGreenAve
+  xpos 998
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage}}
+ }
+push $Nb6f8fc00
+ Expression {
+  expr2 b>(g+r)/2*LimitPercentage?(g+r)/2*LimitPercentage:b
+  expr3 b-(r+g)*LimitPercentage/2
+  name RedAndGreenLimitBlue
+  xpos 862
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+ Switch {
+  inputs 5
+  which {{GizmoControl.algorithm i}}
+  name SwitchBlue
+  xpos 728
+  ypos 190
+ }
+ Dot {
+  name Dot5
+  xpos 762
+  ypos 370
+ }
+push $Nb73e8000
+ Dot {
+  name Dot1
+  xpos 164
+  ypos -71
+ }
+set Nb4b51c00 [stack 0]
+ Expression {
+  expr1 g>b*LimitPercentage?b*LimitPercentage:g
+  expr3 g-b*LimitPercentage
+  name BlueLimitsGreen
+  xpos -15
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $Nb4b51c00
+ Expression {
+  expr1 g>r*LimitPercentage?r*LimitPercentage:g
+  expr3 g-r*LimitPercentage
+  name RedLimitsGreen
+  xpos -160
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage 0.94
+ }
+push $Nb4b51c00
+ Expression {
+  expr1 g>(b+2*r)/3*LimitPercentage?(b+2*r)/3*LimitPercentage:g
+  expr3 g-(r+b)*LimitPercentage/2
+  name DoubleRedAve
+  xpos 370
+  ypos 42
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $Nb4b51c00
+ Expression {
+  expr1 g>(2*b+r)/3*LimitPercentage?(2*b+r)/3*LimitPercentage:g
+  expr3 g-(r+b)*LimitPercentage/2
+  name DoubleBlueAve
+  xpos 257
+  ypos 42
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $Nb4b51c00
+ Expression {
+  expr1 g>(b+r)/2*LimitPercentage?(b+r)/2*LimitPercentage:g
+  expr3 g-(r+b)*LimitPercentage/2
+  name RedAveBlueLimitsGreen
+  xpos 130
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+ Switch {
+  inputs 5
+  which {{GizmoControl.algorithm i}}
+  name SwitchGreen
+  xpos -15
+  ypos 199
+ }
+ Dot {
+  name Dot4
+  xpos 19
+  ypos 370
+ }
+ Switch {
+  inputs 2
+  which {{GizmoControl.screenType i}}
+  name SwitchMain
+  xpos 257
+  ypos 366
+ }
+ Clamp {
+  channels alpha
+  name Clamp1
+  xpos 257
+  ypos 408
+ }
+ ColorCorrect {
+  maskChannelInput rgba.alpha
+  name CC_SpillMap
+  note_font Verdana
+  xpos 257
+  ypos 468
+ }
+set Nbdd6f400 [stack 0]
+ Dot {
+  name Dot9
+  xpos 440
+  ypos 478
+ }
+ Dot {
+  name Dot10
+  xpos 440
+  ypos 1389
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -696
+  ypos -348
+  number 1
+ }
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue none}
+  expr0 0
+  channel1 {-rgba.red -rgba.green -rgba.blue none}
+  expr1 0
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  expr2 0
+  channel3 {rgba.alpha none none rgba.alpha}
+  expr3 a==0?0:a
+  name AlphaError1
+  label "To avid Gizmo being in state of\nerror without something plugged in input."
+  xpos -696
+  ypos 861
+ }
+set Nbdd6e400 [stack 0]
+push $Nbdd6e400
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name CopyMask
+  xpos -296
+  ypos 867
+ }
+ Invert {
+  name Invert1
+  xpos -296
+  ypos 943
+  disable {{parent.invmsk i}}
+ }
+push $Nb73e8400
+ Dot {
+  name Dot7
+  xpos -345
+  ypos -186
+ }
+ Dot {
+  name Dot8
+  xpos -345
+  ypos 551
+ }
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue none}
+  expr0 0
+  channel1 {-rgba.red -rgba.green -rgba.blue none}
+  expr1 0
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  expr2 0
+  channel3 {rgba.alpha none none rgba.alpha}
+  expr3 a==0?0:a
+  name AlphaError
+  label "To avid Gizmo being in state of\nerror without something plugged in input."
+  xpos -27
+  ypos 534
+ }
+set N8a541000 [stack 0]
+ Dot {
+  name Dot11
+  xpos -113
+  ypos 614
+ }
+ Dot {
+  name Dot12
+  xpos -113
+  ypos 818
+ }
+set N8a540800 [stack 0]
+push $N8a541000
+push $N8a541000
+push $Nbdd6f400
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  from3 rgba.alpha
+  to3 rgba.alpha
+  name CopyAlpha
+  xpos 257
+  ypos 534
+ }
+set N8a540400 [stack 0]
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge3
+  xpos -27
+  ypos 672
+ }
+ Clamp {
+  name Clamp2
+  xpos -27
+  ypos 698
+ }
+ Saturation {
+  saturation 0
+  name Saturation2
+  xpos -27
+  ypos 736
+ }
+push $N8a540400
+ Merge2 {
+  inputs 2
+  operation plus
+  name RestoreLuma
+  xpos 257
+  ypos 736
+  disable {{!parent.sourceLuma i}}
+ }
+ Keymix {
+  inputs 3
+  maskChannel -rgba.alpha
+  name KeymixMask
+  xpos 257
+  ypos 943
+ }
+push $N8a540800
+ Dot {
+  name Dot13
+  xpos -113
+  ypos 1087
+ }
+ Dissolve {
+  inputs 2
+  which 1
+  name mix
+  xpos 257
+  ypos 1077
+ }
+ Switch {
+  inputs 2
+  which {{GizmoControl.spillMatteOut i}}
+  name SwitchSpillMap
+  xpos 257
+  ypos 1385
+ }
+ Output {
+  name Output1
+  xpos 257
+  ypos 1485
+ }
+ NoOp {
+  inputs 0
+  name GizmoControl
+  selected true
+  xpos 875
+  ypos 414
+  addUserKnob {20 User}
+  addUserKnob {26 version l v1.0}
+  addUserKnob {4 screenType l "screen type" M {green blue}}
+  addUserKnob {4 algorithm l "despill algorithm" M {average "double green/blue average" "double red average" "red limit" "green/blue limit" ""}}
+  algorithm "double green/blue average"
+  addUserKnob {6 spillMatteOut l "output spill matte in alpha" +STARTLINE}
+ }
+end_group
+Keymix {
+ inputs 3
+ channels rgba
+ name Keymix2
+ selected true
+ xpos 11801
+ ypos 15034
+}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy5
+ selected true
+ xpos 11801
+ ypos 16421
+}
+Dot {
+ name Dot277
+ selected true
+ xpos 11835
+ ypos 16774
+}
+set N8b2dac00 [stack 0]
+Dot {
+ name Dot278
+ selected true
+ xpos 11974
+ ypos 16774
+}
+Group {
+ name Colour_Smear2
+ note_font Verdana
+ selected true
+ xpos 11940
+ ypos 16872
+ addUserKnob {20 User}
+ addUserKnob {26 smearing l Smearing T ""}
+ addUserKnob {6 already_premulted l "Input is premultiplied?" t "Click checkbox \"on\" if image is already premulted" +STARTLINE}
+ addUserKnob {7 pre_choke l Pre-choke R 0 30}
+ pre_choke 2.5
+ addUserKnob {7 pre_contrast l "Pre Contrast" R 0 0.5}
+ pre_contrast 0.084
+ addUserKnob {7 pre_blur l Pre-blur R 0 100}
+ pre_blur 8.5
+ addUserKnob {7 post_blur l "Post Blur" R 0 100}
+ post_blur 5.5
+ addUserKnob {26 ""}
+ addUserKnob {26 Masking}
+ addUserKnob {6 xor_edge_detect l "Use XOR edge detect method?" t "XOR edge detect will isolate edge mask to areas that are blurred. Regular edge detect method will apply smear evenly all the way around." +STARTLINE}
+ addUserKnob {7 dilate_mask l "Dilate Mask" R 0 30}
+ dilate_mask 2.8
+ addUserKnob {7 blur_mask l "Blur Mask" R 0 100}
+ blur_mask 3.5
+ addUserKnob {6 output_premulted l "Premultiply output" +STARTLINE}
+ output_premulted true
+ addUserKnob {26 ""}
+ addUserKnob {6 outputmask l "Output smear mask?" +STARTLINE}
+ addUserKnob {26 smearmask_description l " (uses 'smearmask.a' channel - handy for regraining later)" -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 RestoreDetail l "Restore Detail"}
+ addUserKnob {7 sharpness l Sharpness R 0 10}
+ sharpness 10
+ addUserKnob {7 amount l Amount}
+ amount 0.1
+ addUserKnob {26 ""}
+ addUserKnob {26 credit l "" +STARTLINE T "Colour Smear v2.1 by Richard Frazer - www.richardfrazer.com"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x7171c600
+  label "Restore detail"
+  note_font Verdana
+  note_font_size 42
+  xpos -833
+  ypos 14
+  bdwidth 546
+  bdheight 976
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode18
+  tile_color 0x7171c600
+  label "unpremult / blur trick"
+  note_font Verdana
+  note_font_size 42
+  xpos 653
+  ypos 25
+  bdwidth 856
+  bdheight 999
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode19
+  tile_color 0x7171c600
+  label "mask to smear back over shot"
+  note_font Verdana
+  note_font_size 42
+  xpos -239
+  ypos 27
+  bdwidth 649
+  bdheight 976
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode20
+  tile_color 0x7171c600
+  label "colour smear\n<-- in here goes plate with alpha (unpremulted) "
+  note_font Verdana
+  note_font_size 42
+  xpos -1098
+  ypos -281
+  bdwidth 2603
+  bdheight 277
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote20
+  label "bigger blur will smear\ncolour out further\nbut may cause\nbleed\nin areas of high contrast"
+  note_font Verdana
+  note_font_size 31
+  xpos 1122
+  ypos 405
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote23
+  label "xor way \nisolates areas\nwith highest\namounts of blur\n(i.e\nmotion blur)"
+  note_font Verdana
+  note_font_size 31
+  xpos -338
+  ypos 288
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote25
+  label "tweak the \ndilate and \nblur to make\nnice"
+  note_font Verdana
+  xpos -1
+  ypos 581
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote24
+  label "choose which works best"
+  note_font Verdana
+  note_font_size 31
+  xpos -115
+  ypos 774
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote22
+  label "this way \nsmears evenly\naround all\nedges"
+  note_font Verdana
+  note_font_size 31
+  xpos 211
+  ypos 235
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote27
+  label "shuffle original alpha back in"
+  note_font Verdana
+  note_font_size 31
+  xpos -1369
+  ypos 1645
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote26
+  label "smear back over edges"
+  note_font Verdana
+  note_font_size 31
+  xpos -1057
+  ypos 1295
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote19
+  label "choke back alpha first\nso that no background\ncolour is bought in"
+  note_font Verdana
+  note_font_size 31
+  xpos 1131
+  ypos 229
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "mask input - \nareas with solid matte\nwill be excluded from \nbeing effected"
+  note_font Verdana
+  note_font_size 31
+  xpos 1716
+  ypos -149
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote21
+  label "just to soften areas\nwith hard edges"
+  note_font Verdana
+  note_font_size 31
+  xpos 682
+  ypos 670
+ }
+ Input {
+  inputs 0
+  name IMG
+  label "Your main image input"
+  note_font Verdana
+  xpos -1238
+  ypos -298
+ }
+set N2bbbcc00 [stack 0]
+ Dot {
+  name Dot29
+  note_font Verdana
+  xpos -1204
+  ypos -109
+ }
+set N2bbbc800 [stack 0]
+ Dot {
+  name Dot7
+  xpos -1204
+  ypos 1270
+ }
+ Dot {
+  name Dot18
+  note_font Verdana
+  xpos -1204
+  ypos 1564
+ }
+set N2bbbc000 [stack 0]
+push $N2bbbc800
+ Unpremult {
+  name Unpremult2
+  note_font Verdana
+  xpos -1073
+  ypos -108
+ }
+push $N2bbbc800
+ Switch {
+  inputs 2
+  which {{"\[value parent.already_premulted]" i}}
+  name Switch1
+  note_font Verdana
+  xpos -1073
+  ypos -56
+ }
+ Dot {
+  name Dot30
+  note_font Verdana
+  xpos -901
+  ypos -52
+ }
+set N2bbd3400 [stack 0]
+ Dot {
+  name Dot5
+  xpos -562
+  ypos -52
+ }
+set N2bbd3000 [stack 0]
+ Dot {
+  name Dot17
+  note_font Verdana
+  xpos 42
+  ypos -52
+ }
+set N2bbd2c00 [stack 0]
+ Dot {
+  name Dot38
+  note_font Verdana
+  xpos 42
+  ypos 122
+ }
+set N2bbd2800 [stack 0]
+ Dot {
+  name Dot145
+  note_font Verdana
+  xpos -39
+  ypos 122
+ }
+set N2bbd2400 [stack 0]
+ Dot {
+  name Dot138
+  note_font Verdana
+  xpos -92
+  ypos 185
+ }
+push $N2bbd2400
+ Dot {
+  name Dot39
+  note_font Verdana
+  xpos 4
+  ypos 193
+ }
+ Merge2 {
+  inputs 2
+  operation xor
+  name Merge14
+  note_font Verdana
+  xpos -71
+  ypos 243
+ }
+ Dilate {
+  channels alpha
+  size {{"\[value parent.dilate_mask]" i}}
+  name Dilate2
+  note_font Verdana
+  xpos -71
+  ypos 319
+ }
+ Grade {
+  channels alpha
+  gamma 2
+  black_clamp false
+  name Grade16
+  note_font Verdana
+  xpos -71
+  ypos 394
+ }
+ Clamp {
+  name Clamp2
+  note_font Verdana
+  xpos -71
+  ypos 432
+ }
+ Blur {
+  size {{"\[value parent.blur_mask]" i}}
+  name Blur13
+  note_font Verdana
+  xpos -71
+  ypos 516
+ }
+ Dot {
+  name Dot156
+  note_font Verdana
+  xpos -37
+  ypos 659
+ }
+push $N2bbd2800
+ Dot {
+  name Dot20
+  note_font Verdana
+  xpos 119
+  ypos 122
+ }
+ Dilate {
+  channels alpha
+  size {{"-\[value parent.dilate_mask]" i}}
+  name Dilate4
+  note_font Verdana
+  xpos 85
+  ypos 271
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.022
+  whitepoint 0.69
+  gamma 0.94
+  black_clamp false
+  name Grade18
+  note_font Verdana
+  xpos 85
+  ypos 344
+ }
+ Invert {
+  channels alpha
+  name Invert4
+  note_font Verdana
+  xpos 85
+  ypos 392
+ }
+ Clamp {
+  name Clamp8
+  note_font Verdana
+  xpos 85
+  ypos 430
+ }
+ Blur {
+  size {{"\[value parent.blur_mask]" i}}
+  name Blur17
+  note_font Verdana
+  xpos 85
+  ypos 510
+ }
+ Dot {
+  name Dot147
+  note_font Verdana
+  xpos 119
+  ypos 670
+ }
+ Switch {
+  inputs 2
+  which {{"\[value parent.xor_edge_detect]" i}}
+  name Switch3
+  note_font Verdana
+  xpos 7
+  ypos 747
+ }
+push $N2bbd2c00
+ Dot {
+  name Dot71
+  note_font Verdana
+  xpos 1045
+  ypos -52
+ }
+ Dot {
+  name Dot1
+  note_font Verdana
+  xpos 1045
+  ypos 100
+ }
+set Nbe1e7c00 [stack 0]
+push $Nbe1e7c00
+ Input {
+  inputs 0
+  name OMIT
+  label "The area to omit from being affected"
+  note_font Verdana
+  xpos 1582
+  ypos -260
+  number 1
+ }
+ Dot {
+  name Dot2
+  note_font Verdana
+  xpos 1616
+  ypos 50
+ }
+set Nbe1e7400 [stack 0]
+ Merge2 {
+  inputs 2
+  operation out
+  name Merge1
+  note_font Verdana
+  xpos 1088
+  ypos 147
+ }
+ Switch {
+  inputs 2
+  name Switch4
+  note_font Verdana
+  xpos 1011
+  ypos 209
+ }
+ FilterErode {
+  channels alpha
+  size {{"\[value parent.pre_choke]" i}}
+  name FilterErode2
+  note_font Verdana
+  xpos 1011
+  ypos 280
+ }
+ Grade {
+  channels alpha
+  blackpoint {{"\[value parent.pre_contrast]"}}
+  whitepoint {{"1-\[value parent.pre_contrast]"}}
+  black_clamp false
+  name Grade19
+  note_font Verdana
+  xpos 1011
+  ypos 341
+ }
+ Clamp {
+  channels alpha
+  name Clamp4
+  note_font Verdana
+  xpos 1011
+  ypos 390
+ }
+ Premult {
+  name Premult3
+  note_font Verdana
+  xpos 1011
+  ypos 471
+ }
+ Blur {
+  size {{"\[value parent.pre_blur]" i}}
+  name Blur8
+  note_font Verdana
+  xpos 1011
+  ypos 560
+ }
+ Unpremult {
+  name Unpremult1
+  note_font Verdana
+  xpos 1011
+  ypos 643
+ }
+ Blur {
+  size {{"\[value parent.post_blur]" i}}
+  name Blur20
+  note_font Verdana
+  xpos 1011
+  ypos 704
+ }
+ Dot {
+  name Dot61
+  note_font Verdana
+  xpos 1045
+  ypos 795
+ }
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy1
+  note_font Verdana
+  xpos 7
+  ypos 901
+ }
+ Premult {
+  name Premult4
+  note_font Verdana
+  xpos 7
+  ypos 1045
+ }
+ Dot {
+  name Dot4
+  note_font Verdana
+  xpos 41
+  ypos 1122
+ }
+set Nd0481c00 [stack 0]
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge5
+  xpos -498
+  ypos 1611
+ }
+push $N2bbbc000
+push $N2bbd3000
+ Dot {
+  name Dot6
+  xpos -562
+  ypos 162
+ }
+set Nd0481400 [stack 0]
+push $Nd0481400
+ Blur {
+  size {{"\[value parent.sharpness]" i}}
+  name Blur1
+  xpos -728
+  ypos 211
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge3
+  xpos -596
+  ypos 283
+ }
+ ColorCorrect {
+  saturation 0
+  name ColorCorrect1
+  xpos -596
+  ypos 375
+ }
+ Dot {
+  name Dot8
+  xpos -554
+  ypos 1268
+ }
+push $Nd0481c00
+push $Nd0481c00
+push $Nbe1e7400
+ Dot {
+  name Dot3
+  note_font Verdana
+  xpos 1616
+  ypos 967
+ }
+ Merge2 {
+  inputs 2
+  operation out
+  name Merge2
+  note_font Verdana
+  xpos 76
+  ypos 1192
+ }
+ Switch {
+  inputs 2
+  name Switch5
+  note_font Verdana
+  xpos 7
+  ypos 1253
+ }
+ Unpremult {
+  name Unpremult3
+  xpos -471
+  ypos 1330
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  mix {{"\[value parent.amount]"}}
+  name Merge4
+  xpos -588
+  ypos 1352
+ }
+ Premult {
+  name Premult1
+  xpos -588
+  ypos 1393
+ }
+push $N2bbd3400
+ Merge2 {
+  inputs 2
+  name Merge13
+  note_font Verdana
+  xpos -935
+  ypos 1393
+ }
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy2
+  note_font Verdana
+  xpos -1238
+  ypos 1725
+ }
+set Nd04aa400 [stack 0]
+ Premult {
+  name Premult10
+  note_font Verdana
+  xpos -1130
+  ypos 1789
+ }
+push $Nd04aa400
+ Switch {
+  inputs 2
+  which {{"\[value parent.output_premulted]" i}}
+  name Switch2
+  note_font Verdana
+  xpos -1238
+  ypos 1878
+ }
+ Dot {
+  name Dot9
+  xpos -1204
+  ypos 1996
+ }
+set N3a473800 [stack 0]
+add_layer {smearmask smearmask.a}
+ ShuffleCopy {
+  inputs 2
+  alpha alpha2
+  black alpha
+  out2 smearmask
+  name ShuffleCopy3
+  note_font Verdana
+  xpos -1140
+  ypos 2066
+ }
+push $N3a473800
+ Switch {
+  inputs 2
+  which {{"\[value parent.outputmask]"}}
+  name Switch6
+  note_font Verdana
+  selected true
+  xpos -1238
+  ypos 2141
+ }
+set N3a473000 [stack 0]
+ Dot {
+  name Dot19
+  note_font Verdana
+  xpos -1204
+  ypos 2343
+ }
+ Output {
+  name Output1
+  note_font Verdana
+  xpos -1238
+  ypos 2422
+ }
+push $N3a473800
+push 0
+push 0
+push 0
+push 0
+push $N2bbbcc00
+push $N3a473000
+ Viewer {
+  inputs 7
+  frame 1059
+  frame_range 1001-1368
+  fps 25
+  center_fstop 0
+  input_process false
+  name Viewer1
+  note_font Verdana
+  xpos -2639
+  ypos 1011
+ }
+end_group
+Dot {
+ name Dot279
+ selected true
+ xpos 11974
+ ypos 16963
+}
+push $N8b2dac00
+Premult {
+ name Premult8
+ selected true
+ xpos 11801
+ ypos 16870
+}
+Switch {
+ inputs 2
+ which 1
+ name Switch8
+ selected true
+ xpos 11801
+ ypos 16959
+ disable true
+}
+Dot {
+ name Dot280
+ selected true
+ xpos 11835
+ ypos 17232
+}
+Merge2 {
+ inputs 2
+ operation under
+ name Merge25
+ selected true
+ xpos 13974
+ ypos 17228
+}
+Dot {
+ name Dot281
+ selected true
+ xpos 14010
+ ypos 17434
+}
+set Nc0a89000 [stack 0]
+Dot {
+ name Dot282
+ selected true
+ xpos 14229
+ ypos 17434
+}
+Grain2 {
+ name Grain2_1
+ label "Kodak 5248"
+ selected true
+ xpos 14195
+ ypos 17510
+ black {0 0 0}
+ minimum {0 0 0}
+ maskgrain false
+}
+push $N9b032000
+Dot {
+ name Dot287
+ selected true
+ xpos 11290
+ ypos 14074
+}
+Group {
+ name DespillMadness3
+ note_font "Bitstream Vera Sans"
+ selected true
+ xpos 11256
+ ypos 14162
+ disable true
+ mapsize {0.15 0.15}
+ addUserKnob {20 DespillMadness l "Despill Settings"}
+ addUserKnob {41 screenType l "screen type" T GizmoControl.screenType}
+ addUserKnob {41 algorithm l "despill algorithm" T GizmoControl.algorithm}
+ addUserKnob {41 LimitPercentage l "fine tune" T RedLimitsGreen.LimitPercentage}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_2 l "" +STARTLINE T "spill area correction"}
+ addUserKnob {26 spacer l " " T " "}
+ addUserKnob {6 sourceLuma l "restore source luminance" t "Restores luminance of original image." +STARTLINE}
+ sourceLuma true
+ addUserKnob {41 saturation T CC_SpillMap.saturation}
+ addUserKnob {41 gamma T CC_SpillMap.gamma}
+ addUserKnob {41 offset T CC_SpillMap.offset}
+ addUserKnob {26 ""}
+ addUserKnob {41 spillMatteOut l "output spill matte in alpha" T GizmoControl.spillMatteOut}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannel l mask T KeymixMask.maskChannel}
+ addUserKnob {6 invmsk l invert -STARTLINE}
+ addUserKnob {41 which l mix T mix.which}
+}
+ Input {
+  inputs 0
+  name img
+  xpos 262
+  ypos -342
+ }
+ Dot {
+  name Dot6
+  xpos 296
+  ypos -186
+ }
+set N8e32a800 [stack 0]
+ Dot {
+  name Dot2
+  xpos 296
+  ypos -71
+ }
+set N8e32a400 [stack 0]
+ Dot {
+  name Dot3
+  xpos 626
+  ypos -71
+ }
+set N8e32a000 [stack 0]
+ Expression {
+  expr2 b>g*LimitPercentage?g*LimitPercentage:b
+  expr3 b-g*LimitPercentage
+  name GreenLimitsBlue1
+  xpos 728
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $N8e32a000
+ Expression {
+  expr2 b>r*LimitPercentage?r*LimitPercentage:b
+  expr3 b-r*LimitPercentage
+  name RedLimitsBlue
+  xpos 592
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $N8e32a000
+ Expression {
+  expr2 b>(g+2*r)/2*LimitPercentage?(g+2*r)/2*LimitPercentage:b
+  expr3 b-(2*r+g)*LimitPercentage/2
+  name DoubleRedAve2
+  xpos 1125
+  ypos 43
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $N8e32a000
+ Expression {
+  expr2 b>(2*g+r)/2*LimitPercentage?(2*g+r)/2*LimitPercentage:b
+  expr3 b-(r+2*g)*LimitPercentage/2
+  name DoubleGreenAve
+  xpos 998
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage}}
+ }
+push $N8e32a000
+ Expression {
+  expr2 b>(g+r)/2*LimitPercentage?(g+r)/2*LimitPercentage:b
+  expr3 b-(r+g)*LimitPercentage/2
+  name RedAndGreenLimitBlue
+  xpos 862
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+ Switch {
+  inputs 5
+  which {{GizmoControl.algorithm i}}
+  name SwitchBlue
+  xpos 728
+  ypos 190
+ }
+ Dot {
+  name Dot5
+  xpos 762
+  ypos 370
+ }
+push $N8e32a400
+ Dot {
+  name Dot1
+  xpos 164
+  ypos -71
+ }
+set Nbd5e0000 [stack 0]
+ Expression {
+  expr1 g>b*LimitPercentage?b*LimitPercentage:g
+  expr3 g-b*LimitPercentage
+  name BlueLimitsGreen
+  xpos -15
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $Nbd5e0000
+ Expression {
+  expr1 g>r*LimitPercentage?r*LimitPercentage:g
+  expr3 g-r*LimitPercentage
+  name RedLimitsGreen
+  xpos -160
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage 1.101
+ }
+push $Nbd5e0000
+ Expression {
+  expr1 g>(b+2*r)/3*LimitPercentage?(b+2*r)/3*LimitPercentage:g
+  expr3 g-(r+b)*LimitPercentage/2
+  name DoubleRedAve
+  xpos 370
+  ypos 42
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $Nbd5e0000
+ Expression {
+  expr1 g>(2*b+r)/3*LimitPercentage?(2*b+r)/3*LimitPercentage:g
+  expr3 g-(r+b)*LimitPercentage/2
+  name DoubleBlueAve
+  xpos 257
+  ypos 42
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+push $Nbd5e0000
+ Expression {
+  expr1 g>(b+r)/2*LimitPercentage?(b+r)/2*LimitPercentage:g
+  expr3 g-(r+b)*LimitPercentage/2
+  name RedAveBlueLimitsGreen
+  xpos 130
+  ypos 44
+  addUserKnob {20 User}
+  addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
+  LimitPercentage {{RedLimitsGreen.LimitPercentage i}}
+ }
+ Switch {
+  inputs 5
+  which {{GizmoControl.algorithm i}}
+  name SwitchGreen
+  xpos -15
+  ypos 199
+ }
+ Dot {
+  name Dot4
+  xpos 19
+  ypos 370
+ }
+ Switch {
+  inputs 2
+  which {{GizmoControl.screenType i}}
+  name SwitchMain
+  xpos 257
+  ypos 366
+ }
+ Clamp {
+  channels alpha
+  name Clamp1
+  xpos 257
+  ypos 408
+ }
+ ColorCorrect {
+  maskChannelInput rgba.alpha
+  name CC_SpillMap
+  note_font Verdana
+  xpos 257
+  ypos 468
+ }
+set Nba1c5800 [stack 0]
+ Dot {
+  name Dot9
+  xpos 440
+  ypos 478
+ }
+ Dot {
+  name Dot10
+  xpos 440
+  ypos 1389
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -696
+  ypos -348
+  number 1
+ }
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue none}
+  expr0 0
+  channel1 {-rgba.red -rgba.green -rgba.blue none}
+  expr1 0
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  expr2 0
+  channel3 {rgba.alpha none none rgba.alpha}
+  expr3 a==0?0:a
+  name AlphaError1
+  label "To avid Gizmo being in state of\nerror without something plugged in input."
+  xpos -696
+  ypos 861
+ }
+set Nba1c4800 [stack 0]
+push $Nba1c4800
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name CopyMask
+  xpos -296
+  ypos 867
+ }
+ Invert {
+  name Invert1
+  xpos -296
+  ypos 943
+  disable {{parent.invmsk i}}
+ }
+push $N8e32a800
+ Dot {
+  name Dot7
+  xpos -345
+  ypos -186
+ }
+ Dot {
+  name Dot8
+  xpos -345
+  ypos 551
+ }
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue none}
+  expr0 0
+  channel1 {-rgba.red -rgba.green -rgba.blue none}
+  expr1 0
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  expr2 0
+  channel3 {rgba.alpha none none rgba.alpha}
+  expr3 a==0?0:a
+  name AlphaError
+  label "To avid Gizmo being in state of\nerror without something plugged in input."
+  xpos -27
+  ypos 534
+ }
+set N3a1e9400 [stack 0]
+ Dot {
+  name Dot11
+  xpos -113
+  ypos 614
+ }
+ Dot {
+  name Dot12
+  xpos -113
+  ypos 818
+ }
+set N3a1e8c00 [stack 0]
+push $N3a1e9400
+push $N3a1e9400
+push $Nba1c5800
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  from3 rgba.alpha
+  to3 rgba.alpha
+  name CopyAlpha
+  xpos 257
+  ypos 534
+ }
+set N3a1e8800 [stack 0]
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge3
+  xpos -27
+  ypos 672
+ }
+ Clamp {
+  name Clamp2
+  xpos -27
+  ypos 698
+ }
+ Saturation {
+  saturation 0
+  name Saturation2
+  xpos -27
+  ypos 736
+ }
+push $N3a1e8800
+ Merge2 {
+  inputs 2
+  operation plus
+  name RestoreLuma
+  xpos 257
+  ypos 736
+  disable {{!parent.sourceLuma i}}
+ }
+ Keymix {
+  inputs 3
+  maskChannel -rgba.alpha
+  name KeymixMask
+  xpos 257
+  ypos 943
+ }
+push $N3a1e8c00
+ Dot {
+  name Dot13
+  xpos -113
+  ypos 1087
+ }
+ Dissolve {
+  inputs 2
+  which 1
+  name mix
+  xpos 257
+  ypos 1077
+ }
+ Switch {
+  inputs 2
+  which {{GizmoControl.spillMatteOut i}}
+  name SwitchSpillMap
+  xpos 257
+  ypos 1385
+ }
+ Output {
+  name Output1
+  xpos 257
+  ypos 1485
+ }
+ NoOp {
+  inputs 0
+  name GizmoControl
+  selected true
+  xpos 875
+  ypos 414
+  addUserKnob {20 User}
+  addUserKnob {26 version l v1.0}
+  addUserKnob {4 screenType l "screen type" M {green blue}}
+  addUserKnob {4 algorithm l "despill algorithm" M {average "double green/blue average" "double red average" "red limit" "green/blue limit" ""}}
+  algorithm "double green/blue average"
+  addUserKnob {6 spillMatteOut l "output spill matte in alpha" +STARTLINE}
+  spillMatteOut true
+ }
+end_group
+Dot {
+ name Dot288
+ selected true
+ xpos 11069
+ ypos 14165
+}
+Grade {
+ channels alpha
+ whitepoint 0.288
+ gamma 0.476
+ name Grade37
+ selected true
+ xpos 11026
+ ypos 16573
+ disable true
+}
+Dot {
+ name Dot289
+ selected true
+ xpos 11060
+ ypos 16670
+}
+push $N26f01000
+Dot {
+ name Dot290
+ selected true
+ xpos 10652
+ ypos 12897
+}
+Dot {
+ name Dot291
+ selected true
+ xpos 10643
+ ypos 16453
+}
+push $Ne52d000
+Dot {
+ name Dot292
+ selected true
+ xpos 10864
+ ypos 13631
+}
+Merge2 {
+ inputs 2
+ operation minus
+ name Merge26
+ selected true
+ xpos 10830
+ ypos 16449
+}
+HueCorrect {
+ inputs 1+1
+ hue {sat {}
+   lum {}
+   red {}
+   green {}
+   blue {}
+   r_sup {}
+   g_sup {curve 1 1 1 0.1243783236 1 1 1}
+   b_sup {}
+   sat_thrsh {}}
+ mix 0.127
+ name HueCorrect2
+ selected true
+ xpos 10830
+ ypos 16666
+ disable true
+}
+Dot {
+ name Dot296
+ selected true
+ xpos 10864
+ ypos 17516
+}
+push $Nc0a89000
+Merge2 {
+ inputs 2
+ operation plus
+ name Merge32
+ label Grain
+ selected true
+ xpos 13976
+ ypos 17506
+ disable {{parent.Switch7.disable}}
+}
+Dot {
+ name Dot297
+ selected true
+ xpos 14010
+ ypos 17613
+}
+set Nbd7a2000 [stack 0]
+Keymix {
+ inputs 3
+ channels rgb
+ name Keymix8
+ selected true
+ xpos 14195
+ ypos 17609
+}
+Dot {
+ name Dot298
+ selected true
+ xpos 14229
+ ypos 17748
+}
+push $Nbd7a2000
+Switch {
+ inputs 2
+ which 1
+ name Switch12
+ label "Regrain Switch"
+ selected true
+ xpos 13976
+ ypos 17738
+ disable true
+}
+NoOp {
+ name OUTPUT1
+ label "\n\n\n\n\n\n\n\n\n\n\n\noutput\n\n"
+ selected true
+ xpos 13976
+ ypos 17929
+}
+set Nc84b9000 [stack 0]
+Dot {
+ name Dot299
+ selected true
+ xpos 14010
+ ypos 18357
+}
+push $Nc84b9000
+Dot {
+ name Dot300
+ selected true
+ xpos 14141
+ ypos 18017
+}
+set Nc84b8800 [stack 0]
+Dot {
+ name Dot301
+ selected true
+ xpos 14141
+ ypos 18077
+}
+set Nc84b8400 [stack 0]
+Blur {
+ channels rgb
+ size 50
+ name CheckColor1
+ selected true
+ xpos 14316
+ ypos 18073
+}
+push $Nc84b8400
+Dot {
+ name Dot302
+ selected true
+ xpos 14141
+ ypos 18138
+}
+Mirror2 {
+ flop true
+ name CheckMirror1
+ selected true
+ xpos 14316
+ ypos 18133
+}
+push $Nc84b8800
+Saturation {
+ saturation 2
+ mode Average
+ name CheckSaturation1
+ selected true
+ xpos 14316
+ ypos 18013
+}

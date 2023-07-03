@@ -1,0 +1,123 @@
+#! C:/Program Files/Nuke11.3v1/nuke-11.3.1.dll -nx
+version 10.5 v1
+Gizmo {
+ inputs 2
+ tile_color 0x55bfffff
+ label v3.0
+ addUserKnob {20 paint l Paint}
+ addUserKnob {26 directions1 l <b>Directions:</b> T "Use <b><i>Smear Tool</i></b> for painting distortion.<br>Recommended paint opacity - <b>0.1</b>."}
+ addUserKnob {26 ""}
+ addUserKnob {22 setup l Setup T "import os, math, nuke, nukescripts\n\n# Current Liquify Node\nselectedName = str(nuke.thisNode().name())\nliquify = nuke.toNode(selectedName)\n\n# Get Liquify Number\nlNum = selectedName\[-1:]\n\n# Create required Paint Nodes\nwith nuke.root():\n  nuke.nodes.Reformat(name = 'ReformatLiquify' + lNum, label = 'Root Format')\n  nuke.nodes.Expression(name = 'ExpressionLiquify' + lNum, label = 'Generate UV')\n  nuke.nodes.RotoPaint(name = 'RotoPaintLiquify' + lNum, label = 'Liquify Strokes')\n  \n  \n# Format Reformat\nreformatN = nuke.toNode('ReformatLiquify' + lNum)\n\nxPos = liquify.xpos() + liquify.screenWidth()/2\nyPos = liquify.ypos() + liquify.screenHeight()/2\nfinX = int(math.floor(xPos - reformatN.screenWidth()/2))\nfinY = int(math.floor(yPos - reformatN.screenHeight()/2))\nreformatN.setXpos(finX + 220)\nreformatN.setYpos(finY - 96 - 6)\n\n# Set root format\nreformatN\['type'].setValue(1)\nreformatN\['box_fixed'].setValue(True)\nreformatN\['box_width'].setExpression('root.width')\nreformatN\['box_height'].setExpression('root.height')\n\n\n# Format Expression\nexpressionN = nuke.toNode('ExpressionLiquify' + lNum)\n\nxPos = liquify.xpos() + liquify.screenWidth()/2\nyPos = liquify.ypos() + liquify.screenHeight()/2\nfinX = int(math.floor(xPos - expressionN.screenWidth()/2))\nfinY = int(math.floor(yPos - expressionN.screenHeight()/2))\nexpressionN.setXpos(finX + 220)\nexpressionN.setYpos(finY - 48 - 6)\nexpressionN.setInput(0, reformatN)\n\n# Set expression values\nexpressionN\['expr0'].setValue('x/width')\nexpressionN\['expr1'].setValue('y/height')\n\n# Format RotoPaint\nrotopaintN = nuke.toNode('RotoPaintLiquify' + lNum)\n\nxPos = liquify.xpos() + liquify.screenWidth()/2\nyPos = liquify.ypos() + liquify.screenHeight()/2\nfinX = int(math.floor(xPos - rotopaintN.screenWidth()/2))\nfinY = int(math.floor(yPos - rotopaintN.screenHeight()/2))\nrotopaintN.setXpos(finX + 220)\nrotopaintN.setYpos(finY - 6)\nrotopaintN.setInput(0, expressionN)\n\n# Parent roto root transforms\nliquify\['selected'].setValue(False)\nrotopaintN\['selected'].setValue(True)\nrotopaintN\['translate'].setExpression('parent.' + selectedName + '.translate')\nrotopaintN\['rotate'].setExpression('parent.' + selectedName + '.rotate')\nrotopaintN\['scale'].setExpression('parent.' + selectedName + '.scale')\nrotopaintN\['center'].setExpression('parent.' + selectedName + '.center')\nliquify\['selected'].setValue(True)\nrotopaintN\['selected'].setValue(False)\n\n\n\n# Connect Liquify Paint Input\nliquify.setInput(1, rotopaintN)\n\n" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 copyright1 l "" +STARTLINE T "<b>T_Liquify v3.0</b> - Petar Tsonev (c)"}
+ addUserKnob {20 controls l Controls}
+ addUserKnob {26 dcontrols l "<b>Distortion Controls</b>"}
+ addUserKnob {7 distortion l "Distortion Amount" R 0 100}
+ distortion 5
+ addUserKnob {7 smooth l Smooth R 0 100}
+ addUserKnob {7 motionblur l "Motion Blur" t "\t\t\t\t\t" R 0 10}
+ motionblur 2
+ addUserKnob {6 mb_on l on -STARTLINE}
+ mb_on true
+ addUserKnob {26 text l Tracking}
+ addUserKnob {26 ""}
+ addUserKnob {26 directions2 l <b>Directions:</b> T "To link the first rotopaint track, select the Root folder<br>and then click <b><i>Link Track</i></b>. Any following roto nodes<br>just click <b><i>Link Track</i></b> and enter the roto name."}
+ addUserKnob {26 ""}
+ addUserKnob {22 linkTrack l "Link Track" T "import os, math, nuke, nukescripts\n\n# Current Liquify Node\nselectedName = str(nuke.thisNode().name())\nliquify = nuke.toNode(selectedName)\n\n# Get Liquify Number\nlNum = selectedName\[-1:]\n\nlinkNode = nuke.getInput('Node Name:', 'RotoPaintLiquify' + lNum)\n\nif linkNode:\n  rotopaintN = nuke.toNode(linkNode)\n  # Parent roto root transforms\n  rotopaintN\['selected'].setValue(True)\n  rotopaintN\['translate'].setExpression('parent.' + selectedName + '.translate')\n  rotopaintN\['rotate'].setExpression('parent.' + selectedName + '.rotate')\n  rotopaintN\['scale'].setExpression('parent.' + selectedName + '.scale')\n  rotopaintN\['center'].setExpression('parent.' + selectedName + '.center')" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {12 translate}
+ addUserKnob {7 rotate R -180 180}
+ addUserKnob {14 scale R 0 100}
+ scale 1
+ addUserKnob {12 center}
+ center {960 540}
+ addUserKnob {26 ""}
+ addUserKnob {26 copyright2 l "" +STARTLINE T "<b>T_Liquify v3.0</b> - Petar Tsonev (c)"}
+}
+ Input {
+  inputs 0
+  name paint
+  xpos 180
+  ypos -154
+  number 1
+ }
+ Expression {
+  expr0 -x+r*width-0.5
+  expr1 -y+g*height-0.5
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  channel3 {none none none -rgba.alpha}
+  name UV_to_Vectors
+  label "Generate Vectors"
+  xpos 180
+  ypos -64
+ }
+ Expression {
+  expr0 r+.5
+  expr1 g+.5
+  name Expression2
+  label "Normalize Values"
+  xpos 180
+  ypos -16
+ }
+ Blur {
+  size {{parent.smooth}}
+  name Blur1
+  xpos 180
+  ypos 32
+ }
+ Input {
+  inputs 0
+  name source
+  xpos 290
+  ypos -346
+ }
+ Shuffle {
+  name Shuffle1
+  xpos 290
+  ypos -58
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  out forward
+  name ShuffleCopy1
+  xpos 290
+  ypos 38
+ }
+ IDistort {
+  uv forward
+  uv_scale {{parent.distortion}}
+  name IDistort1
+  xpos 290
+  ypos 128
+ }
+ VectorBlur2 {
+  uv forward
+  blur_uv linear
+  scale {{parent.motionblur}}
+  motion_falloff 0.5
+  name VectorBlur1
+  selected true
+  xpos 290
+  ypos 176
+  disable {{"parent.mb_on == 1 ? 0 : 1"}}
+ }
+ Crop {
+  box {0 0 {root.width} {root.height}}
+  name Crop1
+  xpos 290
+  ypos 230
+ }
+ Output {
+  name Output1
+  xpos 290
+  ypos 332
+ }
+ Viewer {
+  frame_range 1-100
+  name Viewer1
+  xpos -95
+  ypos 470
+ }
+end_group

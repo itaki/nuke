@@ -1,0 +1,371 @@
+Gizmo {
+ inputs 2
+ knobChanged "\nn = nuke.thisNode()\nk = nuke.thisKnob()\n\n\nif(k.name() == 'effectOnly'):\n    n\['repeatAlpha'].setEnabled(n\['effectOnly'].value())\n\nif(k.name() == 'pingpong'):\n    n\['displayPong'].setEnabled(n\['pingpong'].value())\n"
+ addUserKnob {20 PixelRepeatTab l PixelRepeat}
+ addUserKnob {7 rotate t "rotate line direction" R -180 180}
+ addUserKnob {7 threshold t "value to start stretching at"}
+ threshold 0.8
+ addUserKnob {3 length t "length of stretching lines (0 is unlimited)"}
+ addUserKnob {3 repeats t "pixel count to repeat\n\nfor best quality repeating values, use a single matte channel and disable override"}
+ repeats 1
+ addUserKnob {6 multipleStreaks l "multiple streaks" t "allow multiple streaks on the same line" -STARTLINE}
+ multipleStreaks true
+ addUserKnob {6 pingpong t "go back and forth over repeating pixels" -STARTLINE}
+ addUserKnob {6 displayPong l "output pingpong matte" t "show a matte of the repeating values" -STARTLINE +DISABLED}
+ addUserKnob {3 repeatsOffset l "repeats offset" t "offset the repeated pixels"}
+ addUserKnob {26 empty0 l "" +STARTLINE T " "}
+ addUserKnob {6 useMatte l "use matte input instead of img" t "use matte input instead of img input for threshold" +STARTLINE}
+ addUserKnob {41 from0 l "use single matte channel" t "use single channel for matte, instead of rgba separately" T Copy2.from0}
+ addUserKnob {26 empty1 l "" +STARTLINE T " "}
+ addUserKnob {6 override t "restart streak if the current pixel is brighter" +STARTLINE}
+ addUserKnob {6 effectOnly l "effect only" t "do not show original plate underneath" +STARTLINE}
+ addUserKnob {6 repeatAlpha l "also repeat alpha" t "if disabled, the alpha will correspond with where the rgb has been repeated, making the resulting image premultiplied" -STARTLINE +DISABLED}
+ addUserKnob {26 empty2 l "" +STARTLINE T " "}
+ addUserKnob {4 rotateFilter l filter t "rotation filter" M {Impulse Cubic Keys Simon Riffman Mitchell Parzen Notch Lanczos4 Lanczos6 Sinc4}}
+ rotateFilter Cubic
+ addUserKnob {26 ""}
+ addUserKnob {26 Me l "" +STARTLINE T "Max van Leeuwen"}
+ addUserKnob {26 Version l "" +STARTLINE T "PixelRepeat 1.0"}
+ addUserKnob {26 Website l "" +STARTLINE T "<a href=\"https://www.maxvanleeuwen.com/pixelrepeat\"><font color=\"#b2b2b2\">maxvanleeuwen.com/pixelrepeat</font></a>"}
+ addUserKnob {20 GPUtab l GPU}
+ addUserKnob {6 useGPU l "Use gpu if available" +STARTLINE}
+ useGPU true
+ addUserKnob {6 vectorizeCPU l "Vectorize on CPU" +STARTLINE}
+ vectorizeCPU true
+ addUserKnob {7 PercentageGPU l "Percentage of GPU memory to use" R 0 100}
+ PercentageGPU 50
+ addUserKnob {7 percentageImageHeight l "Percentage of image height per tile" R 0 100}
+ percentageImageHeight 10
+}
+ Constant {
+  inputs 0
+  color {0 0 0 0}
+  name Constant1
+  xpos 189
+  ypos -1625
+ }
+ Dot {
+  name Dot13
+  note_font_size 30
+  xpos 223
+  ypos -1496
+ }
+ Input {
+  inputs 0
+  name img
+  xpos 362
+  ypos -1814
+ }
+ Switch {
+  inputs 2
+  which {{bbox.w<2}}
+  name Switch_onNoInp
+  xpos 362
+  ypos -1500
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove1
+  xpos 362
+  ypos -1275
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  crop false
+  name Crop3
+  xpos 362
+  ypos -1249
+ }
+ Dot {
+  name Dot6
+  note_font_size 30
+  xpos 396
+  ypos -1057
+ }
+set N1398fc00 [stack 0]
+ Dot {
+  name Dot8
+  note_font_size 30
+  xpos 396
+  ypos -824
+ }
+set N1398f800 [stack 0]
+ Dot {
+  name Dot1
+  note_font_size 30
+  xpos 396
+  ypos -456
+ }
+set N1398f400 [stack 0]
+ Dot {
+  name Dot2
+  note_font_size 30
+  xpos 147
+  ypos -456
+ }
+ Dot {
+  name Dot4
+  note_font_size 30
+  xpos 147
+  ypos 1185
+ }
+push $N1398f800
+ Input {
+  inputs 0
+  name matte
+  xpos 962
+  ypos -1809
+  number 1
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove2
+  xpos 962
+  ypos -1273
+ }
+ Crop {
+  box {0 0 {parent.Crop3.box.r} {parent.Crop3.box.t}}
+  crop false
+  name Crop4
+  xpos 962
+  ypos -1247
+ }
+push $N1398fc00
+ Switch {
+  inputs 2
+  which {{parent.useMatte}}
+  name Switch1
+  xpos 962
+  ypos -1061
+ }
+ Dot {
+  name Dot11
+  note_font_size 30
+  xpos 996
+  ypos -824
+ }
+set N139ad800 [stack 0]
+ Switch {
+  inputs 2
+  which {{!parent.useMatte}}
+  name Switch2
+  xpos 659
+  ypos -828
+ }
+push 0
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.alpha
+  name Copy2
+  xpos 659
+  ypos -752
+ }
+ Dot {
+  name Dot10
+  note_font_size 30
+  xpos 693
+  ypos -665
+ }
+push $N139ad800
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  xpos 962
+  ypos -676
+  disable {{!parent.from0}}
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  label "\[value in]"
+  xpos 962
+  ypos -480
+  disable {{!parent.from0}}
+ }
+ Transform {
+  rotate {{parent.Transform1.rotate}}
+  center {{parent.Transform1.center.x} {parent.Transform1.center.y}}
+  shutteroffset centred
+  name Transform2
+  xpos 962
+  ypos -294
+ }
+ Reformat {
+  type "to box"
+  box_width {{parent.Reformat1.box_width}}
+  box_height {{parent.Reformat1.box_height}}
+  box_fixed true
+  resize none
+  pbb true
+  name Reformat2
+  xpos 962
+  ypos -268
+ }
+ Crop {
+  box {0 0 {parent.Crop1.box.r} {parent.Crop1.box.t}}
+  crop false
+  name Crop2
+  xpos 962
+  ypos -242
+ }
+ Dot {
+  name Dot9
+  note_font_size 30
+  xpos 996
+  ypos -19
+ }
+push $N1398f400
+ Transform {
+  rotate {{"parent.rotate - 90"}}
+  center {{width/2} {height/2}}
+  shutteroffset centred
+  name Transform1
+  xpos 362
+  ypos -293
+ }
+ Reformat {
+  type "to box"
+  box_width {{bbox.w}}
+  box_height {{bbox.h}}
+  box_fixed true
+  resize none
+  pbb true
+  name Reformat1
+  xpos 362
+  ypos -267
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  crop false
+  name Crop1
+  xpos 362
+  ypos -241
+ }
+ BlinkScript {
+  inputs 2
+  recompileCount 199
+  ProgramGroup 1
+  KernelDescription "2 \"PixelRepeat\" iterate componentWise 5f7c03e44b48d39f3ba0d8fcc0f5a85ef542617dc98a6fadb5a235e79c38ed0b 3 \"src\" Read Random \"matte\" Read Random \"dst\" Write Random 8 \"stretchLength\" Int 1 AAAAAA== \"multipleStreaks\" Bool 1 AQ== \"repeatCount\" Int 1 AAAAAA== \"repeatOffset\" Int 1 AAAAAA== \"pingPong\" Bool 1 AA== \"displayPong\" Bool 1 AA== \"thresholdValue\" Float 1 zcxMPw== \"override\" Bool 1 AA== 8 \"stretchLength\" 1 1 \"multipleStreaks\" 1 1 \"repeatCount\" 1 1 \"repeatOffset\" 1 1 \"pingPong\" 1 1 \"displayPong\" 1 1 \"thresholdValue\" 1 1 \"override\" 1 1 0"
+  kernelSource "// Max van leeuwen\n// maxvanleeuwen.com/pixelrepeat\n//\n// Repeats the pixels starting where matte goes over threshold. Creates stretchy lines, or mirrors/warps the image.\n\n\n\n\nkernel PixelRepeat : ImageComputationKernel<eComponentWise>\{\n\n\tImage<eRead, eAccessRandom, eEdgeClamped> src;\n\tImage<eRead, eAccessRandom, eEdgeClamped> matte;\n\tImage<eWrite, eAccessRandom> dst;\n\n\nparam:\n\n\tint stretchLength;\n\tbool multipleStreaks;\n\tint repeatCount;\n\tint repeatOffset;\n\tbool pingPong;\n\tbool displayPong;\n\tfloat thresholdValue;\n\tbool override;\n\n\nlocal:\n\n\tvoid define() \{\n\n\t\t// how long the streaks can get (0 means unlimited stretching)\n\t\tdefineParam(stretchLength, \"stretchLength\", 0);\n\n\t\t// allow multiple streaks\n\t\tdefineParam(multipleStreaks, \"multipleStreaks\", true);\n\n\t\t// amount of pixels to repeat\n\t\tdefineParam(repeatCount, \"repeatCount\", 0);\n\n\t\t// offset for repeated pixels\n\t\tdefineParam(repeatOffset, \"repeatOffset\", 0);\n\n\t\t// go back-and-forth through cycle index instead of repeating front to end\n\t\tdefineParam(pingPong, \"pingPong\", false);\n\n\t\t// show pingpong matte\n\t\tdefineParam(displayPong, \"displayPong\", false);\n\n\t\t// when to start stretching\n\t\tdefineParam(thresholdValue, \"thresholdValue\", 0.8f);\n\n\t\t// whether the value can update mid-streak if it is higher than current\n\t\tdefineParam(override, \"override\", false);\n\t\}\n\n\n\n\n\t// run over each pixel\n\tvoid process(int3 pos) \{\n\n\t\t// empty bg val\n\t\tfloat emptyVal = -1.0f;\n\n\t\t// placeholder for out value\n\t\tfloat outVal = -1.0f;\n\n\t\t// get img width\n\t\tint srcWidth = src.bounds.x2;\n\n\t\t// only once per row\n\t\tif (pos.x == 0)\{\n\n\t\t\t// start of stretch index\n\t\t\tint stretchStart = -1;\n\n\t\t\t// placeholder value at start of stretch\n\t\t\tfloat startStretchValue = -1.0f;\n\n\t\t\t// current stretching counter\n\t\t\tint currStretchLength = -1;\n\n\t\t\t// cycle index\n\t\t\tint currCyclePos = 0;\n\n\t\t\t// check if forwards or backwards\n\t\t\tbool pong = false;\n\n\n\t\t\t// go through each pixel in row\n\t\t\tfor(int pixel = 0; pixel < srcWidth; pixel++)\{\n\n\t\t\t\t// get current img value\n\t\t\t\tfloat currVal = src(pixel, pos.y);\n\n\n\t\t\t\t// if stretching has not started yet\n\t\t\t\tif(currStretchLength == -1)\{\n\n\t\t\t\t\t// value to compare from matte\n\t\t\t\t\tfloat foundValue = matte(pixel, pos.y);\n\n\t\t\t\t\t// if matte is greater than thresholdValue, start stretch\n\t\t\t\t\tif(foundValue >= thresholdValue)\{\n\t\t\t\t\t\n\t\t\t\t\t\t// index of first stretched pixel\n\t\t\t\t\t\tstretchStart = pixel;\n\n\t\t\t\t\t\t// start stretch\n\t\t\t\t\t\tcurrStretchLength = 0;\n\t\t\t\t\t\t// set out to current pixel\n\t\t\t\t\t\toutVal = (pingPong && displayPong) ? 0 : currVal;\n\n\t\t\t\t\t\t// store this highscore value\n\t\t\t\t\t\tstartStretchValue = foundValue;\n\n\t\t\t\t\t// if not, this is empty space\n\t\t\t\t\t\}else\{\n\n\t\t\t\t\t\toutVal = emptyVal;\n\t\t\t\t\t\}\n\n\n\t\t\t\t// if stretching has started and is still going\n\t\t\t\t\}else if(currStretchLength >= 0 && (currStretchLength < stretchLength || stretchLength <= 0) )\{\n\n\t\t\t\t\t// get current stretch position without non-stretch part\n\t\t\t\t\tint currStretchPos = pixel - stretchStart - 1;\n\n\t\t\t\t\t// set index in cycle\n\t\t\t\t\tcurrCyclePos = (currStretchPos + repeatOffset) % abs(repeatCount);\n\n\t\t\t\t\tif(pingPong)\{\n\n\t\t\t\t\t\tpong = int(currStretchPos/repeatCount) % 2 ? true : false;\n\t\t\t\t\t\}\n\n\t\t\t\t\t// make index including (if enabled) pingpong\n\t\t\t\t\tint cyclePingpongIndex = pong ? (abs(repeatCount) - 1) - currCyclePos : currCyclePos;\n\n\t\t\t\t\t// override active\n\t\t\t\t\tbool overridden = false;\n\n\n\t\t\t\t\t// check if override\n\t\t\t\t\tif(override)\{\n\n\t\t\t\t\t\tif(currVal > startStretchValue)\{\n\n\t\t\t\t\t\t\toverridden = true;\n\n\t\t\t\t\t\t\t// first in cycle\n\t\t\t\t\t\t\tcurrCyclePos = 0;\n\n\t\t\t\t\t\t\t// reset pingpong\n\t\t\t\t\t\t\tpong = false;\n\n\t\t\t\t\t\t\t// first index of stretching\n\t\t\t\t\t\t\tcurrStretchLength = 0;\n\n\t\t\t\t\t\t\t// index of first stretched pixel\n\t\t\t\t\t\t\tstretchStart = pixel;\n\n\t\t\t\t\t\t\t// set out to current pixel\n\t\t\t\t\t\t\toutVal = currVal;\n\n\t\t\t\t\t\t\t// store this highscore value\n\t\t\t\t\t\t\tstartStretchValue = currVal;\n\t\t\t\t\t\t\}\n\t\t\t\t\t\}\n\n\n\t\t\t\t\t// increment index\n\t\t\t\t\tcurrStretchLength++;\n\n\t\t\t\t\tif(!overridden)\{\n\n\t\t\t\t\t\tif(pingPong && displayPong)\{\n\n\t\t\t\t\t\t\toutVal = pong;\n\t\t\t\t\t\t\}else\{\n\n\t\t\t\t\t\t\toutVal = src(stretchStart + (cyclePingpongIndex * (repeatCount < 0 ? -1 : 1)), pos.y);\n\t\t\t\t\t\t\}\n\t\t\t\t\t\}\n\n\n\t\t\t\t// if stretching has started and is over limit, end\n\t\t\t\t\}else if(currStretchLength >= stretchLength && stretchLength > 0)\{\n\n\t\t\t\t\t// start of stretch index\n\t\t\t\t\tstretchStart = -1;\n\n\t\t\t\t\t// placeholder value at start of stretch\n\t\t\t\t\tstartStretchValue = -1;\n\n\t\t\t\t\t// current stretching index back to start, or even further if should be ignored after this\n\t\t\t\t\tcurrStretchLength = multipleStreaks ? -1 : -2;\n\n\t\t\t\t\t// cycle index\n\t\t\t\t\tcurrCyclePos = 0;\n\n\t\t\t\t\t// show current pixel value\n\t\t\t\t\toutVal = emptyVal;\n\n\t\t\t\t\}\n\n\n\t\t\t\t// write\n\t\t\t\tdst(pixel, pos.y) = outVal;\n\t\t\t\}\n\t\t\}\n\t\}\n\};"
+  useGPUIfAvailable {{parent.useGPU}}
+  vectorize {{parent.vectorizeCPU}}
+  rebuild ""
+  PixelRepeat_stretchLength {{parent.length}}
+  PixelRepeat_multipleStreaks {{parent.multipleStreaks}}
+  PixelRepeat_repeatCount {{parent.repeats}}
+  PixelRepeat_repeatOffset {{parent.repeatsOffset}}
+  PixelRepeat_pingPong {{parent.pingpong}}
+  PixelRepeat_displayPong {{parent.displayPong}}
+  PixelRepeat_thresholdValue {{parent.threshold}}
+  PixelRepeat_override {{parent.override}}
+  rebuild_finalise ""
+  maxGPUMemory {{parent.PercentageGPU}}
+  maxTileLines {{parent.percentageImageHeight}}
+  name BlinkScript_PixelRepeat
+  xpos 362
+  ypos -30
+ }
+ Dot {
+  name Dot5
+  note_font_size 30
+  xpos 396
+  ypos 400
+ }
+set N13a19800 [stack 0]
+ Dot {
+  name Dot3
+  note_font_size 30
+  xpos 625
+  ypos 400
+ }
+ Expression {
+  expr0 "r == -1 ? 0 : r"
+  expr1 "g == -1 ? 0 : g"
+  expr2 "b == -1 ? 0 : b"
+  expr3 "a == -1 ? 0 : a"
+  name Expressions_NegValues_remove
+  xpos 591
+  ypos 493
+ }
+ Dot {
+  name Dot7
+  note_font_size 30
+  xpos 625
+  ypos 615
+ }
+push $N13a19800
+ Expression {
+  expr0 "r == -1 ? 0 : r"
+  expr1 "g == -1 ? 0 : g"
+  expr2 "b == -1 ? 0 : b"
+  expr3 "!(r == -1 || g == -1 || b == -1)"
+  name Expressions_NegValues_to_Alpha
+  xpos 362
+  ypos 494
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 362
+  ypos 604
+  disable {{"!parent.effectOnly || !parent.repeatAlpha"}}
+ }
+ Transform {
+  rotate {{-Transform1.rotate}}
+  center {{width/2} {height/2}}
+  shutteroffset centred
+  name Transform3
+  xpos 362
+  ypos 935
+ }
+ Reformat {
+  type "to box"
+  box_width {{img.width}}
+  box_height {{img.height}}
+  box_fixed true
+  resize none
+  name Reformat3
+  xpos 362
+  ypos 961
+ }
+ Transform {
+  filter {{parent.rotateFilter}}
+  black_outside false
+  shutter 0
+  shutteroffset centred
+  name Transform_SetFilterConcatinated1
+  xpos 362
+  ypos 1021
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  crop false
+  name Crop5
+  xpos 362
+  ypos 1047
+ }
+ Merge2 {
+  inputs 2
+  operation under
+  Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge1
+  xpos 362
+  ypos 1181
+  disable {{parent.effectOnly}}
+ }
+ Output {
+  name Output1
+  xpos 362
+  ypos 1539
+ }
+end_group

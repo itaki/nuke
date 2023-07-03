@@ -1,0 +1,260 @@
+#! C:/Program Files/Nuke4.7v5/nuke4.7.exe -nx
+version 4.7500
+Group {
+ name H_Streaks
+ inputs 1
+ tile_color 0xff00
+ label v0.2
+ help "Repeats last pixels until the edge of the picture. With optional blur, \nCC, softness and mosaic controls to the Streaks.\n\nInfo:\n\n-Use the \"box\" to animate or position your \"streaks\"\n\n- Use the \"softness of the box\" to make a soft edge to the box\n\n-Optional blur and mosaic effect to apply to the streak only or \nto the entire image.\n\n-In the \"Streak CC\" tab you can color correct the streak only.\n\n-In the \"Streak Grain\" you can apply Grain to the Streak only \nto mach grain from the footage that is \"un-streaked\".\n\n- In the \"Streak masking controls\" you can select a mask and \nalso you can output the mask of the Streak box to use later for \ntreatment to only the \"un-streaked\" area."
+ addUserKnob {20 "" l H_Streaks}
+ addUserKnob {26 "" l "Streak box"}
+ addUserKnob {41 box T streak_transform.box}
+ addUserKnob {41 softness l "softness of box" T Blur1.size}
+ addUserKnob {41 filter_1 l filter T Blur1.filter}
+ addUserKnob {41 quality_1 l "" T Blur1.quality}
+ addUserKnob {26 "" l "Streak Blur"}
+ addUserKnob {6 DisableStreakBlur l "Disable Streak Blur"}
+ DisableStreakBlur true
+ addUserKnob {41 size T streak_blur.size}
+ addUserKnob {41 filter T streak_blur.filter}
+ addUserKnob {41 quality l "" T streak_blur.quality}
+ addUserKnob {41 crop l "crop to format" T streak_blur.crop}
+ addUserKnob {41 mix T streak_blur.mix}
+ addUserKnob {26 "" l "Streak mosaic"}
+ addUserKnob {6 DisableStreakMosaic l "Disable Streak Mosaic"}
+ DisableStreakMosaic true
+ addUserKnob {41 size_1 l size T streak_mosaic.size}
+ addUserKnob {26 "" l ""}
+ addUserKnob {26 "" l "Streak masking controls"}
+ addUserKnob {6 DisableStreakMask l "Disable Streak Mask"}
+ addUserKnob {6 InvertStreakMask l "Invert Streak Mask"}
+ addUserKnob {26 "" l "H_Streaks v0.2"}
+ addUserKnob {20 "" l "Streak CC"}
+ addUserKnob {6 DisableStreakCC l "Disable Streak CC"}
+ DisableStreakCC true
+ addUserKnob {26 "" l "@b;master"}
+ addUserKnob {41 saturation T ColorCorrect1.saturation}
+ addUserKnob {41 contrast T ColorCorrect1.contrast}
+ addUserKnob {41 gamma T ColorCorrect1.gamma}
+ addUserKnob {41 gain T ColorCorrect1.gain}
+ addUserKnob {41 offset T ColorCorrect1.offset}
+ addUserKnob {26 "" l "@b;shadows"}
+ addUserKnob {41 shadows.saturation l saturation T ColorCorrect1.shadows.saturation}
+ addUserKnob {41 shadows.contrast l contrast T ColorCorrect1.shadows.contrast}
+ addUserKnob {41 shadows.gamma l gamma T ColorCorrect1.shadows.gamma}
+ addUserKnob {41 shadows.gain l gain T ColorCorrect1.shadows.gain}
+ addUserKnob {41 shadows.offset l offset T ColorCorrect1.shadows.offset}
+ addUserKnob {26 "" l "@b;midtones"}
+ addUserKnob {41 midtones.saturation l saturation T ColorCorrect1.midtones.saturation}
+ addUserKnob {41 midtones.contrast l contrast T ColorCorrect1.midtones.contrast}
+ addUserKnob {41 midtones.gamma l gamma T ColorCorrect1.midtones.gamma}
+ addUserKnob {41 midtones.gain l gain T ColorCorrect1.midtones.gain}
+ addUserKnob {41 midtones.offset l offset T ColorCorrect1.midtones.offset}
+ addUserKnob {26 "" l "@b;highlights"}
+ addUserKnob {41 highlights.saturation l saturation T ColorCorrect1.highlights.saturation}
+ addUserKnob {41 highlights.contrast l contrast T ColorCorrect1.highlights.contrast}
+ addUserKnob {41 highlights.gamma l gamma T ColorCorrect1.highlights.gamma}
+ addUserKnob {41 highlights.gain l gain T ColorCorrect1.highlights.gain}
+ addUserKnob {41 highlights.offset l offset T ColorCorrect1.highlights.offset}
+ addUserKnob {20 "" l "Streak Grain"}
+ addUserKnob {26 "" l "Streak Grain"}
+ addUserKnob {6 DisableStreakGrain l "Disable Streak Grain"}
+ DisableStreakGrain true
+ addUserKnob {41 seed T streak_grain.seed}
+ addUserKnob {41 presets l "" T streak_grain.presets}
+ addUserKnob {26 "" l "@b;Size"}
+ addUserKnob {41 red_size l red T streak_grain.red_size}
+ addUserKnob {41 green_size l green T streak_grain.green_size}
+ addUserKnob {41 blue_size l blue T streak_grain.blue_size}
+ addUserKnob {26 "" l "@b;Irregularity"}
+ addUserKnob {41 red_i l red T streak_grain.red_i}
+ addUserKnob {41 green_i l green T streak_grain.green_i}
+ addUserKnob {41 blue_i l blue T streak_grain.blue_i}
+ addUserKnob {26 "" l "@b;Intensity"}
+ addUserKnob {41 red_m l red T streak_grain.red_m}
+ addUserKnob {41 green_m l green T streak_grain.green_m}
+ addUserKnob {41 blue_m l blue T streak_grain.blue_m}
+ addUserKnob {41 black T streak_grain.black}
+ addUserKnob {41 minimum T streak_grain.minimum}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 130
+  ypos -280
+ }
+set N1c2ffa0 [stack 0]
+add_layer {alpha rgba.alpha}
+ Rectangle {
+  output alpha
+  replace true
+  invert true
+  area {{streak_transform.box.x x70 0} {streak_transform.box.y x70 0} {streak_transform.box.r x70 324} {streak_transform.box.t x70 405}}
+  p1 {100 400}
+  p0 {100 100}
+  name Rectangle1
+  xpos 329
+  ypos -175
+ }
+ Blur {
+  channels alpha
+  name Blur1
+  xpos 329
+  ypos -127
+ }
+push $N1c2ffa0
+ Crop {
+  box {0 0 150 150}
+  crop false
+  name streak_transform
+  xpos 130
+  ypos -161
+ }
+ Crop {
+  box {{curve} {curve} {Input1.format.width} {Input1.format.height}}
+  name Cropthecrop
+  xpos 130
+  ypos -116
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 130
+  ypos -66
+ }
+ Premult {
+  channels rgba
+  name Premult1
+  xpos 130
+  ypos 3
+ }
+ Blur {
+  channels rgba
+  size 15
+  name streak_blur
+  xpos 130
+  ypos 69
+  disable {{DisableStreakBlur i}}
+ }
+ Crop {
+  box {{curve} {curve} {Input1.format.width} {Input1.format.height}}
+  name Cropblur
+  xpos 130
+  ypos 121
+ }
+ Blocky {
+  name streak_mosaic
+  xpos 130
+  ypos 168
+  disable {{DisableStreakMosaic i}}
+ }
+ ColorCorrect {
+  channels rgba
+  saturation 0
+  lookup {shadow {curve 1 s0 x0.09 0 s0}
+    midtone {1-shadow-highlight}
+    highlight {curve x0.5 0 s0 x1 1 s0}}
+  name ColorCorrect1
+  xpos 130
+  ypos 212
+  disable {{DisableStreakCC i}}
+ }
+ Grain2 {
+  inputs 1
+  name streak_grain
+  label "Kodak 5218"
+  xpos 130
+  ypos 330
+  help "Adds synthetic grain. Push \"presets\" to get predefined types of grain, these are the correct size for 2K scans.\n\nYou can also adjust the sliders to match a sample piece of grain. Find a sample with a rather constant background, blur it to remove the grain, and use as input to this. View with a wipe in the viewer so you can make a match. It helps to view and match each of the red, green, blue seperately."
+  disable {{DisableStreakGrain i}}
+  seed 134
+  presets "presets/Kodak 5248"
+  red_size 0.1
+  green_size 0.8
+  blue_size 1.4
+  red_i 0.6
+  green_i 0.86
+  blue_i 0.73
+  red_m 0.38
+  green_m 0.255
+  blue_m 0.25
+  black 0.02
+  minimum 0
+  maskgrain true
+  maskinvert false
+ }
+set N1c6b2f8 [stack 0]
+add_layer {streak_box streak_box.mask}
+ Shuffle {
+  in alpha
+  out streak_box
+  name Shuffle1
+  xpos 130
+  ypos 426
+ }
+ Invert {
+  name Invert1
+  selected true
+  xpos 130
+  ypos 475
+  disable {{InvertStreakMask}}
+ }
+ AddChannels {
+  channels streak_box
+  name AddChannels1
+  xpos 130
+  ypos 537
+ }
+push $N1c6b2f8
+push $N1c2ffa0
+ Merge2 {
+  inputs 2
+  also_merge rgba
+  name Merge1
+  xpos -169
+  ypos 388
+ }
+set N1c70cf0 [stack 0]
+push $N1c2ffa0
+ Dot {
+  name Dot2
+  xpos -249
+  ypos 26
+ }
+push $N1c70cf0
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  channels all
+  name Copy2
+  xpos -283
+  ypos 466
+ }
+ Merge2 {
+  inputs 2
+  operation copy
+  also_merge all
+  name streak_mask
+  label streak_mask
+  xpos -209
+  ypos 576
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  channels streak_box
+  name Copy3
+  xpos -209
+  ypos 646
+  disable {{DisableStreakMask}}
+ }
+ Output {
+  name Output1
+  xpos -209
+  ypos 808
+ }
+end_group

@@ -1,0 +1,328 @@
+set cut_paste_input [stack 0]
+version 10.0 v6
+push $cut_paste_input
+Group {
+ name Edgenator1
+ tile_color 0xab28ccff
+ note_font_color 0xa020cff
+ selected true
+ xpos 296
+ ypos -18
+ addUserKnob {20 Edgenator}
+ addUserKnob {6 AlphaEdge +STARTLINE}
+ AlphaEdge true
+ addUserKnob {7 innerSize l InnerSize R 0 100}
+ innerSize 6
+ addUserKnob {7 outerSize l OuterSize R 0 100}
+ outerSize 6
+ addUserKnob {7 innerAmount l InnerAmount}
+ innerAmount 1
+ addUserKnob {7 outerAmount l OuterAmount}
+ outerAmount 1
+ addUserKnob {7 mixPercent l MixPercent}
+ mixPercent 0.5
+ addUserKnob {26 ""}
+ addUserKnob {7 Dark2WhiteEdge R 0 2}
+ Dark2WhiteEdge 1
+}
+ Input {
+  inputs 0
+  name InputMask
+  xpos -129
+  ypos -472
+  number 1
+ }
+ Dot {
+  name Dot2
+  xpos -95
+  ypos -373
+ }
+ Input {
+  inputs 0
+  name InputINPUT
+  xpos -349
+  ypos -569
+ }
+ Dot {
+  name Dot1
+  xpos -315
+  ypos -509
+ }
+ Remove {
+  channels alpha
+  name Remove1
+  label "channels: \[value channels]"
+  xpos -349
+  ypos -451
+ }
+ ChannelMerge {
+  inputs 2
+  name ChannelMerge1
+  xpos -349
+  ypos -354
+ }
+ Dot {
+  name Dot3
+  xpos -315
+  ypos -229
+ }
+set N1f55400 [stack 0]
+ Premult {
+  name Premult1
+  xpos -239
+  ypos -151
+ }
+set N1f55000 [stack 0]
+push $N1f55400
+ AddMix {
+  inputs 2
+  premultiplied true
+  lut {A {curve 0 s0 t1.649999976 1}
+    B {curve 1 0 s-1.75 t0}}
+  name AddMix1
+  xpos -239
+  ypos -41
+ }
+push 0
+push $N1f55400
+push $N1f55000
+push $N1f55400
+ AddMix {
+  inputs 2
+  premultiplied true
+  lut {A {curve 0 s0 t0.4499999881 1}
+    B {curve 1 0 s-0.4399999976 t0}}
+  name AddMix2
+  xpos -459
+  ypos -41
+ }
+ Dissolve {
+  inputs 3+1
+  which {{parent.Dark2WhiteEdge}}
+  name Dissolve1
+  label "\[value which]"
+  xpos -349
+  ypos 17
+ }
+ Dot {
+  name Dot4
+  xpos -315
+  ypos 227
+ }
+set N1f54000 [stack 0]
+ Dot {
+  name Dot5
+  xpos -645
+  ypos 227
+ }
+ NoOp {
+  name NoOp2
+  label Outer
+  xpos -679
+  ypos 313
+ }
+ Dot {
+  name Dot7
+  xpos -645
+  ypos 419
+ }
+set N644c1400 [stack 0]
+ Dot {
+  name Dot9
+  xpos -865
+  ypos 419
+ }
+set N644c1000 [stack 0]
+ Dot {
+  name Dot8
+  xpos -1085
+  ypos 419
+ }
+ Blur {
+  size {{parent.outerSize}}
+  name Blur2
+  label "Size: \[value size]"
+  xpos -1119
+  ypos 474
+ }
+ Expression {
+  expr3 1-pow(2*fabs((a)-0.5),2)
+  name Expression2
+  xpos -1119
+  ypos 559
+ }
+set N644c0400 [stack 0]
+push $N644c1000
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge4
+  label "Also merge: \[value also_merge]"
+  xpos -899
+  ypos 553
+ }
+ Clamp {
+  name Clamp2
+  xpos -899
+  ypos 625
+ }
+push $N644c0400
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos -1119
+  ypos 625
+ }
+ Premult {
+  name Premult3
+  xpos -1119
+  ypos 727
+ }
+set N644e5000 [stack 0]
+push $N1f54000
+ Dot {
+  name Dot6
+  xpos 125
+  ypos 227
+ }
+ NoOp {
+  name NoOp3
+  label Inner
+  xpos 91
+  ypos 313
+ }
+set N644e4800 [stack 0]
+ Blur {
+  size {{parent.innerSize}}
+  name Blur1
+  label "Size: \[value size]"
+  xpos 91
+  ypos 426
+ }
+ Expression {
+  expr3 1-pow(2*fabs((a)-0.5),2)
+  name Expression1
+  xpos 91
+  ypos 511
+ }
+set N644e4000 [stack 0]
+push $N644e4800
+ Invert {
+  name Invert1
+  xpos 311
+  ypos 433
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge3
+  label "Also merge: \[value also_merge]"
+  xpos 311
+  ypos 505
+ }
+ Clamp {
+  name Clamp1
+  xpos 311
+  ypos 577
+ }
+push $N644e4000
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 91
+  ypos 673
+ }
+ Premult {
+  name Premult2
+  xpos 91
+  ypos 751
+ }
+set N64514800 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge6
+  label "Also merge: \[value also_merge]"
+  xpos -1119
+  ypos 937
+ }
+ Dot {
+  name Dot11
+  xpos -1085
+  ypos 1259
+ }
+push $N1f54000
+ Dot {
+  name Dot10
+  xpos -315
+  ypos 1043
+ }
+set N64557c00 [stack 0]
+push $N64514800
+push $N644e5000
+push $N644c1400
+ Merge2 {
+  inputs 2
+  mix {{parent.outerAmount}}
+  name Merge5
+  label "Also merge: \[value also_merge]"
+  xpos -679
+  ypos 721
+ }
+ Merge2 {
+  inputs 2
+  mix {{parent.innerAmount}}
+  name Merge7
+  label "Also merge: \[value also_merge]"
+  xpos 91
+  ypos 913
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  xpos 91
+  ypos 1033
+ }
+ Dot {
+  name Dot12
+  xpos 125
+  ypos 1139
+ }
+push $N64557c00
+ Dissolve {
+  inputs 2
+  which {{parent.mixPercent}}
+  name Dissolve2
+  label "\[value which]"
+  xpos -349
+  ypos 1122
+ }
+set N64556800 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy4
+  xpos -565
+  ypos 1249
+ }
+push $N64556800
+ Switch {
+  inputs 2
+  which {{parent.AlphaEdge}}
+  name Switch1
+  selected true
+  xpos -349
+  ypos 1444
+ }
+ Output {
+  name Output1
+  xpos -349
+  ypos 1669
+ }
+end_group

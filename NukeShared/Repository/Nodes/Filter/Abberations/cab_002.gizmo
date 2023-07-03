@@ -1,0 +1,360 @@
+#! X:/apps/Nuke8.0v5/nuke-8.0.v5.dll -nx
+version 8.0 v5
+Gizmo {
+ inputs 2
+ help "LX_CA V1.2\nCreated by: Rob Bannister\n\nBased on the CA found in the Retro node by julian van mil. You can download his plugin on Nukepedia.\n\nOperation: \nYou can base your CA on 4 opereations. Full, Radial Falloff, Lumanance, or a combination of Radial falloff and Lumanance.\n\nMask:\n- Source will be based on the input source and all the controls are handled with the gizmo.\n\n-Luma Mask, input souce into the mask input and use the gizmo controls to create your mask.\n\n- Alpah mask, create your mask externally and input the alpha into the mask input.\n\nUse the preview falloff to adjust your mattes.\n\n-----------------------\nfixes in V1.2\nBBox would double in size. This has been resolved."
+ tile_color 0x990000
+ addUserKnob {20 User}
+ addUserKnob {4 Operation M {Full Radial Luma "Radial + Luma" ""}}
+ addUserKnob {4 LumaMatte l Mask M {Source "Luma Mask" "Alpha Mask"}}
+ addUserKnob {4 PreviewFalloff l "Preview Falloff" M {Result Falloff}}
+ addUserKnob {41 multiplier l amount T Dot14.multiplier}
+ addUserKnob {41 mixRay l mixRays T moxDot1.mixRay}
+ addUserKnob {41 size l blur T Blur2.size}
+ addUserKnob {41 which T Switch3.which}
+ addUserKnob {26 ""}
+ addUserKnob {26 Falloff l "" +STARTLINE T "Radial Falloff"}
+ addUserKnob {41 softness T Radial1.softness}
+ addUserKnob {41 size_1 l Blur T Blur3.size}
+ addUserKnob {41 scale T Transform_radialscale.scale}
+ addUserKnob {26 ""}
+ addUserKnob {26 Tolerance l "" +STARTLINE T "Luma Tolerance"}
+ addUserKnob {41 blackpoint T Grade_luma.blackpoint}
+ addUserKnob {41 whitepoint T Grade_luma.whitepoint}
+ addUserKnob {41 size_2 l Erode T FilterErode_luma.size}
+ addUserKnob {41 size_3 l Blur T Blur_luma.size}
+}
+ Dot {
+  inputs 0
+  name Dot14
+  xpos 562
+  ypos 335
+  addUserKnob {20 User}
+  addUserKnob {7 multiplier R -0.1 0.1}
+  multiplier 0.01
+ }
+ Dot {
+  inputs 0
+  name moxDot1
+  xpos 914
+  ypos 515
+  addUserKnob {20 User}
+  addUserKnob {7 mixRay}
+ }
+ Radial {
+  inputs 0
+  cliptype none
+  area {0 0 {format.width} {format.height}}
+  softness 0.15
+  name Radial1
+  xpos 1103
+  ypos 462
+  hide_input true
+ }
+ Transform {
+  center {{format.width/2 i} {format.height/2 i}}
+  name Transform_radial
+  xpos 1103
+  ypos 488
+ }
+ Transform {
+  center {{format.width/2 i} {format.height/2 i}}
+  name Transform_radialscale
+  xpos 1103
+  ypos 514
+ }
+ Blur {
+  size 100
+  quality 30
+  name Blur3
+  xpos 1103
+  ypos 548
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.095
+  black 0.03
+  name Grade_radial
+  xpos 1103
+  ypos 586
+ }
+ Invert {
+  name Invert1
+  xpos 1103
+  ypos 624
+ }
+ Dot {
+  name Dot13
+  xpos 1137
+  ypos 677
+ }
+set N4210c6e0 [stack 0]
+ Input {
+  inputs 0
+  name mask
+  xpos 1499
+  ypos 308
+  number 1
+ }
+set N4210ca50 [stack 0]
+ Dot {
+  name Dot5
+  xpos 1533
+  ypos 552
+ }
+push $N4210ca50
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle3
+  xpos 1389
+  ypos 308
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.42
+  whitepoint 0.58
+  name Grade_luma
+  xpos 1389
+  ypos 334
+ }
+ set C4210d4a0 [stack 0]
+ FilterErode {
+  size -2.5
+  filter quadratic
+  name FilterErode_luma
+  xpos 1389
+  ypos 372
+ }
+ set C4210d810 [stack 0]
+ Blur {
+  channels alpha
+  size 6
+  name Blur_luma
+  xpos 1389
+  ypos 410
+ }
+ set C4210db80 [stack 0]
+ Input {
+  inputs 0
+  name Input1
+  xpos 773
+  ypos 60
+ }
+ Dot {
+  name Dot15
+  xpos 807
+  ypos 107
+ }
+set N4210e260 [stack 0]
+ Dot {
+  name Dot3
+  xpos 1315
+  ypos 107
+ }
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle1
+  xpos 1281
+  ypos 310
+ }
+clone $C4210d4a0 {
+  xpos 1281
+  ypos 336
+  selected false
+ }
+clone $C4210d810 {
+  xpos 1281
+  ypos 374
+  selected false
+ }
+clone $C4210db80 {
+  xpos 1281
+  ypos 412
+  selected false
+ }
+ Switch {
+  inputs 3
+  which {{LumaMatte i}}
+  name lumamatte_switch
+  xpos 1281
+  ypos 548
+ }
+ Dot {
+  name Dot4
+  xpos 1315
+  ypos 669
+ }
+set N4210f700 [stack 0]
+ ChannelMerge {
+  inputs 2
+  operation multiply
+  name ChannelMerge1
+  xpos 1281
+  ypos 732
+ }
+push $N4210f700
+push $N4210c6e0
+ Constant {
+  inputs 0
+  color 1
+  name Constant1
+  xpos 959
+  ypos 590
+ }
+ Switch {
+  inputs 4
+  which {{Operation i}}
+  name Switch_matte
+  xpos 1103
+  ypos 745
+ }
+set N3fc96600 [stack 0]
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle2
+  xpos 1103
+  ypos 828
+ }
+push $N3fc96600
+push $N4210e260
+ Dot {
+  name Dot1
+  xpos 463
+  ypos 107
+ }
+ Dot {
+  name Dot2
+  xpos 463
+  ypos 749
+ }
+push $N4210e260
+ AdjBBox {
+  numpixels {{abs(parent.Dot14.multiplier)*100}}
+  name AdjBBox1
+  xpos 772
+  ypos 176
+ }
+ Dot {
+  name Dot6
+  xpos 807
+  ypos 239
+ }
+set N45ec1600 [stack 0]
+ GodRays {
+  channels {-rgba.red rgba.green -rgba.blue none}
+  scale {{parent.GodRays10.scale}}
+  center {{parent.GodRays11.center.x} {parent.GodRays11.center.y}}
+  name GodRays4
+  xpos 886
+  ypos 293
+ }
+ GodRays {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  scale {{parent.GodRays11.scale}}
+  center {{parent.GodRays4.center.x} {parent.GodRays4.center.y}}
+  name GodRays9
+  xpos 886
+  ypos 382
+  addUserKnob {20 User}
+  addUserKnob {4 sasdasd M {Read1 ""}}
+ }
+push $N45ec1600
+ GodRays {
+  channels {-rgba.red -rgba.green rgba.blue none}
+  scale {{(Dot14.multiplier)+1 i}}
+  center {{(format.width)/2 i x1 400} {(format.height)/2 i}}
+  name GodRays10
+  xpos 773
+  ypos 292
+ }
+ GodRays {
+  channels {-rgba.red rgba.green -rgba.blue none}
+  scale {{parent.GodRays13.scale i}}
+  center {{parent.GodRays10.center.x i} {parent.GodRays10.center.y i}}
+  name GodRays11
+  xpos 773
+  ypos 383
+  addUserKnob {20 User}
+  addUserKnob {4 sasdasd M {Read1 ""}}
+ }
+push $N45ec1600
+ GodRays {
+  channels {-rgba.red -rgba.green rgba.blue none}
+  scale {{(Dot14.multiplier)+1}}
+  center {{(format.width)/2} {(format.height)/2}}
+  maskChannelInput -rgba.alpha
+  name GodRays12
+  xpos 658
+  ypos 296
+ }
+ GodRays {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  scale {{((Dot14.multiplier)*(-1))+1 i}}
+  center {{parent.GodRays12.center.x i} {parent.GodRays12.center.y i}}
+  name GodRays13
+  xpos 658
+  ypos 381
+  addUserKnob {20 User}
+  addUserKnob {4 sasdasd M {Read1 ""}}
+ }
+ Switch {
+  inputs 3
+  name Switch3
+  xpos 773
+  ypos 455
+  addUserKnob {20 User}
+  addUserKnob {41 which_1 l which T Switch3.which}
+ }
+ GodRays {
+  scale {{((moxDot1.mixRay)*.05)+1 i}}
+  center {{width/2 i} {height/2 i}}
+  name GodRays14
+  xpos 773
+  ypos 507
+  addUserKnob {20 User}
+  addUserKnob {7 mult}
+  mult 1
+ }
+ Blur {
+  name Blur2
+  xpos 773
+  ypos 587
+ }
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox A
+  name Keymix1
+  selected true
+  xpos 773
+  ypos 739
+ }
+ Switch {
+  inputs 2
+  which {{PreviewFalloff i}}
+  name PreviewFalloff
+  xpos 773
+  ypos 828
+ }
+set N3fc96d60 [stack 0]
+push $N3fc96d60
+ Output {
+  name Output1
+  xpos 773
+  ypos 971
+ }
+ Viewer {
+  inputs 2
+  input_number 1
+  input_process false
+  name Viewer1
+  xpos 1499
+  ypos 334
+ }
+end_group

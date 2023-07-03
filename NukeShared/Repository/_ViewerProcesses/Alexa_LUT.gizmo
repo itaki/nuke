@@ -1,0 +1,30 @@
+#! /Applications/Nuke13.2v2/Nuke13.2v2.app/Contents/MacOS/libnuke-13.2.2.dylib -nx
+version 13.2 v2
+Gizmo {
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 294
+  ypos -325
+ }
+ OCIOFileTransform {
+  file "/Volumes/panda/Dropbox (Personal)/Shark/1_VFX/0_global_assets/LUTs/AlexaV3_K1S1_LogC2Video_Rec709_EE_nuke3d.cube"
+  working_space AlexaV3LogC
+  name OCIOFileTransform1
+  xpos 294
+  ypos -285
+ }
+ OCIOColorSpace {
+  in_colorspace scene_linear
+  out_colorspace AlexaV3LogC
+  name OCIOColorSpace1
+  xpos 294
+  ypos -261
+ }
+ Output {
+  name Output1
+  xpos 294
+  ypos -161
+ }
+end_group

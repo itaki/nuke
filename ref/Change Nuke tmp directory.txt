@@ -1,0 +1,26 @@
+Change the tmp directory.
+
+Search for init.py IN the application. 
+
+change
+
+# set $NUKE_TEMP_DIR, used to write temporary files:
+nuke_subdir = "nuke"
+try:
+  nuke_temp_dir = os.environ["NUKE_TEMP_DIR"]
+except:
+  try:
+    temp_dir = os.environ["TEMP"]
+  except:
+    if nuke.env["WIN32"]:
+      temp_dir = "C:/temp"
+    else:
+      temp_dir = "/Volumes/roboSloth/_Library/Nuke"
+      nuke_subdir += "-u" + str(os.getuid())
+
+  nuke_temp_dir = os.path.join(temp_dir, nuke_subdir)
+
+if nuke.env["WIN32"]:
+  nuke_temp_dir = nuke_temp_dir.replace( "\\", "/" )
+
+os.environ["NUKE_TEMP_DIR"] = nuke_temp_dir

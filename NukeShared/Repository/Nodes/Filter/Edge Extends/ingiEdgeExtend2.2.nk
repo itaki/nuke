@@ -1,0 +1,615 @@
+Group {
+ name ingiEdgeExtend
+ knobChanged "\nif int(nuke.thisNode()\['Size'].getValue())==2:\n    nuke.thisNode()\['Premult'].setEnabled(False)\n    nuke.thisNode()\['Premult'].setValue(0)\nelse:\n    nuke.thisNode()\['Premult'].setEnabled(True)\n"
+ tile_color 0xd39600ff
+ note_font "Bitstream Vera Sans Bold"
+ selected true
+ xpos -27773
+ ypos 53828
+ addUserKnob {20 ingiEdgeExtend l "ingi Edge Extend"}
+ addUserKnob {41 blackpoint t "Alpha blackpoint before edge extension." T contrast_alpha.blackpoint}
+ addUserKnob {41 whitepoint t "Alpha whitepoint before edge extension." T contrast_alpha.whitepoint}
+ addUserKnob {7 erode t "Erode the alpha before edge extension." R 0 10}
+ addUserKnob {26 _1 l "" +STARTLINE}
+ addUserKnob {41 scale l Scale t "0 to 1, any values outside that range will be ignored. \nIt scales the extension based on x or y.\n1=full extension(normal)\n0=no extension" T ieeBlurRatio.scale}
+ addUserKnob {26 ""}
+ addUserKnob {4 Size l "Output Size" t "The size is proportional to the input resolution.\nSmaller is faster, larger is slower, with \"fill up frame\" being the slowest. \nThe only reason to use a smaller size is to make this node faster.\nOther than that, it is preferable to use the largest, to avoid the risk of solid black appearing." M {"Small (fastest)" "Large (slower)" "Fill up frame" "" ""}}
+ addUserKnob {6 Premult t "\"Fill up frame\" will always give an unpremult result." +STARTLINE}
+ Premult true
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannel l "mask channel" T Keymix1.maskChannel}
+ addUserKnob {41 invertMask l invert -STARTLINE T Keymix1.invertMask}
+ addUserKnob {7 mix}
+ mix 1
+ addUserKnob {26 version_author l "" +STARTLINE T "<span style=\"color:#afafaf\"><br/><b>ingi Edge Extend v2.2</b> by <b>Corentin Fievet </b></span>"}
+ addUserKnob {20 info}
+ addUserKnob {26 info_1 l "Bounding Box" T "This node is compatible with bounding boxes. \n\nIt should not be necessary to have to fiddle around with reformats before and after the node in order to get the edge extension to work within the bbox that is outside the format.\n\nTo get even more edge extension outside the format canvas, simply input a bigger bounding box, with a crop or adjust bbox.\n\nIf the input bbox is bigger than the format, then this node will keep on extending the edges until it reaches the borders of the bounding box. \nHowever, the edge extension size is based on the format, not the bbox. \nMeaning that if the input bbox is much bigger than the input format, the edge extension will become solid black before reaching the bbox borders.\n\nIf the input bbox is smaller than the format, this node will allow the bbox to grow along with the edge extension, until it reaches the borders of the format."}
+ addUserKnob {20 endGroup n -1}
+}
+ Blur {
+  inputs 0
+  size {1 1}
+  name ieeBlurRatio
+  xpos 84
+  ypos 433
+  addUserKnob {20 User}
+  addUserKnob {12 scale l Scale}
+  scale {1 1}
+  addUserKnob {12 max}
+  max {{this.scale.x>1?1:this.scale.x} {this.scale.y>1?1:this.scale.y}}
+  addUserKnob {12 min}
+  min {{this.max.x<0.00001?0.00001:this.max.x} {this.max.y<0.00001?0.00001:this.max.y}}
+ }
+ Input {
+  inputs 0
+  name Inputpremult
+  xpos -1044
+  ypos -13
+ }
+ Dot {
+  name Dot106
+  xpos -1010
+  ypos 86
+ }
+set Nd7d31d30 [stack 0]
+ Crop {
+  box {{min(input.bbox.x,0)} {min(input.bbox.y,0)} {max(input.bbox.r,input.width)} {max(input.bbox.t,input.height)}}
+  crop false
+  name ieeCropMaster
+  xpos -872
+  ypos 82
+ }
+push $Nd7d31d30
+ Dot {
+  name Dot126
+  xpos -1389
+  ypos 86
+ }
+ Dot {
+  name Dot127
+  xpos -1389
+  ypos 3175
+ }
+ Dot {
+  name Dot5
+  xpos -690
+  ypos 3175
+ }
+set Na454af30 [stack 0]
+ Dot {
+  name Dot7
+  xpos -690
+  ypos 3289
+ }
+set Nd7d14b90 [stack 0]
+ Dot {
+  name Dot13
+  xpos -690
+  ypos 3334
+ }
+ Input {
+  inputs 0
+  name Inputmask
+  xpos -336
+  ypos 3229
+  number 1
+ }
+ Invert {
+  name Invert5
+  xpos -336
+  ypos 3279
+ }
+push $Nd7d14b90
+push $Na454af30
+push $Nd7d31d30
+ Unpremult {
+  name Unpremult1
+  xpos -1044
+  ypos 156
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.98
+  white_clamp true
+  name contrast_alpha
+  xpos -1044
+  ypos 209
+  addUserKnob {20 User}
+  addUserKnob {7 black_1 l blackpoint}
+  black_1 0.98
+  addUserKnob {7 white_1 l whitepoint}
+  white_1 1
+ }
+ Dilate {
+  channels alpha
+  size {{parent.erode*-1}}
+  name Dilate1
+  xpos -1044
+  ypos 247
+  addUserKnob {20 User}
+ }
+ Premult {
+  name Premult1
+  xpos -1044
+  ypos 317
+ }
+ Dot {
+  name Dot6
+  xpos -1010
+  ypos 368
+ }
+set Nd8692560 [stack 0]
+ Unpremult {
+  name Unpremult4
+  xpos -1178
+  ypos 381
+ }
+ Expression {
+  expr3 r+g+b!=0?1:0
+  name Expression1
+  selected true
+  xpos -1178
+  ypos 407
+ }
+ Blur {
+  size {{((input.width+input.height)/6144+1)*ieeBlurRatio.min.x} {((input.width+input.height)/6144+1)*ieeBlurRatio.min.y}}
+  crop false
+  name Blur6144
+  xpos -1178
+  ypos 433
+ }
+ Crop {
+  box {{ieeCropMaster.bbox.x} {ieeCropMaster.bbox.y} {ieeCropMaster.bbox.r} {ieeCropMaster.bbox.t}}
+  intersect true
+  crop false
+  name Crop1
+  xpos -1178
+  ypos 471
+ }
+push $Nd8692560
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge4
+  xpos -1044
+  ypos 481
+ }
+set Nd99d32c0 [stack 0]
+ Unpremult {
+  name Unpremult5
+  xpos -1184
+  ypos 536
+ }
+ Expression {
+  expr3 r+g+b!=0?1:0
+  name Expression2
+  xpos -1184
+  ypos 562
+ }
+ Blur {
+  size {{((input.width+input.height)/3072+1)*ieeBlurRatio.min.x} {((input.width+input.height)/3072+1)*ieeBlurRatio.min.y}}
+  crop false
+  name Blur3072
+  xpos -1184
+  ypos 588
+ }
+ Crop {
+  box {{ieeCropMaster.bbox.x} {ieeCropMaster.bbox.y} {ieeCropMaster.bbox.r} {ieeCropMaster.bbox.t}}
+  intersect true
+  crop false
+  name Crop2
+  xpos -1184
+  ypos 626
+ }
+push $Nd99d32c0
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge5
+  xpos -1044
+  ypos 639
+ }
+set Nd7cdb7a0 [stack 0]
+ Unpremult {
+  name Unpremult6
+  xpos -1184
+  ypos 688
+ }
+ Expression {
+  expr3 r+g+b!=0?1:0
+  name Expression3
+  xpos -1184
+  ypos 714
+ }
+ Blur {
+  size {{((input.width+input.height)/1536)*ieeBlurRatio.min.x} {((input.width+input.height)/1536)*ieeBlurRatio.min.y}}
+  crop false
+  name Blur1536
+  xpos -1184
+  ypos 744
+ }
+ Crop {
+  box {{ieeCropMaster.bbox.x} {ieeCropMaster.bbox.y} {ieeCropMaster.bbox.r} {ieeCropMaster.bbox.t}}
+  intersect true
+  crop false
+  name Crop3
+  xpos -1184
+  ypos 782
+ }
+push $Nd7cdb7a0
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge6
+  xpos -1044
+  ypos 782
+ }
+set Nd7d256e0 [stack 0]
+ Unpremult {
+  name Unpremult7
+  xpos -1184
+  ypos 835
+ }
+ Expression {
+  expr3 r+g+b!=0?1:0
+  name Expression4
+  xpos -1184
+  ypos 861
+ }
+ Blur {
+  size {{((input.width+input.height)/768)*ieeBlurRatio.min.x} {((input.width+input.height)/768)*ieeBlurRatio.min.y}}
+  crop false
+  name Blur768
+  xpos -1184
+  ypos 889
+ }
+ Crop {
+  box {{ieeCropMaster.bbox.x} {ieeCropMaster.bbox.y} {ieeCropMaster.bbox.r} {ieeCropMaster.bbox.t}}
+  intersect true
+  crop false
+  name Crop4
+  xpos -1184
+  ypos 927
+ }
+push $Nd7d256e0
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge7
+  xpos -1044
+  ypos 927
+ }
+ Dot {
+  name Dot4
+  xpos -1010
+  ypos 990
+ }
+set Nd7a7aeb0 [stack 0]
+ Unpremult {
+  name Unpremult8
+  xpos -1184
+  ypos 1044
+ }
+ Expression {
+  expr3 r+g+b!=0?1:0
+  name Expression5
+  xpos -1184
+  ypos 1070
+ }
+ Blur {
+  size {{((input.width+input.height)/384)*ieeBlurRatio.min.x} {((input.width+input.height)/384)*ieeBlurRatio.min.y}}
+  crop false
+  name Blur384
+  xpos -1184
+  ypos 1096
+ }
+ Crop {
+  box {{ieeCropMaster.bbox.x} {ieeCropMaster.bbox.y} {ieeCropMaster.bbox.r} {ieeCropMaster.bbox.t}}
+  intersect true
+  crop false
+  name Crop5
+  xpos -1184
+  ypos 1134
+ }
+push $Nd7a7aeb0
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge8
+  xpos -1044
+  ypos 1139
+ }
+ Dot {
+  name Dot3
+  xpos -1010
+  ypos 1179
+ }
+set Nd7abf9c0 [stack 0]
+ Dot {
+  name Dot1
+  xpos -510
+  ypos 1293
+ }
+set Nd7ac4840 [stack 0]
+ Unpremult {
+  name Unpremult9
+  xpos -652
+  ypos 1335
+ }
+ Expression {
+  expr3 r+g+b!=0?1:0
+  name Expression6
+  xpos -652
+  ypos 1361
+ }
+ Blur {
+  size {{((input.width+input.height)/192)*ieeBlurRatio.min.x} {((input.width+input.height)/192)*ieeBlurRatio.min.y}}
+  crop false
+  name Blur192
+  xpos -652
+  ypos 1386
+ }
+ Crop {
+  box {{ieeCropMaster.bbox.x} {ieeCropMaster.bbox.y} {ieeCropMaster.bbox.r} {ieeCropMaster.bbox.t}}
+  intersect true
+  crop false
+  name Crop6
+  xpos -652
+  ypos 1424
+ }
+push $Nd7ac4840
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge9
+  xpos -544
+  ypos 1451
+ }
+set Nd7af8c50 [stack 0]
+ Unpremult {
+  name Unpremult10
+  xpos -662
+  ypos 1525
+ }
+ Expression {
+  expr3 r+g+b!=0?1:0
+  name Expression7
+  xpos -662
+  ypos 1551
+ }
+ Blur {
+  size {{((input.width+input.height)/96)*ieeBlurRatio.min.x} {((input.width+input.height)/96)*ieeBlurRatio.min.y}}
+  crop false
+  name Blur96
+  xpos -662
+  ypos 1577
+ }
+ Crop {
+  box {{ieeCropMaster.bbox.x} {ieeCropMaster.bbox.y} {ieeCropMaster.bbox.r} {ieeCropMaster.bbox.t}}
+  intersect true
+  crop false
+  name Crop7
+  xpos -662
+  ypos 1615
+ }
+push $Nd7af8c50
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge10
+  xpos -544
+  ypos 1656
+ }
+set Nd7b38900 [stack 0]
+ Unpremult {
+  name Unpremult11
+  xpos -654
+  ypos 1706
+ }
+ Expression {
+  expr3 r+g+b!=0?1:0
+  name Expression8
+  xpos -654
+  ypos 1732
+ }
+ Blur {
+  size {{((input.width+input.height)/48)*ieeBlurRatio.min.x} {((input.width+input.height)/48)*ieeBlurRatio.min.y}}
+  crop false
+  name Blur48
+  xpos -654
+  ypos 1758
+ }
+ Crop {
+  box {{ieeCropMaster.bbox.x} {ieeCropMaster.bbox.y} {ieeCropMaster.bbox.r} {ieeCropMaster.bbox.t}}
+  intersect true
+  crop false
+  name Crop8
+  xpos -654
+  ypos 1796
+ }
+push $Nd7b38900
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge11
+  xpos -544
+  ypos 1830
+ }
+ Dot {
+  name Dot2
+  xpos -510
+  ypos 1872
+ }
+set Nd7989470 [stack 0]
+ Dot {
+  name Dot8
+  xpos 35
+  ypos 2017
+ }
+set Nd798dfd0 [stack 0]
+ Unpremult {
+  name Unpremult12
+  xpos -139
+  ypos 2027
+ }
+ Expression {
+  expr3 r+g+b!=0?1:0
+  name Expression9
+  xpos -139
+  ypos 2053
+ }
+ Blur {
+  size {{((input.width+input.height)/24)*ieeBlurRatio.min.x} {((input.width+input.height)/24)*ieeBlurRatio.min.y}}
+  crop false
+  name Blur24
+  xpos -139
+  ypos 2083
+ }
+ Crop {
+  box {{ieeCropMaster.bbox.x} {ieeCropMaster.bbox.y} {ieeCropMaster.bbox.r} {ieeCropMaster.bbox.t}}
+  intersect true
+  crop false
+  name Crop9
+  xpos -139
+  ypos 2121
+ }
+push $Nd798dfd0
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge12
+  xpos 1
+  ypos 2121
+ }
+set Nd79c2590 [stack 0]
+ Unpremult {
+  name Unpremult13
+  xpos -139
+  ypos 2184
+ }
+ Expression {
+  expr3 r+g+b!=0?1:0
+  name Expression10
+  xpos -139
+  ypos 2210
+ }
+ Blur {
+  size {{((input.width+input.height)/12)*ieeBlurRatio.min.x} {((input.width+input.height)/12)*ieeBlurRatio.min.y}}
+  crop false
+  name Blur12
+  xpos -139
+  ypos 2240
+ }
+ Crop {
+  box {{ieeCropMaster.bbox.x} {ieeCropMaster.bbox.y} {ieeCropMaster.bbox.r} {ieeCropMaster.bbox.t}}
+  intersect true
+  crop false
+  name Crop10
+  xpos -139
+  ypos 2278
+ }
+push $Nd79c2590
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge13
+  xpos 1
+  ypos 2278
+ }
+set Nd7a022a0 [stack 0]
+ Unpremult {
+  name Unpremult16
+  xpos -139
+  ypos 2347
+ }
+ Expression {
+  expr3 r+g+b!=0?1:0
+  name Expression11
+  xpos -139
+  ypos 2373
+ }
+ Blur {
+  size {{((input.width+input.height)/3)*ieeBlurRatio.min.x} {((input.width+input.height)/3)*ieeBlurRatio.min.y}}
+  crop false
+  name Blur15
+  xpos -139
+  ypos 2403
+ }
+ Crop {
+  box {{ieeCropMaster.bbox.x} {ieeCropMaster.bbox.y} {ieeCropMaster.bbox.r} {ieeCropMaster.bbox.t}}
+  intersect true
+  crop false
+  name Crop11
+  xpos -139
+  ypos 2441
+ }
+push $Nd7a022a0
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge14
+  xpos 1
+  ypos 2441
+ }
+ Unpremult {
+  name Unpremult14
+  xpos 1
+  ypos 2640
+ }
+push $Nd7989470
+ Unpremult {
+  name Unpremult3
+  xpos -544
+  ypos 2635
+ }
+push $Nd7abf9c0
+ Unpremult {
+  name Unpremult2
+  xpos -1044
+  ypos 2638
+ }
+ Switch {
+  inputs 3
+  which {{parent.Size}}
+  name ieechoose
+  xpos -544
+  ypos 2795
+  addUserKnob {20 User}
+  addUserKnob {4 Size l "Output Size" M {"Small (fastest)" "Large (slower)" "Fill up frame" "" "" ""}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -544
+  ypos 3165
+ }
+ Premult {
+  name Premult2
+  xpos -544
+  ypos 3224
+  disable {{"Premult==1 && ieechoose.which<2?0:1"}}
+ }
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix1
+  xpos -544
+  ypos 3279
+  disable {{"!\[exists parent.input1]"}}
+ }
+ Dissolve {
+  inputs 2
+  which {{1-parent.mix}}
+  name Dissolve1
+  xpos -544
+  ypos 3324
+  disable {{parent.mix==1}}
+ }
+ Output {
+  name Output1
+  xpos -544
+  ypos 3468
+ }
+end_group

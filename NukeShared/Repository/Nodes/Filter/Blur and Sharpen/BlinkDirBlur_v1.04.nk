@@ -1,0 +1,3070 @@
+#! /usr/local/Nuke12.0v5/libnuke-12.0.5.so -nx
+version 12.0 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="3840" h="2160" maximized="1" fullscreen="1" screen="0">
+        <splitter orientation="2">
+            <split size="340"/>
+            <dock id=""/>
+            <split size="64"/>
+            <dock id="" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1708"/>
+            <splitter orientation="1">
+                <split size="1880"/>
+                <dock id="" activePageId="Viewer.2">
+                    <page id="Viewer.2"/>
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="1199"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                    <page id="DAG.3"/>
+                </dock>
+                <split size="753"/>
+                <dock id="" activePageId="Properties.1">
+                    <page id="Properties.1"/>
+                    <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+                </dock>
+            </splitter>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "/run/media/rgray/My Book/Nuke/Nukepedia/BlinkDirBlur/BlinkDirBlur_v1.04.nk"
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x71c67100
+ label BlinkDirBlur
+ note_font_size 42
+ xpos -997
+ ypos -94
+ bdwidth 458
+ bdheight 341
+}
+Text2 {
+ inputs 0
+ font_size_toolbar 125
+ font_width_toolbar 100
+ font_height_toolbar 100
+ baseline_toolbar -400
+ cliptype bbox
+ message BlinkDirBlur
+ old_message {{66 108 105 110 107 68 105 114 66 108 117 114}
+   }
+ box {0 0 2048 1556}
+ xjustify center
+ yjustify center
+ transforms {{0 2}
+   }
+ font_size_values {{0 125 1 125 2 125 3 125 4 125 5 125 6 125 7 125 8 125 9 125 10 125 11 125 0 200 1 200 2 200 3 200 4 200 5 200 6 200 7 200 8 200 9 200 10 200 11 200}
+   }
+ baseline_values {{0 -400 1 -400 2 -400 3 -400 4 -400 5 -400 6 -400 7 -400 8 -400 9 -400 10 -400 11 -400 0 -1 1 -1 2 -1 3 -1 4 -1 5 -1 6 -1 7 -1 8 -1 9 -1 10 -1 11 -1}
+   }
+ font {{ Meera : Regular : smc/Meera.ttf : 0 }}
+ global_font_scale 1.1
+ font_size 125
+ baseline_shift -400
+ center {1024 778}
+ cursor_initialised true
+ autofit_bbox false
+ initial_cursor_position {{0 1556}
+   }
+ group_animations {{0} imported: 0 selected: items: "root transform/"}
+ animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+   }
+ name Text1
+ xpos 298
+ ypos -367
+}
+Transform {
+ translate {0 -60}
+ scale {1.05 1}
+ center {1024 778}
+ name Transform1
+ xpos 298
+ ypos -313
+}
+Crop {
+ box {0 0 2048 1556}
+ name Crop2
+ xpos 298
+ ypos -289
+}
+Dot {
+ name Dot3
+ xpos 332
+ ypos -231
+}
+set N11d70410 [stack 0]
+Grade {
+ white {0.8333333135 0.7333333492 0.8333333135 0.8000000119}
+ name Grade2
+ xpos 298
+ ypos 135
+}
+Group {
+ name R_ExponentialGlow4
+ xpos 298
+ ypos 183
+ addUserKnob {20 User}
+ addUserKnob {41 Falloff T NoOp1.Falloff}
+ addUserKnob {41 Intensity T NoOp1.Intensity}
+ addUserKnob {41 BlurSize l "Blur Size" T NoOp1.BlurSize}
+ addUserKnob {41 operation T Method.operation}
+ addUserKnob {26 ""}
+ addUserKnob {41 addSource l "Add Source" T NoOp1.addSource}
+ addUserKnob {41 InputCrop l "Crop to Input" -STARTLINE T NoOp1.InputCrop}
+ addUserKnob {41 Overscan T NoOp1.Overscan}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannel l "mask channel" T Keymix1.maskChannel}
+ addUserKnob {7 Mix}
+ Mix 1
+ addUserKnob {26 ""}
+ addUserKnob {26 INFO l "" +STARTLINE T "R_ExponebtialGlow v1.02"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -325
+  ypos -739
+ }
+ Dot {
+  name Dot18
+  xpos -291
+  ypos -655
+ }
+set Nb7975360 [stack 0]
+ Dot {
+  name Dot3
+  xpos -441
+  ypos -655
+ }
+set N50e9c340 [stack 0]
+ Dot {
+  name Dot2
+  xpos -694
+  ypos -655
+ }
+ Dot {
+  name Dot4
+  xpos -694
+  ypos 913
+ }
+set N7c054200 [stack 0]
+ Dot {
+  name Dot1
+  xpos -694
+  ypos 1001
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -18
+  ypos 910
+  number 1
+ }
+push $N7c054200
+push $Nb7975360
+ NoOp {
+  name NoOp1
+  xpos -325
+  ypos -596
+  addUserKnob {20 User}
+  addUserKnob {7 Falloff R 0 5}
+  Falloff 1
+  addUserKnob {7 Intensity R 0 10}
+  Intensity 1
+  addUserKnob {14 BlurSize R 0 100}
+  BlurSize {1 1}
+  addUserKnob {26 ""}
+  addUserKnob {6 addSource l "Add Source" +STARTLINE}
+  addSource true
+  addUserKnob {6 InputCrop l "Crop to Input" +STARTLINE}
+  InputCrop true
+  addUserKnob {3 Overscan}
+  Overscan 200
+  addUserKnob {26 ""}
+ }
+set N55f98360 [stack 0]
+ Dot {
+  name Dot9
+  xpos 264
+  ypos -593
+ }
+ Log2Lin {
+  operation lin2log
+  name Log2Lin3
+  xpos 230
+  ypos -561
+  disable true
+ }
+ Keyer {
+  operation "luminance key"
+  name Keyer1
+  xpos 228
+  ypos -534
+ }
+ Log2Lin {
+  name Log2Lin4
+  xpos 230
+  ypos -475
+  disable true
+ }
+ Premult {
+  name Premult3
+  xpos 230
+  ypos -455
+ }
+ Remove {
+  operation keep
+  channels rgb
+  name Remove1
+  xpos 230
+  ypos -431
+ }
+ Grade {
+  multiply {{parent.NoOp1.Intensity/10}}
+  name Grade9
+  xpos 230
+  ypos -396
+ }
+ Dot {
+  name Dot10
+  xpos 264
+  ypos -303
+ }
+set N7ba4d440 [stack 0]
+ Dot {
+  name Dot11
+  xpos 264
+  ypos -192
+ }
+set N7ba52170 [stack 0]
+ Dot {
+  name Dot8
+  xpos 264
+  ypos -91
+ }
+set N7ba56fc0 [stack 0]
+ Dot {
+  name Dot12
+  xpos 264
+  ypos 2
+ }
+set N7b94bf70 [stack 0]
+ Dot {
+  name Dot13
+  xpos 264
+  ypos 91
+ }
+set N7b950d80 [stack 0]
+ Dot {
+  name Dot14
+  xpos 264
+  ypos 206
+ }
+set N7b955bd0 [stack 0]
+ Dot {
+  name Dot15
+  xpos 264
+  ypos 320
+ }
+set N7b84ab30 [stack 0]
+ Dot {
+  name Dot16
+  xpos 264
+  ypos 439
+ }
+set N7b84f980 [stack 0]
+ Dot {
+  name Dot17
+  xpos 264
+  ypos 561
+ }
+ Group {
+  name Glow9
+  xpos 125
+  ypos 558
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow8.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow8.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff8.value/NoOp1.Falloff}}
+  name Falloff9
+  xpos -5
+  ypos 552
+ }
+push $N7b84f980
+ Group {
+  name Glow8
+  xpos 125
+  ypos 436
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow7.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow7.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff7.value/NoOp1.Falloff}}
+  name Falloff8
+  xpos -6
+  ypos 430
+ }
+push $N7b84ab30
+ Group {
+  name Glow7
+  xpos 124
+  ypos 317
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow6.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow6.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff6.value/NoOp1.Falloff}}
+  name Falloff7
+  xpos -6
+  ypos 311
+ }
+push $N7b955bd0
+ Group {
+  name Glow6
+  xpos 125
+  ypos 203
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow5.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow5.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 132
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff5.value/NoOp1.Falloff}}
+  name Falloff6
+  xpos -7
+  ypos 197
+ }
+push $N7b950d80
+ Group {
+  name Glow5
+  xpos 125
+  ypos 88
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow4.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow4.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff4.value/NoOp1.Falloff}}
+  name Falloff5
+  xpos -7
+  ypos 82
+ }
+push $N7b94bf70
+ Group {
+  name Glow4
+  xpos 125
+  ypos -1
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow3.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow3.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff3.value/NoOp1.Falloff}}
+  name Falloff4
+  xpos -6
+  ypos -7
+ }
+set N54ed59e0 [stack 0]
+push $N7ba56fc0
+ Group {
+  name Glow3
+  xpos 125
+  ypos -94
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow2.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow2.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff2.value/NoOp1.Falloff}}
+  name Falloff3
+  xpos -6
+  ypos -100
+ }
+push $N7ba52170
+ Group {
+  name Glow2
+  xpos 128
+  ypos -195
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow1.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow1.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff1.value/NoOp1.Falloff}}
+  name Falloff2
+  xpos -8
+  ypos -201
+ }
+push $N55f98360
+push $N7ba4d440
+ Group {
+  name Glow1
+  xpos 127
+  ypos -306
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.NoOp1.BlurSize.w * parent.Scale.scale"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.NoOp1.BlurSize.h * parent.Scale.scale/height *width"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.NoOp1.Falloff}}
+  name Falloff1
+  xpos -6
+  ypos -312
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap
+  xpos -325
+  ypos -306
+  disable {{"parent.NoOp1.addSource? 0:1" x1 0 x67 1}}
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap1
+  xpos -325
+  ypos -195
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap2
+  xpos -325
+  ypos -94
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap3
+  xpos -325
+  ypos -1
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap4
+  xpos -325
+  ypos 88
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap5
+  xpos -325
+  ypos 203
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap6
+  xpos -325
+  ypos 317
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap7
+  xpos -325
+  ypos 436
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap8
+  xpos -325
+  ypos 558
+ }
+ Crop {
+  box {{"NoOp1.bbox.x - NoOp1.Overscan"} {"NoOp1.bbox.y - NoOp1.Overscan"} {"NoOp1.bbox.r + NoOp1.Overscan"} {"NoOp1.bbox.t + NoOp1.Overscan"}}
+  name Crop2
+  xpos -325
+  ypos 655
+  disable {{"parent.NoOp1.InputCrop? 0:1"}}
+ }
+set N53bdea20 [stack 0]
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox B
+  name Keymix1
+  xpos -325
+  ypos 904
+  disable {{"\[exists parent.input1] ? 0 : 1"}}
+ }
+ Dissolve {
+  inputs 2
+  which {{"Mix/-1 +1"}}
+  name Dissolve1
+  xpos -325
+  ypos 992
+ }
+ Dot {
+  name Dot19
+  xpos -291
+  ypos 1222
+ }
+ Output {
+  name Output1
+  xpos -325
+  ypos 1303
+ }
+push $N50e9c340
+ NoOp {
+  name Scale
+  xpos -475
+  ypos -598
+  addUserKnob {20 User}
+  addUserKnob {7 scale}
+  scale {{max(width,height)/2000}}
+ }
+push $N54ed59e0
+push $N53bdea20
+ Viewer {
+  inputs 2
+  frame_range 1-5
+  name Viewer1
+  xpos 258
+  ypos 1091
+ }
+ NoOp {
+  inputs 0
+  name Method
+  knobChanged "\n\nmode = nuke.thisNode().knob('operation').getValue()\n\nif mode == 0:\n    OP = (\"plus\")\nelse:\n    OP = ('screen')\n\nfor n in nuke.allNodes():\n  if n.Class() == \"Merge2\" and \"Wrap\" in n.name():\n    n\[\"operation\"].setValue(OP)\n\n"
+  xpos -480
+  ypos -306
+  addUserKnob {20 User}
+  addUserKnob {68 operation M {plus screen}}
+ }
+end_group
+Dot {
+ name Dot4
+ xpos 332
+ ypos 340
+}
+Noise {
+ inputs 0
+ size 300
+ gain 0.7
+ gamma 0.22
+ center {1024 778}
+ name Noise1
+ xpos -74
+ ypos -370
+}
+Dot {
+ name Dot1
+ xpos -40
+ ypos -110
+}
+set N578dbff0 [stack 0]
+Group {
+ name BlinkDirBlur2
+ xpos -193
+ ypos 15
+ addUserKnob {20 User}
+ addUserKnob {19 Radial_Length l "Radial Length"}
+ Radial_Length -300
+ addUserKnob {6 Radial_Length_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 Zoom_Blur l "Zoom Length"}
+ Zoom_Blur {1133.333374 733.333313 1133.333374 1000}
+ addUserKnob {6 Zoom_Blur_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 Linear_Blur l "Linear Length"}
+ Linear_Blur {1450 2000 2550 2000}
+ addUserKnob {6 Linear_Blur_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {12 Center}
+ Center {1004 792}
+ addUserKnob {22 initCenter l "init Center" -STARTLINE T "n = nuke.thisNode()\nn\['Center'].setValue(\[(n.width()/2), (n.height()/2)])"}
+ addUserKnob {12 Target}
+ Target {806 248}
+ addUserKnob {6 useTarget -STARTLINE}
+ addUserKnob {6 useTargetLength -STARTLINE}
+ addUserKnob {19 Blur_Angle l "Blur Angle"}
+ Blur_Angle 45
+ addUserKnob {6 Blur_Angle_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 Aspect}
+ Aspect 1
+ addUserKnob {6 Aspect_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_2 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {7 Sample_Mult}
+ Sample_Mult 0.5
+ addUserKnob {6 Fade_To_Center l "Fade To Center" +STARTLINE}
+ addUserKnob {6 MapAllChannels l "Map All Channels" -STARTLINE}
+ MapAllChannels true
+ addUserKnob {26 ""}
+ addUserKnob {26 INFO l "" +STARTLINE T "v1.04 - (c) Owen Bulka and Riley Gray - 2018  "}
+ addUserKnob {20 GPU_Settings l "GPU Settings"}
+ addUserKnob {7 PercentageGPUmemory l "Percentage of GPU memory to use" R 0 100}
+ PercentageGPUmemory 50
+ addUserKnob {7 PercentageHeightTile l "Percentage of image height per tile" R 0 100}
+ PercentageHeightTile 40
+}
+ Input {
+  inputs 0
+  name Lengh_Map
+  xpos 1081
+  ypos -178
+  number 1
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos 1081
+  ypos -95
+  disable {{parent.MapAllChannels}}
+ }
+ Dot {
+  name Dot15
+  xpos 1115
+  ypos -36
+ }
+set Naaccbc00 [stack 0]
+ Input {
+  inputs 0
+  name Image
+  xpos 465
+  ypos -187
+ }
+ Dot {
+  name Dot1
+  xpos 499
+  ypos -92
+ }
+set Nf7d35ea0 [stack 0]
+ Dot {
+  name Dot8
+  xpos 641
+  ypos -92
+ }
+set Nf7d35200 [stack 0]
+ Dot {
+  name Dot9
+  xpos 780
+  ypos -92
+ }
+set N9537b010 [stack 0]
+ Dot {
+  name Dot10
+  xpos 904
+  ypos -92
+ }
+set N8d8e45f0 [stack 0]
+ Dot {
+  name Dot11
+  xpos 1031
+  ypos -92
+ }
+ BlinkScript {
+  inputs 2
+  recompileCount 32
+  ProgramGroup 1
+  KernelDescription "2 \"FastDirBlur\" iterate componentWise 9d8aadcf1d6091993fad465c282c83eb94bfda2ae19036f8f207577b7a6ce0b5 3 \"src\" Read Random \"map\" Read Point \"dst\" Write Point 9 \"Radial Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Zoom Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Linear_Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Blur_Angle\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== \"Fade To Center\" Bool 1 AA== \"Max Distance To Center\" Float 1 AAAAAA== 9 \"radial_length\" 4 1 \"zoom_length\" 4 1 \"linear_length\" 4 1 \"angle\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 \"fade_to_center\" 1 1 \"max_dist_corner\" 1 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel FastDirBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> map;\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 radial_length;  // This local variable is not exposed to the user.\n    float4 zoom_length;\n    float4 linear_length;\n    float4 angle;\n    float2 center;\n    int samples;\n    float4 aspect; \n    bool fade_to_center;\n    float max_dist_corner;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(radial_length, \"Radial Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n    defineParam(zoom_length, \"Zoom Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n    defineParam(linear_length, \"Linear_Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(angle, \"Blur_Angle\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n\n    defineParam(fade_to_center, \"Fade To Center\", false);\n    defineParam(max_dist_corner, \"Max Distance To Center\", 0.0f);\n  \}\n\n  void process(int3 pos) \{\n    SampleType(map) blur_map = map();\n\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float theta_add = radial_length\[pos.z] * blur_map\[pos.z] / samples;\n\n    float lin_x = 0.0f;\n    float lin_y = 0.0f;\n\n    float fade_scale = fade_to_center ? radius / max_dist_corner : 1;\n\n    float radius_sub = zoom_length\[pos.z] * fade_scale * blur_map\[pos.z] / samples;\n    float lin_x_add = linear_length\[pos.z] * cos(angle\[pos.z]) * fade_scale * blur_map\[pos.z] / samples;\n    float lin_y_add = linear_length\[pos.z] * sin(angle\[pos.z]) * fade_scale * blur_map\[pos.z] / samples;\n\n    float sum = 0.0f;\n\n    int sample = 0;\n    while (sample < samples && radius >= 0) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x + lin_x, radius * sin(theta) + center.y + lin_y);\n\n      theta += theta_add;\n      radius -= radius_sub;\n      lin_x += lin_x_add;\n      lin_y += lin_y_add;\n      sample++;\n    \}\n    dst() = sum / sample;\n  \}\n\};\n"
+  rebuild ""
+  "FastDirBlur_Radial Length" {{radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)}}
+  "FastDirBlur_Zoom Length" {{"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"}}
+  FastDirBlur_Linear_Length {{"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"}}
+  FastDirBlur_Blur_Angle {{"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"}}
+  FastDirBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  FastDirBlur_Samples {{"max(abs(rint(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))) * radians(max(max(parent.Radial_Length.r,parent.Radial_Length.g), max(parent.Radial_Length.b,parent.Radial_Length.a)))/4)), max(rint(abs(max(max(parent.Zoom_Blur.r,parent.Zoom_Blur.g), max(parent.Zoom_Blur.b,parent.Zoom_Blur.a)))), rint(abs(max(max(FastDirBlur_Linear_Length.r,FastDirBlur_Linear_Length.g), max(FastDirBlur_Linear_Length.b,FastDirBlur_Linear_Length.a))))))*abs(Sample_Mult)  +1"}}
+  FastDirBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  "FastDirBlur_Fade To Center" {{parent.Fade_To_Center}}
+  "FastDirBlur_Max Distance To Center" {{"1- proxy?(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y)))): (max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))))* proxy_scale"}}
+  rebuild_finalise ""
+  name RadialZoomLinearMap
+  xpos 997
+  ypos 17
+ }
+ Dot {
+  name Dot12
+  xpos 1031
+  ypos 229
+ }
+push $Naaccbc00
+ Dot {
+  name Dot19
+  xpos 972
+  ypos -36
+ }
+set Nda6cf870 [stack 0]
+push $N8d8e45f0
+ BlinkScript {
+  inputs 2
+  recompileCount 8
+  ProgramGroup 1
+  KernelDescription "2 \"ZoomBlur\" iterate componentWise 045447cce10296d559dab4e15caee3177813c8149f4b31d706937ca3a0757253 3 \"src\" Read Random \"map\" Read Point \"dst\" Write Point 6 \"Zoom Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== \"Fade To Center\" Bool 1 AA== \"Max Distance To Center\" Float 1 AAAAAA== 6 \"zoom_length\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 \"fade_to_center\" 1 1 \"max_dist_corner\" 1 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel ZoomBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> map;\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 zoom_length;\n    float2 center;\n    int samples;\n    float4 aspect; \n    bool fade_to_center;\n    float max_dist_corner;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(zoom_length, \"Zoom Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n\n    defineParam(fade_to_center, \"Fade To Center\", false);\n    defineParam(max_dist_corner, \"Max Distance To Center\", 0.0f);\n  \}\n\n  void process(int3 pos) \{\n    SampleType(map) blur_map = map();\n\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float fade_scale = fade_to_center ? radius / max_dist_corner : 1;\n\n    float radius_sub = zoom_length\[pos.z] * fade_scale * blur_map\[pos.z] / samples;\n\n    float sum = 0.0f;\n\n    int sample = 0;\n    while (sample < samples && radius >= 0) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x, radius * sin(theta) + center.y);\n\n      radius -= radius_sub;\n      sample++;\n    \}\n    dst() = sum / sample;\n  \}\n\};\n"
+  rebuild ""
+  "ZoomBlur_Zoom Length" {{"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"}}
+  ZoomBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  ZoomBlur_Samples {{"rint(abs(max(max(parent.Zoom_Blur.r,parent.Zoom_Blur.g), max(parent.Zoom_Blur.b,parent.Zoom_Blur.a))))* abs(Sample_Mult)  +1"}}
+  ZoomBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  "ZoomBlur_Fade To Center" {{parent.Fade_To_Center}}
+  "ZoomBlur_Max Distance To Center" {{"1- proxy?(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y)))): (max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))))* proxy_scale"}}
+  rebuild_finalise ""
+  name ZoomMap
+  xpos 870
+  ypos 14
+ }
+ Dot {
+  name Dot13
+  xpos 904
+  ypos 160
+ }
+push $Nda6cf870
+ Dot {
+  name Dot18
+  xpos 834
+  ypos -36
+ }
+set Ndbcca390 [stack 0]
+push $N9537b010
+ BlinkScript {
+  inputs 2
+  recompileCount 32
+  ProgramGroup 1
+  KernelDescription "2 \"RadialBlur\" iterate componentWise 448fabc69a9fbc99fceeedbd5479c75b028217fc057a93a442ac7fb14ea1d3f6 3 \"src\" Read Random \"map\" Read Point \"dst\" Write Point 4 \"Radial Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== 4 \"radial_length\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel RadialBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> map;\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 radial_length;  // This local variable is not exposed to the user.\n    float2 center;\n    int samples;\n    float4 aspect; \n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(radial_length, \"Radial Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n  \}\n\n  void process(int3 pos) \{\n    SampleType(map) blur_map = map();\n\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float theta_add = radial_length\[pos.z] * blur_map\[pos.z] / samples;\n\n    float sum = 0.0f;\n\n    for (int sample=0; sample < samples; sample++) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x, radius * sin(theta) + center.y);\n\n      theta += theta_add;\n    \}\n    dst() = sum / samples;\n  \}\n\};\n"
+  rebuild ""
+  "RadialBlur_Radial Length" {{radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)}}
+  RadialBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  RadialBlur_Samples {{"abs(rint(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))) * radians(max(max(parent.Radial_Length.r,parent.Radial_Length.g), max(parent.Radial_Length.b,parent.Radial_Length.a)))/4))* abs(Sample_Mult)  +1"}}
+  RadialBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  rebuild_finalise ""
+  name RadialMap
+  xpos 746
+  ypos 11
+ }
+ Dot {
+  name Dot14
+  xpos 780
+  ypos 84
+ }
+push $Ndbcca390
+ Dot {
+  name Dot17
+  xpos 705
+  ypos -36
+ }
+push $Nf7d35200
+ BlinkScript {
+  inputs 2
+  recompileCount 34
+  ProgramGroup 1
+  KernelDescription "2 \"LinearBlur\" iterate componentWise 0e21876bf550589e27a04540efb9bea707d99c87355d4c941a30711252ee5438 3 \"src\" Read Random \"map\" Read Point \"dst\" Write Point 4 \"Linear_Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Blur_Angle\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== 4 \"linear_length\" 4 1 \"angle\" 4 1 \"samples\" 1 1 \"aspect\" 4 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel LinearBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> map;\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 linear_length;\n    float4 angle;\n    int samples;\n    float4 aspect;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(linear_length, \"Linear_Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(angle, \"Blur_Angle\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n  \}\n\n  void process(int3 pos) \{\n    SampleType(map) blur_map = map();\n\n    float lin_x = pos.x;\n    float lin_y = pos.y;\n\n    float lin_x_add = linear_length\[pos.z] * cos(angle\[pos.z]) * blur_map\[pos.z] / samples;\n    float lin_y_add = linear_length\[pos.z] * sin(angle\[pos.z]) * blur_map\[pos.z] / samples;\n\n    float sum = 0.0f;\n\n    for (int sample=0; sample < samples; sample++) \{\n      sum += bilinear(src, lin_x, lin_y);\n\n      lin_x += lin_x_add;\n      lin_y += lin_y_add;\n    \}\n    dst() = sum / samples;\n  \}\n\};\n"
+  rebuild ""
+  LinearBlur_Linear_Length {{"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"}}
+  LinearBlur_Blur_Angle {{"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"}}
+  LinearBlur_Samples {{"rint(abs(max(max(LinearBlur_Linear_Length.r,LinearBlur_Linear_Length.g), max(LinearBlur_Linear_Length.b,LinearBlur_Linear_Length.a))))* abs(Sample_Mult)  +1"}}
+  LinearBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  rebuild_finalise ""
+  name LinearMap
+  xpos 607
+  ypos 14
+ }
+ Switch {
+  inputs 2
+  which {{"parent.Radial_Length.r || parent.Radial_Length.g || parent.Radial_Length.b || parent.Radial_Length.a"}}
+  name if_radial1
+  xpos 607
+  ypos 81
+ }
+ Switch {
+  inputs 2
+  which {{"parent.Zoom_Blur.r || parent.Zoom_Blur.g || parent.Zoom_Blur.b || parent.Zoom_Blur.a"}}
+  name if_zoom1
+  xpos 607
+  ypos 157
+ }
+ Switch {
+  inputs 2
+  which {{"(parent.Radial_Length.r || parent.Radial_Length.g || parent.Radial_Length.b || parent.Radial_Length.a) + (parent.Linear.LinearBlur_Linear_Length.r || parent.Linear.LinearBlur_Linear_Length.g || parent.Linear.LinearBlur_Linear_Length.b || parent.Linear.LinearBlur_Linear_Length.a) + (parent.Zoom_Blur.r || parent.Zoom_Blur.g || parent.Zoom_Blur.b || parent.Zoom_Blur.a) > 1"}}
+  name if_all1
+  xpos 607
+  ypos 226
+ }
+ Dot {
+  name Dot16
+  xpos 641
+  ypos 329
+ }
+push $Nf7d35ea0
+ Dot {
+  name Dot2
+  xpos 365
+  ypos -92
+ }
+set N6f9d7fc0 [stack 0]
+ Dot {
+  name Dot4
+  xpos 228
+  ypos -92
+ }
+set N3929e990 [stack 0]
+ Dot {
+  name Dot3
+  xpos 80
+  ypos -92
+ }
+ BlinkScript {
+  recompileCount 32
+  ProgramGroup 1
+  KernelDescription "2 \"FastDirBlur\" iterate componentWise c3dc040cc19ccb16c6879a85eaf85386b7eff081ceadc489df7bbbad9f08d131 2 \"src\" Read Random \"dst\" Write Point 9 \"Radial Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Zoom Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Linear_Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Blur_Angle\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== \"Fade To Center\" Bool 1 AA== \"Max Distance To Center\" Float 1 AAAAAA== 9 \"radial_length\" 4 1 \"zoom_length\" 4 1 \"linear_length\" 4 1 \"angle\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 \"fade_to_center\" 1 1 \"max_dist_corner\" 1 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel FastDirBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 radial_length;  // This local variable is not exposed to the user.\n    float4 zoom_length;\n    float4 linear_length;\n    float4 angle;\n    float2 center;\n    int samples;\n    float4 aspect; \n    bool fade_to_center;\n    float max_dist_corner;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(radial_length, \"Radial Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n    defineParam(zoom_length, \"Zoom Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n    defineParam(linear_length, \"Linear_Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(angle, \"Blur_Angle\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n\n    defineParam(fade_to_center, \"Fade To Center\", false);\n    defineParam(max_dist_corner, \"Max Distance To Center\", 0.0f);\n  \}\n\n  void process(int3 pos) \{\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float theta_add = radial_length\[pos.z] / samples;\n\n    float lin_x = 0.0f;\n    float lin_y = 0.0f;\n\n    float fade_scale = fade_to_center ? radius / max_dist_corner : 1;\n\n    float radius_sub = zoom_length\[pos.z] * fade_scale / samples;\n    float lin_x_add = linear_length\[pos.z] * cos(angle\[pos.z]) * fade_scale / samples;\n    float lin_y_add = linear_length\[pos.z] * sin(angle\[pos.z]) * fade_scale / samples;\n\n    float sum = 0.0f;\n\n    int sample = 0;\n    while (sample < samples && radius >= 0) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x + lin_x, radius * sin(theta) + center.y + lin_y);\n\n      theta += theta_add;\n      radius -= radius_sub;\n      lin_x += lin_x_add;\n      lin_y += lin_y_add;\n      sample++;\n    \}\n    dst() = sum / sample;\n  \}\n\};\n"
+  rebuild ""
+  "FastDirBlur_Radial Length" {{radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)}}
+  "FastDirBlur_Zoom Length" {{"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"}}
+  FastDirBlur_Linear_Length {{"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"}}
+  FastDirBlur_Blur_Angle {{"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"}}
+  FastDirBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  FastDirBlur_Samples {{"max(abs(rint(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))) * radians(max(max(parent.Radial_Length.r,parent.Radial_Length.g), max(parent.Radial_Length.b,parent.Radial_Length.a)))/4)), max(rint(abs(max(max(parent.Zoom_Blur.r,parent.Zoom_Blur.g), max(parent.Zoom_Blur.b,parent.Zoom_Blur.a)))), rint(abs(max(max(FastDirBlur_Linear_Length.r,FastDirBlur_Linear_Length.g), max(FastDirBlur_Linear_Length.b,FastDirBlur_Linear_Length.a))))))*abs(Sample_Mult)  +1"}}
+  FastDirBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  "FastDirBlur_Fade To Center" {{parent.Fade_To_Center}}
+  "FastDirBlur_Max Distance To Center" {{"1- proxy?(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y)))): (max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))))* proxy_scale"}}
+  rebuild_finalise ""
+  name RadialZoomLinear
+  xpos 46
+  ypos 12
+ }
+ Dot {
+  name Dot7
+  xpos 80
+  ypos 229
+ }
+push $N3929e990
+ BlinkScript {
+  recompileCount 10
+  ProgramGroup 1
+  KernelDescription "2 \"ZoomBlur\" iterate componentWise be8e25d2e19a31316681c897251d90744e54fdc8c65d4197f08914f321e7fa91 2 \"src\" Read Random \"dst\" Write Point 6 \"Zoom Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== \"Fade To Center\" Bool 1 AA== \"Max Distance To Center\" Float 1 AAAAAA== 6 \"zoom_length\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 \"fade_to_center\" 1 1 \"max_dist_corner\" 1 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel ZoomBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 zoom_length;\n    float2 center;\n    int samples;\n    float4 aspect; \n    bool fade_to_center;\n    float max_dist_corner;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(zoom_length, \"Zoom Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n\n    defineParam(fade_to_center, \"Fade To Center\", false);\n    defineParam(max_dist_corner, \"Max Distance To Center\", 0.0f);\n  \}\n\n  void process(int3 pos) \{\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float fade_scale = fade_to_center ? radius / max_dist_corner : 1;\n\n    float radius_sub = zoom_length\[pos.z] * fade_scale / samples;\n\n    float sum = 0.0f;\n\n    int sample = 0;\n    while (sample < samples && radius >= 0) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x, radius * sin(theta) + center.y);\n\n      radius -= radius_sub;\n      sample++;\n    \}\n    dst() = sum / sample;\n  \}\n\};\n"
+  rebuild ""
+  "ZoomBlur_Zoom Length" {{"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"}}
+  ZoomBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  ZoomBlur_Samples {{"rint(abs(max(max(parent.Zoom_Blur.r,parent.Zoom_Blur.g), max(parent.Zoom_Blur.b,parent.Zoom_Blur.a)))) * abs(Sample_Mult)  +1"}}
+  ZoomBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  "ZoomBlur_Fade To Center" {{parent.Fade_To_Center}}
+  "ZoomBlur_Max Distance To Center" {{"1- proxy?(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y)))): (max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))))* proxy_scale"}}
+  rebuild_finalise ""
+  name Zoom
+  xpos 194
+  ypos 10
+ }
+ Dot {
+  name Dot6
+  xpos 228
+  ypos 160
+ }
+push $N6f9d7fc0
+ BlinkScript {
+  recompileCount 31
+  ProgramGroup 1
+  KernelDescription "2 \"RadialBlur\" iterate componentWise fb1620c4156fe072986c7f98ace6f59c92b276ee60f408b83e21acf1b6b1f444 2 \"src\" Read Random \"dst\" Write Point 4 \"Radial Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== 4 \"radial_length\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel RadialBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 radial_length;  // This local variable is not exposed to the user.\n    float2 center;\n    int samples;\n    float4 aspect; \n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(radial_length, \"Radial Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n  \}\n\n  void process(int3 pos) \{\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float theta_add = radial_length\[pos.z] / samples;\n\n    float sum = 0.0f;\n\n    for (int sample=0; sample < samples; sample++) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x, radius * sin(theta) + center.y);\n\n      theta += theta_add;\n    \}\n    dst() = sum / samples;\n  \}\n\};\n"
+  rebuild ""
+  "RadialBlur_Radial Length" {{radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)}}
+  RadialBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  RadialBlur_Samples {{"abs(rint(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))) * radians(max(max(parent.Radial_Length.r,parent.Radial_Length.g), max(parent.Radial_Length.b,parent.Radial_Length.a)))/4))* abs(Sample_Mult)  +1"}}
+  RadialBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  rebuild_finalise ""
+  name Radial
+  xpos 331
+  ypos 12
+ }
+ Dot {
+  name Dot5
+  xpos 365
+  ypos 84
+ }
+push $Nf7d35ea0
+ BlinkScript {
+  recompileCount 31
+  ProgramGroup 1
+  KernelDescription "2 \"LinearBlur\" iterate componentWise eeaa4ecce011b0f88e01a7ac73e36853f779f938add6b77cc8aa0cb5a3e0a7b9 2 \"src\" Read Random \"dst\" Write Point 4 \"Linear_Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Blur_Angle\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== 4 \"linear_length\" 4 1 \"angle\" 4 1 \"samples\" 1 1 \"aspect\" 4 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel LinearBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 linear_length;\n    float4 angle;\n    int samples;\n    float4 aspect;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(linear_length, \"Linear_Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(angle, \"Blur_Angle\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n  \}\n\n  void process(int3 pos) \{\n    float lin_x = pos.x;\n    float lin_y = pos.y;\n\n    float lin_x_add = linear_length\[pos.z] * cos(angle\[pos.z]) / samples;\n    float lin_y_add = linear_length\[pos.z] * sin(angle\[pos.z]) / samples;\n\n    float sum = 0.0f;\n\n    for (int sample=0; sample < samples; sample++) \{\n      sum += bilinear(src, lin_x, lin_y);\n\n      lin_x += lin_x_add;\n      lin_y += lin_y_add;\n    \}\n    dst() = sum / samples;\n  \}\n\};\n"
+  rebuild ""
+  LinearBlur_Linear_Length {{"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"}}
+  LinearBlur_Blur_Angle {{"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"}}
+  LinearBlur_Samples {{"rint(abs(max(max(LinearBlur_Linear_Length.r,LinearBlur_Linear_Length.g), max(LinearBlur_Linear_Length.b,LinearBlur_Linear_Length.a))))* abs(Sample_Mult)  +1"}}
+  LinearBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  rebuild_finalise ""
+  name Linear
+  xpos 465
+  ypos 12
+ }
+ Switch {
+  inputs 2
+  which {{"parent.Radial_Length.r || parent.Radial_Length.g || parent.Radial_Length.b || parent.Radial_Length.a"}}
+  name if_radial
+  xpos 465
+  ypos 81
+ }
+ Switch {
+  inputs 2
+  which {{"parent.Zoom_Blur.r || parent.Zoom_Blur.g || parent.Zoom_Blur.b || parent.Zoom_Blur.a"}}
+  name if_zoom
+  xpos 465
+  ypos 157
+ }
+ Switch {
+  inputs 2
+  which {{"(parent.Radial_Length.r || parent.Radial_Length.g || parent.Radial_Length.b || parent.Radial_Length.a) + (parent.Linear.LinearBlur_Linear_Length.r || parent.Linear.LinearBlur_Linear_Length.g || parent.Linear.LinearBlur_Linear_Length.b || parent.Linear.LinearBlur_Linear_Length.a) + (parent.Zoom_Blur.r || parent.Zoom_Blur.g || parent.Zoom_Blur.b || parent.Zoom_Blur.a) > 1"}}
+  name if_all
+  xpos 465
+  ypos 226
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input1] "}}
+  name Mode
+  xpos 465
+  ypos 326
+ }
+ Switch {
+  which {{"\[exists parent.input0] ? 0 : 1"}}
+  name notError
+  xpos 465
+  ypos 424
+ }
+ Output {
+  name Output1
+  xpos 465
+  ypos 520
+ }
+end_group
+push $N11d70410
+Dot {
+ name Dot5
+ xpos 134
+ ypos -231
+}
+Group {
+ name R_ExponentialGlow3
+ xpos 100
+ ypos -174
+ addUserKnob {20 User}
+ addUserKnob {41 Falloff T NoOp1.Falloff}
+ addUserKnob {41 Intensity T NoOp1.Intensity}
+ addUserKnob {41 BlurSize l "Blur Size" T NoOp1.BlurSize}
+ addUserKnob {41 operation T Method.operation}
+ addUserKnob {26 ""}
+ addUserKnob {41 addSource l "Add Source" T NoOp1.addSource}
+ addUserKnob {41 InputCrop l "Crop to Input" -STARTLINE T NoOp1.InputCrop}
+ addUserKnob {41 Overscan T NoOp1.Overscan}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannel l "mask channel" T Keymix1.maskChannel}
+ addUserKnob {7 Mix}
+ Mix 1
+ addUserKnob {26 ""}
+ addUserKnob {26 INFO l "" +STARTLINE T "R_ExponebtialGlow v1.02"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -325
+  ypos -739
+ }
+ Dot {
+  name Dot18
+  xpos -291
+  ypos -655
+ }
+set Nc8f1ff00 [stack 0]
+ Dot {
+  name Dot3
+  xpos -441
+  ypos -655
+ }
+set N701d4dc0 [stack 0]
+ Dot {
+  name Dot2
+  xpos -694
+  ypos -655
+ }
+ Dot {
+  name Dot4
+  xpos -694
+  ypos 913
+ }
+set N89670a40 [stack 0]
+ Dot {
+  name Dot1
+  xpos -694
+  ypos 1001
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -18
+  ypos 910
+  number 1
+ }
+push $N89670a40
+push $Nc8f1ff00
+ NoOp {
+  name NoOp1
+  xpos -325
+  ypos -596
+  addUserKnob {20 User}
+  addUserKnob {7 Falloff R 0 5}
+  Falloff 0.48
+  addUserKnob {7 Intensity R 0 10}
+  Intensity 1.8
+  addUserKnob {14 BlurSize R 0 100}
+  BlurSize {0.8 1}
+  addUserKnob {26 ""}
+  addUserKnob {6 addSource l "Add Source" +STARTLINE}
+  addSource true
+  addUserKnob {6 InputCrop l "Crop to Input" +STARTLINE}
+  InputCrop true
+  addUserKnob {3 Overscan}
+  Overscan 200
+  addUserKnob {26 ""}
+ }
+set N895730b0 [stack 0]
+ Dot {
+  name Dot9
+  xpos 264
+  ypos -593
+ }
+ Log2Lin {
+  operation lin2log
+  name Log2Lin3
+  xpos 230
+  ypos -561
+  disable true
+ }
+ Keyer {
+  operation "luminance key"
+  name Keyer1
+  xpos 228
+  ypos -534
+ }
+ Log2Lin {
+  name Log2Lin4
+  xpos 230
+  ypos -475
+  disable true
+ }
+ Premult {
+  name Premult3
+  xpos 230
+  ypos -455
+ }
+ Remove {
+  operation keep
+  channels rgb
+  name Remove1
+  xpos 230
+  ypos -431
+ }
+ Grade {
+  multiply {{parent.NoOp1.Intensity/10}}
+  name Grade9
+  xpos 230
+  ypos -396
+ }
+ Dot {
+  name Dot10
+  xpos 264
+  ypos -303
+ }
+set N716e3cf0 [stack 0]
+ Dot {
+  name Dot11
+  xpos 264
+  ypos -192
+ }
+set N3c2c9910 [stack 0]
+ Dot {
+  name Dot8
+  xpos 264
+  ypos -91
+ }
+set N3cc7ce50 [stack 0]
+ Dot {
+  name Dot12
+  xpos 264
+  ypos 2
+ }
+set N6fbd4430 [stack 0]
+ Dot {
+  name Dot13
+  xpos 264
+  ypos 91
+ }
+set N6f8d7a80 [stack 0]
+ Dot {
+  name Dot14
+  xpos 264
+  ypos 206
+ }
+set N41924c50 [stack 0]
+ Dot {
+  name Dot15
+  xpos 264
+  ypos 320
+ }
+set N62a11420 [stack 0]
+ Dot {
+  name Dot16
+  xpos 264
+  ypos 439
+ }
+set N3c13dd50 [stack 0]
+ Dot {
+  name Dot17
+  xpos 264
+  ypos 561
+ }
+ Group {
+  name Glow9
+  xpos 125
+  ypos 558
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow8.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow8.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff8.value/NoOp1.Falloff}}
+  name Falloff9
+  xpos -5
+  ypos 552
+ }
+push $N3c13dd50
+ Group {
+  name Glow8
+  xpos 125
+  ypos 436
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow7.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow7.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff7.value/NoOp1.Falloff}}
+  name Falloff8
+  xpos -6
+  ypos 430
+ }
+push $N62a11420
+ Group {
+  name Glow7
+  xpos 124
+  ypos 317
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow6.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow6.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff6.value/NoOp1.Falloff}}
+  name Falloff7
+  xpos -6
+  ypos 311
+ }
+push $N41924c50
+ Group {
+  name Glow6
+  xpos 125
+  ypos 203
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow5.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow5.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 132
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff5.value/NoOp1.Falloff}}
+  name Falloff6
+  xpos -7
+  ypos 197
+ }
+push $N6f8d7a80
+ Group {
+  name Glow5
+  xpos 125
+  ypos 88
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow4.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow4.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff4.value/NoOp1.Falloff}}
+  name Falloff5
+  xpos -7
+  ypos 82
+ }
+push $N6fbd4430
+ Group {
+  name Glow4
+  xpos 125
+  ypos -1
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow3.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow3.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff3.value/NoOp1.Falloff}}
+  name Falloff4
+  xpos -6
+  ypos -7
+ }
+set Nd11dd0d0 [stack 0]
+push $N3cc7ce50
+ Group {
+  name Glow3
+  xpos 125
+  ypos -94
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow2.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow2.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff2.value/NoOp1.Falloff}}
+  name Falloff3
+  xpos -6
+  ypos -100
+ }
+push $N3c2c9910
+ Group {
+  name Glow2
+  xpos 128
+  ypos -195
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.Glow1.Xpercent *2"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.Glow1.Ypercent *2"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.Falloff1.value/NoOp1.Falloff}}
+  name Falloff2
+  xpos -8
+  ypos -201
+ }
+push $N895730b0
+push $N716e3cf0
+ Group {
+  name Glow1
+  xpos 127
+  ypos -306
+  addUserKnob {20 User}
+  addUserKnob {7 Xpercent}
+  Xpercent {{"parent.NoOp1.BlurSize.w * parent.Scale.scale"}}
+  addUserKnob {7 Ypercent}
+  Ypercent {{"parent.NoOp1.BlurSize.h * parent.Scale.scale/height *width"}}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 0
+  }
+  Blur {
+   size {{"Xpercent * 3 * (width/height)"} {"Ypercent * 3 * (height/width)"}}
+   crop false
+   name Blur1
+   selected true
+   xpos 0
+   ypos 134
+  }
+  Output {
+   name Output1
+   xpos 0
+   ypos 300
+  }
+ end_group
+ Multiply {
+  value {{parent.NoOp1.Falloff}}
+  name Falloff1
+  xpos -6
+  ypos -312
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap
+  xpos -325
+  ypos -306
+  disable {{"parent.NoOp1.addSource? 0:1" x1 0 x67 1}}
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap1
+  xpos -325
+  ypos -195
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap2
+  xpos -325
+  ypos -94
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap3
+  xpos -325
+  ypos -1
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap4
+  xpos -325
+  ypos 88
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap5
+  xpos -325
+  ypos 203
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap6
+  xpos -325
+  ypos 317
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap7
+  xpos -325
+  ypos 436
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Wrap8
+  xpos -325
+  ypos 558
+ }
+ Crop {
+  box {{"NoOp1.bbox.x - NoOp1.Overscan"} {"NoOp1.bbox.y - NoOp1.Overscan"} {"NoOp1.bbox.r + NoOp1.Overscan"} {"NoOp1.bbox.t + NoOp1.Overscan"}}
+  name Crop2
+  xpos -325
+  ypos 655
+  disable {{"parent.NoOp1.InputCrop? 0:1"}}
+ }
+set Nf3b1dd50 [stack 0]
+ Keymix {
+  inputs 3
+  invertMask true
+  bbox B
+  name Keymix1
+  xpos -325
+  ypos 904
+  disable {{"\[exists parent.input1] ? 0 : 1"}}
+ }
+ Dissolve {
+  inputs 2
+  which {{"Mix/-1 +1"}}
+  name Dissolve1
+  xpos -325
+  ypos 992
+ }
+ Dot {
+  name Dot19
+  xpos -291
+  ypos 1222
+ }
+ Output {
+  name Output1
+  xpos -325
+  ypos 1303
+ }
+push $N701d4dc0
+ NoOp {
+  name Scale
+  xpos -475
+  ypos -598
+  addUserKnob {20 User}
+  addUserKnob {7 scale}
+  scale {{max(width,height)/2000}}
+ }
+push $Nd11dd0d0
+push $Nf3b1dd50
+ Viewer {
+  inputs 2
+  frame_range 1-5
+  name Viewer1
+  xpos 258
+  ypos 1091
+ }
+ NoOp {
+  inputs 0
+  name Method
+  knobChanged "\n\nmode = nuke.thisNode().knob('operation').getValue()\n\nif mode == 0:\n    OP = (\"plus\")\nelse:\n    OP = ('screen')\n\nfor n in nuke.allNodes():\n  if n.Class() == \"Merge2\" and \"Wrap\" in n.name():\n    n\[\"operation\"].setValue(OP)\n\n"
+  xpos -480
+  ypos -306
+  addUserKnob {20 User}
+  addUserKnob {68 operation M {plus screen}}
+ }
+end_group
+ColorLookup {
+ lut {master {curve C 0 x0.4547145367 0.4547145367 x0.5279220939 0.5279220939 x0.6464485526 0.6464485526 x1 0.7969149351 x2.661216259 0.9598050117}
+   red {}
+   green {}
+   blue {}
+   alpha {}}
+ name ColorLookup1
+ xpos 100
+ ypos -150
+}
+Invert {
+ name Invert2
+ xpos 100
+ ypos -113
+}
+Group {
+ name Fractal_Blur2
+ xpos 100
+ ypos -64
+ addUserKnob {20 User}
+ addUserKnob {41 channels T Blur1.channels}
+ addUserKnob {26 ""}
+ addUserKnob {41 fractalSize l "fractal size" T Controller.fractalSize}
+ addUserKnob {41 fractalSpread l "fractal spread" T Controller.fractalSpread}
+ addUserKnob {41 seed T Controller.seed}
+ addUserKnob {41 blur T Controller.blur}
+ addUserKnob {41 mix T Controller.mix}
+ addUserKnob {26 ""}
+ addUserKnob {26 INFO l "" +STARTLINE T "Edited by Riley Gray (2018)"}
+}
+ Input {
+  inputs 0
+  name Image
+  xpos -587
+  ypos -230
+ }
+ Dot {
+  name Dot6
+  xpos -553
+  ypos -173
+ }
+ Crop {
+  box {{"Dot6.bbox.x - (IDistort1.uv_scale/1.5)"} {"Dot6.bbox.y - (IDistort1.uv_scale/1.5)"} {"Dot6.bbox.r + (IDistort1.uv_scale/1.5)"} {"Dot6.bbox.t + (IDistort1.uv_scale/1.5)"}}
+  crop false
+  name Crop3
+  xpos -587
+  ypos -124
+ }
+set Nd64c9da0 [stack 0]
+ Dot {
+  name Dot1
+  xpos -553
+  ypos -52
+ }
+set N89672220 [stack 0]
+ Dot {
+  name Dot2
+  xpos -920
+  ypos -52
+ }
+ Remove {
+  name Remove1
+  xpos -954
+  ypos -21
+ }
+set Nd9fcad00 [stack 0]
+ Noise {
+  output {rgba.red -rgba.green -rgba.blue none}
+  cliptype bbox
+  size {{parent.Controller.fractalSize}}
+  zoffset {{"parent.Controller.seed +1000"}}
+  center {1024 778}
+  name Noise2
+  selected true
+  xpos -1029
+  ypos 43
+ }
+ Crop {
+  box {{bbox.x} {bbox.y} {bbox.r} {bbox.t}}
+  name Crop2
+  xpos -1029
+  ypos 79
+ }
+push $Nd9fcad00
+ Noise {
+  output {-rgba.red rgba.green -rgba.blue none}
+  cliptype bbox
+  size {{parent.Controller.fractalSize}}
+  zoffset {{parent.Controller.seed}}
+  center {1024 778}
+  name Noise1
+  xpos -884
+  ypos 47
+ }
+ Crop {
+  box {{bbox.x} {bbox.y} {bbox.r} {bbox.t}}
+  name Crop1
+  xpos -884
+  ypos 85
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  output rgb
+  name Merge1
+  xpos -952
+  ypos 163
+ }
+ Dot {
+  name Dot3
+  xpos -918
+  ypos 266
+ }
+push $N89672220
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name Copy1
+  xpos -587
+  ypos 251
+ }
+ IDistort {
+  channels {{{parent.Blur1.channels}}}
+  uv forward
+  uv_offset 0.25
+  uv_scale {{parent.Controller.fractalSpread}}
+  name IDistort1
+  xpos -587
+  ypos 330
+ }
+ Remove {
+  channels forward
+  name Remove2
+  xpos -587
+  ypos 412
+ }
+push $N89672220
+ Dot {
+  name Dot5
+  xpos -406
+  ypos -52
+ }
+ Dot {
+  name Dot4
+  xpos -406
+  ypos 505
+ }
+ Dissolve {
+  inputs 2
+  channels {{{parent.Blur1.channels}}}
+  which {{parent.Controller.mix}}
+  name Dissolve1
+  xpos -587
+  ypos 496
+ }
+ Blur {
+  channels rgba
+  size {{parent.Controller.blur}}
+  name Blur1
+  xpos -587
+  ypos 592
+ }
+ Output {
+  name Output1
+  xpos -587
+  ypos 692
+ }
+ NoOp {
+  inputs 0
+  name Controller
+  xpos -279
+  ypos 55
+  addUserKnob {20 User}
+  addUserKnob {7 fractalSize l "fractal size" R 0 100}
+  fractalSize 300
+  addUserKnob {7 fractalSpread l "fractal spread" R 0 200}
+  fractalSpread 400
+  addUserKnob {7 seed R 0 5}
+  seed 1
+  addUserKnob {7 blur R 0 50}
+  blur 4
+  addUserKnob {7 mix}
+  mix 0.5
+ }
+push $Nd64c9da0
+ Viewer {
+  frame_range 1-100
+  name Viewer1
+  xpos -527
+  ypos 23
+ }
+end_group
+Blur {
+ size 6
+ name Blur1
+ xpos 100
+ ypos -40
+}
+Dot {
+ name Dot2
+ xpos 134
+ ypos 12
+}
+push $N578dbff0
+Group {
+ inputs 2
+ name BlinkDirBlur1
+ xpos -74
+ ypos 9
+ addUserKnob {20 User}
+ addUserKnob {19 Radial_Length l "Radial Length"}
+ Radial_Length -300
+ addUserKnob {6 Radial_Length_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 Zoom_Blur l "Zoom Length"}
+ Zoom_Blur {1133.333374 733.333313 1133.333374 1000}
+ addUserKnob {6 Zoom_Blur_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 Linear_Blur l "Linear Length"}
+ Linear_Blur {1450 2000 2550 2000}
+ addUserKnob {6 Linear_Blur_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {12 Center}
+ Center {1004 792}
+ addUserKnob {22 initCenter l "init Center" -STARTLINE T "n = nuke.thisNode()\nn\['Center'].setValue(\[(n.width()/2), (n.height()/2)])"}
+ addUserKnob {12 Target}
+ Target {806 248}
+ addUserKnob {6 useTarget -STARTLINE}
+ addUserKnob {6 useTargetLength -STARTLINE}
+ addUserKnob {19 Blur_Angle l "Blur Angle"}
+ Blur_Angle 45
+ addUserKnob {6 Blur_Angle_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 Aspect}
+ Aspect 1
+ addUserKnob {6 Aspect_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_2 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {7 Sample_Mult}
+ Sample_Mult 0.5
+ addUserKnob {6 Fade_To_Center l "Fade To Center" +STARTLINE}
+ addUserKnob {6 MapAllChannels l "Map All Channels" -STARTLINE}
+ MapAllChannels true
+ addUserKnob {26 ""}
+ addUserKnob {26 INFO l "" +STARTLINE T "v1.04 - (c) Owen Bulka and Riley Gray - 2018  "}
+ addUserKnob {20 GPU_Settings l "GPU Settings"}
+ addUserKnob {7 PercentageGPUmemory l "Percentage of GPU memory to use" R 0 100}
+ PercentageGPUmemory 50
+ addUserKnob {7 PercentageHeightTile l "Percentage of image height per tile" R 0 100}
+ PercentageHeightTile 40
+}
+ Input {
+  inputs 0
+  name Lengh_Map
+  xpos 1081
+  ypos -178
+  number 1
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos 1081
+  ypos -95
+  disable {{parent.MapAllChannels}}
+ }
+ Dot {
+  name Dot15
+  xpos 1115
+  ypos -36
+ }
+set N2cd96840 [stack 0]
+ Input {
+  inputs 0
+  name Image
+  xpos 465
+  ypos -187
+ }
+ Dot {
+  name Dot1
+  xpos 499
+  ypos -92
+ }
+set N15ff4fd0 [stack 0]
+ Dot {
+  name Dot8
+  xpos 641
+  ypos -92
+ }
+set N6f3db10 [stack 0]
+ Dot {
+  name Dot9
+  xpos 780
+  ypos -92
+ }
+set N78fd7a00 [stack 0]
+ Dot {
+  name Dot10
+  xpos 904
+  ypos -92
+ }
+set N78fdaab0 [stack 0]
+ Dot {
+  name Dot11
+  xpos 1031
+  ypos -92
+ }
+ BlinkScript {
+  inputs 2
+  recompileCount 32
+  ProgramGroup 1
+  KernelDescription "2 \"FastDirBlur\" iterate componentWise 9d8aadcf1d6091993fad465c282c83eb94bfda2ae19036f8f207577b7a6ce0b5 3 \"src\" Read Random \"map\" Read Point \"dst\" Write Point 9 \"Radial Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Zoom Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Linear_Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Blur_Angle\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== \"Fade To Center\" Bool 1 AA== \"Max Distance To Center\" Float 1 AAAAAA== 9 \"radial_length\" 4 1 \"zoom_length\" 4 1 \"linear_length\" 4 1 \"angle\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 \"fade_to_center\" 1 1 \"max_dist_corner\" 1 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel FastDirBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> map;\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 radial_length;  // This local variable is not exposed to the user.\n    float4 zoom_length;\n    float4 linear_length;\n    float4 angle;\n    float2 center;\n    int samples;\n    float4 aspect; \n    bool fade_to_center;\n    float max_dist_corner;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(radial_length, \"Radial Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n    defineParam(zoom_length, \"Zoom Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n    defineParam(linear_length, \"Linear_Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(angle, \"Blur_Angle\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n\n    defineParam(fade_to_center, \"Fade To Center\", false);\n    defineParam(max_dist_corner, \"Max Distance To Center\", 0.0f);\n  \}\n\n  void process(int3 pos) \{\n    SampleType(map) blur_map = map();\n\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float theta_add = radial_length\[pos.z] * blur_map\[pos.z] / samples;\n\n    float lin_x = 0.0f;\n    float lin_y = 0.0f;\n\n    float fade_scale = fade_to_center ? radius / max_dist_corner : 1;\n\n    float radius_sub = zoom_length\[pos.z] * fade_scale * blur_map\[pos.z] / samples;\n    float lin_x_add = linear_length\[pos.z] * cos(angle\[pos.z]) * fade_scale * blur_map\[pos.z] / samples;\n    float lin_y_add = linear_length\[pos.z] * sin(angle\[pos.z]) * fade_scale * blur_map\[pos.z] / samples;\n\n    float sum = 0.0f;\n\n    int sample = 0;\n    while (sample < samples && radius >= 0) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x + lin_x, radius * sin(theta) + center.y + lin_y);\n\n      theta += theta_add;\n      radius -= radius_sub;\n      lin_x += lin_x_add;\n      lin_y += lin_y_add;\n      sample++;\n    \}\n    dst() = sum / sample;\n  \}\n\};\n"
+  rebuild ""
+  "FastDirBlur_Radial Length" {{radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)}}
+  "FastDirBlur_Zoom Length" {{"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"}}
+  FastDirBlur_Linear_Length {{"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"}}
+  FastDirBlur_Blur_Angle {{"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"}}
+  FastDirBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  FastDirBlur_Samples {{"max(abs(rint(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))) * radians(max(max(parent.Radial_Length.r,parent.Radial_Length.g), max(parent.Radial_Length.b,parent.Radial_Length.a)))/4)), max(rint(abs(max(max(parent.Zoom_Blur.r,parent.Zoom_Blur.g), max(parent.Zoom_Blur.b,parent.Zoom_Blur.a)))), rint(abs(max(max(FastDirBlur_Linear_Length.r,FastDirBlur_Linear_Length.g), max(FastDirBlur_Linear_Length.b,FastDirBlur_Linear_Length.a))))))*abs(Sample_Mult)  +1"}}
+  FastDirBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  "FastDirBlur_Fade To Center" {{parent.Fade_To_Center}}
+  "FastDirBlur_Max Distance To Center" {{"1- proxy?(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y)))): (max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))))* proxy_scale"}}
+  rebuild_finalise ""
+  name RadialZoomLinearMap
+  xpos 997
+  ypos 17
+ }
+ Dot {
+  name Dot12
+  xpos 1031
+  ypos 229
+ }
+push $N2cd96840
+ Dot {
+  name Dot19
+  xpos 972
+  ypos -36
+ }
+set N2daad450 [stack 0]
+push $N78fdaab0
+ BlinkScript {
+  inputs 2
+  recompileCount 8
+  ProgramGroup 1
+  KernelDescription "2 \"ZoomBlur\" iterate componentWise 045447cce10296d559dab4e15caee3177813c8149f4b31d706937ca3a0757253 3 \"src\" Read Random \"map\" Read Point \"dst\" Write Point 6 \"Zoom Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== \"Fade To Center\" Bool 1 AA== \"Max Distance To Center\" Float 1 AAAAAA== 6 \"zoom_length\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 \"fade_to_center\" 1 1 \"max_dist_corner\" 1 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel ZoomBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> map;\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 zoom_length;\n    float2 center;\n    int samples;\n    float4 aspect; \n    bool fade_to_center;\n    float max_dist_corner;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(zoom_length, \"Zoom Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n\n    defineParam(fade_to_center, \"Fade To Center\", false);\n    defineParam(max_dist_corner, \"Max Distance To Center\", 0.0f);\n  \}\n\n  void process(int3 pos) \{\n    SampleType(map) blur_map = map();\n\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float fade_scale = fade_to_center ? radius / max_dist_corner : 1;\n\n    float radius_sub = zoom_length\[pos.z] * fade_scale * blur_map\[pos.z] / samples;\n\n    float sum = 0.0f;\n\n    int sample = 0;\n    while (sample < samples && radius >= 0) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x, radius * sin(theta) + center.y);\n\n      radius -= radius_sub;\n      sample++;\n    \}\n    dst() = sum / sample;\n  \}\n\};\n"
+  rebuild ""
+  "ZoomBlur_Zoom Length" {{"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"}}
+  ZoomBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  ZoomBlur_Samples {{"rint(abs(max(max(parent.Zoom_Blur.r,parent.Zoom_Blur.g), max(parent.Zoom_Blur.b,parent.Zoom_Blur.a))))* abs(Sample_Mult)  +1"}}
+  ZoomBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  "ZoomBlur_Fade To Center" {{parent.Fade_To_Center}}
+  "ZoomBlur_Max Distance To Center" {{"1- proxy?(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y)))): (max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))))* proxy_scale"}}
+  rebuild_finalise ""
+  name ZoomMap
+  xpos 870
+  ypos 14
+ }
+ Dot {
+  name Dot13
+  xpos 904
+  ypos 160
+ }
+push $N2daad450
+ Dot {
+  name Dot18
+  xpos 834
+  ypos -36
+ }
+set N2ccd65b0 [stack 0]
+push $N78fd7a00
+ BlinkScript {
+  inputs 2
+  recompileCount 32
+  ProgramGroup 1
+  KernelDescription "2 \"RadialBlur\" iterate componentWise 448fabc69a9fbc99fceeedbd5479c75b028217fc057a93a442ac7fb14ea1d3f6 3 \"src\" Read Random \"map\" Read Point \"dst\" Write Point 4 \"Radial Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== 4 \"radial_length\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel RadialBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> map;\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 radial_length;  // This local variable is not exposed to the user.\n    float2 center;\n    int samples;\n    float4 aspect; \n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(radial_length, \"Radial Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n  \}\n\n  void process(int3 pos) \{\n    SampleType(map) blur_map = map();\n\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float theta_add = radial_length\[pos.z] * blur_map\[pos.z] / samples;\n\n    float sum = 0.0f;\n\n    for (int sample=0; sample < samples; sample++) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x, radius * sin(theta) + center.y);\n\n      theta += theta_add;\n    \}\n    dst() = sum / samples;\n  \}\n\};\n"
+  rebuild ""
+  "RadialBlur_Radial Length" {{radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)}}
+  RadialBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  RadialBlur_Samples {{"abs(rint(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))) * radians(max(max(parent.Radial_Length.r,parent.Radial_Length.g), max(parent.Radial_Length.b,parent.Radial_Length.a)))/4))* abs(Sample_Mult)  +1"}}
+  RadialBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  rebuild_finalise ""
+  name RadialMap
+  xpos 746
+  ypos 11
+ }
+ Dot {
+  name Dot14
+  xpos 780
+  ypos 84
+ }
+push $N2ccd65b0
+ Dot {
+  name Dot17
+  xpos 705
+  ypos -36
+ }
+push $N6f3db10
+ BlinkScript {
+  inputs 2
+  recompileCount 34
+  ProgramGroup 1
+  KernelDescription "2 \"LinearBlur\" iterate componentWise 0e21876bf550589e27a04540efb9bea707d99c87355d4c941a30711252ee5438 3 \"src\" Read Random \"map\" Read Point \"dst\" Write Point 4 \"Linear_Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Blur_Angle\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== 4 \"linear_length\" 4 1 \"angle\" 4 1 \"samples\" 1 1 \"aspect\" 4 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel LinearBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> map;\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 linear_length;\n    float4 angle;\n    int samples;\n    float4 aspect;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(linear_length, \"Linear_Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(angle, \"Blur_Angle\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n  \}\n\n  void process(int3 pos) \{\n    SampleType(map) blur_map = map();\n\n    float lin_x = pos.x;\n    float lin_y = pos.y;\n\n    float lin_x_add = linear_length\[pos.z] * cos(angle\[pos.z]) * blur_map\[pos.z] / samples;\n    float lin_y_add = linear_length\[pos.z] * sin(angle\[pos.z]) * blur_map\[pos.z] / samples;\n\n    float sum = 0.0f;\n\n    for (int sample=0; sample < samples; sample++) \{\n      sum += bilinear(src, lin_x, lin_y);\n\n      lin_x += lin_x_add;\n      lin_y += lin_y_add;\n    \}\n    dst() = sum / samples;\n  \}\n\};\n"
+  rebuild ""
+  LinearBlur_Linear_Length {{"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"}}
+  LinearBlur_Blur_Angle {{"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"}}
+  LinearBlur_Samples {{"rint(abs(max(max(LinearBlur_Linear_Length.r,LinearBlur_Linear_Length.g), max(LinearBlur_Linear_Length.b,LinearBlur_Linear_Length.a))))* abs(Sample_Mult)  +1"}}
+  LinearBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  rebuild_finalise ""
+  name LinearMap
+  xpos 607
+  ypos 14
+ }
+ Switch {
+  inputs 2
+  which {{"parent.Radial_Length.r || parent.Radial_Length.g || parent.Radial_Length.b || parent.Radial_Length.a"}}
+  name if_radial1
+  xpos 607
+  ypos 81
+ }
+ Switch {
+  inputs 2
+  which {{"parent.Zoom_Blur.r || parent.Zoom_Blur.g || parent.Zoom_Blur.b || parent.Zoom_Blur.a"}}
+  name if_zoom1
+  xpos 607
+  ypos 157
+ }
+ Switch {
+  inputs 2
+  which {{"(parent.Radial_Length.r || parent.Radial_Length.g || parent.Radial_Length.b || parent.Radial_Length.a) + (parent.Linear.LinearBlur_Linear_Length.r || parent.Linear.LinearBlur_Linear_Length.g || parent.Linear.LinearBlur_Linear_Length.b || parent.Linear.LinearBlur_Linear_Length.a) + (parent.Zoom_Blur.r || parent.Zoom_Blur.g || parent.Zoom_Blur.b || parent.Zoom_Blur.a) > 1"}}
+  name if_all1
+  xpos 607
+  ypos 226
+ }
+ Dot {
+  name Dot16
+  xpos 641
+  ypos 329
+ }
+push $N15ff4fd0
+ Dot {
+  name Dot2
+  xpos 365
+  ypos -92
+ }
+set N63ffd660 [stack 0]
+ Dot {
+  name Dot4
+  xpos 228
+  ypos -92
+ }
+set N2c8bed40 [stack 0]
+ Dot {
+  name Dot3
+  xpos 80
+  ypos -92
+ }
+ BlinkScript {
+  recompileCount 32
+  ProgramGroup 1
+  KernelDescription "2 \"FastDirBlur\" iterate componentWise c3dc040cc19ccb16c6879a85eaf85386b7eff081ceadc489df7bbbad9f08d131 2 \"src\" Read Random \"dst\" Write Point 9 \"Radial Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Zoom Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Linear_Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Blur_Angle\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== \"Fade To Center\" Bool 1 AA== \"Max Distance To Center\" Float 1 AAAAAA== 9 \"radial_length\" 4 1 \"zoom_length\" 4 1 \"linear_length\" 4 1 \"angle\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 \"fade_to_center\" 1 1 \"max_dist_corner\" 1 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel FastDirBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 radial_length;  // This local variable is not exposed to the user.\n    float4 zoom_length;\n    float4 linear_length;\n    float4 angle;\n    float2 center;\n    int samples;\n    float4 aspect; \n    bool fade_to_center;\n    float max_dist_corner;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(radial_length, \"Radial Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n    defineParam(zoom_length, \"Zoom Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n    defineParam(linear_length, \"Linear_Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(angle, \"Blur_Angle\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n\n    defineParam(fade_to_center, \"Fade To Center\", false);\n    defineParam(max_dist_corner, \"Max Distance To Center\", 0.0f);\n  \}\n\n  void process(int3 pos) \{\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float theta_add = radial_length\[pos.z] / samples;\n\n    float lin_x = 0.0f;\n    float lin_y = 0.0f;\n\n    float fade_scale = fade_to_center ? radius / max_dist_corner : 1;\n\n    float radius_sub = zoom_length\[pos.z] * fade_scale / samples;\n    float lin_x_add = linear_length\[pos.z] * cos(angle\[pos.z]) * fade_scale / samples;\n    float lin_y_add = linear_length\[pos.z] * sin(angle\[pos.z]) * fade_scale / samples;\n\n    float sum = 0.0f;\n\n    int sample = 0;\n    while (sample < samples && radius >= 0) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x + lin_x, radius * sin(theta) + center.y + lin_y);\n\n      theta += theta_add;\n      radius -= radius_sub;\n      lin_x += lin_x_add;\n      lin_y += lin_y_add;\n      sample++;\n    \}\n    dst() = sum / sample;\n  \}\n\};\n"
+  rebuild ""
+  "FastDirBlur_Radial Length" {{radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)}}
+  "FastDirBlur_Zoom Length" {{"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"}}
+  FastDirBlur_Linear_Length {{"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"}}
+  FastDirBlur_Blur_Angle {{"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"}}
+  FastDirBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  FastDirBlur_Samples {{"max(abs(rint(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))) * radians(max(max(parent.Radial_Length.r,parent.Radial_Length.g), max(parent.Radial_Length.b,parent.Radial_Length.a)))/4)), max(rint(abs(max(max(parent.Zoom_Blur.r,parent.Zoom_Blur.g), max(parent.Zoom_Blur.b,parent.Zoom_Blur.a)))), rint(abs(max(max(FastDirBlur_Linear_Length.r,FastDirBlur_Linear_Length.g), max(FastDirBlur_Linear_Length.b,FastDirBlur_Linear_Length.a))))))*abs(Sample_Mult)  +1"}}
+  FastDirBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  "FastDirBlur_Fade To Center" {{parent.Fade_To_Center}}
+  "FastDirBlur_Max Distance To Center" {{"1- proxy?(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y)))): (max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))))* proxy_scale"}}
+  rebuild_finalise ""
+  name RadialZoomLinear
+  xpos 46
+  ypos 12
+ }
+ Dot {
+  name Dot7
+  xpos 80
+  ypos 229
+ }
+push $N2c8bed40
+ BlinkScript {
+  recompileCount 10
+  ProgramGroup 1
+  KernelDescription "2 \"ZoomBlur\" iterate componentWise be8e25d2e19a31316681c897251d90744e54fdc8c65d4197f08914f321e7fa91 2 \"src\" Read Random \"dst\" Write Point 6 \"Zoom Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== \"Fade To Center\" Bool 1 AA== \"Max Distance To Center\" Float 1 AAAAAA== 6 \"zoom_length\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 \"fade_to_center\" 1 1 \"max_dist_corner\" 1 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel ZoomBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 zoom_length;\n    float2 center;\n    int samples;\n    float4 aspect; \n    bool fade_to_center;\n    float max_dist_corner;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(zoom_length, \"Zoom Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n\n    defineParam(fade_to_center, \"Fade To Center\", false);\n    defineParam(max_dist_corner, \"Max Distance To Center\", 0.0f);\n  \}\n\n  void process(int3 pos) \{\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float fade_scale = fade_to_center ? radius / max_dist_corner : 1;\n\n    float radius_sub = zoom_length\[pos.z] * fade_scale / samples;\n\n    float sum = 0.0f;\n\n    int sample = 0;\n    while (sample < samples && radius >= 0) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x, radius * sin(theta) + center.y);\n\n      radius -= radius_sub;\n      sample++;\n    \}\n    dst() = sum / sample;\n  \}\n\};\n"
+  rebuild ""
+  "ZoomBlur_Zoom Length" {{"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"}}
+  ZoomBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  ZoomBlur_Samples {{"rint(abs(max(max(parent.Zoom_Blur.r,parent.Zoom_Blur.g), max(parent.Zoom_Blur.b,parent.Zoom_Blur.a)))) * abs(Sample_Mult)  +1"}}
+  ZoomBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  "ZoomBlur_Fade To Center" {{parent.Fade_To_Center}}
+  "ZoomBlur_Max Distance To Center" {{"1- proxy?(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y)))): (max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))))* proxy_scale"}}
+  rebuild_finalise ""
+  name Zoom
+  xpos 194
+  ypos 10
+ }
+ Dot {
+  name Dot6
+  xpos 228
+  ypos 160
+ }
+push $N63ffd660
+ BlinkScript {
+  recompileCount 31
+  ProgramGroup 1
+  KernelDescription "2 \"RadialBlur\" iterate componentWise fb1620c4156fe072986c7f98ace6f59c92b276ee60f408b83e21acf1b6b1f444 2 \"src\" Read Random \"dst\" Write Point 4 \"Radial Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== 4 \"radial_length\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel RadialBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 radial_length;  // This local variable is not exposed to the user.\n    float2 center;\n    int samples;\n    float4 aspect; \n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(radial_length, \"Radial Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n  \}\n\n  void process(int3 pos) \{\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float theta_add = radial_length\[pos.z] / samples;\n\n    float sum = 0.0f;\n\n    for (int sample=0; sample < samples; sample++) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x, radius * sin(theta) + center.y);\n\n      theta += theta_add;\n    \}\n    dst() = sum / samples;\n  \}\n\};\n"
+  rebuild ""
+  "RadialBlur_Radial Length" {{radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)}}
+  RadialBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  RadialBlur_Samples {{"abs(rint(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))) * radians(max(max(parent.Radial_Length.r,parent.Radial_Length.g), max(parent.Radial_Length.b,parent.Radial_Length.a)))/4))* abs(Sample_Mult)  +1"}}
+  RadialBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  rebuild_finalise ""
+  name Radial
+  xpos 331
+  ypos 12
+ }
+ Dot {
+  name Dot5
+  xpos 365
+  ypos 84
+ }
+push $N15ff4fd0
+ BlinkScript {
+  recompileCount 31
+  ProgramGroup 1
+  KernelDescription "2 \"LinearBlur\" iterate componentWise eeaa4ecce011b0f88e01a7ac73e36853f779f938add6b77cc8aa0cb5a3e0a7b9 2 \"src\" Read Random \"dst\" Write Point 4 \"Linear_Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Blur_Angle\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== 4 \"linear_length\" 4 1 \"angle\" 4 1 \"samples\" 1 1 \"aspect\" 4 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel LinearBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 linear_length;\n    float4 angle;\n    int samples;\n    float4 aspect;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(linear_length, \"Linear_Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(angle, \"Blur_Angle\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n  \}\n\n  void process(int3 pos) \{\n    float lin_x = pos.x;\n    float lin_y = pos.y;\n\n    float lin_x_add = linear_length\[pos.z] * cos(angle\[pos.z]) / samples;\n    float lin_y_add = linear_length\[pos.z] * sin(angle\[pos.z]) / samples;\n\n    float sum = 0.0f;\n\n    for (int sample=0; sample < samples; sample++) \{\n      sum += bilinear(src, lin_x, lin_y);\n\n      lin_x += lin_x_add;\n      lin_y += lin_y_add;\n    \}\n    dst() = sum / samples;\n  \}\n\};\n"
+  rebuild ""
+  LinearBlur_Linear_Length {{"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"}}
+  LinearBlur_Blur_Angle {{"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"}}
+  LinearBlur_Samples {{"rint(abs(max(max(LinearBlur_Linear_Length.r,LinearBlur_Linear_Length.g), max(LinearBlur_Linear_Length.b,LinearBlur_Linear_Length.a))))* abs(Sample_Mult)  +1"}}
+  LinearBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  rebuild_finalise ""
+  name Linear
+  xpos 465
+  ypos 12
+ }
+ Switch {
+  inputs 2
+  which {{"parent.Radial_Length.r || parent.Radial_Length.g || parent.Radial_Length.b || parent.Radial_Length.a"}}
+  name if_radial
+  xpos 465
+  ypos 81
+ }
+ Switch {
+  inputs 2
+  which {{"parent.Zoom_Blur.r || parent.Zoom_Blur.g || parent.Zoom_Blur.b || parent.Zoom_Blur.a"}}
+  name if_zoom
+  xpos 465
+  ypos 157
+ }
+ Switch {
+  inputs 2
+  which {{"(parent.Radial_Length.r || parent.Radial_Length.g || parent.Radial_Length.b || parent.Radial_Length.a) + (parent.Linear.LinearBlur_Linear_Length.r || parent.Linear.LinearBlur_Linear_Length.g || parent.Linear.LinearBlur_Linear_Length.b || parent.Linear.LinearBlur_Linear_Length.a) + (parent.Zoom_Blur.r || parent.Zoom_Blur.g || parent.Zoom_Blur.b || parent.Zoom_Blur.a) > 1"}}
+  name if_all
+  xpos 465
+  ypos 226
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input1] "}}
+  name Mode
+  xpos 465
+  ypos 326
+ }
+ Switch {
+  which {{"\[exists parent.input0] ? 0 : 1"}}
+  name notError
+  xpos 465
+  ypos 424
+ }
+ Output {
+  name Output1
+  xpos 465
+  ypos 520
+ }
+end_group
+Merge2 {
+ inputs 2
+ operation geometric
+ mix 0.8
+ name Merge2
+ xpos -74
+ ypos 73
+}
+Grade {
+ multiply 2
+ gamma 0.7
+ name Grade3
+ xpos -74
+ ypos 176
+}
+Merge2 {
+ inputs 2
+ name Merge1
+ xpos -74
+ ypos 337
+}
+Dot {
+ name Dot6
+ label Title
+ note_font_size 42
+ xpos -40
+ ypos 475
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x333333ff
+ label EXAMPLES:
+ note_font_size 100
+ xpos -108
+ ypos -614
+}
+Group {
+ inputs 0
+ name BlinkDirBlur3
+ selected true
+ xpos -812
+ ypos 92
+ addUserKnob {20 User}
+ addUserKnob {19 Radial_Length l "Radial Length"}
+ addUserKnob {6 Radial_Length_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Radial_Length_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 Zoom_Blur l "Zoom Length"}
+ addUserKnob {6 Zoom_Blur_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Zoom_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 Linear_Blur l "Linear Length"}
+ Linear_Blur {0 0 0 0}
+ addUserKnob {6 Linear_Blur_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {12 Center}
+ Center {320 240}
+ addUserKnob {22 initCenter l "init Center" -STARTLINE T "n = nuke.thisNode()\nn\['Center'].setValue(\[(n.width()/2), (n.height()/2)])"}
+ addUserKnob {12 Target}
+ Target {480 240}
+ addUserKnob {6 useTarget -STARTLINE}
+ addUserKnob {6 useTargetLength -STARTLINE}
+ addUserKnob {19 Blur_Angle l "Blur Angle"}
+ Blur_Angle 45
+ addUserKnob {6 Blur_Angle_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 Aspect}
+ Aspect 1
+ addUserKnob {6 Aspect_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Aspect_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Linear_Blur_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 Blur_Angle_panelDropped_2 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {7 Sample_Mult}
+ Sample_Mult 0.5
+ addUserKnob {6 Fade_To_Center l "Fade To Center" +STARTLINE}
+ addUserKnob {6 MapAllChannels l "Map All Channels" -STARTLINE}
+ MapAllChannels true
+ addUserKnob {26 ""}
+ addUserKnob {26 INFO l "" +STARTLINE T "v1.04 - (c) Owen Bulka and Riley Gray - 2019  "}
+ addUserKnob {20 GPU_Settings l "GPU Settings"}
+ addUserKnob {7 PercentageGPUmemory l "Percentage of GPU memory to use" R 0 100}
+ PercentageGPUmemory 50
+ addUserKnob {7 PercentageHeightTile l "Percentage of image height per tile" R 0 100}
+ PercentageHeightTile 40
+}
+ Input {
+  inputs 0
+  name Lengh_Map
+  xpos 1081
+  ypos -178
+  number 1
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos 1081
+  ypos -95
+  disable {{parent.MapAllChannels}}
+ }
+ Dot {
+  name Dot15
+  xpos 1115
+  ypos -36
+ }
+set N5c6824c0 [stack 0]
+ Input {
+  inputs 0
+  name Image
+  xpos 465
+  ypos -187
+ }
+ Dot {
+  name Dot1
+  xpos 499
+  ypos -92
+ }
+set N422bf190 [stack 0]
+ Dot {
+  name Dot8
+  xpos 641
+  ypos -92
+ }
+set N385830d0 [stack 0]
+ Dot {
+  name Dot9
+  xpos 780
+  ypos -92
+ }
+set N33b851c0 [stack 0]
+ Dot {
+  name Dot10
+  xpos 904
+  ypos -92
+ }
+set N4a447ec0 [stack 0]
+ Dot {
+  name Dot11
+  xpos 1031
+  ypos -92
+ }
+ BlinkScript {
+  inputs 2
+  recompileCount 32
+  ProgramGroup 1
+  KernelDescription "2 \"FastDirBlur\" iterate componentWise 9d8aadcf1d6091993fad465c282c83eb94bfda2ae19036f8f207577b7a6ce0b5 3 \"src\" Read Random \"map\" Read Point \"dst\" Write Point 9 \"Radial Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Zoom Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Linear_Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Blur_Angle\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== \"Fade To Center\" Bool 1 AA== \"Max Distance To Center\" Float 1 AAAAAA== 9 \"radial_length\" 4 1 \"zoom_length\" 4 1 \"linear_length\" 4 1 \"angle\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 \"fade_to_center\" 1 1 \"max_dist_corner\" 1 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel FastDirBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> map;\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 radial_length;  // This local variable is not exposed to the user.\n    float4 zoom_length;\n    float4 linear_length;\n    float4 angle;\n    float2 center;\n    int samples;\n    float4 aspect; \n    bool fade_to_center;\n    float max_dist_corner;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(radial_length, \"Radial Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n    defineParam(zoom_length, \"Zoom Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n    defineParam(linear_length, \"Linear_Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(angle, \"Blur_Angle\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n\n    defineParam(fade_to_center, \"Fade To Center\", false);\n    defineParam(max_dist_corner, \"Max Distance To Center\", 0.0f);\n  \}\n\n  void process(int3 pos) \{\n    SampleType(map) blur_map = map();\n\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float theta_add = radial_length\[pos.z] * blur_map\[pos.z] / samples;\n\n    float lin_x = 0.0f;\n    float lin_y = 0.0f;\n\n    float fade_scale = fade_to_center ? radius / max_dist_corner : 1;\n\n    float radius_sub = zoom_length\[pos.z] * fade_scale * blur_map\[pos.z] / samples;\n    float lin_x_add = linear_length\[pos.z] * cos(angle\[pos.z]) * fade_scale * blur_map\[pos.z] / samples;\n    float lin_y_add = linear_length\[pos.z] * sin(angle\[pos.z]) * fade_scale * blur_map\[pos.z] / samples;\n\n    float sum = 0.0f;\n\n    int sample = 0;\n    while (sample < samples && radius >= 0) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x + lin_x, radius * sin(theta) + center.y + lin_y);\n\n      theta += theta_add;\n      radius -= radius_sub;\n      lin_x += lin_x_add;\n      lin_y += lin_y_add;\n      sample++;\n    \}\n    dst() = sum / sample;\n  \}\n\};\n"
+  rebuild ""
+  "FastDirBlur_Radial Length" {{radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)}}
+  "FastDirBlur_Zoom Length" {{"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"}}
+  FastDirBlur_Linear_Length {{"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"}}
+  FastDirBlur_Blur_Angle {{"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"}}
+  FastDirBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  FastDirBlur_Samples {{"max(abs(rint(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))) * radians(max(max(parent.Radial_Length.r,parent.Radial_Length.g), max(parent.Radial_Length.b,parent.Radial_Length.a)))/4)), max(rint(abs(max(max(parent.Zoom_Blur.r,parent.Zoom_Blur.g), max(parent.Zoom_Blur.b,parent.Zoom_Blur.a)))), rint(abs(max(max(FastDirBlur_Linear_Length.r,FastDirBlur_Linear_Length.g), max(FastDirBlur_Linear_Length.b,FastDirBlur_Linear_Length.a))))))*abs(Sample_Mult)  +1"}}
+  FastDirBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  "FastDirBlur_Fade To Center" {{parent.Fade_To_Center}}
+  "FastDirBlur_Max Distance To Center" {{"1- proxy?(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y)))): (max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))))* proxy_scale"}}
+  rebuild_finalise ""
+  name RadialZoomLinearMap
+  xpos 997
+  ypos 17
+ }
+ Dot {
+  name Dot12
+  xpos 1031
+  ypos 229
+ }
+push $N5c6824c0
+ Dot {
+  name Dot19
+  xpos 972
+  ypos -36
+ }
+set N6aacf90 [stack 0]
+push $N4a447ec0
+ BlinkScript {
+  inputs 2
+  recompileCount 8
+  ProgramGroup 1
+  KernelDescription "2 \"ZoomBlur\" iterate componentWise 045447cce10296d559dab4e15caee3177813c8149f4b31d706937ca3a0757253 3 \"src\" Read Random \"map\" Read Point \"dst\" Write Point 6 \"Zoom Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== \"Fade To Center\" Bool 1 AA== \"Max Distance To Center\" Float 1 AAAAAA== 6 \"zoom_length\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 \"fade_to_center\" 1 1 \"max_dist_corner\" 1 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel ZoomBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> map;\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 zoom_length;\n    float2 center;\n    int samples;\n    float4 aspect; \n    bool fade_to_center;\n    float max_dist_corner;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(zoom_length, \"Zoom Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n\n    defineParam(fade_to_center, \"Fade To Center\", false);\n    defineParam(max_dist_corner, \"Max Distance To Center\", 0.0f);\n  \}\n\n  void process(int3 pos) \{\n    SampleType(map) blur_map = map();\n\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float fade_scale = fade_to_center ? radius / max_dist_corner : 1;\n\n    float radius_sub = zoom_length\[pos.z] * fade_scale * blur_map\[pos.z] / samples;\n\n    float sum = 0.0f;\n\n    int sample = 0;\n    while (sample < samples && radius >= 0) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x, radius * sin(theta) + center.y);\n\n      radius -= radius_sub;\n      sample++;\n    \}\n    dst() = sum / sample;\n  \}\n\};\n"
+  rebuild ""
+  "ZoomBlur_Zoom Length" {{"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"}}
+  ZoomBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  ZoomBlur_Samples {{"rint(abs(max(max(parent.Zoom_Blur.r,parent.Zoom_Blur.g), max(parent.Zoom_Blur.b,parent.Zoom_Blur.a))))* abs(Sample_Mult)  +1"}}
+  ZoomBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  "ZoomBlur_Fade To Center" {{parent.Fade_To_Center}}
+  "ZoomBlur_Max Distance To Center" {{"1- proxy?(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y)))): (max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))))* proxy_scale"}}
+  rebuild_finalise ""
+  name ZoomMap
+  xpos 870
+  ypos 14
+ }
+ Dot {
+  name Dot13
+  xpos 904
+  ypos 160
+ }
+push $N6aacf90
+ Dot {
+  name Dot18
+  xpos 834
+  ypos -36
+ }
+set N7842a590 [stack 0]
+push $N33b851c0
+ BlinkScript {
+  inputs 2
+  recompileCount 32
+  ProgramGroup 1
+  KernelDescription "2 \"RadialBlur\" iterate componentWise 448fabc69a9fbc99fceeedbd5479c75b028217fc057a93a442ac7fb14ea1d3f6 3 \"src\" Read Random \"map\" Read Point \"dst\" Write Point 4 \"Radial Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== 4 \"radial_length\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel RadialBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> map;\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 radial_length;  // This local variable is not exposed to the user.\n    float2 center;\n    int samples;\n    float4 aspect; \n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(radial_length, \"Radial Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n  \}\n\n  void process(int3 pos) \{\n    SampleType(map) blur_map = map();\n\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float theta_add = radial_length\[pos.z] * blur_map\[pos.z] / samples;\n\n    float sum = 0.0f;\n\n    for (int sample=0; sample < samples; sample++) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x, radius * sin(theta) + center.y);\n\n      theta += theta_add;\n    \}\n    dst() = sum / samples;\n  \}\n\};\n"
+  rebuild ""
+  "RadialBlur_Radial Length" {{radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)}}
+  RadialBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  RadialBlur_Samples {{"abs(rint(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))) * radians(max(max(parent.Radial_Length.r,parent.Radial_Length.g), max(parent.Radial_Length.b,parent.Radial_Length.a)))/4))* abs(Sample_Mult)  +1"}}
+  RadialBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  rebuild_finalise ""
+  name RadialMap
+  xpos 746
+  ypos 11
+ }
+ Dot {
+  name Dot14
+  xpos 780
+  ypos 84
+ }
+push $N7842a590
+ Dot {
+  name Dot17
+  xpos 705
+  ypos -36
+ }
+push $N385830d0
+ BlinkScript {
+  inputs 2
+  recompileCount 34
+  ProgramGroup 1
+  KernelDescription "2 \"LinearBlur\" iterate componentWise 0e21876bf550589e27a04540efb9bea707d99c87355d4c941a30711252ee5438 3 \"src\" Read Random \"map\" Read Point \"dst\" Write Point 4 \"Linear_Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Blur_Angle\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== 4 \"linear_length\" 4 1 \"angle\" 4 1 \"samples\" 1 1 \"aspect\" 4 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel LinearBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> map;\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 linear_length;\n    float4 angle;\n    int samples;\n    float4 aspect;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(linear_length, \"Linear_Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(angle, \"Blur_Angle\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n  \}\n\n  void process(int3 pos) \{\n    SampleType(map) blur_map = map();\n\n    float lin_x = pos.x;\n    float lin_y = pos.y;\n\n    float lin_x_add = linear_length\[pos.z] * cos(angle\[pos.z]) * blur_map\[pos.z] / samples;\n    float lin_y_add = linear_length\[pos.z] * sin(angle\[pos.z]) * blur_map\[pos.z] / samples;\n\n    float sum = 0.0f;\n\n    for (int sample=0; sample < samples; sample++) \{\n      sum += bilinear(src, lin_x, lin_y);\n\n      lin_x += lin_x_add;\n      lin_y += lin_y_add;\n    \}\n    dst() = sum / samples;\n  \}\n\};\n"
+  rebuild ""
+  LinearBlur_Linear_Length {{"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"}}
+  LinearBlur_Blur_Angle {{"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"}}
+  LinearBlur_Samples {{"rint(abs(max(max(LinearBlur_Linear_Length.r,LinearBlur_Linear_Length.g), max(LinearBlur_Linear_Length.b,LinearBlur_Linear_Length.a))))* abs(Sample_Mult)  +1"}}
+  LinearBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  rebuild_finalise ""
+  name LinearMap
+  xpos 607
+  ypos 14
+ }
+ Switch {
+  inputs 2
+  which {{"parent.Radial_Length.r || parent.Radial_Length.g || parent.Radial_Length.b || parent.Radial_Length.a"}}
+  name if_radial1
+  xpos 607
+  ypos 81
+ }
+ Switch {
+  inputs 2
+  which {{"parent.Zoom_Blur.r || parent.Zoom_Blur.g || parent.Zoom_Blur.b || parent.Zoom_Blur.a"}}
+  name if_zoom1
+  xpos 607
+  ypos 157
+ }
+ Switch {
+  inputs 2
+  which {{"(parent.Radial_Length.r || parent.Radial_Length.g || parent.Radial_Length.b || parent.Radial_Length.a) + (parent.Linear.LinearBlur_Linear_Length.r || parent.Linear.LinearBlur_Linear_Length.g || parent.Linear.LinearBlur_Linear_Length.b || parent.Linear.LinearBlur_Linear_Length.a) + (parent.Zoom_Blur.r || parent.Zoom_Blur.g || parent.Zoom_Blur.b || parent.Zoom_Blur.a) > 1"}}
+  name if_all1
+  xpos 607
+  ypos 226
+ }
+ Dot {
+  name Dot16
+  xpos 641
+  ypos 329
+ }
+push $N422bf190
+ Dot {
+  name Dot2
+  xpos 365
+  ypos -92
+ }
+set N4c643bc0 [stack 0]
+ Dot {
+  name Dot4
+  xpos 228
+  ypos -92
+ }
+set N6058c00 [stack 0]
+ Dot {
+  name Dot3
+  xpos 80
+  ypos -92
+ }
+ BlinkScript {
+  recompileCount 32
+  ProgramGroup 1
+  KernelDescription "2 \"FastDirBlur\" iterate componentWise c3dc040cc19ccb16c6879a85eaf85386b7eff081ceadc489df7bbbad9f08d131 2 \"src\" Read Random \"dst\" Write Point 9 \"Radial Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Zoom Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Linear_Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Blur_Angle\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== \"Fade To Center\" Bool 1 AA== \"Max Distance To Center\" Float 1 AAAAAA== 9 \"radial_length\" 4 1 \"zoom_length\" 4 1 \"linear_length\" 4 1 \"angle\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 \"fade_to_center\" 1 1 \"max_dist_corner\" 1 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel FastDirBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 radial_length;  // This local variable is not exposed to the user.\n    float4 zoom_length;\n    float4 linear_length;\n    float4 angle;\n    float2 center;\n    int samples;\n    float4 aspect; \n    bool fade_to_center;\n    float max_dist_corner;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(radial_length, \"Radial Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n    defineParam(zoom_length, \"Zoom Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n    defineParam(linear_length, \"Linear_Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(angle, \"Blur_Angle\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n\n    defineParam(fade_to_center, \"Fade To Center\", false);\n    defineParam(max_dist_corner, \"Max Distance To Center\", 0.0f);\n  \}\n\n  void process(int3 pos) \{\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float theta_add = radial_length\[pos.z] / samples;\n\n    float lin_x = 0.0f;\n    float lin_y = 0.0f;\n\n    float fade_scale = fade_to_center ? radius / max_dist_corner : 1;\n\n    float radius_sub = zoom_length\[pos.z] * fade_scale / samples;\n    float lin_x_add = linear_length\[pos.z] * cos(angle\[pos.z]) * fade_scale / samples;\n    float lin_y_add = linear_length\[pos.z] * sin(angle\[pos.z]) * fade_scale / samples;\n\n    float sum = 0.0f;\n\n    int sample = 0;\n    while (sample < samples && radius >= 0) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x + lin_x, radius * sin(theta) + center.y + lin_y);\n\n      theta += theta_add;\n      radius -= radius_sub;\n      lin_x += lin_x_add;\n      lin_y += lin_y_add;\n      sample++;\n    \}\n    dst() = sum / sample;\n  \}\n\};\n"
+  rebuild ""
+  "FastDirBlur_Radial Length" {{radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)}}
+  "FastDirBlur_Zoom Length" {{"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"}}
+  FastDirBlur_Linear_Length {{"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"}}
+  FastDirBlur_Blur_Angle {{"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"}}
+  FastDirBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  FastDirBlur_Samples {{"max(abs(rint(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))) * radians(max(max(parent.Radial_Length.r,parent.Radial_Length.g), max(parent.Radial_Length.b,parent.Radial_Length.a)))/4)), max(rint(abs(max(max(parent.Zoom_Blur.r,parent.Zoom_Blur.g), max(parent.Zoom_Blur.b,parent.Zoom_Blur.a)))), rint(abs(max(max(FastDirBlur_Linear_Length.r,FastDirBlur_Linear_Length.g), max(FastDirBlur_Linear_Length.b,FastDirBlur_Linear_Length.a))))))*abs(Sample_Mult)  +1"}}
+  FastDirBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  "FastDirBlur_Fade To Center" {{parent.Fade_To_Center}}
+  "FastDirBlur_Max Distance To Center" {{"1- proxy?(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y)))): (max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))))* proxy_scale"}}
+  rebuild_finalise ""
+  name RadialZoomLinear
+  xpos 46
+  ypos 12
+ }
+ Dot {
+  name Dot7
+  xpos 80
+  ypos 229
+ }
+push $N6058c00
+ BlinkScript {
+  recompileCount 10
+  ProgramGroup 1
+  KernelDescription "2 \"ZoomBlur\" iterate componentWise be8e25d2e19a31316681c897251d90744e54fdc8c65d4197f08914f321e7fa91 2 \"src\" Read Random \"dst\" Write Point 6 \"Zoom Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== \"Fade To Center\" Bool 1 AA== \"Max Distance To Center\" Float 1 AAAAAA== 6 \"zoom_length\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 \"fade_to_center\" 1 1 \"max_dist_corner\" 1 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel ZoomBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 zoom_length;\n    float2 center;\n    int samples;\n    float4 aspect; \n    bool fade_to_center;\n    float max_dist_corner;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(zoom_length, \"Zoom Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n\n    defineParam(fade_to_center, \"Fade To Center\", false);\n    defineParam(max_dist_corner, \"Max Distance To Center\", 0.0f);\n  \}\n\n  void process(int3 pos) \{\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float fade_scale = fade_to_center ? radius / max_dist_corner : 1;\n\n    float radius_sub = zoom_length\[pos.z] * fade_scale / samples;\n\n    float sum = 0.0f;\n\n    int sample = 0;\n    while (sample < samples && radius >= 0) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x, radius * sin(theta) + center.y);\n\n      radius -= radius_sub;\n      sample++;\n    \}\n    dst() = sum / sample;\n  \}\n\};\n"
+  rebuild ""
+  "ZoomBlur_Zoom Length" {{"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"} {"1-proxy? parent.Zoom_Blur: parent.Zoom_Blur*proxy_scale"}}
+  ZoomBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  ZoomBlur_Samples {{"rint(abs(max(max(parent.Zoom_Blur.r,parent.Zoom_Blur.g), max(parent.Zoom_Blur.b,parent.Zoom_Blur.a)))) * abs(Sample_Mult)  +1"}}
+  ZoomBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  "ZoomBlur_Fade To Center" {{parent.Fade_To_Center}}
+  "ZoomBlur_Max Distance To Center" {{"1- proxy?(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y)))): (max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))))* proxy_scale"}}
+  rebuild_finalise ""
+  name Zoom
+  xpos 194
+  ypos 10
+ }
+ Dot {
+  name Dot6
+  xpos 228
+  ypos 160
+ }
+push $N4c643bc0
+ BlinkScript {
+  recompileCount 31
+  ProgramGroup 1
+  KernelDescription "2 \"RadialBlur\" iterate componentWise fb1620c4156fe072986c7f98ace6f59c92b276ee60f408b83e21acf1b6b1f444 2 \"src\" Read Random \"dst\" Write Point 4 \"Radial Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Center\" Float 2 AAAAAAAAAAA= \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== 4 \"radial_length\" 4 1 \"center\" 2 1 \"samples\" 1 1 \"aspect\" 4 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel RadialBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 radial_length;  // This local variable is not exposed to the user.\n    float2 center;\n    int samples;\n    float4 aspect; \n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(radial_length, \"Radial Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(center, \"Center\", float2(0.0f, 0.0f));\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n  \}\n\n  void process(int3 pos) \{\n    float2 offset_pos((pos.x - center.x) * aspect\[pos.z], pos.y - center.y);\n\n    float radius = sqrt(offset_pos.x * offset_pos.x + offset_pos.y * offset_pos.y);\n    float theta = atan2(offset_pos.y, offset_pos.x);\n\n    float theta_add = radial_length\[pos.z] / samples;\n\n    float sum = 0.0f;\n\n    for (int sample=0; sample < samples; sample++) \{\n      sum += bilinear(src, radius * cos(theta)/aspect\[pos.z] + center.x, radius * sin(theta) + center.y);\n\n      theta += theta_add;\n    \}\n    dst() = sum / samples;\n  \}\n\};\n"
+  rebuild ""
+  "RadialBlur_Radial Length" {{radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)} {radians(parent.Radial_Length)}}
+  RadialBlur_Center {{"1-proxy?parent.Center.x: parent.Center.x*proxy_scale"} {"1-proxy?parent.Center.y: parent.Center.y*proxy_scale"}}
+  RadialBlur_Samples {{"abs(rint(max(max(hypot(parent.Center.x, parent.Center.y), hypot(parent.Center.x, height - parent.Center.y)), max(hypot(width - parent.Center.x, parent.Center.y), hypot(width - parent.Center.x, height - parent.Center.y))) * radians(max(max(parent.Radial_Length.r,parent.Radial_Length.g), max(parent.Radial_Length.b,parent.Radial_Length.a)))/4))* abs(Sample_Mult)  +1"}}
+  RadialBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  rebuild_finalise ""
+  name Radial
+  xpos 331
+  ypos 12
+ }
+ Dot {
+  name Dot5
+  xpos 365
+  ypos 84
+ }
+push $N422bf190
+ BlinkScript {
+  recompileCount 31
+  ProgramGroup 1
+  KernelDescription "2 \"LinearBlur\" iterate componentWise eeaa4ecce011b0f88e01a7ac73e36853f779f938add6b77cc8aa0cb5a3e0a7b9 2 \"src\" Read Random \"dst\" Write Point 4 \"Linear_Length\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Blur_Angle\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Samples\" Int 1 yAAAAA== \"Aspect\" Float 4 AACAPwAAgD8AAIA/AACAPw== 4 \"linear_length\" 4 1 \"angle\" 4 1 \"samples\" 1 1 \"aspect\" 4 1 1 \"srcconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel LinearBlur : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeConstant> src; // the input image\n  Image<eWrite> dst; // the output image\n\n  param:\n    float4 linear_length;\n    float4 angle;\n    int samples;\n    float4 aspect;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    defineParam(linear_length, \"Linear_Length\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(angle, \"Blur_Angle\", float4(0.0f, 0.0f, 0.0f, 0.0f));\n\n    defineParam(samples, \"Samples\", 200);\n\n    defineParam(aspect, \"Aspect\", float4(1.0f, 1.0f, 1.0f, 1.0f));\n  \}\n\n  void process(int3 pos) \{\n    float lin_x = pos.x;\n    float lin_y = pos.y;\n\n    float lin_x_add = linear_length\[pos.z] * cos(angle\[pos.z]) / samples;\n    float lin_y_add = linear_length\[pos.z] * sin(angle\[pos.z]) / samples;\n\n    float sum = 0.0f;\n\n    for (int sample=0; sample < samples; sample++) \{\n      sum += bilinear(src, lin_x, lin_y);\n\n      lin_x += lin_x_add;\n      lin_y += lin_y_add;\n    \}\n    dst() = sum / samples;\n  \}\n\};\n"
+  rebuild ""
+  LinearBlur_Linear_Length {{"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"} {"1-proxy?useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y): (useTargetLength==0?parent.Linear_Blur: hypot(parent.Center.x-parent.Target.x,parent.Center.y-parent.Target.y)) * proxy_scale"}}
+  LinearBlur_Blur_Angle {{"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"} {"radians(parent.useTarget == 0? parent.Blur_Angle:Target.x >Center.x? degrees(atan((Center.y-Target.y)/(Center.x-Target.x))) -180 : degrees(atan((Center.y-Target.y)/(Center.x-Target.x))))"}}
+  LinearBlur_Samples {{"rint(abs(max(max(LinearBlur_Linear_Length.r,LinearBlur_Linear_Length.g), max(LinearBlur_Linear_Length.b,LinearBlur_Linear_Length.a))))* abs(Sample_Mult)  +1"}}
+  LinearBlur_Aspect {{parent.Aspect} {parent.Aspect} {parent.Aspect} {parent.Aspect}}
+  rebuild_finalise ""
+  name Linear
+  xpos 465
+  ypos 12
+ }
+ Switch {
+  inputs 2
+  which {{"parent.Radial_Length.r || parent.Radial_Length.g || parent.Radial_Length.b || parent.Radial_Length.a"}}
+  name if_radial
+  xpos 465
+  ypos 81
+ }
+ Switch {
+  inputs 2
+  which {{"parent.Zoom_Blur.r || parent.Zoom_Blur.g || parent.Zoom_Blur.b || parent.Zoom_Blur.a"}}
+  name if_zoom
+  xpos 465
+  ypos 157
+ }
+ Switch {
+  inputs 2
+  which {{"(parent.Radial_Length.r || parent.Radial_Length.g || parent.Radial_Length.b || parent.Radial_Length.a) + (parent.Linear.LinearBlur_Linear_Length.r || parent.Linear.LinearBlur_Linear_Length.g || parent.Linear.LinearBlur_Linear_Length.b || parent.Linear.LinearBlur_Linear_Length.a) + (parent.Zoom_Blur.r || parent.Zoom_Blur.g || parent.Zoom_Blur.b || parent.Zoom_Blur.a) > 1"}}
+  name if_all
+  xpos 465
+  ypos 226
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input1] "}}
+  name Mode
+  xpos 465
+  ypos 326
+ }
+ Switch {
+  which {{"\[exists parent.input0] ? 0 : 1"}}
+  name notError
+  xpos 465
+  ypos 424
+ }
+ Output {
+  name Output1
+  xpos 465
+  ypos 520
+ }
+end_group

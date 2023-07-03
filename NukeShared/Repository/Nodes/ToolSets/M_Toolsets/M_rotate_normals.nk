@@ -1,0 +1,26 @@
+set cut_paste_input [stack 0]
+version 10.5 v3
+push $cut_paste_input
+add_layer {N N.x N.y N.z}
+Shuffle {
+in N
+alpha white
+name Shuffle14
+label "\[value in] -> \[value out]"
+selected true
+xpos -7613
+ypos 1576
+}
+HueShift {
+name HueShift1
+selected true
+xpos -7613
+ypos 1642
+}
+Shuffle {
+name Shuffle15
+label "\[value in] -> \[value out]"
+selected true
+xpos -7613
+ypos 1704
+}

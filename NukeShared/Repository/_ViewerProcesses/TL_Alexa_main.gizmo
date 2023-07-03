@@ -1,0 +1,15 @@
+#! /Applications/Nuke14.0v3/Nuke14.0v3.app/Contents/MacOS/libnuke-14.0.3.dylib -nx
+version 14.0 v3
+Gizmo {
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 0
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 300
+ }
+end_group

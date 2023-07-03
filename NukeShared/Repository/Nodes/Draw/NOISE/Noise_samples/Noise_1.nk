@@ -1,0 +1,121 @@
+#! /Applications/Nuke6.3v7/NukeX6.3v7.app/../Nuke6.3v7.app/Contents/MacOS/Nuke6.3v7 -nx
+version 6.3 v7
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="22" w="1600" h="1174" screen="0">
+        <splitter orientation="1">
+            <split size="63"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1533"/>
+            <splitter orientation="2">
+                <split size="1152"/>
+                <dock id="" activePageId="DAG.1">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                </dock>
+            </splitter>
+        </splitter>
+    </window>
+    <window x="1241" y="144" w="1022" h="606" screen="0">
+        <splitter orientation="2">
+            <split size="590"/>
+            <dock id="" activePageId="Viewer.1">
+                <page id="Viewer.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "/Volumes/Data HD/School/-Mine/Learning Docs/ANI275/Wiki/assets/Noise/Noise_1.nk"
+ frame 17
+ last_frame 30
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ label "All of these nodes use the value 'frame' to generate change through time. \nAll of these noises have been adjusted so that they operate roughly within the same movement range"
+ note_font "Verdana Bold Bold"
+ note_font_size 20
+ xpos -352
+ ypos -458
+}
+Radial {
+ inputs 0
+ area {510 370 1534 1148}
+ softness 0
+ name Radial1
+ xpos 122
+ ypos -316
+}
+set N184178e0 [stack 0]
+Transform {
+ translate {0 {60*noise(frame,frame/2,frame/3) i}}
+ center {1024 778}
+ name Transform_Noise
+ label "The movement here is driven by a simple noise expression. \nThe three values in brackets are X,Y,Z and drive the compleity.\nIf you remove Y and Z the noise still works but becomes\nless copmplex."
+ note_font "Verdana Bold Bold Bold"
+ note_font_color 0xffffffff
+ xpos -321
+ ypos -149
+}
+push $N184178e0
+Transform {
+ translate {0 {"2*turbulence(frame,frame/2,frame/3,4,2,5) " i x721 20}}
+ center {960 540}
+ name Transform_turbulence
+ label "The movement here is driven by a turbulence motion expression. \nIt is a relative of the fBm expression.\nIf yopu look closely at its curve (middle mouse to strectch the view) you\nwill see that some of its troughs (opposite to peaks) are 'spiky' and some are not. "
+ note_font "Verdana Bold Bold Bold"
+ note_font_color 0xffffffff
+ xpos 358
+ ypos -133
+}
+push $N184178e0
+Transform {
+ translate {0 {250*random(frame,frame/2,frame/3)-80 i x721 20}}
+ center {960 540}
+ name Transform_Random
+ label "The movement here is driven by a random motion expression.\nDespite its name it is no way as complex as any of the other noise generators. "
+ note_font "Verdana Bold Bold Bold"
+ note_font_color 0xffffffff
+ xpos 789
+ ypos -120
+}
+Viewer {
+ inputs 2
+ frame_range 1-30
+ frame_range_lock true
+ input_process false
+ translate {0 0.0700000003}
+ rotate 180
+ name Viewer1
+ xpos 1
+ ypos 96
+}
+push $N184178e0
+Transform {
+ translate {0 {"2*fBm(frame,frame/2,frame/3,4,2,5) " i x721 20}}
+ center {960 540}
+ name Transform_fBm
+ label "The movement here is driven by a Brownian motion expression. \nIt is based on the noise expression but has addedd complexity. \nThe last three values are Octaves, Lacunarity, Gain.\nOctaves controls the detail of the movement. Higher = more detail.\nLacunarity scales that detail. Higher = bigger.\nGain controls the 'harshness' of the detail. Higher = harsher. \n"
+ note_font "Verdana Bold Bold Bold"
+ note_font_color 0xffffffff
+ xpos 20
+ ypos -152
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ label "The Y position on this shape is driven by different flavors of noise.\nHow to use this script:\n1) Use wipe to compare the different movements.\n2) Also look at the movements using the curve editor (first load up its parameters). You might have to zoom in to see the detail. \n3) For a good visual feel of how noise works look at the noise node which makes patterns based on these operators. "
+ note_font "Verdana Bold Bold"
+ note_font_size 20
+ selected true
+ xpos -491
+ ypos -623
+}

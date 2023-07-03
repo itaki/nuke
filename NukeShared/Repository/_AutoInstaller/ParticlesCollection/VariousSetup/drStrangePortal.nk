@@ -1,0 +1,356 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+#write_info Write1 file:"" format:"2048 1556 1" chans:":rgba.red:rgba.green:rgba.blue:" framerange:"1 100" fps:"0" colorspace:"default" datatype:"unknown" transfer:"unknown" views:"main" colorManagement:"Nuke"
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/Desktop/drStrangePortal.nk
+ frame 57
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x969600ff
+ label "<b>https://www.youtube.com/watch?v=Uey7gCjlMzw&t=120s&ab_channel=LalitDesai        ."
+ note_font_size 20
+ xpos 1942
+ ypos 634
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x335959ff
+ label "<b>author:Lalit Desai"
+ note_font_size 20
+ xpos 1943
+ ypos 561
+}
+Camera2 {
+ inputs 0
+ translate {0.36722574 1.42121677 15.36391563}
+ rotate {2.32199666 1.600003616 0}
+ name Camera2
+ xpos 791
+ ypos 197
+}
+set N97b5a800 [stack 0]
+Radial {
+ inputs 0
+ area {512 220 1536 1167}
+ color {1.5 0.722006 0.210874 1}
+ color_panelDropped true
+ name Radial4
+ xpos 1195
+ ypos -150
+}
+Radial {
+ inputs 0
+ area {724.2625866 401.7381451 1323.737413 985.2618549}
+ color {1.5 0.722006 0.210874 1}
+ color_panelDropped true
+ name Radial5
+ xpos 1061
+ ypos -287
+}
+Radial {
+ inputs 0
+ area {512 220 1536 1167}
+ color {1.5 0.722006 0.210874 1}
+ color_panelDropped true
+ name Radial6
+ xpos 1208
+ ypos -372
+}
+Merge2 {
+ inputs 2
+ operation plus
+ name Merge2
+ label "\[ expr \{ \[value mix] == 1 ? \" \" : \[value mix] \}]"
+ xpos 1208
+ ypos -287
+}
+Cylinder {
+ inputs 0
+ columns 60
+ height 0
+ name Cylinder2
+ xpos 1537
+ ypos -363
+}
+TransformGeo {
+ translate {0 2.454999924 1.073113367e-07}
+ rotate {90 0 0}
+ uniform_scale 1.8
+ name TransformGeo3
+ xpos 1537
+ ypos -281
+}
+push 0
+ParticleEmitter {
+ inputs 4
+ emit_from edges
+ randomize_type "randomized direction"
+ rate 50
+ rate_variation 0.255
+ lifetime 35
+ velocity 0
+ rotation_velocity 0.028
+ size 0.04
+ spread 1
+ name ParticleEmitter2
+ xpos 1537
+ ypos -150
+}
+ParticleTurbulence {
+ strength {{strength.z} {strength.z} 0.1}
+ name ParticleTurbulence1
+ xpos 1537
+ ypos -98
+}
+ParticleGravity {
+ to {0.021 -0.03 0}
+ name ParticleGravity1
+ xpos 1537
+ ypos -28
+}
+ParticleWind {
+ to {0.2 0 0}
+ name ParticleWind1
+ xpos 1537
+ ypos 23
+}
+ParticleBounce {
+ out_bounce 0.21
+ out_friction 0.37
+ in_bounce 0.425
+ in_friction 0.36
+ bounceaxis_uniform_scale 17
+ name ParticleBounce1
+ xpos 1537
+ ypos 101
+}
+push 0
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ samples 40
+ shutter 0.21
+ shutteroffset centred
+ motion_vectors_type distance
+ name ScanlineRender2
+ xpos 1537
+ ypos 218
+}
+Glow2 {
+ brightness 1.54
+ size 18
+ name Glow2
+ xpos 1537
+ ypos 328
+}
+Dot {
+ name Dot2
+ xpos 1570
+ ypos 641
+}
+push $N97b5a800
+Radial {
+ inputs 0
+ area {512 220 1536 1167}
+ color {1.5 0.722006 0.210874 1}
+ color_panelDropped true
+ name Radial3
+ xpos -227
+ ypos 37
+}
+Radial {
+ inputs 0
+ area {724.2625866 401.7381451 1323.737413 985.2618549}
+ color {1.5 0.722006 0.210874 1}
+ color_panelDropped true
+ name Radial2
+ xpos -361
+ ypos -100
+}
+Radial {
+ inputs 0
+ area {512 220 1536 1167}
+ color {1.5 0.722006 0.210874 1}
+ color_panelDropped true
+ name Radial1
+ xpos -214
+ ypos -185
+}
+Merge2 {
+ inputs 2
+ operation plus
+ name Merge1
+ label "\[ expr \{ \[value mix] == 1 ? \" \" : \[value mix] \}]"
+ xpos -214
+ ypos -100
+}
+Cylinder {
+ inputs 0
+ columns 60
+ height 0
+ name Cylinder1
+ xpos 115
+ ypos -176
+}
+TransformGeo {
+ translate {0 2.220000029 9.703926196e-08}
+ rotate {90 0 0}
+ uniform_scale 1.8
+ name TransformGeo1
+ xpos 115
+ ypos -94
+}
+push 0
+ParticleEmitter {
+ inputs 4
+ emit_from edges
+ randomize_type "randomized direction"
+ rate 100
+ rate_variation 0.255
+ lifetime 15
+ velocity 0.042
+ size 0.04
+ transfer_velocity 1
+ spread 1
+ name ParticleEmitter1
+ xpos 115
+ ypos 37
+}
+TransformGeo {
+ rotate {0 0 {frame*20}}
+ pivot {0 2.1 0}
+ name TransformGeo2
+ xpos 115
+ ypos 132
+}
+push 0
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ samples 40
+ shutter 0.68
+ shutteroffset centred
+ motion_vectors_type distance
+ name ScanlineRender1
+ xpos 115
+ ypos 218
+}
+Saturation {
+ saturation 1.4
+ name Saturation1
+ xpos 115
+ ypos 331
+}
+Glow2 {
+ brightness 1.54
+ size 18
+ name Glow1
+ xpos 115
+ ypos 392
+}
+set N97b5a400 [stack 0]
+Dot {
+ name Dot1
+ xpos 148
+ ypos 562
+}
+push $N97b5a400
+Blur {
+ channels rgba
+ size 100
+ name Blur1
+ label "\[value size]"
+ xpos 473
+ ypos 386
+}
+ColorCorrect {
+ saturation 2
+ gain 1.2
+ name ColorCorrect1
+ xpos 473
+ ypos 422
+}
+Reformat {
+ inputs 0
+ name Reformat1
+ xpos 778
+ ypos 299
+}
+Merge2 {
+ inputs 2
+ name Merge4
+ label "\[ expr \{ \[value mix] == 1 ? \" \" : \[value mix] \}]"
+ xpos 778
+ ypos 422
+}
+Merge2 {
+ inputs 2
+ name Merge3
+ label "\[ expr \{ \[value mix] == 1 ? \" \" : \[value mix] \}]"
+ xpos 778
+ ypos 560
+}
+Merge2 {
+ inputs 2
+ name Merge5
+ label "\[ expr \{ \[value mix] == 1 ? \" \" : \[value mix] \}]"
+ xpos 778
+ ypos 639
+}
+Write {
+ name Write1
+ xpos 778
+ ypos 814
+}
+Viewer {
+ frame 57
+ frame_range 1-100
+ name Viewer1
+ xpos 778
+ ypos 1025
+ hide_input true
+}

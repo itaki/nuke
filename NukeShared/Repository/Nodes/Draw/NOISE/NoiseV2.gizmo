@@ -1,0 +1,171 @@
+#! C:/Program Files/Nuke6.2v2/Nuke6.2.exe -nx
+version 6.2 v2
+Gizmo {
+ tile_color 0xd4ffaaff
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 noise l Noise}
+ addUserKnob {4 presetval l Preset -STARTLINE M {RGB White "" ""}}
+ addUserKnob {26 ""}
+ addUserKnob {41 dens l Density T StickyNote1.dens}
+ addUserKnob {41 speedval l Speed T StickyNote1.speedval}
+ addUserKnob {41 seedval l Seed T StickyNote1.seedval}
+ addUserKnob {41 sizeval l Size T StickyNote1.sizeval}
+ addUserKnob {26 ""}
+ addUserKnob {41 mixval l Mix T StickyNote1.mixval}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -579
+  ypos -76
+ }
+set N8c1aea0 [stack 0]
+ Noise {
+  size {{parent.StickyNote1.sizeval i}}
+  zoffset {{frame*parent.StickyNote1.speedval+parent.StickyNote1.seedval i}}
+  lacunarity 4.6
+  gain 0.315
+  gamma {{parent.StickyNote1.dens i}}
+  center {960 540}
+  name Noise1
+  xpos -579
+  ypos 94
+ }
+push $N8c1aea0
+ Multiply {
+  name Multiply2
+  xpos -698
+  ypos 202
+ }
+ Merge2 {
+  inputs 2
+  operation max
+  mix {{parent.StickyNote1.mixval i}}
+  name Merge5
+  xpos -579
+  ypos 208
+ }
+ Dot {
+  name Dot1
+  xpos -545
+  ypos 325
+ }
+push $N8c1aea0
+ Noise {
+  size {{parent.StickyNote1.sizeval i}}
+  zoffset {{frame*parent.StickyNote1.speedval+100++parent.StickyNote1.seedval i}}
+  lacunarity 4.6
+  gain 0.315
+  gamma {{parent.StickyNote1.dens i}}
+  center {960 540}
+  name B
+  xpos -51
+  ypos 84
+ }
+ Shuffle {
+  red black
+  green black
+  alpha black
+  name Shuffle3
+  xpos -51
+  ypos 110
+ }
+push $N8c1aea0
+ Noise {
+  size {{parent.StickyNote1.sizeval i}}
+  zoffset {{frame*parent.StickyNote1.speedval+200+parent.StickyNote1.seedval i}}
+  lacunarity 4.6
+  gain 0.315
+  gamma {{parent.StickyNote1.dens i}}
+  center {960 540}
+  name G
+  xpos -193
+  ypos 89
+ }
+ Shuffle {
+  red black
+  blue black
+  alpha black
+  name Shuffle2
+  xpos -193
+  ypos 115
+ }
+push 0
+push $N8c1aea0
+ Noise {
+  size {{parent.StickyNote1.sizeval i}}
+  zoffset {{frame*parent.StickyNote1.speedval+parent.StickyNote1.seedval i}}
+  lacunarity 2.52
+  gain 0.29
+  gamma {{parent.StickyNote1.dens i}}
+  center {960 540}
+  name R
+  xpos -315
+  ypos 83
+ }
+ Shuffle {
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  xpos -315
+  ypos 115
+ }
+push $N8c1aea0
+ Multiply {
+  name Multiply1
+  xpos -460
+  ypos 244
+ }
+ Merge2 {
+  inputs 4+1
+  operation max
+  mix {{parent.StickyNote1.mixval i}}
+  name Merge1
+  xpos -315
+  ypos 250
+ }
+ Switch {
+  inputs 2
+  which {{presetval i}}
+  name Switch1
+  xpos -315
+  ypos 321
+ }
+set N8b3ecc0 [stack 0]
+ Output {
+  name Output1
+  xpos -315
+  ypos 425
+ }
+push $N8b3ecc0
+ Viewer {
+  frame 41
+  roi {0.09300000221 -0.55400002 0.5670000017 -0.2760000199}
+  input_process false
+  name Viewer1
+  xpos -84
+  ypos 396
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  tile_color 0x7c9cccff
+  label "Control Room"
+  note_font_size 20
+  xpos -236
+  ypos -55
+  addUserKnob {20 control l "Control Room"}
+  addUserKnob {7 dens l Density R 0.05 0.5}
+  dens 0.2
+  addUserKnob {7 speedval l Speed R 0 0.5}
+  speedval 0.5
+  addUserKnob {7 seedval l Seed R 0 100}
+  addUserKnob {7 sizeval l Size R 1 10}
+  sizeval 1.5
+  addUserKnob {26 ""}
+  addUserKnob {16 mixval l Mix}
+  mixval 0.5
+ }
+end_group

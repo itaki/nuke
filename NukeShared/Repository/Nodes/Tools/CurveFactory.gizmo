@@ -1,0 +1,37 @@
+#! C:/Program Files/Nuke6.3v1/Nuke6.3.exe -nx
+version 6.3 v1
+Gizmo {
+ name CurveFactory
+ help "Generates a curve according to the parameters.\nHarrison Ly\ncontactme@harrisonly.co.uk"
+ knobChanged "\nn = nuke.thisNode()\nk = nuke.thisKnob()\n\ndef knobsReset():\n    nochangeKnobs = \[\"curve_type\",\"curve_data\", \"result_divider\", \"end_divider\", \"author\", \"label\", \"note_font\", \"note_font_size\", \"note_font_color\", \"hide_input\", \"cached\", \"disable\", \"dope_sheet\"]\n    if k.name() in nochangeKnobs:\n        k.setVisible(True)\n    else:\n        k.setVisible(False)\n\nif k.name() == \"curve_type\":\n    for k in n.allKnobs() :\n        #Sets Sin Curve\n        if n\['curve_type'].value() == \"Sin\":\n            knobsReset()\n            n\['amplitude'].setVisible(True)\n            n\['frequency'].setVisible(True)\n            n\['phase'].setVisible(True)\n            n\['center'].setVisible(True)\n            n\['curve_data'].setExpression(\"amplitude*sin(frequency*t+phase)+center\")\n    \n        #Sets Random Curve\n        elif n\['curve_type'].value() == \"Random\":\n            knobsReset()\n            n\['amplitude'].setVisible(True)\n            n\['seed'].setVisible(True)\n            n\['frequency'].setVisible(True)\n            n\['phase'].setVisible(True)\n            n\['center'].setVisible(True)\n            n\['curve_data'].setExpression(\"random(seed,( t+phase)*frequency)*amplitude+center\")\n        \n        #Sets Noise Curve\n        elif n\['curve_type'].value() == \"Noise\":\n            knobsReset()\n            n\['amplitude'].setVisible(True)\n            n\['seed'].setVisible(True)\n            n\['frequency'].setVisible(True)\n            n\['phase'].setVisible(True)\n            n\['center'].setVisible(True)\n            n\['curve_data'].setExpression(\"(1*(noise((t+(phase*100))*frequency, (seed*5), 0)*2-1)*amplitude+(amplitude*.7))+center\")\n    \n    #Renames label according to Type\n    labelType = n\['curve_type'].value()\n    n\['label'].setValue(\"%s Curve\" % labelType) \n\n"
+ label "Sin Curve"
+ addUserKnob {20 CurveMachine +HIDDEN}
+ addUserKnob {4 curve_type l "Curve Type" M {Sin Random Noise}}
+ addUserKnob {7 amplitude l Amplitude R 0 5}
+ amplitude 1
+ addUserKnob {7 frequency l Frequency R 0 5}
+ frequency 1
+ addUserKnob {7 phase l Phase R 0 5}
+ phase 1
+ addUserKnob {7 center l Center R 0 5}
+ center 1
+ addUserKnob {7 seed l Seed +HIDDEN R 0 5}
+ seed 1
+ addUserKnob {26 result_divider l Result}
+ addUserKnob {7 curve_data l "Curve Data"}
+ curve_data {{amplitude*sin(frequency*t+phase)+center}}
+ addUserKnob {26 end_divider l "" +STARTLINE}
+ addUserKnob {26 author l "" +STARTLINE T "CurveFactory 1.0 (2012) - Harrison Ly - contactme@harrisonly.co.uk"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 28
+  ypos -93
+ }
+ Output {
+  name Output1
+  xpos 28
+  ypos 207
+ }
+end_group

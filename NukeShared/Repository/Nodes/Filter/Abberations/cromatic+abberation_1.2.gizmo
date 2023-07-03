@@ -1,0 +1,260 @@
+#! C:/Program Files/Nuke12.2v4/nuke-12.2.4.dll -nx
+version 12.2 v4
+Gizmo {
+ inputs 2
+ tile_color 0xff00fcff
+ gl_color 0xf200ffff
+ note_font "Verdana Bold Italic"
+ addUserKnob {20 User l "Abberation Options"}
+ addUserKnob {26 red l Red}
+ addUserKnob {41 size l "blur size red" T Blur_red.size}
+ addUserKnob {41 translate l "translate red" T Transform_red.translate}
+ addUserKnob {41 scale l "scale red" T Transform_red.scale}
+ addUserKnob {41 distortionDenominator0 l "distortion red" T LensDistortion_red.distortionDenominator0}
+ addUserKnob {26 green l Green}
+ addUserKnob {41 size_1 l "blur size green" T Blur_green.size}
+ addUserKnob {41 translate_1 l "translate green" T Transform_green.translate}
+ addUserKnob {41 scale_1 l "scale green" T Transform_green.scale}
+ addUserKnob {41 distortionDenominator0_1 l "distortion green" T LensDistortion_green.distortionDenominator0}
+ addUserKnob {26 blue l Blue}
+ addUserKnob {41 size_2 l "blur size blue" T Blur_blue.size}
+ addUserKnob {41 translate_2 l "translate blue" T Transform_blue.translate}
+ addUserKnob {41 scale_2 l "scale blue" T Transform_blue.scale}
+ addUserKnob {41 distortionDenominator0_2 l "distortion blue" T LensDistortion_blue.distortionDenominator0}
+ addUserKnob {20 Maskoptions l "Mask Options"}
+ addUserKnob {41 maskChannelMask l "" -STARTLINE T Merge1.maskChannelMask}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge1.invert_mask}
+ addUserKnob {41 mix -STARTLINE T Merge1.mix}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x8e8e3800
+  label "cromatic abberation (var_1)"
+  note_font_size 42
+  xpos -706
+  ypos -278
+  bdwidth 563
+  bdheight 517
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -73
+  ypos 214
+  number 1
+ }
+ Dot {
+  name Dot6
+  xpos -39
+  ypos 328
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -466
+  ypos -440
+ }
+ Dot {
+  name Dot1
+  xpos -432
+  ypos -342
+ }
+set Nd1a04400 [stack 0]
+ Dot {
+  name Dot9
+  xpos -432
+  ypos -198
+ }
+set N5e1dec00 [stack 0]
+ Dot {
+  name Dot10
+  xpos -651
+  ypos -198
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.red 0 0 rgba.red 0 0 black -1 -1 rgba.blue 0 2 black -1 -1 rgba.green 0 1 black -1 -1 rgba.alpha 0 3"
+  name Shuffle2
+  xpos -685
+  ypos -142
+ }
+ LensDistortion2 {
+  distortionDenominator0 -0.0005
+  output Undistort
+  outputBBox {-4 -4 1924 1084}
+  bboxBackupSet true
+  featuresKnob "
+version 1
+entries 0
+entries 0
+"
+  distortionModelDisplayX "xu = xd / (1 + k0 * rd^2 + k1 * rd^4)"
+  distortionModelDisplayY "yu = yd / (1 + k0 * rd^2 + k1 * rd^4)"
+  name LensDistortion_red
+  xpos -685
+  ypos -84
+ }
+ Transform {
+  translate {0 -0.5}
+  scale {1 1.002}
+  center {960 540}
+  name Transform_red
+  xpos -685
+  ypos -28
+ }
+ Blur {
+  name Blur_red
+  xpos -685
+  ypos 25
+ }
+ Dot {
+  name Dot4
+  xpos -651
+  ypos 90
+ }
+push $N5e1dec00
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 black -1 -1 rgba.blue 0 2 rgba.green 0 1 rgba.green 0 1 black -1 -1 rgba.red 0 0 black -1 -1 rgba.alpha 0 3"
+  name Shuffle3
+  xpos -466
+  ypos -142
+ }
+ LensDistortion2 {
+  distortionDenominator0 -0.001
+  output Undistort
+  outputBBox {-5 -4 1925 1084}
+  featuresKnob "
+version 1
+entries 0
+entries 0
+"
+  distortionModelDisplayX "xu = xd / (1 + k0 * rd^2 + k1 * rd^4)"
+  distortionModelDisplayY "yu = yd / (1 + k0 * rd^2 + k1 * rd^4)"
+  name LensDistortion_green
+  xpos -466
+  ypos -84
+ }
+ Transform {
+  translate {0 -0.2}
+  scale 1.0003
+  center {960 540}
+  name Transform_green
+  xpos -466
+  ypos -28
+ }
+ Blur {
+  name Blur_green
+  xpos -466
+  ypos 26
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge4
+  xpos -466
+  ypos 87
+ }
+push $N5e1dec00
+ Dot {
+  name Dot8
+  xpos -215
+  ypos -198
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 black -1 -1 rgba.green 0 1 black -1 -1 rgba.red 0 0 rgba.blue 0 2 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3"
+  name Shuffle4
+  xpos -249
+  ypos -142
+ }
+ LensDistortion2 {
+  output Undistort
+  outputBBox {0 0 1920 1080}
+  bboxBackup {0 0 1920 1080}
+  bboxBackupSet true
+  featuresKnob "
+version 1
+entries 0
+entries 0
+"
+  distortionModelDisplayX "xu = xd / (1 + k0 * rd^2 + k1 * rd^4)"
+  distortionModelDisplayY "yu = yd / (1 + k0 * rd^2 + k1 * rd^4)"
+  name LensDistortion_blue
+  xpos -249
+  ypos -84
+ }
+ Transform {
+  translate {0.5 0}
+  scale {1.002 1}
+  center {960 540}
+  name Transform_blue
+  xpos -249
+  ypos -28
+ }
+ Blur {
+  name Blur_blue
+  xpos -249
+  ypos 26
+ }
+ Dot {
+  name Dot5
+  xpos -215
+  ypos 147
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge3
+  xpos -466
+  ypos 144
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 white -1 -1 rgba.alpha 0 3"
+  name Shuffle5
+  xpos -466
+  ypos 280
+ }
+push $Nd1a04400
+ Dot {
+  name Dot2
+  xpos -770
+  ypos -342
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 white -1 -1 rgba.alpha 0 3"
+  name Shuffle1
+  xpos -804
+  ypos 270
+ }
+ Dot {
+  name Dot3
+  xpos -770
+  ypos 328
+ }
+ Merge2 {
+  inputs 2+1
+  name Merge1
+  xpos -466
+  ypos 325
+ }
+ Crop {
+  box {0 0 1920 1080}
+  name Crop1
+  xpos -466
+  ypos 349
+ }
+ Output {
+  name Output1
+  xpos -466
+  ypos 421
+ }
+end_group

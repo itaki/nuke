@@ -1,0 +1,90 @@
+Group {
+ inputs 0
+ name Position_Expression1
+ help "Expresion que asigna los valores de posicion 'x' e 'y', a los canales 'r' y 'g'\n\n-Dario S."
+ tile_color 0xffff0000
+
+ addUserKnob {20 User}
+ addUserKnob {41 format l "output format" T Reformat1.format}
+ addUserKnob {26 div l "" +STARTLINE}
+ addUserKnob {6 customboolean l "custom format" +STARTLINE}
+ addUserKnob {68 select_format l "" -STARTLINE M {custom "input format" "input bbox" ""}}
+ select_format "input format"
+ addUserKnob {22 input_button l "create/remove input" T "pos_expr_group = nuke.thisNode()\n\npos_expr_group.begin()\n\nhay_input = False\n\nfor mynode in nuke.allNodes():\n\tif mynode.Class() == 'Input' :\n\t\thay_input = True\n\t\tmyinput = mynode\n\nif hay_input:\n\tnuke.delete(myinput)\n\tpos_expr_group\['pe_format'].clearAnimated()\n\tpos_expr_group\['pe_format'].setValue(0,0)\n\tpos_expr_group\['pe_format'].setValue(0,1)\n\tpos_expr_group\['pe_format'].setValue(0,2)\n\tpos_expr_group\['pe_format'].setValue(0,3)\nelse:\n\tmyinput = nuke.nodes.Input(xpos = nuke.toNode('input_dot').xpos()-33, ypos =nuke.toNode('input_dot').ypos()-100)\n\tmyinput.setName('input')\n\tnuke.toNode('input_dot').setInput(0,myinput)\n\tpos_expr_group\['pe_format'].setExpression('select_format == 1 ? Crop_input.box : select_format == 2 ? Crop_bbox.box : 0',0)\n\tpos_expr_group\['pe_format'].setExpression('select_format == 1 ? Crop_input.box : select_format == 2 ? Crop_bbox.box : 0',1)\n\tpos_expr_group\['pe_format'].setExpression('select_format == 1 ? Crop_input.box : select_format == 2 ? Crop_bbox.box : 0',2)\n\tpos_expr_group\['pe_format'].setExpression('select_format == 1 ? Crop_input.box : select_format == 2 ? Crop_bbox.box : 0',3)\n\npos_expr_group.end()" +STARTLINE}
+ addUserKnob {15 pe_format l format}
+ addUserKnob {26 ""}
+ addUserKnob {26 sign l "" +STARTLINE T "-Dario Siero"}
+}
+ Dot {
+  inputs 0
+  name input_dot
+  xpos 759
+  ypos -142
+ }
+set N8f420800 [stack 0]
+ Dot {
+  name Dot4
+  xpos 866
+  ypos -142
+ }
+ Crop {
+  box {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+  name Crop_bbox
+  xpos 832
+  ypos -117
+ }
+ Dot {
+  name Dot2
+  xpos 866
+  ypos -53
+ }
+push $N8f420800
+ Crop {
+  box {{0} {0} {input.width} {input.height}}
+  name Crop_input
+  xpos 725
+  ypos -124
+ }
+ Dot {
+  name Dot1
+  xpos 759
+  ypos -85
+ }
+ Reformat {
+  inputs 0
+  name Reformat1
+  xpos 462
+  ypos -135
+ }
+ Crop {
+  box {{parent.pe_format} {parent.pe_format} {parent.pe_format} {parent.pe_format}}
+  reformat true
+  crop false
+  name Crop1
+  xpos 462
+  ypos -98
+  disable {{!(parent.customboolean)}}
+ }
+ Switch {
+  inputs 3
+  which {{"parent.customboolean ? parent.select_format : 0"}}
+  name Switch1
+  selected true
+  xpos 462
+  ypos -57
+ }
+ Expression {
+  expr0 x
+  expr1 y
+  expr2 0
+  expr3 0
+  name Expression1
+  xpos 462
+  ypos -18
+ }
+ Output {
+  name Output1
+  xpos 462
+  ypos 63
+ }
+end_group

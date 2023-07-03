@@ -1,0 +1,4455 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/.nuke/Particles/PyroAndSparks/TrailSparks/TrailSparks.nk
+ frame 45
+ last_frame 65
+ lock_range true
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode10
+ tile_color 0x272727ff
+ label "Geo/Cam Creation"
+ note_font_size 36
+ note_font_color 0xffffffff
+ xpos 165
+ ypos -352
+ bdwidth 740
+ bdheight 700
+ z_order -1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode8
+ tile_color 0x272727ff
+ label Trails
+ note_font_size 42
+ note_font_color 0xffffffff
+ xpos 51
+ ypos 438
+ bdwidth 1137
+ bdheight 1092
+ z_order -1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode9
+ tile_color 0x272727ff
+ label Sparks
+ note_font_size 42
+ note_font_color 0xffffffff
+ xpos 51
+ ypos 1623
+ bdwidth 503
+ bdheight 862
+ z_order -1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x3e3e3eff
+ label "Sign Geo"
+ note_font_size 32
+ note_font_color 0xffffffff
+ xpos 375
+ ypos -272
+ bdwidth 490
+ bdheight 312
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode11
+ tile_color 0x44636d01
+ note_font "Helvetica Bold"
+ note_font_size 100
+ xpos 41
+ ypos -684
+ bookmark false
+ bdwidth 1147
+ bdheight 3517
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode12
+ tile_color 0x352b4f01
+ note_font "Helvetica Bold"
+ note_font_size 100
+ xpos 90
+ ypos -1304
+ bookmark false
+ bdwidth 653
+ bdheight 280
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode13
+ tile_color 0x443f3a01
+ note_font "Helvetica Bold"
+ note_font_size 100
+ xpos 1007
+ ypos -1306
+ bookmark false
+ bdwidth 657
+ bdheight 272
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode2
+ tile_color 0x3e3e3eff
+ label "Cam Setup"
+ note_font_size 32
+ note_font_color 0xffffffff
+ xpos 341
+ ypos 81
+ bdwidth 273
+ bdheight 245
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0x3e3e3eff
+ label "Trails setup"
+ note_font_size 32
+ note_font_color 0xffffffff
+ xpos 749
+ ypos 518
+ bdwidth 429
+ bdheight 364
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode4
+ tile_color 0x3e3e3eff
+ label "Render Trails"
+ note_font_size 32
+ note_font_color 0xffffffff
+ xpos 371
+ ypos 885
+ bdwidth 200
+ bdheight 289
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode5
+ tile_color 0x3e3e3eff
+ label "Merge Trails"
+ note_font_size 32
+ note_font_color 0xffffffff
+ xpos 61
+ ypos 1294
+ bdwidth 410
+ bdheight 226
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode6
+ tile_color 0x3e3e3eff
+ label Sparks
+ note_font_size 32
+ note_font_color 0xffffffff
+ xpos 337
+ ypos 1703
+ bdwidth 207
+ bdheight 439
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode7
+ tile_color 0x3e3e3eff
+ label "Merge Sparks"
+ note_font_size 32
+ note_font_color 0xffffffff
+ xpos 61
+ ypos 2239
+ bdwidth 476
+ bdheight 235
+}
+Camera2 {
+ inputs 0
+ translate {0 1.1 30}
+ rotate {3.5 0 0}
+ focal 35
+ name Camera1
+ xpos 391
+ ypos 191
+}
+set N7084c800 [stack 0]
+CheckerBoard2 {
+ inputs 0
+ format "512 512 0 0 512 512 1 square_512"
+ name CheckerBoard1
+ xpos 775
+ ypos -112
+ disable true
+}
+Card2 {
+ orientation ZX
+ image_aspect false
+ translate {0 0 -10}
+ scaling {1.5 1 6}
+ uniform_scale 10
+ control_points {3 3 3 6 
+
+1 {-0.5 0 -0.5} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0 0 0} 
+1 {0 0 -0.5} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 0 -0.5} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {1 0.5 0} 
+1 {-0.5 0 0.5} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0 1 0} 
+1 {0 0 0.5} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0.5 1 0} 
+1 {0.5 0 0.5} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {1 1 0} }
+ name Card1
+ xpos 775
+ ypos -9
+}
+CheckerBoard2 {
+ inputs 0
+ format "512 512 0 0 512 512 1 square_512"
+ name CheckerBoard4
+ xpos 598
+ ypos -191
+ disable true
+}
+Cube {
+ rotate {0 0 -45}
+ name Cube1
+ xpos 598
+ ypos -119
+}
+TransformGeo {
+ translate {0 4.980000019 0}
+ scaling {1 0.4 0.2}
+ uniform_scale 6.2
+ name TransformGeo1
+ xpos 598
+ ypos -95
+}
+CheckerBoard2 {
+ inputs 0
+ format "512 512 0 0 512 512 1 square_512"
+ name CheckerBoard3
+ xpos 491
+ ypos -192
+ disable true
+}
+Cylinder {
+ radius 0.14
+ translate {2.980113745 2.240659714 0}
+ rotate {0 0 1.5}
+ scaling {1 3 1}
+ name Cylinder2
+ xpos 491
+ ypos -93
+}
+CheckerBoard2 {
+ inputs 0
+ format "512 512 0 0 512 512 1 square_512"
+ name CheckerBoard2
+ xpos 385
+ ypos -191
+ disable true
+}
+Cylinder {
+ radius 0.15
+ translate {-3.539999962 2.24000001 0}
+ scaling {1 3 1}
+ name Cylinder1
+ xpos 385
+ ypos -93
+}
+Scene {
+ inputs 4
+ name Scene2
+ xpos 501
+ ypos -30
+}
+push $N7084c800
+push 0
+Scene {
+ inputs 3
+ name Scene1
+ xpos 501
+ ypos 191
+}
+set N70805800 [stack 0]
+Read {
+ inputs 0
+ file_type mov
+ file "\[python \{Particles_path\} ]/PyroAndSparks/TrailSparks/img/LAS VEGAS SIGN nested.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 65
+ origlast 65
+ origset true
+ name Read1
+ xpos 72
+ ypos -600
+}
+Dot {
+ name Dot2
+ xpos 105
+ ypos -446
+}
+Dot {
+ name Dot4
+ xpos 105
+ ypos 215
+}
+set N70804800 [stack 0]
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ motion_vectors_type distance
+ name Preview
+ xpos 215
+ ypos 212
+}
+Camera2 {
+ inputs 0
+ translate {0 1.1 30}
+ rotate {3.5 0 0}
+ focal 35
+ name Camera2
+ xpos 347
+ ypos 1965
+}
+set N7077fc00 [stack 0]
+push $N7077fc00
+Group {
+ inputs 0
+ name P_Sparks
+ xpos 447
+ ypos 1750
+ addUserKnob {20 particleControlsTab l Emitter}
+ addUserKnob {6 previewGeo l "Enable Preview Mode" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {6 sparksGen_userGeo l "Use Custom Emission Geo" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 sparkEmissionRate l Amount R 0 50}
+ sparkEmissionRate 10
+ addUserKnob {7 sparkSize l Size R 0.1 10}
+ sparkSize 3
+ addUserKnob {7 sparkInitialVelocity l Speed}
+ sparkInitialVelocity 0.3
+ addUserKnob {7 sparksSpread l Spread R 0 360}
+ sparksSpread 10
+ addUserKnob {7 sparkLifetime l Life R 0 250}
+ sparkLifetime 6
+ addUserKnob {26 ""}
+ addUserKnob {7 sparkRandomness l Randomness R 0 0.5}
+ sparkRandomness 0.35
+ addUserKnob {7 sparkGravity l Gravity R -0.25 0.25}
+ sparkGravity -0.04
+ addUserKnob {26 ""}
+ addUserKnob {7 sparksSeed l "System Seed" R 0 10000}
+ sparksSeed 84.1
+ addUserKnob {20 Color}
+ addUserKnob {6 sparks_enableImage l "Use Custom Image" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {41 color l "Spark Colour" T Constant1.color}
+ addUserKnob {26 ""}
+ addUserKnob {7 sparksGen_ColourMult l "Exposure Multiplier" R 0 10}
+ sparksGen_ColourMult 2
+ addUserKnob {20 Tail}
+ addUserKnob {6 enableTail l "Enable Tail" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {4 sparksGen_falloffType l "Tail Falloff" M {"Bright Start" S-Curve "Slow Fade Convex" "Slow Fade Concave" Linear ""}}
+ addUserKnob {7 sparksGen_tailLengthMult l "Tail Length" R 0.01 3}
+ sparksGen_tailLengthMult 1.5
+ addUserKnob {20 Bounce}
+ addUserKnob {6 sparksBounceEnable l Bounce +STARTLINE}
+ addUserKnob {3 sparksGen_bounceHeight l "Bouce Plane Height"}
+ sparksGen_bounceHeight -10
+ addUserKnob {41 in_bounce l "Bounce Amount" T ParticleBounce1.in_bounce}
+ addUserKnob {41 in_friction l "Friction Amount" T ParticleBounce1.in_friction}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode10
+  tile_color 0x68a85aff
+  label "Colour randomisation"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3053
+  ypos -310
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode11
+  tile_color 0x68a85aff
+  label "Set particle growth"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3053
+  ypos -36
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode12
+  tile_color 0x68a85aff
+  label Subframe
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -2970
+  ypos 399
+  bdwidth 310
+  bdheight 131
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode13
+  tile_color 0x68a85aff
+  label "Set opacity falloff"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3060
+  ypos 541
+  bdwidth 473
+  bdheight 195
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode14
+  tile_color 0x454554ff
+  label "Sparks System"
+  note_font_size 42
+  note_font_color 0xd2d2ffff
+  xpos -3406
+  ypos -1346
+  bdwidth 977
+  bdheight 2412
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x68a85aff
+  label "Colour multiplication"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -2981
+  ypos 747
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xc65353ff
+  label "Choose source geo."
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -2767
+  ypos -869
+  bdwidth 301
+  bdheight 206
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x68a85aff
+  label "Setup Emitter system"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3051
+  ypos -597
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x68a85aff
+  label "Spawn tail into channel B"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -2969
+  ypos 259
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode7
+  tile_color 0x68a85aff
+  label "Define up velocities"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3053
+  ypos -453
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x7171c600
+  label "Setup sprite presets"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3077
+  ypos -1230
+  bdwidth 315
+  bdheight 332
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x68a85aff
+  label "Add system forces"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3053
+  ypos -165
+  bdwidth 309
+  bdheight 117
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x8e388e00
+  label "3D Preview Geo"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3125
+  ypos -817
+  bdwidth 258
+  bdheight 108
+  z_order 1
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "In this section, we're choosing between the exisiting\nsprite image and an input from the 'Img' pipe on the\n main UI."
+  xpos -3037
+  ypos -1169
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote5
+  label "Gravity added, with a multiplier set in the UI"
+  xpos -3273
+  ypos -120
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote8
+  label "The idea with this system is that we first\nemit 'guide' particles, from which we\nspawn the tail particles. The 'guide'\nparticles have a size of 0, though their\ncolour is passed on the tail later on\nin the system.\n\nThe emitter is set up as normal, except\nfor the expressions on 'emission_rate', \n'max lifetime', 'velocity' and 'spread'\nthat take our UI values into account"
+  xpos -3247
+  ypos -595
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote7
+  label "Here I'm using our guide particles to spawn\nwhat will eventually become the tail. Two \nthings here are important to note :\n\n1) in 'Conditions' I'm only spawning from\nparticles in channel 'A'.\n\n2) 'Inherit Color' is turned on. This makes our\ntail particles take the 'guide' particle's colour \n(something we randomised further up-stream)."
+  xpos -3194
+  ypos 270
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote4
+  label "Here I'm adding a random value to the\nthe chosen particle colour to add further\nvariation to the system."
+  xpos -3256
+  ypos -265
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote11
+  label "Finally, I'm multiplying the colour of our particles\nbased upon the value chosen in the UI. This can\nbe useful when adding further post effects (eg.\nglows, blurs etc.)"
+  xpos -3215
+  ypos 786
+ }
+ BlendMat {
+  inputs 0
+  surfaceblend "vertex color"
+  name BlendMat2
+  xpos -3109
+  ypos -737
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {0.9785633683 0.8711366653 0.5827599168 0}
+  format "32 32 0 0 32 32 1 Particles"
+  name Constant1
+  xpos -3025
+  ypos -1116
+ }
+ Roto {
+  output alpha
+  premultiply rgb
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x41800000 x41800000}
+    {a pt 0}
+    {curvegroup Ellipse1 576 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc02e00a8 0}
+        {x417f0ded x412f1eb8}
+        {x402e00a8 0}
+        {0 xc02f67cb}
+        {x41a6e8dc x417e851f}
+        {0 x402f67cb}
+        {x402e00a8 0}
+        {x417f0ded x41a6f5c3}
+        {xc02e00a8 0}
+        {0 x402f67cb}
+        {x41304a23 x417e851f}
+        {0 xc02f67cb}}}     idem}
+     {t
+      {{1 x41a73333}}
+      {{1 x41466666}}     0
+      {{1 0}}
+      {{1 0}}     0 0 0
+      {{1 0}}
+      {{1 1}}
+      {{1 1}}     1
+      {{1 0}}}
+     {a fx x41280000 fy x41280000 spx x41800000 spy x41800000 sb 1 tt x40c00000 pt 0}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 tt 5 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay 0
+  lifetime_type "all frames"
+  motionblur_shutter_offset_type centred
+  feather 10.5
+  source_translate_round false
+  source_black_outside true
+  name Roto1
+  xpos -3025
+  ypos -1032
+ }
+ Input {
+  inputs 0
+  name Img
+  xpos -2885
+  ypos -1024
+ }
+ Switch {
+  inputs 2
+  which {{!parent.sparks_enableImage i}}
+  name Switch1
+  xpos -2956
+  ypos -961
+ }
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat1
+  xpos -2956
+  ypos -926
+ }
+ Switch {
+  inputs 2
+  which {{parent.previewGeo}}
+  name Switch4
+  xpos -2957
+  ypos -737
+ }
+ Dot {
+  name Dot5
+  xpos -2923
+  ypos -661
+ }
+ Input {
+  inputs 0
+  name Geo
+  xpos -2598
+  ypos -752
+  number 1
+ }
+ Card2 {
+  inputs 0
+  image_aspect false
+  uniform_scale 0.1
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Card1
+  xpos -2719
+  ypos -753
+ }
+ Switch {
+  inputs 2
+  which {{parent.sparksGen_userGeo}}
+  name Switch3
+  xpos -2660
+  ypos -707
+ }
+ Dot {
+  name Dot1
+  xpos -2626
+  ypos -523
+ }
+push 0
+ ParticleEmitter {
+  inputs 3
+  rate {{"random(frame) > \[value randomness] ? \[value emissionRate] : 0"}}
+  lifetime {{particleLife}}
+  lifetime_variation 1
+  halflife 522
+  velocity {{parent.sparkInitialVelocity}}
+  size 0
+  mass_variation 0.44
+  spread {{"parent.sparksSpread /360"}}
+  color_from_texture true
+  input_order "in order"
+  start_frame_animation current
+  start_wrap true
+  frame_advance constant
+  max_clip_length 1
+  seed {{parent.sparksSeed}}
+  name ParticleEmitter1
+  xpos -2956
+  ypos -526
+  addUserKnob {20 User}
+  addUserKnob {7 particleLife R 0 500}
+  particleLife {{parent.sparkLifetime}}
+  addUserKnob {7 emissionRate R 0 100}
+  emissionRate {{parent.sparkEmissionRate}}
+  addUserKnob {7 randomness R 0 100}
+  randomness {{parent.sparkRandomness}}
+ }
+ ParticleExpression {
+  temp_name0 UIUpRatio
+  temp_expr0 "\[value randomness] * 100"
+  temp_expr0_pp false
+  temp_expr1_pp false
+  temp_expr2_pp false
+  temp_name3 velRandomY
+  temp_expr3 "id % 50 < UIUpRatio ?  v(1,2.5,1) : v(1,1,1)"
+  massexpr random
+  massexpr_onlynew true
+  velexpr "vel * velRandomY"
+  velexpr_onlynew true
+  channels {a}
+  name ParticleExpression1
+  xpos -2956
+  ypos -380
+  addUserKnob {20 User}
+  addUserKnob {7 randomness}
+  randomness {{parent.sparkRandomness}}
+ }
+ ParticleExpression {
+  temp_name0 colorRand
+  temp_expr0 random
+  colexpr "color + (v(colorRand, colorRand, colorRand)*5)"
+  colexpr_onlynew true
+  channels {a}
+  name ParticleExpression3
+  xpos -2956
+  ypos -244
+ }
+ ParticleGravity {
+  to {0 {parent.sparkGravity} 0}
+  channels {a}
+  name ParticleGravity1
+  xpos -2956
+  ypos -105
+ }
+ ParticleBounce {
+  display wireframe
+  selectable false
+  render_mode off
+  out_bounce 0
+  in_bounce 0.3
+  in_friction 0.7
+  bounceaxis_translate {{curve} {parent.sparksGen_bounceHeight} {curve}}
+  bounceaxis_uniform_scale 20
+  name ParticleBounce1
+  xpos -2956
+  ypos 27
+  disable {{!parent.sparksBounceEnable x50 0}}
+ }
+ Dot {
+  name Dot2
+  xpos -2922
+  ypos 142
+ }
+ Dot {
+  name Dot3
+  xpos -2822
+  ypos 205
+ }
+ ParticleSpawn {
+  rate {{"parent.enableTail? 25 * parent.sparksGen_tailLengthMult : 1"}}
+  lifetime {{P_Sparks.sparksGen_tailLengthMult}}
+  velocity 0
+  size {{0.005*parent.sparkSize}}
+  conserve_mass false
+  conserve_momentum false
+  inherit_color true
+  name ParticleSpawn1
+  xpos -2856
+  ypos 330
+ }
+ ParticleSettings {
+  steps_per_frame {{"25 * parent.sparksGen_tailLengthMult"}}
+  name ParticleSettings1
+  xpos -2856
+  ypos 454
+ }
+set N2c92d400 [stack 0]
+ Dot {
+  name Dot4
+  xpos -2542
+  ypos 457
+ }
+ Dot {
+  name Dot6
+  xpos -2542
+  ypos 705
+ }
+push $N2c92d400
+ ParticleCurve {
+  curves {r {}
+    g {}
+    b {}
+    a {curve L 0.8037313223 0.00199007988}
+    size {}
+    mass {}}
+  affect_rgb false
+  channels {b}
+  name ParticleCurve4
+  xpos -2694
+  ypos 562
+ }
+push $N2c92d400
+ ParticleCurve {
+  curves {r {}
+    g {}
+    b {}
+    a {curve R 0.8037313223 s1.194402933 t-2.200000048 S l 0.00199007988 s-0}
+    size {}
+    mass {}}
+  affect_rgb false
+  channels {b}
+  name ParticleCurve5
+  xpos -2776
+  ypos 561
+ }
+push $N2c92d400
+ ParticleCurve {
+  curves {r {}
+    g {}
+    b {}
+    a {curve l 0.8037313223 s-0 k 0.00199007988 s-2.049999952 t0}
+    size {}
+    mass {}}
+  affect_rgb false
+  channels {b}
+  name ParticleCurve2
+  xpos -2856
+  ypos 562
+ }
+push $N2c92d400
+ ParticleCurve {
+  curves {r {}
+    g {}
+    b {}
+    a {curve l 0.8037313223 s-0.1000000015 -0.0007462501526 s-0.009999999776}
+    size {}
+    mass {}}
+  affect_rgb false
+  channels {b}
+  name ParticleCurve1
+  xpos -2935
+  ypos 560
+ }
+push $N2c92d400
+ ParticleCurve {
+  curves {r {}
+    g {}
+    b {}
+    a {curve 0.9542288184 x0.03936780989 0.9487419724 x0.1078364402 0.1712597609 s3 t-0.400000006 x0.9932064414 -0.0007462501526 s-0.1000000015}
+    size {}
+    mass {}}
+  affect_rgb false
+  channels {b}
+  name ParticleCurve3
+  xpos -3015
+  ypos 559
+ }
+ Switch {
+  inputs 5
+  which {{parent.sparksGen_falloffType}}
+  name Switch2
+  xpos -2856
+  ypos 635
+ }
+ Switch {
+  inputs 2
+  which {{!parent.enableTail}}
+  name Switch5
+  xpos -2856
+  ypos 702
+ }
+ ParticleExpression {
+  temp_name0 mult
+  temp_expr0 "\[value exposureMult]"
+  colexpr "color + (color * mult)"
+  name ParticleExpression4
+  xpos -2856
+  ypos 805
+  addUserKnob {20 User}
+  addUserKnob {7 exposureMult R 0 100}
+  exposureMult {{(parent.sparksGen_ColourMult-1)/578}}
+ }
+ NoOp {
+  name System_Completed
+  tile_color 0xff00ff
+  note_font "Verdana Bold"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -2856
+  ypos 922
+ }
+ Output {
+  name Output1
+  xpos -2856
+  ypos 997
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote3
+  label "Here I'm allowing the user to choose between\nemitting from the built-in card, or from their\nown geo, plugged into the 'Geo' pipe."
+  xpos -2716
+  ypos -822
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote12
+  label "To enable better placement in the 3D view\nthe user can switch between the sprite and\na placeholder sphere for each spark."
+  xpos -3359
+  ypos -787
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote10
+  label "Using the 'ParticleSettings' node we can fill in\nthe gaps between existing particles in our system\n(the value itself defining just how many particles\nwill be introduced in each gap). \n\nThis value (along with 'Emitter_Rate' on the spawn\nnode - an important step in achieving the sub-frame\nlook) is set automatically based upon the chosen\ntail-length."
+  xpos -3259
+  ypos 416
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote9
+  label "This is actually much simpler than it looks!\nUsing 5x'ParticleCurve' nodes, I've definied\n5 different custom falloffs. The switch node\nunderneath is controlled from the drop-down\non the main UI."
+  xpos -3242
+  ypos 544
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote13
+  label "If the tail is not being used, we completely bypass the\nParticleCurve nodes"
+  xpos -3241
+  ypos 696
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote6
+  label "Finally a bounce plane is added to the initial\nparticles. This is customisable through the \nmain UI"
+  xpos -3275
+  ypos 7
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote2
+  label "In this node, I'm choosing how many of the\nparticles I want to be emitted straight-up,\nas opposed to outwards. This ratio is taken\nfrom the main UI.\n\nEssentially, the expression says :\n\nfor every X particle out of those emitted,\nmultiply up velocity by 2.5"
+  xpos -3264
+  ypos -428
+ }
+end_group
+TransformGeo {
+ translate {-3.609999895 5.179999828 0}
+ name TransformGeo4
+ xpos 447
+ ypos 1806
+}
+Scene {
+ name Scene6
+ xpos 457
+ ypos 1852
+}
+Scene {
+ inputs 2
+ name Scene5
+ xpos 457
+ ypos 1965
+}
+push 0
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ spatial_jitter 1.34
+ motion_vectors_type distance
+ name ScanlineRender1
+ xpos 447
+ ypos 2091
+}
+Grade {
+ white 2
+ name Grade3
+ xpos 447
+ ypos 2319
+}
+Defocus {
+ defocus 0.3
+ name Defocus1
+ xpos 447
+ ypos 2343
+}
+push $N7084c800
+Axis2 {
+ inputs 0
+ translate {2.9 0 0}
+ name Axis1
+ xpos 983
+ ypos 614
+}
+Axis2 {
+ translate {{-(sin(frame*RightPoleAxis.rotateSpeed))*RightPoleAxis.rotateRadius} {curve x1 0.5 x65 4} {-(cos(frame*RightPoleAxis.rotateSpeed))*RightPoleAxis.rotateRadius}}
+ name RightPoleAxis
+ xpos 983
+ ypos 680
+ addUserKnob {20 User}
+ addUserKnob {7 rotateSpeed}
+ rotateSpeed 0.515
+ addUserKnob {7 rotateRadius}
+ rotateRadius 0.325
+}
+CheckerBoard2 {
+ inputs 0
+ name CheckerBoard6
+ xpos 1088
+ ypos 628
+}
+Sphere {
+ name Sphere2
+ xpos 1088
+ ypos 700
+}
+TransformGeo {
+ inputs 2
+ uniform_scale 0.02
+ name TransformGeo3
+ xpos 1088
+ ypos 735
+}
+Group {
+ name P_Trail1
+ xpos 1088
+ ypos 780
+ addUserKnob {20 User l Emitter}
+ addUserKnob {4 trail_geoType l "Geo Type" M {Sphere Card Custom}}
+ trail_geoType Custom
+ addUserKnob {7 trail_geoSize l "Geo Scale" R 0.01 5}
+ trail_geoSize 1
+ addUserKnob {26 ""}
+ addUserKnob {7 trail_rate l Rate R 0 2500}
+ trail_rate 25
+ addUserKnob {7 particleSize l Size}
+ particleSize 0.1
+ addUserKnob {7 trail_emitVelocity l Speed R 0 5}
+ addUserKnob {7 trail_particleLife l Life R 1 100}
+ trail_particleLife 50
+ addUserKnob {26 ""}
+ addUserKnob {3 seed l Seed}
+ seed 141252
+ addUserKnob {20 Look}
+ addUserKnob {4 trail_blendMode l "Blend Mode" M {Plus Over}}
+ addUserKnob {18 trail_particleColour l "Particle Colour"}
+ trail_particleColour {1 0.4 0.075}
+ addUserKnob {6 trail_particleColour_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 trail_fadeToColour l "Fade To Alt Colour?" +STARTLINE}
+ trail_fadeToColour true
+ addUserKnob {18 trails_altColour l "Alt Colour"}
+ trails_altColour {0.023768 0.245485 0.75}
+ addUserKnob {6 trails_altColour_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {7 trail_startOpacity l Opacity R 0.01 1}
+ trail_startOpacity 0.2
+ addUserKnob {7 trail_particleSizeMult l "Shrink Rate" R 0.01 2}
+ trail_particleSizeMult 0.8
+ addUserKnob {20 Forces}
+ addUserKnob {7 trail_turbStrength l "Turb Strength" R 0 2}
+ addUserKnob {7 trail_turbScale l "Turb Scale" R 0 2}
+ trail_turbScale 0.1
+ addUserKnob {26 ""}
+ addUserKnob {7 trail_dragStrength l "Drag Strength"}
+ trail_dragStrength 1
+ addUserKnob {41 min_age l "Drag Min Age" T ParticleDrag1.min_age}
+ addUserKnob {41 max_age l "Drag Max Age" T ParticleDrag1.max_age}
+ addUserKnob {26 ""}
+ addUserKnob {7 trail_gravityAmount l "Gravity Amount"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x68a85aff
+  label "Add system forces"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1440
+  ypos 122
+  bdwidth 310
+  bdheight 210
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode14
+  tile_color 0x454554ff
+  label "Trail System"
+  note_font_size 42
+  note_font_color 0xd2d2ffff
+  xpos 1083
+  ypos -825
+  bdwidth 1001
+  bdheight 1798
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x68a85aff
+  label "Define Particle Falloffs"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1440
+  ypos 411
+  bdwidth 310
+  bdheight 213
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x68a85aff
+  label Forces
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1439
+  ypos 156
+  bdwidth 310
+  bdheight 213
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xc65353ff
+  label "Choose/Move source geo."
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1726
+  ypos -358
+  bdwidth 286
+  bdheight 288
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x68a85aff
+  label "Setup Emitter system"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1441
+  ypos -20
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x7171c600
+  label "Setup sprite presets"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1412
+  ypos -709
+  bdwidth 315
+  bdheight 332
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x68a85aff
+  label "Subframe Control"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1440
+  ypos 632
+  bdwidth 309
+  bdheight 117
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "Here we define the main sprite colour/shape. As this preset\nhas a very specific look, we don't add a switch/Input node\nsetup to allow theuser to choose their own particle image."
+  xpos 1437
+  ypos -651
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote3
+  label "Here I'm allowing the user to choose between\nemitting from a sphere, a card or their own \ncustom geo. The transform geo allows the user\nto add custom animation and control scale."
+  xpos 1763
+  ypos -307
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote8
+  label "This particle system is set up as per usual,\napart from the expressions on rate, lifetime\nand velocity which take values from the main\nUI. The rate parameter also takes subframe\namount into account."
+  xpos 1228
+  ypos 14
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote4
+  label "Here we define what happens to the look of the\nparticles over time. I've split the expressions\nover 3 nodes so that they can easily be turned\non and off as needed."
+  xpos 1219
+  ypos 497
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.trail_particleColour.r} {parent.trail_particleColour.g} {parent.trail_particleColour.b} 1}
+  format "12 12 0 0 12 12 1 Particle 12x12"
+  name Constant1
+  xpos 1533
+  ypos -589
+ }
+ Roto {
+  output alpha
+  premultiply rgb
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x41800000 x41800000}
+    {a pt 0}
+    {curvegroup Ellipse1 576 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xbf610d39 x3bc57ffc}
+        {x40c0debe x408f3276}
+        {x3f610d28 xbbc57ffc}
+        {xbbc57bf6 xbf610d28}
+        {x40f427d0 x40c1c8b4}
+        {x3bc57ffc x3f610d39}
+        {x3f610d28 xbbc57ffc}
+        {x40c1917d x40f511dc}
+        {xbf610d39 x3bc57ffc}
+        {x3bc57ffc x3f610d39}
+        {x408e486b x40c27b89}
+        {xbbc57bf6 xbf610d28}}}     idem}
+     {t
+      {{x41880000 x418ccccd}}
+      {{x41880000 x41680000}}     0
+      {{x41880000 0}}
+      {{x41880000 0}}     0 0 0
+      {{x41880000 0}}
+      {{x41880000 1}}
+      {{x41880000 1}}     1
+      {{x41880000 0}}}
+     {a fx x40800000 fy x40800000 spx x41800000 spy x41800000 sb 1 nv x40000000 ltn x41880000 ltm x41880000 tt x40c00000 pt 0 view2 x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay 0
+  lifetime_type "all frames"
+  lifetime_start 17
+  lifetime_end 17
+  motionblur_shutter_offset_type centred
+  feather 4
+  source_translate_round false
+  source_black_outside true
+  name Roto1
+  xpos 1533
+  ypos -517
+ }
+set N2cbe5000 [stack 0]
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat2
+  xpos 1597
+  ypos -457
+ }
+push $N2cbe5000
+ BlendMat {
+  operation plus
+  surfaceblend modulate
+  name BlendMat1
+  xpos 1465
+  ypos -459
+ }
+ Switch {
+  inputs 2
+  which {{parent.trail_blendMode}}
+  name Switch2
+  xpos 1533
+  ypos -415
+ }
+ Input {
+  inputs 0
+  name Axis
+  xpos 1917
+  ypos -119
+  number 1
+ }
+ Input {
+  inputs 0
+  name Geo
+  xpos 1917
+  ypos -177
+ }
+ Card2 {
+  inputs 0
+  orientation ZX
+  image_aspect false
+  uniform_scale 0.5
+  control_points {3 3 3 6 
+
+1 {-0.5 0 -0.5} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0 0 0} 
+1 {0 0 -0.5} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 0 -0.5} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {1 0.5 0} 
+1 {-0.5 0 0.5} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0 1 0} 
+1 {0 0 0.5} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0.5 1 0} 
+1 {0.5 0 0.5} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {1 1 0} }
+  name Card1
+  xpos 1855
+  ypos -226
+ }
+ Sphere {
+  inputs 0
+  radius 0.02
+  name Sphere1
+  xpos 1754
+  ypos -226
+ }
+ Switch {
+  inputs 3
+  which {{parent.trail_geoType i}}
+  name Switch1
+  xpos 1807
+  ypos -177
+ }
+ TransformGeo {
+  inputs 2
+  uniform_scale {{geoSize}}
+  name TransformGeo1
+  xpos 1807
+  ypos -119
+  addUserKnob {20 User}
+  addUserKnob {7 geoSize}
+  geoSize {{parent.trail_geoSize}}
+ }
+ Dot {
+  name Dot1
+  xpos 1841
+  ypos 57
+ }
+push 0
+ ParticleEmitter {
+  inputs 3
+  emit_from faces
+  rate {{rate_1*10}}
+  rate_variation 0.65
+  lifetime {{life}}
+  lifetime_variation 0.5
+  halflife 465
+  velocity {{emitVelocity}}
+  velocity_variation 0.5
+  size {{particleSize}}
+  size_variation 0.355
+  mass_variation 0.25
+  seed {{parent.seed}}
+  name ParticleEmitter1
+  xpos 1532
+  ypos 54
+  addUserKnob {20 User}
+  addUserKnob {7 particleSize}
+  particleSize {{parent.particleSize}}
+  addUserKnob {7 emitVelocity}
+  emitVelocity {{parent.trail_emitVelocity}}
+  addUserKnob {7 life}
+  life {{parent.trail_particleLife}}
+  addUserKnob {7 rate_1 l rate}
+  rate_1 {{parent.trail_rate}}
+ }
+ ParticleTurbulence {
+  strength {{parent.trail_turbStrength} {parent.trail_turbStrength} {parent.trail_turbStrength}}
+  scale {{parent.trail_turbScale} {parent.trail_turbScale} {parent.trail_turbScale}}
+  name ParticleTurbulence1
+  xpos 1532
+  ypos 218
+ }
+ ParticleDrag {
+  drag {{parent.trail_dragStrength i}}
+  max_age 0.75
+  seed 200
+  translate {0 -0.1899999976 0}
+  name ParticleDrag1
+  xpos 1532
+  ypos 261
+ }
+ ParticleGravity {
+  to {0 {parent.trail_gravityAmount} 0}
+  name ParticleGravity1
+  xpos 1532
+  ypos 316
+ }
+ ParticleExpression {
+  colexpr "((color * (1-(age/life))) + (v(\[value altColor.r], \[value altColor.g],\[value altColor.b]) * (0 + (age/life)))) * (1 - (age/life))"
+  name ParticleExpression1
+  xpos 1532
+  ypos 483
+  disable {{!parent.trail_fadeToColour}}
+  addUserKnob {20 User}
+  addUserKnob {18 altColor}
+  altColor {{parent.trails_altColour} {parent.trails_altColour} {parent.trails_altColour}}
+  addUserKnob {6 altColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ ParticleExpression {
+  opacityexpr "\[value parent.trail_startOpacity] * (1 - (age/life))"
+  name ParticleExpression2
+  xpos 1532
+  ypos 528
+ }
+ ParticleExpression {
+  temp_name0 sizeMult
+  temp_expr0 "\[value sizeMult]"
+  sizeexpr "size * (1 - sizeMult)"
+  name ParticleExpression3
+  xpos 1532
+  ypos 573
+  addUserKnob {20 User}
+  addUserKnob {7 sizeMult}
+  sizeMult {{parent.trail_particleSizeMult/100}}
+ }
+ ParticleSettings {
+  steps_per_frame 10
+  name ParticleSettings1
+  xpos 1532
+  ypos 702
+ }
+ NoOp {
+  name System_Completed
+  tile_color 0xff00ff
+  note_font "Verdana Bold"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1532
+  ypos 798
+ }
+ Output {
+  name Output1
+  xpos 1532
+  ypos 888
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote2
+  label "Here we add the main forces for the system,\nin this case Turbulence and Drag nodes, both\nof which are controllable from the UI"
+  xpos 1220
+  ypos 261
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote5
+  label "Here we use the ParticleSettings node\nto give a finer detail particle trail."
+  xpos 1224
+  ypos 669
+ }
+end_group
+Axis2 {
+ inputs 0
+ translate {-3.559999943 0 0}
+ name Axis2
+ xpos 886
+ ypos 612
+}
+Axis2 {
+ translate {{(sin(frame*LeftPoleAxis.rotateSpeed))*LeftPoleAxis.rotateRadius} {curve x1 0.2 x65 4} {(cos(frame*LeftPoleAxis.rotateSpeed))*LeftPoleAxis.rotateRadius}}
+ name LeftPoleAxis
+ xpos 886
+ ypos 678
+ addUserKnob {20 User}
+ addUserKnob {7 rotateSpeed}
+ rotateSpeed 0.515
+ addUserKnob {7 rotateRadius}
+ rotateRadius 0.325
+}
+CheckerBoard2 {
+ inputs 0
+ name CheckerBoard5
+ xpos 759
+ ypos 629
+}
+Sphere {
+ name Sphere1
+ xpos 759
+ ypos 701
+}
+TransformGeo {
+ inputs 2
+ uniform_scale 0.02
+ name TransformGeo2
+ xpos 759
+ ypos 743
+}
+Group {
+ name P_Trail
+ xpos 759
+ ypos 783
+ addUserKnob {20 User l Emitter}
+ addUserKnob {4 trail_geoType l "Geo Type" M {Sphere Card Custom}}
+ trail_geoType Custom
+ addUserKnob {7 trail_geoSize l "Geo Scale" R 0.01 5}
+ trail_geoSize 1
+ addUserKnob {26 ""}
+ addUserKnob {7 trail_rate l Rate R 0 2500}
+ trail_rate 25
+ addUserKnob {7 particleSize l Size}
+ particleSize 0.1
+ addUserKnob {7 trail_emitVelocity l Speed R 0 5}
+ addUserKnob {7 trail_particleLife l Life R 1 100}
+ trail_particleLife 50
+ addUserKnob {26 ""}
+ addUserKnob {3 seed l Seed}
+ seed 12425
+ addUserKnob {20 Look}
+ addUserKnob {4 trail_blendMode l "Blend Mode" M {Plus Over}}
+ addUserKnob {18 trail_particleColour l "Particle Colour"}
+ trail_particleColour {1 0.4 0.075}
+ addUserKnob {6 trail_particleColour_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 trail_fadeToColour l "Fade To Alt Colour?" +STARTLINE}
+ trail_fadeToColour true
+ addUserKnob {18 trails_altColour l "Alt Colour"}
+ trails_altColour {0.2 0.36 0.75}
+ addUserKnob {6 trails_altColour_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {7 trail_startOpacity l Opacity R 0.01 1}
+ trail_startOpacity 0.2
+ addUserKnob {7 trail_particleSizeMult l "Shrink Rate" R 0.01 2}
+ trail_particleSizeMult 0.8
+ addUserKnob {20 Forces}
+ addUserKnob {7 trail_turbStrength l "Turb Strength" R 0 2}
+ addUserKnob {7 trail_turbScale l "Turb Scale" R 0 2}
+ trail_turbScale 0.1
+ addUserKnob {26 ""}
+ addUserKnob {7 trail_dragStrength l "Drag Strength"}
+ trail_dragStrength 1
+ addUserKnob {41 min_age l "Drag Min Age" T ParticleDrag1.min_age}
+ addUserKnob {41 max_age l "Drag Max Age" T ParticleDrag1.max_age}
+ addUserKnob {26 ""}
+ addUserKnob {7 trail_gravityAmount l "Gravity Amount"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x68a85aff
+  label "Add system forces"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1440
+  ypos 122
+  bdwidth 310
+  bdheight 210
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode14
+  tile_color 0x454554ff
+  label "Trail System"
+  note_font_size 42
+  note_font_color 0xd2d2ffff
+  xpos 1083
+  ypos -825
+  bdwidth 1001
+  bdheight 1798
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x68a85aff
+  label "Define Particle Falloffs"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1440
+  ypos 411
+  bdwidth 310
+  bdheight 213
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x68a85aff
+  label Forces
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1439
+  ypos 156
+  bdwidth 310
+  bdheight 213
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xc65353ff
+  label "Choose/Move source geo."
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1726
+  ypos -358
+  bdwidth 286
+  bdheight 288
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x68a85aff
+  label "Setup Emitter system"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1441
+  ypos -20
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x7171c600
+  label "Setup sprite presets"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1412
+  ypos -709
+  bdwidth 315
+  bdheight 332
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x68a85aff
+  label "Subframe Control"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1440
+  ypos 632
+  bdwidth 309
+  bdheight 117
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "Here we define the main sprite colour/shape. As this preset\nhas a very specific look, we don't add a switch/Input node\nsetup to allow theuser to choose their own particle image."
+  xpos 1437
+  ypos -651
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote3
+  label "Here I'm allowing the user to choose between\nemitting from a sphere, a card or their own \ncustom geo. The transform geo allows the user\nto add custom animation and control scale."
+  xpos 1763
+  ypos -307
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote8
+  label "This particle system is set up as per usual,\napart from the expressions on rate, lifetime\nand velocity which take values from the main\nUI. The rate parameter also takes subframe\namount into account."
+  xpos 1228
+  ypos 14
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote4
+  label "Here we define what happens to the look of the\nparticles over time. I've split the expressions\nover 3 nodes so that they can easily be turned\non and off as needed."
+  xpos 1219
+  ypos 497
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.trail_particleColour.r} {parent.trail_particleColour.g} {parent.trail_particleColour.b} 1}
+  format "12 12 0 0 12 12 1 Particle 12x12"
+  name Constant1
+  xpos 1533
+  ypos -589
+ }
+ Roto {
+  output alpha
+  premultiply rgb
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x41800000 x41800000}
+    {a pt 0}
+    {curvegroup Ellipse1 576 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xbf610d39 x3bc57ffc}
+        {x40c0debe x408f3276}
+        {x3f610d28 xbbc57ffc}
+        {xbbc57bf6 xbf610d28}
+        {x40f427d0 x40c1c8b4}
+        {x3bc57ffc x3f610d39}
+        {x3f610d28 xbbc57ffc}
+        {x40c1917d x40f511dc}
+        {xbf610d39 x3bc57ffc}
+        {x3bc57ffc x3f610d39}
+        {x408e486b x40c27b89}
+        {xbbc57bf6 xbf610d28}}}     idem}
+     {t
+      {{x41880000 x418ccccd}}
+      {{x41880000 x41680000}}     0
+      {{x41880000 0}}
+      {{x41880000 0}}     0 0 0
+      {{x41880000 0}}
+      {{x41880000 1}}
+      {{x41880000 1}}     1
+      {{x41880000 0}}}
+     {a fx x40800000 fy x40800000 spx x41800000 spy x41800000 sb 1 nv x40000000 ltn x41880000 ltm x41880000 tt x40c00000 pt 0 view2 x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay 0
+  lifetime_type "all frames"
+  lifetime_start 17
+  lifetime_end 17
+  motionblur_shutter_offset_type centred
+  feather 4
+  source_translate_round false
+  source_black_outside true
+  name Roto1
+  xpos 1533
+  ypos -517
+ }
+set N2ca89800 [stack 0]
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat2
+  xpos 1597
+  ypos -457
+ }
+push $N2ca89800
+ BlendMat {
+  operation plus
+  surfaceblend modulate
+  name BlendMat1
+  xpos 1465
+  ypos -459
+ }
+ Switch {
+  inputs 2
+  which {{parent.trail_blendMode}}
+  name Switch2
+  xpos 1533
+  ypos -415
+ }
+ Input {
+  inputs 0
+  name Axis
+  xpos 1917
+  ypos -119
+  number 1
+ }
+ Input {
+  inputs 0
+  name Geo
+  xpos 1917
+  ypos -177
+ }
+ Card2 {
+  inputs 0
+  orientation ZX
+  image_aspect false
+  uniform_scale 0.5
+  control_points {3 3 3 6 
+
+1 {-0.5 0 -0.5} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0 0 0} 
+1 {0 0 -0.5} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 0 -0.5} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {1 0.5 0} 
+1 {-0.5 0 0.5} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0 1 0} 
+1 {0 0 0.5} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0.5 1 0} 
+1 {0.5 0 0.5} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {1 1 0} }
+  name Card1
+  xpos 1855
+  ypos -226
+ }
+ Sphere {
+  inputs 0
+  radius 0.02
+  name Sphere1
+  xpos 1754
+  ypos -226
+ }
+ Switch {
+  inputs 3
+  which {{parent.trail_geoType i}}
+  name Switch1
+  xpos 1807
+  ypos -177
+ }
+ TransformGeo {
+  inputs 2
+  uniform_scale {{geoSize}}
+  name TransformGeo1
+  xpos 1807
+  ypos -119
+  addUserKnob {20 User}
+  addUserKnob {7 geoSize}
+  geoSize {{parent.trail_geoSize}}
+ }
+ Dot {
+  name Dot1
+  xpos 1841
+  ypos 57
+ }
+push 0
+ ParticleEmitter {
+  inputs 3
+  emit_from faces
+  rate {{rate_1*10}}
+  rate_variation 0.65
+  lifetime {{life}}
+  lifetime_variation 0.5
+  halflife 465
+  velocity {{emitVelocity}}
+  velocity_variation 0.5
+  size {{particleSize}}
+  size_variation 0.355
+  mass_variation 0.25
+  seed {{parent.seed}}
+  name ParticleEmitter1
+  xpos 1532
+  ypos 54
+  addUserKnob {20 User}
+  addUserKnob {7 particleSize}
+  particleSize {{parent.particleSize}}
+  addUserKnob {7 emitVelocity}
+  emitVelocity {{parent.trail_emitVelocity}}
+  addUserKnob {7 life}
+  life {{parent.trail_particleLife}}
+  addUserKnob {7 rate_1 l rate}
+  rate_1 {{parent.trail_rate}}
+ }
+ ParticleTurbulence {
+  strength {{parent.trail_turbStrength} {parent.trail_turbStrength} {parent.trail_turbStrength}}
+  scale {{parent.trail_turbScale} {parent.trail_turbScale} {parent.trail_turbScale}}
+  name ParticleTurbulence1
+  xpos 1532
+  ypos 218
+ }
+ ParticleDrag {
+  drag {{parent.trail_dragStrength i}}
+  max_age 0.75
+  seed 200
+  translate {0 -0.1899999976 0}
+  name ParticleDrag1
+  xpos 1532
+  ypos 261
+ }
+ ParticleGravity {
+  to {0 {parent.trail_gravityAmount} 0}
+  name ParticleGravity1
+  xpos 1532
+  ypos 316
+ }
+ ParticleExpression {
+  colexpr "((color * (1-(age/life))) + (v(\[value altColor.r], \[value altColor.g],\[value altColor.b]) * (0 + (age/life)))) * (1 - (age/life))"
+  name ParticleExpression1
+  xpos 1532
+  ypos 483
+  disable {{!parent.trail_fadeToColour}}
+  addUserKnob {20 User}
+  addUserKnob {18 altColor}
+  altColor {{parent.trails_altColour} {parent.trails_altColour} {parent.trails_altColour}}
+  addUserKnob {6 altColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ ParticleExpression {
+  opacityexpr "\[value parent.trail_startOpacity] * (1 - (age/life))"
+  name ParticleExpression2
+  xpos 1532
+  ypos 528
+ }
+ ParticleExpression {
+  temp_name0 sizeMult
+  temp_expr0 "\[value sizeMult]"
+  sizeexpr "size * (1 - sizeMult)"
+  name ParticleExpression3
+  xpos 1532
+  ypos 573
+  addUserKnob {20 User}
+  addUserKnob {7 sizeMult}
+  sizeMult {{parent.trail_particleSizeMult/100}}
+ }
+ ParticleSettings {
+  steps_per_frame 10
+  name ParticleSettings1
+  selected true
+  xpos 1532
+  ypos 702
+ }
+ NoOp {
+  name System_Completed
+  tile_color 0xff00ff
+  note_font "Verdana Bold"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1532
+  ypos 798
+ }
+ Output {
+  name Output1
+  xpos 1532
+  ypos 888
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote2
+  label "Here we add the main forces for the system,\nin this case Turbulence and Drag nodes, both\nof which are controllable from the UI"
+  xpos 1220
+  ypos 261
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote5
+  label "Here we use the ParticleSettings node\nto give a finer detail particle trail."
+  xpos 1224
+  ypos 669
+ }
+end_group
+Scene {
+ inputs 2
+ name Scene3
+ xpos 933
+ ypos 812
+}
+Dot {
+ name Dot1
+ xpos 957
+ ypos 989
+}
+push $N70805800
+Scene {
+ inputs 2
+ name Scene4
+ xpos 501
+ ypos 965
+}
+push 0
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ motion_vectors_type distance
+ name ScanlineRender2
+ xpos 381
+ ypos 1090
+}
+Grade {
+ white 3
+ name Grade1
+ xpos 381
+ ypos 1114
+}
+Blur {
+ size 2
+ name Blur1
+ xpos 381
+ ypos 1138
+}
+Roto {
+ output rgb
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x44700000 x44070000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Bezier29 512 bezier
+     {{cc
+       {f 8192}
+       {px x42540000
+        {0 0}
+        {x4420999a x43e58000}
+        {0 0}
+        {0 0}
+        {x44260ccd x43e58000}
+        {0 0}
+        {0 0}
+        {x44290000 x43d64ccd}
+        {0 0}
+        {0 0}
+        {x44182666 x43c0e666}
+        {0 0}
+        {0 0}
+        {x4417599a x43c54ccd}
+        {0 0}
+        {0 x3ecccc00}
+        {x441f4ccd x43d23333}
+        {0 xbecccc00}}}     idem}
+     {tx x42540000 x441fbdde x43d44888}
+     {a r 0 g 0 b 0 a 0 fx 1 fy 1 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42540000 ltm x42540000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier28 512 bezier
+     {{cc
+       {f 8192}
+       {px x42500000
+        {0 0}
+        {x44228ccd x43e3e666}
+        {0 0}
+        {0 0}
+        {x4428c000 x43de3333}
+        {0 0}
+        {0 0}
+        {x44280000 x43cb0000}
+        {0 0}
+        {x3eccc800 0}
+        {x4417b333 x43c06666}
+        {xbeccc800 0}
+        {xc0733300 xbfb33400}
+        {x44194000 x43c56666}
+        {x40733300 x3fb33400}}}     idem}
+     {tx x42500000 x4420d99a x43d0947b}
+     {a r 0 g 0 b 0 a 0 fx 1 fy 1 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42500000 ltm x42500000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier27 512 bezier
+     {{cc
+       {f 8192}
+       {px x424c0000
+        {xc0333300 xbe4cc800}
+        {x441ecccd x43f6cccd}
+        {x40333300 x3e4cc800}
+        {xc0b99980 x40ecccc0}
+        {x44238ccd x43f33333}
+        {x40b99980 xc0ecccc0}
+        {0 0}
+        {x44246666 x43e06666}
+        {0 0}
+        {0 x3fcccc00}
+        {x44233333 x43da6666}
+        {0 xbfcccc00}
+        {xbf999a00 x3f999a00}
+        {x4421f333 x43d5199a}
+        {x3f999a00 xbf999a00}
+        {0 0}
+        {x4424cccd x43d26666}
+        {0 0}
+        {0 0}
+        {x4421199a x43bf0000}
+        {0 0}
+        {x3e4cd000 0}
+        {x4417599a x43be8000}
+        {xbe4cd000 0}
+        {0 0}
+        {x44137333 x43d76666}
+        {0 0}
+        {0 0}
+        {x44184000 x43e13333}
+        {0 0}
+        {xbeccc800 xc0d33340}
+        {x4418999a x43ebcccd}
+        {x3eccc800 x40d33340}
+        {xc0b99980 xc0000000}
+        {x441c0ccd x43f4e666}
+        {x40b99980 x40000000}}}     idem}
+     {tx x424c0000 x441e2000 x43dd9778}
+     {a r 0 g 0 b 0 a 0 fx 1 fy 1 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x424c0000 ltm x424c0000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier26 512 bezier
+     {{cc
+       {f 8192}
+       {px x42480000
+        {0 0}
+        {x44208000 x44018000}
+        {0 0}
+        {0 0}
+        {x44272000 x4401c000}
+        {0 0}
+        {0 x3f000000}
+        {x4429c000 x43ed8000}
+        {0 xbf000000}
+        {0 0}
+        {x44294000 x43ae8000}
+        {0 0}
+        {0 0}
+        {x44118000 x43c3c000}
+        {0 0}
+        {0 xbf000000}
+        {x4417a000 x43d98000}
+        {0 x3f000000}
+        {0 0}
+        {x44174ccd x43e10000}
+        {0 0}
+        {0 0}
+        {x44180ccd x43e54ccd}
+        {0 0}
+        {xc0c66680 xbecccc00}
+        {x441a8000 x43e7999a}
+        {x40c66680 x3ecccc00}
+        {0 0}
+        {x441d4ccd x43e64ccd}
+        {0 0}
+        {0 0}
+        {x441db333 x43ef0000}
+        {0 0}
+        {xbe4cd000 xc0999980}
+        {x441d0000 x43f64ccd}
+        {x3e4cd000 x40999980}}}     idem}
+     {tx x42480000 x441dcccd x43e4c555}
+     {a r 0 g 0 b 0 a 0 fx 1 fy 1 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42480000 ltm x42480000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier25 512 bezier
+     {{cc
+       {f 8192}
+       {px x42440000
+        {0 xbe4cd000}
+        {x441b4ccd x440c4ccd}
+        {0 x3e4cd000}
+        {xc1033340 x41866660}
+        {x441c3333 x44013333}
+        {x41033340 xc1866660}
+        {0 x40ccccc0}
+        {x441f0ccd x43f33333}
+        {0 xc0ccccc0}
+        {x41099980 x404ccd00}
+        {x4415f333 x43e74ccd}
+        {xc1099980 xc04ccd00}
+        {0 x3eccd000}
+        {x44178ccd x43df199a}
+        {0 xbeccd000}
+        {0 x3e4cd000}
+        {x44142666 x43be0000}
+        {0 xbe4cd000}
+        {xbeccd000 0}
+        {x442c3333 x43cbcccd}
+        {x3eccd000 0}
+        {0 xbe4cd000}
+        {x442a999a x44040000}
+        {0 x3e4cd000}
+        {x3eccc800 xbeccc800}
+        {x44216666 x440d4ccd}
+        {xbeccc800 x3eccc800}}}     idem}
+     {tx x42440000 x441e4444 x43f1e38e}
+     {a r 0 g 0 b 0 a 0 fx 1 fy 1 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42440000 ltm x42440000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier24 512 bezier
+     {{cc
+       {f 8192}
+       {px x42400000
+        {0 0}
+        {x4413a666 x43e71212}
+        {0 0}
+        {0 0}
+        {x441dbe7f x43efcfcf}
+        {0 0}
+        {0 0}
+        {x441cb333 x43f7199a}
+        {0 0}
+        {0 0}
+        {x4423999a x4403c000}
+        {0 0}
+        {0 0}
+        {x442a3333 x43fb0000}
+        {0 0}
+        {0 x3e4cd000}
+        {x44294000 x43ca999a}
+        {0 xbe4cd000}
+        {x3e4cd000 0}
+        {x441b0ccd x43b86666}
+        {xbe4cd000 0}
+        {0 xbecccc00}
+        {x4413b333 x43cd199a}
+        {0 x3ecccc00}}}
+      {cc
+       {f 8192}
+       {px x42400000
+        {0 0}
+        {xbf61e000 x40296980}
+        {0 0}
+        {0 0}
+        {xc003c400 x4003c400}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 x3e4cd000}
+        {0 0}
+        {0 xbe4cd000}
+        {x3e4cd000 0}
+        {0 0}
+        {xbe4cd000 0}
+        {0 xbecccc00}
+        {0 0}
+        {0 x3ecccc00}}}}
+     {tx x42400000 x441e7333 x43e44666}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42400000 ltm x42400000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier23 512 bezier
+     {{cc
+       {f 8192}
+       {px x42400000
+        {0 0}
+        {x44183333 x440b3333}
+        {0 0}
+        {0 0}
+        {x441ecccd x440bcccd}
+        {0 0}
+        {0 0}
+        {x441c0ccd x43f90000}
+        {0 0}
+        {x3fe66600 xc14999c0}
+        {x44182666 x4404f333}
+        {xbfe66600 x414999c0}}}     idem}
+     {tx x42400000 x441acccc x44061ccd}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42400000 ltm x42400000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier22 512 bezier
+     {{cc
+       {f 8192}
+       {px x423c0000
+        {0 0}
+        {x44137333 x43e6999a}
+        {0 0}
+        {0 0}
+        {x441c7333 x43ee0000}
+        {0 0}
+        {x40599900 xc0d33340}
+        {x441e3333 x43f46666}
+        {xc0599900 x40d33340}
+        {0 0}
+        {x4422999a x4401f333}
+        {0 0}
+        {0 0}
+        {x442b8000 x4402c000}
+        {0 0}
+        {0 x3ecccc00}
+        {x442acccd x43d56666}
+        {0 xbecccc00}
+        {0 x3e4cd000}
+        {x44268000 x43b5999a}
+        {0 xbe4cd000}
+        {x3eccc800 xbe4cd000}
+        {x4414f333 x43c36666}
+        {xbeccc800 x3e4cd000}}}     idem}
+     {tx x423c0000 x44204e66 x43e4199a}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x423c0000 ltm x423c0000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier21 512 bezier
+     {{cc
+       {f 8192}
+       {px x423c0000
+        {x3e4cd000 0}
+        {x441a0ccd x440bc000}
+        {xbe4cd000 0}
+        {0 0}
+        {x4421b333 x44074ccd}
+        {0 0}
+        {0 0}
+        {x441ce666 x43f8e666}
+        {0 0}
+        {x3fcccc00 xc1399980}
+        {x44196000 x44044ccd}
+        {xbfcccc00 x41399980}}}     idem}
+     {tx x423c0000 x441c899a x4404e333}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x423c0000 ltm x423c0000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier20 512 bezier
+     {{cc
+       {f 8192}
+       {px x42380000
+        {x3e4cd000 0}
+        {x44134ccd x43f63333}
+        {xbe4cd000 0}
+        {0 xbeccd000}
+        {x4424599a x44028000}
+        {0 x3eccd000}
+        {0 xbf199a00}
+        {x4430e666 x43fa4ccd}
+        {0 x3f199a00}
+        {0 0}
+        {x4427b333 x43c0e666}
+        {0 0}
+        {x3eccc800 0}
+        {x4413f333 x43b73333}
+        {xbeccc800 0}
+        {0 xbe4cd000}
+        {x44118000 x43e88000}
+        {0 x3e4cd000}}}     idem}
+     {tx x42380000 x441e4889 x43e3aeef}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42380000 ltm x42380000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier19 512 bezier
+     {{cc
+       {f 8192}
+       {px x42380000
+        {0 0}
+        {x4416a666 x4407e666}
+        {0 0}
+        {0 0}
+        {x441e8ccd x44088ccd}
+        {0 0}
+        {0 0}
+        {x441cfb33 x43f9e445}
+        {0 0}
+        {x40199a00 xc0e00000}
+        {x44178ccd x44027333}
+        {xc0199a00 x40e00000}}}     idem}
+     {tx x42380000 x4419eccd x44044ccd}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42380000 ltm x42380000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier18 512 bezier
+     {{cc
+       {f 8192}
+       {px x42340000
+        {0 1}
+        {x4415c000 x4407a000}
+        {0 xbf800000}
+        {0 0}
+        {x442b8000 x44092000}
+        {0 0}
+        {0 0}
+        {x442d2000 x43b18000}
+        {0 0}
+        {x3fc00000 xbf800000}
+        {x44106000 x43b60000}
+        {xbfc00000 1}}}     idem}
+     {tx x42340000 x441fb000 x43e24000}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42340000 ltm x42340000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier17 512 bezier
+     {{cc
+       {f 8192}
+       {px x422c0000
+        {0 0}
+        {x44240ccd x43c58000}
+        {0 0}
+        {0 0}
+        {x4429999a x43c43333}
+        {0 0}
+        {0 0}
+        {x44290ccd x43aa3333}
+        {0 0}
+        {0 0}
+        {x4421c000 x43b58000}
+        {0 0}}}     idem}
+     {tx x422c0000 x44261ccd x43ba599a}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x422c0000 ltm x422c0000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier16 512 bezier
+     {{cc
+       {f 8192}
+       {px x42280000
+        {0 0}
+        {x44240dde x43c1cccd}
+        {0 0}
+        {0 0}
+        {x4429999a x43be6666}
+        {0 0}
+        {0 0}
+        {x4429599a x43a5999a}
+        {0 0}
+        {0 0}
+        {x44234000 x43b00000}
+        {0 0}
+        {0 0}
+        {x4422999a x43b6199a}
+        {0 0}}}     idem}
+     {tx x42280000 x4425c000 x43b5947b}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42280000 ltm x42280000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier15 512 bezier
+     {{cc
+       {f 8192}
+       {px x42240000
+        {0 xbecccc00}
+        {x4424cccd x43c70000}
+        {0 x3ecccc00}
+        {xbeccd000 0}
+        {x442c8000 x43b90000}
+        {x3eccd000 0}
+        {0 0}
+        {x44259ccd x43aec445}
+        {0 0}
+        {0 0}
+        {x4422b333 x43b5e666}
+        {0 0}}}     idem}
+     {tx x42240000 x44265333 x43baa000}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42240000 ltm x42240000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier14 512 bezier
+     {{cc
+       {f 8192}
+       {px
+        {x42200000 x42240000}
+        {{x3eccc800}
+      {0}}
+        {{x44223333}
+      {x43b64ccd}}
+        {{xbeccc800}
+      {0}}
+        {{xbeccc800}
+      {xc0733380}}
+        {{x44238ccd}
+      {x43c43333}}
+        {{x3eccc800}
+      {x40733380}}
+        {{0}
+      {x3ecccc00}}
+        {{x44290ccd}
+      {x43bb4ccd}}
+        {{0}
+      {xbecccc00}}
+        {{0}
+      {0}}
+        {{x4427cccd}
+      {x43ae3333}}
+        {{0}
+      {0}}}}     idem}
+     {tx x42200000 x4425a666 x43b90000}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42200000 ltm x42200000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier13 512 bezier
+     {{cc
+       {f 8192}
+       {px x421c0000
+        {0 x3ecccc00}
+        {x441fa99a x43b0e000}
+        {0 xbecccc00}
+        {xbfe66600 xc04ccd00}
+        {x44244000 x43c70000}
+        {x3fe66600 x404ccd00}
+        {0 0}
+        {x442a4ccd x43ba8000}
+        {0 0}
+        {0 0}
+        {x44254ccd x43ace666}
+        {0 0}}}     idem}
+     {tx x421c0000 x4424cccd x43b7f99a}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x421c0000 ltm x421c0000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier12 512 bezier
+     {{cc
+       {f 8192}
+       {px x42180000
+        {0 0}
+        {x44194000 x43ba0000}
+        {0 0}
+        {xc0b99980 xc0f99980}
+        {x441d999a x43cc999a}
+        {x40b99980 x40f99980}
+        {xc1766680 xc0d33300}
+        {x44270000 x43de199a}
+        {x41766680 x40d33300}
+        {0 0}
+        {x442e999a x43e44ccd}
+        {0 0}
+        {0 0}
+        {x442a999a x43ab0000}
+        {0 0}
+        {x3f999a00 xbfe66700}
+        {x4418999a x43ab3333}
+        {xbf999a00 x3fe66700}}}     idem}
+     {tx x42180000 x44229bbc x43c53333}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42180000 ltm x42180000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier11 512 bezier
+     {{cc
+       {f 8192}
+       {px x42140000
+        {0 xc0a00000}
+        {x441d3333 x43c0b333}
+        {0 x40a00000}
+        {xc0c66680 xc1000000}
+        {x441f8000 x43d23333}
+        {x40c66680 x41000000}
+        {xc1e66680 xc13cccc0}
+        {x4428a666 x43e20000}
+        {x41e66680 x413cccc0}
+        {0 0}
+        {x442f8000 x43d60000}
+        {0 0}
+        {0 0}
+        {x44204ccd x43c26666}
+        {0 0}
+        {xbeccd000 0}
+        {x442af333 x43c1199a}
+        {x3eccd000 0}
+        {0 0}
+        {x4424999a x43a7e666}
+        {0 0}
+        {0 0}
+        {x441db333 x43acb333}
+        {0 0}
+        {x3f999a00 xbecccc00}
+        {x441b199a x43af3333}
+        {xbf999a00 x3ecccc00}}}     idem}
+     {tx x42140000 x4423471c x43c205b0}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42140000 ltm x42140000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier10 512 bezier
+     {{cc
+       {f 8192}
+       {px x42100000
+        {xbeccd000 0}
+        {x4420f333 x43c26666}
+        {x3eccd000 0}
+        {0 0}
+        {x442ba666 x43bc4ccd}
+        {0 0}
+        {0 0}
+        {x44244000 x43ab0000}
+        {0 0}
+        {x3eccd000 0}
+        {x4417599a x43a03333}
+        {xbeccd000 0}
+        {0 0}
+        {x44134ccd x43af6666}
+        {0 0}}}     idem}
+     {tx x42100000 x441f1999 x43b1dc2a}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42100000 ltm x42100000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier9 512 bezier
+     {{cc
+       {f 8192}
+       {px x420c0000
+        {0 0}
+        {x4421c000 x43c6b333}
+        {0 0}
+        {0 0}
+        {x442d8ccd x43c2cccd}
+        {0 0}
+        {0 0}
+        {x44258000 x439eb333}
+        {0 0}
+        {0 xbecccc00}
+        {x441f0ccd x43a8199a}
+        {0 x3ecccc00}
+        {xbeccd000 xc0866680}
+        {x441f8000 x43b46666}
+        {x3eccd000 x40866680}}}     idem}
+     {tx x420c0000 x4423deb8 x43b423d8}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x420c0000 ltm x420c0000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier8 512 bezier
+     {{cc
+       {f 8192}
+       {px x42080000
+        {0 0}
+        {x44230000 x43b8cccd}
+        {0 0}
+        {xc0266600 xc0c66680}
+        {x44241000 x43c29bbc}
+        {x40266600 x40c66680}
+        {0 0}
+        {x442ac000 x43c20000}
+        {0 0}
+        {0 0}
+        {x442a999a x43a9999a}
+        {0 0}
+        {0 0}
+        {x4417599a x43966666}
+        {0 0}
+        {0 0}
+        {x4412599a x43ad8000}
+        {0 0}}}     idem}
+     {tx x42080000 x442104cc x43b1d16c}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42080000 ltm x42080000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier7 512 bezier
+     {{cc
+       {f 8192}
+       {px x42080000
+        {0 0}
+        {x441e0000 x43d44ccd}
+        {0 0}
+        {x400ccc00 0}
+        {x441d6666 x43cdcccd}
+        {xc00ccc00 0}
+        {0 0}
+        {x441f999a x43bab333}
+        {0 0}
+        {x3eccd000 0}
+        {x44128ccd x43ba8000}
+        {xbeccd000 0}
+        {0 xbecccc00}
+        {x44168000 x43d13333}
+        {0 x3ecccc00}}}     idem}
+     {tx x42080000 x441a68f6 x43c8199a}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42080000 ltm x42080000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier6 512 bezier
+     {{cc
+       {f 8192}
+       {px x42080000
+        {0 0}
+        {x44134ccd x43deb333}
+        {0 0}
+        {xc15cccc0 xc0800000}
+        {x44168555 x43e8c000}
+        {x415cccc0 x40800000}
+        {xc0c66600 x40733300}
+        {x441cdeef x43e7a666}
+        {x40c66600 xc0733300}
+        {0 0}
+        {x441d8000 x43e03333}
+        {0 0}
+        {0 0}
+        {x4417599a x43d66666}
+        {0 0}}}     idem}
+     {tx x42080000 x4418b555 x43e123d6}
+     {a r 0 g 0 b 0 a 0 fx x3f8ccccd fy x3f8ccccd osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42080000 ltm x42080000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier5 512 bezier
+     {{cc
+       {f 8192}
+       {px x42040000
+        {x3eccd000 0}
+        {x441e0000 x43cc6666}
+        {xbeccd000 0}
+        {0 x3f4ccc00}
+        {x441e199a x43b1e666}
+        {0 xbf4ccc00}
+        {xc0accc80 x3fcccd00}
+        {x441f0ccd x43ad199a}
+        {x40accc80 xbfcccd00}
+        {0 0}
+        {x442a0000 x43b3999a}
+        {0 0}
+        {0 0}
+        {x442a3333 x43cc6666}
+        {0 0}}}     idem}
+     {tx x42040000 x442311ec x43bbe148}
+     {a r 0 g 0 b 0 a 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42040000 ltm x42040000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier4 512 bezier
+     {{cc
+       {f 8192}
+       {px x42040000
+        {0 0}
+        {x44190000 x43b3cccd}
+        {0 0}
+        {xc0733300 x415cccc0}
+        {x441c2778 x43a71556}
+        {x40733300 xc15cccc0}
+        {0 0}
+        {x441c7333 x4397b333}
+        {0 0}
+        {x3eccd000 0}
+        {x440fd99a x439d8000}
+        {xbeccd000 0}}}     idem}
+     {tx x42040000 x44185d12 x43a40556}
+     {a r 0 g 0 b 0 a 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42040000 ltm x42040000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier3 512 bezier
+     {{cc
+       {f 8192}
+       {px x42000000
+        {0 0}
+        {x44290ccd x43ddcccd}
+        {0 0}
+        {x40ea2a80 x410e4e40}
+        {x44245151 x43d72121}
+        {xc07d0600 xc099c440}
+        {x409a5a80 xc0824280}
+        {x4420e425 x43d08a8c}
+        {xc0c57d00 x40a6a940}
+        {x40800000 xbfb33400}
+        {x441a67e8 x43d722a2}
+        {xc0800000 x3fb33400}
+        {x3eccd000 x3ecccc00}
+        {x44120ccd x43ca6666}
+        {xbeccd000 xbecccc00}
+        {0 0}
+        {x4412e666 x439fb333}
+        {0 0}
+        {xbe4cd000 xbecccc00}
+        {x44278000 x439a199a}
+        {x3e4cd000 x3ecccc00}
+        {0 xbe4cd000}
+        {x442dcccd x43d06666}
+        {0 x3e4cd000}}}
+      {cc
+       {f 8192}
+       {px x42000000
+        {0 0}
+        {0 0}
+        {0 0}
+        {x40ea2a80 x410e4e40}
+        {xc003c400 x3f61e200}
+        {xc07d0600 xc099c440}
+        {x409a5a80 xc0824280}
+        {0 0}
+        {xc0c57d00 x40a6a940}
+        {x40800000 xbfb33400}
+        {0 0}
+        {xc0800000 x3fb33400}
+        {x3eccd000 x3ecccc00}
+        {0 0}
+        {xbeccd000 xbecccc00}
+        {0 0}
+        {0 0}
+        {0 0}
+        {xbe4cd000 xbecccc00}
+        {0 0}
+        {x3e4cd000 x3ecccc00}
+        {0 xbe4cd000}
+        {0 0}
+        {0 x3e4cd000}}}}
+     {tx x42000000 x44205aeb x43c65a5a}
+     {a r 0 g 0 b 0 a 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42000000 ltm x41f80000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier2 512 bezier
+     {{cc
+       {f 8192}
+       {px x41d00000
+        {0 0}
+        {x4420d99a x43b9cccd}
+        {0 0}
+        {x3f199800 x414999a0}
+        {x4421f333 x43ac3333}
+        {xbf199800 xc14999a0}
+        {0 0}
+        {x44187333 x439e999a}
+        {0 0}
+        {xbf4ccc00 xc0cccd00}
+        {x44180000 x43af6666}
+        {x3f4ccc00 x40cccd00}
+        {0 0}
+        {x4418999a x43bf199a}
+        {0 0}
+        {xc1166680 xc04ccd00}
+        {x441c4000 x43c63333}
+        {x41166680 x404ccd00}
+        {0 0}
+        {x441e8000 x43c2999a}
+        {0 0}}}     idem}
+     {tx x41d00000 x441c5f16 x43b6457b}
+     {a r 0 g 0 b 0 a 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x41d00000 ltm x41d00000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {px x41c80000
+        {0 0}
+        {x44267333 x43bccccd}
+        {0 0}
+        {0 0}
+        {x4428599a x43ba8000}
+        {0 0}
+        {0 0}
+        {x44260ccd x43b1199a}
+        {0 0}
+        {x3eb77800 xc0bf7780}
+        {x44250911 x43b30dde}
+        {xbefb1000 x41030100}
+        {xbf999a00 xc0866680}
+        {x4425c800 x43b81666}
+        {x3f999a00 x40866680}}}
+      {cc
+       {f 8192}
+       {px x41c80000
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {x3eb77800 xc0bf7780}
+        {0 0}
+        {xbefb1000 x41030100}
+        {xbf999a00 xc0866680}
+        {x3fa00000 0}
+        {x3f999a00 x40866680}}}}
+     {tx x41c80000 x44264000 x43b7999a}
+     {a r 0 g 0 b 0 a 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x41c80000 ltm x41d00000 ltt x40000000 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {960 540}
+ color 0
+ colorOverlay {0 0 0 0}
+ lifetime_start 53
+ lifetime_end 53
+ motionblur_shutter_offset_type centred
+ feather 1
+ source_black_outside true
+ name LeftRoto
+ xpos 381
+ ypos 1374
+}
+Roto {
+ output rgb
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x44700000 x44070000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Bezier13 512 bezier
+     {{cc
+       {f 8192}
+       {px x42680000
+        {0 0}
+        {x449b4000 x441b2000}
+        {0 0}
+        {0 x41180000}
+        {x449a3000 x44156000}
+        {0 xc1180000}
+        {xc0600000 0}
+        {x449b6000 x44106000}
+        {x40600000 0}
+        {0 0}
+        {x44a12000 x43e60000}
+        {0 0}
+        {x3f000000 0}
+        {x44944000 x43e0c000}
+        {xbf000000 0}
+        {0 0}
+        {x4490b000 x440de000}
+        {0 0}}}     idem}
+     {tx x42680000 x44992555 x44085aab}
+     {a r 0 g 0 b 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42680000 ltm x42680000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier12 512 bezier
+     {{cc
+       {f 8192}
+       {px x42640000
+        {x3f000000 0}
+        {x44940000 x44184000}
+        {xbf000000 0}
+        {0 0}
+        {x449e8000 x441b4000}
+        {0 0}
+        {xbf800000 0}
+        {x449e8000 x43d28000}
+        {1 0}
+        {0 0}
+        {x44940000 x43d28000}
+        {0 0}}}     idem}
+     {tx x42640000 x44994000 x44018000}
+     {a r 0 g 0 b 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42640000 ltm x42640000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier11 512 bezier
+     {{cc
+       {f 8192}
+       {px x42600000
+        {0 0}
+        {x4493d000 x44172000}
+        {0 0}
+        {0 0}
+        {x449c2000 x4418c000}
+        {0 0}
+        {0 0}
+        {x449ea000 x43fbc000}
+        {0 0}
+        {0 0}
+        {x449e8000 x43dc0000}
+        {0 0}
+        {x3f000000 0}
+        {x44959000 x43d4c000}
+        {xbf000000 0}
+        {0 0}
+        {x4491d000 x43e50000}
+        {0 0}}}     idem}
+     {tx x42600000 x4498bd55 x43fd8aab}
+     {a r 0 g 0 b 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42600000 ltm x42600000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier10 512 bezier
+     {{cc
+       {f 8192}
+       {px x425c0000
+        {0 0}
+        {x44905000 x44188000}
+        {0 0}
+        {0 0}
+        {x449e3000 x4419e000}
+        {0 0}
+        {0 0}
+        {x449ec000 x43d60000}
+        {0 0}
+        {0 0}
+        {x44926000 x43d70000}
+        {0 0}}}     idem}
+     {tx x425c0000 x4497e800 x44023800}
+     {a r 0 g 0 b 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x425c0000 ltm x425c0000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier9 512 bezier
+     {{cc
+       {f 8192}
+       {px x42580000
+        {0 0}
+        {x4492b000 x44148000}
+        {0 0}
+        {0 0}
+        {x449c0000 x4417c000}
+        {0 0}
+        {0 0}
+        {x44a43000 x43ca0000}
+        {0 0}
+        {0 0}
+        {x44943000 x43c88000}
+        {0 0}}}     idem}
+     {tx x42580000 x4499c400 x43fac000}
+     {a r 0 g 0 b 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42580000 ltm x42580000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier8 512 bezier
+     {{cc
+       {f 8192}
+       {px x42540000
+        {0 0}
+        {x44907000 x4417a000}
+        {0 0}
+        {0 0}
+        {x449cf000 x44180000}
+        {0 0}
+        {0 0}
+        {x44a1f000 x43c70000}
+        {0 0}
+        {x3f000000 0}
+        {x4495c000 x43c38000}
+        {xbf000000 0}
+        {0 0}
+        {x44915000 x44010000}
+        {0 0}}}     idem}
+     {tx x42540000 x4497accd x43fbf333}
+     {a r 0 g 0 b 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42540000 ltm x42540000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier7 512 bezier
+     {{cc
+       {f 8192}
+       {px x42500000
+        {0 0}
+        {x449d6000 x44028000}
+        {0 0}
+        {xbf000000 x41f40000}
+        {x449bc000 x43e4c000}
+        {x3f000000 xc1f40000}
+        {0 x3f000000}
+        {x449d7000 x43cd0000}
+        {0 xbf000000}
+        {0 0}
+        {x44a51000 x43e3c000}
+        {0 0}}}
+      {cc
+       {f 8192}
+       {px x42500000
+        {0 0}
+        {x40969600 xc061e100}
+        {0 0}
+        {xbf000000 x41f40000}
+        {x40bc3c00 0}
+        {x3f000000 xc1f40000}
+        {0 x3f000000}
+        {0 0}
+        {0 xbf000000}
+        {0 0}
+        {0 0}
+        {0 0}}}}
+     {tx x42500000 x449ee800 x43e6a000}
+     {a r 0 g 0 b 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42500000 ltm x42500000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier6 512 bezier
+     {{cc
+       {f 8192}
+       {px x42040000
+        {0 0}
+        {x44944000 x43e48000}
+        {0 0}
+        {xbf800000 x41580000}
+        {x44960000 x43d8c000}
+        {1 xc1580000}
+        {0 0}
+        {x44973000 x43cac000}
+        {0 0}
+        {0 x40400000}
+        {x4497d000 x43c0c000}
+        {0 xc0400000}
+        {0 0}
+        {x4497c000 x43b20000}
+        {0 0}
+        {0 0}
+        {x4493f000 x43b00000}
+        {0 0}
+        {0 0}
+        {x44928000 x43de0000}
+        {0 0}}}     idem}
+     {tx x42040000 x4495a249 x43ca6492}
+     {a r 0 g 0 b 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42040000 ltm x42040000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier5 512 bezier
+     {{cc
+       {f 8192}
+       {px x42000000
+        {0 0}
+        {x44986000 x43f18000}
+        {0 0}
+        {xc0200000 x41800000}
+        {x449a25a6 x43e30000}
+        {x40200000 xc1800000}
+        {0 x3f000000}
+        {x449b1000 x43cec000}
+        {0 xbf000000}
+        {0 0}
+        {x449c9000 x43cb0000}
+        {0 0}
+        {0 0}
+        {x449ee000 x43ab8000}
+        {0 0}
+        {x3fc00000 0}
+        {x4496b000 x439c8000}
+        {xbfc00000 0}
+        {0 0}
+        {x44922000 x43d30000}
+        {0 0}
+        {1 0}
+        {x4494a000 x43ed0000}
+        {xbf800000 0}}}     idem}
+     {tx x42000000 x4498ceb5 x43cec800}
+     {a r 0 g 0 b 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x42000000 ltm x42000000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier4 512 bezier
+     {{cc
+       {f 8192}
+       {px x41f80000
+        {0 xbf000000}
+        {x4494e000 x43e70000}
+        {0 x3f000000}
+        {0 x40400000}
+        {x4495e000 x43dc4000}
+        {0 xc0400000}
+        {0 0}
+        {x44952000 x43d28000}
+        {0 0}
+        {0 0}
+        {x44943000 x43a6c000}
+        {0 0}
+        {0 0}
+        {x44944000 x439a0000}
+        {0 0}
+        {0 0}
+        {x44a42000 x43a58000}
+        {0 0}
+        {0 0}
+        {x449be000 x44030000}
+        {0 0}}}     idem}
+     {tx x41f80000 x44980b6e x43c96db7}
+     {a r 0 g 0 b 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x41f80000 ltm x41f80000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier3 512 bezier
+     {{cc
+       {f 8192}
+       {px x41a00000
+        {0 0}
+        {x4493d000 x43d8c000}
+        {0 0}
+        {xbf800000 0}
+        {x44a09000 x43d90000}
+        {1 0}
+        {0 0}
+        {x44a0d000 x43908000}
+        {0 0}
+        {1 0}
+        {x4492f000 x43924000}
+        {xbf800000 0}}}     idem}
+     {tx x41a00000 x449a0800 x43b52000}
+     {a r 0 g 0 b 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x41a00000 ltm x41a00000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier2 512 bezier
+     {{cc
+       {f 8192}
+       {px x41500000
+        {0 0}
+        {x4498c000 x43c02aab}
+        {0 0}
+        {0 x40000000}
+        {x4498deab x43b50333}
+        {0 xc0000000}
+        {xc0e66600 x40d33300}
+        {x449a8000 x43a7e666}
+        {x40e66600 xc0d33300}
+        {xbe4cc000 0}
+        {x449e799a x43acb333}
+        {x3e4cc000 0}
+        {0 xbe4cc800}
+        {x449e0000 x43bfcccd}
+        {0 x3e4cc800}}}     idem}
+     {tx x41500000 x449b5852 x43b53852}
+     {a r 0 g 0 b 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn x41500000 ltm x41500000 ltt x40000000 tt x40800000}}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {0 0}
+        {x4495e000 x43a2e666}
+        {0 0}
+        {0 0}
+        {x4497c000 x439a8000}
+        {0 0}
+        {0 0}
+        {x4496f333 x4398b333}
+        {0 0}
+        {x3eccd000 0}
+        {x44954000 x43a08000}
+        {xbeccd000 0}}}     idem}
+     {tx 1 x449674cd x439da666}
+     {a r 0 g 0 b 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltt x40000000 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier r 0 g 0 b 0 str 1 ssx 1 ssy 1 sf 1 sb 1 ltt 2 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 5 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 8 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 9 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 tt 10 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_paint_color {0 0 0 1}
+ toolbar_brush_hardness 0.200000003
+ toolbar_lifetime_type single
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {960 540}
+ color {0 0 0 1}
+ colorOverlay {0 0 0 0}
+ lifetime_start 58
+ lifetime_end 58
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ name RightRoto
+ xpos 381
+ ypos 1398
+}
+push $N70804800
+Merge2 {
+ inputs 2
+ operation plus
+ name Merge1
+ xpos 71
+ ypos 1491
+}
+Merge2 {
+ inputs 2
+ operation plus
+ name Merge2
+ xpos 71
+ ypos 2447
+}
+Dot {
+ name Dot3
+ xpos 105
+ ypos 2596
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0xffffffff
+ label "<b>Example                ."
+ note_font "Helvetica Bold"
+ note_font_size 100
+ xpos 41
+ ypos -809
+}
+Group {
+ inputs 0
+ name P_Trail2
+ xpos 643
+ ypos -1219
+ addUserKnob {20 User l Emitter}
+ addUserKnob {4 trail_geoType l "Geo Type" M {Sphere Card Custom}}
+ addUserKnob {7 trail_geoSize l "Geo Scale" R 0.01 5}
+ trail_geoSize 0.25
+ addUserKnob {26 ""}
+ addUserKnob {7 trail_rate l Rate R 0 2500}
+ trail_rate 25
+ addUserKnob {7 particleSize l Size}
+ particleSize 0.1
+ addUserKnob {7 trail_emitVelocity l Speed R 0 5}
+ trail_emitVelocity 0.1
+ addUserKnob {7 trail_particleLife l Life R 1 100}
+ trail_particleLife 50
+ addUserKnob {26 ""}
+ addUserKnob {3 seed l Seed}
+ addUserKnob {20 Look}
+ addUserKnob {4 trail_blendMode l "Blend Mode" M {Plus Over}}
+ addUserKnob {18 trail_particleColour l "Particle Colour"}
+ trail_particleColour {1 0.4 0.075}
+ addUserKnob {6 trail_particleColour_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 trail_fadeToColour l "Fade To Alt Colour?" +STARTLINE}
+ trail_fadeToColour true
+ addUserKnob {18 trails_altColour l "Alt Colour"}
+ trails_altColour {0.2 0.36 0.75}
+ addUserKnob {6 trails_altColour_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {7 trail_startOpacity l Opacity R 0.01 1}
+ trail_startOpacity 0.2
+ addUserKnob {7 trail_particleSizeMult l "Shrink Rate" R 0.01 2}
+ trail_particleSizeMult 0.8
+ addUserKnob {20 Forces}
+ addUserKnob {7 trail_turbStrength l "Turb Strength" R 0 2}
+ trail_turbStrength 0.25
+ addUserKnob {7 trail_turbScale l "Turb Scale" R 0 2}
+ trail_turbScale 0.1
+ addUserKnob {26 ""}
+ addUserKnob {7 trail_dragStrength l "Drag Strength"}
+ trail_dragStrength 0.9
+ addUserKnob {41 min_age l "Drag Min Age" T ParticleDrag1.min_age}
+ addUserKnob {41 max_age l "Drag Max Age" T ParticleDrag1.max_age}
+ addUserKnob {26 ""}
+ addUserKnob {7 trail_gravityAmount l "Gravity Amount"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x68a85aff
+  label "Add system forces"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1440
+  ypos 122
+  bdwidth 310
+  bdheight 210
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode14
+  tile_color 0x454554ff
+  label "Trail System"
+  note_font_size 42
+  note_font_color 0xd2d2ffff
+  xpos 1083
+  ypos -825
+  bdwidth 1001
+  bdheight 1798
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x68a85aff
+  label "Define Particle Falloffs"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1440
+  ypos 411
+  bdwidth 310
+  bdheight 213
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x68a85aff
+  label Forces
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1439
+  ypos 156
+  bdwidth 310
+  bdheight 213
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xc65353ff
+  label "Choose/Move source geo."
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1726
+  ypos -358
+  bdwidth 286
+  bdheight 288
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x68a85aff
+  label "Setup Emitter system"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1441
+  ypos -20
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x7171c600
+  label "Setup sprite presets"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1412
+  ypos -709
+  bdwidth 315
+  bdheight 332
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x68a85aff
+  label "Subframe Control"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1440
+  ypos 632
+  bdwidth 309
+  bdheight 117
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "Here we define the main sprite colour/shape. As this preset\nhas a very specific look, we don't add a switch/Input node\nsetup to allow theuser to choose their own particle image."
+  xpos 1437
+  ypos -651
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote3
+  label "Here I'm allowing the user to choose between\nemitting from a sphere, a card or their own \ncustom geo. The transform geo allows the user\nto add custom animation and control scale."
+  xpos 1763
+  ypos -307
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote8
+  label "This particle system is set up as per usual,\napart from the expressions on rate, lifetime\nand velocity which take values from the main\nUI. The rate parameter also takes subframe\namount into account."
+  xpos 1228
+  ypos 14
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote4
+  label "Here we define what happens to the look of the\nparticles over time. I've split the expressions\nover 3 nodes so that they can easily be turned\non and off as needed."
+  xpos 1219
+  ypos 497
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.trail_particleColour.r} {parent.trail_particleColour.g} {parent.trail_particleColour.b} 1}
+  format "12 12 0 0 12 12 1 Particle 12x12"
+  name Constant1
+  xpos 1533
+  ypos -589
+ }
+ Roto {
+  output alpha
+  premultiply rgb
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x41800000 x41800000}
+    {a pt 0}
+    {curvegroup Ellipse1 576 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xbf610d39 x3bc57ffc}
+        {x40c0debe x408f3276}
+        {x3f610d28 xbbc57ffc}
+        {xbbc57bf6 xbf610d28}
+        {x40f427d0 x40c1c8b4}
+        {x3bc57ffc x3f610d39}
+        {x3f610d28 xbbc57ffc}
+        {x40c1917d x40f511dc}
+        {xbf610d39 x3bc57ffc}
+        {x3bc57ffc x3f610d39}
+        {x408e486b x40c27b89}
+        {xbbc57bf6 xbf610d28}}}     idem}
+     {t
+      {{x41880000 x418ccccd}}
+      {{x41880000 x41680000}}     0
+      {{x41880000 0}}
+      {{x41880000 0}}     0 0 0
+      {{x41880000 0}}
+      {{x41880000 1}}
+      {{x41880000 1}}     1
+      {{x41880000 0}}}
+     {a fx x40800000 fy x40800000 spx x41800000 spy x41800000 sb 1 nv x40000000 ltn x41880000 ltm x41880000 tt x40c00000 pt 0 view2 x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay 0
+  lifetime_type "all frames"
+  lifetime_start 17
+  lifetime_end 17
+  motionblur_shutter_offset_type centred
+  feather 4
+  source_translate_round false
+  source_black_outside true
+  name Roto1
+  xpos 1533
+  ypos -517
+ }
+set N2cd6cc00 [stack 0]
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat2
+  xpos 1597
+  ypos -457
+ }
+push $N2cd6cc00
+ BlendMat {
+  operation plus
+  surfaceblend modulate
+  name BlendMat1
+  xpos 1465
+  ypos -459
+ }
+ Switch {
+  inputs 2
+  which {{parent.trail_blendMode}}
+  name Switch2
+  xpos 1533
+  ypos -415
+ }
+ Input {
+  inputs 0
+  name Axis
+  xpos 1917
+  ypos -119
+  number 1
+ }
+ Input {
+  inputs 0
+  name Geo
+  xpos 1917
+  ypos -177
+ }
+ Card2 {
+  inputs 0
+  orientation ZX
+  image_aspect false
+  uniform_scale 0.5
+  control_points {3 3 3 6 
+
+1 {-0.5 0 -0.5} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0 0 0} 
+1 {0 0 -0.5} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 0 -0.5} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {1 0.5 0} 
+1 {-0.5 0 0.5} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0 1 0} 
+1 {0 0 0.5} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0.5 1 0} 
+1 {0.5 0 0.5} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {1 1 0} }
+  name Card1
+  xpos 1855
+  ypos -226
+ }
+ Sphere {
+  inputs 0
+  radius 0.02
+  name Sphere1
+  xpos 1754
+  ypos -226
+ }
+ Switch {
+  inputs 3
+  which {{parent.trail_geoType i}}
+  name Switch1
+  xpos 1807
+  ypos -177
+ }
+ TransformGeo {
+  inputs 2
+  uniform_scale {{geoSize}}
+  name TransformGeo1
+  xpos 1807
+  ypos -119
+  addUserKnob {20 User}
+  addUserKnob {7 geoSize}
+  geoSize {{parent.trail_geoSize}}
+ }
+ Dot {
+  name Dot1
+  xpos 1841
+  ypos 57
+ }
+push 0
+ ParticleEmitter {
+  inputs 3
+  emit_from faces
+  rate {{rate_1*10}}
+  rate_variation 0.65
+  lifetime {{life}}
+  lifetime_variation 0.5
+  halflife 465
+  velocity {{emitVelocity}}
+  velocity_variation 0.5
+  size {{particleSize}}
+  size_variation 0.355
+  mass_variation 0.25
+  seed {{parent.seed}}
+  name ParticleEmitter1
+  xpos 1532
+  ypos 54
+  addUserKnob {20 User}
+  addUserKnob {7 particleSize}
+  particleSize {{parent.particleSize}}
+  addUserKnob {7 emitVelocity}
+  emitVelocity {{parent.trail_emitVelocity}}
+  addUserKnob {7 life}
+  life {{parent.trail_particleLife}}
+  addUserKnob {7 rate_1 l rate}
+  rate_1 {{parent.trail_rate}}
+ }
+ ParticleTurbulence {
+  strength {{parent.trail_turbStrength} {parent.trail_turbStrength} {parent.trail_turbStrength}}
+  scale {{parent.trail_turbScale} {parent.trail_turbScale} {parent.trail_turbScale}}
+  name ParticleTurbulence1
+  xpos 1532
+  ypos 218
+ }
+ ParticleDrag {
+  drag {{parent.trail_dragStrength i}}
+  max_age 0.75
+  seed 200
+  translate {0 -0.1899999976 0}
+  name ParticleDrag1
+  xpos 1532
+  ypos 261
+ }
+ ParticleGravity {
+  to {0 {parent.trail_gravityAmount} 0}
+  name ParticleGravity1
+  xpos 1532
+  ypos 316
+ }
+ ParticleExpression {
+  colexpr "((color * (1-(age/life))) + (v(\[value altColor.r], \[value altColor.g],\[value altColor.b]) * (0 + (age/life)))) * (1 - (age/life))"
+  name ParticleExpression1
+  xpos 1532
+  ypos 483
+  disable {{!parent.trail_fadeToColour}}
+  addUserKnob {20 User}
+  addUserKnob {18 altColor}
+  altColor {{parent.trails_altColour} {parent.trails_altColour} {parent.trails_altColour}}
+  addUserKnob {6 altColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ ParticleExpression {
+  opacityexpr "\[value parent.trail_startOpacity] * (1 - (age/life))"
+  name ParticleExpression2
+  xpos 1532
+  ypos 528
+ }
+ ParticleExpression {
+  temp_name0 sizeMult
+  temp_expr0 "\[value sizeMult]"
+  sizeexpr "size * (1 - sizeMult)"
+  name ParticleExpression3
+  xpos 1532
+  ypos 573
+  addUserKnob {20 User}
+  addUserKnob {7 sizeMult}
+  sizeMult {{parent.trail_particleSizeMult/100}}
+ }
+ ParticleSettings {
+  steps_per_frame 10
+  name ParticleSettings1
+  xpos 1532
+  ypos 702
+ }
+ NoOp {
+  name System_Completed
+  tile_color 0xff00ff
+  note_font "Verdana Bold"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos 1532
+  ypos 798
+ }
+ Output {
+  name Output1
+  xpos 1532
+  ypos 888
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote2
+  label "Here we add the main forces for the system,\nin this case Turbulence and Drag nodes, both\nof which are controllable from the UI"
+  xpos 1220
+  ypos 261
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote5
+  label "Here we use the ParticleSettings node\nto give a finer detail particle trail."
+  xpos 1224
+  ypos 669
+ }
+end_group
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0xc1c1c1ff
+ gl_color 0xccccccff
+ label "You can either download the toolset example files by pasting this URL into your browser:\n\nhttp://thefoundry.s3.amazonaws.com/products/nuke/toolsets/toolset_examples.zip\n\nOr by clicking on the Download Toolset Examples button of this node:\n\n\n"
+ note_font Verdana
+ note_font_size 14
+ note_font_color 0xffffffff
+ xpos 100
+ ypos -1165
+}
+NoOp {
+ inputs 0
+ name Examples
+ xpos 643
+ ypos -1099
+ addUserKnob {20 Examples}
+ addUserKnob {22 HTML l "Download Toolset Examples" t "Click to download the example script for this Toolset" T "import webbrowser\nwebbrowser.open(\"http://thefoundry.s3.amazonaws.com/products/nuke/toolsets/toolset_examples.zip\")" +STARTLINE}
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0xffffffff
+ label "<b>Gizmo                ."
+ note_font "Helvetica Bold"
+ note_font_size 100
+ xpos 90
+ ypos -1429
+}
+Group {
+ inputs 0
+ name P_Sparks1
+ xpos 1561
+ ypos -1221
+ addUserKnob {20 particleControlsTab l Emitter}
+ addUserKnob {6 previewGeo l "Enable Preview Mode" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {6 sparksGen_userGeo l "Use Custom Emission Geo" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 sparkEmissionRate l Amount R 0 50}
+ sparkEmissionRate 5
+ addUserKnob {7 sparkSize l Size R 0.1 10}
+ sparkSize 10
+ addUserKnob {7 sparkInitialVelocity l Speed}
+ sparkInitialVelocity 0.3
+ addUserKnob {7 sparksSpread l Spread R 0 360}
+ sparksSpread 15
+ addUserKnob {7 sparkLifetime l Life R 0 250}
+ sparkLifetime 10
+ addUserKnob {26 ""}
+ addUserKnob {7 sparkRandomness l Randomness R 0 0.5}
+ sparkRandomness 0.35
+ addUserKnob {7 sparkGravity l Gravity R -0.25 0.25}
+ sparkGravity -0.04
+ addUserKnob {26 ""}
+ addUserKnob {7 sparksSeed l "System Seed" R 0 10000}
+ sparksSeed 84.1
+ addUserKnob {20 Color}
+ addUserKnob {6 sparks_enableImage l "Use Custom Image" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {41 color l "Spark Colour" T Constant1.color}
+ addUserKnob {26 ""}
+ addUserKnob {7 sparksGen_ColourMult l "Exposure Multiplier" R 0 10}
+ sparksGen_ColourMult 1
+ addUserKnob {20 Tail}
+ addUserKnob {6 enableTail l "Enable Tail" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {4 sparksGen_falloffType l "Tail Falloff" M {"Bright Start" S-Curve "Slow Fade Convex" "Slow Fade Concave" Linear ""}}
+ addUserKnob {7 sparksGen_tailLengthMult l "Tail Length" R 0.01 3}
+ sparksGen_tailLengthMult 1.5
+ addUserKnob {20 Bounce}
+ addUserKnob {6 sparksBounceEnable l Bounce +STARTLINE}
+ sparksBounceEnable true
+ addUserKnob {3 sparksGen_bounceHeight l "Bouce Plane Height"}
+ sparksGen_bounceHeight -10
+ addUserKnob {41 in_bounce l "Bounce Amount" T ParticleBounce1.in_bounce}
+ addUserKnob {41 in_friction l "Friction Amount" T ParticleBounce1.in_friction}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode10
+  tile_color 0x68a85aff
+  label "Colour randomisation"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3053
+  ypos -310
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode11
+  tile_color 0x68a85aff
+  label "Set particle growth"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3053
+  ypos -36
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode12
+  tile_color 0x68a85aff
+  label Subframe
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -2970
+  ypos 399
+  bdwidth 310
+  bdheight 131
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode13
+  tile_color 0x68a85aff
+  label "Set opacity falloff"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3060
+  ypos 541
+  bdwidth 473
+  bdheight 195
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode14
+  tile_color 0x454554ff
+  label "Sparks System"
+  note_font_size 42
+  note_font_color 0xd2d2ffff
+  xpos -3406
+  ypos -1346
+  bdwidth 977
+  bdheight 2412
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x68a85aff
+  label "Colour multiplication"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -2981
+  ypos 747
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xc65353ff
+  label "Choose source geo."
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -2767
+  ypos -869
+  bdwidth 301
+  bdheight 206
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x68a85aff
+  label "Setup Emitter system"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3051
+  ypos -597
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x68a85aff
+  label "Spawn tail into channel B"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -2969
+  ypos 259
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode7
+  tile_color 0x68a85aff
+  label "Define up velocities"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3053
+  ypos -453
+  bdwidth 309
+  bdheight 136
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x7171c600
+  label "Setup sprite presets"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3077
+  ypos -1230
+  bdwidth 315
+  bdheight 332
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x68a85aff
+  label "Add system forces"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3053
+  ypos -165
+  bdwidth 309
+  bdheight 117
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x8e388e00
+  label "3D Preview Geo"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -3125
+  ypos -817
+  bdwidth 258
+  bdheight 108
+  z_order 1
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "In this section, we're choosing between the exisiting\nsprite image and an input from the 'Img' pipe on the\n main UI."
+  xpos -3037
+  ypos -1169
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote5
+  label "Gravity added, with a multiplier set in the UI"
+  xpos -3273
+  ypos -120
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote8
+  label "The idea with this system is that we first\nemit 'guide' particles, from which we\nspawn the tail particles. The 'guide'\nparticles have a size of 0, though their\ncolour is passed on the tail later on\nin the system.\n\nThe emitter is set up as normal, except\nfor the expressions on 'emission_rate', \n'max lifetime', 'velocity' and 'spread'\nthat take our UI values into account"
+  xpos -3247
+  ypos -595
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote7
+  label "Here I'm using our guide particles to spawn\nwhat will eventually become the tail. Two \nthings here are important to note :\n\n1) in 'Conditions' I'm only spawning from\nparticles in channel 'A'.\n\n2) 'Inherit Color' is turned on. This makes our\ntail particles take the 'guide' particle's colour \n(something we randomised further up-stream)."
+  xpos -3194
+  ypos 270
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote4
+  label "Here I'm adding a random value to the\nthe chosen particle colour to add further\nvariation to the system."
+  xpos -3256
+  ypos -265
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote11
+  label "Finally, I'm multiplying the colour of our particles\nbased upon the value chosen in the UI. This can\nbe useful when adding further post effects (eg.\nglows, blurs etc.)"
+  xpos -3215
+  ypos 786
+ }
+ BlendMat {
+  inputs 0
+  surfaceblend "vertex color"
+  name BlendMat2
+  xpos -3109
+  ypos -737
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {1 0.4486767054 0.1186107993 1}
+  format "32 32 0 0 32 32 1 Particles"
+  name Constant1
+  xpos -3025
+  ypos -1116
+ }
+ Roto {
+  output alpha
+  premultiply rgb
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x41800000 x41800000}
+    {a pt 0}
+    {curvegroup Ellipse1 576 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc02e00a8 0}
+        {x417f0ded x412f1eb8}
+        {x402e00a8 0}
+        {0 xc02f67cb}
+        {x41a6e8dc x417e851f}
+        {0 x402f67cb}
+        {x402e00a8 0}
+        {x417f0ded x41a6f5c3}
+        {xc02e00a8 0}
+        {0 x402f67cb}
+        {x41304a23 x417e851f}
+        {0 xc02f67cb}}}     idem}
+     {t
+      {{1 x41a73333}}
+      {{1 x41466666}}     0
+      {{1 0}}
+      {{1 0}}     0 0 0
+      {{1 0}}
+      {{1 1}}
+      {{1 1}}     1
+      {{1 0}}}
+     {a fx x41280000 fy x41280000 spx x41800000 spy x41800000 sb 1 tt x40c00000 pt 0}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 tt 5 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay 0
+  lifetime_type "all frames"
+  motionblur_shutter_offset_type centred
+  feather 10.5
+  source_translate_round false
+  source_black_outside true
+  name Roto1
+  xpos -3025
+  ypos -1032
+ }
+ Input {
+  inputs 0
+  name Img
+  xpos -2885
+  ypos -1024
+ }
+ Switch {
+  inputs 2
+  which {{!parent.sparks_enableImage i}}
+  name Switch1
+  xpos -2956
+  ypos -961
+ }
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat1
+  xpos -2956
+  ypos -926
+ }
+ Switch {
+  inputs 2
+  which {{parent.previewGeo}}
+  name Switch4
+  xpos -2957
+  ypos -737
+ }
+ Dot {
+  name Dot5
+  xpos -2923
+  ypos -661
+ }
+ Input {
+  inputs 0
+  name Geo
+  xpos -2598
+  ypos -752
+  number 1
+ }
+ Card2 {
+  inputs 0
+  image_aspect false
+  uniform_scale 0.1
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Card1
+  xpos -2719
+  ypos -753
+ }
+ Switch {
+  inputs 2
+  which {{parent.sparksGen_userGeo}}
+  name Switch3
+  xpos -2660
+  ypos -707
+ }
+ Dot {
+  name Dot1
+  xpos -2626
+  ypos -523
+ }
+push 0
+ ParticleEmitter {
+  inputs 3
+  rate {{"random(frame) > \[value randomness] ? \[value emissionRate] : 0"}}
+  lifetime {{particleLife}}
+  lifetime_variation 1
+  halflife 522
+  velocity {{parent.sparkInitialVelocity}}
+  size 0
+  mass_variation 0.44
+  spread {{"parent.sparksSpread /360"}}
+  color_from_texture true
+  input_order "in order"
+  start_frame_animation current
+  start_wrap true
+  frame_advance constant
+  max_clip_length 1
+  seed {{parent.sparksSeed}}
+  name ParticleEmitter1
+  xpos -2956
+  ypos -526
+  addUserKnob {20 User}
+  addUserKnob {7 particleLife R 0 500}
+  particleLife {{parent.sparkLifetime}}
+  addUserKnob {7 emissionRate R 0 100}
+  emissionRate {{parent.sparkEmissionRate}}
+  addUserKnob {7 randomness R 0 100}
+  randomness {{parent.sparkRandomness}}
+ }
+ ParticleExpression {
+  temp_name0 UIUpRatio
+  temp_expr0 "\[value randomness] * 100"
+  temp_expr0_pp false
+  temp_expr1_pp false
+  temp_expr2_pp false
+  temp_name3 velRandomY
+  temp_expr3 "id % 50 < UIUpRatio ?  v(1,2.5,1) : v(1,1,1)"
+  massexpr random
+  massexpr_onlynew true
+  velexpr "vel * velRandomY"
+  velexpr_onlynew true
+  channels {a}
+  name ParticleExpression1
+  xpos -2956
+  ypos -380
+  addUserKnob {20 User}
+  addUserKnob {7 randomness}
+  randomness {{parent.sparkRandomness}}
+ }
+ ParticleExpression {
+  temp_name0 colorRand
+  temp_expr0 random
+  colexpr "color + (v(colorRand, colorRand, colorRand)*5)"
+  colexpr_onlynew true
+  channels {a}
+  name ParticleExpression3
+  xpos -2956
+  ypos -244
+ }
+ ParticleGravity {
+  to {0 {parent.sparkGravity} 0}
+  channels {a}
+  name ParticleGravity1
+  xpos -2956
+  ypos -105
+ }
+ ParticleBounce {
+  display wireframe
+  selectable false
+  render_mode off
+  out_bounce 0
+  in_bounce 0.3
+  in_friction 0.7
+  bounceaxis_translate {{curve} {parent.sparksGen_bounceHeight} {curve}}
+  bounceaxis_uniform_scale 20
+  name ParticleBounce1
+  xpos -2956
+  ypos 27
+  disable {{!parent.sparksBounceEnable x50 0}}
+ }
+ Dot {
+  name Dot2
+  xpos -2922
+  ypos 142
+ }
+ Dot {
+  name Dot3
+  xpos -2822
+  ypos 205
+ }
+ ParticleSpawn {
+  rate {{"parent.enableTail? 25 * parent.sparksGen_tailLengthMult : 1"}}
+  lifetime {{P_Sparks1.sparksGen_tailLengthMult}}
+  velocity 0
+  size {{0.005*parent.sparkSize}}
+  transfer_velocity 0
+  conserve_mass false
+  conserve_momentum false
+  inherit_color true
+  name ParticleSpawn1
+  xpos -2856
+  ypos 330
+ }
+ ParticleSettings {
+  steps_per_frame {{"25 * parent.sparksGen_tailLengthMult"}}
+  name ParticleSettings1
+  xpos -2856
+  ypos 454
+ }
+set N2cf2f400 [stack 0]
+ Dot {
+  name Dot4
+  xpos -2542
+  ypos 457
+ }
+ Dot {
+  name Dot6
+  xpos -2542
+  ypos 705
+ }
+push $N2cf2f400
+ ParticleCurve {
+  curves {r {}
+    g {}
+    b {}
+    a {curve L 0.8037313223 0.00199007988}
+    size {}
+    mass {}}
+  affect_rgb false
+  channels {b}
+  name ParticleCurve4
+  xpos -2694
+  ypos 562
+ }
+push $N2cf2f400
+ ParticleCurve {
+  curves {r {}
+    g {}
+    b {}
+    a {curve R 0.8037313223 s1.194402933 t-2.200000048 S l 0.00199007988 s-0}
+    size {}
+    mass {}}
+  affect_rgb false
+  channels {b}
+  name ParticleCurve5
+  xpos -2776
+  ypos 561
+ }
+push $N2cf2f400
+ ParticleCurve {
+  curves {r {}
+    g {}
+    b {}
+    a {curve l 0.8037313223 s-0 k 0.00199007988 s-2.049999952 t0}
+    size {}
+    mass {}}
+  affect_rgb false
+  channels {b}
+  name ParticleCurve2
+  xpos -2856
+  ypos 562
+ }
+push $N2cf2f400
+ ParticleCurve {
+  curves {r {}
+    g {}
+    b {}
+    a {curve l 0.8037313223 s-0.1000000015 -0.0007462501526 s-0.009999999776}
+    size {}
+    mass {}}
+  affect_rgb false
+  channels {b}
+  name ParticleCurve1
+  xpos -2935
+  ypos 560
+ }
+push $N2cf2f400
+ ParticleCurve {
+  curves {r {}
+    g {}
+    b {}
+    a {curve 0.9542288184 x0.03936780989 0.9487419724 x0.1078364402 0.1712597609 s3 t-0.400000006 x0.9932064414 -0.0007462501526 s-0.1000000015}
+    size {}
+    mass {}}
+  affect_rgb false
+  channels {b}
+  name ParticleCurve3
+  xpos -3015
+  ypos 559
+ }
+ Switch {
+  inputs 5
+  which {{parent.sparksGen_falloffType}}
+  name Switch2
+  xpos -2856
+  ypos 635
+ }
+ Switch {
+  inputs 2
+  which {{!parent.enableTail}}
+  name Switch5
+  xpos -2856
+  ypos 702
+ }
+ ParticleExpression {
+  temp_name0 mult
+  temp_expr0 "\[value exposureMult]"
+  colexpr "color + (color * mult)"
+  name ParticleExpression4
+  xpos -2856
+  ypos 805
+  addUserKnob {20 User}
+  addUserKnob {7 exposureMult R 0 100}
+  exposureMult {{(parent.sparksGen_ColourMult-1)/578}}
+ }
+ NoOp {
+  name System_Completed
+  tile_color 0xff00ff
+  note_font "Verdana Bold"
+  note_font_size 24
+  note_font_color 0xffffffff
+  xpos -2856
+  ypos 922
+ }
+ Output {
+  name Output1
+  xpos -2856
+  ypos 997
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote3
+  label "Here I'm allowing the user to choose between\nemitting from the built-in card, or from their\nown geo, plugged into the 'Geo' pipe."
+  xpos -2716
+  ypos -822
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote12
+  label "To enable better placement in the 3D view\nthe user can switch between the sprite and\na placeholder sphere for each spark."
+  xpos -3359
+  ypos -787
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote10
+  label "Using the 'ParticleSettings' node we can fill in\nthe gaps between existing particles in our system\n(the value itself defining just how many particles\nwill be introduced in each gap). \n\nThis value (along with 'Emitter_Rate' on the spawn\nnode - an important step in achieving the sub-frame\nlook) is set automatically based upon the chosen\ntail-length."
+  xpos -3259
+  ypos 416
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote9
+  label "This is actually much simpler than it looks!\nUsing 5x'ParticleCurve' nodes, I've definied\n5 different custom falloffs. The switch node\nunderneath is controlled from the drop-down\non the main UI."
+  xpos -3242
+  ypos 544
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote13
+  label "If the tail is not being used, we completely bypass the\nParticleCurve nodes"
+  xpos -3241
+  ypos 696
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote6
+  label "Finally a bounce plane is added to the initial\nparticles. This is customisable through the \nmain UI"
+  xpos -3275
+  ypos 7
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote2
+  label "In this node, I'm choosing how many of the\nparticles I want to be emitted straight-up,\nas opposed to outwards. This ratio is taken\nfrom the main UI.\n\nEssentially, the expression says :\n\nfor every X particle out of those emitted,\nmultiply up velocity by 2.5"
+  xpos -3264
+  ypos -428
+ }
+end_group
+StickyNote {
+ inputs 0
+ name StickyNote4
+ tile_color 0xc1c1c1ff
+ gl_color 0xccccccff
+ label "You can either download the toolset example files by pasting this URL into your browser:\n\nhttp://thefoundry.s3.amazonaws.com/products/nuke/toolsets/toolset_examples.zip\n\nOr by clicking on the Download Toolset Examples button of this node:\n\n\n"
+ note_font Verdana
+ note_font_size 14
+ note_font_color 0xffffffff
+ xpos 1017
+ ypos -1172
+}
+NoOp {
+ inputs 0
+ name Examples1
+ xpos 1564
+ ypos -1109
+ addUserKnob {20 Examples}
+ addUserKnob {22 HTML l "Download Toolset Examples" t "Click to download the example script for this Toolset" T "import webbrowser\nwebbrowser.open(\"http://thefoundry.s3.amazonaws.com/products/nuke/toolsets/toolset_examples.zip\")" +STARTLINE}
+}
+StickyNote {
+ inputs 0
+ name StickyNote5
+ tile_color 0xffffffff
+ label "<b>Gizmo                ."
+ note_font "Helvetica Bold"
+ note_font_size 100
+ xpos 1007
+ ypos -1431
+}

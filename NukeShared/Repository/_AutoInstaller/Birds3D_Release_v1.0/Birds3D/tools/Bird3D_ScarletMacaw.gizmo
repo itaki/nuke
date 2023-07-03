@@ -1,0 +1,246 @@
+Group {
+ inputs 0
+ name Bird3D_ScarletMacaw1
+ onCreate "\nfor node in nuke.allNodes():\n    if node.name().startswith('ReadGeo'):\n        b3d_assetname = node.knob('label').getValue()\n        b3d_filepath = birds3d_assets_path + '/' + b3d_assetname\n        node.knob('file').setValue(b3d_filepath)\n        node.knob('reload').execute()\n        node.knob('read_on_each_frame').setValue(0)\n"
+ tile_color 0xff1c0bff
+ note_font_color 0xffffffff
+ addUserKnob {20 User l "Scarlet Macaw"}
+ addUserKnob {26 div1 l <b>Wings</b>}
+ addUserKnob {7 flapSpeed l "Flap Speed" t "Frequency or speed at which the wings flap" R 0 2}
+ flapSpeed 0.5
+ addUserKnob {7 flapAmp l "Flap Range" t "Amplitude or range of the flaps, greater values = bigger flaps" R 0 100}
+ flapAmp 85
+ addUserKnob {7 flapRand l "Flap Randomness" t "Adds speed variation into the flap animation" R 0 10}
+ flapRand 7
+ addUserKnob {26 div2 l "" +STARTLINE T " "}
+ addUserKnob {26 div3 l <b>Material</b>}
+ addUserKnob {18 diffAmnt l Diffuse t "Additional diffuse lighting to act as a fake bouce light if using 3D lights\n\nSet to 1 if not using 3D lights!"}
+ diffAmnt 0.5
+ addUserKnob {6 diffAmnt_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 div4 l "" +STARTLINE}
+ addUserKnob {26 bottomText l "" +STARTLINE T "Birds_3D | John Clayton"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x7171c600
+  label "Scarlet Macaw"
+  note_font_size 42
+  xpos -572
+  ypos -589
+  bdwidth 693
+  bdheight 809
+ }
+ Read {
+  inputs 0
+  file_type png
+  file "\[python \{birds3d_assets_path+'/scarlet_macaw_wing.png'\}]"
+  format "380 965 0 0 380 965 1 "
+  origset true
+  version 4
+  name Read3
+  xpos -434
+  ypos -486
+ }
+ Premult {
+  name Premult2
+  xpos -434
+  ypos -402
+ }
+ Dot {
+  name Dot1
+  xpos -400
+  ypos -343
+ }
+set N580ebc00 [stack 0]
+push $N580ebc00
+ Dot {
+  name Dot2
+  xpos -495
+  ypos -343
+ }
+ Multiply {
+  channels rgb
+  value {{parent.diffAmnt} {parent.diffAmnt} {parent.diffAmnt} {parent.diffAmnt}}
+  name Multiply1
+  xpos -529
+  ypos -325
+ }
+ set C580eb400 [stack 0]
+ Dot {
+  name Dot3
+  xpos -495
+  ypos -263
+ }
+ Diffuse {
+  inputs 2
+  name Diffuse3
+  xpos -434
+  ypos -266
+ }
+ ReadGeo2 {
+  name ReadGeo3
+  label scarlet_macaw_wing.abc
+  xpos -434
+  ypos -195
+ }
+ TransformGeo {
+  rotate {{parent.NoOp1.flapRetime/3} {parent.NoOp1.flapRetime/8} 0}
+  pivot {0 0.092 -0.03}
+  name TransformGeo4
+  xpos -434
+  ypos -93
+ }
+ Dot {
+  name Dot28
+  xpos -400
+  ypos -23
+ }
+set N580e9c00 [stack 0]
+ Dot {
+  name Dot29
+  xpos -510
+  ypos -23
+ }
+ TransformGeo {
+  scaling {1 1 -1}
+  name TransformGeo1
+  xpos -544
+  ypos -5
+ }
+push $N580e9c00
+ MergeGeo {
+  inputs 2
+  name MergeGeo2
+  xpos -434
+  ypos 34
+ }
+ Read {
+  inputs 0
+  file_type png
+  file "\[python \{birds3d_assets_path+'/scarlet_macaw_tail.png'\}]"
+  format "280 553 0 0 280 553 1 "
+  origset true
+  version 1
+  name Read2
+  xpos -213
+  ypos -486
+ }
+ Premult {
+  name Premult1
+  xpos -213
+  ypos -402
+ }
+ Dot {
+  name Dot26
+  xpos -179
+  ypos -344
+ }
+set N5809bc00 [stack 0]
+push $N5809bc00
+ Dot {
+  name Dot30
+  xpos -274
+  ypos -344
+ }
+clone $C580eb400 {
+  xpos -308
+  ypos -326
+  selected false
+ }
+ Dot {
+  name Dot31
+  xpos -274
+  ypos -264
+ }
+ Diffuse {
+  inputs 2
+  name Diffuse2
+  xpos -213
+  ypos -267
+ }
+ ReadGeo2 {
+  name ReadGeo2
+  label scarlet_macaw_tail.abc
+  xpos -213
+  ypos -197
+ }
+ Dot {
+  name Dot27
+  xpos -179
+  ypos -29
+ }
+ Read {
+  inputs 0
+  file_type png
+  file "\[python \{birds3d_assets_path+'/scarlet_macaw_body.png'\}]"
+  format "688 175 0 0 688 175 1 "
+  origset true
+  version 5
+  name Read1
+  xpos 0
+  ypos -485
+ }
+ Dot {
+  name Dot23
+  xpos 34
+  ypos -345
+ }
+set N58099400 [stack 0]
+push $N58099400
+ Dot {
+  name Dot24
+  xpos -61
+  ypos -345
+ }
+clone $C580eb400 {
+  xpos -95
+  ypos -327
+  selected false
+ }
+ Dot {
+  name Dot25
+  xpos -61
+  ypos -253
+ }
+ Diffuse {
+  inputs 2
+  name Diffuse1
+  xpos 0
+  ypos -256
+ }
+ ReadGeo2 {
+  name ReadGeo1
+  label scarlet_macaw_body.abc
+  xpos 0
+  ypos -197
+ }
+ MergeGeo {
+  inputs 3
+  name MergeGeo1
+  xpos 0
+  ypos 34
+ }
+ TransformGeo {
+  rotate {0 -90 {parent.NoOp1.flapRetime/20}}
+  name TransformGeo3
+  xpos 0
+  ypos 167
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 297
+ }
+ NoOp {
+  inputs 0
+  name NoOp1
+  xpos -321
+  ypos -111
+  addUserKnob {20 User}
+  addUserKnob {7 flap}
+  flap {{sin(frame*flapSpeed)*flapAmp}}
+  addUserKnob {7 flapRetime}
+  flapRetime {{"flap(frame+random(3, frame/12)*flapRand)"}}
+ }
+end_group

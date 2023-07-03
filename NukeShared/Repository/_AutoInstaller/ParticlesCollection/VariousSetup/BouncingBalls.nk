@@ -1,0 +1,853 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+#write_info Write1 file:"/mnt/work/Particle_test/output/particle_test_%04d.exr" format:"640 480 1" chans:":rgba.red:rgba.green:rgba.blue:" framerange:"1 100" fps:"0" colorspace:"default (linear)" datatype:"16 bit half" transfer:"unknown" views:"main" colorManagement:"Nuke"
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/OneDrive/VFX/PARTICLES/Particles_v04.nk
+ frame 7
+ lock_range true
+ format "640 480 0 0 640 480 1 PC_Video"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x71c67100
+ label "particle setup"
+ note_font_size 42
+ xpos -323
+ ypos -910
+ bdwidth 523
+ bdheight 504
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode10
+ tile_color 0xaaaaaa00
+ label "trying to create\nfake reflection."
+ note_font_size 42
+ xpos -1635
+ ypos -320
+ bdwidth 340
+ bdheight 370
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode11
+ tile_color 0x545454ff
+ label "Shadow animation"
+ note_font_size 42
+ xpos 603
+ ypos 687
+ bdwidth 705
+ bdheight 372
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode2
+ tile_color 0x8e8e3800
+ label "particle shaders.\nSphere node used for create ball."
+ note_font_size 42
+ xpos -481
+ ypos -1764
+ bdwidth 845
+ bdheight 744
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0xaaaaaa00
+ label "Ground plane"
+ note_font_size 42
+ xpos 1009
+ ypos -571
+ bdwidth 357
+ bdheight 577
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode4
+ tile_color 0x388e8e00
+ label Lights
+ note_font_size 42
+ xpos 463
+ ypos -390
+ bdwidth 251
+ bdheight 390
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode5
+ tile_color 0x212121ff
+ label "Ball Scanline"
+ note_font_size 42
+ xpos -332
+ ypos -19
+ bdwidth 592
+ bdheight 495
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode6
+ tile_color 0x7171c600
+ label "Ground plane scanline.\nWith ball shadow"
+ note_font_size 42
+ xpos 906
+ ypos 104
+ bdwidth 508
+ bdheight 262
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode7
+ tile_color 0xaabfffff
+ label "Balls hided using shaders \nto render shadow..\n"
+ note_font_size 42
+ xpos 1750
+ ypos -1637
+ bdwidth 845
+ bdheight 744
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode8
+ tile_color 0x71c67100
+ label "particle setup"
+ note_font_size 42
+ xpos 1912
+ ypos -576
+ bdwidth 523
+ bdheight 504
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode9
+ tile_color 0x8e8e3800
+ note_font_size 42
+ xpos 1528
+ ypos -1780
+ bdwidth 1651
+ bdheight 1873
+}
+Camera2 {
+ inputs 0
+ translate {-0.1255409718 0.03000000492 0.02999997139}
+ rotate {90 0 0}
+ focal 35
+ name Cam_for_reflection
+ xpos -1519
+ ypos -175
+}
+set N97dfd000 [stack 0]
+add_layer {shadowAlpha shadowAlpha.a}
+Spotlight {
+ inputs 0
+ cone_falloff 70
+ translate {-0.01069518924 22.85358429 0.5759871006}
+ rotate {-87.20001984 7.400004387 -2.184708364e-06}
+ samples 30
+ sample_width 10
+ depthmap_slope_bias 0.01
+ shadow_mask shadowAlpha.a
+ name Spotlight1
+ xpos 561
+ ypos -147
+}
+set N97dfcc00 [stack 0]
+push 0
+DirectLight {
+ inputs 0
+ intensity 0.4
+ cast_shadows true
+ name DirectLight1
+ xpos 567
+ ypos -278
+}
+set N97dfc800 [stack 0]
+push 0
+push $N97dfd000
+Noise {
+ inputs 0
+ size 126
+ zoffset 2.28
+ center {320 240}
+ name Noise1
+ xpos -359
+ ypos -1271
+}
+set N97dfc400 [stack 0]
+Constant {
+ inputs 0
+ channels rgb
+ color {0 0 1 0}
+ name Constant3
+ xpos 28
+ ypos -1525
+}
+Shuffle {
+ alpha white
+ name Shuffle3
+ label "\[value in]--->\[value out]"
+ note_font_size 20
+ xpos 28
+ ypos -1422
+}
+Phong {
+ inputs 2
+ color 1.46
+ emission 0.0015
+ diffuse 0.29
+ specular 1.74
+ min_shininess 3.55
+ max_shininess 7.9
+ name Phong3
+ xpos 28
+ ypos -1271
+}
+Sphere {
+ name Sphere3
+ xpos 28
+ ypos -1145
+}
+push $N97dfc400
+Constant {
+ inputs 0
+ channels rgb
+ color {1 0 0 0}
+ name Constant1
+ xpos -225
+ ypos -1528
+}
+Shuffle {
+ alpha white
+ name Shuffle1
+ label "\[value in]--->\[value out]"
+ note_font_size 20
+ xpos -225
+ ypos -1426
+}
+Phong {
+ inputs 2
+ name Phong1
+ xpos -225
+ ypos -1274
+}
+Sphere {
+ name Sphere1
+ xpos -225
+ ypos -1147
+}
+push $N97dfc400
+Constant {
+ inputs 0
+ channels rgb
+ color {0 0.2849999964 0 0}
+ name Constant2
+ xpos -107
+ ypos -1524
+}
+Shuffle {
+ alpha white
+ name Shuffle2
+ label "\[value in]--->\[value out]"
+ note_font_size 20
+ xpos -107
+ ypos -1426
+}
+Phong {
+ inputs 2
+ color 1.46
+ emission 0.0015
+ diffuse 0.29
+ specular 1.74
+ min_shininess 3.55
+ max_shininess 7.9
+ name Phong2
+ xpos -109
+ ypos -1271
+}
+Sphere {
+ name Sphere2
+ xpos -107
+ ypos -1149
+}
+Card2 {
+ inputs 0
+ orientation ZX
+ translate {0 8.390000343 7.334770658e-07}
+ rotate {180 0 0}
+ control_points {3 3 3 6 
+
+1 {-0.5 0 -0.5} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 
+1 {-0.5 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {-0.5 0 0.5} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {1 0 0} 
+1 {0 0 -0.5} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0.5 0.5 0} 
+1 {0 0 0.5} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {1 0.5 0} 
+1 {0.5 0 -0.5} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 1 0} 
+1 {0.5 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0.5 1 0} 
+1 {0.5 0 0.5} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {1 1 0} }
+ name Card1
+ xpos 76
+ ypos -780
+}
+push 0
+ParticleEmitter {
+ inputs 5
+ start_frame -50
+ emit_order uniformly
+ vertex_rate 0.0014
+ lifetime 100
+ lifetime_variation 100
+ velocity 0.023
+ velocity_variation 0.275
+ size 0.084
+ spread 1
+ input_order "in order"
+ frame_advance constant
+ max_clip_length 190
+ region box
+ translate {0 6.880000114 0}
+ uniform_scale 4.9
+ name ParticleEmitter1
+ xpos -107
+ ypos -780
+}
+ParticleDirectionalForce {
+ strength {0 -0.01 0}
+ name ParticleDirectionalForce1
+ xpos -107
+ ypos -735
+}
+ParticleTurbulence {
+ strength {0 0.06 0}
+ scale {0 1 0}
+ name ParticleTurbulence1
+ xpos -107
+ ypos -676
+}
+ParticleBounce {
+ out_friction 1
+ in_bounce {{curve x40 0.65 x100 0.35}}
+ in_friction 0.05
+ bounceaxis_translate {0 5.480000019 0}
+ bounceaxis_uniform_scale 100
+ translate {0 7.099999905 0}
+ uniform_scale 4.6
+ name ParticleBounce2
+ xpos -107
+ ypos -579
+}
+ParticlePointForce {
+ strength 0.01
+ falloff inverse
+ radius 3.5
+ min_age 1
+ name ParticlePointForce1
+ xpos -107
+ ypos -517
+}
+Scene {
+ inputs 6
+ name Scene1
+ xpos -97
+ ypos -147
+}
+set N97d0f000 [stack 0]
+push 0
+ScanlineRender {
+ inputs 3
+ antialiasing medium
+ motion_vectors_type distance
+ name ScanlineRender2
+ xpos -1529
+ ypos -65
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ label "Using vector blur for render speed\nits not perfect!!!?? but make some sense."
+ note_font "Bitstream Vera Sans Bold"
+ note_font_size 40
+ xpos -1049
+ ypos 942
+}
+Camera2 {
+ inputs 0
+ translate {0.009812935255 6.848739147 11.38167}
+ rotate {-3.399997473 1.19996953 0}
+ name Camera1
+ xpos 104
+ ypos 244
+}
+set N97d0e000 [stack 0]
+push $N97d0e000
+push 0
+push $N97d0f000
+Scene {
+ inputs 3
+ name Scene3
+ xpos -97
+ ypos 125
+}
+push 0
+add_layer {ballsPoint ballsPoint.red ballsPoint.green ballsPoint.blue ballsPoint.alpha}
+add_layer {ballsNormal ballsNormal.red ballsNormal.green ballsNormal.blue ballsNormal.alpha}
+ScanlineRender {
+ inputs 3
+ antialiasing medium
+ overscan 50
+ shutteroffset centred
+ motion_vectors_type velocity
+ MB_channel forward
+ P_channel ballsPoint
+ N_channel ballsNormal
+ name ScanlineRender1
+ xpos -107
+ ypos 264
+}
+AdjBBox {
+ name AdjBBox1
+ xpos -107
+ ypos 972
+}
+set N97d0d400 [stack 0]
+VectorBlur {
+ channels rgba
+ uv forward
+ scale 0.3
+ method forward
+ alpha rgba.alpha
+ name Motion_Blur
+ label "vector blur"
+ note_font_size 20
+ xpos -107
+ ypos 1022
+}
+Remove {
+ operation keep
+ channels rgba
+ name Remove1
+ xpos -107
+ ypos 1200
+}
+Crop {
+ box {0 0 640 480}
+ name Crop1
+ xpos -107
+ ypos 1330
+}
+push $N97d0d400
+Dilate {
+ size 1
+ name Dilate1
+ xpos 717
+ ypos 966
+}
+push $N97d0e000
+Constant {
+ inputs 0
+ channels rgb
+ name Constant9
+ xpos 1844
+ ypos -1338
+}
+Dot {
+ name Dot2
+ xpos 1877
+ ypos -1203
+}
+set N97c93800 [stack 0]
+Constant {
+ inputs 0
+ channels rgb
+ color {0 0 1 0}
+ name Constant5
+ xpos 2256
+ ypos -1458
+}
+Shuffle {
+ alpha white
+ name Shuffle4
+ label "\[value in]--->\[value out]"
+ note_font_size 20
+ xpos 2256
+ ypos -1355
+}
+Multiply {
+ value 0
+ name Multiply3
+ xpos 2256
+ ypos -1272
+}
+Phong {
+ inputs 2
+ color 0
+ diffuse 0
+ specular 0
+ name Phong7
+ xpos 2256
+ ypos -1207
+}
+Sphere {
+ name Sphere7
+ xpos 2256
+ ypos -1078
+}
+push $N97c93800
+Constant {
+ inputs 0
+ channels rgb
+ color {1 0 0 0}
+ name Constant6
+ xpos 2003
+ ypos -1461
+}
+Shuffle {
+ alpha white
+ name Shuffle5
+ label "\[value in]--->\[value out]"
+ note_font_size 20
+ xpos 2003
+ ypos -1359
+}
+Multiply {
+ value 0
+ name Multiply1
+ xpos 2003
+ ypos -1294
+}
+Phong {
+ inputs 2
+ color 0
+ diffuse 0
+ specular 0
+ name Phong6
+ xpos 2003
+ ypos -1207
+}
+Sphere {
+ name Sphere8
+ xpos 2003
+ ypos -1080
+}
+push $N97c93800
+Constant {
+ inputs 0
+ channels rgb
+ color {0 0.2849999964 0 0}
+ name Constant7
+ xpos 2121
+ ypos -1457
+}
+Shuffle {
+ alpha white
+ name Shuffle6
+ label "\[value in]--->\[value out]"
+ note_font_size 20
+ xpos 2121
+ ypos -1359
+}
+Multiply {
+ value 0
+ name Multiply2
+ xpos 2124
+ ypos -1293
+}
+Phong {
+ inputs 2
+ color 0
+ diffuse 0
+ specular 0
+ name Phong8
+ xpos 2121
+ ypos -1207
+}
+Sphere {
+ name Sphere9
+ xpos 2121
+ ypos -1082
+}
+Card2 {
+ inputs 0
+ orientation ZX
+ translate {0 8.390000343 7.334770658e-07}
+ rotate {180 0 0}
+ control_points {3 3 3 6 
+
+1 {-0.5 0 -0.5} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 
+1 {-0.5 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {-0.5 0 0.5} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {1 0 0} 
+1 {0 0 -0.5} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0.5 0.5 0} 
+1 {0 0 0.5} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {1 0.5 0} 
+1 {0.5 0 -0.5} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 1 0} 
+1 {0.5 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0.5 1 0} 
+1 {0.5 0 0.5} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {1 1 0} }
+ name Card3
+ xpos 2261
+ ypos -409
+}
+push 0
+ParticleEmitter {
+ inputs 5
+ start_frame -50
+ emit_order uniformly
+ vertex_rate 0.0014
+ lifetime 100
+ lifetime_variation 100
+ velocity 0.023
+ velocity_variation 0.275
+ size 0.084
+ spread 1
+ input_order "in order"
+ frame_advance constant
+ max_clip_length 190
+ region box
+ translate {0 6.880000114 0}
+ uniform_scale 4.9
+ name ParticleEmitter2
+ xpos 2103
+ ypos -409
+}
+ParticleDirectionalForce {
+ strength {0 -0.01 0}
+ name ParticleDirectionalForce2
+ xpos 2103
+ ypos -364
+}
+ParticleTurbulence {
+ strength {0 0.06 0}
+ scale {0 1 0}
+ name ParticleTurbulence2
+ xpos 2103
+ ypos -305
+}
+ParticleBounce {
+ out_friction 1
+ in_bounce {{curve x40 0.65 x100 0.35}}
+ in_friction 0.05
+ bounceaxis_translate {0 5.480000019 0}
+ bounceaxis_uniform_scale 100
+ translate {0 7.099999905 0}
+ uniform_scale 4.6
+ name ParticleBounce1
+ xpos 2103
+ ypos -208
+}
+ParticlePointForce {
+ strength 0.01
+ falloff inverse
+ radius 3.5
+ min_age 1
+ name ParticlePointForce2
+ xpos 2103
+ ypos -133
+}
+push $N97dfcc00
+push $N97dfc800
+Constant {
+ inputs 0
+ channels rgb
+ color {0.06666666269 0.06666666269 0.06666666269 1}
+ name Constant4
+ xpos 1130
+ ypos -432
+}
+Phong {
+ specular 0.12
+ name Phong4
+ xpos 1130
+ ypos -312
+}
+Card2 {
+ orientation ZX
+ translate {0 5.39200002 0}
+ uniform_scale 20
+ control_points {3 3 3 6 
+
+1 {-0.5 0 -0.5} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0 0 0} 
+1 {0 0 -0.5} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 0 -0.5} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0.1666666865} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0.1666666716} 0 {0 0 -0.1666666716} 0 {1 0.5 0} 
+1 {-0.5 0 0.5} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0 1 0} 
+1 {0 0 0.5} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {0.5 1 0} 
+1 {0.5 0 0.5} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 0 -0.1666666865} 0 {1 1 0} }
+ name Card2
+ xpos 1130
+ ypos -224
+}
+Scene {
+ inputs 4
+ name Scene2
+ xpos 1140
+ ypos -147
+}
+push 0
+add_layer {groundPoint groundPoint.red groundPoint.green groundPoint.blue groundPoint.alpha}
+add_layer {groundNormal groundNormal.red groundNormal.green groundNormal.blue groundNormal.alpha}
+ScanlineRender {
+ inputs 3
+ antialiasing medium
+ shutteroffset centred
+ motion_vectors_type off
+ MB_channel none
+ P_channel groundPoint
+ N_channel groundNormal
+ name ScanlineRender3
+ xpos 1130
+ ypos 264
+}
+Dot {
+ name Dot3
+ xpos 1164
+ ypos 810
+}
+set Nd3d18800 [stack 0]
+Shuffle {
+ in shadowAlpha
+ green red
+ blue red
+ alpha red
+ name Shuffle7
+ label "\[value in]--->\[value out]"
+ note_font_size 20
+ xpos 879
+ ypos 791
+}
+Merge2 {
+ inputs 2
+ operation stencil
+ name Merge2
+ label "Bbox: \[value bbox]"
+ note_font_size 20
+ xpos 879
+ ypos 957
+}
+Blur {
+ size 2
+ name Blur1
+ xpos 1009
+ ypos 966
+}
+push $Nd3d18800
+Grade {
+ inputs 1+1
+ multiply {{curve x2 1 s0 x18 0.2}}
+ name Grade1
+ xpos 1130
+ ypos 972
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0.06665038317 0.06665038317 0.06665038317 0.9999999404}
+ name Constant8
+ xpos 1307
+ ypos 1367
+}
+Merge2 {
+ inputs 2
+ name Merge3
+ label "Bbox: \[value bbox]"
+ note_font_size 20
+ xpos 1130
+ ypos 1375
+}
+Dot {
+ name Dot1
+ xpos 1164
+ ypos 1471
+}
+Merge2 {
+ inputs 2
+ name Merge1
+ label "Bbox: \[value bbox]"
+ note_font_size 20
+ xpos -107
+ ypos 1452
+}
+Write {
+ file /mnt/work/Particle_test/output/particle_test_####.exr
+ file_type exr
+ first_part rgba
+ version 3
+ name Write1
+ xpos -107
+ ypos 1657
+}
+Viewer {
+ frame_range 1-100
+ frame_range_lock true
+ input_process false
+ name Viewer1
+ xpos -173
+ ypos 2270
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ label "This is a cheat way of render only shadow"
+ note_font "Bitstream Vera Sans Bold"
+ note_font_size 80
+ xpos 1479
+ ypos -806
+}
+StickyNote {
+ inputs 0
+ name StickyNote4
+ tile_color 0x969600ff
+ label "<b>https://satheeshnuketutorials.blogspot.com/2013/06/bouncing-ball-using-nuke-particle-system.html        ."
+ note_font_size 20
+ xpos 357
+ ypos 1744
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0x335959ff
+ label "<b>author: Satheesh        ."
+ note_font_size 20
+ xpos 360
+ ypos 1652
+}

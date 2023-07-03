@@ -1,0 +1,447 @@
+set cut_paste_input [stack 0]
+version 11.3 v2
+Roto {
+ inputs 0
+ output alpha
+ cliptype none
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 0}
+    {t x44700000 x44070000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}}}}}
+ toolbox {createBezier {
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {960 540}
+ name Roto35
+ label "define the specific area here"
+ selected true
+ xpos 17264
+ ypos 25718
+}
+Dot {
+ name Dot278
+ selected true
+ xpos 17298
+ ypos 25829
+}
+push $cut_paste_input
+Dot {
+ name Dot277
+ label "input shot"
+ note_font_size 47
+ selected true
+ xpos 17112
+ ypos 23926
+}
+Dot {
+ name Dot259
+ selected true
+ xpos 17112
+ ypos 24083
+}
+set N61f9e000 [stack 0]
+Dot {
+ name Dot260
+ selected true
+ xpos 16630
+ ypos 24083
+}
+Shuffle {
+ red black
+ green black
+ blue black
+ alpha white
+ name Shuffle8
+ label "\[value in] -> \[value out]"
+ selected true
+ xpos 16596
+ ypos 24163
+}
+Expression {
+ expr0 (x+0.5)/width
+ expr1 (y+0.5)/height
+ name Expression3
+ label "St map"
+ selected true
+ xpos 16596
+ ypos 24261
+}
+set N647f1400 [stack 0]
+Dot {
+ name Dot261
+ selected true
+ xpos 16486
+ ypos 24271
+}
+set N647f1000 [stack 0]
+Dot {
+ name Dot262
+ selected true
+ xpos 16156
+ ypos 24271
+}
+Dot {
+ name Dot263
+ selected true
+ xpos 16156
+ ypos 25432
+}
+Camera2 {
+ inputs 0
+ name Camera5
+ label "render and projection cam"
+ selected true
+ xpos 16300
+ ypos 24534
+ addUserKnob {20 User}
+ addUserKnob {22 reveal l "reveal in explorer" -STARTLINE T "from nuke_utils import reveal_in_explorer;reveal_in_explorer.reveal(nuke.thisNode())"}
+}
+Dot {
+ name Dot264
+ selected true
+ xpos 16324
+ ypos 24682
+}
+set N647f0000 [stack 0]
+Dot {
+ name Dot265
+ selected true
+ xpos 16324
+ ypos 25068
+}
+push $N647f0000
+FrameHold {
+ first_frame {{parent.FrameHold4.knob.first_frame}}
+ name FrameHold3
+ selected true
+ xpos 16422
+ ypos 24672
+}
+push $N647f1000
+Dot {
+ name Dot266
+ selected true
+ xpos 16486
+ ypos 24481
+}
+push $N61f9e000
+Dot {
+ name Dot267
+ selected true
+ xpos 17112
+ ypos 24376
+}
+set N62367400 [stack 0]
+FrameHold {
+ first_frame 1001
+ name FrameHold4
+ label "set reference frame here"
+ selected true
+ xpos 16829
+ ypos 24359
+}
+push $N647f1400
+SplineWarp3 {
+ inputs 2
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 0}
+    {t x44c80000 x44610000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}}}}}
+ toolbar_preview_mode "persistent preview"
+ name SplineWarp3_2
+ label "there can be any warp here\n"
+ note_font_size 16
+ selected true
+ xpos 16596
+ ypos 24355
+}
+add_layer {St_map_base St_map_base.red St_map_base.green St_map_base.blue St_map_base.alpha}
+ShuffleCopy {
+ inputs 2
+ red red
+ green green
+ blue blue
+ out St_map_base
+ name ShuffleCopy2
+ label "\[value in] -> \[value out]"
+ selected true
+ xpos 16596
+ ypos 24471
+}
+LensDistortion2 {
+ distortionModelDisplayX "xu = xd / (1 + k0 * rd^2 + k1 * rd^4)"
+ distortionModelDisplayY "yu = yd / (1 + k0 * rd^2 + k1 * rd^4)"
+ keyFrame {{curve x1006 1006}}
+ keyingInitialised true
+ output Undistort
+ outputFormat "1920 1080 0 0 1920 1080 1 HD_1080"
+ outputBBox {0 0 1920 1080}
+ featuresKnob "
+version 1
+entries 0
+entries 0
+"
+ name LensDistortion1
+ selected true
+ xpos 16596
+ ypos 24569
+}
+Project3D2 {
+ inputs 2
+ name Project3D2
+ selected true
+ xpos 16596
+ ypos 24678
+}
+Card2 {
+ inputs 0
+ rows 1
+ columns 1
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card2
+ label "projection geo"
+ selected true
+ xpos 16832
+ ypos 24654
+}
+Dot {
+ name Dot268
+ selected true
+ xpos 16866
+ ypos 24783
+}
+set N4ced7c00 [stack 0]
+FrameHold {
+ first_frame {{parent.FrameHold4.knob.first_frame}}
+ name FrameHold6
+ selected true
+ xpos 16722
+ ypos 24773
+}
+ApplyMaterial {
+ inputs 2
+ name ApplyMaterial1
+ selected true
+ xpos 16596
+ ypos 24779
+}
+push 0
+ScanlineRender {
+ inputs 2
+ conservative_shader_sampling false
+ projection_mode uv
+ shutteroffset centred
+ motion_vectors_type distance
+ name ScanlineRender4
+ label "\[if \{\[value projection_mode] != \"render camera\"\} \{ value projection_mode  \}]\n"
+ selected true
+ xpos 16596
+ ypos 24865
+}
+push $N4ced7c00
+Dot {
+ name Dot269
+ selected true
+ xpos 16866
+ ypos 24963
+}
+ApplyMaterial {
+ inputs 2
+ name ApplyMaterial4
+ selected true
+ xpos 16596
+ ypos 24959
+}
+Reformat {
+ inputs 0
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ name Reformat7
+ selected true
+ xpos 16752
+ ypos 25064
+}
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ shutteroffset centred
+ motion_vectors_type distance
+ name ScanlineRender5
+ selected true
+ xpos 16596
+ ypos 25064
+}
+LensDistortion2 {
+ distortionModelDisplayX "xu = xd / (1 + k0 * rd^2 + k1 * rd^4)"
+ distortionModelDisplayY "yu = yd / (1 + k0 * rd^2 + k1 * rd^4)"
+ keyFrame {{curve x1006 1006}}
+ keyingInitialised true
+ output Redistort
+ outputFormat "3520 1980 0 0 3520 1980 1 Arri 3.2K Overscan 10%"
+ outputBBox {0 0 4 4}
+ featuresKnob "
+version 1
+entries 0
+entries 0
+"
+ name LensDistortion2
+ selected true
+ xpos 16596
+ ypos 25136
+}
+Unpremult {
+ channels all
+ name Unpremult9
+ selected true
+ xpos 16596
+ ypos 25230
+}
+set N2a8df800 [stack 0]
+push $N2a8df800
+Dot {
+ name Dot270
+ selected true
+ xpos 16753
+ ypos 25240
+}
+Shuffle {
+ in St_map_base
+ name Shuffle9
+ label "\[value in] -> \[value out]"
+ selected true
+ xpos 16719
+ ypos 25286
+}
+Dot {
+ name Dot271
+ selected true
+ xpos 16753
+ ypos 25363
+}
+Merge2 {
+ inputs 2
+ operation minus
+ bbox B
+ name Merge25
+ label "\[if \{\[value mix]<1\} \{ value mix \}]"
+ selected true
+ xpos 16596
+ ypos 25359
+}
+Merge2 {
+ inputs 2
+ operation plus
+ bbox B
+ name Merge26
+ label "\[if \{\[value mix]<1\} \{ value mix \}]"
+ selected true
+ xpos 16596
+ ypos 25428
+}
+Expression {
+ expr3 "a > 0.0001 ? 1 : 0"
+ name Expression4
+ selected true
+ xpos 16596
+ ypos 25503
+}
+Dot {
+ name Dot272
+ selected true
+ xpos 16630
+ ypos 25571
+}
+set N23fdbc00 [stack 0]
+Dot {
+ name Dot273
+ selected true
+ xpos 16477
+ ypos 25571
+}
+Dot {
+ name Dot274
+ selected true
+ xpos 16477
+ ypos 25726
+}
+push $N23fdbc00
+push $N62367400
+Dot {
+ name Dot275
+ selected true
+ xpos 17112
+ ypos 25640
+}
+set N23fdb000 [stack 0]
+STMap {
+ inputs 2
+ channels rgb
+ uv rgb
+ name STMap2
+ label "projected warp gets applied here"
+ selected true
+ xpos 16596
+ ypos 25630
+}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy5
+ selected true
+ xpos 16596
+ ypos 25716
+}
+Dot {
+ name Dot276
+ selected true
+ xpos 16630
+ ypos 25829
+}
+push $N23fdb000
+Merge2 {
+ inputs 2+1
+ bbox B
+ name Merge27
+ label "merge the warp here"
+ selected true
+ xpos 17078
+ ypos 25819
+}
+Dot {
+ name Dot279
+ selected true
+ xpos 17112
+ ypos 26000
+}

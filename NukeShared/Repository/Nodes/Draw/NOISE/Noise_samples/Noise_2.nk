@@ -1,0 +1,185 @@
+#! /Applications/Nuke6.3v7/NukeX6.3v7.app/../Nuke6.3v7.app/Contents/MacOS/Nuke6.3v7 -nx
+version 6.3 v7
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="22" w="1600" h="1174" screen="0">
+        <splitter orientation="1">
+            <split size="63"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1533"/>
+            <splitter orientation="2">
+                <split size="1152"/>
+                <dock id="" activePageId="DAG.1">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                </dock>
+            </splitter>
+        </splitter>
+    </window>
+    <window x="1046" y="392" w="1022" h="606" screen="0">
+        <splitter orientation="2">
+            <split size="590"/>
+            <dock id="" activePageId="Viewer.1">
+                <page id="Viewer.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "/Volumes/Data HD/School/-Mine/Learning Docs/ANI275/Wiki/assets/Noise/Noise_2.nk"
+ frame 19
+ last_frame 30
+ format "1920 1080 0 0 1920 1080 1 HD"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x8e8e3800
+ note_font_size 42
+ xpos -249
+ ypos -677
+ bdwidth 703
+ bdheight 419
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode2
+ tile_color 0x8e8e3800
+ note_font_size 42
+ xpos -536
+ ypos -672
+ bdwidth 264
+ bdheight 412
+}
+Constant {
+ inputs 0
+ channels rgb
+ color 1
+ name Constant3
+ xpos 101
+ ypos -543
+}
+Crop {
+ box {927.5 502.5 991.5 578}
+ name Crop1
+ xpos 101
+ ypos -471
+}
+Transform {
+ translate {{parent.fBm_Master.noisevaluex} {parent.fBm_Master.noisevaluey}}
+ center {960 540}
+ name Transform1
+ xpos 101
+ ypos -447
+}
+Constant {
+ inputs 0
+ channels rgb
+ color 0.23
+ name Constant2
+ xpos 256
+ ypos -502
+}
+Merge2 {
+ inputs 2
+ name Merge1
+ xpos 180
+ ypos -293
+}
+Viewer {
+ frame 19
+ frame_increment 14
+ input_process false
+ name Viewer1
+ xpos 180
+ ypos -134
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ label "                     \n                     The fBm_Master is a node I made that drives two values: X and Y. At its heart is a                      \n                     fBm noise value. This, together with other noises, is desribed in the EXPRESSIONS                     \n                     chapter of the Nuke User Guide.                     \n\n                     The two values X and Y are identical apart from their seed values. \n\n                     You can cut and paste this node into your own script\n                     or save it as a ToolSet\n                     "
+ note_font "Helvetica Bold Bold"
+ note_font_size 20
+ xpos -299
+ ypos -905
+}
+Dot {
+ inputs 0
+ name Dot2
+ label "This node supplies a simpler noise \nvaraible than the fBm_Master. "
+ note_font "Verdana Bold Bold"
+ xpos -488
+ ypos -459
+ hide_input true
+}
+NoOp {
+ name Noise_Master
+ xpos -522
+ ypos -416
+ addUserKnob {20 User}
+ addUserKnob {26 text01 l "" +STARTLINE T "From the manual:\n   creates a 3D Perlin noise value. This produces a signed range \n   centerd on zero. The absolute maximum range is from -1.0 to \n   1.0. This produces zero at all integers, so you should rotate \n   the coordinates somewhat (add a fraction of y and z to x, etc.) \n   if you want to use this for random number generation."}
+ addUserKnob {26 line01 l "" +STARTLINE}
+ addUserKnob {7 yshift l "y shift" t "Shifts in amount." R -5 5}
+ yshift 0.55
+ addUserKnob {7 xshift l "x shift" t "Shifts in time." R -5 5}
+ xshift 0.75
+ addUserKnob {7 amplitude t "Embiggens / de-embiggens the noise. " R 0 100}
+ amplitude 55
+ addUserKnob {7 frequency t "Changes the 'noisiness' of the noise." R 0 10}
+ frequency 0.3
+ addUserKnob {7 seed t "The 'seed' from which the value grows. \nChange to entirly alter the shape of\nthe noise. " R 0 100}
+ addUserKnob {26 line02 l "" +STARTLINE}
+ addUserKnob {7 noisevalue l "noise value" R 0 100}
+ noisevalue {{"(noise((frame+(xshift))*frequency, (seed), 0)*amplitude)+yshift" i}}
+}
+Dot {
+ inputs 0
+ name Dot1
+ label "This fBm_Master drives the translate \nvalues of Transform_1"
+ note_font "Verdana Bold Bold"
+ xpos -188
+ ypos -453
+ hide_input true
+}
+NoOp {
+ name fBm_Master
+ selected true
+ xpos -222
+ ypos -417
+ addUserKnob {20 User}
+ addUserKnob {26 text01 l "" +STARTLINE T "From the manual: \n   creates a 3D Perlin noise value. This produces a \n   signed range centerd on zero. The absolute \n   maximum range is from -1.0 to 1.0. This produces \n   zero at all integers, so you should rotate the \n   coordinates somewhat (add a fraction of y and z to x, etc.) \n   if you want to use this for random number generation."}
+ addUserKnob {26 line01 l "" +STARTLINE}
+ addUserKnob {26 text02 l "" +STARTLINE T "Change the values to add a complexity on top of the base \nnoise. Defualt values have no effect. To start, change the \noctaves parameter to a value greater than 2. Check out\nthe tooltips for details of paramaters. \n"}
+ addUserKnob {7 octaves t "Determines the nature of \nthe complexity. Needs to be \nan integer greater than 2 in \norder for complexity to be viable" R 0 10}
+ octaves 4.3
+ addUserKnob {7 lucanacity t "This works in conjunction with octaves.\nNeeds to be a value greater than \n0 in order for complexity to be viable. " R 0 5}
+ lucanacity 2.52
+ addUserKnob {7 gain t "Adjusts the 'amount' of the \ncomplexty. Needs to be a \nvalue greater than 0 in order \nfor complexity to be viable"}
+ gain 0.555
+ addUserKnob {26 line02 l "" +STARTLINE}
+ addUserKnob {26 text03 l "" +STARTLINE T "Change these values to edit the base noise.\n"}
+ addUserKnob {7 yshift l "y shift" t "Shifts in X axis (amount)" R -100 100}
+ yshift -55
+ addUserKnob {7 xshift l "x shift" t "Shifts in time" R -5 5}
+ xshift -2.75
+ addUserKnob {7 amplitude t "Embiggens / de-embiggens \nthe noise on the y axis" R 0 500}
+ amplitude 460
+ addUserKnob {7 frequency t "Makes the noise more / less 'noisy'. " R 0 4}
+ frequency 0.22
+ addUserKnob {26 line03 l "" +STARTLINE}
+ addUserKnob {7 seedx l "seed X" t "The 'seed' from which the X value grows. \nChange to entirly alter the shape of\nthe noise. " R 0 100}
+ seedx 37.5
+ addUserKnob {7 seedy l "seed Y" t "The 'seed' from which the Y value grows. \nChange to entirly alter the shape of\nthe noise. " R 0 100}
+ seedy 31
+ addUserKnob {26 line04 l "" +STARTLINE}
+ addUserKnob {7 noisevaluex l "noise value X" t "This is the result of the above values.\nDon't try to edit thisvalue  directly. " R 0 100}
+ noisevaluex {{"(fBm((frame+(xshift))*frequency, (seedx), 0, octaves, lucanacity, gain)*amplitude)+yshift" i}}
+ addUserKnob {7 noisevaluey l "noise value Y" t "This is the result of the above values.\nDon't try to edit thisvalue  directly. " R 0 100}
+ noisevaluey {{"(fBm((frame+(xshift))*frequency, (seedy), 0, octaves, lucanacity, gain)*amplitude)+yshift" i}}
+}

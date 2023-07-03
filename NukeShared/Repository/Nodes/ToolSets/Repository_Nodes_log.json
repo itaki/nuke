@@ -1,0 +1,67 @@
+{
+    "header": {
+        "project_name": "Repository",
+        "shot": "Nodes",
+        "directory": "/Volumes/panda/Dropbox (Personal)/_Library/nuke/NukeShared/Repository/Nodes/ToolSets",
+        "number_of_sessions": 0,
+        "shot_clock": "0:42:24",
+        "work_time": "0:30:24",
+        "idle_time": "0:12:00"
+    },
+    "sessions": [
+        {
+            "filename": "degrain.nk",
+            "artist": "itakidev",
+            "start_time": "2023-03-14T11:49:27.355549",
+            "notes": [],
+            "idle_time": 540,
+            "end_time": "2023-03-14T12:27:32.268927",
+            "status": "saved"
+        },
+        {
+            "filename": "degrain.nk",
+            "artist": "itakidev",
+            "start_time": "2023-03-14T14:03:03.958152",
+            "notes": [],
+            "idle_time": 0,
+            "end_time": "2023-03-14T14:03:28.163646",
+            "status": "saved"
+        },
+        {
+            "filename": "degrain.nk",
+            "artist": "itakidev",
+            "start_time": "2023-03-14T14:04:16.149231",
+            "notes": [],
+            "idle_time": 0,
+            "end_time": "2023-03-14T14:04:51.517339",
+            "status": "saved"
+        },
+        {
+            "filename": "Grain_Master.nk",
+            "artist": "itakidev",
+            "start_time": "2023-03-14T14:23:14.551284",
+            "notes": [],
+            "idle_time": 120,
+            "end_time": "2023-03-14T14:25:21.685738",
+            "status": "saved"
+        },
+        {
+            "filename": "TL_setup.nk",
+            "artist": "itakidev",
+            "start_time": "2023-03-14T14:25:40.331516",
+            "notes": [],
+            "idle_time": 60,
+            "end_time": "2023-03-14T14:26:52.248305",
+            "status": "saved"
+        },
+        {
+            "filename": "TL_setup.nk",
+            "artist": "itakidev",
+            "start_time": "2023-03-14T14:28:52.370072",
+            "notes": [],
+            "idle_time": 0,
+            "end_time": "2023-03-14T14:28:55.741824",
+            "status": "saved"
+        }
+    ]
+}

@@ -1,0 +1,419 @@
+set cut_paste_input [stack 0]
+version 11.3 v2
+BackdropNode {
+ inputs 0
+ name BackdropNode12
+ tile_color 0x793f46ff
+ label "Cut Ref"
+ note_font_size 42.5
+ selected true
+ xpos 3210
+ ypos 33632
+ bdwidth 281
+ bdheight 275
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode13
+ tile_color 0x8e8e61ff
+ label "Comp out"
+ note_font_size 42
+ selected true
+ xpos 2597
+ ypos 34024
+ bdwidth 257
+ bdheight 279
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode14
+ tile_color 0x8e8560ff
+ label Reference
+ note_font_size 42
+ selected true
+ xpos 3606
+ ypos 33633
+ bdwidth 324
+ bdheight 272
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode15
+ tile_color 0x7171c600
+ label "Degrain Output"
+ note_font_size 24.7
+ selected true
+ xpos 2109
+ ypos 30439
+ bdwidth 246
+ bdheight 253
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode16
+ tile_color 0x7171c6ff
+ label Degrain
+ note_font_size 42
+ selected true
+ xpos 2571
+ ypos 30264
+ bdwidth 295
+ bdheight 307
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode19
+ tile_color 0x7171c6ff
+ label Regrain
+ note_font_size 42
+ selected true
+ xpos 2561
+ ypos 32973
+ bdwidth 989
+ bdheight 506
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode20
+ tile_color 0x9dc1c6ff
+ label Versions
+ note_font_size 42
+ selected true
+ xpos 2967
+ ypos 34028
+ bdwidth 727
+ bdheight 295
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode22
+ tile_color 0x375f8eff
+ label "foreground plate"
+ note_font_size 29.55
+ selected true
+ xpos 2587
+ ypos 29891
+ bdwidth 284
+ bdheight 316
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode23
+ tile_color 0x68878eff
+ label "Isolate plate grain"
+ note_font_size 42
+ selected true
+ xpos 543
+ ypos 32717
+ bdwidth 465
+ bdheight 568
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode24
+ tile_color 0x7171c600
+ label "Degrained Foreground\nPlate"
+ note_font_size 24.7
+ selected true
+ xpos 2982
+ ypos 30438
+ bdwidth 258
+ bdheight 252
+}
+push $cut_paste_input
+Dot {
+ name Dot245
+ label input
+ selected true
+ xpos 2714
+ ypos 30171
+}
+Dot {
+ name Dot246
+ selected true
+ xpos 2714
+ ypos 30336
+}
+set Nda2f4800 [stack 0]
+Colorspace {
+ colorspace_out AlexaV3LogC
+ name Colorspace2
+ selected true
+ xpos 2680
+ ypos 30376
+}
+Denoise2 {
+ userMessage "Move the analysis region to analyse noise or press Lock Noise Analysis to disable this message."
+ profileCurve {profile {curve 0 x0.125 0 0 0 0 0 0 0 0}}
+ serializeKnob "0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 
+18446744073709551615"
+ name Denoise1
+ selected true
+ xpos 2680
+ ypos 30420
+ disable true
+}
+Colorspace {
+ colorspace_in AlexaV3LogC
+ name Colorspace3
+ selected true
+ xpos 2680
+ ypos 30473
+}
+Dot {
+ name Dot247
+ selected true
+ xpos 2714
+ ypos 30530
+}
+set Nda319800 [stack 0]
+Dot {
+ name Dot250
+ label "\n\nDegrain Render"
+ note_font_size 22
+ selected true
+ xpos 2209
+ ypos 30530
+}
+Dot {
+ inputs 0
+ name Dot251
+ label "Paint Mask input"
+ note_font_size 27.5
+ selected true
+ xpos 3400
+ ypos 33044
+}
+Grade {
+ channels alpha
+ gamma 1.4
+ name Grade37
+ label "gamma up"
+ selected true
+ xpos 3366
+ ypos 33100
+ disable true
+}
+Clamp {
+ channels alpha
+ name Clamp2
+ selected true
+ xpos 3366
+ ypos 33166
+}
+EdgeBlur {
+ channels alpha
+ size 5
+ name EdgeBlur2
+ selected true
+ xpos 3366
+ ypos 33236
+ disable true
+}
+Dot {
+ name Dot252
+ selected true
+ xpos 3400
+ ypos 33300
+}
+Dot {
+ inputs 0
+ name Dot243
+ label "Degrain Input"
+ note_font_size 18
+ selected true
+ xpos 3097
+ ypos 30660
+}
+Dot {
+ name Dot244
+ selected true
+ xpos 3097
+ ypos 30820
+}
+push $Nda319800
+Switch {
+ inputs 2
+ which 1
+ name Switch4
+ selected true
+ xpos 2680
+ ypos 30816
+ disable true
+}
+set Nda319400 [stack 0]
+Dot {
+ name Dot253
+ selected true
+ xpos 2714
+ ypos 33089
+}
+set Nda338800 [stack 0]
+Dot {
+ name Dot254
+ selected true
+ xpos 2936
+ ypos 33089
+}
+Grain2 {
+ name Grain2_1
+ label "Kodak 5248"
+ selected true
+ xpos 2902
+ ypos 33192
+ black {0 0 0}
+ minimum {0 0 0}
+ maskgrain false
+}
+push $Nda2f4800
+Dot {
+ name Dot255
+ selected true
+ xpos 611
+ ypos 30336
+}
+Dot {
+ name Dot256
+ selected true
+ xpos 611
+ ypos 32871
+}
+push $Nda319400
+Dot {
+ name Dot257
+ selected true
+ xpos 832
+ ypos 30820
+}
+Merge2 {
+ inputs 2
+ operation minus
+ name Merge22
+ selected true
+ xpos 798
+ ypos 32867
+}
+Dot {
+ name Dot258
+ selected true
+ xpos 832
+ ypos 33208
+}
+push $Nda338800
+Merge2 {
+ inputs 2
+ operation plus
+ name Merge23
+ label Grain
+ selected true
+ xpos 2680
+ ypos 33198
+}
+Dot {
+ name Dot259
+ selected true
+ xpos 2714
+ ypos 33300
+}
+set Nda3f8c00 [stack 0]
+Keymix {
+ inputs 3
+ channels rgb
+ name Keymix2
+ selected true
+ xpos 2902
+ ypos 33296
+}
+Dot {
+ name Dot260
+ selected true
+ xpos 2936
+ ypos 33409
+}
+push $Nda3f8c00
+Switch {
+ inputs 2
+ which 1
+ name Switch5
+ label "Grain Replacement Switch"
+ selected true
+ xpos 2680
+ ypos 33399
+ disable true
+}
+NoOp {
+ name OUTPUT1
+ label "\n\n\n\n\n\n\n\n\n\n\n\noutput\n\n"
+ selected true
+ xpos 2680
+ ypos 33644
+}
+set Nda419800 [stack 0]
+Dot {
+ name Dot264
+ selected true
+ xpos 2714
+ ypos 34106
+}
+push $Nda419800
+Dot {
+ name Dot261
+ selected true
+ xpos 2848
+ ypos 33732
+}
+set Nda419400 [stack 0]
+Saturation {
+ saturation 2
+ mode Average
+ name CheckSaturation1
+ selected true
+ xpos 3023
+ ypos 33728
+}
+push $Nda419400
+Dot {
+ name Dot262
+ selected true
+ xpos 2848
+ ypos 33792
+}
+set Nda419000 [stack 0]
+Blur {
+ channels rgb
+ size 50
+ name CheckColor1
+ selected true
+ xpos 3023
+ ypos 33788
+}
+push $Nda419000
+Dot {
+ name Dot263
+ selected true
+ xpos 2848
+ ypos 33853
+}
+Mirror2 {
+ flop true
+ name CheckMirror1
+ selected true
+ xpos 3023
+ ypos 33848
+}

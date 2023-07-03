@@ -1,0 +1,90 @@
+{
+    "styles": [
+        {   "name" : "Input",
+            "category" : "Read",
+            "label" : "Input",
+            "icon" : "Read.png",
+            "color_type" : "HSV",
+            "color" : [
+                "0.156",
+                "0.011",
+                "0.212"
+            ],
+            "font" : "Verdana Bold Italic",
+            "size" : 30,
+            "label_color" : [
+                "0",
+                "0",
+                "0"
+            ],
+            "appearance" : "Border",
+            "border_width" : "4.5"
+        },
+        {   "name" : "Reference",
+            "category" : "Read",
+            "label" : "Reference",
+            "icon" : "SideBySide.png",
+            "color_type" : "HSV",
+            "color" : [
+                "0.682",
+                "0",
+                "0.298"
+            ],
+            "font" : "Verdana",
+            "style" : "reg",
+            "size" : 30,
+            "label_color" : [
+                "0",
+                "0",
+                "0"
+            ],
+            "appearance" : "Fill",
+            "border_width" : "4.5"
+        },
+        {   
+            "name" : "Keyer",
+            "category" : "Keyer",
+            "label" : "Keyer",
+            "icon" : "Keyer.png",
+            "color_type" : "HSV",
+            "color" : [
+                "0.682",
+                "0",
+                "0.298"
+            ],
+            "font" : "Verdana",
+            "style" : "reg",
+            "size" : 30,
+            "label_color" : [
+                "0",
+                "0",
+                "0"
+            ],
+            "appearance" : "Fill",
+            "border_width" : "4.5"
+        },
+        {   
+            "name" : "Key Out",
+            "category" : "Keyer",
+            "label" : "Key Out",
+            "icon" : "Keyer.png",
+            "color_type" : "HSV",
+            "color" : [
+                "0.682",
+                "0",
+                "0.298"
+            ],
+            "font" : "Verdana",
+            "style" : "reg",
+            "size" : 30,
+            "label_color" : [
+                "0",
+                "0",
+                "0"
+            ],
+            "appearance" : "Fill",
+            "border_width" : "4.5"
+        }
+
+    ]
+}

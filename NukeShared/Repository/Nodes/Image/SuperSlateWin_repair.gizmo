@@ -1,0 +1,1996 @@
+#! /Applications/Nuke14.0v3/Nuke14.0v3.app/Contents/MacOS/libnuke-14.0.3.dylib -nx
+version 14.0 v3
+Gizmo {
+}
+ Constant {
+  inputs 0
+  channels rgb
+  format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+  name Constant5
+  label "Additional Logos Can be added Here"
+  xpos -1089
+  ypos -1048
+ }
+ Grade {
+  channels rgba
+  white {{LogoColour.r i} {LogoColour.g i} {LogoColour.b i} {LogoColour.a i}}
+  name LogoColour1
+  xpos -1089
+  ypos -881
+ }
+push 0
+ Constant {
+  inputs 0
+  channels rgb
+  format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+  name Constant1
+  xpos -1582
+  ypos -1192
+ }
+ Text {
+  message "Your\nName   Here "
+  font "\[python nuke.defaultFontPathname()]"
+  size 420
+  kerning 0.01
+  leading -0.41
+  xjustify center
+  yjustify center
+  Transform 1
+  box {{0 i} {0 i} {width i} {height i}}
+  center {-100000 -100000}
+  name LogoText
+  xpos -1582
+  ypos -1090
+ }
+set N7ed9c00 [stack 0]
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle1
+  xpos -1481
+  ypos -1090
+ }
+set Nd580de00 [stack 0]
+push $Nd580de00
+push $Nd580de00
+ Blur {
+  size 52
+  name Blur1
+  xpos -1371
+  ypos -1095
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge5
+  xpos -1416
+  ypos -1052
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge3
+  xpos -1481
+  ypos -1015
+ }
+push $N7ed9c00
+ Dissolve {
+  inputs 2
+  which {{GlowOutline i}}
+  name Dissolve20
+  xpos -1582
+  ypos -983
+ }
+ Grade {
+  white {{LogoColour.r i} {LogoColour.g i} {LogoColour.b i} {LogoColour.a i}}
+  name LogoColour
+  xpos -1582
+  ypos -936
+ }
+ Read {
+  inputs 0
+  file_type png
+  file "Z:/Software Library/2D_resources/NukeTools/Slate/SuperSlateIcon.png"
+  format "24 24 0 0 24 24 1 "
+  origset true
+  in_colorspace scene_linear
+  out_colorspace scene_linear
+  name Read1
+  xpos -1767
+  ypos -910
+  addUserKnob {20 User}
+  addUserKnob {26 names l "Create shuffle nodes from all layers"}
+  addUserKnob {22 setShuffle l "Create Shuffle nodes" -STARTLINE T "\{newNode()\}"}
+  addUserKnob {22 selLayer l "Select your Layers" -STARTLINE T "\{mylayerPanel()\}"}
+  addUserKnob {26 names l "Create shuffle nodes from all layers"}
+  addUserKnob {22 setShuffle l "Create Shuffle nodes" -STARTLINE T "\{newNode()\}"}
+  addUserKnob {26 name l "Select the layers needed to create shuffle nodes"}
+  addUserKnob {22 selLayer l "Select your Layers" -STARTLINE T "\{mylayerPanel()\}"}
+ }
+ Dissolve {
+  inputs 3+1
+  which {{GenerateLogo i}}
+  name Dissolve21
+  xpos -1582
+  ypos -886
+ }
+ Reformat {
+  format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+  resize fit
+  name Reformat4
+  xpos -1582
+  ypos -852
+ }
+set N7f34200 [stack 0]
+ Reformat {
+  format "2048 1556 590 820 1410 1250 1 2k_logoArea"
+  resize fill
+  black_outside true
+  pbb true
+  name Reformat3
+  xpos -1582
+  ypos -818
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -2784
+  ypos -592
+ }
+set N7efb600 [stack 0]
+ Reformat {
+  format "1920 1080 0 0 1920 1080 1 HD_1080"
+  name Reformat1
+  xpos -2784
+  ypos -660
+ }
+ Crop {
+  box {0 0 1920 1080}
+  name Crop13
+  xpos -2784
+  ypos -695
+ }
+ Transform {
+  translate {760 490}
+  scale 0.3
+  center {960 540}
+  name Transform8
+  xpos -2784
+  ypos -745
+ }
+push 0
+ ColorBars {
+  inputs 0
+  format "1920 1080 0 0 1920 1080 1 HD_1080"
+  name ColorBars1
+  xpos -2654
+  ypos -965
+ }
+ Transform {
+  translate {-650 490}
+  scale 0.27
+  center {960 540}
+  name Transform7
+  xpos -2654
+  ypos -893
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+  name Constant4
+  xpos -3184
+  ypos -1482
+ }
+set N7f3d000 [stack 0]
+ Ramp {
+  replace true
+  p0 {254 430}
+  p1 {1816 430}
+  name Ramp1
+  xpos -3286
+  ypos -1323
+ }
+ ColorLookup {
+  lut {master {curve K 0 x0.05000000075 0.05 x0.09561031312 0.1 x0.1434155107 0.15 x0.1912206262 0.2 x0.2390258014 0.25 x0.2868310213 0.3 x0.3346360922 0.35 x0.3824412525 0.4 0.45 x0.4780516028 0.5 x0.5258568525 0.55 x0.5736620426 0.6 x0.6214671135 0.65 0.7 x0.7170773149 0.75 x0.7648825049 0.8 0.8511736457 x0.8604928255 0.9 x0.9076246619 0.9492956521 x0.9561032057 1}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name ColorLookup1
+  xpos -3286
+  ypos -1299
+ }
+ Grade {
+  black 0.07
+  gamma 0.4
+  name Grade1
+  xpos -3286
+  ypos -1275
+ }
+push $N7f3d000
+ Rectangle {
+  invert true
+  area {258 368 1814 427}
+  name Rectangle11
+  xpos -3184
+  ypos -1333
+ }
+ Merge2 {
+  inputs 2
+  operation max
+  name Merge10
+  xpos -3184
+  ypos -1275
+ }
+ Crop {
+  box {256 366 1816 429}
+  name Crop12
+  xpos -3184
+  ypos -1251
+ }
+push $N7f3d000
+ Rectangle {
+  area {0 1394 2048 1396}
+  name Rectangle1
+  xpos -3381
+  ypos -1306
+ }
+ Rectangle {
+  area {0 159 2048 161}
+  name Rectangle2
+  xpos -3381
+  ypos -1282
+ }
+ Rectangle {
+  area {0 1356 2048 1358}
+  name Rectangle3
+  xpos -3381
+  ypos -1258
+ }
+ Rectangle {
+  area {0 197 2048 199}
+  name Rectangle4
+  xpos -3381
+  ypos -1234
+ }
+ Rectangle {
+  area {0 1331 2048 1333}
+  name Rectangle5
+  xpos -3381
+  ypos -1210
+ }
+ Rectangle {
+  area {0 222 2048 224}
+  name Rectangle6
+  xpos -3381
+  ypos -1186
+ }
+ Rectangle {
+  area {0 1214 2048 1216}
+  name Rectangle7
+  xpos -3381
+  ypos -1162
+ }
+ Rectangle {
+  area {0 340 2048 342}
+  name Rectangle8
+  xpos -3381
+  ypos -1138
+ }
+ Rectangle {
+  area {0 1205 2048 1207}
+  name Rectangle9
+  xpos -3381
+  ypos -1114
+ }
+ Rectangle {
+  area {0 349 2048 351}
+  name Rectangle10
+  xpos -3381
+  ypos -1090
+ }
+ Rectangle {
+  area {997 94 1066 1445}
+  color 0
+  name Rectangle12
+  xpos -3381
+  ypos -1066
+ }
+ Text {
+  message "1.66\n"
+  font "\[python nuke.defaultFontPathname()]"
+  size 32
+  xjustify center
+  yjustify top
+  Transform 1
+  box {970 298 1092 351}
+  translate {0 1060}
+  center {1024 778}
+  name Text9
+  xpos -3285
+  ypos -1066
+ }
+ Text {
+  message "1.77\n\n"
+  font "\[python nuke.defaultFontPathname()]"
+  size 32
+  xjustify center
+  yjustify top
+  Transform 1
+  box {970 298 1092 351}
+  translate {0 1024}
+  center {1024 778}
+  name Text10
+  xpos -3285
+  ypos -1042
+ }
+ Text {
+  message "1.85\n\n\n"
+  font "\[python nuke.defaultFontPathname()]"
+  size 32
+  xjustify center
+  yjustify top
+  Transform 1
+  box {970 298 1092 351}
+  translate {0 997}
+  center {1024 778}
+  name Text11
+  xpos -3285
+  ypos -1018
+ }
+ Text {
+  message "2.35\n\n\n"
+  font "\[python nuke.defaultFontPathname()]"
+  size 32
+  xjustify center
+  yjustify top
+  Transform 1
+  box {970 298 1092 351}
+  translate {0 887}
+  center {1024 778}
+  name Text12
+  xpos -3285
+  ypos -994
+ }
+ Text {
+  message "2.40\n\n\n\n"
+  font "\[python nuke.defaultFontPathname()]"
+  size 32
+  xjustify center
+  yjustify top
+  Transform 1
+  box {970 298 1092 351}
+  translate {0 868}
+  center {1024 778}
+  name Text13
+  xpos -3285
+  ypos -970
+ }
+ Text {
+  message "1.66\n"
+  font "\[python nuke.defaultFontPathname()]"
+  size 32
+  xjustify center
+  yjustify top
+  Transform 1
+  box {970 298 1092 351}
+  translate {0 -176}
+  center {1024 778}
+  name Text14
+  xpos -3285
+  ypos -946
+ }
+ Text {
+  message "1.77\n\n"
+  font "\[python nuke.defaultFontPathname()]"
+  size 32
+  xjustify center
+  yjustify top
+  Transform 1
+  box {970 298 1092 351}
+  translate {0 -136}
+  center {1024 778}
+  name Text15
+  xpos -3285
+  ypos -922
+ }
+ Text {
+  message "1.85\n\n\n"
+  font "\[python nuke.defaultFontPathname()]"
+  size 32
+  xjustify center
+  yjustify top
+  Transform 1
+  box {970 298 1092 351}
+  translate {0 -111}
+  center {1024 778}
+  name Text16
+  xpos -3285
+  ypos -898
+ }
+ Text {
+  message "2.35\n\n\n"
+  font "\[python nuke.defaultFontPathname()]"
+  size 32
+  xjustify center
+  yjustify top
+  Transform 1
+  box {970 298 1092 351}
+  translate {0 -1}
+  center {1024 778}
+  name Text17
+  xpos -3285
+  ypos -874
+ }
+ Text {
+  message "2.40\n\n\n\n"
+  font "\[python nuke.defaultFontPathname()]"
+  size 32
+  xjustify center
+  yjustify top
+  Transform 1
+  box {970 298 1092 351}
+  translate {0 19}
+  center {1024 778}
+  name Text18
+  xpos -3285
+  ypos -850
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge11
+  xpos -3184
+  ypos -850
+ }
+set N7f2ae00 [stack 0]
+ Merge2 {
+  inputs 3+1
+  operation screen
+  name Merge12
+  xpos -2654
+  ypos -845
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+  name Constant3
+  xpos -2937
+  ypos -1110
+ }
+ RotoPaint {
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t 0}
+    {a}
+    {curvegroup Shape15 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 xc3a8bd71 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}
+    {curvegroup Shape14 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 xc39d7d71 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}
+    {curvegroup Shape13 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 xc3923d71 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}
+    {curvegroup Shape12 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 xc386fc29 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}
+    {curvegroup Shape11 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 xc3778000 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}
+    {curvegroup Shape10 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 xc3610000 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}
+    {curvegroup Shape9 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 xc34a8000 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}
+    {curvegroup Shape8 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 xc3340000 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}
+    {curvegroup Shape7 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 xc31d8000 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}
+    {curvegroup Shape6 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 xc3070000 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}
+    {curvegroup Shape5 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 xc2e10000 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}
+    {curvegroup Shape4 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 xc2b40000 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}
+    {curvegroup Shape16 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 xc2870000 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}
+    {curvegroup Shape3 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 xc2340000 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}
+    {curvegroup Shape2 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 xc1b40000 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}
+    {curvegroup Shape1 512 bezier
+     {{cc
+       {f 8192}
+       {px x4601e800
+        {0 0}
+        {x446bcccd x44b8a000}
+        {0 0}
+        {xc208999a xbf2667f9}
+        {x447ca666 x44b95333}
+        {x4208999a x3f265ffa}
+        {0 0}
+        {x4486f99a x44b8f333}
+        {0 0}
+        {0 0}
+        {x44800000 x44428000}
+        {0 0}}}     idem}
+     {t
+      {{x4601e800 x44800000 -}}
+      {{x4601e800 x44428010 -}}     0
+      {{x4601e800 0}}
+      {{x4601e800 0}}     0 0 0
+      {{x4601e800 0 -}}
+      {{x4601e800 1}}
+      {{x4601e800 1}}     1
+      {{x4601e800 0}}}
+     {a ltn x4601e800 ltm x4601e800}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {1024 778}
+  colorOverlay 0
+  lifetime_type "all frames"
+  lifetime_start 8314
+  lifetime_end 8314
+  motionblur_shutter_offset_type centred
+  source_translate_round false
+  aspect_ignore_compatibility11 true
+  name RotoPaint1
+  xpos -2937
+  ypos -1015
+ }
+set N7f2ca00 [stack 0]
+ Transform {
+  translate {670 140}
+  scale 0.32
+  center {1024 778}
+  name Transform6
+  xpos -3038
+  ypos -938
+ }
+push 0
+push $N7f2ca00
+ Transform {
+  translate {-670 140}
+  scale 0.32
+  center {1024 778}
+  name Transform1
+  xpos -2937
+  ypos -935
+ }
+push $N7f2ae00
+ Merge2 {
+  inputs 3+1
+  operation screen
+  name Merge9
+  xpos -2937
+  ypos -784
+ }
+ Dissolve {
+  inputs 2
+  which {{SlateType i}}
+  name Dissolve1
+  xpos -2614
+  ypos -789
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge1
+  xpos -1582
+  ypos -784
+ }
+ Text {
+  message "Show:\n\nShot:\n\nDate:\n\nResolution:\n\nCutLength:\n\nFrame Rate:\n\nDescription:"
+  font "\[python nuke.defaultFontPathname()]"
+  leading -0.46
+  xjustify right
+  yjustify top
+  Transform 1
+  box {286 432 751 870}
+  center {1024 778}
+  name Text1
+  xpos -1582
+  ypos -760
+ }
+ Text {
+  message "\[knob Show]"
+  font "\[python nuke.defaultFontPathname()]"
+  yjustify top
+  Transform 1
+  box {780 442 1784 870}
+  center {1024 778}
+  name Show
+  xpos -1583
+  ypos -736
+ }
+ Text {
+  message "\[file tail \[value \[? AutoName==0 Shot root.name]]]"
+  font "\[python nuke.defaultFontPathname()]"
+  yjustify top
+  Transform 1
+  box {780 442 1784 814}
+  center {1024 778}
+  name Shot
+  xpos -1583
+  ypos -688
+ }
+ Text {
+  message "\[? AutoDate==0 \[knob Date_txt] \"\[date %D]\"]   \[? AutoTime==1 \"\[date %T] \[date %Z]\" \"\"]"
+  font "\[python nuke.defaultFontPathname()]"
+  yjustify top
+  Transform 1
+  box {780 442 1784 760}
+  center {1024 778}
+  name Date
+  xpos -1583
+  ypos -664
+ }
+ Text {
+  opacity 0.66
+  message "\[value Output1.width] x \[value Output1.height]   \[expr \[value Output1.width]*\[value Output1.pixel_aspect] *1.0 / \[value Output1.height] ]\n\n"
+  font "\[python nuke.defaultFontPathname()]"
+  yjustify top
+  Transform 1
+  box {780 442 1784 706}
+  center {1024 778}
+  name Rez
+  xpos -1583
+  ypos -640
+ }
+set Na7850000 [stack 0]
+ Text {
+  message "\[expr \[value Input1.last_frame] -  \[value Input1.first_frame]+0] Frames   (\[expr  \[expr \[value Input1.last_frame] -  \[value Input1.first_frame]+0.0] /\[value \[? AutoFrameRate==0 FrameRate root.fps]]] seconds)"
+  font "\[python nuke.defaultFontPathname()]"
+  yjustify top
+  Transform 1
+  box {780 442 2048 651}
+  center {1024 778}
+  name CutLength2
+  xpos -1482
+  ypos -584
+ }
+push 0
+push $Na7850000
+ Text {
+  message "\[expr \[value root.last_frame] -  \[value root.first_frame]+0]  Frames  (\[expr  \[expr \[value root.last_frame] -  \[value root.first_frame]+0.0] /\[value \[? AutoFrameRate==0 FrameRate root.fps]]] seconds)\n\n"
+  font "\[python nuke.defaultFontPathname()]"
+  yjustify top
+  Transform 1
+  box {780 442 2030 651}
+  center {1024 778}
+  name CutLength1
+  xpos -1584
+  ypos -583
+ }
+push $Na7850000
+ Text {
+  message "\[knob CutLength] Frames  (\[expr (\[knob CutLength]+0.0)/\[value \[? AutoFrameRate==0 FrameRate root.fps]]] seconds)"
+  font "\[python nuke.defaultFontPathname()]"
+  yjustify top
+  Transform 1
+  box {780 442 2052 651}
+  center {1024 778}
+  name CutLength
+  xpos -1691
+  ypos -585
+ }
+ Dissolve {
+  inputs 3+1
+  which {{AutoFill i}}
+  name Dissolve12
+  xpos -1584
+  ypos -538
+ }
+ Text {
+  message "\[value \[? AutoFrameRate==0 FrameRate root.fps]] fps"
+  font "\[python nuke.defaultFontPathname()]"
+  yjustify top
+  Transform 1
+  box {780 442 1784 599}
+  center {1024 778}
+  name FrameRate
+  xpos -1584
+  ypos -487
+ }
+ Text {
+  message "\[knob Description_txt]"
+  font "\[python nuke.defaultFontPathname()]"
+  leading -0.32
+  yjustify top
+  Transform 1
+  box {780 432 1784 549}
+  center {1024 778}
+  name Description
+  xpos -1584
+  ypos -436
+ }
+ Text {
+  opacity {{ShowOnSlate i}}
+  message "\[knob Copyright]"
+  font "\[python nuke.defaultFontPathname()]"
+  xjustify center
+  yjustify center
+  Transform 1
+  box {512 222 1536 344}
+  center {1024 778}
+  name Notice
+  xpos -1584
+  ypos -412
+ }
+ Reformat {
+  format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+  black_outside true
+  name Reformat2
+  xpos -1602
+  ypos 456
+ }
+ set Ca78e6a00 [stack 0]
+ Dot {
+  name Dot2
+  xpos -995
+  ypos 459
+ }
+set Na7861400 [stack 0]
+push $N7efb600
+ Dot {
+  name Dot1
+  xpos -2750
+  ypos -458
+ }
+set Na7861800 [stack 0]
+ Crop {
+  box {{curve i} {"(height-((width*pixel_aspect)/(\[knob AspectRatio])))/2" i} {width i} {"height-((height-(width*pixel_aspect)/(\[knob AspectRatio]))/2)" i}}
+  name HardMask
+  xpos -2900
+  ypos -392
+ }
+push $Na7861800
+ Dissolve {
+  inputs 2
+  which {{MaskOpacity i}}
+  name Dissolve7
+  xpos -2859
+  ypos -318
+ }
+push $Na7861800
+ Dissolve {
+  inputs 2
+  which {{HardMask i}}
+  name Dissolve5
+  label Mask
+  xpos -2784
+  ypos -265
+ }
+clone $Ca78e6a00 {
+  xpos -2784
+  ypos -52
+  selected false
+ }
+set Na7862800 [stack 0]
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle3
+  xpos -804
+  ypos -325
+ }
+set Na7863000 [stack 0]
+ AddTimeCode {
+  useFrame true
+  name AddTimeCode1
+  xpos -804
+  ypos -252
+ }
+set Na7865400 [stack 0]
+ Text {
+  message "\[timecode]"
+  font "\[python nuke.defaultFontPathname()]"
+  size {{40*(((width*pixel_aspect)/2048)) i}}
+  yjustify center
+  Transform 1
+  box {{((width-(width*.9))/2)+10 i} {"(height-((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2))" i} {"(width -((width-(width*.9))/2))-10" i} {"(height-((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2))" i}}
+  translate {{curve i} {(TitleOnMask*(108/(1556/height)))*1 i}}
+  center {1024 778}
+  name TimecodeDisplay
+  xpos -755
+  ypos -192
+ }
+push 0
+push $Na7863000
+ Dot {
+  name Dot4
+  xpos -666
+  ypos -252
+ }
+set Na7867c00 [stack 0]
+ Text {
+  font "\[python nuke.defaultFontPathname()]"
+  size {{40*(((width*pixel_aspect)/2048)) i}}
+  yjustify center
+  Transform 1
+  box {{((width-(width*.9))/2)+10 i} {"(height-((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2))" i} {"(width -((width-(width*.9))/2))-10" i} {"(height-((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2))" i}}
+  translate {{curve i} {(TitleOnMask*(108/(1556/height)))*1 i}}
+  center {1024 778}
+  name FrameDisplay1
+  xpos -652
+  ypos -192
+ }
+push $Na7867c00
+ Dissolve {
+  inputs 3+1
+  which {{Counter i}}
+  name Counter1
+  xpos -700
+  ypos -144
+ }
+ Text {
+  opacity 0.875
+  message "\[? Date==1 \[? AutoDate==0 \[knob Date_txt] \"\[date %D]\"] \"\"]  \[? TimeOverlay==1 \"\[date %T] \[date %Z]\" \"\"]\n"
+  font "\[python nuke.defaultFontPathname()]"
+  size {{40*(((width*pixel_aspect)/2048)) i}}
+  leading -1
+  xjustify right
+  yjustify center
+  Transform 1
+  box {{((width-(width*.9))/2)+10 i} {"(height-((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2))" i} {"(width -((width-(width*.9))/2))-10" i} {"(height-((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2))" i}}
+  translate {{curve i} {(TitleOnMask*(108/(1556/height)))*1 i}}
+  center {1024 778}
+  name Date_man
+  xpos -700
+  ypos -94
+ }
+ Text {
+  opacity {{Description i}}
+  message "\[knob Description_txt]"
+  font "\[python nuke.defaultFontPathname()]"
+  size {{40*(((width*pixel_aspect)/2048)) i}}
+  xjustify center
+  yjustify top
+  Transform 1
+  box {{((width-(width*.9))/2)+(width/4) i} {"(((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2))" i} {"(width -((width-(width*.9))/2))-(width/4)" i} {"(((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2))" i}}
+  translate {{curve i} {(TitleOnMask*(108/(1556/height)))*-1 i}}
+  center {1024 778}
+  name Description4
+  xpos -700
+  ypos -70
+ }
+ Text {
+  opacity {{ShowOverlay i}}
+  message "\[knob Show]"
+  font "\[python nuke.defaultFontPathname()]"
+  size {{40*(((width*pixel_aspect)/2048)) i}}
+  yjustify center
+  Transform 1
+  box {{((width-(width*.9))/2)+10 i} {"(((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2))" i} {"(width -((width-(width*.9))/2))-10" i} {"(((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2))" i}}
+  translate {{curve i} {(TitleOnMask*(108/(1556/height)))*-1 i}}
+  center {1024 778}
+  name Show4
+  xpos -700
+  ypos -46
+ }
+ Text {
+  opacity {{ShotOverlay i}}
+  message "\[file tail \[value \[? AutoName==0 Shot root.name]]]"
+  font "\[python nuke.defaultFontPathname()]"
+  size {{40*(((width*pixel_aspect)/2048)) i}}
+  xjustify right
+  yjustify center
+  Transform 1
+  box {{((width-(width*.9))/2)+10 i} {"(((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2))" i} {"(width -((width-(width*.9))/2))-10" i} {"(((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2))" i}}
+  translate {{curve i} {(TitleOnMask*(108/(1556/height)))*-1 i}}
+  center {1024 778}
+  name ShotMan5
+  xpos -700
+  ypos -18
+ }
+push $Na7865400
+ Text {
+  replace true
+  message "\[timecode]"
+  font "\[python nuke.defaultFontPathname()]"
+  size {{40*(((width*pixel_aspect)/2048)) i}}
+  yjustify center
+  Transform 1
+  box {{((width-(width*.9))/2)+10 i} {"(((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2))" i} {"(width -((width-(width*.9))/2))-10" i} {"(((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2))" i}}
+  translate {{curve i} {(TitleOnMask*(108/(1556/height)))*-1 i}}
+  center {1024 778}
+  name Frame1
+  xpos -863
+  ypos -186
+ }
+push 0
+push $Na7863000
+ Dot {
+  name Dot5
+  xpos -902
+  ypos -242
+ }
+set Na7875c00 [stack 0]
+ Text {
+  replace true
+  font "\[python nuke.defaultFontPathname()]"
+  size {{40*(((width*pixel_aspect)/2048)) i}}
+  yjustify center
+  Transform 1
+  box {{((width-(width*.9))/2)+10 i} {"(((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2))" i} {"(width -((width-(width*.9))/2))-10" i} {"(((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2))" i}}
+  translate {{curve i} {(TitleOnMask*(108/(1556/height)))*-1 i}}
+  center {1024 778}
+  name Frame
+  xpos -999
+  ypos -186
+ }
+push $Na7875c00
+ Dissolve {
+  inputs 3+1
+  which {{Counter i}}
+  name Counter
+  xpos -936
+  ypos -138
+ }
+ Text {
+  message "\[? Date==1 \[? AutoDate==0 \[knob Date_txt] \"\[date %D]\"] \"\"]  \[? TimeOverlay==1 \"\[date %T] \[date %Z]\" \"\"]\n"
+  font "\[python nuke.defaultFontPathname()]"
+  size {{40*(((width*pixel_aspect)/2048)) i}}
+  leading -1
+  xjustify right
+  yjustify center
+  Transform 1
+  box {{((width-(width*.9))/2)+10 i} {"(((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2))" i} {"(width -((width-(width*.9))/2))-10" i} {"(((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2))" i}}
+  translate {{curve i} {(TitleOnMask*(108/(1556/height)))*-1 i}}
+  center {1024 778}
+  name Date4
+  xpos -936
+  ypos -96
+ }
+ Text {
+  opacity {{Description i}}
+  message "\[knob Description_txt]"
+  font "\[python nuke.defaultFontPathname()]"
+  size {{40*(((width*pixel_aspect)/2048)) i}}
+  xjustify center
+  yjustify bottom
+  Transform 1
+  box {{((width-(width*.9))/2)+(width/4) i} {"(height-((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2))" i} {"(width -((width-(width*.9))/2))-(width/4)" i} {"(height-((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2))" i}}
+  translate {{curve i} {(TitleOnMask*(108/(1556/height)))*1 i}}
+  center {1024 778}
+  name Description1
+  xpos -936
+  ypos -66
+ }
+ Text {
+  opacity {{ShowOverlay i}}
+  message "\[knob Show]"
+  font "\[python nuke.defaultFontPathname()]"
+  size {{40*(((width*pixel_aspect)/2048)) i}}
+  yjustify center
+  Transform 1
+  box {{((width-(width*.9))/2)+10 i} {"(height-((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2))" i} {"(width -((width-(width*.9))/2))-10" i} {"(height-((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2))" i}}
+  translate {{curve i} {(TitleOnMask*(108/(1556/height)))*1 i}}
+  center {1024 778}
+  name Show_Overlay
+  xpos -936
+  ypos -42
+ }
+ Text {
+  opacity {{ShotOverlay i}}
+  message "\[file tail \[value \[? AutoName==0 Shot root.name]]]"
+  font "\[python nuke.defaultFontPathname()]"
+  size {{40*(((width*pixel_aspect)/2048)) i}}
+  xjustify right
+  yjustify center
+  Transform 1
+  box {{((width-(width*.9))/2)+10 i} {"(height-((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2))" i} {"(width -((width-(width*.9))/2))-10" i} {"(height-((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2))" i}}
+  translate {{curve i} {(TitleOnMask*(108/(1556/height)))*1 i}}
+  center {1024 778}
+  name ShotOver
+  xpos -936
+  ypos -18
+ }
+ Dissolve {
+  inputs 2
+  which {{Reverse i}}
+  name Dissolve9
+  xpos -826
+  ypos -23
+ }
+set Na7881800 [stack 0]
+ Blur {
+  size 3
+  name Blur2
+  xpos -886
+  ypos 27
+ }
+ Transform {
+  translate {3 -3}
+  center {1024 778}
+  name Transform2
+  xpos -886
+  ypos 75
+ }
+push $Na7881800
+ ChannelMerge {
+  inputs 2
+  name ChannelMerge1
+  xpos -826
+  ypos 116
+ }
+push $Na7862800
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle4
+  xpos -1294
+  ypos -52
+ }
+ Rectangle {
+  area {{((width-(width*.9))/2)-(3*pixel_aspect) i} {"(((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2))-(3*((width*pixel_aspect)/2048))" i} {"(width -((width-(width*.9))/2))+(3*pixel_aspect)" i} {"(height-(((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2)))+(3*((width*pixel_aspect)/2048))" i}}
+  name Rectangle39
+  xpos -1294
+  ypos -28
+ }
+ Rectangle {
+  area {{((width-(width*.9))/2) i} {"(((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2))" i} {"width -((width-(width*.9))/2)" i} {"height-(((height-(((width*pixel_aspect)*.9)/\[value AspectRatio]))/2))" i}}
+  color 0
+  name Rectangle40
+  xpos -1294
+  ypos -4
+ }
+ Rectangle {
+  area {{((width-(width*.8))/2)-(3*pixel_aspect) i} {"(((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2))-(3*((width*pixel_aspect)/2048))" i} {"(width -((width-(width*.8))/2))+(3*pixel_aspect)" i} {"(height-((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2))+(3*((width*pixel_aspect)/2048))" i}}
+  name Rectangle41
+  xpos -1294
+  ypos 20
+ }
+ Rectangle {
+  area {{(width-(width*.8))/2 i} {"((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2)" i} {"width -((width-(width*.8))/2)" i} {"height-((height-(((width*pixel_aspect)*.8)/\[value AspectRatio]))/2)" i}}
+  color 0
+  name Rectangle42
+  xpos -1294
+  ypos 44
+ }
+ Rectangle {
+  area {{(width/2)-2 i} {(height/2)-(height*0.025706940874036) i} {(width/2)+2 i} {(height/2)+(height*0.025706940874036) i}}
+  name Rectangle17
+  xpos -1294
+  ypos 68
+ }
+ Rectangle {
+  area {{(width/2)-(width*0.01953125) i} {(height/2)-(2*pixel_aspect) i} {(width/2)+(width*0.01953125) i} {(height/2)+(2*pixel_aspect) i}}
+  name Rectangle18
+  xpos -1294
+  ypos 92
+ }
+set Na788dc00 [stack 0]
+ Constant {
+  inputs 0
+  channels rgb
+  format "4096 3112 0 0 4096 3112 1 4K_Super_35(full-ap)"
+  name Constant2
+  xpos -2118
+  ypos -654
+ }
+ RotoPaint {
+  replace true
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t 0}
+    {a}
+    {curvegroup Shape2 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {0 0}
+        {x4040a3d7 x3c23d70a}
+        {0 0}
+        {0 0}
+        {xc010a3d7 xbfd9999a}
+        {0 0}
+        {0 0}
+        {0 x40400000}
+        {0 0}
+        {0 0}
+        {x457fd052 x45427f33}
+        {0 0}
+        {xbf37af10 x3f407619}
+        {x4580123d x4542a0a4}
+        {x3f37af10 xbf407619}
+        {0 0}
+        {x45800000 x45424f85}
+        {0 0}}}     idem}
+     {t
+      {{1 x45000000}}
+      {{1 x44c27fae}}     0
+      {{1 0}}
+      {{1 0}}     0 0 0
+      {{1 0}}
+      {{1 1}}
+      {{1 1}}     1
+      {{1 0}}}
+     {a}}
+    {curvegroup Shape1 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {0 0}
+        {x4040a3d7 x45427fae}
+        {0 0}
+        {0 0}
+        {xc0451eb8 x4542a19a}
+        {0 0}
+        {0 0}
+        {x3cf5c28f x45424fd7}
+        {0 0}
+        {0 0}
+        {x457fd052 xbc23d70a}
+        {xb980000d 0}
+        {0 0}
+        {x458016b8 xbff33333}
+        {0 0}
+        {xb980000d 0}
+        {x457fffae x403f5c29}
+        {0 0}}}     idem}
+     {t
+      {{1 x44fff4cd -}}
+      {{1 x44c29148 -}}     0
+      {{1 0 -}}
+      {{1 0 -}}     0 0 0
+      {{1 0 -}}
+      {{1 1 -}}
+      {{1 1 -}}     1
+      {{1 0 -}}}
+     {a}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {2048 1556}
+  lifetime_type "all frames"
+  view {}
+  motionblur_on true
+  motionblur_shutter_offset_type centred
+  aspect_ignore_compatibility11 true
+  name RotoPaint2
+  xpos -2121
+  ypos -557
+ }
+ Grid {
+  number 32
+  size 5
+  name Grid1
+  xpos -2118
+  ypos -523
+ }
+ Text {
+  message "16       15       14        13        12       11        10       9          8         7          6         5          4                     2      "
+  font "\[python nuke.defaultFontPathname()]"
+  size 41
+  yjustify bottom
+  Transform 1
+  box {14 1564 2048 1619}
+  center {2048 1556}
+  name Text3
+  xpos -2118
+  ypos -499
+ }
+ Text {
+  message "2                     4         5          6          7         8         9        10        11       12        13       14       15        16"
+  font "\[python nuke.defaultFontPathname()]"
+  size 41
+  xjustify right
+  yjustify bottom
+  Transform 1
+  box {2048 1564 4082 1619}
+  center {2048 1556}
+  name Text4
+  xpos -2118
+  ypos -475
+ }
+ Text {
+  message "16\n\n\n15\n\n\n14\n\n\n13\n\n\n12\n\n\n11\n\n\n10\n\n\n9\n\n\n8\n\n\n7\n\n\n6\n\n\n5\n\n\n4\n\n\n\n\n\n2      "
+  font "\[python nuke.defaultFontPathname()]"
+  size 41
+  leading -0.216
+  yjustify top
+  Transform 1
+  box {2055 1564 2114 3098}
+  center {2048 1556}
+  name Text6
+  xpos -2118
+  ypos -451
+ }
+ Text {
+  message "2\n\n\n\n\n\n4\n\n\n5\n\n\n6\n\n\n7\n\n\n8\n\n\n9\n\n\n10\n\n\n11\n\n\n12\n\n\n13\n\n\n14\n\n\n15\n\n\n16"
+  font "\[python nuke.defaultFontPathname()]"
+  size 41
+  leading -0.209
+  yjustify bottom
+  Transform 1
+  box {2054 5 2114 1556}
+  center {2048 1556}
+  name Text7
+  xpos -2118
+  ypos -427
+ }
+ Radial {
+  area {1690 1518 1770 1598}
+  softness 0.055
+  color 0.5
+  name Radial1
+  xpos -2118
+  ypos -403
+ }
+ Radial {
+  area {2332 1518 2412 1598}
+  softness 0.055
+  ramp linear
+  color 0.5
+  name Radial2
+  xpos -2118
+  ypos -379
+ }
+ Radial {
+  area {2008 1758 2088 1838}
+  softness 0.055
+  color 0.5
+  name Radial3
+  xpos -2118
+  ypos -355
+ }
+ Radial {
+  area {2008 1274 2088 1354}
+  softness 0.055
+  color 0.5
+  name Radial4
+  xpos -2118
+  ypos -331
+ }
+ Text {
+  message N
+  font "\[python nuke.defaultFontPathname()]"
+  size 60
+  xjustify center
+  yjustify center
+  Transform 1
+  box {1024 778 3072 2334}
+  translate {0 242}
+  center {2048 1556}
+  color 0
+  name Text8
+  xpos -2118
+  ypos -307
+ }
+ Text {
+  message S
+  font "\[python nuke.defaultFontPathname()]"
+  size 60
+  xjustify center
+  yjustify center
+  Transform 1
+  box {1024 778 3072 2334}
+  translate {0 -242}
+  center {2048 1556}
+  color 0
+  name Text19
+  xpos -2118
+  ypos -283
+ }
+ Text {
+  message E
+  font "\[python nuke.defaultFontPathname()]"
+  size 60
+  xjustify center
+  yjustify center
+  Transform 1
+  box {1024 778 3072 2334}
+  translate {323 0}
+  center {2048 1556}
+  color 0
+  name Text20
+  xpos -2118
+  ypos -259
+ }
+ Text {
+  message W
+  font "\[python nuke.defaultFontPathname()]"
+  size 60
+  xjustify center
+  yjustify center
+  Transform 1
+  box {1024 778 3072 2334}
+  translate {-318 0}
+  center {2048 1556}
+  color 0
+  name Text21
+  xpos -2118
+  ypos -235
+ }
+ CornerPin2D {
+  to1 {0 0}
+  to2 {{Reformat2.width i} {0 i}}
+  to3 {{Reformat2.width i} {Reformat2.height i}}
+  to4 {{0 i} {Reformat2.height i}}
+  invert false
+  filter Mitchell
+  shutter 0
+  from1 {0 0}
+  from2 {4096 0}
+  from3 {4096 3112}
+  from4 {0 3112}
+  name CornerPin2D1
+  xpos -2118
+  ypos -211
+ }
+ Crop {
+  box {{curve i} {curve i} {Reformat2.width i} {Reformat2.height i}}
+  reformat true
+  crop false
+  name Crop1
+  xpos -2118
+  ypos -187
+ }
+set Na78e3e00 [stack 0]
+ Crop {
+  box {{curve i} {"(height-((width*Reformat2.pixel_aspect)/(\[knob AspectRatio])))/2" i} {width i} {"height-((height-(width*Reformat2.pixel_aspect)/(\[knob AspectRatio]))/2)" i}}
+  name HardMask1
+  xpos -2195
+  ypos -98
+ }
+push $Na78e3e00
+ Dissolve {
+  inputs 2
+  which {{MaskOpacity i}}
+  name Dissolve8
+  xpos -2168
+  ypos -12
+ }
+push $Na78e3e00
+ Dissolve {
+  inputs 2
+  which {{"HardMask && Reformat2.pixel_aspect !=2" i}}
+  name Dissolve19
+  label Mask
+  xpos -2118
+  ypos 31
+ }
+set Na78e4a00 [stack 0]
+push $N7f34200
+ Transform {
+  scale {{LogoSize i}}
+  center {{Input1.width/2 i} {Input1.height/2 i}}
+  name Transform4
+  xpos -2366
+  ypos -672
+ }
+clone $Ca78e6a00 {
+  xpos -2366
+  ypos -648
+  selected false
+ }
+set Na78e6a00 [stack 0]
+ Saturation {
+  saturation {{WaterSat i}}
+  name Saturation1
+  xpos -2420
+  ypos -547
+ }
+set Na78e7600 [stack 0]
+push $Na78e6a00
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle2
+  xpos -2312
+  ypos -548
+ }
+ Dissolve {
+  inputs 2
+  which {{WaterSat i}}
+  name Dissolve3
+  xpos -2352
+  ypos -495
+ }
+push $Na78e7600
+ Dissolve {
+  inputs 2
+  which {{GenerateLogo i}}
+  name Dissolve6
+  xpos -2365
+  ypos -426
+ }
+push $Na7862800
+ Dot {
+  name Dot7
+  xpos -2506
+  ypos 95
+ }
+set Na78eae00 [stack 0]
+ Text {
+  replace true
+  message "\[knob Copyright]"
+  font "\[python nuke.defaultFontPathname()]"
+  size {{((width*pixel_aspect)*.085)*LogoSize i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {{curve i} {curve i} {width i} {height i}}
+  center {-100000 -100000}
+  name Text2
+  xpos -2475
+  ypos 28
+ }
+ Dissolve {
+  inputs 2
+  which {{UseLogo i}}
+  name Dissolve4
+  xpos -2365
+  ypos 23
+ }
+ Clamp {
+  name Clamp1
+  xpos -2365
+  ypos 68
+ }
+push $Na78eae00
+ Merge2 {
+  inputs 2
+  operation screen
+  mix {{WatermarkOpacity i}}
+  name Merge4
+  xpos -2365
+  ypos 117
+ }
+push $Na78eae00
+ Dissolve {
+  inputs 2
+  which {{Watermark i}}
+  name Dissolve2
+  xpos -2365
+  ypos 153
+ }
+ Dot {
+  name Dot8
+  xpos -2165
+  ypos 161
+ }
+set Na78f0600 [stack 0]
+ Merge2 {
+  inputs 2
+  mix {{GridMix i}}
+  name Merge7
+  xpos -2118
+  ypos 92
+ }
+push $Na78e4a00
+push $Na78f0600
+ Merge2 {
+  inputs 2
+  operation stencil
+  mix {{GridMix i}}
+  name Merge8
+  xpos -2010
+  ypos 95
+ }
+ Dissolve {
+  inputs 2
+  which {{GridInvert i}}
+  name Dissolve25
+  xpos -2010
+  ypos 155
+ }
+push $Na78f0600
+ Dissolve {
+  inputs 2
+  which {{Grid i}}
+  name Dissolve22
+  xpos -2010
+  ypos 203
+ }
+ Dot {
+  name Dot6
+  xpos -1496
+  ypos 220
+ }
+set Na78f2a00 [stack 0]
+ Merge2 {
+  inputs 2
+  mix {{SafeMix i}}
+  name Merge13
+  xpos -1415
+  ypos 176
+ }
+push $Na788dc00
+push $Na78f2a00
+ Merge2 {
+  inputs 2
+  operation stencil
+  mix {{SafeMix i}}
+  name Merge14
+  xpos -1294
+  ypos 180
+ }
+ Dissolve {
+  inputs 2
+  which {{SafeInvert i}}
+  name Dissolve24
+  xpos -1341
+  ypos 225
+ }
+push $Na78f2a00
+ Dissolve {
+  inputs 2
+  which {{SafeArea i}}
+  name Dissolve23
+  xpos -1341
+  ypos 269
+ }
+ Dot {
+  name Dot9
+  xpos -1231
+  ypos 277
+ }
+ Merge2 {
+  inputs 2
+  also_merge all
+  name Merge2
+  xpos -826
+  ypos 292
+ }
+ Dot {
+  name Dot3
+  xpos -792
+  ypos 458
+ }
+set Na78f5600 [stack 0]
+ Dissolve {
+  inputs 2
+  which {{"frame < (\[value Input1.first_frame])" i}}
+  name Dissolve15
+  xpos -799
+  ypos 540
+ }
+push $Na7861400
+push $Na78f5600
+ Dissolve {
+  inputs 2
+  which {{"frame <= (\[value root.first_frame])" i}}
+  name Dissolve16
+  xpos -908
+  ypos 539
+ }
+ Dissolve {
+  inputs 2
+  which {{AutoFill-1 i}}
+  name Dissolve14
+  xpos -799
+  ypos 588
+ }
+push $Na7861400
+push $Na78f5600
+ Dissolve {
+  inputs 2
+  which {{"frame <= SlateFrame" i}}
+  name Dissolve11
+  xpos -1029
+  ypos 538
+ }
+ Dissolve {
+  inputs 2
+  which {{AutoSlateFrame i}}
+  name Dissolve17
+  xpos -909
+  ypos 588
+ }
+ Output {
+  name Output1
+  xpos -908
+  ypos 727
+ }
+ Output {
+  name Output1
+  xpos -908
+  ypos 827
+ }
+end_group

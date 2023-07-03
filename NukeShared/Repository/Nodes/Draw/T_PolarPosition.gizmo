@@ -1,0 +1,849 @@
+#! C:/Program Files/Nuke11.3v1/nuke-11.3.1.dll -nx
+version 10.5 v1
+Gizmo {
+ tile_color 0x6a55ffff
+ label "\[if \{\[value this.undist]==false\} \{return \"Distorted\"\} else \{return \"Undistorted\"\}]\nv2.0"
+ addUserKnob {20 user l Controls}
+ addUserKnob {26 op l Options}
+ addUserKnob {6 visualize l Visualize +STARTLINE}
+ addUserKnob {6 workspace l Workspace -STARTLINE}
+ addUserKnob {6 undist l Undistort -STARTLINE}
+ addUserKnob {6 seam l "Remove Seam" -STARTLINE}
+ seam true
+ addUserKnob {26 __________ l "" +STARTLINE}
+ addUserKnob {7 vizMix l mix}
+ vizMix 0.5
+ addUserKnob {26 ___________1 l "" +STARTLINE}
+ addUserKnob {26 s l Seam}
+ addUserKnob {7 seamOffset l Offset}
+ seamOffset 300
+ addUserKnob {7 seamBlur l Blur}
+ seamBlur 150
+ addUserKnob {7 seamErode l Erode}
+ addUserKnob {26 border l Border}
+ addUserKnob {12 top l Top}
+ top {0 1661}
+ addUserKnob {12 bottom l Bottom}
+ bottom {0 507}
+ addUserKnob {26 ___________2 l "" +STARTLINE}
+ addUserKnob {20 ip l "Iris/Pupil Controls" n 1}
+ addUserKnob {7 texture l "Iris Aspect Ration" R 0 2}
+ texture 1
+ addUserKnob {7 inner l "Iris Inner" R 0 2}
+ inner 0.7
+ addUserKnob {7 outer l "Iris Outer" R 0 2}
+ outer 0.7
+ addUserKnob {7 pdilation l "Pupil Dilation" R -1 1}
+ addUserKnob {20 endGroupIP l "" +STARTLINE n -1}
+ addUserKnob {26 ___________3 l "" +STARTLINE}
+ addUserKnob {20 ramp_controls l "Edge Erode/Blur" n 1}
+ addUserKnob {26 ramp_overall l Overall}
+ addUserKnob {7 oFade l Fade}
+ oFade 150
+ addUserKnob {7 oErode l Erode}
+ addUserKnob {26 ramp_inner l Inner}
+ addUserKnob {7 iFade l Fade}
+ addUserKnob {7 iErode l Erode}
+ addUserKnob {26 ramp_outer l Outer}
+ addUserKnob {7 oUFade l Fade}
+ addUserKnob {7 oUErode l Erode}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ___________4 l "" +STARTLINE}
+ addUserKnob {26 copyright1 l "" +STARTLINE T "<b>T_PolarPosition v2.0</b> - Petar Tsonev (c)"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x161616ff
+  label Unwrap
+  note_font_size 42
+  xpos -712
+  ypos -918
+  bdwidth 228
+  bdheight 437
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode10
+  tile_color 0x141a14ff
+  label Undistort
+  note_font_size 42
+  xpos -380
+  ypos 2262
+  bdwidth 210
+  bdheight 323
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x261926ff
+  label Remap
+  note_font_size 42
+  xpos -961
+  ypos -624
+  bdwidth 171
+  bdheight 166
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x191919ff
+  label "Alpha & BBox"
+  note_font_size 42
+  xpos -1256
+  ypos -439
+  bdwidth 442
+  bdheight 320
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0x141d1dff
+  label "Iris size/\nPupil Dilation"
+  note_font_size 42
+  xpos -1791
+  ypos 1191
+  bdwidth 283
+  bdheight 280
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x161e16ff
+  label "Spherical Transform/\nReformat"
+  note_font_size 42
+  xpos -1861
+  ypos 2739
+  bdwidth 423
+  bdheight 332
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x1e2625ff
+  label "Undo Remap"
+  note_font_size 42
+  xpos -1785
+  ypos 2439
+  bdwidth 271
+  bdheight 209
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode7
+  tile_color 0x181818ff
+  label "Edge Erode/\nEdge Blur"
+  note_font_size 42
+  xpos -1810
+  ypos 713
+  bdwidth 426
+  bdheight 352
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x131a13ff
+  label "Remove Seam"
+  note_font_size 42
+  xpos -1920
+  ypos 1940
+  bdwidth 550
+  bdheight 351
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x261926ff
+  label Remap
+  note_font_size 42
+  xpos -635
+  ypos 2446
+  bdwidth 169
+  bdheight 218
+ }
+ Input {
+  inputs 0
+  name Map
+  xpos -1690
+  ypos 134
+ }
+set N35c3400 [stack 0]
+ Dot {
+  name Dot16
+  xpos -336
+  ypos 138
+ }
+ Reformat {
+  filter Lanczos4
+  name Reformat5
+  xpos -370
+  ypos 2342
+  disable {{"parent.undist == 1 ? 0 : 1"}}
+ }
+ Reformat {
+  format "4096 4096 0 0 4096 4096 1 4K Square"
+  resize none
+  filter Lanczos4
+  name Reformat4
+  xpos -370
+  ypos 2384
+  disable {{"parent.undist == 1 ? 0 : 1"}}
+ }
+ Crop {
+  box {0 0 4096 4096}
+  name Crop4
+  xpos -370
+  ypos 2438
+  disable {{"parent.undist == 1 ? 0 : 1"}}
+ }
+push 0
+push 0
+push 0
+push 0
+ Constant {
+  inputs 0
+  channels rgb
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  name Constant4
+  xpos -260
+  ypos 2509
+  disable {{"parent.undist == 1 ? 0 : 1"}}
+ }
+ SphericalTransform {
+  inputs 6
+  input Cube
+  format "3840 2160 0 0 3840 2160 1 UHD_4K"
+  filter Lanczos4
+  fix true
+  name SphericalTransform2
+  xpos -370
+  ypos 2526
+  disable {{"parent.undist == 1 ? 0 : 1"}}
+ }
+ Transform {
+  scale {1 6.5}
+  center {0 2160}
+  filter Lanczos4
+  name Transform6
+  xpos -590
+  ypos 2532
+  disable {{"parent.undist == 1 ? 0 : 1"}}
+ }
+ Transform {
+  translate {0 -500}
+  center {1920 1080}
+  filter Lanczos4
+  name Transform7
+  xpos -590
+  ypos 2582
+  disable {{"parent.undist == 1 ? 0 : 1"}}
+ }
+ Crop {
+  box {0 0 3840 2160}
+  name Crop5
+  xpos -590
+  ypos 2630
+  disable {{"parent.undist == 1 ? 0 : 1"}}
+ }
+ Dot {
+  name Dot17
+  xpos -556
+  ypos 3114
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  format "3840 2160 0 0 3840 2160 1 UHD_4K"
+  name Constant1
+  xpos -1470
+  ypos 879
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+set N33432000 [stack 0]
+ Dot {
+  name Dot5
+  xpos -1436
+  ypos 1002
+ }
+ Ramp {
+  p0 {0 {"(p1.y + 1)  + parent.oUFade + parent.oFade"}}
+  p1 {0 {"parent.bottom.y + parent.oUErode + parent.oErode"}}
+  type smooth
+  name Ramp1
+  xpos -1580
+  ypos 998
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+push $N33432000
+ Ramp {
+  p0 {0 {"(p1.y - 1)  - parent.iFade - parent.oFade"}}
+  p1 {0 {"parent.top.y  - parent.iErode - parent.oErode"}}
+  type smooth
+  name Ramp2
+  xpos -1580
+  ypos 902
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ ColorWheel {
+  inputs 0
+  gamma 0.45
+  name ColorWheel1
+  xpos -696
+  ypos -849
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+set N33455000 [stack 0]
+ Dot {
+  name Dot6
+  xpos -586
+  ypos -822
+ }
+ Dot {
+  name Dot4
+  xpos -586
+  ypos -726
+ }
+push $N33455000
+ Grid {
+  inputs 1+1
+  size 3
+  name Grid1
+  xpos -696
+  ypos -730
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Reformat {
+  format "4096 4096 0 0 4096 4096 1 4K Square"
+  resize none
+  filter Lanczos4
+  name Reformat9
+  xpos -696
+  ypos -688
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Crop {
+  box {0 0 4096 4096}
+  name Crop3
+  xpos -696
+  ypos -632
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+push 0
+push 0
+push 0
+push 0
+ Constant {
+  inputs 0
+  channels rgb
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  name Constant2
+  xpos -586
+  ypos -561
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ SphericalTransform {
+  inputs 6
+  input Cube
+  format "3840 2160 0 0 3840 2160 1 UHD_4K"
+  filter Lanczos4
+  fix true
+  name SphericalTransform6
+  xpos -696
+  ypos -544
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Transform {
+  scale {1 6.5}
+  center {0 2160}
+  filter Lanczos4
+  name Transform2
+  xpos -916
+  ypos -538
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Transform {
+  translate {0 -500}
+  center {1920 1080}
+  filter Lanczos4
+  name Transform4
+  xpos -916
+  ypos -488
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Crop {
+  box {0 0 3840 2160}
+  crop false
+  name Crop2
+  xpos -916
+  ypos -344
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+set N3347a000 [stack 0]
+ Dot {
+  name Dot2
+  xpos -992
+  ypos -340
+ }
+set N334abc00 [stack 0]
+ Dot {
+  name Dot1
+  xpos -1102
+  ypos -340
+ }
+set N334ab800 [stack 0]
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle1
+  tile_color 0xbf0000ff
+  xpos -1246
+  ypos -344
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Dot {
+  name Dot3
+  xpos -1212
+  ypos -244
+ }
+push $N334ab800
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle2
+  tile_color 0xbf00ff
+  xpos -1136
+  ypos -298
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos -1136
+  ypos -248
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+push $N334abc00
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle3
+  tile_color 0x3fbfff
+  xpos -1026
+  ypos -298
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos -1026
+  ypos -248
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+push $N3347a000
+ ShuffleCopy {
+  inputs 2
+  name borders_alpha
+  tile_color 0xffffff
+  xpos -916
+  ypos -248
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Clamp {
+  name Clamp1
+  xpos -916
+  ypos -208
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Crop {
+  box {0 {parent.border_control.bottom.y} 3840 {parent.border_control.top.y}}
+  name border
+  tile_color 0xff
+  xpos -916
+  ypos -154
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Dot {
+  name Dot7
+  xpos -882
+  ypos 330
+ }
+set N334d7000 [stack 0]
+ Dot {
+  name Dot8
+  xpos -882
+  ypos 526
+ }
+push $N334d7000
+push $N35c3400
+ Reformat {
+  format "3840 2160 0 0 3840 2160 1 UHD_4K"
+  filter Lanczos4
+  name Reformat3
+  xpos -1690
+  ypos 224
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy1
+  xpos -1690
+  ypos 326
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  mix {{parent.vizMix}}
+  name visualize
+  xpos -1690
+  ypos 522
+  disable {{"parent.visualize == 1 ? 0 : 1"}}
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge4
+  xpos -1690
+  ypos 902
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge3
+  xpos -1690
+  ypos 998
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Transform {
+  scale {1 {parent.inner}}
+  center {0 {parent.bottom.y}}
+  filter Lanczos4
+  name inner_border_transform
+  xpos -1692
+  ypos 1334
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Transform {
+  scale {1 {parent.outer}}
+  center {0 {"parent.top.y - ((parent.top.y - parent.bottom.y) - ((parent.top.y - parent.bottom.y)*inner_border_transform.scale.h))"}}
+  filter Lanczos4
+  name outer_border_transform
+  xpos -1692
+  ypos 1382
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Transform {
+  scale {1 {"1 - parent.pdilation"}}
+  center {0 {"parent.bottom.y + ((outer_border_transform.center.y - parent.bottom.y) - ((outer_border_transform.center.y - parent.bottom.y) * outer_border_transform.scale.h))"}}
+  filter Lanczos4
+  name pupil_dilation
+  xpos -1692
+  ypos 1430
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+set N334fa800 [stack 0]
+ Dot {
+  name Dot9
+  xpos -1656
+  ypos 1578
+ }
+set N334fa400 [stack 0]
+ Dot {
+  name Dot14
+  xpos -996
+  ypos 1578
+ }
+ Dot {
+  name Dot13
+  xpos -996
+  ypos 3066
+ }
+ Dot {
+  name Dot18
+  xpos -1326
+  ypos 3066
+ }
+push $N334fa400
+ Transform {
+  scale {1.0025 1}
+  center {960 540}
+  filter Lanczos4
+  name Transform8
+  xpos -1690
+  ypos 1670
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Crop {
+  box {0 0 3840 2160}
+  crop false
+  name Crop6
+  xpos -1690
+  ypos 1718
+ }
+ Tile {
+  columns {{parent.texture}}
+  filter Lanczos4
+  name Iris_Aspect_Ratio
+  xpos -1690
+  ypos 1766
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Dot {
+  name Dot10
+  xpos -1656
+  ypos 2010
+ }
+set N33528800 [stack 0]
+ Dot {
+  name Dot11
+  xpos -1546
+  ypos 2010
+ }
+set N33528400 [stack 0]
+ Dot {
+  name Dot12
+  xpos -1436
+  ypos 2010
+ }
+ Expression {
+  expr0 ((x-1920)<0?1+((x-1920)/width)-int((x-1920)/width):((x-1920)/width)-int((x-1920)/width))
+  expr1 ((y-0)<0?1+((y-0)/height)-int((y-0)/height):((y-0)/height)-int((y-0)/height))
+  expr2 0
+  channel3 {none none none -rgba.alpha}
+  name offset_xp
+  xpos -1470
+  ypos 2150
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+set N34547c00 [stack 0]
+ Dot {
+  name Dot15
+  xpos -1436
+  ypos 2250
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  format "3840 2160 0 0 3840 2160 1 UHD_4K"
+  name Constant3
+  xpos -1800
+  ypos 2031
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Roto {
+  output alpha
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t x44700000 x44070000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup RectangleCusped1 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {0 0}
+        {x44da8000 x451e7926}
+        {0 0}
+        {0 0}
+        {x45030000 x451e7926}
+        {0 0}
+        {0 0}
+        {x45030000 xc3c3c938}
+        {0 0}
+        {0 0}
+        {x44da8000 xc3c3c938}
+        {0 0}}}
+      {cc
+       {f 8192}
+       {px 1
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}
+        {0 0}}}}
+     {tx 1 x44f04000 x44860000}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 tt x41100000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 9 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {960 540}
+  colorOverlay {0 0 0 0}
+  lifetime_type "all frames"
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  name Roto8
+  xpos -1910
+  ypos 2048
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Dilate {
+  size {{parent.seamErode}}
+  name Dilate1
+  xpos -1910
+  ypos 2146
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Blur {
+  size {{parent.seamBlur}}
+  name Blur5
+  xpos -1800
+  ypos 2146
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+push $N33528800
+ Transform {
+  translate {{parent.seamOffset} 0}
+  center {1920 1080}
+  name Transform1
+  xpos -1690
+  ypos 2054
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+push $N34547c00
+push $N33528400
+ STMap {
+  inputs 2
+  uv rgb
+  blur_scale 0
+  filter Lanczos4
+  name STMap1
+  xpos -1580
+  ypos 2144
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Keymix {
+  inputs 3
+  name Keymix2
+  xpos -1690
+  ypos 2144
+  disable {{"parent.undist == 1 ? 1 : parent.seam == 0 ? 1 : 0"}}
+ }
+ STMap {
+  inputs 2
+  uv rgb
+  blur_scale 0
+  filter Lanczos4
+  name STMap2
+  xpos -1690
+  ypos 2240
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Transform {
+  translate {0 502}
+  center {1920 1080}
+  filter Lanczos4
+  name Transform5
+  xpos -1690
+  ypos 2534
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Transform {
+  scale {1 0.154}
+  center {0 2160}
+  filter Lanczos4
+  name Transform3
+  xpos -1690
+  ypos 2582
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Reformat {
+  format "7680 4320 0 0 7680 4320 1 8k Res"
+  resize height
+  filter Lanczos4
+  black_outside true
+  name Reformat1
+  xpos -1690
+  ypos 2864
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Crop {
+  box {0 0 7680 4320}
+  crop false
+  name Crop1
+  xpos -1690
+  ypos 2918
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ SphericalTransform {
+  input "Lat Long map"
+  output Cube
+  out_rx 90
+  format "4096 4096 0 0 4096 4096 1 4K Square"
+  filter Lanczos4
+  fix true
+  name SphericalTransform1
+  xpos -1690
+  ypos 2960
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Reformat {
+  resize none
+  filter Lanczos4
+  name Reformat2
+  xpos -1690
+  ypos 3014
+  disable {{"parent.undist == 1 ? 1 : 0"}}
+ }
+ Switch {
+  inputs 3
+  which {{"parent.workspace == 1 ? 1 : parent.undist == 1 ? 2 : 0"}}
+  name Switch1
+  xpos -1690
+  ypos 3110
+ }
+ Output {
+  name Output1
+  xpos -1690
+  ypos 3494
+ }
+ NoOp {
+  inputs 0
+  name border_control
+  tile_color 0xff
+  xpos -700
+  ypos -154
+  hide_input true
+  addUserKnob {20 user l Position}
+  addUserKnob {12 top}
+  top {{parent.top.x} {parent.top.y}}
+  addUserKnob {12 bottom}
+  bottom {{parent.bottom.x} {parent.bottom.y}}
+ }
+push $N334fa800
+ Viewer {
+  frame_range 1-100
+  name Viewer1
+  xpos -2072
+  ypos 1526
+ }
+end_group

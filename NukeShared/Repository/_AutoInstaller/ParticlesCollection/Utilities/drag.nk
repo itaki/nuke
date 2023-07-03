@@ -1,0 +1,125 @@
+#! /Applications/Nuke10.5v2/Nuke10.5v2.app/Contents/MacOS/libnuke-10.5.2.dylib -nx
+version 10.5 v2
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="23" w="1440" h="835" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="777" stretch="1"/>
+            <splitter orientation="2">
+                <split size="475"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="334"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.scripteditor.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "/Users/gere/Desktop/PARTICLES/PRESETS from NUKEPEDIA/drag.nk"
+ frame 40
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x9b9b9bff
+ label "This example applies drag to particles to \ngradually alter their velocity over time."
+ note_font_size 18
+ xpos 18
+ ypos -1271
+}
+Camera2 {
+ inputs 0
+ translate {30 23 30}
+ rotate {-30 45 0}
+ name Camera1
+ xpos -4
+ ypos -889
+}
+Constant {
+ inputs 0
+ color {0 0.3212000132 0.4399999976 1}
+ format "40 40 0 0 40 40 1 tiny"
+ name Constant1
+ xpos 106
+ ypos -1207
+}
+Sphere {
+ inputs 0
+ translate {{curve x1 -7 x50 7} {curve x1 0 x50 0} {curve x1 5.5 x50 -5.5}}
+ name Sphere1
+ gl_color 0x828282ff
+ xpos 233
+ ypos -1093
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ rate 5
+ lifetime 50
+ velocity 0.1
+ size 0.295
+ name ParticleEmitter1
+ xpos 106
+ ypos -1093
+}
+ParticleDrag {
+ drag {{curve x1 0 x50 1}}
+ name ParticleDrag1
+ xpos 106
+ ypos -1036
+}
+Scene {
+ name Scene1
+ xpos 116
+ ypos -969
+}
+Constant {
+ inputs 0
+ channels rgb
+ format "640 480 0 0 640 480 1 PC_Video"
+ name Constant2
+ xpos 231
+ ypos -892
+}
+ScanlineRender {
+ inputs 3
+ motion_vectors_type velocity
+ name ScanlineRender1
+ xpos 106
+ ypos -868
+}
+Viewer {
+ frame 40
+ frame_range 1-100
+ input_process false
+ name Viewer1
+ xpos 106
+ ypos -814
+}

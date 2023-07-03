@@ -1,0 +1,415 @@
+#! /usr/local/Nuke10.5v4/libnuke-10.5.4.so -nx
+version 10.5 v4
+Group {
+ name s_Despill
+ inputs 3
+ addUserKnob {20 s_Despill}
+ addUserKnob {4 ScreenColour M {Green Blue}}
+ addUserKnob {7 HueSize}
+ HueSize 1
+ addUserKnob {20 FixGreenSpillInBlueScreen n 1}
+ FixGreenSpillInBlueScreen 0
+ addUserKnob {6 removeGreen +STARTLINE}
+ removeGreen true
+ addUserKnob {7 greenValue}
+ greenValue 1
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {6 visualize_spillRemoval +STARTLINE}
+ addUserKnob {41 multiply T screen_balancing.multiply}
+ addUserKnob {41 white l Luminance_back T LumaValue.white}
+ addUserKnob {26 ""}
+ addUserKnob {7 redContribution R 1 5}
+ redContribution 1
+ addUserKnob {6 enableMask +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {41 which l Mix T Dissolve1.which}
+ addUserKnob {26 ""}
+ addUserKnob {26 author -STARTLINE T "\nsatheesh-r\n\nFor bugs & reports :)\nsatheesrev@gmail.com"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x345ba8ff
+  label "Blue despill setup"
+  note_font_size 42
+  xpos -1384
+  ypos -69
+  bdwidth 531
+  bdheight 690
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x5000ff
+  label "Green despill setup"
+  note_font_size 42
+  xpos -397
+  ypos -55
+  bdwidth 531
+  bdheight 690
+ }
+ Input {
+  inputs 0
+  name Mask
+  xpos -916
+  ypos 1580
+  number 2
+ }
+ Invert {
+  name Invert2
+  xpos -916
+  ypos 1623
+ }
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue none}
+  expr0 0
+  channel1 {-rgba.red -rgba.green -rgba.blue none}
+  expr1 0
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  expr2 0
+  channel3 {rgba.alpha none none rgba.alpha}
+  expr3 a==0?0:a
+  name AlphaFix2
+  label "To avid Gizmo being in state of\nerror without something plugged in input."
+  xpos -916
+  ypos 1682
+ }
+ Invert {
+  name Invert1
+  xpos -750
+  ypos 1688
+ }
+ Input {
+  inputs 0
+  name plate
+  xpos -531
+  ypos -203
+ }
+ Dot {
+  name Dot9
+  xpos -497
+  ypos -116
+ }
+set N633fe20 [stack 0]
+ Dot {
+  name Dot10
+  xpos 156
+  ypos -116
+ }
+ Dot {
+  name Dot12
+  xpos 156
+  ypos 739
+ }
+set N63494c0 [stack 0]
+ Input {
+  inputs 0
+  name Red_Limit_Mask
+  xpos -675
+  ypos -202
+  number 1
+ }
+ Dot {
+  name Dot6
+  xpos -641
+  ypos -129
+ }
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue none}
+  expr0 0
+  channel1 {-rgba.red -rgba.green -rgba.blue none}
+  expr1 0
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  expr2 0
+  channel3 {rgba.alpha none none rgba.alpha}
+  expr3 a==0?0:a
+  name AlphaFix1
+  label "To avid Gizmo being in state of\nerror without something plugged in input."
+  xpos -675
+  ypos -74
+ }
+ Dot {
+  name Dot5
+  xpos -641
+  ypos 351
+ }
+set N6365540 [stack 0]
+push $N633fe20
+ Dot {
+  name Dot2
+  xpos -497
+  ypos 7
+ }
+set N6369fa0 [stack 0]
+ Dot {
+  name Dot4
+  xpos -1060
+  ypos 7
+ }
+set N636ea00 [stack 0]
+ Expression {
+  expr2 "b > ((r/redContribution)+g)/2/HueSize ? ((r/redContribution)+g)/2/HueSize :b"
+  name Blue_red_contribution
+  tile_color 0x1f00ffff
+  xpos -1094
+  ypos 121
+ }
+set N63734c0 [stack 0]
+ Expression {
+  expr1 "g > (r+b)/2/greenValue ? (r+b)/2/greenValue : g"
+  name Green_suppress1
+  tile_color 0x5600ff
+  xpos -981
+  ypos 166
+  disable {{parent.HueSize>0.00001?0:1 x361 1}}
+ }
+push $N63734c0
+ Switch {
+  inputs 2
+  which {{parent.removeGreen}}
+  name Switch5
+  xpos -1094
+  ypos 194
+ }
+ Dot {
+  name Dot19
+  xpos -1060
+  ypos 278
+ }
+set N6397880 [stack 0]
+push $N636ea00
+ Dot {
+  name Dot3
+  xpos -1240
+  ypos 7
+ }
+ Expression {
+  expr2 "b > (r+g)/2/HueSize ? (r+g)/2/HueSize : b"
+  name Blue_suppress
+  tile_color 0x1f00ffff
+  xpos -1274
+  ypos 123
+ }
+set N63a0e30 [stack 0]
+ Expression {
+  expr1 "g > (r+b)/2/greenValue ? (r+b)/2/greenValue : g"
+  name Green_suppress
+  tile_color 0x5600ff
+  xpos -1209
+  ypos 183
+  disable {{parent.HueSize>0.00001?0:1 x361 1}}
+ }
+push $N63a0e30
+ Switch {
+  inputs 2
+  which {{removeGreen}}
+  name Switch4
+  xpos -1274
+  ypos 236
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -1208
+  ypos 341
+ }
+push $N6397880
+ Switch {
+  inputs 2
+  which {{parent.enableMask}}
+  name Switch1
+  xpos -1094
+  ypos 434
+ }
+push $N6365540
+push $N6369fa0
+ Dot {
+  name Dot7
+  xpos -186
+  ypos 7
+ }
+set N63d6fc0 [stack 0]
+ Expression {
+  expr1 "g > ((r/redContribution)+b)/2/HueSize ? ((r/redContribution)+b)/2/HueSize : g"
+  name Green_spill_redPlus
+  tile_color 0x1fff00ff
+  xpos -220
+  ypos 121
+ }
+set N63dba40 [stack 0]
+push $N63d6fc0
+ Dot {
+  name Dot1
+  xpos -44
+  ypos 7
+ }
+ Expression {
+  expr1 "g > (r+b)/2/HueSize ? (r+b)/2/HueSize : g"
+  name Green_spill
+  tile_color 0x1fff00ff
+  xpos -78
+  ypos 122
+ }
+ Keymix {
+  inputs 3
+  name Keymix2
+  xpos -116
+  ypos 341
+ }
+push $N63dba40
+ Switch {
+  inputs 2
+  which {{parent.enableMask}}
+  name Switch2
+  xpos -220
+  ypos 445
+ }
+ Switch {
+  inputs 2
+  which {{ScreenColour}}
+  name Switch3
+  xpos -551
+  ypos 575
+ }
+ Dot {
+  name Dot11
+  xpos -517
+  ypos 739
+ }
+set N6415980 [stack 0]
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  label "Bbox: \[value bbox]"
+  xpos -321
+  ypos 729
+ }
+ Dot {
+  name Dot16
+  xpos -287
+  ypos 803
+ }
+set N642a8c0 [stack 0]
+ Dot {
+  name Dot14
+  xpos -79
+  ypos 803
+ }
+ Dot {
+  name Dot15
+  xpos -79
+  ypos 1411
+ }
+push $N63494c0
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue none}
+  expr0 0
+  channel1 {-rgba.red -rgba.green -rgba.blue none}
+  expr1 0
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  expr2 0
+  channel3 {rgba.alpha none none rgba.alpha}
+  expr3 a==0?0:a
+  name AlphaFix
+  label "To avid Gizmo being in state of\nerror without something plugged in input."
+  xpos 122
+  ypos 1153
+ }
+ Dot {
+  name Dot8
+  xpos 156
+  ypos 1266
+ }
+set N6446d50 [stack 0]
+ Dot {
+  name Dot17
+  xpos 156
+  ypos 1340
+ }
+set N644b6f0 [stack 0]
+push $N642a8c0
+ Saturation {
+  saturation 0
+  name Saturation1
+  xpos -321
+  ypos 856
+ }
+ Dot {
+  name Dot13
+  xpos -287
+  ypos 977
+ }
+set N645c940 [stack 0]
+ Grade {
+  white 0.5
+  black_clamp false
+  name LumaValue
+  xpos -321
+  ypos 1054
+ }
+push $N645c940
+ Grade {
+  multiply {0 0 0 0}
+  black_clamp false
+  name screen_balancing
+  xpos -403
+  ypos 973
+ }
+push $N6415980
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge2
+  xpos -551
+  ypos 973
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Luminance_back
+  xpos -551
+  ypos 1054
+ }
+push $N6446d50
+ Dissolve {
+  inputs 2
+  which 1
+  name Dissolve1
+  xpos -551
+  ypos 1256
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -551
+  ypos 1330
+ }
+ Dissolve {
+  inputs 2
+  which {{parent.visualize_spillRemoval}}
+  name Dissolve2
+  xpos -551
+  ypos 1401
+ }
+push $N644b6f0
+ Dot {
+  name Dot18
+  xpos 156
+  ypos 1698
+ }
+ Keymix {
+  inputs 3
+  name Keymix3
+  xpos -551
+  ypos 1688
+ }
+ Output {
+  name Output1
+  xpos -551
+  ypos 1787
+ }
+end_group

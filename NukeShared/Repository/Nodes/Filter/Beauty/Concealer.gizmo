@@ -1,0 +1,971 @@
+Group {
+ name Concealer
+ help "Concealer works by separating the high and low frequencies of an image. It smooths out the low frequency detail, masked by the mask input. "
+ tile_color 0x4e9aa7ff
+ selected true
+ xpos -571
+ ypos 89
+ addUserKnob {20 User l Concealer}
+ addUserKnob {7 highFreq l "High Frequency" t "Adjust which high frequency portion of your image to preserve. " R 0 100}
+ highFreq 8
+ addUserKnob {7 lowFreq l "Low Frequency" t "Adjust which low frequency portion of your image to remove. " R 0 100}
+ lowFreq 25
+ addUserKnob {6 twoPass l "Two Pass" t "Apply the effect twice. " +STARTLINE}
+ addUserKnob {6 cropToFormat l "Crop To Format" t "Crop the bounding box to the format. " -STARTLINE}
+ addUserKnob {7 blurMask l "Blur Mask" t "Blur the input mask. " R 0 100}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {20 advancedOptions l "Advanced Options" n 1}
+ advancedOptions 0
+ addUserKnob {6 enableRemoveChromaArtefacts l "Remove Chroma Artefacts" t "Remove chroma artefacts. " +STARTLINE}
+ addUserKnob {7 removeChromaArtefacts l Size t "Adjust the Size to blend the colour component of the image, removing chroma artefacts. " R 0 100}
+ removeChromaArtefacts 10
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {6 enableFrequencyDeletion l "Enable Frequency Deletion" t "Delete certain frequencies from the image. " +STARTLINE}
+ addUserKnob {41 range l Range t "Adjust the Range to select the frequencies to delete. \n\nLowering the A and B sliders lowers the threshold for the frequencies to be removed. \n\nLowering the C and D sliders as well lets you target only a certain frequency range. " T Keyer1.range}
+ addUserKnob {26 ""}
+ addUserKnob {6 unpremultOption l "Generate New Low Frequency Pixels" t "Generate new pixels in the low frequency portion of the image. " +STARTLINE}
+ addUserKnob {7 unpremultOptionSize l Size t "Adjust the Size to fill the low frequency portion of the image with new pixels using a blur/unpremult technique. " R 0 100}
+ unpremultOptionSize 25
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 info l "" +STARTLINE}
+ addUserKnob {26 creator l "" +STARTLINE T "Kenn Hedin Kalvik"}
+ addUserKnob {26 versioning l "" +STARTLINE T "Concealer v1.0 | 2022"}
+ addUserKnob {26 website l "" +STARTLINE T "<a href='https://www.keheka.com/tag/nuke/' target='_blank' rel='noopener noreferrer'>www.keheka.com</a>"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x898989ff
+  label "Two Pass"
+  note_font_size 100
+  xpos -1426
+  ypos 1918
+  bdwidth 1765
+  bdheight 4910
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode10
+  tile_color 0x898989ff
+  label "YCbCr\nColour\nArtefact\nRemoval"
+  note_font_size 100
+  xpos -403
+  ypos -2514
+  bdwidth 535
+  bdheight 519
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode16
+  tile_color 0x898989ff
+  label "Restore\nOriginal \nAlpha If It \nExists"
+  note_font_size 100
+  xpos -334
+  ypos 7073
+  bdwidth 530
+  bdheight 513
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode17
+  tile_color 0x898989ff
+  label "Crop To\nFormat"
+  note_font_size 100
+  xpos -337
+  ypos 7791
+  bdwidth 529
+  bdheight 367
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x898989ff
+  label Output
+  note_font_size 100
+  xpos -336
+  ypos 8403
+  bdwidth 529
+  bdheight 367
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x898989ff
+  label Input
+  note_font_size 100
+  xpos -334
+  ypos -4141
+  bdwidth 529
+  bdheight 367
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0x898989ff
+  label Mask
+  note_font_size 100
+  xpos -2033
+  ypos -3182
+  bdwidth 502
+  bdheight 710
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x898989ff
+  label "High \nFrequency"
+  note_font_size 100
+  xpos -363
+  ypos -825
+  bdwidth 514
+  bdheight 708
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x898989ff
+  label "Low\nFrequency"
+  note_font_size 100
+  xpos -712
+  ypos 897
+  bdwidth 819
+  bdheight 786
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode7
+  tile_color 0x898989ff
+  label "Unpremult \nCleanup"
+  note_font_size 100
+  xpos -1399
+  ypos -110
+  bdwidth 615
+  bdheight 818
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x898989ff
+  label "Alpha Handling"
+  note_font_size 100
+  xpos -3032
+  ypos -3191
+  bdwidth 759
+  bdheight 723
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x898989ff
+  label "FFT\nArtefact\nRemoval"
+  note_font_size 100
+  xpos -399
+  ypos -1869
+  bdwidth 537
+  bdheight 864
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode11
+  tile_color 0x707070ff
+  label "Low\nFrequency"
+  note_font_size 100
+  xpos -729
+  ypos 5848
+  bdwidth 819
+  bdheight 786
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode12
+  tile_color 0x707070ff
+  label "Unpremult \nCleanup"
+  note_font_size 100
+  xpos -1302
+  ypos 4671
+  bdwidth 697
+  bdheight 1004
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode13
+  tile_color 0x707070ff
+  label "FFT\nArtefact\nRemoval"
+  note_font_size 100
+  xpos -405
+  ypos 2775
+  bdwidth 537
+  bdheight 864
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode14
+  tile_color 0x707070ff
+  label "YCbCr\nColour\nArtefact\nRemoval"
+  note_font_size 100
+  xpos -407
+  ypos 2108
+  bdwidth 535
+  bdheight 519
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode15
+  tile_color 0x707070ff
+  label "High \nFrequency"
+  note_font_size 100
+  xpos -378
+  ypos 3779
+  bdwidth 514
+  bdheight 708
+  z_order 1
+ }
+ Input {
+  inputs 0
+  name img
+  xpos -108
+  ypos -3930
+ }
+ Dot {
+  name Dot30
+  xpos -74
+  ypos -3520
+ }
+set N72b91400 [stack 0]
+ Dot {
+  name Dot32
+  xpos -2487
+  ypos -3520
+ }
+set N72b91000 [stack 0]
+ Dot {
+  name Dot33
+  xpos -2853
+  ypos -3520
+ }
+ NoOp {
+  name CheckAlpha
+  xpos -2887
+  ypos -2850
+  addUserKnob {20 User l "Check Alpha"}
+  addUserKnob {6 checkIfAlpha l "Check If Alpha Channel" +STARTLINE}
+  checkIfAlpha {{"\[string first \".alpha\" \[channels \[input this 0]]]>-1"}}
+ }
+push $N72b91000
+ AddChannels {
+  channels alpha
+  name AddChannels2
+  xpos -2521
+  ypos -2859
+ }
+ Dot {
+  name Dot31
+  xpos -2487
+  ypos 7310
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -1822
+  ypos -2995
+  number 1
+ }
+ AddChannels {
+  channels alpha
+  name AddChannels1
+  xpos -1822
+  ypos -2885
+ }
+ Blur {
+  channels alpha
+  size {{parent.blurMask}}
+  name Blur7
+  xpos -1822
+  ypos -2751
+ }
+ Clamp {
+  channels alpha
+  name Clamp1
+  xpos -1822
+  ypos -2629
+ }
+ Dot {
+  name Dot52
+  xpos -1788
+  ypos -2257
+ }
+set N72bb0c00 [stack 0]
+ Dot {
+  name Dot51
+  xpos -1788
+  ypos -1222
+ }
+set N72bb0800 [stack 0]
+ Dot {
+  name Dot17
+  xpos -1788
+  ypos 60
+ }
+set N72bb0400 [stack 0]
+ Dot {
+  name Dot18
+  xpos -1788
+  ypos 470
+ }
+set N72bb0000 [stack 0]
+ Dot {
+  name Dot7
+  xpos -1788
+  ypos 1210
+ }
+set N72bd5c00 [stack 0]
+ Dot {
+  name Dot53
+  xpos -1788
+  ypos 2359
+ }
+set N72bd5800 [stack 0]
+ Dot {
+  name Dot54
+  xpos -1788
+  ypos 3423
+ }
+set N72bd5400 [stack 0]
+ Dot {
+  name Dot26
+  xpos -1788
+  ypos 4915
+ }
+set N72bd5000 [stack 0]
+ Dot {
+  name Dot27
+  xpos -1788
+  ypos 5325
+ }
+set N72bd4c00 [stack 0]
+ Dot {
+  name Dot14
+  xpos -709
+  ypos 5325
+ }
+ Dot {
+  name Dot38
+  xpos -709
+  ypos 5424
+ }
+push $N72bd5000
+ Dot {
+  name Dot39
+  xpos -1109
+  ypos 4915
+ }
+ Invert {
+  channels alpha
+  name Invert3
+  xpos -1143
+  ypos 4985
+  disable {{clamp(!parent.unpremultOption+!parent.twoPass)}}
+ }
+ Dot {
+  name Dot40
+  xpos -1109
+  ypos 5070
+ }
+push $N72bd5400
+ Dot {
+  name Dot55
+  xpos 42
+  ypos 3423
+ }
+ Dot {
+  name Dot56
+  xpos 42
+  ypos 3507
+ }
+push $N72bd5800
+push $N72bb0000
+ Dot {
+  name Dot20
+  xpos -872
+  ypos 470
+ }
+ Dot {
+  name Dot19
+  xpos -872
+  ypos 569
+ }
+push $N72bb0400
+ Dot {
+  name Dot24
+  xpos -1272
+  ypos 60
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos -1306
+  ypos 130
+  disable {{!parent.unpremultOption}}
+ }
+ Dot {
+  name Dot23
+  xpos -1272
+  ypos 215
+ }
+push $N72bb0800
+ Dot {
+  name Dot49
+  xpos 42
+  ypos -1222
+ }
+ Dot {
+  name Dot50
+  xpos 42
+  ypos -1138
+ }
+push $N72bb0c00
+push $N72b91400
+ Colorspace {
+  colorspace_out YCbCr
+  name Colorspace1
+  xpos -108
+  ypos -2332
+  disable {{!parent.enableRemoveChromaArtefacts}}
+ }
+ Blur {
+  inputs 1+1
+  channels {-rgba.red rgba.green rgba.blue none}
+  size {{parent.removeChromaArtefacts}}
+  name Blur8
+  xpos -108
+  ypos -2261
+  disable {{!parent.enableRemoveChromaArtefacts}}
+ }
+ Colorspace {
+  colorspace_in YCbCr
+  name Colorspace2
+  xpos -108
+  ypos -2179
+  disable {{!parent.enableRemoveChromaArtefacts}}
+ }
+ Dot {
+  name Dot46
+  xpos -74
+  ypos -1756
+ }
+set N72c91800 [stack 0]
+ Dot {
+  name Dot47
+  xpos -184
+  ypos -1756
+ }
+ FFT {
+  channels rgba
+  name FFT1
+  xpos -218
+  ypos -1665
+  disable {{!enableFrequencyDeletion}}
+ }
+ Dot {
+  name Dot44
+  xpos -184
+  ypos -1593
+ }
+set N72c90c00 [stack 0]
+ Dot {
+  name Dot45
+  xpos -294
+  ypos -1593
+ }
+ Remove {
+  name Remove1
+  xpos -328
+  ypos -1548
+  disable {{!enableFrequencyDeletion}}
+ }
+ Ramp {
+  p0 {{format.x} 0}
+  p1 {{format.r} 0}
+  name Ramp1
+  xpos -328
+  ypos -1489
+  disable {{!enableFrequencyDeletion}}
+ }
+ Keyer {
+  operation "luminance key"
+  range {0 0.5 1 1}
+  name Keyer1
+  xpos -328
+  ypos -1439
+  disable {{!enableFrequencyDeletion}}
+ }
+ Dot {
+  name Dot34
+  selected true
+  xpos -294
+  ypos -1363
+ }
+push $N72c90c00
+ Merge2 {
+  inputs 2
+  operation stencil
+  bbox B
+  name Merge5
+  xpos -218
+  ypos -1367
+  disable {{!enableFrequencyDeletion}}
+ }
+ InvFFT {
+  channels rgba
+  name InvFFT1
+  xpos -218
+  ypos -1285
+  disable {{!enableFrequencyDeletion}}
+ }
+ Dot {
+  name Dot48
+  xpos -184
+  ypos -1138
+ }
+push $N72c91800
+ Keymix {
+  inputs 3
+  channels rgba
+  name Keymix2
+  xpos -108
+  ypos -1142
+  disable {{!enableFrequencyDeletion}}
+ }
+ Dot {
+  name Dot1
+  xpos -74
+  ypos -538
+ }
+set N72bf0000 [stack 0]
+ Blur {
+  channels rgba
+  size {{parent.highFreq}}
+  name Blur1
+  xpos -108
+  ypos -459
+ }
+ Dot {
+  name Dot5
+  xpos -74
+  ypos -376
+ }
+set N72c17800 [stack 0]
+ Dot {
+  name Dot28
+  xpos -563
+  ypos -376
+ }
+ Dot {
+  name Dot6
+  xpos -563
+  ypos -228
+ }
+set N72c17000 [stack 0]
+ Dot {
+  name Dot25
+  xpos -988
+  ypos -228
+ }
+ Dot {
+  name Dot16
+  xpos -988
+  ypos 14
+ }
+set N72c16800 [stack 0]
+ Dot {
+  name Dot21
+  xpos -1125
+  ypos 14
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -1159
+  ypos 205
+  disable {{!parent.unpremultOption}}
+ }
+ Premult {
+  name Premult1
+  xpos -1159
+  ypos 276
+  disable {{!parent.unpremultOption}}
+ }
+ Blur {
+  channels rgba
+  size {{parent.unpremultOptionSize}}
+  name Blur5
+  xpos -1159
+  ypos 327
+  disable {{!parent.unpremultOption}}
+ }
+ Unpremult {
+  name Unpremult1
+  xpos -1159
+  ypos 383
+  disable {{!parent.unpremultOption}}
+ }
+ Dot {
+  name Dot22
+  xpos -1125
+  ypos 569
+ }
+push $N72c16800
+ Keymix {
+  inputs 3
+  channels rgba
+  name Keymix1
+  xpos -1022
+  ypos 565
+  disable {{!parent.unpremultOption}}
+ }
+ Dot {
+  name Dot15
+  xpos -988
+  ypos 1357
+ }
+push $N72bd5c00
+push $N72c17000
+ Blur {
+  inputs 1+1
+  channels rgba
+  size {{parent.lowFreq}}
+  name Blur2
+  xpos -597
+  ypos 1206
+  disable {{parent.unpremultOption}}
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch1
+  xpos -597
+  ypos 1353
+  disable {{!parent.unpremultOption}}
+ }
+ Dot {
+  name Dot4
+  xpos -563
+  ypos 1488
+ }
+push $N72bf0000
+ Dot {
+  name Dot2
+  xpos -249
+  ypos -538
+ }
+ Dot {
+  name Dot3
+  xpos -249
+  ypos -261
+ }
+push $N72c17800
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge1
+  xpos -108
+  ypos -265
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge2
+  xpos -108
+  ypos 1484
+ }
+ Colorspace {
+  colorspace_out YCbCr
+  name Colorspace3
+  xpos -108
+  ypos 2284
+  disable {{clamp(!parent.enableRemoveChromaArtefacts+!parent.twoPass)}}
+ }
+ Blur {
+  inputs 1+1
+  channels {-rgba.red rgba.green rgba.blue none}
+  size {{parent.removeChromaArtefacts}}
+  name Blur9
+  xpos -108
+  ypos 2355
+  disable {{clamp(!parent.enableRemoveChromaArtefacts+!parent.twoPass)}}
+ }
+ Colorspace {
+  colorspace_in YCbCr
+  name Colorspace4
+  xpos -108
+  ypos 2437
+  disable {{clamp(!parent.enableRemoveChromaArtefacts+!parent.twoPass)}}
+ }
+ Dot {
+  name Dot57
+  xpos -74
+  ypos 2889
+ }
+set N72d6d400 [stack 0]
+ Dot {
+  name Dot58
+  xpos -184
+  ypos 2889
+ }
+ FFT {
+  channels rgba
+  name FFT2
+  xpos -218
+  ypos 2980
+  disable {{clamp(!enableFrequencyDeletion+!parent.twoPass)}}
+ }
+ Dot {
+  name Dot59
+  xpos -184
+  ypos 3052
+ }
+set N72d6c800 [stack 0]
+ Dot {
+  name Dot60
+  xpos -294
+  ypos 3052
+ }
+ Remove {
+  name Remove2
+  xpos -328
+  ypos 3097
+  disable {{clamp(!enableFrequencyDeletion+!parent.twoPass)}}
+ }
+ Ramp {
+  p0 {{format.x} 0}
+  p1 {{format.r} 0}
+  name Ramp2
+  xpos -328
+  ypos 3156
+  disable {{clamp(!enableFrequencyDeletion+!parent.twoPass)}}
+ }
+ Keyer {
+  operation "luminance key"
+  range {0.3 0.55 1 1}
+  name Keyer2
+  xpos -328
+  ypos 3206
+  disable {{clamp(!enableFrequencyDeletion+!parent.twoPass)}}
+ }
+ Dot {
+  name Dot61
+  xpos -294
+  ypos 3282
+ }
+push $N72d6c800
+ Merge2 {
+  inputs 2
+  operation stencil
+  bbox B
+  name Merge6
+  xpos -218
+  ypos 3278
+  disable {{clamp(!enableFrequencyDeletion+!parent.twoPass)}}
+ }
+ InvFFT {
+  channels rgba
+  name InvFFT2
+  xpos -218
+  ypos 3360
+  disable {{clamp(!enableFrequencyDeletion+!parent.twoPass)}}
+ }
+ Dot {
+  name Dot62
+  xpos -184
+  ypos 3507
+ }
+push $N72d6d400
+ Keymix {
+  inputs 3
+  channels rgba
+  name Keymix4
+  xpos -108
+  ypos 3503
+  disable {{clamp(!enableFrequencyDeletion+!parent.twoPass)}}
+ }
+ Dot {
+  name Dot10
+  xpos -74
+  ypos 4050
+ }
+set N72cbc000 [stack 0]
+ Blur {
+  channels rgba
+  size {{parent.highFreq}}
+  name Blur3
+  xpos -108
+  ypos 4137
+  disable {{!parent.twoPass}}
+ }
+ Dot {
+  name Dot11
+  xpos -74
+  ypos 4241
+ }
+set N72ced800 [stack 0]
+ Dot {
+  name Dot12
+  xpos -543
+  ypos 4241
+ }
+ Dot {
+  name Dot29
+  xpos -543
+  ypos 4576
+ }
+set N72ced000 [stack 0]
+ Dot {
+  name Dot37
+  xpos -825
+  ypos 4576
+ }
+ Dot {
+  name Dot41
+  xpos -825
+  ypos 4869
+ }
+set N72cec800 [stack 0]
+ Dot {
+  name Dot42
+  xpos -962
+  ypos 4869
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  xpos -996
+  ypos 5060
+  disable {{clamp(!parent.unpremultOption+!parent.twoPass)}}
+ }
+ Premult {
+  name Premult3
+  xpos -996
+  ypos 5131
+  disable {{clamp(!parent.unpremultOption+!parent.twoPass)}}
+ }
+ Blur {
+  channels rgba
+  size {{parent.unpremultOptionSize}}
+  name Blur6
+  xpos -996
+  ypos 5182
+  disable {{clamp(!parent.unpremultOption+!parent.twoPass)}}
+ }
+ Unpremult {
+  name Unpremult3
+  xpos -996
+  ypos 5240
+  disable {{clamp(!parent.unpremultOption+!parent.twoPass)}}
+ }
+ Dot {
+  name Dot43
+  xpos -962
+  ypos 5424
+ }
+push $N72cec800
+ Keymix {
+  inputs 3
+  channels rgba
+  name Keymix3
+  xpos -859
+  ypos 5420
+  disable {{clamp(!parent.unpremultOption+!parent.twoPass)}}
+ }
+ Dot {
+  name Dot35
+  xpos -825
+  ypos 6364
+ }
+push $N72bd4c00
+ Dot {
+  name Dot36
+  xpos -1788
+  ypos 6177
+ }
+push $N72ced000
+ Blur {
+  inputs 1+1
+  channels rgba
+  size {{parent.lowFreq}}
+  name Blur4
+  xpos -577
+  ypos 6173
+  disable {{clamp(!parent.twoPass+parent.unpremultOption)}}
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch2
+  xpos -577
+  ypos 6360
+  disable {{clamp(!parent.unpremultOption+!parent.twoPass)}}
+ }
+ Dot {
+  name Dot13
+  xpos -543
+  ypos 6519
+ }
+push $N72cbc000
+ Dot {
+  name Dot8
+  xpos -242
+  ypos 4050
+ }
+ Dot {
+  name Dot9
+  xpos -242
+  ypos 4379
+ }
+push $N72ced800
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge3
+  xpos -108
+  ypos 4375
+  disable {{!parent.twoPass}}
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge4
+  xpos -108
+  ypos 6515
+  disable {{!parent.twoPass}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos -108
+  ypos 7300
+  disable {{!parent.CheckAlpha.checkIfAlpha}}
+ }
+ Crop {
+  box {{format.x} {format.y} {format.r} {format.t}}
+  crop false
+  name Crop_To_Format
+  xpos -108
+  ypos 7999
+  disable {{!parent.cropToFormat}}
+ }
+ Output {
+  name Output1
+  xpos -108
+  ypos 8603
+ }
+end_group

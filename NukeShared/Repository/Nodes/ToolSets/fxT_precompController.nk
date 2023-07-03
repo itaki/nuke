@@ -1,0 +1,16 @@
+set cut_paste_input [stack 0]
+push $cut_paste_input
+NoOp {
+ name fxT_precompController
+ help "a global controller to keep track of all precomps.  works together with the fxT_precompSwitch.\n\nversion: 1.3\ndeveloper: Tor Andreassen - fxtor.net"
+ tile_color 0xf8ff00ff
+ note_font_size 25
+ selected true
+ xpos -1123
+ ypos 538
+ hide_input true
+ addUserKnob {20 fxT_precompControllerTAB l fxT_precompController}
+ addUserKnob {22 getPrecompnodes l "<font color='light grey'><b>refresh precomps</b></font>" t "click button to automatically update this node with controls for all the fxT_precompSwitches in the nuke script" T "try:\n    fxT_precompTool.controller()\nexcept NameError:\n    pass" +STARTLINE}
+ addUserKnob {22 zoom l "<font color='light grey'><b>zoom</b></font>" t "click to go to this node in the node graph" -STARTLINE T "def zoom():\n\tmee = nuke.thisNode()\n\tnuke.zoom( 0.9, \[ mee.xpos(), mee.ypos() ])\nzoom()"}
+ addUserKnob {26 fxT_precompSwitch_BaseDiv l "" +STARTLINE}
+}

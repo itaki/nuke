@@ -1,0 +1,1877 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/.nuke/Particles/VariousSetup/Leaves/LeavesExample.nk
+ last_frame 5
+ lock_range true
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Read {
+ inputs 0
+ file_type exr
+ file "\[python \{Particles_path\} ]/VariousSetup/Leaves/Leaves Pack With Alpha/Leaf_04.exr"
+ format "512 512 0 0 512 512 1 square_512"
+ origset true
+ auto_alpha true
+ name Read6
+ xpos 385
+ ypos -454
+}
+Read {
+ inputs 0
+ file_type exr
+ file "\[python \{Particles_path\} ]/VariousSetup/Leaves/Leaves Pack With Alpha/Leaf_03.exr"
+ format "512 512 0 0 512 512 1 square_512"
+ origset true
+ auto_alpha true
+ name Read5
+ xpos 275
+ ypos -455
+}
+Read {
+ inputs 0
+ file_type exr
+ file "\[python \{Particles_path\} ]/VariousSetup/Leaves/Leaves Pack With Alpha/Leaf_02.exr"
+ format "512 512 0 0 512 512 1 square_512"
+ origset true
+ auto_alpha true
+ name Read4
+ xpos 165
+ ypos -453
+}
+Read {
+ inputs 0
+ file_type exr
+ file "\[python \{Particles_path\} ]/VariousSetup/Leaves/Leaves Pack With Alpha/Leaf_01.exr"
+ format "512 512 0 0 512 512 1 square_512"
+ origset true
+ auto_alpha true
+ name Read3
+ xpos 55
+ ypos -453
+}
+Group {
+ inputs 4
+ name FallingLeaves
+ tile_color 0x161616ff
+ note_font Verdana
+ note_font_color 0xff9959ff
+ xpos 213
+ ypos -193
+ addUserKnob {20 FallingLeaves}
+ addUserKnob {26 fallingleavesname l "" t "Many thanks to AdrianP !" +STARTLINE T "<font size=\"5\"><div><span style=\"color:#df7f4a;\">F</span><span style=\"color:#e1864d;\">a</span><span style=\"color:#e38c50;\">l</span><span style=\"color:#e59352;\">l</span><span style=\"color:#e69a55;\">i</span><span style=\"color:#e8a058;\">n</span><span style=\"color:#eaa75b;\">g</span><span style=\"color:#e8a058;\">L</span><span style=\"color:#e69a55;\">e</span><span style=\"color:#e49353;\">a</span><span style=\"color:#e38c50;\">v</span><span style=\"color:#e1864d;\">e</span><span style=\"color:#df7f4a;\">s</span></div><font size=\"2\"></span><span style=\"color:#ba6d00;\"> </span><span style=\"color:#eaa75b;\">v2.0"}
+ addUserKnob {26 damianbinder l "" +STARTLINE T "<font size=\"2\"><span style=\"color:#eaa75b\">By Damian Binder"}
+ addUserKnob {26 guidebox l "<b><span style=\"color:#F39961\">Guide Box"}
+ addUserKnob {13 guideboxtranslate l Translate}
+ addUserKnob {13 guideboxrotate l Rotate}
+ addUserKnob {13 guideboxscale l Scale}
+ addUserKnob {7 boxuniformscale l "Uniform Scale" R 0 4}
+ boxuniformscale 1
+ addUserKnob {6 guideboxoff l "Guide Box Off" t "Make guide box invisible." +STARTLINE}
+ addUserKnob {26 particleoptions l "<b><span style=\"color:#F39961\">Particle Options"}
+ addUserKnob {68 leavetype l "Leaf Type" M {"Default Leaf" "Custom Leaf " "" ""}}
+ addUserKnob {7 start_at l "Start At" R -1000 1000}
+ start_at -200
+ addUserKnob {7 emissionrate l "Emission Rate" R 0 5}
+ emissionrate 0.5
+ addUserKnob {7 leavesize l "Leaf Size" R 0 2}
+ leavesize 0.4
+ addUserKnob {7 sizerandom l "Size Random" R 0 3}
+ sizerandom 0.3
+ addUserKnob {7 maxlifetime l "Max Lifetime" R 0 1000}
+ maxlifetime 100000
+ addUserKnob {26 behaviour l "<b><span style=\"color:#F39961\">Environment Options"}
+ addUserKnob {7 gravity l "Gravity Amount" R 0 0.05}
+ gravity 0.015
+ addUserKnob {13 turbulence l "Turbulence Amount"}
+ turbulence {0.05 0.03 0.04}
+ addUserKnob {7 rotationvelocity l "Rotation Velocity" R 0 20}
+ rotationvelocity 8
+ addUserKnob {20 wind l "Wind Options" n 1}
+ addUserKnob {13 windto l "Wind Direction"}
+ addUserKnob {7 windstrength l "Wind Strength" R 0 0.05}
+ windstrength 0.01
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 groundoptions l "<b><span style=\"color:#F39961\">Ground Options"}
+ addUserKnob {68 ground_type l "Ground Type" M {"Default Ground" "Custom Ground (Mesh) " ""}}
+ addUserKnob {6 ground l "Disable Ground" +STARTLINE}
+ addUserKnob {6 killleaves l "Kill Leaves" +STARTLINE}
+ addUserKnob {26 devide l " " T " "}
+ addUserKnob {22 refresh l Refresh T "import random\nnumber = random.randint(0,1000)\nnuke.toNode(\"ParticleEmitter2\")\[\"seed\"].setValue(number)\n\n" +STARTLINE}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0xaaaaaa00
+  note_font_size 22
+  xpos 513
+  ypos -631
+  bdwidth 222
+  bdheight 268
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0xc6ab71ff
+  note_font_size 42
+  xpos -750
+  ypos -914
+  bdwidth 486
+  bdheight 654
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x8e8e64ff
+  note_font_size 42
+  xpos -1249
+  ypos -738
+  bdwidth 435
+  bdheight 480
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x5a8848ff
+  xpos -101
+  ypos -819
+  bdwidth 152
+  bdheight 110
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x6b728eff
+  note_font_size 42
+  xpos -286
+  ypos -247
+  bdwidth 718
+  bdheight 953
+ }
+ TransformGeo {
+  inputs 0
+  scaling {{parent.guideboxscale+1} 0 {parent.guideboxscale+1}}
+  name TransformGeo2
+  tile_color 0x48ff4dff
+  xpos -64
+  ypos -764
+ }
+ Group {
+  inputs 0
+  name Wireframe
+  xpos 643
+  ypos -540
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 118
+   ypos 215
+  }
+  Card2 {
+   display wireframe
+   selectable false
+   render_mode solid
+   image_aspect false
+   rows 1
+   columns 1
+   translate {0 0.5 0}
+   rotate {90 0 0}
+   control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+   name Card7
+   selected true
+   xpos 118
+   ypos 253
+  }
+  Input {
+   inputs 0
+   name Input2
+   xpos -412
+   ypos 209
+   number 1
+  }
+  Card2 {
+   display wireframe
+   selectable false
+   render_mode solid
+   image_aspect false
+   rows 1
+   columns 1
+   translate {0 0 -0.5}
+   control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+   name Card3
+   xpos -412
+   ypos 249
+  }
+  Input {
+   inputs 0
+   name Input3
+   xpos -307
+   ypos 212
+   number 2
+  }
+  Card2 {
+   display wireframe
+   selectable false
+   render_mode solid
+   image_aspect false
+   rows 1
+   columns 1
+   translate {0 0 0.5}
+   control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+   name Card2
+   xpos -307
+   ypos 252
+  }
+  Input {
+   inputs 0
+   name Input4
+   xpos -201
+   ypos 211
+   number 3
+  }
+  Card2 {
+   display wireframe
+   selectable false
+   render_mode solid
+   image_aspect false
+   rows 1
+   columns 1
+   translate {0.5 0 0}
+   rotate {0 90 0}
+   control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+   name Card4
+   xpos -201
+   ypos 251
+  }
+  Input {
+   inputs 0
+   name Input5
+   xpos -95
+   ypos 213
+   number 4
+  }
+  Card2 {
+   display wireframe
+   selectable false
+   render_mode solid
+   image_aspect false
+   rows 1
+   columns 1
+   translate {-0.5 0 0}
+   rotate {0 90 0}
+   control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+   name Card5
+   xpos -95
+   ypos 253
+  }
+  Input {
+   inputs 0
+   name Input6
+   xpos 8
+   ypos 214
+   number 5
+  }
+  Card2 {
+   display wireframe
+   selectable false
+   render_mode solid
+   image_aspect false
+   rows 1
+   columns 1
+   translate {0 -0.5 0}
+   rotate {90 0 0}
+   control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+   name Card6
+   xpos 8
+   ypos 252
+  }
+  MergeGeo {
+   inputs 6
+   selectable false
+   render_mode off
+   name MergeGeo1
+   xpos 118
+   ypos 277
+  }
+  Output {
+   name Output1
+   xpos 118
+   ypos 301
+  }
+ end_group
+ TransformGeo {
+  translate {0 10 0}
+  uniform_scale 20
+  name TransformGeo4
+  xpos 643
+  ypos -491
+ }
+ Dot {
+  name Dot1
+  xpos 677
+  ypos -451
+ }
+ TransformGeo {
+  translate {{parent.TransformGeo2.translate.x} {curve} {parent.TransformGeo2.translate.z}}
+  rotate {{curve} {parent.TransformGeo2.rotate.y} {curve}}
+  scaling {{parent.TransformGeo2.scaling} 1 {parent.TransformGeo2.scaling}}
+  name TransformGeo3
+  xpos 529
+  ypos -455
+ }
+ Switch {
+  which {{parent.guideboxoff}}
+  name Switch1
+  xpos 529
+  ypos -408
+ }
+ Dot {
+  name Dot2
+  xpos 563
+  ypos 977
+ }
+ Input {
+  inputs 0
+  name img1
+  xpos -1228
+  ypos -647
+ }
+ Reformat {
+  format "200 200 0 0 200 200 1 200x200"
+  name Reformat1
+  xpos -1228
+  ypos -580
+ }
+ Card2 {
+  receive_shadow false
+  rows 4
+  columns 4
+  translate {0 0.04300000146 1.879589595e-09}
+  rotate {90 0 0}
+  type bicubic
+  uv_position {0.207051456 0.4006408453}
+  control_points {3 3 3 6 
+
+1 {-0.4740000069 -0.4799999893 -0.07400000095} 0 {0.1665000021 -0.005000025034 0.02199999988} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0.002000000095 -0.5 0.008000001311} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.476000011 -0.4670000076 -0.05999999493} 0 {0 0 0} 0 {-0.1625000238 -0.01299998164 0.04199999571} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.4740000069 0.01999999955 -0.07400000095} 0 {0.1610000134 -0.001000000164 0.04900000058} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {-0.006000000052 0.01600000076 0.03999999911} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.4600000083 -0.01400000043 -0.07999999821} 0 {0 0 0} 0 {-0.150000006 -0.005999999121 0.04899999872} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.4699999988 0.4959999919 -0.09499999881} 0 {0.1680000126 0.008700013161 0.02099999785} 0 {0 0 0} 0 {0 0 0} 0 {-0.00799998641 -0.1625999808 0.02099999785} 0 {0 1 0} 
+1 {0.00800000038 0.4835000038 -0.05799999833} 0 {0.1569768488 -0.002877918305 -0.002093020827} 0 {-0.150000005 0.002750009298 0.001999996603} 0 {0 0 0} 0 {-0.007999999449 -0.1317999959 0.055999998} 0 {0.5 1 0} 
+1 {0.4560000002 0.4690000117 -0.1000000015} 0 {0 0 0} 0 {-0.1579999924 0.01499998569 0.05000000075} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  drawPosition {-0.2805423141 -0.08216268569 -0.01403256878}
+  name Card10
+  xpos -1228
+  ypos -475
+ }
+ Normals {
+  invert true
+  name Normals5
+  xpos -1229
+  ypos -374
+ }
+ Dot {
+  name Dot7
+  xpos -1193
+  ypos -16
+ }
+ Reformat {
+  inputs 0
+  format "200 200 0 0 200 200 1 200x200"
+  name Reformat2
+  xpos -472
+  ypos -866
+ }
+ Roto {
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 0}
+    {t x42c80000 x42c80000}
+    {a}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {px x42540000
+        {x3e999900 0}
+        {x42dc6666 x41140000}
+        {xbe999900 0}
+        {x40666680 xc0233338}
+        {x42d48254 x4175e413}
+        {xc0666680 x40233338}
+        {x3e4ccc00 xbf866660}
+        {x42c7a790 x41f19998}
+        {xbe4ccc00 x3f866660}
+        {xbf400000 xbfe66680}
+        {x42c5f905 x424fac38}
+        {x3f400000 x3fe66680}
+        {xc11b3338 x40833330}
+        {x42ed1bed x424a45d0}
+        {x411b3338 xc0833330}
+        {xbfc66680 xbf400000}
+        {x43096095 x422d1746}
+        {x3fc66680 x3f400000}
+        {xbfe66680 xbfb33340}
+        {x430aa666 x422f3333}
+        {x3fe66680 x3fb33340}
+        {xbeb33400 0}
+        {x43160000 x4238cccd}
+        {x3eb33400 0}
+        {xbecccc00 xbe800000}
+        {x43214000 x423ccccd}
+        {x3ecccc00 x3e800000}
+        {x40166680 xbf666680}
+        {x431ecccd x42440000}
+        {xc0166680 x3f666680}
+        {xbf933380 xbf599980}
+        {x431e3333 x42550000}
+        {x3f933380 x3f599980}
+        {xbf800000 xbfa00000}
+        {x4333199a x428f4ccd}
+        {1 x3fa00000}
+        {x40700000 xc09a2e80}
+        {x43247333 x429722e8}
+        {xc02cccc0 x40a904b0}
+        {xbe999800 xbfecccc0}
+        {x4326599a x42a88000}
+        {x3e999800 x3fecccc0}
+        {xbf0ccd00 xbf333380}
+        {x432dfdac x42bdd61c}
+        {x3f0ccd00 x3f333380}
+        {x40433340 xbee66600}
+        {x432b4000 x42c00000}
+        {xc0433340 x3ee66600}
+        {xbfa66680 xc0db3330}
+        {x43287333 x42d08000}
+        {x3fa66680 x40db3330}
+        {xc0799980 xc0800000}
+        {x4333199a x43024000}
+        {x40799980 x40800000}
+        {x3e4ccc00 x3dccd000}
+        {x432f8ccd x4301c000}
+        {xbe4ccc00 xbdccd000}
+        {x41300000 x3fb999c0}
+        {x431e0000 x42f74ccd}
+        {xc1300000 xbfb999c0}
+        {x40399980 xbf666680}
+        {x43090000 x42e74ccd}
+        {xc0399980 x3f666680}
+        {xbf333400 xc0066680}
+        {x4306a666 x43010000}
+        {x3f333400 x40066680}
+        {x3e199c00 xbfe66680}
+        {x4308cccd x43107333}
+        {xbe199c00 x3fe66680}
+        {x403cccc0 x3f666600}
+        {x43053333 x430d7333}
+        {xc03cccc0 xbf666600}
+        {x400cccc0 xbfaccd00}
+        {x42fee666 x430c0000}
+        {xc00cccc0 x3faccd00}
+        {x3dcccc00 xc0033340}
+        {x42fb8000 x4317c000}
+        {xbdcccc00 x40033340}
+        {x406999a0 xbf4ccd00}
+        {x42f3199a x43170000}
+        {xc06999a0 x3f4ccd00}
+        {x3fe66680 xbfc66680}
+        {x42d9c5d2 x432d46fc}
+        {xbfe66680 x3fc66680}
+        {x3fc66680 xbfb99980}
+        {x42cb199a x433c599a}
+        {xbfc66680 x3fb99980}
+        {x3eb33300 x3f8ccd00}
+        {x42c80000 x433a8ccd}
+        {xbeb33300 xbf8ccd00}
+        {x40000000 x40233340}
+        {x42c63333 x4331c000}
+        {xc0000000 xc0233340}
+        {x40d66670 x408b3340}
+        {x42afcccd x431e0000}
+        {xc0d66670 xc08b3340}
+        {0 xbe199c00}
+        {x42a38000 x431e3333}
+        {0 x3e199c00}
+        {xbe886e00 x4078a040}
+        {x42a0094e x43171870}
+        {x3edd1800 xc0c97460}
+        {x3f8cccc0 xbf800000}
+        {x4291cccd x4311c000}
+        {xbf8cccc0 1}
+        {x3eb33300 xbf0ccd00}
+        {x428bcccd x43158ccd}
+        {xbeb33300 x3f0ccd00}
+        {xbdcccc00 x400999c0}
+        {x428a8000 x430acccd}
+        {x3dcccc00 xc00999c0}
+        {x4094ccc8 x401cccc0}
+        {x427e3333 x42ee0000}
+        {xc094ccc8 xc01cccc0}
+        {x3f199980 xbeb33400}
+        {x4234a2e9 x42f5ac38}
+        {xbf199980 x3eb33400}
+        {x40819998 xbf800000}
+        {x42050000 x42fd199a}
+        {xc0819998 1}
+        {x3f8cccd0 xbf0ccd00}
+        {x41a3999a x43087333}
+        {xbf8cccd0 x3f0ccd00}
+        {xbf266680 x40299980}
+        {x41c46666 x42fce666}
+        {x3f266680 xc0299980}
+        {0 x3f999980}
+        {x41dd3333 x42e46666}
+        {0 xbf999980}
+        {x3ee66680 x40566660}
+        {x41fddac3 x42bd437d}
+        {xbee66680 xc0566660}
+        {xbeb33340 x3f333300}
+        {x41e694f1 x42ad9746}
+        {x3eb33340 xbf333300}
+        {1 x407999a0}
+        {x420f999a x429a0000}
+        {xbf800000 xc07999a0}
+        {x40b4a790 x3f9c8240}
+        {x41b0094f x42888df7}
+        {xc00a2d60 xbeef6a00}
+        {xbfe66670 x3e199900}
+        {x41f53333 x427f3333}
+        {x3fe66670 xbe199900}
+        {xbfaccce0 x3fd999a0}
+        {x42206666 x426d0000}
+        {x3faccce0 xbfd999a0}
+        {0 0}
+        {x42270000 x425c6666}
+        {0 0}
+        {xbfc66680 1}
+        {x4241094e x4258745d}
+        {x3fc66680 xbf800000}
+        {x3f666640 x3fc66660}
+        {x424904a6 x4247904a}
+        {xbf666640 xbfc66660}
+        {xbfacccc0 xbe4ccd00}
+        {x425e999a x42440000}
+        {x3facccc0 x3e4ccd00}
+        {xbf4ccd00 x3e800000}
+        {x42706666 x42416666}
+        {x3f4ccd00 xbe800000}
+        {xc0000000 xbf8cccc0}
+        {x428b199a x424d0000}
+        {x40000000 x3f8cccc0}
+        {xc0400000 xbe800000}
+        {x42b7199a x425e999a}
+        {x40400000 x3e800000}
+        {xbf933340 x40100000}
+        {x42c0f45e x4258586f}
+        {x3f933340 xc0100000}
+        {xbf0ccd00 x3f266640}
+        {x42c26666 x42023333}
+        {x3f0ccd00 xbf266660}
+        {xc08eb100 x405094f0}
+        {x42cfd176 x416d745e}
+        {xbc152000 xc03f6b10}
+        {xbf8cccc0 x3f866660}
+        {x42d1cccd x4115999a}
+        {x40300000 xbf000000}}}     idem}
+     {tx x42540000 x42c78385 x42bb5867}
+     {a str 1 spx x42c80000 spy x42c80000 sb 1 ltn x42540000 ltm x42540000 tt x40800000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {100 100}
+  colorOverlay {0 0 0 0}
+  lifetime_type "all frames"
+  lifetime_start 53
+  lifetime_end 53
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  name Roto1
+  xpos -472
+  ypos -815
+ }
+set Na4d9000 [stack 0]
+ Dot {
+  name Dot3
+  xpos -438
+  ypos -733
+ }
+ Constant {
+  inputs 0
+  color {0.486 0.248 0.104 1}
+  color_panelDropped true
+  format "200 200 0 0 200 200 1 200x200"
+  name Constant1
+  xpos -638
+  ypos -873
+ }
+ Dot {
+  name Dot5
+  xpos -604
+  ypos -733
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge2
+  xpos -559
+  ypos -736
+ }
+set N4743bc00 [stack 0]
+ Dot {
+  name Dot10
+  xpos -700
+  ypos -602
+ }
+ Card2 {
+  receive_shadow false
+  rows 4
+  columns 4
+  translate {0 0.04300000146 1.879589595e-09}
+  rotate {90 0 0}
+  type bicubic
+  uv_position {0.207051456 0.4006408453}
+  control_points {3 3 3 6 
+
+1 {-0.4740000069 -0.4799999893 -0.07400000095} 0 {0.1665000021 -0.005000025034 0.02199999988} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0.002000000095 -0.5 0.008000001311} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.476000011 -0.4670000076 -0.05999999493} 0 {0 0 0} 0 {-0.1625000238 -0.01299998164 0.04199999571} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.4740000069 0.01999999955 -0.07400000095} 0 {0.1610000134 -0.001000000164 0.04900000058} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {-0.006000000052 0.01600000076 0.03999999911} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.4600000083 -0.01400000043 -0.07999999821} 0 {0 0 0} 0 {-0.150000006 -0.005999999121 0.04899999872} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.4699999988 0.4959999919 -0.09499999881} 0 {0.1680000126 0.008700013161 0.02099999785} 0 {0 0 0} 0 {0 0 0} 0 {-0.00799998641 -0.1625999808 0.02099999785} 0 {0 1 0} 
+1 {0.00800000038 0.4835000038 -0.05799999833} 0 {0.1569768488 -0.002877918305 -0.002093020827} 0 {-0.150000005 0.002750009298 0.001999996603} 0 {0 0 0} 0 {-0.007999999449 -0.1317999959 0.055999998} 0 {0.5 1 0} 
+1 {0.4560000002 0.4690000117 -0.1000000015} 0 {0 0 0} 0 {-0.1579999924 0.01499998569 0.05000000075} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  drawPosition {-0.2805423141 -0.08216268569 -0.01403256878}
+  name Card3
+  xpos -734
+  ypos -472
+ }
+ Normals {
+  invert true
+  name Normals1
+  xpos -735
+  ypos -372
+ }
+ Switch {
+  inputs 2
+  which {{parent.leavetype}}
+  name Switch2
+  xpos -734
+  ypos -19
+ }
+ Input {
+  inputs 0
+  name img2
+  xpos -1132
+  ypos -647
+  number 1
+ }
+ Reformat {
+  format "200 200 0 0 200 200 1 200x200"
+  name Reformat3
+  xpos -1132
+  ypos -580
+ }
+ Card2 {
+  receive_shadow false
+  rows 4
+  columns 4
+  translate {0 0.04300000146 1.879589595e-09}
+  rotate {90 0 0}
+  type bicubic
+  uv_position {0.207051456 0.4006408453}
+  control_points {3 3 3 6 
+
+1 {-0.4740000069 -0.4799999893 -0.07400000095} 0 {0.1665000021 -0.005000025034 0.02199999988} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0.002000000095 -0.5 0.008000001311} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.476000011 -0.4670000076 -0.05999999493} 0 {0 0 0} 0 {-0.1625000238 -0.01299998164 0.04199999571} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.4740000069 0.01999999955 -0.07400000095} 0 {0.1610000134 -0.001000000164 0.04900000058} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {-0.006000000052 0.01600000076 0.03999999911} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.4600000083 -0.01400000043 -0.07999999821} 0 {0 0 0} 0 {-0.150000006 -0.005999999121 0.04899999872} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.4699999988 0.4959999919 -0.09499999881} 0 {0.1680000126 0.008700013161 0.02099999785} 0 {0 0 0} 0 {0 0 0} 0 {-0.00799998641 -0.1625999808 0.02099999785} 0 {0 1 0} 
+1 {0.00800000038 0.4835000038 -0.05799999833} 0 {0.1569768488 -0.002877918305 -0.002093020827} 0 {-0.150000005 0.002750009298 0.001999996603} 0 {0 0 0} 0 {-0.007999999449 -0.1317999959 0.055999998} 0 {0.5 1 0} 
+1 {0.4560000002 0.4690000117 -0.1000000015} 0 {0 0 0} 0 {-0.1579999924 0.01499998569 0.05000000075} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  drawPosition {-0.2805423141 -0.08216268569 -0.01403256878}
+  name Card2
+  xpos -1132
+  ypos -474
+ }
+ Normals {
+  invert true
+  name Normals6
+  xpos -1132
+  ypos -373
+ }
+ TransformGeo {
+  rotate {0 162 0}
+  name TransformGeo10
+  xpos -1130
+  ypos -315
+ }
+ Dot {
+  name Dot9
+  xpos -1097
+  ypos -85
+ }
+push $N4743bc00
+ Multiply {
+  value {1 1.14 0.26 1}
+  value_panelDropped true
+  name Multiply1
+  xpos -615
+  ypos -602
+ }
+ Saturation {
+  saturation 0.75
+  mode Average
+  name Saturation1
+  xpos -615
+  ypos -564
+ }
+ Card2 {
+  receive_shadow false
+  rows 4
+  columns 4
+  translate {0 0.04300000146 1.879589595e-09}
+  rotate {90 0 0}
+  type bicubic
+  uv_position {0.207051456 0.4006408453}
+  control_points {3 3 3 6 
+
+1 {-0.4740000069 -0.4799999893 -0.07400000095} 0 {0.1665000021 -0.005000025034 0.02199999988} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0.002000000095 -0.5 0.008000001311} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.476000011 -0.4670000076 -0.05999999493} 0 {0 0 0} 0 {-0.1625000238 -0.01299998164 0.04199999571} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.4740000069 0.01999999955 -0.07400000095} 0 {0.1610000134 -0.001000000164 0.04900000058} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {-0.006000000052 0.01600000076 0.03999999911} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.4600000083 -0.01400000043 -0.07999999821} 0 {0 0 0} 0 {-0.150000006 -0.005999999121 0.04899999872} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.4699999988 0.4959999919 -0.09499999881} 0 {0.1680000126 0.008700013161 0.02099999785} 0 {0 0 0} 0 {0 0 0} 0 {-0.00799998641 -0.1625999808 0.02099999785} 0 {0 1 0} 
+1 {0.00800000038 0.4835000038 -0.05799999833} 0 {0.1569768488 -0.002877918305 -0.002093020827} 0 {-0.150000005 0.002750009298 0.001999996603} 0 {0 0 0} 0 {-0.007999999449 -0.1317999959 0.055999998} 0 {0.5 1 0} 
+1 {0.4560000002 0.4690000117 -0.1000000015} 0 {0 0 0} 0 {-0.1579999924 0.01499998569 0.05000000075} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  drawPosition {-0.2805423141 -0.08216268569 -0.01403256878}
+  name Card4
+  xpos -615
+  ypos -471
+ }
+ Normals {
+  invert true
+  name Normals2
+  xpos -615
+  ypos -371
+ }
+ TransformGeo {
+  rotate {0 162 0}
+  name TransformGeo5
+  xpos -615
+  ypos -315
+ }
+ Switch {
+  inputs 2
+  which {{parent.leavetype}}
+  name Switch3
+  xpos -615
+  ypos -88
+ }
+ Input {
+  inputs 0
+  name img3
+  xpos -1032
+  ypos -647
+  number 2
+ }
+ Reformat {
+  format "200 200 0 0 200 200 1 200x200"
+  name Reformat4
+  xpos -1032
+  ypos -579
+ }
+ Card2 {
+  receive_shadow false
+  rows 4
+  columns 4
+  translate {0 0.04300000146 1.879589595e-09}
+  rotate {90 0 0}
+  type bicubic
+  uv_position {0.207051456 0.4006408453}
+  control_points {3 3 3 6 
+
+1 {-0.4740000069 -0.4799999893 -0.07400000095} 0 {0.1665000021 -0.005000025034 0.02199999988} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0.002000000095 -0.5 0.008000001311} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.476000011 -0.4670000076 -0.05999999493} 0 {0 0 0} 0 {-0.1625000238 -0.01299998164 0.04199999571} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.4740000069 0.01999999955 -0.07400000095} 0 {0.1610000134 -0.001000000164 0.04900000058} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {-0.006000000052 0.01600000076 0.03999999911} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.4600000083 -0.01400000043 -0.07999999821} 0 {0 0 0} 0 {-0.150000006 -0.005999999121 0.04899999872} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.4699999988 0.4959999919 -0.09499999881} 0 {0.1680000126 0.008700013161 0.02099999785} 0 {0 0 0} 0 {0 0 0} 0 {-0.00799998641 -0.1625999808 0.02099999785} 0 {0 1 0} 
+1 {0.00800000038 0.4835000038 -0.05799999833} 0 {0.1569768488 -0.002877918305 -0.002093020827} 0 {-0.150000005 0.002750009298 0.001999996603} 0 {0 0 0} 0 {-0.007999999449 -0.1317999959 0.055999998} 0 {0.5 1 0} 
+1 {0.4560000002 0.4690000117 -0.1000000015} 0 {0 0 0} 0 {-0.1579999924 0.01499998569 0.05000000075} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  drawPosition {-0.2805423141 -0.08216268569 -0.01403256878}
+  name Card5
+  xpos -1032
+  ypos -474
+ }
+ Normals {
+  invert true
+  name Normals7
+  xpos -1033
+  ypos -372
+ }
+ TransformGeo {
+  rotate {0 -62 0}
+  name TransformGeo9
+  xpos -1031
+  ypos -313
+ }
+ Dot {
+  name Dot6
+  xpos -997
+  ypos -154
+ }
+push $N4743bc00
+ Multiply {
+  value {0.68 1.52 0.58 1}
+  value_panelDropped true
+  name Multiply2
+  xpos -491
+  ypos -601
+ }
+ Saturation {
+  saturation 0.64
+  mode Average
+  name Saturation2
+  xpos -491
+  ypos -563
+ }
+ Card2 {
+  receive_shadow false
+  rows 4
+  columns 4
+  translate {0 0.04300000146 1.879589595e-09}
+  rotate {90 0 0}
+  type bicubic
+  uv_position {0.207051456 0.4006408453}
+  control_points {3 3 3 6 
+
+1 {-0.4740000069 -0.4799999893 -0.07400000095} 0 {0.1665000021 -0.005000025034 0.02199999988} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0.002000000095 -0.5 0.008000001311} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.476000011 -0.4670000076 -0.05999999493} 0 {0 0 0} 0 {-0.1625000238 -0.01299998164 0.04199999571} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.4740000069 0.01999999955 -0.07400000095} 0 {0.1610000134 -0.001000000164 0.04900000058} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {-0.006000000052 0.01600000076 0.03999999911} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.4600000083 -0.01400000043 -0.07999999821} 0 {0 0 0} 0 {-0.150000006 -0.005999999121 0.04899999872} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.4699999988 0.4959999919 -0.09499999881} 0 {0.1680000126 0.008700013161 0.02099999785} 0 {0 0 0} 0 {0 0 0} 0 {-0.00799998641 -0.1625999808 0.02099999785} 0 {0 1 0} 
+1 {0.00800000038 0.4835000038 -0.05799999833} 0 {0.1569768488 -0.002877918305 -0.002093020827} 0 {-0.150000005 0.002750009298 0.001999996603} 0 {0 0 0} 0 {-0.007999999449 -0.1317999959 0.055999998} 0 {0.5 1 0} 
+1 {0.4560000002 0.4690000117 -0.1000000015} 0 {0 0 0} 0 {-0.1579999924 0.01499998569 0.05000000075} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  drawPosition {-0.2805423141 -0.08216268569 -0.01403256878}
+  name Card8
+  xpos -491
+  ypos -474
+ }
+ Normals {
+  invert true
+  name Normals3
+  xpos -491
+  ypos -372
+ }
+ TransformGeo {
+  rotate {0 -62 0}
+  name TransformGeo6
+  xpos -491
+  ypos -314
+ }
+ Switch {
+  inputs 2
+  which {{parent.leavetype}}
+  name Switch4
+  xpos -491
+  ypos -157
+ }
+ Input {
+  inputs 0
+  name img4
+  xpos -932
+  ypos -647
+  number 3
+ }
+ Reformat {
+  format "200 200 0 0 200 200 1 200x200"
+  name Reformat5
+  xpos -932
+  ypos -578
+ }
+ Card2 {
+  receive_shadow false
+  rows 4
+  columns 4
+  translate {0 0.04300000146 1.879589595e-09}
+  rotate {90 0 0}
+  type bicubic
+  uv_position {0.207051456 0.4006408453}
+  control_points {3 3 3 6 
+
+1 {-0.4740000069 -0.4799999893 -0.07400000095} 0 {0.1665000021 -0.005000025034 0.02199999988} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0.002000000095 -0.5 0.008000001311} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.476000011 -0.4670000076 -0.05999999493} 0 {0 0 0} 0 {-0.1625000238 -0.01299998164 0.04199999571} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.4740000069 0.01999999955 -0.07400000095} 0 {0.1610000134 -0.001000000164 0.04900000058} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {-0.006000000052 0.01600000076 0.03999999911} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.4600000083 -0.01400000043 -0.07999999821} 0 {0 0 0} 0 {-0.150000006 -0.005999999121 0.04899999872} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.4699999988 0.4959999919 -0.09499999881} 0 {0.1680000126 0.008700013161 0.02099999785} 0 {0 0 0} 0 {0 0 0} 0 {-0.00799998641 -0.1625999808 0.02099999785} 0 {0 1 0} 
+1 {0.00800000038 0.4835000038 -0.05799999833} 0 {0.1569768488 -0.002877918305 -0.002093020827} 0 {-0.150000005 0.002750009298 0.001999996603} 0 {0 0 0} 0 {-0.007999999449 -0.1317999959 0.055999998} 0 {0.5 1 0} 
+1 {0.4560000002 0.4690000117 -0.1000000015} 0 {0 0 0} 0 {-0.1579999924 0.01499998569 0.05000000075} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  drawPosition {-0.2805423141 -0.08216268569 -0.01403256878}
+  name Card6
+  xpos -932
+  ypos -474
+ }
+ Normals {
+  invert true
+  name Normals8
+  xpos -934
+  ypos -368
+ }
+ TransformGeo {
+  rotate {0 150 0}
+  name TransformGeo8
+  xpos -931
+  ypos -312
+ }
+ Dot {
+  name Dot8
+  xpos -897
+  ypos -218
+ }
+push $N4743bc00
+ Multiply {
+  value {1.092222 0.978889 0.178889 1}
+  value_panelDropped true
+  name Multiply3
+  xpos -380
+  ypos -600
+ }
+ Saturation {
+  saturation 0.69
+  mode Average
+  name Saturation3
+  xpos -380
+  ypos -562
+ }
+ Card2 {
+  receive_shadow false
+  rows 4
+  columns 4
+  translate {0 0.04300000146 1.879589595e-09}
+  rotate {90 0 0}
+  type bicubic
+  uv_position {0.207051456 0.4006408453}
+  control_points {3 3 3 6 
+
+1 {-0.4740000069 -0.4799999893 -0.07400000095} 0 {0.1665000021 -0.005000025034 0.02199999988} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0.002000000095 -0.5 0.008000001311} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.476000011 -0.4670000076 -0.05999999493} 0 {0 0 0} 0 {-0.1625000238 -0.01299998164 0.04199999571} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.4740000069 0.01999999955 -0.07400000095} 0 {0.1610000134 -0.001000000164 0.04900000058} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {-0.006000000052 0.01600000076 0.03999999911} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.4600000083 -0.01400000043 -0.07999999821} 0 {0 0 0} 0 {-0.150000006 -0.005999999121 0.04899999872} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.4699999988 0.4959999919 -0.09499999881} 0 {0.1680000126 0.008700013161 0.02099999785} 0 {0 0 0} 0 {0 0 0} 0 {-0.00799998641 -0.1625999808 0.02099999785} 0 {0 1 0} 
+1 {0.00800000038 0.4835000038 -0.05799999833} 0 {0.1569768488 -0.002877918305 -0.002093020827} 0 {-0.150000005 0.002750009298 0.001999996603} 0 {0 0 0} 0 {-0.007999999449 -0.1317999959 0.055999998} 0 {0.5 1 0} 
+1 {0.4560000002 0.4690000117 -0.1000000015} 0 {0 0 0} 0 {-0.1579999924 0.01499998569 0.05000000075} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  drawPosition {-0.2805423141 -0.08216268569 -0.01403256878}
+  name Card9
+  xpos -380
+  ypos -471
+ }
+ Normals {
+  invert true
+  name Normals4
+  xpos -380
+  ypos -371
+ }
+ TransformGeo {
+  rotate {0 30 0}
+  name TransformGeo7
+  xpos -380
+  ypos -313
+ }
+ Switch {
+  inputs 2
+  which {{parent.leavetype}}
+  name Switch5
+  xpos -380
+  ypos -222
+ }
+ Card2 {
+  inputs 0
+  cast_shadow false
+  receive_shadow false
+  image_aspect false
+  rows {{parent.guideboxscale*1}}
+  columns 0
+  translate {0 20 0}
+  rotate {90 0 0}
+  uniform_scale 17.1
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Card1
+  xpos -113
+  ypos -168
+ }
+ TransformGeo {
+  translate {{parent.TransformGeo2.translate.x} {curve} {parent.TransformGeo2.translate.z}}
+  rotate {{curve} {parent.TransformGeo2.rotate.y} {curve}}
+  scaling {{parent.TransformGeo2.scaling} 1 {parent.TransformGeo2.scaling}}
+  name TransformGeo1
+  xpos -113
+  ypos -110
+ }
+push 0
+ ParticleEmitter {
+  inputs 6
+  selectable false
+  start_frame {{parent.start_at}}
+  emit_from faces
+  rate {{parent.emissionrate}}
+  lifetime {{parent.maxlifetime}}
+  velocity 0
+  rotation_velocity {{parent.rotationvelocity}}
+  size {{parent.leavesize}}
+  size_variation {{parent.sizerandom}}
+  seed 208
+  translate {0 10 0}
+  uniform_scale 20
+  name ParticleEmitter2
+  xpos -113
+  ypos -19
+ }
+ ParticleTurbulence {
+  display textured
+  selectable false
+  render_mode textured
+  strength {{parent.turbulence} {parent.turbulence} {parent.turbulence}}
+  offset {{parent.guideboxscale*0} {parent.guideboxscale*0} {parent.guideboxscale*0}}
+  name ParticleTurbulence2
+  xpos -113
+  ypos 66
+ }
+ ParticleExpression {
+  velexpr "vel* 0.9"
+  channels {a}
+  name ParticleExpression4
+  xpos -113
+  ypos 111
+ }
+ ParticleGravity {
+  selectable false
+  to {{curve} {parent.gravity*-1} {curve}}
+  channels {a}
+  name ParticleGravity2
+  xpos -113
+  ypos 182
+ }
+ ParticleWind {
+  selectable false
+  to {{parent.windto} {parent.windto} {parent.windto}}
+  drag {{parent.windstrength}}
+  name ParticleWind2
+  xpos -113
+  ypos 265
+ }
+set N4763e800 [stack 0]
+ Dot {
+  name Dot12
+  xpos -242
+  ypos 272
+ }
+ ParticleBounce {
+  selectable false
+  out_bounce_mode kill
+  out_new_channels {b}
+  in_bounce_mode kill
+  in_new_channels {b}
+  bounceaxis_translate {{parent.TransformGeo2.translate.x} {curve} {parent.TransformGeo2.translate.z}}
+  bounceaxis_rotate {{curve} {parent.TransformGeo2.rotate.y} {curve}}
+  bounceaxis_scaling {{parent.TransformGeo2.scaling} 1 {parent.TransformGeo2.scaling}}
+  bounceaxis_uniform_scale 500
+  name ParticleBounce1
+  xpos -276
+  ypos 604
+ }
+push $N4763e800
+ Input {
+  inputs 0
+  name mesh
+  xpos 328
+  ypos 250
+  number 4
+ }
+ Dot {
+  name Dot14
+  xpos 362
+  ypos 354
+ }
+push $N4763e800
+ Dot {
+  name Dot11
+  xpos 83
+  ypos 272
+ }
+set N4763d400 [stack 0]
+ Dot {
+  name Dot17
+  xpos 222
+  ypos 272
+ }
+ ParticleBounce {
+  inputs 2
+  selectable false
+  out_new_channels {b}
+  out_bounce 0
+  in_new_channels {b}
+  in_bounce 0
+  object input
+  bounceaxis_uniform_scale {{1/parent.TransformGeo11.uniform_scale}}
+  name ParticleBounce2
+  xpos 188
+  ypos 344
+ }
+push $N4763d400
+ ParticleBounce {
+  selectable false
+  out_new_channels {b}
+  out_bounce 0
+  in_new_channels {b}
+  in_bounce 0
+  bounceaxis_translate {{parent.TransformGeo2.translate.x} {curve} {parent.TransformGeo2.translate.z}}
+  bounceaxis_rotate {{curve} {parent.TransformGeo2.rotate.y} {curve}}
+  bounceaxis_scaling {{parent.TransformGeo2.scaling} 1 {parent.TransformGeo2.scaling}}
+  bounceaxis_uniform_scale 500
+  name ParticleBounce3
+  xpos 49
+  ypos 337
+ }
+ Switch {
+  inputs 2
+  which {{parent.ground_type}}
+  name Switch9
+  xpos 123
+  ypos 421
+ }
+ Dot {
+  name Dot15
+  xpos 157
+  ypos 470
+ }
+ Switch {
+  inputs 2
+  which {{parent.ground}}
+  name Switch6
+  xpos -113
+  ypos 466
+ }
+ Switch {
+  inputs 2
+  which {{parent.killleaves}}
+  name Switch7
+  xpos -113
+  ypos 610
+ }
+ ParticleExpression {
+  velexpr 0
+  channels {b}
+  name ParticleExpression5
+  xpos -113
+  ypos 742
+ }
+set N475bf000 [stack 0]
+push $N475bf000
+ Dot {
+  name Dot13
+  xpos 79
+  ypos 749
+ }
+ ParticleLookAt {
+  selectable false
+  region box
+  scaling {30 0.1 30}
+  uniform_scale 20
+  name ParticleLookAt2
+  xpos 45
+  ypos 833
+ }
+ Switch {
+  inputs 2
+  which {{parent.ground}}
+  name Switch8
+  xpos -113
+  ypos 837
+ }
+ Scene {
+  inputs 2
+  name Scene1
+  xpos -103
+  ypos 953
+ }
+ TransformGeo {
+  selectable false
+  translate {{parent.guideboxtranslate} {parent.guideboxtranslate} {parent.guideboxtranslate}}
+  rotate {{guideboxrotate} {guideboxrotate} {guideboxrotate}}
+  uniform_scale {{parent.boxuniformscale}}
+  name TransformGeo11
+  xpos -113
+  ypos 1144
+ }
+ Output {
+  name Output1
+  xpos -113
+  ypos 1294
+ }
+push $Na4d9000
+ Viewer {
+  frame_range 100-100
+  name Viewer1
+  xpos -114
+  ypos 1342
+ }
+end_group
+Group {
+ name LeavesRender
+ knobChanged "\nif nuke.thisNode()\['shadow_on'].getValue() == 0:\n    nuke.thisNode()\['ground_type_render'].setEnabled(False)\n    nuke.thisNode()\['light_translate'].setEnabled(False)\n    nuke.thisNode()\['light_rotate'].setEnabled(False)\n    nuke.thisNode()\['light_scale'].setEnabled(False)\n    nuke.thisNode()\['shadow_erode'].setEnabled(False)\n    nuke.thisNode()\['erodefilter'].setEnabled(False)\n    nuke.thisNode()\['shadow_blur'].setEnabled(False)\n    nuke.thisNode()\['shadow_opacity'].setEnabled(False)\n    nuke.thisNode()\['shadow_only'].setEnabled(False)\nelse:\n    nuke.thisNode()\['ground_type_render'].setEnabled(True)\n    nuke.thisNode()\['light_translate'].setEnabled(True)\n    nuke.thisNode()\['light_rotate'].setEnabled(True)\n    nuke.thisNode()\['light_scale'].setEnabled(True)\n    nuke.thisNode()\['shadow_erode'].setEnabled(True)\n    nuke.thisNode()\['erodefilter'].setEnabled(True)\n    nuke.thisNode()\['shadow_blur'].setEnabled(True)\n    nuke.thisNode()\['shadow_opacity'].setEnabled(True)\n    nuke.thisNode()\['shadow_only'].setEnabled(True)\n\nif nuke.thisNode()\['mb_on'].getValue() == 0:\n    nuke.thisNode()\['mb_samples'].setEnabled(False)\n    nuke.thisNode()\['mb_shutter'].setEnabled(False)\n\nelse:\n    nuke.thisNode()\['mb_samples'].setEnabled(True)\n    nuke.thisNode()\['mb_shutter'].setEnabled(True)\n"
+ tile_color 0x151515ff
+ note_font_color 0xff8565ff
+ xpos 19
+ ypos -89
+ addUserKnob {20 leavesrender l FLeavesRender}
+ addUserKnob {26 fleavesrender l "" +STARTLINE T "<font size=\"5\"><div><span style=\"color:#f06e55;\">F</span><span style=\"color:#f3775e;\">L</span><span style=\"color:#f58066;\">e</span><span style=\"color:#f8896f;\">a</span><span style=\"color:#fa9177;\">v</span><span style=\"color:#fd9a80;\">e</span><span style=\"color:#ffa388;\">s</span><span style=\"color:#fd9a80;\">R</span><span style=\"color:#fa9177;\">e</span><span style=\"color:#f8886f;\">n</span><span style=\"color:#f58066;\">d</span><span style=\"color:#f3775e;\">e</span><span style=\"color:#f06e55;\">r</span></div><font size=\"2\"></span><span style=\"color:#ba6d00;\"> </span><span style=\"color:#fd9c82;\">v2.0"}
+ addUserKnob {26 bydamianbinder l "" +STARTLINE T "<font size=\"2\"><span style=\"color:#fd9c82\">By Damian Binder"}
+ addUserKnob {26 bgline l "<b><span style=\"color:#F37961\">Background"}
+ addUserKnob {68 bg_type l "BG Type" M {"Default BG" "Custom BG " "No BG" "" ""}}
+ addUserKnob {26 shadow1 l "<b><span style=\"color:#F37961\">Shadow"}
+ addUserKnob {6 shadow_on l "Shadow On" +STARTLINE}
+ addUserKnob {68 ground_type_render l "Ground Type" +DISABLED M {"Default (Flat)" "Custom Mesh " "" ""}}
+ addUserKnob {20 light_options l "Light Options" n 1}
+ addUserKnob {13 light_translate l Translate +DISABLED}
+ light_translate {0 30 0}
+ addUserKnob {13 light_rotate l Rotate +DISABLED}
+ light_rotate {-90 0 0}
+ addUserKnob {7 light_scale l Scale +DISABLED R 1 100}
+ light_scale 10
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 shadow_options l "Shadow Options" n 1}
+ addUserKnob {7 shadow_erode l Erode +DISABLED R 0 10}
+ shadow_erode 0.5
+ addUserKnob {68 erodefilter l "Erode Filter" +DISABLED M {Box Triangle Cuadratic Gaussian}}
+ erodefilter Gaussian
+ addUserKnob {7 shadow_blur l Blur +DISABLED R 0 20}
+ shadow_blur 1
+ addUserKnob {7 shadow_opacity l Opacity +DISABLED}
+ shadow_opacity 0.8
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {6 shadow_only l "Shadow Only" +DISABLED +STARTLINE}
+ addUserKnob {20 light_help l Help n 1}
+ light_help 0
+ addUserKnob {26 help_text l "" +STARTLINE T "If shadows dont work:\n\n-Light may be inside the guide box. It needs to be outside. \n\n-Light needs to face the leaves. View the scene through the light (using the Viewer's \n camera dropdown menu) and adjust the light's translate and scale so that the \n part of the scene that should cast shadows fits within the view.\n\n\nIf you are using a custom object or mesh for the ground remember to disable\nthe \"cast shadow\" option and enable \"receive shadow\".\n\n\nIf shadows are working but look pixelated, change the lights scale and play around\nwith the erode and blur settings in the shadow options.\nRemember: High project settings resolution = High quality shadows.\n\nOnce you turn on Motion Blur shadows look much much better.\n"}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 MotionBlur l "<b><span style=\"color:#F37961\">MotionBlur"}
+ addUserKnob {6 mb_on l "Motion Blur On" +STARTLINE}
+ addUserKnob {7 mb_samples l Samples +DISABLED R 1 50}
+ mb_samples 10
+ addUserKnob {7 mb_shutter l Shutter +DISABLED R 0 2}
+ mb_shutter 0.8
+ addUserKnob {52 python T "nuke.thisNode()\['knobChanged'].setValue('''\nif nuke.thisNode()\['shadow_on'].getValue() == 0:\n    nuke.thisNode()\['ground_type_render'].setEnabled(False)\n    nuke.thisNode()\['light_translate'].setEnabled(False)\n    nuke.thisNode()\['light_rotate'].setEnabled(False)\n    nuke.thisNode()\['light_scale'].setEnabled(False)\n    nuke.thisNode()\['shadow_erode'].setEnabled(False)\n    nuke.thisNode()\['erodefilter'].setEnabled(False)\n    nuke.thisNode()\['shadow_blur'].setEnabled(False)\n    nuke.thisNode()\['shadow_opacity'].setEnabled(False)\n    nuke.thisNode()\['shadow_only'].setEnabled(False)\nelse:\n    nuke.thisNode()\['ground_type_render'].setEnabled(True)\n    nuke.thisNode()\['light_translate'].setEnabled(True)\n    nuke.thisNode()\['light_rotate'].setEnabled(True)\n    nuke.thisNode()\['light_scale'].setEnabled(True)\n    nuke.thisNode()\['shadow_erode'].setEnabled(True)\n    nuke.thisNode()\['erodefilter'].setEnabled(True)\n    nuke.thisNode()\['shadow_blur'].setEnabled(True)\n    nuke.thisNode()\['shadow_opacity'].setEnabled(True)\n    nuke.thisNode()\['shadow_only'].setEnabled(True)\n\nif nuke.thisNode()\['mb_on'].getValue() == 0:\n    nuke.thisNode()\['mb_samples'].setEnabled(False)\n    nuke.thisNode()\['mb_shutter'].setEnabled(False)\n\nelse:\n    nuke.thisNode()\['mb_samples'].setEnabled(True)\n    nuke.thisNode()\['mb_shutter'].setEnabled(True)\n''')" +STARTLINE}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0xc6c6c6ff
+  label "Default BG"
+  note_font_size 30
+  xpos 738
+  ypos 191
+  bdwidth 219
+  bdheight 338
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x507f8eff
+  label "Shadow Generator"
+  note_font_size 42
+  xpos 39
+  ypos 644
+  bdwidth 662
+  bdheight 538
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x5b5842ff
+  label Shadow
+  note_font_size 42
+  xpos 337
+  ypos 1425
+  bdwidth 606
+  bdheight 387
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  label Light
+  xpos 112
+  ypos 741
+  bdwidth 125
+  bdheight 121
+ }
+ Input {
+  inputs 0
+  name camera
+  xpos 52
+  ypos 931
+  number 1
+ }
+ Dot {
+  name Dot2
+  xpos 86
+  ypos 1022
+ }
+set N47553c00 [stack 0]
+ Diffuse {
+  inputs 0
+  white 0.04
+  name Diffuse3
+  xpos 433
+  ypos 774
+ }
+set N47553800 [stack 0]
+ Input {
+  inputs 0
+  name mesh
+  xpos 599
+  ypos 774
+  number 2
+ }
+ ApplyMaterial {
+  inputs 2
+  name ApplyMaterial1
+  xpos 599
+  ypos 845
+ }
+ Dot {
+  name Dot5
+  xpos 633
+  ypos 936
+ }
+push $N47553800
+ Card2 {
+  display off
+  selectable false
+  cast_shadow false
+  image_aspect false
+  rows 1
+  columns 1
+  rotate {-90 0 0}
+  uniform_scale 100
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Card7
+  xpos 433
+  ypos 848
+ }
+ Switch {
+  inputs 2
+  which {{parent.ground_type_render}}
+  name Switch4
+  label "\[value which]"
+  xpos 433
+  ypos 929
+ }
+add_layer {shadow shadow.a}
+ Light2 {
+  inputs 0
+  light_type directional
+  intensity 7.6
+  selectable false
+  translate {{parent.light_translate} {parent.light_translate} {parent.light_translate}}
+  rotate {{parent.light_rotate} {parent.light_rotate} {parent.light_rotate}}
+  uniform_scale {{parent.light_scale}}
+  cast_shadows true
+  shadow_mode "clipped alpha"
+  scene_epsilon 0
+  samples 3.6
+  sample_width 3
+  depthmap_bias 0
+  depthmap_slope_bias 0.07
+  clipping_threshold 0
+  shadow_jitter_scale 0
+  depthmap_width 8192
+  shadow_mask shadow.a
+  name Default_Light1
+  xpos 145
+  ypos 780
+ }
+ Input {
+  inputs 0
+  name leaves
+  xpos 267
+  ypos 5
+ }
+ Dot {
+  name Dot29
+  xpos 301
+  ypos 145
+ }
+set N47551800 [stack 0]
+ Scene {
+  inputs 3
+  name Scene4
+  xpos 277
+  ypos 912
+ }
+push 0
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  samples {{"parent.mb_samples * parent.mb_on"}}
+  shutter {{parent.mb_shutter}}
+  motion_vectors_type off
+  MB_channel none
+  name ScanlineRenderSHADOW
+  xpos 267
+  ypos 1018
+ }
+set N47551000 [stack 0]
+ Shuffle {
+  in shadow
+  name Shuffle3
+  xpos 267
+  ypos 1495
+ }
+set N47550c00 [stack 0]
+ Dot {
+  name Dot31
+  xpos 301
+  ypos 2068
+ }
+push $N47553c00
+ Dot {
+  name Dot1
+  xpos 86
+  ypos 1145
+ }
+push $N47551800
+ Dot {
+  name Dot32
+  xpos 992
+  ypos 145
+ }
+push 0
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  samples {{"parent.mb_samples * parent.mb_on"}}
+  shutter {{parent.mb_shutter}}
+  motion_vectors_type off
+  MB_channel none
+  name ScanlineRender8
+  xpos 958
+  ypos 1141
+ }
+ Switch {
+  which {{parent.shadow_only}}
+  name Switch3
+  label "\[value which]"
+  xpos 958
+  ypos 1193
+ }
+push $N47550c00
+ Dot {
+  name Dot33
+  xpos 538
+  ypos 1498
+ }
+set N474d7000 [stack 0]
+ FilterErode {
+  channels all
+  size {{-parent.shadow_erode}}
+  filter gaussian
+  name FilterErode5
+  xpos 658
+  ypos 1549
+ }
+push $N474d7000
+ FilterErode {
+  size {{-parent.shadow_erode}}
+  filter quadratic
+  name FilterErode4
+  xpos 557
+  ypos 1549
+ }
+push $N474d7000
+ FilterErode {
+  size {{-parent.shadow_erode}}
+  filter triangle
+  name FilterErode3
+  xpos 453
+  ypos 1545
+ }
+push $N474d7000
+ FilterErode {
+  size {{-parent.shadow_erode}}
+  name FilterErode2
+  xpos 352
+  ypos 1544
+ }
+ Switch {
+  inputs 4
+  which {{parent.erodefilter}}
+  name Switch5
+  label "\[value which]"
+  xpos 506
+  ypos 1601
+ }
+ FilterErode {
+  size {{parent.shadow_blur/-5}}
+  name FilterErode1
+  xpos 506
+  ypos 1646
+ }
+ Blur {
+  channels alpha
+  size {{parent.shadow_blur}}
+  name Blur12
+  xpos 506
+  ypos 1684
+ }
+ Dot {
+  name Dot34
+  xpos 540
+  ypos 1735
+ }
+ Constant {
+  inputs 0
+  color {0 0 0 1}
+  color_panelDropped true
+  name Constant5
+  xpos 774
+  ypos 1507
+ }
+push 0
+ Merge2 {
+  inputs 2
+  mix {{parent.shadow_opacity}}
+  name Merge23
+  xpos 774
+  ypos 1601
+ }
+ Dot {
+  name Dot35
+  xpos 808
+  ypos 1736
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge24
+  xpos 643
+  ypos 1762
+ }
+push 0
+ Switch {
+  inputs 2
+  which {{parent.shadow_on}}
+  name Switch1
+  label "\[value which]"
+  xpos 831
+  ypos 1756
+ }
+ Merge2 {
+  inputs 2
+  name Merge25
+  xpos 958
+  ypos 1763
+ }
+ Dot {
+  inputs 0
+  name Dot3
+  xpos 849
+  ypos 553
+  hide_input true
+ }
+ Input {
+  inputs 0
+  name bg
+  xpos 536
+  ypos 301
+  number 3
+ }
+ Dot {
+  name Dot4
+  xpos 570
+  ypos 553
+ }
+ Ramp {
+  inputs 0
+  invert true
+  opacity 0.675
+  p0 {130 -3240}
+  p1 {128 1638}
+  type plinear
+  color {0 0 0 1}
+  color_panelDropped true
+  name Ramp3
+  xpos 870
+  ypos 414
+ }
+ Ramp {
+  inputs 0
+  opacity 0.29
+  p0 {105 -76}
+  p1 {106 2176}
+  type plinear
+  name Ramp4
+  xpos 874
+  ypos 374
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 0.3
+  name Constant4
+  xpos 748
+  ypos 271
+ }
+ Merge2 {
+  inputs 2
+  mix 0.8
+  name Merge21
+  xpos 748
+  ypos 374
+ }
+ Merge2 {
+  inputs 2
+  name Merge22
+  xpos 748
+  ypos 414
+ }
+ Shuffle {
+  alpha black
+  name Shuffle1
+  label "\[value in]"
+  xpos 748
+  ypos 486
+ }
+ Switch {
+  inputs 3
+  which {{parent.bg_type}}
+  name Switch2
+  label "\[value which]"
+  xpos 748
+  ypos 543
+ }
+ Dot {
+  name Dot28
+  xpos 782
+  ypos 724
+ }
+ Dot {
+  name Dot36
+  xpos 1282
+  ypos 724
+ }
+ Dot {
+  name Dot37
+  xpos 1282
+  ypos 1921
+ }
+ Merge2 {
+  inputs 2
+  name Merge26
+  xpos 958
+  ypos 1917
+ }
+ Copy {
+  inputs 2
+  from0 depth.Z
+  to0 depth.Z
+  name Copy2
+  xpos 958
+  ypos 2058
+ }
+ Output {
+  name Output1
+  xpos 958
+  ypos 2246
+ }
+push $N47551000
+ Viewer {
+  frame_range 1-100
+  channels shadow
+  name Viewer1
+  xpos 958
+  ypos 2290
+ }
+end_group
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x335959ff
+ label "<b>author: Damian Binder        ."
+ note_font_size 20
+ xpos 696
+ ypos -301
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x969600ff
+ label "<b>https://www.nukepedia.com/gizmos/particles/fallingleaves        ."
+ note_font_size 20
+ xpos 697
+ ypos -215
+}
+Read {
+ inputs 0
+ file_type exr
+ file "\[python \{Particles_path\} ]/VariousSetup/Leaves/Leaves Pack With Alpha/Leaf_05.exr"
+ format "512 512 0 0 512 512 1 square_512"
+ origset true
+ auto_alpha true
+ name Read2
+ xpos 515
+ ypos -451
+}

@@ -1,0 +1,55 @@
+set cut_paste_input [stack 0]
+version 10.5 v3
+push $cut_paste_input
+NoOp {
+name OUTPUT2
+label "\n\n\n\n\n\n\n\n\n\n\n\noutput\n\n"
+selected true
+xpos -7134
+ypos 30989
+}
+Dot {
+name Dot269
+selected true
+xpos -6969
+ypos 31056
+}
+set N34cd6c00 [stack 0]
+Dot {
+name Dot270
+selected true
+xpos -6969
+ypos 31116
+}
+set N34cd7800 [stack 0]
+Blur {
+channels rgb
+size 50
+name CheckColor2
+selected true
+xpos -6794
+ypos 31112
+}
+push $N34cd7800
+Dot {
+name Dot271
+selected true
+xpos -6969
+ypos 31177
+}
+Mirror2 {
+flop true
+name CheckMirror2
+selected true
+xpos -6794
+ypos 31172
+}
+push $N34cd6c00
+Saturation {
+saturation 2
+mode Average
+name CheckSaturation2
+selected true
+xpos -6794
+ypos 31052
+}

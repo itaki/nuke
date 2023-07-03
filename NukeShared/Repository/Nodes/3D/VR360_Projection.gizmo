@@ -1,0 +1,278 @@
+#! /Applications/Nuke11.3v3/Nuke11.3v3.app/Contents/MacOS/libnuke-11.3.3.dylib -nx
+version 11.3 v3
+Group {
+ name VR360_Projection
+ addUserKnob {20 VR_360_Projection}
+ addUserKnob {26 Note l "" +STARTLINE T "VR 360 Projection Tool for Nuke v1.5\n------------------------------------------------\nHow to use it:\n------------------------------------------------\n1) Connect the input to the read node\n\n- Still image or image sequence\n- Only Lat Long Format supported 2:1\n\n2) Connect the output to the geometry node\n\n3) Translate and Rotate the projection if needed\n\n4) Select the projection resolution\n\n- Resolution must be 1:1\n\n2K - 2048x2048\n4K - 4096x4096\n8K - 8192x8192\n\n5) Enjoy the 360 projection\n\n------------------------------------------------\nEmail me for any question or bug report:\n\nDavide Preite\nFreelance VR VFX Supervisor\npreite.davide(at)gmail.com\n"}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 translate l "Origin translate" T Axis1.translate}
+ addUserKnob {41 rotate l "Origin rotate" T Axis1.rotate}
+ addUserKnob {41 format l "Projection resolution" T SphericalTransform1.format}
+}
+ Input {
+  inputs 0
+  name Lat_Long_Input
+  label Lat_Long_Input
+  xpos -152
+  ypos 194
+ }
+set N4beac7e0 [stack 0]
+ Dot {
+  name Dot3
+  xpos 303
+  ypos -147
+  hide_input true
+ }
+set N4b15e180 [stack 0]
+ NoOp {
+  name NoOp1
+  xpos 182
+  ypos -72
+ }
+push $N4b15e180
+ NoOp {
+  name NoOp2
+  xpos 354
+  ypos -73
+ }
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{Axis1.translate.x} {Axis1.translate.y} {Axis1.translate.z}}
+  rotate {{0+Axis1.rotate} {0+Axis1.rotate} {0+Axis1.rotate}}
+  focal 45
+  haperture 90
+  vaperture 90
+  name Camera1
+  xpos 324
+  ypos -248
+  hide_input true
+ }
+push $N4beac7e0
+ Dot {
+  name Input
+  xpos 6
+  ypos 201
+ }
+set N47c09640 [stack 0]
+ SphericalTransform {
+  input "Lat Long map"
+  output Cube
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  filter Impulse
+  fix true
+  name SphericalTransform1
+  xpos 190
+  ypos 350
+ }
+ Project3D2 {
+  inputs 2
+  name Project3D1
+  xpos 314
+  ypos 354
+ }
+ Axis2 {
+  inputs 0
+  name Axis1
+  xpos 516
+  ypos -167
+ }
+set N4b86f480 [stack 0]
+ Camera2 {
+  display off
+  selectable false
+  rotate {90 0 0}
+  focal {{Camera1.focal}}
+  haperture {{Camera1.haperture}}
+  vaperture {{Camera1.vaperture}}
+  name Camera6
+  xpos 434
+  ypos 4
+  hide_input true
+ }
+push $N47c09640
+ SphericalTransform {
+  input "Lat Long map"
+  output Cube
+  out_rx 90
+  format {{{SphericalTransform1.format}}}
+  filter Impulse
+  fix true
+  name SphericalTransform4
+  xpos 192
+  ypos 194
+ }
+ Project3D2 {
+  inputs 2
+  name Project3D4
+  xpos 424
+  ypos 200
+ }
+ MergeMat {
+  inputs 2
+  name MergeMat2
+  xpos 424
+  ypos 354
+ }
+push $N4b86f480
+ Camera2 {
+  display off
+  rotate {-90 0 0}
+  focal {{Camera1.focal}}
+  haperture {{Camera1.haperture}}
+  vaperture {{Camera1.vaperture}}
+  name Camera5
+  xpos 544
+  ypos 5
+  hide_input true
+ }
+push $N47c09640
+ SphericalTransform {
+  input "Lat Long map"
+  output Cube
+  out_rx -90
+  format {{{SphericalTransform1.format}}}
+  filter Impulse
+  fix true
+  name SphericalTransform5
+  xpos 195
+  ypos 144
+ }
+ Project3D2 {
+  inputs 2
+  name Project3D5
+  xpos 534
+  ypos 150
+ }
+ MergeMat {
+  inputs 2
+  name MergeMat3
+  xpos 534
+  ypos 354
+ }
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{Camera1.translate.x} {Camera1.translate.y} {Camera1.translate.z}}
+  rotate {{0+Axis1.rotate.z} {270+Axis1.rotate} {0-Axis1.rotate.x}}
+  focal {{Camera1.focal}}
+  haperture {{Camera1.haperture}}
+  vaperture {{Camera1.vaperture}}
+  name Camera4
+  xpos 654
+  ypos -92
+  hide_input true
+ }
+push $N47c09640
+ SphericalTransform {
+  input "Lat Long map"
+  output Cube
+  out_ry -90
+  format {{{SphericalTransform1.format}}}
+  filter Impulse
+  fix true
+  name SphericalTransform3
+  xpos 190
+  ypos 254
+ }
+ Project3D2 {
+  inputs 2
+  name Project3D3
+  xpos 644
+  ypos 260
+ }
+ MergeMat {
+  inputs 2
+  name MergeMat4
+  xpos 644
+  ypos 354
+ }
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{Camera1.translate.x} {Camera1.translate.y} {Camera1.translate.z}}
+  rotate {{0-Axis1.rotate.z} {90+Axis1.rotate} {0+Axis1.rotate.x}}
+  focal {{Camera1.focal}}
+  haperture {{Camera1.haperture}}
+  vaperture {{Camera1.vaperture}}
+  name Camera2
+  xpos 764
+  ypos -105
+  hide_input true
+ }
+push $N47c09640
+ SphericalTransform {
+  input "Lat Long map"
+  output Cube
+  out_ry 90
+  format {{{SphericalTransform1.format}}}
+  filter Impulse
+  fix true
+  name SphericalTransform6
+  xpos 193
+  ypos 98
+ }
+ Project3D2 {
+  inputs 2
+  name Project3D6
+  xpos 754
+  ypos 104
+ }
+ MergeMat {
+  inputs 2
+  name MergeMat5
+  xpos 754
+  ypos 354
+ }
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  translate {{Camera1.translate.x} {Camera1.translate.y} {Camera1.translate.z}}
+  rotate {{0-Axis1.rotate} {180+Axis1.rotate} {0-Axis1.rotate}}
+  focal {{Camera1.focal}}
+  haperture {{Camera1.haperture}}
+  vaperture {{Camera1.vaperture}}
+  name Camera3
+  xpos 874
+  ypos -251
+  hide_input true
+ }
+push $N47c09640
+ SphericalTransform {
+  input "Lat Long map"
+  output Cube
+  out_ry 180
+  format {{{SphericalTransform1.format}}}
+  filter Impulse
+  fix true
+  name SphericalTransform2
+  xpos 190
+  ypos 302
+ }
+ Project3D2 {
+  inputs 2
+  name Project3D2
+  xpos 864
+  ypos 313
+ }
+ MergeMat {
+  inputs 2
+  name MergeMat1
+  xpos 864
+  ypos 354
+ }
+ Dot {
+  name Output
+  xpos 898
+  ypos 656
+ }
+ Output {
+  name Output1
+  xpos 898
+  ypos 756
+ }
+end_group

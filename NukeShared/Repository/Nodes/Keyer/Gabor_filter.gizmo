@@ -1,0 +1,1205 @@
+#! C:/Program Files/Nuke13.2v2/nuke-13.2.2.dll -nx
+version 13.2 v2
+Gizmo {
+ name Gabor_Filter
+ tile_color 0xe0e0eff
+ addUserKnob {20 User}
+ addUserKnob {26 text_1 l " " T "Gabor Kernel Controls\n"}
+ addUserKnob {6 Psic l "Hair is lighter than BG" +STARTLINE}
+ addUserKnob {41 sigma l Radius t "Use this to adapt the filter to the thickness of the features you want to extract.\nIf you want to understand better what this knob does, you can check out the 'kernel' in the Display pulldown" T GaborFilter_1.sigma}
+ addUserKnob {41 loff l Frequency t "To use in combination with 'Radius'. Play with the values to find the best results" T GaborFilter_1.loff}
+ addUserKnob {41 gamma l Ratio t "Ratio of the gaussian envelope. Reduce to enhance longer features (but can bring up some unwated details!)" T GaborFilter_1.gamma}
+ addUserKnob {7 c_psi l Threshold t "Increase this to filter out noise & small artifacts" R -1 1}
+ addUserKnob {41 off +INVISIBLE T GaborFilter_1.off}
+ addUserKnob {41 dist +INVISIBLE T GaborFilter_1.dist}
+ addUserKnob {41 psi +INVISIBLE T GaborFilter_1.psi}
+ addUserKnob {41 theta l Angle t "theta // Gabor starting angle // Defines the starting angle on which the iterations will occur. Default is 0, but changing it will prevent artifacts in certain specific angles." +INVISIBLE T GaborFilter_1.theta}
+ addUserKnob {7 offbg l "BG Offset" t "*use with caution!* Controls the kernel gamma. Useful for isolating features from BG noise." R -10 10}
+ addUserKnob {7 gammabg l "BG Gamma" t "*use with caution!* Controls de offset of the kernel. Useful for removing BG noise." R -1 1}
+ addUserKnob {26 ""}
+ addUserKnob {26 text l " " +INVISIBLE T "Post-Process grade\n"}
+ addUserKnob {41 blackpoint +INVISIBLE T ConvolveCorrect.blackpoint}
+ addUserKnob {41 whitepoint +INVISIBLE T ConvolveCorrect.whitepoint}
+ addUserKnob {41 white l gain +INVISIBLE T ConvolveCorrect.white}
+ addUserKnob {41 add l offset +INVISIBLE T ConvolveCorrect.add}
+ addUserKnob {41 gamma_1 l gamma +INVISIBLE T ConvolveCorrect.gamma}
+ addUserKnob {41 white_clamp l "white clamp" +INVISIBLE T ConvolveCorrect.white_clamp}
+ addUserKnob {4 display l Display t "Display either the result of the filtering or the kernel of the convolution process. \n\nNB : the kernel view here is an enhanced, normalized version, and does not represent the effective kernel (which is way smaller and has negative values)" M {Result Kernel "" ""}}
+ addUserKnob {26 version l "" +STARTLINE T "<br>\n<font size=\"4\"><b>v2.1</b></font>\n<br><br>\n<font color=\"#696969\">by Théophile Grezes</font>"}
+}
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width {{parent.Kernel_size.box_width*mult}}
+  box_height {{parent.Kernel_size.box_height*mult}}
+  box_fixed true
+  resize none
+  black_outside true
+  name Viz_size
+  xpos -1640
+  ypos 1731
+  addUserKnob {20 User}
+  addUserKnob {3 mult l "Kernel Viz Resize"}
+  mult 60
+ }
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_Viz2
+  xpos -1640
+  ypos 1790
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{parent.GaborFilter_1.theta}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma*parent.Viz_size.mult}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(input.box_width/2)-cos(thetac)*dist} {(input.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist*parent.Viz_size.mult}}
+ }
+ Grade {
+  channels rgba
+  add 0.5
+  name kernelGrade
+  xpos -1640
+  ypos 1847
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.alpha 0 3 rgba.red 0 0 rgba.alpha 0 3 rgba.green 0 1 rgba.alpha 0 3 rgba.blue 0 2 rgba.alpha 0 3 rgba.alpha 0 3"
+  name kern_alpha
+  xpos -1640
+  ypos 1901
+ }
+ Transform {
+  translate {0 {parent.kern_plot.select_bbox.t}}
+  name kern_center
+  xpos -1640
+  ypos 1953
+ }
+ Crop {
+  box {0 0 {parent.Viz_size.box_width} {parent.Viz_size.box_height+kern_plot.select_bbox.t}}
+  reformat true
+  crop false
+  name kern_crop
+  xpos -1640
+  ypos 1989
+ }
+ PixelStat {
+  channels rgb
+  WtransfType "plot scanline"
+  select_bbox {0 0 {parent.Viz_size.box_width} {max_scale}}
+  scanline_coord {{parent.Viz_size.box_width/2 x248 64.5} {max_scale+Viz_size.box_width/2}}
+  max_scale 180
+  max_value {0.5000021458 0.5000021458 0.5000021458}
+  min_value {-2.140238394e-06 0.4999978542 0.4999978542}
+  average_value {0.5 0.5 0.5}
+  name kern_plot
+  xpos -1640
+  ypos 2041
+ }
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width 21
+  box_height {{box_width}}
+  box_fixed true
+  resize none
+  black_outside true
+  pbb true
+  name Kernel_size
+  xpos -1470
+  ypos 231
+ }
+set Nea7cabf0 [stack 0]
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_19
+  xpos 510
+  ypos 880
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+ Grade {
+  channels alpha
+  add {{(parent.offbg)*10e-6}}
+  gamma {{1+(parent.gammabg/100)}}
+  black_clamp false
+  name kernelCorrect
+  xpos 510
+  ypos 1075
+ }
+ set Cea7ca050 [stack 0]
+ Input {
+  inputs 0
+  name IMG
+  xpos -1800
+  ypos -537
+ }
+ Dot {
+  name Dot1
+  xpos -1766
+  ypos 1002
+ }
+ Dot {
+  name Dot48
+  xpos -336
+  ypos 1002
+ }
+set Nea7c75b0 [stack 0]
+ Convolve2 {
+  inputs 2
+  filter_bounds format
+  normalize false
+  name Convolution
+  xpos 510
+  ypos 1185
+ }
+ set Cea7ca810 [stack 0]
+ Grade {
+  name ConvolveCorrect
+  xpos 510
+  ypos 1431
+ }
+ set Cea7c7d70 [stack 0]
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_6
+  xpos -920
+  ypos 881
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos -920
+  ypos 1068
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos -920
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos -920
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_7
+  xpos -810
+  ypos 881
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos -810
+  ypos 1068
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos -810
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos -810
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_8
+  xpos -700
+  ypos 881
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos -700
+  ypos 1071
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos -700
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos -700
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_9
+  xpos -590
+  ypos 880
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos -590
+  ypos 1072
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos -590
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos -590
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_10
+  xpos -480
+  ypos 881
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos -480
+  ypos 1070
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos -480
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos -480
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_11
+  xpos -372
+  ypos 881
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos -370
+  ypos 1070
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos -370
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos -370
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_1
+  xpos -1470
+  ypos 881
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta 0.065
+  addUserKnob {7 sigma R 0.5 10}
+  sigma 1
+  addUserKnob {7 loff l "lambda offset" R 0 10}
+  loff 5
+  addUserKnob {7 gamma R 0 0.5}
+  gamma 0.5
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{-sigma*1.6*(2*Psic-1)}}
+ }
+set Ncbfbc540 [stack 0]
+clone $Cea7ca050 {
+  xpos -1470
+  ypos 1064
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos -1470
+  ypos 1186
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos -1470
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_2
+  xpos -1360
+  ypos 881
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos -1360
+  ypos 1066
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos -1360
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos -1360
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_3
+  xpos -1250
+  ypos 881
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos -1250
+  ypos 1067
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos -1250
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos -1250
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_4
+  xpos -1140
+  ypos 881
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos -1140
+  ypos 1068
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos -1140
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos -1140
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_12
+  xpos -260
+  ypos 880
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos -260
+  ypos 1071
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos -260
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos -260
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_13
+  xpos -150
+  ypos 881
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos -150
+  ypos 1072
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos -150
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos -150
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_14
+  xpos -40
+  ypos 881
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos -40
+  ypos 1073
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos -40
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos -40
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_15
+  xpos 70
+  ypos 881
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos 70
+  ypos 1074
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos 70
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos 70
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_17
+  xpos 290
+  ypos 881
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos 290
+  ypos 1074
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos 290
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos 290
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_18
+  xpos 400
+  ypos 881
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos 400
+  ypos 1074
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos 400
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos 400
+  ypos 1431
+  selected false
+ }
+push 0
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_16
+  xpos 180
+  ypos 881
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos 180
+  ypos 1074
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos 180
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos 180
+  ypos 1431
+  selected false
+ }
+push $Nea7cabf0
+ Expression {
+  temp_name0 X
+  temp_expr0 x-off.x
+  temp_name1 Y
+  temp_expr1 y-off.y
+  temp_name2 a
+  temp_expr2 cos(thetac)*X+sin(thetac)*Y
+  temp_name3 b
+  temp_expr3 -sin(thetac)*X+cos(thetac)*Y
+  expr3 exp(-(pow2(a)+pow2(gamma*b))/2*pow2(1/sigma))*cos(psi+2*pi*a/lambda)
+  name GaborFilter_5
+  xpos -1030
+  ypos 880
+  addUserKnob {20 constants l Constants}
+  addUserKnob {7 thetac R -7 7}
+  thetac {{theta*2*pi}}
+  addUserKnob {7 lambda t wavelength R 0.1 10}
+  lambda {{(sigma)*(1+loff)}}
+  addUserKnob {20 var l Var}
+  addUserKnob {7 theta}
+  theta {{"parent.GaborFilter_1.theta+CTRL.increment*(\[lindex \[split \[value name] _] 1]-1)"}}
+  addUserKnob {7 sigma R 0 10}
+  sigma {{parent.GaborFilter_1.sigma}}
+  addUserKnob {7 loff l "lambda offset" R 0 5}
+  loff {{parent.GaborFilter_1.loff}}
+  addUserKnob {7 gamma R 0 0.5}
+  gamma {{parent.GaborFilter_1.gamma}}
+  addUserKnob {7 psi t phase R 0 3.14159}
+  psi {{(pi/2)*(1+(c_psi/100))}}
+  addUserKnob {12 off}
+  off {{(parent.Kernel_size.box_width/2)-cos(thetac)*dist} {(parent.Kernel_size.box_height/2)-sin(thetac)*dist}}
+  addUserKnob {7 dist R 0 3}
+  dist {{parent.GaborFilter_1.dist}}
+ }
+clone $Cea7ca050 {
+  xpos -1030
+  ypos 1069
+  selected false
+ }
+push $Nea7c75b0
+clone $Cea7ca810 {
+  inputs 2
+  xpos -1030
+  ypos 1185
+  selected false
+ }
+clone $Cea7c7d70 {
+  xpos -1030
+  ypos 1431
+  selected false
+ }
+ Merge2 {
+  inputs 19+1
+  operation max
+  name mergall
+  xpos -1470
+  ypos 2079
+ }
+set Neaea26a0 [stack 0]
+ Switch {
+  inputs 2
+  which {{parent.display x442 0}}
+  name Display
+  xpos -1640
+  ypos 2079
+ }
+ Dot {
+  name Dot2
+  xpos -1766
+  ypos 2082
+ }
+ Output {
+  name Output1
+  xpos -1800
+  ypos 2775
+ }
+ NoOp {
+  inputs 0
+  name CTRL
+  xpos 510
+  ypos 279
+  addUserKnob {20 User}
+  addUserKnob {7 increment l Increment R 0 0.5}
+  increment 0.06
+ }
+push $Ncbfbc540
+ Dot {
+  name Dot3
+  xpos -1546
+  ypos 885
+ }
+push $Ncbfbc540
+ Grade {
+  channels rgba
+  add 0.5
+  name kernelGrade1
+  xpos -1752
+  ypos 1237
+ }
+push $Neaea26a0
+ Viewer {
+  frame_range 1-920
+  viewerProcess "sRGB (ACES)"
+  name Viewer1
+  xpos -1122
+  ypos 2079
+ }
+end_group

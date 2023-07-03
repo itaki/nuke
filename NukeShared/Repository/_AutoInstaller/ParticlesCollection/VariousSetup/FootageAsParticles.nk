@@ -1,0 +1,346 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/Downloads/Setups/FootageAsParticles.nk
+ frame 57
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Radial {
+ inputs 0
+ area {1231 271.5 1435 455}
+ color {{cos(frame/10)} {cos((frame+50)/10)} {sin(frame/10)} {sin((frame+12)/10)}}
+ name Radial1
+ xpos 43
+ ypos -353
+}
+Crop {
+ box {1230 272 1434 454}
+ reformat true
+ crop false
+ name Crop1
+ xpos 43
+ ypos -329
+}
+Constant {
+ inputs 0
+ channels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+ color 1
+ format "512 512 0 0 512 512 1 square_512"
+ name Constant1
+ xpos -177
+ ypos -495
+ postage_stamp false
+}
+RotoPaint {
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t x44700000 x44070000}
+    {a}
+    {curvegroup Ellipse6 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc0947de9 0}
+        {x43f7bcee x43737be7}
+        {x40947de9 0}
+        {0 xc0f6e4a4}
+        {x43fabed9 x4380ba1d}
+        {0 x40f6e47a}
+        {x40947de9 0}
+        {x43f7bcee x4387b646}
+        {xc0947de9 0}
+        {0 x40f6e47a}
+        {x43f4cccd x4380999a}
+        {0 xc0f6e4b8}}}     idem}
+     {t
+      {{1 x429f0000}}
+      {{1 x439c4000}}     0
+      {{1 0}}
+      {{1 0}}     0 0 0
+      {{1 0}}
+      {{1 1}}
+      {{1 1}}     1
+      {{1 0}}}
+     {a spx x44700000 spy x44070000 sb 1 tt x40c00000}}
+    {curvegroup Ellipse5 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc0947de9 0}
+        {x43cf5687 x43737be7}
+        {x40947de9 0}
+        {0 xc0f6e4a4}
+        {x43d25873 x4380ba1d}
+        {0 x40f6e47a}
+        {x40947de9 0}
+        {x43cf5687 x4387b646}
+        {xc0947de9 0}
+        {0 x40f6e47a}
+        {x43cc6666 x4380999a}
+        {0 xc0f6e4b8}}}     idem}
+     {t
+      {{1 x429f0000}}
+      {{1 x439c4000}}     0
+      {{1 0}}
+      {{1 0}}     0 0 0
+      {{1 0}}
+      {{1 1}}
+      {{1 1}}     1
+      {{1 0}}}
+     {a spx x44700000 spy x44070000 sb 1 tt x40c00000}}
+    {curvegroup Ellipse4 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc0947de9 0}
+        {x43a35687 x4371e24e}
+        {x40947de9 0}
+        {0 xc0f6e4a4}
+        {x43a65873 x437fdaa0}
+        {0 x40f6e47a}
+        {x40947de9 0}
+        {x43a35687 x4386e979}
+        {xc0947de9 0}
+        {0 x40f6e47a}
+        {x43a06666 x437f999a}
+        {0 xc0f6e4b8}}}     idem}
+     {t
+      {{1 x429f0000}}
+      {{1 x439c4000}}     0
+      {{1 0}}
+      {{1 0}}     0 0 0
+      {{1 0}}
+      {{1 1}}
+      {{1 1}}     1
+      {{1 0}}}
+     {a spx x44700000 spy x44070000 sb 1 tt x40c00000}}
+    {curvegroup Ellipse3 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc0947de9 0}
+        {x4284f66d x436e87ae}
+        {x40947de9 0}
+        {0 xc0f6e4a4}
+        {x4290fdcc x437c8000}
+        {0 x40f6e47a}
+        {x40947de9 0}
+        {x4284f66d x43853c29}
+        {xc0947de9 0}
+        {0 x40f6e47a}
+        {x42726b51 x437c3efa}
+        {0 xc0f6e4b8}}}     idem}
+     {t
+      {{1 x429f0000}}
+      {{1 x439c4000}}     0
+      {{1 0}}
+      {{1 0}}     0 0 0
+      {{1 0}}
+      {{1 1}}
+      {{1 1}}     1
+      {{1 0}}}
+     {a spx x44700000 spy x44070000 sb 1 tt x40c00000}}
+    {curvegroup Ellipse2 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc0947de9 0}
+        {x431a7b23 x43702148}
+        {x40947de9 0}
+        {0 xc0f6e4a4}
+        {x43207efa x437e199a}
+        {0 x40f6e47a}
+        {x40947de9 0}
+        {x431a7b23 x438608f6}
+        {xc0947de9 0}
+        {0 x40f6e47a}
+        {x43149ae1 x437dd893}
+        {0 xc0f6e4b8}}}     idem}
+     {t
+      {{1 x429f0000}}
+      {{1 x439c4000}}     0
+      {{1 0}}
+      {{1 0}}     0 0 0
+      {{1 0}}
+      {{1 1}}
+      {{1 1}}     1
+      {{1 0}}}
+     {a spx x44700000 spy x44070000 sb 1 tt x40c00000}}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc0947de9 0}
+        {x436b47f0 x43702148}
+        {x40947de9 0}
+        {0 xc0f6e4a4}
+        {x43714bc7 x437e199a}
+        {0 x40f6e47a}
+        {x40947de9 0}
+        {x436b47f0 x438608f6}
+        {xc0947de9 0}
+        {0 x40f6e47a}
+        {x436567ae x437dd893}
+        {0 xc0f6e4b8}}}     idem}
+     {t
+      {{1 x429f0000}}
+      {{1 x439c4000}}     0
+      {{1 0}}
+      {{1 0}}     0 0 0
+      {{1 0}}
+      {{1 1}}
+      {{1 1}}     1
+      {{1 0}}}
+     {a spx x44700000 spy x44070000 sb 1 tt x40c00000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ colorOverlay 0
+ lifetime_type "all frames"
+ view {}
+ motionblur_on true
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ name RotoPaint1
+ xpos -177
+ ypos -459
+}
+Sphere {
+ rotate {0 {frame} 0}
+ uniform_scale 0.1
+ name Sphere1
+ xpos -177
+ ypos -400
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ start_frame -100
+ rate 800
+ rate_channel rgba.red
+ lifetime 100
+ velocity 0.032
+ size_variation 0.1
+ spread 0.1
+ name ParticleEmitter1
+ xpos -177
+ ypos -329
+}
+ParticleWind {
+ from {0.1 0.1 0.2}
+ to {0.1350000054 0.4950000048 0}
+ drag 0.008
+ region sphere
+ rotate {0 0 -157.3855492}
+ name ParticleWind1
+ xpos -177
+ ypos -305
+}
+ParticleDrag {
+ drag 0.15
+ name ParticleDrag1
+ xpos -177
+ ypos -269
+}
+ParticleTurbulence {
+ strength {0.004 0 0.004}
+ scale {2 2 1}
+ name ParticleTurbulence1
+ xpos -177
+ ypos -233
+}
+Viewer {
+ frame 57
+ frame_range 1-100
+ name Viewer1
+ xpos -40
+ ypos -9
+ hide_input true
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ label "<b>replace it with a Footage        ."
+ note_font_size 10
+ xpos 8
+ ypos -418
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x969600ff
+ label "<b>http://www.nukepedia.com/toolsets/particles/toolsets        ."
+ note_font_size 20
+ xpos 336
+ ypos -333
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0x335959ff
+ label "<b>author: INEED MONEY        ."
+ note_font_size 20
+ xpos 338
+ ypos -395
+}

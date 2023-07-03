@@ -1,0 +1,161 @@
+
+SuperSlate by Rachel Dunn
+
+
+SuperSlate is a semi-automated slate mask utility with a full suite of features and overlay tools which make finish production easy.
+
+The main font used is Coperplate.ttf - please insure that this is installed in your system to prevent layout problems.
+
+Below is the list of features and functions:
+
+--
+
+SuperSlate Tab --------------------------
+
+Show - enter your job name here
+
+Shot - the auto feature will automatically fill in the nuke script name or you can enter it manually
+
+Date -  the auto feature will automatically fill in the date and time or you can enter it manually
+
+Cut length type -  there are three choices which automatically calculates the length in frames and seconds
+
+	- Manual - enter the length in the 'frames' field to the right of this pulldown
+
+	- Auto Script Length - auto calculates cut length based on the global start and end frames for the script
+
+	- Auto Input Length - auto calculates cut length based on the start and end of the clip fed into the slate gizmo
+
+FrameRate - the auto feature will automatically fill in the global frame rate or you can enter it manually
+
+Description - Space to enter a note
+
+SlateType 	-  Film  	- adds focus stars on the slate
+		- Video	- adds colour bars and a preview of the first frame of the clip to the slate
+
+Output format 	- defaults to root.format size 
+			- or you can use this to reformat your clip to any specified format independent of the global root.format
+Filter			-Specified the resize image processing filter
+
+Slate frame 	- Enter it manually or auto button will select it based on Cut length type choice and will chose global or local start frame
+		- Selecting AutoInput cut Length and Auto Slate frame will print slate on every frame up to the first frame of the input clip
+
+
+Mask Overlay Tab  -------------------------
+
+HardMask 	-  letterbox crops top and bottom of image based on Aspect Ratio
+
+Aspect Ratio - Aspect ratio  - choose between various standard aspect ratios - 1.3161, 1.33, 1.66, 1.7777, 1.85, 2.35, 2.40
+
+Safe Area 	- displays appropriate action/title safe for selected aspect ratio - can be inverted and has variable opacity
+			(if using Cinemascope format (Pixel aspect ratio of 2) you will need to set AspectRatio to 2.35 to display properly)
+
+Grid		- Standard 16 field animation grid overlay - can be inverted and has variable opacity
+
+Frame Counter	- Three choices for a frame counter overlay:
+			- None 			= off
+			- Frames 		= frame count
+			- Preset Timecode	= Displays preset Timecode
+
+Keep Overlays Outside Image Area - Repositions Overlay Text Displays onto Hard mask outside of image area.
+
+Show		- displays Show note onto overlay
+
+Shot		- displays Shot note onto overlay
+
+Date		- displays Date Note onto overlay
+
+Time		- displays current time onto Overlay
+
+Description	- displays Description note onto overlay
+
+Reverse	- Switches display positions between Top and Bottom
+
+-
+
+startcode	- Set starting timecode for Preset Timecode overlay display
+
+fps		- Set timecode fps or automatically get from metadata
+
+Start Frame	-Set frame for preset timecode  value or automatically use global start frame
+
+-
+
+Watermark 	- Uses 'Watermark Text' or Custom Logo to watermark images with opacity and saturation control
+
+Watermark Text 	- Enter text used for WaterMark Overlay and Copyright Notice on Slate
+
+font		- Set font for watermark Text
+
+Size		- Set size of Watermark
+
+
+Logos Tab  ---------------------------
+
+Logo Source	- load an external picture file - Use following controls to generate your own logo for the slate and watermark,
+			
+Logo_File		- Enter path to external logo picture file here. Optimal file size for logo = 1280x720 or 1920x1280 (16x9)
+			- Automatically resized to fit - Additional size control for watermark
+
+Logo Text		- Enter your name or Company Name here to generate a Logo
+
+Glow Outline		-  choose between plain text or a glowing outline
+
+Glow Size		- Set size of glow
+
+font			- Set Logo font
+
+Size			- Set Logo Font Size
+
+Kerning 		- Set Logo Font Kerning
+
+leading		- Set Logo Font Leading
+
+Logo Colour		-Set Logo Colour
+
+------------------------------
+
+Please Note - There may be instances when using formats with odd pixel aspect ratios (cinemascope) that the title safe will not be set correctly - simply adjust the AspectRatio pulldown in the MaskOverlay Tab so that it reflects the appropriate Aspect ratio. (2.35 for Cinemascope)
+
+------------------------------
+
+Installation Procedure:
+
+Drag SuperSlate.gizmo and SuperSlateIcon.png to your ~/.nuke directory and add the following line(s) to your menu.py script file:
+
+toolbar = nuke.menu('Nodes')    [ this line is optional since it may already be included in the menu.py file]
+
+toolbar.addCommand('Image/SuperSlate', "nuke.createNode('SuperSlate')",icon ='SuperSlateIcon.png')
+
+--
+
+This will place the Superslate generator in the Image Menu along with it's corresponding icon.
+
+------------------------------
+
+Setting Defaults:
+
+open SuperSlate and go to 'Node' tab
+
+Click on Button labeled "Copy to Group"
+
+Delete Superslate Gizmo, and Open up new node now labeled "Group 1 - SlateGen"
+
+Customize Logo and turn on any features you want as a default
+
+Go to Node Tab and Click on button labeled "Export as Gizmo"
+
+Save over SuperSlate.gizmo in the ~/.nuke directory
+
+
+restart Nuke, and you should be good to go.
+
+------------------------------
+
+
+SuperSlate by Rachel Dunn
+
+
+Please send any comments or suggestions for improvement to me at rachel@racheldunn.com
+
+

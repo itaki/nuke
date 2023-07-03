@@ -1,0 +1,22 @@
+{
+    "header": {
+        "project_name": "nuke",
+        "shot": "itaki_tools",
+        "directory": "/Volumes/panda/Dropbox (Personal)/_Library/nuke/itaki_tools/i_tools",
+        "number_of_sessions": 0,
+        "shot_clock": "8:08:46",
+        "work_time": "1:09:46",
+        "idle_time": "6:59:00"
+    },
+    "sessions": [
+        {
+            "filename": "backdrop_test.nk",
+            "artist": "itakidev",
+            "start_time": "2023-03-16T14:51:50.561922",
+            "notes": [],
+            "idle_time": 25140,
+            "end_time": "2023-03-16T23:00:36.801574",
+            "status": "unsaved"
+        }
+    ]
+}

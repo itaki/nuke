@@ -1,0 +1,4718 @@
+Group {
+ name Zip_Blur
+ tile_color 0x59e8ff
+ note_font_color 0xffffffff
+ addUserKnob {20 User}
+ addUserKnob {26 info l " " T "ZipBlur\nby Mads Hagbarth Damsbo 2022"}
+ addUserKnob {26 ""}
+ addUserKnob {6 usegpu l "Use GPU if available" +STARTLINE}
+ usegpu true
+ addUserKnob {26 text01 l "<b><font color=#ADF97D>General</font><b>"}
+ addUserKnob {4 itterations l Itterations t "Number of times to apply the blur" M {1 2 3 4 5 6 7 8 9 "" ""}}
+ itterations 3
+ addUserKnob {4 algorithm l Algorithm t "<b>\[Soft]</b> Fast but can cause ghosting\n<b>\[Cross]</b> Slow but reduces ghosting\n<b>\[Fast Cross]</b> Reduces ghosting, but not as good as cross\n<b>\[Selective Cross]</b> Like cross but lets you use the Seletive Threshold to avoid ghosting\n<b>\[Weighted Cross]</b> Like cross but uses the input mask as a inverted weight\n<b>\[Weighted Cross]</b> Like Soft but uses the input mask as a inverted weight\n<b>\[Zip Only]</b> Only use the Zip function (Not Yet Implemented)" M {Soft Cross "Fast Cross" "Selective Cross" "Weighted Cross" "Weighted Soft" "" "" "" "" "" "" ""}}
+ addUserKnob {7 Detail t "How much detail to preserve" R 0 100}
+ Detail 20
+ addUserKnob {7 ElementBlur l Blur t "How much blur to be applied to the unwanted element?" R 0 100}
+ ElementBlur 20
+ addUserKnob {6 compression l Compress t "Compresses the high frequency detail to reduce sharp high frequency detail. (Can cause some loss of detail in high frequency areas)" +STARTLINE}
+ addUserKnob {7 compression_level l "| Level" -STARTLINE R 0 8}
+ compression_level 0.5
+ addUserKnob {26 text_1 l "<b><font color=#ADF97D>Additonal</font><b>"}
+ addUserKnob {7 nuclearOption l Zip t "Destructive Zipping warp, that pinches the area around the mask in." +INVISIBLE R 0 200}
+ addUserKnob {7 selectiveThreshold l "Selective Threshold" t "Used with the Cross Selective algorithm to define how big of a threshold that is allowed with the blur. (Think Bilateral Filter)"}
+ selectiveThreshold 0.2
+ addUserKnob {26 text03 l "<b><font color=#ADF97D>Settings</font><b>"}
+ addUserKnob {41 size_2 l "Soften Input Mask" t "The input mask <b>must</b> be soft and not contain even areas, as that can cause artifacts. Use this slider to soften your input mask." T Blur3.size}
+ addUserKnob {6 processinlog l "Log Mode" t "Should the effect be applied in log? (Can reduce haloing)" +STARTLINE}
+ processinlog true
+ addUserKnob {20 advanced}
+ addUserKnob {26 text04 l "<b><font color=#ADF97D>Advanced</font><b>"}
+ addUserKnob {7 CompressionRadius l "Compression Radius"}
+ CompressionRadius 2
+ addUserKnob {7 detailFalloff l "Detail Falloff" t "How big of a falloff should be applied to the detail slider?"}
+ detailFalloff 1
+ addUserKnob {6 Softlining t "This can be used to avoid sharp artifacts in the center of the input mask. However can also cause some slight ghosting." +STARTLINE}
+ addUserKnob {7 limitZip l "Zip Limit" t "Limit the direction of the zip slider. Set this to 0 and the zip will only be applied in a single direction, then use the direction slider to control that direction. (Not Yet Implemented)"}
+ limitZip 1
+ addUserKnob {7 LimtZipDirection l "Zip Limit Direction" t "If Zip limit is below 1 this will control the direction of the zip limit. (Not Yet Implemented)"}
+ addUserKnob {7 WeightDistribution l "Weight Distribution" R 0.1 1}
+ WeightDistribution 1
+}
+ Input {
+  inputs 0
+  name InputMask
+  xpos 352
+  ypos 28
+  number 1
+ }
+ Dot {
+  name Dot6
+  xpos 386
+  ypos 111
+ }
+set Nd79b0800 [stack 0]
+ Dot {
+  name Dot4
+  xpos 386
+  ypos 170
+ }
+set Nd79b0400 [stack 0]
+ Dot {
+  name Dot8
+  xpos 386
+  ypos 222
+ }
+set N4f797c00 [stack 0]
+ Dot {
+  name Dot10
+  xpos 386
+  ypos 274
+ }
+set N4f797800 [stack 0]
+ Dot {
+  name Dot12
+  xpos 386
+  ypos 326
+ }
+set N4f797400 [stack 0]
+ Dot {
+  name Dot14
+  xpos 386
+  ypos 378
+ }
+set N4f797000 [stack 0]
+ Dot {
+  name Dot16
+  xpos 384
+  ypos 430
+ }
+set N4f796c00 [stack 0]
+ Dot {
+  name Dot18
+  xpos 384
+  ypos 482
+ }
+set N4f796800 [stack 0]
+ Dot {
+  name Dot20
+  xpos 384
+  ypos 534
+ }
+set N4f796400 [stack 0]
+ Dot {
+  name Dot1
+  xpos 388
+  ypos 1171
+ }
+push $N4f796800
+push $N4f796c00
+push $N4f797000
+push $N4f797400
+push $N4f797800
+push $N4f797c00
+push $Nd79b0400
+ Input {
+  inputs 0
+  name Input
+  xpos 1105
+  ypos -176
+ }
+ OCIOLogConvert {
+  operation "lin to log"
+  name OCIOLogConvert1
+  xpos 1105
+  ypos -126
+  disable {{!parent.processinlog}}
+ }
+ Dot {
+  name Dot2
+  xpos 1139
+  ypos -66
+ }
+set N4f795400 [stack 0]
+ Dot {
+  name Dot7
+  xpos 1139
+  ypos 170
+ }
+set N4f795000 [stack 0]
+push $Nd79b0800
+ Blur {
+  channels alpha
+  size 4
+  name Blur3
+  xpos 449
+  ypos 101
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  label "\[python nuke.thisNode().knob('in').value()] >> \[python nuke.thisNode().knob('out').value()]"
+  xpos 545
+  ypos 101
+ }
+ Expression {
+  expr3 1>a&&a>0?1:0
+  name Expression2
+  xpos 655
+  ypos 107
+ }
+set N4f794400 [stack 0]
+push $N4f795400
+ Dot {
+  name Dot3
+  xpos 896
+  ypos -66
+ }
+set N69087c00 [stack 0]
+ Group {
+  inputs 2
+  name GradientBlur3
+  selected true
+  xpos 862
+  ypos 107
+  disable {{!(parent.itterations>-1)}}
+  addUserKnob {20 User}
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+ }
+  Input {
+   inputs 0
+   name InputMask
+   xpos -1205
+   ypos 237
+   number 1
+  }
+  Dot {
+   name Dot9
+   xpos -1171
+   ypos 378
+  }
+set N69087400 [stack 0]
+  Dot {
+   name Dot1
+   xpos -1171
+   ypos 767
+  }
+set N69087000 [stack 0]
+push $N69087400
+  Dot {
+   name Dot2
+   xpos -872
+   ypos 378
+  }
+set N69086c00 [stack 0]
+  Dot {
+   name Dot3
+   xpos -609
+   ypos 378
+  }
+push $N69086c00
+  Matrix {
+   channels {rgba.red -rgba.green -rgba.blue none}
+   matrix {
+       {-1 -2 -1}
+       {0 0 0}
+       {1 2 1}
+     }
+   name Matrix3
+   xpos -906
+   ypos 441
+  }
+  Matrix {
+   channels {-rgba.red rgba.green -rgba.blue none}
+   matrix {
+       {-1 0 1}
+       {-2 0 2}
+       {-1 0 1}
+     }
+   name Matrix4
+   xpos -906
+   ypos 467
+  }
+  Expression {
+   temp_name3 Le
+   temp_expr3 "sqrt((Red*Red) + (Green*Green))+0.00000001"
+   expr0 Red/Le
+   expr1 Green/Le
+   expr3 Le
+   name NVO
+   xpos -906
+   ypos 493
+  }
+  Input {
+   inputs 0
+   name InputImg
+   xpos -1078
+   ypos 233
+  }
+  Dot {
+   name Dot8
+   xpos -1044
+   ypos 595
+  }
+set N69085400 [stack 0]
+  ShuffleCopy {
+   inputs 2
+   alpha blue
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 motion
+   name ShuffleCopy5
+   label "\[python nuke.thisNode().knob('in').value()] >> \[python nuke.thisNode().knob('out').value()]"
+   xpos -906
+   ypos 585
+  }
+  VectorBlur2 {
+   inputs 1+1
+   channels rgba
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv motion
+   scale {{parent.parent.Detail}}
+   motion_falloff {{parent.parent.detailFalloff}}
+   soft_lines {{parent.parent.Softlining}}
+   name VectorBlur1
+   xpos -643
+   ypos 585
+  }
+  Dot {
+   name Dot11
+   xpos -609
+   ypos 690
+  }
+set N69084400 [stack 0]
+  Dot {
+   name Dot10
+   xpos -609
+   ypos 746
+  }
+set Nee3c00 [stack 0]
+  Group {
+   name Allign_Vec
+   xpos -643
+   ypos 799
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos 229
+    ypos 70
+   }
+   Expression {
+    channel0 {forward.u -forward.v}
+    expr0 forward.v
+    channel1 {-forward.u forward.v}
+    expr1 -forward.u
+    channel2 {-rgba.red -rgba.green -rgba.blue none}
+    expr2 0
+    channel3 {none none none -rgba.alpha}
+    expr3 0
+    name Expression1
+    xpos 229
+    ypos 164
+   }
+   Grade {
+    channels forward
+    white 0.5
+    black_clamp false
+    name Grade1
+    xpos 229
+    ypos 190
+   }
+   Output {
+    name Output1
+    xpos 229
+    ypos 314
+   }
+  end_group
+set Nfa637200 [stack 0]
+  Shuffle2 {
+   fromInput1 {{0} B}
+   in1 motion
+   fromInput2 {{0} B}
+   mappings "4 forward.u 0 0 rgba.red 0 0 forward.v 0 1 rgba.green 0 1 backward.u 0 2 rgba.blue 0 2 backward.v 0 3 rgba.alpha 0 3"
+   name Shuffle1
+   xpos -477
+   ypos 799
+  }
+set Nee2800 [stack 0]
+  Dot {
+   name Dot5
+   xpos -251
+   ypos 803
+  }
+  Dot {
+   name Dot6
+   xpos -251
+   ypos 985
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   name Merge3
+   xpos -1205
+   ypos 981
+   disable true
+  }
+set Nee1c00 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   name ColorMatrix1
+   xpos -1299
+   ypos 1046
+  }
+  Grade {
+   multiply {{parent.parent.limitZip} 1 1 1}
+   multiply_panelDropped true
+   black_clamp false
+   name Grade2
+   xpos -1299
+   ypos 1072
+  }
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   invert true
+   name ColorMatrix2
+   xpos -1299
+   ypos 1098
+  }
+push $Nee1c00
+  Switch {
+   inputs 2
+   which {{parent.parent.limitZip<1}}
+   name Switch3
+   xpos -1205
+   ypos 1151
+  }
+push $N69087000
+push $N69085400
+  Dot {
+   name Dot4
+   xpos -1044
+   ypos 690
+  }
+push $N69084400
+  Merge2 {
+   inputs 2
+   operation minus
+   invert_mask true
+   name Merge1
+   xpos -911
+   ypos 686
+  }
+set Nee0400 [stack 0]
+push $Nee0400
+  Group {
+   inputs 2
+   name Compressor
+   xpos -911
+   ypos 763
+   disable {{!parent.parent.compression}}
+   addUserKnob {20 User}
+   addUserKnob {41 size T Blur1.size}
+   addUserKnob {41 multiply T Grade4.multiply}
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos -431
+    ypos 124
+   }
+set Nbc517c00 [stack 0]
+push $Nbc517c00
+   Blur {
+    size {{parent.parent.parent.CompressionRadius}}
+    name Blur1
+    selected true
+    xpos -431
+    ypos 164
+   }
+set Nbc517800 [stack 0]
+   Merge2 {
+    inputs 2
+    operation minus
+    name Merge4
+    xpos -345
+    ypos 170
+   }
+   Grade {
+    white 25
+    multiply {{parent.parent.parent.compression_level}}
+    black_clamp false
+    name Grade4
+    xpos -345
+    ypos 196
+   }
+   Expression {
+    expr0 r>0?(r/(r+1)):-(-r/(-r+1))
+    expr1 g>0?(g/(g+1)):-(-g/(-g+1))
+    expr2 b>0?(b/(b+1)):-(-b/(-b+1))
+    name Expression2
+    xpos -345
+    ypos 222
+   }
+   Grade {
+    white {{parent.Grade4.white}}
+    multiply {{parent.Grade4.multiply}}
+    gamma {{parent.Grade4.gamma}}
+    reverse true
+    black_clamp false
+    name Grade5
+    xpos -345
+    ypos 248
+   }
+push $Nbc517800
+   Merge2 {
+    inputs 2
+    operation plus
+    name Merge5
+    xpos -431
+    ypos 248
+   }
+   Output {
+    name Output1
+    xpos -431
+    ypos 348
+   }
+  end_group
+set N54b78800 [stack 0]
+  Shuffle2 {
+   inputs 2
+   fromInput1 {{0} B A}
+   fromInput2 {{1} B A}
+   in2 rgba
+   mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.red 1 0 rgba.alpha 0 3"
+   name Shuffle2
+   xpos -1030
+   ypos 763
+  }
+  Grade {
+   channels alpha
+   gamma 0.31
+   name Grade1
+   xpos -1030
+   ypos 822
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 19
+   ProgramGroup 1
+   KernelDescription "2 \"ZipBlur\" iterate pixelWise d734f3d395bbb94244668173872317cbf77f3d5355c28821b93568a5317f0d0a 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 1 \"radius\" Float 1 AABAQA== 1 \"radius\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel ZipBlur : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  float radius;  //The vertical radius of our box blur\n\n\nlocal:\n  int _filterSize;\n\n\n  void define() \{\n    defineParam(radius, \"radius\", 3.0f); \n  \}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    int xRadius = int(_filterSize)+1;\n    src.setRange(-xRadius, -xRadius, xRadius, xRadius);\n  \}\n\n  void process() \{\n    float4 sum = 0.0f;\n    float2 mvsample = float2(mv(0),mv(1));\n    //float4 aSample = bilinear(src,radius*mvsample.x,radius*mvsample.y);\n    //float4 bSample = bilinear(src,-radius*mvsample.x,-radius*mvsample.y);\n    float4 aSample = src(radius*mvsample.x,radius*mvsample.y);\n    float4 bSample = src(-radius*mvsample.x,-radius*mvsample.y);\n    aSample.w = 1.0f-aSample.w;\n    bSample.w = 1.0f-bSample.w;\n    dst() = ((aSample*aSample.w)+(bSample*bSample.w))/(aSample.w+bSample.w);\n\n  \}\n\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   ZipBlur_radius {{parent.parent.nuclearOption}}
+   rebuild_finalise ""
+   name BlinkScript4
+   xpos -1030
+   ypos 1145
+  }
+push $N54b78800
+  Switch {
+   inputs 2
+   which {{parent.parent.nuclearOption>0}}
+   name Switch2
+   xpos -911
+   ypos 1132
+  }
+push $Nee2800
+push $Nee3c00
+  Expression {
+   expr3 1-a
+   name Expression1
+   xpos -567
+   ypos 742
+  }
+  Dot {
+   name Dot12
+   xpos -347
+   ypos 746
+  }
+  Grade {
+   channels alpha
+   gamma {{parent.parent.WeightDistribution}}
+   name Grade3
+   selected true
+   xpos -381
+   ypos 861
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 26
+   ProgramGroup 1
+   KernelDescription "2 \"BoxBlur2D\" iterate pixelWise b192d98157b51825d06f8b741e01ddbad1333554bc2cd266b9a98e88df5be905 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 4 \"SampleSize\" Int 1 BQAAAA== \"Method\" Int 1 AAAAAA== \"PositionalSigma\" Float 1 AAAgQQ== \"ColorSigma\" Float 1 zczMPQ== 4 \"sampleSize\" 1 1 \"method\" 1 1 \"SIGMA\" 1 1 \"BSIGMA\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel BoxBlur2D : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n\n  int sampleSize;  //The horizontal radius of our box blur\n  int method;  //The vertical radius of our box blur\n    float SIGMA;\n    float BSIGMA;\n\n\n\nlocal:\n  int _filterSize;\n\n\n\n  void define() \{\n    defineParam(sampleSize, \"SampleSize\", 5); \n    defineParam(method, \"Method\", 0); \n    defineParam(SIGMA, \"PositionalSigma\", 10.0f);\n    defineParam(BSIGMA, \"ColorSigma\", 0.1f);         \n  \}\n\n\nfloat normpdf(float x, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*x*x/(sigma*sigma))/sigma;\n\}\n\nfloat normpdf3(float3 v, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*dot(v,v)/(sigma*sigma))/sigma;\n\}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    src.setRange(-sampleSize, -sampleSize, sampleSize, sampleSize);\n    _filterSize = (2 * sampleSize + 1);\n  \}\n\n\n\n  void process() \{\n    float4 sum = 0.0f;\n    float4 srcsample = src(0,0);\n    float2 mvsample = float2(mv(0),mv(1));\n    float4 col_output = float4(0.0);\n    float3 tmp_colour = float3(0.0); //Temp Storage\n    float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n\n    if (method==0)\{\n      for(int j = -sampleSize; j <= sampleSize; j++)\n          sum += bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n      col_output = sum / (float)_filterSize;\n    \}\n    else if (method==1) \{\n        float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n        float kernelB\[200];\n\n        \n        //create the 1-D kernel\n        float Z = 0.0;\n\n        for (int j = 0; j <= _filterSize; ++j)\n        \{\n          kernelB\[_filterSize+j] = kernelB\[_filterSize-j] = normpdf(float(j), SIGMA);\n        \}\n            \n        float3 cc;\n        float factor;\n        float bZ = 1.0f/normpdf(0.0f, BSIGMA);\n        //read out the texels\n        for (int i=-_filterSize; i <= _filterSize; ++i)\n        \{\n            srcsample = bilinear(src,((float)i*mvsample.x),((float)i*mvsample.y));\n            cc = float3(srcsample.x,srcsample.y,srcsample.z);\n            factor = normpdf3(cc-c, BSIGMA)*bZ*kernelB\[_filterSize]*kernelB\[_filterSize+i];\n            Z += factor;\n            tmp_colour += factor*cc;\n        \}    \n        tmp_colour = tmp_colour/Z;\n        col_output = float4(tmp_colour.x,tmp_colour.y,tmp_colour.z, 1.0f);\n    \}        \n    else if (method==2)  \{ //\"Weighted Blur\"\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          temp_sample = bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n      \}\n    \n    else \{\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          for(int i = -sampleSize; i <= sampleSize; i++)\{\n          temp_sample = src(i,j);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n          \}\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n    \}\n\n\n    dst() = col_output;\n\n  \}\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   BoxBlur2D_SampleSize {{parent.parent.ElementBlur}}
+   BoxBlur2D_Method {{min(max(parent.parent.algorithm,2)-2,3)}}
+   BoxBlur2D_PositionalSigma 60000
+   BoxBlur2D_ColorSigma {{max(parent.parent.selectiveThreshold,0.00001)}}
+   rebuild_finalise ""
+   name BlinkScript2
+   xpos -477
+   ypos 861
+  }
+push $Nfa637200
+  VectorBlur2 {
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv forward
+   scale {{parent.parent.ElementBlur*2}}
+   motion_falloff 1
+   soft_lines true
+   name VectorBlur2
+   xpos -643
+   ypos 858
+  }
+push $Nee3c00
+  Blur {
+   size {{parent.parent.ElementBlur}}
+   name Blur2
+   xpos -798
+   ypos 859
+  }
+  Switch {
+   inputs 3
+   which {{min(parent.parent.algorithm,2)}}
+   name Switch1
+   xpos -643
+   ypos 938
+  }
+  Dot {
+   name Dot7
+   xpos -609
+   ypos 1204
+  }
+  Merge2 {
+   inputs 2
+   operation plus
+   name Merge2
+   xpos -911
+   ypos 1200
+  }
+  Output {
+   name Output1
+   xpos -911
+   ypos 1275
+  }
+  TransformGeo {
+   inputs 0
+   rotate {0 0 {parent.parent.LimtZipDirection*360}}
+   name TransformGeo1
+   xpos -1412
+   ypos 1079
+  }
+ end_group
+ Merge2 {
+  inputs 2+1
+  operation copy
+  invert_mask true
+  name Merge1
+  xpos 862
+  ypos 166
+  disable {{!parent.Switch2.which}}
+ }
+set Nb54e5800 [stack 0]
+push $N4f795000
+ Switch {
+  inputs 2
+  which 1
+  name Switch2
+  xpos 1105
+  ypos 218
+ }
+ set Cb54e5400 [stack 0]
+set Nb54e5400 [stack 0]
+push $N4f794400
+ Dot {
+  name Dot22
+  xpos 689
+  ypos 196
+ }
+set Nb54e5000 [stack 0]
+push $Nb54e5800
+ Group {
+  inputs 2
+  name GradientBlur2
+  xpos 862
+  ypos 192
+  disable {{!(parent.itterations>0)}}
+  addUserKnob {20 User}
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+ }
+  Input {
+   inputs 0
+   name InputMask
+   xpos -1205
+   ypos 237
+   number 1
+  }
+  Dot {
+   name Dot9
+   xpos -1171
+   ypos 378
+  }
+set Nb54e4800 [stack 0]
+  Dot {
+   name Dot1
+   xpos -1171
+   ypos 767
+  }
+set Nb54e4400 [stack 0]
+push $Nb54e4800
+  Dot {
+   name Dot2
+   xpos -872
+   ypos 378
+  }
+set N6dcb3c00 [stack 0]
+  Dot {
+   name Dot3
+   xpos -609
+   ypos 378
+  }
+push $N6dcb3c00
+  Matrix {
+   channels {rgba.red -rgba.green -rgba.blue none}
+   matrix {
+       {-1 -2 -1}
+       {0 0 0}
+       {1 2 1}
+     }
+   name Matrix3
+   xpos -906
+   ypos 441
+  }
+  Matrix {
+   channels {-rgba.red rgba.green -rgba.blue none}
+   matrix {
+       {-1 0 1}
+       {-2 0 2}
+       {-1 0 1}
+     }
+   name Matrix4
+   xpos -906
+   ypos 467
+  }
+  Expression {
+   temp_name3 Le
+   temp_expr3 "sqrt((Red*Red) + (Green*Green))+0.00000001"
+   expr0 Red/Le
+   expr1 Green/Le
+   expr3 Le
+   name NVO
+   xpos -906
+   ypos 493
+  }
+  Input {
+   inputs 0
+   name InputImg
+   xpos -1078
+   ypos 233
+  }
+  Dot {
+   name Dot8
+   xpos -1044
+   ypos 595
+  }
+set N6dcb2400 [stack 0]
+  ShuffleCopy {
+   inputs 2
+   alpha blue
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 motion
+   name ShuffleCopy5
+   label "\[python nuke.thisNode().knob('in').value()] >> \[python nuke.thisNode().knob('out').value()]"
+   xpos -906
+   ypos 585
+  }
+  VectorBlur2 {
+   inputs 1+1
+   channels rgba
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv motion
+   scale {{parent.parent.Detail}}
+   motion_falloff {{parent.parent.detailFalloff}}
+   soft_lines {{parent.parent.Softlining}}
+   name VectorBlur1
+   xpos -643
+   ypos 585
+  }
+  Dot {
+   name Dot11
+   xpos -609
+   ypos 690
+  }
+set N6dcb1400 [stack 0]
+  Dot {
+   name Dot12
+   xpos -609
+   ypos 746
+  }
+set N6dcb1000 [stack 0]
+  Group {
+   name Allign_Vec1
+   xpos -643
+   ypos 799
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos 229
+    ypos 70
+   }
+   Expression {
+    channel0 {forward.u -forward.v}
+    expr0 forward.v
+    channel1 {-forward.u forward.v}
+    expr1 -forward.u
+    channel2 {-rgba.red -rgba.green -rgba.blue none}
+    expr2 0
+    channel3 {none none none -rgba.alpha}
+    expr3 0
+    name Expression1
+    xpos 229
+    ypos 164
+   }
+   Grade {
+    channels forward
+    white 0.5
+    black_clamp false
+    name Grade1
+    xpos 229
+    ypos 190
+   }
+   Output {
+    name Output1
+    xpos 229
+    ypos 314
+   }
+  end_group
+set Nba456400 [stack 0]
+  Shuffle2 {
+   fromInput1 {{0} B}
+   in1 motion
+   fromInput2 {{0} B}
+   mappings "4 forward.u 0 0 rgba.red 0 0 forward.v 0 1 rgba.green 0 1 backward.u 0 2 rgba.blue 0 2 backward.v 0 3 rgba.alpha 0 3"
+   name Shuffle3
+   xpos -477
+   ypos 799
+  }
+set N6d39b800 [stack 0]
+  Dot {
+   name Dot13
+   xpos -251
+   ypos 803
+  }
+  Dot {
+   name Dot14
+   xpos -251
+   ypos 985
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   name Merge3
+   xpos -1205
+   ypos 981
+   disable true
+  }
+set N6d39ac00 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   name ColorMatrix1
+   xpos -1299
+   ypos 1046
+  }
+  Grade {
+   multiply {{parent.parent.limitZip} 1 1 1}
+   multiply_panelDropped true
+   black_clamp false
+   name Grade2
+   xpos -1299
+   ypos 1072
+  }
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   invert true
+   name ColorMatrix2
+   xpos -1299
+   ypos 1098
+  }
+push $N6d39ac00
+  Switch {
+   inputs 2
+   which {{parent.parent.limitZip<1}}
+   name Switch3
+   xpos -1205
+   ypos 1151
+  }
+push $Nb54e4400
+push $N6dcb2400
+  Dot {
+   name Dot4
+   xpos -1044
+   ypos 690
+  }
+push $N6dcb1400
+  Merge2 {
+   inputs 2
+   operation minus
+   invert_mask true
+   name Merge1
+   xpos -911
+   ypos 686
+  }
+set N6d399400 [stack 0]
+push $N6d399400
+  Group {
+   inputs 2
+   name Compressor
+   selected true
+   xpos -911
+   ypos 712
+   disable {{!parent.parent.compression}}
+   addUserKnob {20 User}
+   addUserKnob {41 size T Blur1.size}
+   addUserKnob {41 multiply T Grade4.multiply}
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos -431
+    ypos 124
+   }
+set N6d399000 [stack 0]
+push $N6d399000
+   Blur {
+    size {{parent.parent.parent.CompressionRadius}}
+    name Blur1
+    selected true
+    xpos -431
+    ypos 164
+   }
+set N6d398c00 [stack 0]
+   Merge2 {
+    inputs 2
+    operation minus
+    name Merge4
+    xpos -345
+    ypos 170
+   }
+   Grade {
+    white 25
+    multiply {{parent.parent.parent.compression_level}}
+    black_clamp false
+    name Grade4
+    xpos -345
+    ypos 196
+   }
+   Expression {
+    expr0 r>0?(r/(r+1)):-(-r/(-r+1))
+    expr1 g>0?(g/(g+1)):-(-g/(-g+1))
+    expr2 b>0?(b/(b+1)):-(-b/(-b+1))
+    name Expression2
+    xpos -345
+    ypos 222
+   }
+   Grade {
+    white {{parent.Grade4.white}}
+    multiply {{parent.Grade4.multiply}}
+    gamma {{parent.Grade4.gamma}}
+    reverse true
+    black_clamp false
+    name Grade5
+    xpos -345
+    ypos 248
+   }
+push $N6d398c00
+   Merge2 {
+    inputs 2
+    operation plus
+    name Merge5
+    xpos -431
+    ypos 248
+   }
+   Output {
+    name Output1
+    xpos -431
+    ypos 348
+   }
+  end_group
+set N997bf900 [stack 0]
+  Shuffle2 {
+   inputs 2
+   fromInput1 {{0} B A}
+   fromInput2 {{1} B A}
+   in2 rgba
+   mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.red 1 0 rgba.alpha 0 3"
+   name Shuffle2
+   xpos -1030
+   ypos 763
+  }
+  Grade {
+   channels alpha
+   gamma 0.31
+   name Grade1
+   xpos -1030
+   ypos 822
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 18
+   ProgramGroup 1
+   KernelDescription "2 \"ZipBlur\" iterate pixelWise d734f3d395bbb94244668173872317cbf77f3d5355c28821b93568a5317f0d0a 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 1 \"radius\" Float 1 AABAQA== 1 \"radius\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel ZipBlur : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  float radius;  //The vertical radius of our box blur\n\n\nlocal:\n  int _filterSize;\n\n\n  void define() \{\n    defineParam(radius, \"radius\", 3.0f); \n  \}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    int xRadius = int(_filterSize)+1;\n    src.setRange(-xRadius, -xRadius, xRadius, xRadius);\n  \}\n\n  void process() \{\n    float4 sum = 0.0f;\n    float2 mvsample = float2(mv(0),mv(1));\n    //float4 aSample = bilinear(src,radius*mvsample.x,radius*mvsample.y);\n    //float4 bSample = bilinear(src,-radius*mvsample.x,-radius*mvsample.y);\n    float4 aSample = src(radius*mvsample.x,radius*mvsample.y);\n    float4 bSample = src(-radius*mvsample.x,-radius*mvsample.y);\n    aSample.w = 1.0f-aSample.w;\n    bSample.w = 1.0f-bSample.w;\n    dst() = ((aSample*aSample.w)+(bSample*bSample.w))/(aSample.w+bSample.w);\n\n  \}\n\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   ZipBlur_radius {{parent.parent.nuclearOption}}
+   rebuild_finalise ""
+   name BlinkScript4
+   xpos -1030
+   ypos 1145
+  }
+push $N997bf900
+  Switch {
+   inputs 2
+   which {{parent.parent.nuclearOption>0}}
+   name Switch2
+   xpos -911
+   ypos 1151
+  }
+push $N6d39b800
+push $N6dcb1000
+  Expression {
+   expr3 1-a
+   name Expression1
+   xpos -567
+   ypos 742
+  }
+  Dot {
+   name Dot15
+   xpos -347
+   ypos 746
+  }
+  Grade {
+   channels alpha
+   gamma {{parent.parent.WeightDistribution}}
+   name Grade3
+   xpos -381
+   ypos 861
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 26
+   ProgramGroup 1
+   KernelDescription "2 \"BoxBlur2D\" iterate pixelWise b192d98157b51825d06f8b741e01ddbad1333554bc2cd266b9a98e88df5be905 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 4 \"SampleSize\" Int 1 BQAAAA== \"Method\" Int 1 AAAAAA== \"PositionalSigma\" Float 1 AAAgQQ== \"ColorSigma\" Float 1 zczMPQ== 4 \"sampleSize\" 1 1 \"method\" 1 1 \"SIGMA\" 1 1 \"BSIGMA\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel BoxBlur2D : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n\n  int sampleSize;  //The horizontal radius of our box blur\n  int method;  //The vertical radius of our box blur\n    float SIGMA;\n    float BSIGMA;\n\n\n\nlocal:\n  int _filterSize;\n\n\n\n  void define() \{\n    defineParam(sampleSize, \"SampleSize\", 5); \n    defineParam(method, \"Method\", 0); \n    defineParam(SIGMA, \"PositionalSigma\", 10.0f);\n    defineParam(BSIGMA, \"ColorSigma\", 0.1f);         \n  \}\n\n\nfloat normpdf(float x, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*x*x/(sigma*sigma))/sigma;\n\}\n\nfloat normpdf3(float3 v, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*dot(v,v)/(sigma*sigma))/sigma;\n\}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    src.setRange(-sampleSize, -sampleSize, sampleSize, sampleSize);\n    _filterSize = (2 * sampleSize + 1);\n  \}\n\n\n\n  void process() \{\n    float4 sum = 0.0f;\n    float4 srcsample = src(0,0);\n    float2 mvsample = float2(mv(0),mv(1));\n    float4 col_output = float4(0.0);\n    float3 tmp_colour = float3(0.0); //Temp Storage\n    float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n\n    if (method==0)\{\n      for(int j = -sampleSize; j <= sampleSize; j++)\n          sum += bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n      col_output = sum / (float)_filterSize;\n    \}\n    else if (method==1) \{\n        float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n        float kernelB\[200];\n\n        \n        //create the 1-D kernel\n        float Z = 0.0;\n\n        for (int j = 0; j <= _filterSize; ++j)\n        \{\n          kernelB\[_filterSize+j] = kernelB\[_filterSize-j] = normpdf(float(j), SIGMA);\n        \}\n            \n        float3 cc;\n        float factor;\n        float bZ = 1.0f/normpdf(0.0f, BSIGMA);\n        //read out the texels\n        for (int i=-_filterSize; i <= _filterSize; ++i)\n        \{\n            srcsample = bilinear(src,((float)i*mvsample.x),((float)i*mvsample.y));\n            cc = float3(srcsample.x,srcsample.y,srcsample.z);\n            factor = normpdf3(cc-c, BSIGMA)*bZ*kernelB\[_filterSize]*kernelB\[_filterSize+i];\n            Z += factor;\n            tmp_colour += factor*cc;\n        \}    \n        tmp_colour = tmp_colour/Z;\n        col_output = float4(tmp_colour.x,tmp_colour.y,tmp_colour.z, 1.0f);\n    \}        \n    else if (method==2)  \{ //\"Weighted Blur\"\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          temp_sample = bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n      \}\n    \n    else \{\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          for(int i = -sampleSize; i <= sampleSize; i++)\{\n          temp_sample = src(i,j);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n          \}\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n    \}\n\n\n    dst() = col_output;\n\n  \}\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   BoxBlur2D_SampleSize {{parent.parent.ElementBlur}}
+   BoxBlur2D_Method {{min(max(parent.parent.algorithm,2)-2,3)}}
+   BoxBlur2D_PositionalSigma 60000
+   BoxBlur2D_ColorSigma {{max(parent.parent.selectiveThreshold,0.00001)}}
+   rebuild_finalise ""
+   name BlinkScript1
+   xpos -477
+   ypos 861
+  }
+push $Nba456400
+  VectorBlur2 {
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv forward
+   scale {{parent.parent.ElementBlur}}
+   motion_falloff 1
+   soft_lines true
+   name VectorBlur3
+   xpos -643
+   ypos 858
+  }
+push $N6dcb1000
+  Blur {
+   size {{parent.parent.ElementBlur}}
+   name Blur1
+   xpos -798
+   ypos 850
+  }
+  Switch {
+   inputs 3
+   which {{min(parent.parent.algorithm,2)}}
+   name Switch4
+   xpos -643
+   ypos 938
+  }
+  Dot {
+   name Dot7
+   xpos -609
+   ypos 1204
+  }
+  Merge2 {
+   inputs 2
+   operation plus
+   name Merge2
+   xpos -911
+   ypos 1200
+  }
+  Output {
+   name Output1
+   xpos -911
+   ypos 1275
+  }
+  TransformGeo {
+   inputs 0
+   rotate {0 0 {parent.parent.LimtZipDirection*360}}
+   name TransformGeo1
+   xpos -1412
+   ypos 1079
+  }
+ end_group
+ Merge2 {
+  inputs 2+1
+  operation copy
+  invert_mask true
+  name Merge2
+  xpos 862
+  ypos 218
+  disable {{!parent.Switch2.which}}
+ }
+set N5b56800 [stack 0]
+push $Nb54e5400
+clone $Cb54e5400 {
+  inputs 2
+  xpos 1105
+  ypos 270
+  selected false
+ }
+set N5b56400 [stack 0]
+push $Nb54e5000
+ Blur {
+  size 10
+  name Blur1
+  xpos 655
+  ypos 214
+ }
+ set C5b56000 [stack 0]
+ Dot {
+  name Dot21
+  xpos 689
+  ypos 248
+ }
+set N5b55c00 [stack 0]
+push $N5b56800
+ Group {
+  inputs 2
+  name GradientBlur4
+  xpos 862
+  ypos 244
+  disable {{!(parent.itterations>1)}}
+  addUserKnob {20 User}
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+ }
+  Input {
+   inputs 0
+   name InputMask
+   xpos -1205
+   ypos 237
+   number 1
+  }
+  Dot {
+   name Dot9
+   xpos -1171
+   ypos 378
+  }
+set N5b55400 [stack 0]
+  Dot {
+   name Dot1
+   xpos -1171
+   ypos 767
+  }
+set N5b55000 [stack 0]
+push $N5b55400
+  Dot {
+   name Dot2
+   xpos -872
+   ypos 378
+  }
+set N5b54c00 [stack 0]
+  Dot {
+   name Dot3
+   xpos -609
+   ypos 378
+  }
+push $N5b54c00
+  Matrix {
+   channels {rgba.red -rgba.green -rgba.blue none}
+   matrix {
+       {-1 -2 -1}
+       {0 0 0}
+       {1 2 1}
+     }
+   name Matrix3
+   xpos -906
+   ypos 441
+  }
+  Matrix {
+   channels {-rgba.red rgba.green -rgba.blue none}
+   matrix {
+       {-1 0 1}
+       {-2 0 2}
+       {-1 0 1}
+     }
+   name Matrix4
+   xpos -906
+   ypos 467
+  }
+  Expression {
+   temp_name3 Le
+   temp_expr3 "sqrt((Red*Red) + (Green*Green))+0.00000001"
+   expr0 Red/Le
+   expr1 Green/Le
+   expr3 Le
+   name NVO
+   xpos -906
+   ypos 493
+  }
+  Input {
+   inputs 0
+   name InputImg
+   xpos -1078
+   ypos 233
+  }
+  Dot {
+   name Dot8
+   xpos -1044
+   ypos 595
+  }
+set N254e7000 [stack 0]
+  ShuffleCopy {
+   inputs 2
+   alpha blue
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 motion
+   name ShuffleCopy5
+   label "\[python nuke.thisNode().knob('in').value()] >> \[python nuke.thisNode().knob('out').value()]"
+   xpos -906
+   ypos 585
+  }
+  VectorBlur2 {
+   inputs 1+1
+   channels rgba
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv motion
+   scale {{parent.parent.Detail}}
+   motion_falloff {{parent.parent.detailFalloff}}
+   soft_lines {{parent.parent.Softlining}}
+   name VectorBlur1
+   xpos -643
+   ypos 585
+  }
+  Dot {
+   name Dot11
+   xpos -609
+   ypos 690
+  }
+set N254e6000 [stack 0]
+  Dot {
+   name Dot12
+   xpos -609
+   ypos 746
+  }
+set N254e5c00 [stack 0]
+  Group {
+   name Allign_Vec1
+   xpos -643
+   ypos 799
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos 229
+    ypos 70
+   }
+   Expression {
+    channel0 {forward.u -forward.v}
+    expr0 forward.v
+    channel1 {-forward.u forward.v}
+    expr1 -forward.u
+    channel2 {-rgba.red -rgba.green -rgba.blue none}
+    expr2 0
+    channel3 {none none none -rgba.alpha}
+    expr3 0
+    name Expression1
+    xpos 229
+    ypos 164
+   }
+   Grade {
+    channels forward
+    white 0.5
+    black_clamp false
+    name Grade1
+    xpos 229
+    ypos 190
+   }
+   Output {
+    name Output1
+    xpos 229
+    ypos 314
+   }
+  end_group
+set N5a829600 [stack 0]
+  Shuffle2 {
+   fromInput1 {{0} B}
+   in1 motion
+   fromInput2 {{0} B}
+   mappings "4 forward.u 0 0 rgba.red 0 0 forward.v 0 1 rgba.green 0 1 backward.u 0 2 rgba.blue 0 2 backward.v 0 3 rgba.alpha 0 3"
+   name Shuffle3
+   xpos -477
+   ypos 799
+  }
+set N254e4800 [stack 0]
+  Dot {
+   name Dot13
+   xpos -251
+   ypos 803
+  }
+  Dot {
+   name Dot14
+   xpos -251
+   ypos 985
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   name Merge3
+   xpos -1205
+   ypos 981
+   disable true
+  }
+set Ndcf03800 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   name ColorMatrix1
+   xpos -1299
+   ypos 1046
+  }
+  Grade {
+   multiply {{parent.parent.limitZip} 1 1 1}
+   multiply_panelDropped true
+   black_clamp false
+   name Grade2
+   xpos -1299
+   ypos 1072
+  }
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   invert true
+   name ColorMatrix2
+   xpos -1299
+   ypos 1098
+  }
+push $Ndcf03800
+  Switch {
+   inputs 2
+   which {{parent.parent.limitZip<1}}
+   name Switch3
+   xpos -1205
+   ypos 1151
+  }
+push $N5b55000
+push $N254e7000
+  Dot {
+   name Dot4
+   xpos -1044
+   ypos 690
+  }
+push $N254e6000
+  Merge2 {
+   inputs 2
+   operation minus
+   invert_mask true
+   name Merge1
+   xpos -911
+   ypos 686
+  }
+set Ndcf02000 [stack 0]
+push $Ndcf02000
+  Group {
+   inputs 2
+   name Compressor
+   selected true
+   xpos -911
+   ypos 712
+   disable {{!parent.parent.compression}}
+   addUserKnob {20 User}
+   addUserKnob {41 size T Blur1.size}
+   addUserKnob {41 multiply T Grade4.multiply}
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos -431
+    ypos 124
+   }
+set Ndcf01c00 [stack 0]
+push $Ndcf01c00
+   Blur {
+    size {{parent.parent.parent.CompressionRadius}}
+    name Blur1
+    selected true
+    xpos -431
+    ypos 164
+   }
+set Ndcf01800 [stack 0]
+   Merge2 {
+    inputs 2
+    operation minus
+    name Merge4
+    xpos -345
+    ypos 170
+   }
+   Grade {
+    white 25
+    multiply {{parent.parent.parent.compression_level}}
+    black_clamp false
+    name Grade4
+    xpos -345
+    ypos 196
+   }
+   Expression {
+    expr0 r>0?(r/(r+1)):-(-r/(-r+1))
+    expr1 g>0?(g/(g+1)):-(-g/(-g+1))
+    expr2 b>0?(b/(b+1)):-(-b/(-b+1))
+    name Expression2
+    xpos -345
+    ypos 222
+   }
+   Grade {
+    white {{parent.Grade4.white}}
+    multiply {{parent.Grade4.multiply}}
+    gamma {{parent.Grade4.gamma}}
+    reverse true
+    black_clamp false
+    name Grade5
+    xpos -345
+    ypos 248
+   }
+push $Ndcf01800
+   Merge2 {
+    inputs 2
+    operation plus
+    name Merge5
+    xpos -431
+    ypos 248
+   }
+   Output {
+    name Output1
+    xpos -431
+    ypos 348
+   }
+  end_group
+set N82342b00 [stack 0]
+  Shuffle2 {
+   inputs 2
+   fromInput1 {{0} B A}
+   fromInput2 {{1} B A}
+   in2 rgba
+   mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.red 1 0 rgba.alpha 0 3"
+   name Shuffle2
+   xpos -1030
+   ypos 763
+  }
+  Grade {
+   channels alpha
+   gamma 0.31
+   name Grade1
+   xpos -1030
+   ypos 822
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 18
+   ProgramGroup 1
+   KernelDescription "2 \"ZipBlur\" iterate pixelWise d734f3d395bbb94244668173872317cbf77f3d5355c28821b93568a5317f0d0a 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 1 \"radius\" Float 1 AABAQA== 1 \"radius\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel ZipBlur : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  float radius;  //The vertical radius of our box blur\n\n\nlocal:\n  int _filterSize;\n\n\n  void define() \{\n    defineParam(radius, \"radius\", 3.0f); \n  \}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    int xRadius = int(_filterSize)+1;\n    src.setRange(-xRadius, -xRadius, xRadius, xRadius);\n  \}\n\n  void process() \{\n    float4 sum = 0.0f;\n    float2 mvsample = float2(mv(0),mv(1));\n    //float4 aSample = bilinear(src,radius*mvsample.x,radius*mvsample.y);\n    //float4 bSample = bilinear(src,-radius*mvsample.x,-radius*mvsample.y);\n    float4 aSample = src(radius*mvsample.x,radius*mvsample.y);\n    float4 bSample = src(-radius*mvsample.x,-radius*mvsample.y);\n    aSample.w = 1.0f-aSample.w;\n    bSample.w = 1.0f-bSample.w;\n    dst() = ((aSample*aSample.w)+(bSample*bSample.w))/(aSample.w+bSample.w);\n\n  \}\n\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   ZipBlur_radius {{parent.parent.nuclearOption}}
+   rebuild_finalise ""
+   name BlinkScript4
+   xpos -1030
+   ypos 1145
+  }
+push $N82342b00
+  Switch {
+   inputs 2
+   which {{parent.parent.nuclearOption>0}}
+   name Switch2
+   xpos -911
+   ypos 1151
+  }
+push $N254e4800
+push $N254e5c00
+  Expression {
+   expr3 1-a
+   name Expression1
+   xpos -567
+   ypos 742
+  }
+  Dot {
+   name Dot15
+   xpos -347
+   ypos 746
+  }
+  Grade {
+   channels alpha
+   gamma {{parent.parent.WeightDistribution}}
+   name Grade3
+   xpos -381
+   ypos 861
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 26
+   ProgramGroup 1
+   KernelDescription "2 \"BoxBlur2D\" iterate pixelWise b192d98157b51825d06f8b741e01ddbad1333554bc2cd266b9a98e88df5be905 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 4 \"SampleSize\" Int 1 BQAAAA== \"Method\" Int 1 AAAAAA== \"PositionalSigma\" Float 1 AAAgQQ== \"ColorSigma\" Float 1 zczMPQ== 4 \"sampleSize\" 1 1 \"method\" 1 1 \"SIGMA\" 1 1 \"BSIGMA\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel BoxBlur2D : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n\n  int sampleSize;  //The horizontal radius of our box blur\n  int method;  //The vertical radius of our box blur\n    float SIGMA;\n    float BSIGMA;\n\n\n\nlocal:\n  int _filterSize;\n\n\n\n  void define() \{\n    defineParam(sampleSize, \"SampleSize\", 5); \n    defineParam(method, \"Method\", 0); \n    defineParam(SIGMA, \"PositionalSigma\", 10.0f);\n    defineParam(BSIGMA, \"ColorSigma\", 0.1f);         \n  \}\n\n\nfloat normpdf(float x, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*x*x/(sigma*sigma))/sigma;\n\}\n\nfloat normpdf3(float3 v, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*dot(v,v)/(sigma*sigma))/sigma;\n\}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    src.setRange(-sampleSize, -sampleSize, sampleSize, sampleSize);\n    _filterSize = (2 * sampleSize + 1);\n  \}\n\n\n\n  void process() \{\n    float4 sum = 0.0f;\n    float4 srcsample = src(0,0);\n    float2 mvsample = float2(mv(0),mv(1));\n    float4 col_output = float4(0.0);\n    float3 tmp_colour = float3(0.0); //Temp Storage\n    float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n\n    if (method==0)\{\n      for(int j = -sampleSize; j <= sampleSize; j++)\n          sum += bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n      col_output = sum / (float)_filterSize;\n    \}\n    else if (method==1) \{\n        float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n        float kernelB\[200];\n\n        \n        //create the 1-D kernel\n        float Z = 0.0;\n\n        for (int j = 0; j <= _filterSize; ++j)\n        \{\n          kernelB\[_filterSize+j] = kernelB\[_filterSize-j] = normpdf(float(j), SIGMA);\n        \}\n            \n        float3 cc;\n        float factor;\n        float bZ = 1.0f/normpdf(0.0f, BSIGMA);\n        //read out the texels\n        for (int i=-_filterSize; i <= _filterSize; ++i)\n        \{\n            srcsample = bilinear(src,((float)i*mvsample.x),((float)i*mvsample.y));\n            cc = float3(srcsample.x,srcsample.y,srcsample.z);\n            factor = normpdf3(cc-c, BSIGMA)*bZ*kernelB\[_filterSize]*kernelB\[_filterSize+i];\n            Z += factor;\n            tmp_colour += factor*cc;\n        \}    \n        tmp_colour = tmp_colour/Z;\n        col_output = float4(tmp_colour.x,tmp_colour.y,tmp_colour.z, 1.0f);\n    \}        \n    else if (method==2)  \{ //\"Weighted Blur\"\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          temp_sample = bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n      \}\n    \n    else \{\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          for(int i = -sampleSize; i <= sampleSize; i++)\{\n          temp_sample = src(i,j);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n          \}\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n    \}\n\n\n    dst() = col_output;\n\n  \}\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   BoxBlur2D_SampleSize {{parent.parent.ElementBlur}}
+   BoxBlur2D_Method {{min(max(parent.parent.algorithm,2)-2,3)}}
+   BoxBlur2D_PositionalSigma 60000
+   BoxBlur2D_ColorSigma {{max(parent.parent.selectiveThreshold,0.00001)}}
+   rebuild_finalise ""
+   name BlinkScript1
+   xpos -477
+   ypos 861
+  }
+push $N5a829600
+  VectorBlur2 {
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv forward
+   scale {{parent.parent.ElementBlur}}
+   motion_falloff 1
+   soft_lines true
+   name VectorBlur3
+   xpos -643
+   ypos 858
+  }
+push $N254e5c00
+  Blur {
+   size {{parent.parent.ElementBlur}}
+   name Blur1
+   xpos -798
+   ypos 850
+  }
+  Switch {
+   inputs 3
+   which {{min(parent.parent.algorithm,2)}}
+   name Switch4
+   xpos -643
+   ypos 938
+  }
+  Dot {
+   name Dot7
+   xpos -609
+   ypos 1204
+  }
+  Merge2 {
+   inputs 2
+   operation plus
+   name Merge2
+   xpos -911
+   ypos 1200
+  }
+  Output {
+   name Output1
+   xpos -911
+   ypos 1275
+  }
+  TransformGeo {
+   inputs 0
+   rotate {0 0 {parent.parent.LimtZipDirection*360}}
+   name TransformGeo1
+   xpos -1412
+   ypos 1079
+  }
+ end_group
+ Merge2 {
+  inputs 2+1
+  operation copy
+  invert_mask true
+  name Merge4
+  xpos 862
+  ypos 270
+  disable {{!parent.Switch2.which}}
+ }
+set Nf9d4b400 [stack 0]
+push $N5b56400
+clone $Cb54e5400 {
+  inputs 2
+  xpos 1105
+  ypos 322
+  selected false
+ }
+set Nf9d4b000 [stack 0]
+push $N5b55c00
+clone $C5b56000 {
+  xpos 655
+  ypos 266
+  selected false
+ }
+ Dot {
+  name Dot19
+  xpos 689
+  ypos 300
+ }
+set Nf9d4a800 [stack 0]
+push $Nf9d4b400
+ Group {
+  inputs 2
+  name GradientBlur5
+  xpos 862
+  ypos 296
+  disable {{!(parent.itterations>2)}}
+  addUserKnob {20 User}
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+ }
+  Input {
+   inputs 0
+   name InputMask
+   xpos -1205
+   ypos 237
+   number 1
+  }
+  Dot {
+   name Dot9
+   xpos -1171
+   ypos 378
+  }
+set Nf9d4a000 [stack 0]
+  Dot {
+   name Dot1
+   xpos -1171
+   ypos 767
+  }
+set Nf9d49c00 [stack 0]
+push $Nf9d4a000
+  Dot {
+   name Dot2
+   xpos -872
+   ypos 378
+  }
+set Nf9d49800 [stack 0]
+  Dot {
+   name Dot3
+   xpos -609
+   ypos 378
+  }
+push $Nf9d49800
+  Matrix {
+   channels {rgba.red -rgba.green -rgba.blue none}
+   matrix {
+       {-1 -2 -1}
+       {0 0 0}
+       {1 2 1}
+     }
+   name Matrix3
+   xpos -906
+   ypos 441
+  }
+  Matrix {
+   channels {-rgba.red rgba.green -rgba.blue none}
+   matrix {
+       {-1 0 1}
+       {-2 0 2}
+       {-1 0 1}
+     }
+   name Matrix4
+   xpos -906
+   ypos 467
+  }
+  Expression {
+   temp_name3 Le
+   temp_expr3 "sqrt((Red*Red) + (Green*Green))+0.00000001"
+   expr0 Red/Le
+   expr1 Green/Le
+   expr3 Le
+   name NVO
+   xpos -906
+   ypos 493
+  }
+  Input {
+   inputs 0
+   name InputImg
+   xpos -1078
+   ypos 233
+  }
+  Dot {
+   name Dot8
+   xpos -1044
+   ypos 595
+  }
+set N807bc00 [stack 0]
+  ShuffleCopy {
+   inputs 2
+   alpha blue
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 motion
+   name ShuffleCopy5
+   label "\[python nuke.thisNode().knob('in').value()] >> \[python nuke.thisNode().knob('out').value()]"
+   xpos -906
+   ypos 585
+  }
+  VectorBlur2 {
+   inputs 1+1
+   channels rgba
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv motion
+   scale {{parent.parent.Detail}}
+   motion_falloff {{parent.parent.detailFalloff}}
+   soft_lines {{parent.parent.Softlining}}
+   name VectorBlur1
+   xpos -643
+   ypos 585
+  }
+  Dot {
+   name Dot11
+   xpos -609
+   ypos 690
+  }
+set N807ac00 [stack 0]
+  Dot {
+   name Dot12
+   xpos -609
+   ypos 746
+  }
+set N807a800 [stack 0]
+  Group {
+   name Allign_Vec1
+   xpos -643
+   ypos 799
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos 229
+    ypos 70
+   }
+   Expression {
+    channel0 {forward.u -forward.v}
+    expr0 forward.v
+    channel1 {-forward.u forward.v}
+    expr1 -forward.u
+    channel2 {-rgba.red -rgba.green -rgba.blue none}
+    expr2 0
+    channel3 {none none none -rgba.alpha}
+    expr3 0
+    name Expression1
+    xpos 229
+    ypos 164
+   }
+   Grade {
+    channels forward
+    white 0.5
+    black_clamp false
+    name Grade1
+    xpos 229
+    ypos 190
+   }
+   Output {
+    name Output1
+    xpos 229
+    ypos 314
+   }
+  end_group
+set N24d58800 [stack 0]
+  Shuffle2 {
+   fromInput1 {{0} B}
+   in1 motion
+   fromInput2 {{0} B}
+   mappings "4 forward.u 0 0 rgba.red 0 0 forward.v 0 1 rgba.green 0 1 backward.u 0 2 rgba.blue 0 2 backward.v 0 3 rgba.alpha 0 3"
+   name Shuffle3
+   xpos -477
+   ypos 799
+  }
+set N8079400 [stack 0]
+  Dot {
+   name Dot13
+   xpos -251
+   ypos 803
+  }
+  Dot {
+   name Dot14
+   xpos -251
+   ypos 985
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   name Merge3
+   xpos -1205
+   ypos 981
+   disable true
+  }
+set N8078800 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   name ColorMatrix1
+   xpos -1299
+   ypos 1046
+  }
+  Grade {
+   multiply {{parent.parent.limitZip} 1 1 1}
+   multiply_panelDropped true
+   black_clamp false
+   name Grade2
+   xpos -1299
+   ypos 1072
+  }
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   invert true
+   name ColorMatrix2
+   xpos -1299
+   ypos 1098
+  }
+push $N8078800
+  Switch {
+   inputs 2
+   which {{parent.parent.limitZip<1}}
+   name Switch3
+   xpos -1205
+   ypos 1151
+  }
+push $Nf9d49c00
+push $N807bc00
+  Dot {
+   name Dot4
+   xpos -1044
+   ypos 690
+  }
+push $N807ac00
+  Merge2 {
+   inputs 2
+   operation minus
+   invert_mask true
+   name Merge1
+   xpos -911
+   ypos 686
+  }
+set N63ebac00 [stack 0]
+push $N63ebac00
+  Group {
+   inputs 2
+   name Compressor
+   selected true
+   xpos -911
+   ypos 712
+   disable {{!parent.parent.compression}}
+   addUserKnob {20 User}
+   addUserKnob {41 size T Blur1.size}
+   addUserKnob {41 multiply T Grade4.multiply}
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos -431
+    ypos 124
+   }
+set N63eba800 [stack 0]
+push $N63eba800
+   Blur {
+    size {{parent.parent.parent.CompressionRadius}}
+    name Blur1
+    selected true
+    xpos -431
+    ypos 164
+   }
+set N63eba400 [stack 0]
+   Merge2 {
+    inputs 2
+    operation minus
+    name Merge4
+    xpos -345
+    ypos 170
+   }
+   Grade {
+    white 25
+    multiply {{parent.parent.parent.compression_level}}
+    black_clamp false
+    name Grade4
+    xpos -345
+    ypos 196
+   }
+   Expression {
+    expr0 r>0?(r/(r+1)):-(-r/(-r+1))
+    expr1 g>0?(g/(g+1)):-(-g/(-g+1))
+    expr2 b>0?(b/(b+1)):-(-b/(-b+1))
+    name Expression2
+    xpos -345
+    ypos 222
+   }
+   Grade {
+    white {{parent.Grade4.white}}
+    multiply {{parent.Grade4.multiply}}
+    gamma {{parent.Grade4.gamma}}
+    reverse true
+    black_clamp false
+    name Grade5
+    xpos -345
+    ypos 248
+   }
+push $N63eba400
+   Merge2 {
+    inputs 2
+    operation plus
+    name Merge5
+    xpos -431
+    ypos 248
+   }
+   Output {
+    name Output1
+    xpos -431
+    ypos 348
+   }
+  end_group
+set N63ebdd00 [stack 0]
+  Shuffle2 {
+   inputs 2
+   fromInput1 {{0} B A}
+   fromInput2 {{1} B A}
+   in2 rgba
+   mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.red 1 0 rgba.alpha 0 3"
+   name Shuffle2
+   xpos -1030
+   ypos 763
+  }
+  Grade {
+   channels alpha
+   gamma 0.31
+   name Grade1
+   xpos -1030
+   ypos 822
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 18
+   ProgramGroup 1
+   KernelDescription "2 \"ZipBlur\" iterate pixelWise d734f3d395bbb94244668173872317cbf77f3d5355c28821b93568a5317f0d0a 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 1 \"radius\" Float 1 AABAQA== 1 \"radius\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel ZipBlur : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  float radius;  //The vertical radius of our box blur\n\n\nlocal:\n  int _filterSize;\n\n\n  void define() \{\n    defineParam(radius, \"radius\", 3.0f); \n  \}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    int xRadius = int(_filterSize)+1;\n    src.setRange(-xRadius, -xRadius, xRadius, xRadius);\n  \}\n\n  void process() \{\n    float4 sum = 0.0f;\n    float2 mvsample = float2(mv(0),mv(1));\n    //float4 aSample = bilinear(src,radius*mvsample.x,radius*mvsample.y);\n    //float4 bSample = bilinear(src,-radius*mvsample.x,-radius*mvsample.y);\n    float4 aSample = src(radius*mvsample.x,radius*mvsample.y);\n    float4 bSample = src(-radius*mvsample.x,-radius*mvsample.y);\n    aSample.w = 1.0f-aSample.w;\n    bSample.w = 1.0f-bSample.w;\n    dst() = ((aSample*aSample.w)+(bSample*bSample.w))/(aSample.w+bSample.w);\n\n  \}\n\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   ZipBlur_radius {{parent.parent.nuclearOption}}
+   rebuild_finalise ""
+   name BlinkScript4
+   xpos -1030
+   ypos 1145
+  }
+push $N63ebdd00
+  Switch {
+   inputs 2
+   which {{parent.parent.nuclearOption>0}}
+   name Switch2
+   xpos -911
+   ypos 1151
+  }
+push $N8079400
+push $N807a800
+  Expression {
+   expr3 1-a
+   name Expression1
+   xpos -567
+   ypos 742
+  }
+  Dot {
+   name Dot15
+   xpos -347
+   ypos 746
+  }
+  Grade {
+   channels alpha
+   gamma {{parent.parent.WeightDistribution}}
+   name Grade3
+   xpos -381
+   ypos 861
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 26
+   ProgramGroup 1
+   KernelDescription "2 \"BoxBlur2D\" iterate pixelWise b192d98157b51825d06f8b741e01ddbad1333554bc2cd266b9a98e88df5be905 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 4 \"SampleSize\" Int 1 BQAAAA== \"Method\" Int 1 AAAAAA== \"PositionalSigma\" Float 1 AAAgQQ== \"ColorSigma\" Float 1 zczMPQ== 4 \"sampleSize\" 1 1 \"method\" 1 1 \"SIGMA\" 1 1 \"BSIGMA\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel BoxBlur2D : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n\n  int sampleSize;  //The horizontal radius of our box blur\n  int method;  //The vertical radius of our box blur\n    float SIGMA;\n    float BSIGMA;\n\n\n\nlocal:\n  int _filterSize;\n\n\n\n  void define() \{\n    defineParam(sampleSize, \"SampleSize\", 5); \n    defineParam(method, \"Method\", 0); \n    defineParam(SIGMA, \"PositionalSigma\", 10.0f);\n    defineParam(BSIGMA, \"ColorSigma\", 0.1f);         \n  \}\n\n\nfloat normpdf(float x, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*x*x/(sigma*sigma))/sigma;\n\}\n\nfloat normpdf3(float3 v, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*dot(v,v)/(sigma*sigma))/sigma;\n\}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    src.setRange(-sampleSize, -sampleSize, sampleSize, sampleSize);\n    _filterSize = (2 * sampleSize + 1);\n  \}\n\n\n\n  void process() \{\n    float4 sum = 0.0f;\n    float4 srcsample = src(0,0);\n    float2 mvsample = float2(mv(0),mv(1));\n    float4 col_output = float4(0.0);\n    float3 tmp_colour = float3(0.0); //Temp Storage\n    float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n\n    if (method==0)\{\n      for(int j = -sampleSize; j <= sampleSize; j++)\n          sum += bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n      col_output = sum / (float)_filterSize;\n    \}\n    else if (method==1) \{\n        float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n        float kernelB\[200];\n\n        \n        //create the 1-D kernel\n        float Z = 0.0;\n\n        for (int j = 0; j <= _filterSize; ++j)\n        \{\n          kernelB\[_filterSize+j] = kernelB\[_filterSize-j] = normpdf(float(j), SIGMA);\n        \}\n            \n        float3 cc;\n        float factor;\n        float bZ = 1.0f/normpdf(0.0f, BSIGMA);\n        //read out the texels\n        for (int i=-_filterSize; i <= _filterSize; ++i)\n        \{\n            srcsample = bilinear(src,((float)i*mvsample.x),((float)i*mvsample.y));\n            cc = float3(srcsample.x,srcsample.y,srcsample.z);\n            factor = normpdf3(cc-c, BSIGMA)*bZ*kernelB\[_filterSize]*kernelB\[_filterSize+i];\n            Z += factor;\n            tmp_colour += factor*cc;\n        \}    \n        tmp_colour = tmp_colour/Z;\n        col_output = float4(tmp_colour.x,tmp_colour.y,tmp_colour.z, 1.0f);\n    \}        \n    else if (method==2)  \{ //\"Weighted Blur\"\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          temp_sample = bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n      \}\n    \n    else \{\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          for(int i = -sampleSize; i <= sampleSize; i++)\{\n          temp_sample = src(i,j);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n          \}\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n    \}\n\n\n    dst() = col_output;\n\n  \}\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   BoxBlur2D_SampleSize {{parent.parent.ElementBlur}}
+   BoxBlur2D_Method {{min(max(parent.parent.algorithm,2)-2,3)}}
+   BoxBlur2D_PositionalSigma 60000
+   BoxBlur2D_ColorSigma {{max(parent.parent.selectiveThreshold,0.00001)}}
+   rebuild_finalise ""
+   name BlinkScript1
+   xpos -477
+   ypos 861
+  }
+push $N24d58800
+  VectorBlur2 {
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv forward
+   scale {{parent.parent.ElementBlur}}
+   motion_falloff 1
+   soft_lines true
+   name VectorBlur3
+   xpos -643
+   ypos 858
+  }
+push $N807a800
+  Blur {
+   size {{parent.parent.ElementBlur}}
+   name Blur1
+   xpos -798
+   ypos 850
+  }
+  Switch {
+   inputs 3
+   which {{min(parent.parent.algorithm,2)}}
+   name Switch4
+   xpos -643
+   ypos 938
+  }
+  Dot {
+   name Dot7
+   xpos -609
+   ypos 1204
+  }
+  Merge2 {
+   inputs 2
+   operation plus
+   name Merge2
+   xpos -911
+   ypos 1200
+  }
+  Output {
+   name Output1
+   xpos -911
+   ypos 1275
+  }
+  TransformGeo {
+   inputs 0
+   rotate {0 0 {parent.parent.LimtZipDirection*360}}
+   name TransformGeo1
+   xpos -1412
+   ypos 1079
+  }
+ end_group
+ Merge2 {
+  inputs 2+1
+  operation copy
+  invert_mask true
+  name Merge5
+  xpos 862
+  ypos 322
+  disable {{!parent.Switch2.which}}
+ }
+set N73728400 [stack 0]
+push $Nf9d4b000
+clone $Cb54e5400 {
+  inputs 2
+  xpos 1105
+  ypos 374
+  selected false
+ }
+set N58f17c00 [stack 0]
+push $Nf9d4a800
+clone $C5b56000 {
+  xpos 655
+  ypos 318
+  selected false
+ }
+ Dot {
+  name Dot17
+  xpos 689
+  ypos 352
+ }
+set N58f17400 [stack 0]
+push $N73728400
+ Group {
+  inputs 2
+  name GradientBlur6
+  xpos 862
+  ypos 348
+  disable {{!(parent.itterations>3)}}
+  addUserKnob {20 User}
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+ }
+  Input {
+   inputs 0
+   name InputMask
+   xpos -1205
+   ypos 237
+   number 1
+  }
+  Dot {
+   name Dot9
+   xpos -1171
+   ypos 378
+  }
+set N58f16c00 [stack 0]
+  Dot {
+   name Dot1
+   xpos -1171
+   ypos 767
+  }
+set N58f16800 [stack 0]
+push $N58f16c00
+  Dot {
+   name Dot2
+   xpos -872
+   ypos 378
+  }
+set N58f16400 [stack 0]
+  Dot {
+   name Dot3
+   xpos -609
+   ypos 378
+  }
+push $N58f16400
+  Matrix {
+   channels {rgba.red -rgba.green -rgba.blue none}
+   matrix {
+       {-1 -2 -1}
+       {0 0 0}
+       {1 2 1}
+     }
+   name Matrix3
+   xpos -906
+   ypos 441
+  }
+  Matrix {
+   channels {-rgba.red rgba.green -rgba.blue none}
+   matrix {
+       {-1 0 1}
+       {-2 0 2}
+       {-1 0 1}
+     }
+   name Matrix4
+   xpos -906
+   ypos 467
+  }
+  Expression {
+   temp_name3 Le
+   temp_expr3 "sqrt((Red*Red) + (Green*Green))+0.00000001"
+   expr0 Red/Le
+   expr1 Green/Le
+   expr3 Le
+   name NVO
+   xpos -906
+   ypos 493
+  }
+  Input {
+   inputs 0
+   name InputImg
+   xpos -1078
+   ypos 233
+  }
+  Dot {
+   name Dot8
+   xpos -1044
+   ypos 595
+  }
+set N58f14c00 [stack 0]
+  ShuffleCopy {
+   inputs 2
+   alpha blue
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 motion
+   name ShuffleCopy5
+   label "\[python nuke.thisNode().knob('in').value()] >> \[python nuke.thisNode().knob('out').value()]"
+   xpos -906
+   ypos 585
+  }
+  VectorBlur2 {
+   inputs 1+1
+   channels rgba
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv motion
+   scale {{parent.parent.Detail}}
+   motion_falloff {{parent.parent.detailFalloff}}
+   soft_lines {{parent.parent.Softlining}}
+   name VectorBlur1
+   xpos -643
+   ypos 585
+  }
+  Dot {
+   name Dot11
+   xpos -609
+   ypos 690
+  }
+set N27eb7800 [stack 0]
+  Dot {
+   name Dot12
+   xpos -609
+   ypos 746
+  }
+set N27eb7400 [stack 0]
+  Group {
+   name Allign_Vec1
+   xpos -643
+   ypos 799
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos 229
+    ypos 70
+   }
+   Expression {
+    channel0 {forward.u -forward.v}
+    expr0 forward.v
+    channel1 {-forward.u forward.v}
+    expr1 -forward.u
+    channel2 {-rgba.red -rgba.green -rgba.blue none}
+    expr2 0
+    channel3 {none none none -rgba.alpha}
+    expr3 0
+    name Expression1
+    xpos 229
+    ypos 164
+   }
+   Grade {
+    channels forward
+    white 0.5
+    black_clamp false
+    name Grade1
+    xpos 229
+    ypos 190
+   }
+   Output {
+    name Output1
+    xpos 229
+    ypos 314
+   }
+  end_group
+set N7ba07900 [stack 0]
+  Shuffle2 {
+   fromInput1 {{0} B}
+   in1 motion
+   fromInput2 {{0} B}
+   mappings "4 forward.u 0 0 rgba.red 0 0 forward.v 0 1 rgba.green 0 1 backward.u 0 2 rgba.blue 0 2 backward.v 0 3 rgba.alpha 0 3"
+   name Shuffle3
+   xpos -477
+   ypos 799
+  }
+set N27eb6000 [stack 0]
+  Dot {
+   name Dot13
+   xpos -251
+   ypos 803
+  }
+  Dot {
+   name Dot14
+   xpos -251
+   ypos 985
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   name Merge3
+   xpos -1205
+   ypos 981
+   disable true
+  }
+set N27eb5400 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   name ColorMatrix1
+   xpos -1299
+   ypos 1046
+  }
+  Grade {
+   multiply {{parent.parent.limitZip} 1 1 1}
+   multiply_panelDropped true
+   black_clamp false
+   name Grade2
+   xpos -1299
+   ypos 1072
+  }
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   invert true
+   name ColorMatrix2
+   xpos -1299
+   ypos 1098
+  }
+push $N27eb5400
+  Switch {
+   inputs 2
+   which {{parent.parent.limitZip<1}}
+   name Switch3
+   xpos -1205
+   ypos 1151
+  }
+push $N58f16800
+push $N58f14c00
+  Dot {
+   name Dot4
+   xpos -1044
+   ypos 690
+  }
+push $N27eb7800
+  Merge2 {
+   inputs 2
+   operation minus
+   invert_mask true
+   name Merge1
+   xpos -911
+   ypos 686
+  }
+set Nfdb53800 [stack 0]
+push $Nfdb53800
+  Group {
+   inputs 2
+   name Compressor
+   selected true
+   xpos -911
+   ypos 712
+   disable {{!parent.parent.compression}}
+   addUserKnob {20 User}
+   addUserKnob {41 size T Blur1.size}
+   addUserKnob {41 multiply T Grade4.multiply}
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos -431
+    ypos 124
+   }
+set Nfdb53400 [stack 0]
+push $Nfdb53400
+   Blur {
+    size {{parent.parent.parent.CompressionRadius}}
+    name Blur1
+    selected true
+    xpos -431
+    ypos 164
+   }
+set Nfdb53000 [stack 0]
+   Merge2 {
+    inputs 2
+    operation minus
+    name Merge4
+    xpos -345
+    ypos 170
+   }
+   Grade {
+    white 25
+    multiply {{parent.parent.parent.compression_level}}
+    black_clamp false
+    name Grade4
+    xpos -345
+    ypos 196
+   }
+   Expression {
+    expr0 r>0?(r/(r+1)):-(-r/(-r+1))
+    expr1 g>0?(g/(g+1)):-(-g/(-g+1))
+    expr2 b>0?(b/(b+1)):-(-b/(-b+1))
+    name Expression2
+    xpos -345
+    ypos 222
+   }
+   Grade {
+    white {{parent.Grade4.white}}
+    multiply {{parent.Grade4.multiply}}
+    gamma {{parent.Grade4.gamma}}
+    reverse true
+    black_clamp false
+    name Grade5
+    xpos -345
+    ypos 248
+   }
+push $Nfdb53000
+   Merge2 {
+    inputs 2
+    operation plus
+    name Merge5
+    xpos -431
+    ypos 248
+   }
+   Output {
+    name Output1
+    xpos -431
+    ypos 348
+   }
+  end_group
+set Ne86a4f00 [stack 0]
+  Shuffle2 {
+   inputs 2
+   fromInput1 {{0} B A}
+   fromInput2 {{1} B A}
+   in2 rgba
+   mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.red 1 0 rgba.alpha 0 3"
+   name Shuffle2
+   xpos -1030
+   ypos 763
+  }
+  Grade {
+   channels alpha
+   gamma 0.31
+   name Grade1
+   xpos -1030
+   ypos 822
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 18
+   ProgramGroup 1
+   KernelDescription "2 \"ZipBlur\" iterate pixelWise d734f3d395bbb94244668173872317cbf77f3d5355c28821b93568a5317f0d0a 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 1 \"radius\" Float 1 AABAQA== 1 \"radius\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel ZipBlur : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  float radius;  //The vertical radius of our box blur\n\n\nlocal:\n  int _filterSize;\n\n\n  void define() \{\n    defineParam(radius, \"radius\", 3.0f); \n  \}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    int xRadius = int(_filterSize)+1;\n    src.setRange(-xRadius, -xRadius, xRadius, xRadius);\n  \}\n\n  void process() \{\n    float4 sum = 0.0f;\n    float2 mvsample = float2(mv(0),mv(1));\n    //float4 aSample = bilinear(src,radius*mvsample.x,radius*mvsample.y);\n    //float4 bSample = bilinear(src,-radius*mvsample.x,-radius*mvsample.y);\n    float4 aSample = src(radius*mvsample.x,radius*mvsample.y);\n    float4 bSample = src(-radius*mvsample.x,-radius*mvsample.y);\n    aSample.w = 1.0f-aSample.w;\n    bSample.w = 1.0f-bSample.w;\n    dst() = ((aSample*aSample.w)+(bSample*bSample.w))/(aSample.w+bSample.w);\n\n  \}\n\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   ZipBlur_radius {{parent.parent.nuclearOption}}
+   rebuild_finalise ""
+   name BlinkScript4
+   xpos -1030
+   ypos 1145
+  }
+push $Ne86a4f00
+  Switch {
+   inputs 2
+   which {{parent.parent.nuclearOption>0}}
+   name Switch2
+   xpos -911
+   ypos 1151
+  }
+push $N27eb6000
+push $N27eb7400
+  Expression {
+   expr3 1-a
+   name Expression1
+   xpos -567
+   ypos 742
+  }
+  Dot {
+   name Dot15
+   xpos -347
+   ypos 746
+  }
+  Grade {
+   channels alpha
+   gamma {{parent.parent.WeightDistribution}}
+   name Grade3
+   xpos -381
+   ypos 861
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 26
+   ProgramGroup 1
+   KernelDescription "2 \"BoxBlur2D\" iterate pixelWise b192d98157b51825d06f8b741e01ddbad1333554bc2cd266b9a98e88df5be905 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 4 \"SampleSize\" Int 1 BQAAAA== \"Method\" Int 1 AAAAAA== \"PositionalSigma\" Float 1 AAAgQQ== \"ColorSigma\" Float 1 zczMPQ== 4 \"sampleSize\" 1 1 \"method\" 1 1 \"SIGMA\" 1 1 \"BSIGMA\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel BoxBlur2D : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n\n  int sampleSize;  //The horizontal radius of our box blur\n  int method;  //The vertical radius of our box blur\n    float SIGMA;\n    float BSIGMA;\n\n\n\nlocal:\n  int _filterSize;\n\n\n\n  void define() \{\n    defineParam(sampleSize, \"SampleSize\", 5); \n    defineParam(method, \"Method\", 0); \n    defineParam(SIGMA, \"PositionalSigma\", 10.0f);\n    defineParam(BSIGMA, \"ColorSigma\", 0.1f);         \n  \}\n\n\nfloat normpdf(float x, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*x*x/(sigma*sigma))/sigma;\n\}\n\nfloat normpdf3(float3 v, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*dot(v,v)/(sigma*sigma))/sigma;\n\}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    src.setRange(-sampleSize, -sampleSize, sampleSize, sampleSize);\n    _filterSize = (2 * sampleSize + 1);\n  \}\n\n\n\n  void process() \{\n    float4 sum = 0.0f;\n    float4 srcsample = src(0,0);\n    float2 mvsample = float2(mv(0),mv(1));\n    float4 col_output = float4(0.0);\n    float3 tmp_colour = float3(0.0); //Temp Storage\n    float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n\n    if (method==0)\{\n      for(int j = -sampleSize; j <= sampleSize; j++)\n          sum += bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n      col_output = sum / (float)_filterSize;\n    \}\n    else if (method==1) \{\n        float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n        float kernelB\[200];\n\n        \n        //create the 1-D kernel\n        float Z = 0.0;\n\n        for (int j = 0; j <= _filterSize; ++j)\n        \{\n          kernelB\[_filterSize+j] = kernelB\[_filterSize-j] = normpdf(float(j), SIGMA);\n        \}\n            \n        float3 cc;\n        float factor;\n        float bZ = 1.0f/normpdf(0.0f, BSIGMA);\n        //read out the texels\n        for (int i=-_filterSize; i <= _filterSize; ++i)\n        \{\n            srcsample = bilinear(src,((float)i*mvsample.x),((float)i*mvsample.y));\n            cc = float3(srcsample.x,srcsample.y,srcsample.z);\n            factor = normpdf3(cc-c, BSIGMA)*bZ*kernelB\[_filterSize]*kernelB\[_filterSize+i];\n            Z += factor;\n            tmp_colour += factor*cc;\n        \}    \n        tmp_colour = tmp_colour/Z;\n        col_output = float4(tmp_colour.x,tmp_colour.y,tmp_colour.z, 1.0f);\n    \}        \n    else if (method==2)  \{ //\"Weighted Blur\"\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          temp_sample = bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n      \}\n    \n    else \{\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          for(int i = -sampleSize; i <= sampleSize; i++)\{\n          temp_sample = src(i,j);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n          \}\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n    \}\n\n\n    dst() = col_output;\n\n  \}\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   BoxBlur2D_SampleSize {{parent.parent.ElementBlur}}
+   BoxBlur2D_Method {{min(max(parent.parent.algorithm,2)-2,3)}}
+   BoxBlur2D_PositionalSigma 60000
+   BoxBlur2D_ColorSigma {{max(parent.parent.selectiveThreshold,0.00001)}}
+   rebuild_finalise ""
+   name BlinkScript1
+   xpos -477
+   ypos 861
+  }
+push $N7ba07900
+  VectorBlur2 {
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv forward
+   scale {{parent.parent.ElementBlur}}
+   motion_falloff 1
+   soft_lines true
+   name VectorBlur3
+   xpos -643
+   ypos 858
+  }
+push $N27eb7400
+  Blur {
+   size {{parent.parent.ElementBlur}}
+   name Blur1
+   xpos -798
+   ypos 850
+  }
+  Switch {
+   inputs 3
+   which {{min(parent.parent.algorithm,2)}}
+   name Switch4
+   xpos -643
+   ypos 938
+  }
+  Dot {
+   name Dot7
+   xpos -609
+   ypos 1204
+  }
+  Merge2 {
+   inputs 2
+   operation plus
+   name Merge2
+   xpos -911
+   ypos 1200
+  }
+  Output {
+   name Output1
+   xpos -911
+   ypos 1275
+  }
+  TransformGeo {
+   inputs 0
+   rotate {0 0 {parent.parent.LimtZipDirection*360}}
+   name TransformGeo1
+   xpos -1412
+   ypos 1079
+  }
+ end_group
+ Merge2 {
+  inputs 2+1
+  operation copy
+  invert_mask true
+  name Merge6
+  xpos 862
+  ypos 374
+  disable {{!parent.Switch2.which}}
+ }
+set Nd1de9000 [stack 0]
+push $N58f17c00
+clone $Cb54e5400 {
+  inputs 2
+  xpos 1103
+  ypos 426
+  selected false
+ }
+set Nd1de8c00 [stack 0]
+push $N58f17400
+clone $C5b56000 {
+  xpos 655
+  ypos 366
+  selected false
+ }
+ Dot {
+  name Dot15
+  xpos 689
+  ypos 404
+ }
+set Nd1de8400 [stack 0]
+push $Nd1de9000
+ Group {
+  inputs 2
+  name GradientBlur7
+  xpos 862
+  ypos 400
+  disable {{!(parent.itterations>4)}}
+  addUserKnob {20 User}
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+ }
+  Input {
+   inputs 0
+   name InputMask
+   xpos -1205
+   ypos 237
+   number 1
+  }
+  Dot {
+   name Dot9
+   xpos -1171
+   ypos 378
+  }
+set Nb7a7f800 [stack 0]
+  Dot {
+   name Dot1
+   xpos -1171
+   ypos 767
+  }
+set Nb7a7f400 [stack 0]
+push $Nb7a7f800
+  Dot {
+   name Dot2
+   xpos -872
+   ypos 378
+  }
+set Nb7a7f000 [stack 0]
+  Dot {
+   name Dot3
+   xpos -609
+   ypos 378
+  }
+push $Nb7a7f000
+  Matrix {
+   channels {rgba.red -rgba.green -rgba.blue none}
+   matrix {
+       {-1 -2 -1}
+       {0 0 0}
+       {1 2 1}
+     }
+   name Matrix3
+   xpos -906
+   ypos 441
+  }
+  Matrix {
+   channels {-rgba.red rgba.green -rgba.blue none}
+   matrix {
+       {-1 0 1}
+       {-2 0 2}
+       {-1 0 1}
+     }
+   name Matrix4
+   xpos -906
+   ypos 467
+  }
+  Expression {
+   temp_name3 Le
+   temp_expr3 "sqrt((Red*Red) + (Green*Green))+0.00000001"
+   expr0 Red/Le
+   expr1 Green/Le
+   expr3 Le
+   name NVO
+   xpos -906
+   ypos 493
+  }
+  Input {
+   inputs 0
+   name InputImg
+   xpos -1078
+   ypos 233
+  }
+  Dot {
+   name Dot8
+   xpos -1044
+   ypos 595
+  }
+set Nb7a7d800 [stack 0]
+  ShuffleCopy {
+   inputs 2
+   alpha blue
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 motion
+   name ShuffleCopy5
+   label "\[python nuke.thisNode().knob('in').value()] >> \[python nuke.thisNode().knob('out').value()]"
+   xpos -906
+   ypos 585
+  }
+  VectorBlur2 {
+   inputs 1+1
+   channels rgba
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv motion
+   scale {{parent.parent.Detail}}
+   motion_falloff {{parent.parent.detailFalloff}}
+   soft_lines {{parent.parent.Softlining}}
+   name VectorBlur1
+   xpos -643
+   ypos 585
+  }
+  Dot {
+   name Dot11
+   xpos -609
+   ypos 690
+  }
+set Nb7a7c800 [stack 0]
+  Dot {
+   name Dot12
+   xpos -609
+   ypos 746
+  }
+set Nb7a7c400 [stack 0]
+  Group {
+   name Allign_Vec1
+   xpos -643
+   ypos 799
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos 229
+    ypos 70
+   }
+   Expression {
+    channel0 {forward.u -forward.v}
+    expr0 forward.v
+    channel1 {-forward.u forward.v}
+    expr1 -forward.u
+    channel2 {-rgba.red -rgba.green -rgba.blue none}
+    expr2 0
+    channel3 {none none none -rgba.alpha}
+    expr3 0
+    name Expression1
+    xpos 229
+    ypos 164
+   }
+   Grade {
+    channels forward
+    white 0.5
+    black_clamp false
+    name Grade1
+    xpos 229
+    ypos 190
+   }
+   Output {
+    name Output1
+    xpos 229
+    ypos 314
+   }
+  end_group
+set Ncd8dab00 [stack 0]
+  Shuffle2 {
+   fromInput1 {{0} B}
+   in1 motion
+   fromInput2 {{0} B}
+   mappings "4 forward.u 0 0 rgba.red 0 0 forward.v 0 1 rgba.green 0 1 backward.u 0 2 rgba.blue 0 2 backward.v 0 3 rgba.alpha 0 3"
+   name Shuffle3
+   xpos -477
+   ypos 799
+  }
+set N26122c00 [stack 0]
+  Dot {
+   name Dot13
+   xpos -251
+   ypos 803
+  }
+  Dot {
+   name Dot14
+   xpos -251
+   ypos 985
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   name Merge3
+   xpos -1205
+   ypos 981
+   disable true
+  }
+set N26122000 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   name ColorMatrix1
+   xpos -1299
+   ypos 1046
+  }
+  Grade {
+   multiply {{parent.parent.limitZip} 1 1 1}
+   multiply_panelDropped true
+   black_clamp false
+   name Grade2
+   xpos -1299
+   ypos 1072
+  }
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   invert true
+   name ColorMatrix2
+   xpos -1299
+   ypos 1098
+  }
+push $N26122000
+  Switch {
+   inputs 2
+   which {{parent.parent.limitZip<1}}
+   name Switch3
+   xpos -1205
+   ypos 1151
+  }
+push $Nb7a7f400
+push $Nb7a7d800
+  Dot {
+   name Dot4
+   xpos -1044
+   ypos 690
+  }
+push $Nb7a7c800
+  Merge2 {
+   inputs 2
+   operation minus
+   invert_mask true
+   name Merge1
+   xpos -911
+   ypos 686
+  }
+set N26120800 [stack 0]
+push $N26120800
+  Group {
+   inputs 2
+   name Compressor
+   selected true
+   xpos -911
+   ypos 712
+   disable {{!parent.parent.compression}}
+   addUserKnob {20 User}
+   addUserKnob {41 size T Blur1.size}
+   addUserKnob {41 multiply T Grade4.multiply}
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos -431
+    ypos 124
+   }
+set N26120400 [stack 0]
+push $N26120400
+   Blur {
+    size {{parent.parent.parent.CompressionRadius}}
+    name Blur1
+    selected true
+    xpos -431
+    ypos 164
+   }
+set N69773c00 [stack 0]
+   Merge2 {
+    inputs 2
+    operation minus
+    name Merge4
+    xpos -345
+    ypos 170
+   }
+   Grade {
+    white 25
+    multiply {{parent.parent.parent.compression_level}}
+    black_clamp false
+    name Grade4
+    xpos -345
+    ypos 196
+   }
+   Expression {
+    expr0 r>0?(r/(r+1)):-(-r/(-r+1))
+    expr1 g>0?(g/(g+1)):-(-g/(-g+1))
+    expr2 b>0?(b/(b+1)):-(-b/(-b+1))
+    name Expression2
+    xpos -345
+    ypos 222
+   }
+   Grade {
+    white {{parent.Grade4.white}}
+    multiply {{parent.Grade4.multiply}}
+    gamma {{parent.Grade4.gamma}}
+    reverse true
+    black_clamp false
+    name Grade5
+    xpos -345
+    ypos 248
+   }
+push $N69773c00
+   Merge2 {
+    inputs 2
+    operation plus
+    name Merge5
+    xpos -431
+    ypos 248
+   }
+   Output {
+    name Output1
+    xpos -431
+    ypos 348
+   }
+  end_group
+set N6cba8100 [stack 0]
+  Shuffle2 {
+   inputs 2
+   fromInput1 {{0} B A}
+   fromInput2 {{1} B A}
+   in2 rgba
+   mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.red 1 0 rgba.alpha 0 3"
+   name Shuffle2
+   xpos -1030
+   ypos 763
+  }
+  Grade {
+   channels alpha
+   gamma 0.31
+   name Grade1
+   xpos -1030
+   ypos 822
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 18
+   ProgramGroup 1
+   KernelDescription "2 \"ZipBlur\" iterate pixelWise d734f3d395bbb94244668173872317cbf77f3d5355c28821b93568a5317f0d0a 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 1 \"radius\" Float 1 AABAQA== 1 \"radius\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel ZipBlur : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  float radius;  //The vertical radius of our box blur\n\n\nlocal:\n  int _filterSize;\n\n\n  void define() \{\n    defineParam(radius, \"radius\", 3.0f); \n  \}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    int xRadius = int(_filterSize)+1;\n    src.setRange(-xRadius, -xRadius, xRadius, xRadius);\n  \}\n\n  void process() \{\n    float4 sum = 0.0f;\n    float2 mvsample = float2(mv(0),mv(1));\n    //float4 aSample = bilinear(src,radius*mvsample.x,radius*mvsample.y);\n    //float4 bSample = bilinear(src,-radius*mvsample.x,-radius*mvsample.y);\n    float4 aSample = src(radius*mvsample.x,radius*mvsample.y);\n    float4 bSample = src(-radius*mvsample.x,-radius*mvsample.y);\n    aSample.w = 1.0f-aSample.w;\n    bSample.w = 1.0f-bSample.w;\n    dst() = ((aSample*aSample.w)+(bSample*bSample.w))/(aSample.w+bSample.w);\n\n  \}\n\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   ZipBlur_radius {{parent.parent.nuclearOption}}
+   rebuild_finalise ""
+   name BlinkScript4
+   xpos -1030
+   ypos 1145
+  }
+push $N6cba8100
+  Switch {
+   inputs 2
+   which {{parent.parent.nuclearOption>0}}
+   name Switch2
+   xpos -911
+   ypos 1151
+  }
+push $N26122c00
+push $Nb7a7c400
+  Expression {
+   expr3 1-a
+   name Expression1
+   xpos -567
+   ypos 742
+  }
+  Dot {
+   name Dot15
+   xpos -347
+   ypos 746
+  }
+  Grade {
+   channels alpha
+   gamma {{parent.parent.WeightDistribution}}
+   name Grade3
+   xpos -381
+   ypos 861
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 26
+   ProgramGroup 1
+   KernelDescription "2 \"BoxBlur2D\" iterate pixelWise b192d98157b51825d06f8b741e01ddbad1333554bc2cd266b9a98e88df5be905 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 4 \"SampleSize\" Int 1 BQAAAA== \"Method\" Int 1 AAAAAA== \"PositionalSigma\" Float 1 AAAgQQ== \"ColorSigma\" Float 1 zczMPQ== 4 \"sampleSize\" 1 1 \"method\" 1 1 \"SIGMA\" 1 1 \"BSIGMA\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel BoxBlur2D : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n\n  int sampleSize;  //The horizontal radius of our box blur\n  int method;  //The vertical radius of our box blur\n    float SIGMA;\n    float BSIGMA;\n\n\n\nlocal:\n  int _filterSize;\n\n\n\n  void define() \{\n    defineParam(sampleSize, \"SampleSize\", 5); \n    defineParam(method, \"Method\", 0); \n    defineParam(SIGMA, \"PositionalSigma\", 10.0f);\n    defineParam(BSIGMA, \"ColorSigma\", 0.1f);         \n  \}\n\n\nfloat normpdf(float x, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*x*x/(sigma*sigma))/sigma;\n\}\n\nfloat normpdf3(float3 v, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*dot(v,v)/(sigma*sigma))/sigma;\n\}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    src.setRange(-sampleSize, -sampleSize, sampleSize, sampleSize);\n    _filterSize = (2 * sampleSize + 1);\n  \}\n\n\n\n  void process() \{\n    float4 sum = 0.0f;\n    float4 srcsample = src(0,0);\n    float2 mvsample = float2(mv(0),mv(1));\n    float4 col_output = float4(0.0);\n    float3 tmp_colour = float3(0.0); //Temp Storage\n    float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n\n    if (method==0)\{\n      for(int j = -sampleSize; j <= sampleSize; j++)\n          sum += bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n      col_output = sum / (float)_filterSize;\n    \}\n    else if (method==1) \{\n        float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n        float kernelB\[200];\n\n        \n        //create the 1-D kernel\n        float Z = 0.0;\n\n        for (int j = 0; j <= _filterSize; ++j)\n        \{\n          kernelB\[_filterSize+j] = kernelB\[_filterSize-j] = normpdf(float(j), SIGMA);\n        \}\n            \n        float3 cc;\n        float factor;\n        float bZ = 1.0f/normpdf(0.0f, BSIGMA);\n        //read out the texels\n        for (int i=-_filterSize; i <= _filterSize; ++i)\n        \{\n            srcsample = bilinear(src,((float)i*mvsample.x),((float)i*mvsample.y));\n            cc = float3(srcsample.x,srcsample.y,srcsample.z);\n            factor = normpdf3(cc-c, BSIGMA)*bZ*kernelB\[_filterSize]*kernelB\[_filterSize+i];\n            Z += factor;\n            tmp_colour += factor*cc;\n        \}    \n        tmp_colour = tmp_colour/Z;\n        col_output = float4(tmp_colour.x,tmp_colour.y,tmp_colour.z, 1.0f);\n    \}        \n    else if (method==2)  \{ //\"Weighted Blur\"\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          temp_sample = bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n      \}\n    \n    else \{\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          for(int i = -sampleSize; i <= sampleSize; i++)\{\n          temp_sample = src(i,j);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n          \}\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n    \}\n\n\n    dst() = col_output;\n\n  \}\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   BoxBlur2D_SampleSize {{parent.parent.ElementBlur}}
+   BoxBlur2D_Method {{min(max(parent.parent.algorithm,2)-2,3)}}
+   BoxBlur2D_PositionalSigma 60000
+   BoxBlur2D_ColorSigma {{max(parent.parent.selectiveThreshold,0.00001)}}
+   rebuild_finalise ""
+   name BlinkScript1
+   xpos -477
+   ypos 861
+  }
+push $Ncd8dab00
+  VectorBlur2 {
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv forward
+   scale {{parent.parent.ElementBlur}}
+   motion_falloff 1
+   soft_lines true
+   name VectorBlur3
+   xpos -643
+   ypos 858
+  }
+push $Nb7a7c400
+  Blur {
+   size {{parent.parent.ElementBlur}}
+   name Blur1
+   xpos -798
+   ypos 850
+  }
+  Switch {
+   inputs 3
+   which {{min(parent.parent.algorithm,2)}}
+   name Switch4
+   xpos -643
+   ypos 938
+  }
+  Dot {
+   name Dot7
+   xpos -609
+   ypos 1204
+  }
+  Merge2 {
+   inputs 2
+   operation plus
+   name Merge2
+   xpos -911
+   ypos 1200
+  }
+  Output {
+   name Output1
+   xpos -911
+   ypos 1275
+  }
+  TransformGeo {
+   inputs 0
+   rotate {0 0 {parent.parent.LimtZipDirection*360}}
+   name TransformGeo1
+   xpos -1412
+   ypos 1079
+  }
+ end_group
+ Merge2 {
+  inputs 2+1
+  operation copy
+  invert_mask true
+  name Merge7
+  xpos 862
+  ypos 426
+  disable {{!parent.Switch2.which}}
+ }
+set Nb60fdc00 [stack 0]
+push $Nd1de8c00
+clone $Cb54e5400 {
+  inputs 2
+  xpos 1103
+  ypos 478
+  selected false
+ }
+set Nb60fd800 [stack 0]
+push $Nd1de8400
+clone $C5b56000 {
+  xpos 655
+  ypos 418
+  selected false
+ }
+ Dot {
+  name Dot13
+  xpos 689
+  ypos 456
+ }
+set Nb60fd000 [stack 0]
+push $Nb60fdc00
+ Group {
+  inputs 2
+  name GradientBlur8
+  xpos 862
+  ypos 452
+  disable {{!(parent.itterations>5)}}
+  addUserKnob {20 User}
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+ }
+  Input {
+   inputs 0
+   name InputMask
+   xpos -1205
+   ypos 237
+   number 1
+  }
+  Dot {
+   name Dot9
+   xpos -1171
+   ypos 378
+  }
+set Nb60fc800 [stack 0]
+  Dot {
+   name Dot1
+   xpos -1171
+   ypos 767
+  }
+set Nb60fc400 [stack 0]
+push $Nb60fc800
+  Dot {
+   name Dot2
+   xpos -872
+   ypos 378
+  }
+set N631f7c00 [stack 0]
+  Dot {
+   name Dot3
+   xpos -609
+   ypos 378
+  }
+push $N631f7c00
+  Matrix {
+   channels {rgba.red -rgba.green -rgba.blue none}
+   matrix {
+       {-1 -2 -1}
+       {0 0 0}
+       {1 2 1}
+     }
+   name Matrix3
+   xpos -906
+   ypos 441
+  }
+  Matrix {
+   channels {-rgba.red rgba.green -rgba.blue none}
+   matrix {
+       {-1 0 1}
+       {-2 0 2}
+       {-1 0 1}
+     }
+   name Matrix4
+   xpos -906
+   ypos 467
+  }
+  Expression {
+   temp_name3 Le
+   temp_expr3 "sqrt((Red*Red) + (Green*Green))+0.00000001"
+   expr0 Red/Le
+   expr1 Green/Le
+   expr3 Le
+   name NVO
+   xpos -906
+   ypos 493
+  }
+  Input {
+   inputs 0
+   name InputImg
+   xpos -1078
+   ypos 233
+  }
+  Dot {
+   name Dot8
+   xpos -1044
+   ypos 595
+  }
+set N631f6400 [stack 0]
+  ShuffleCopy {
+   inputs 2
+   alpha blue
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 motion
+   name ShuffleCopy5
+   label "\[python nuke.thisNode().knob('in').value()] >> \[python nuke.thisNode().knob('out').value()]"
+   xpos -906
+   ypos 585
+  }
+  VectorBlur2 {
+   inputs 1+1
+   channels rgba
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv motion
+   scale {{parent.parent.Detail}}
+   motion_falloff {{parent.parent.detailFalloff}}
+   soft_lines {{parent.parent.Softlining}}
+   name VectorBlur1
+   xpos -643
+   ypos 585
+  }
+  Dot {
+   name Dot11
+   xpos -609
+   ypos 690
+  }
+set N631f5400 [stack 0]
+  Dot {
+   name Dot12
+   xpos -609
+   ypos 746
+  }
+set N631f5000 [stack 0]
+  Group {
+   name Allign_Vec1
+   xpos -643
+   ypos 799
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos 229
+    ypos 70
+   }
+   Expression {
+    channel0 {forward.u -forward.v}
+    expr0 forward.v
+    channel1 {-forward.u forward.v}
+    expr1 -forward.u
+    channel2 {-rgba.red -rgba.green -rgba.blue none}
+    expr2 0
+    channel3 {none none none -rgba.alpha}
+    expr3 0
+    name Expression1
+    xpos 229
+    ypos 164
+   }
+   Grade {
+    channels forward
+    white 0.5
+    black_clamp false
+    name Grade1
+    xpos 229
+    ypos 190
+   }
+   Output {
+    name Output1
+    xpos 229
+    ypos 314
+   }
+  end_group
+set Nb6101d00 [stack 0]
+  Shuffle2 {
+   fromInput1 {{0} B}
+   in1 motion
+   fromInput2 {{0} B}
+   mappings "4 forward.u 0 0 rgba.red 0 0 forward.v 0 1 rgba.green 0 1 backward.u 0 2 rgba.blue 0 2 backward.v 0 3 rgba.alpha 0 3"
+   name Shuffle3
+   xpos -477
+   ypos 799
+  }
+set N43357800 [stack 0]
+  Dot {
+   name Dot13
+   xpos -251
+   ypos 803
+  }
+  Dot {
+   name Dot14
+   xpos -251
+   ypos 985
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   name Merge3
+   xpos -1205
+   ypos 981
+   disable true
+  }
+set N43356c00 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   name ColorMatrix1
+   xpos -1299
+   ypos 1046
+  }
+  Grade {
+   multiply {{parent.parent.limitZip} 1 1 1}
+   multiply_panelDropped true
+   black_clamp false
+   name Grade2
+   xpos -1299
+   ypos 1072
+  }
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   invert true
+   name ColorMatrix2
+   xpos -1299
+   ypos 1098
+  }
+push $N43356c00
+  Switch {
+   inputs 2
+   which {{parent.parent.limitZip<1}}
+   name Switch3
+   xpos -1205
+   ypos 1151
+  }
+push $Nb60fc400
+push $N631f6400
+  Dot {
+   name Dot4
+   xpos -1044
+   ypos 690
+  }
+push $N631f5400
+  Merge2 {
+   inputs 2
+   operation minus
+   invert_mask true
+   name Merge1
+   xpos -911
+   ypos 686
+  }
+set N43355400 [stack 0]
+push $N43355400
+  Group {
+   inputs 2
+   name Compressor
+   selected true
+   xpos -911
+   ypos 712
+   disable {{!parent.parent.compression}}
+   addUserKnob {20 User}
+   addUserKnob {41 size T Blur1.size}
+   addUserKnob {41 multiply T Grade4.multiply}
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos -431
+    ypos 124
+   }
+set N43355000 [stack 0]
+push $N43355000
+   Blur {
+    size {{parent.parent.parent.CompressionRadius}}
+    name Blur1
+    selected true
+    xpos -431
+    ypos 164
+   }
+set N43354c00 [stack 0]
+   Merge2 {
+    inputs 2
+    operation minus
+    name Merge4
+    xpos -345
+    ypos 170
+   }
+   Grade {
+    white 25
+    multiply {{parent.parent.parent.compression_level}}
+    black_clamp false
+    name Grade4
+    xpos -345
+    ypos 196
+   }
+   Expression {
+    expr0 r>0?(r/(r+1)):-(-r/(-r+1))
+    expr1 g>0?(g/(g+1)):-(-g/(-g+1))
+    expr2 b>0?(b/(b+1)):-(-b/(-b+1))
+    name Expression2
+    xpos -345
+    ypos 222
+   }
+   Grade {
+    white {{parent.Grade4.white}}
+    multiply {{parent.Grade4.multiply}}
+    gamma {{parent.Grade4.gamma}}
+    reverse true
+    black_clamp false
+    name Grade5
+    xpos -345
+    ypos 248
+   }
+push $N43354c00
+   Merge2 {
+    inputs 2
+    operation plus
+    name Merge5
+    xpos -431
+    ypos 248
+   }
+   Output {
+    name Output1
+    xpos -431
+    ypos 348
+   }
+  end_group
+set Nf9083200 [stack 0]
+  Shuffle2 {
+   inputs 2
+   fromInput1 {{0} B A}
+   fromInput2 {{1} B A}
+   in2 rgba
+   mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.red 1 0 rgba.alpha 0 3"
+   name Shuffle2
+   xpos -1030
+   ypos 763
+  }
+  Grade {
+   channels alpha
+   gamma 0.31
+   name Grade1
+   xpos -1030
+   ypos 822
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 18
+   ProgramGroup 1
+   KernelDescription "2 \"ZipBlur\" iterate pixelWise d734f3d395bbb94244668173872317cbf77f3d5355c28821b93568a5317f0d0a 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 1 \"radius\" Float 1 AABAQA== 1 \"radius\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel ZipBlur : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  float radius;  //The vertical radius of our box blur\n\n\nlocal:\n  int _filterSize;\n\n\n  void define() \{\n    defineParam(radius, \"radius\", 3.0f); \n  \}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    int xRadius = int(_filterSize)+1;\n    src.setRange(-xRadius, -xRadius, xRadius, xRadius);\n  \}\n\n  void process() \{\n    float4 sum = 0.0f;\n    float2 mvsample = float2(mv(0),mv(1));\n    //float4 aSample = bilinear(src,radius*mvsample.x,radius*mvsample.y);\n    //float4 bSample = bilinear(src,-radius*mvsample.x,-radius*mvsample.y);\n    float4 aSample = src(radius*mvsample.x,radius*mvsample.y);\n    float4 bSample = src(-radius*mvsample.x,-radius*mvsample.y);\n    aSample.w = 1.0f-aSample.w;\n    bSample.w = 1.0f-bSample.w;\n    dst() = ((aSample*aSample.w)+(bSample*bSample.w))/(aSample.w+bSample.w);\n\n  \}\n\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   ZipBlur_radius {{parent.parent.nuclearOption}}
+   rebuild_finalise ""
+   name BlinkScript4
+   xpos -1030
+   ypos 1145
+  }
+push $Nf9083200
+  Switch {
+   inputs 2
+   which {{parent.parent.nuclearOption>0}}
+   name Switch2
+   xpos -911
+   ypos 1151
+  }
+push $N43357800
+push $N631f5000
+  Expression {
+   expr3 1-a
+   name Expression1
+   xpos -567
+   ypos 742
+  }
+  Dot {
+   name Dot15
+   xpos -347
+   ypos 746
+  }
+  Grade {
+   channels alpha
+   gamma {{parent.parent.WeightDistribution}}
+   name Grade3
+   xpos -381
+   ypos 861
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 26
+   ProgramGroup 1
+   KernelDescription "2 \"BoxBlur2D\" iterate pixelWise b192d98157b51825d06f8b741e01ddbad1333554bc2cd266b9a98e88df5be905 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 4 \"SampleSize\" Int 1 BQAAAA== \"Method\" Int 1 AAAAAA== \"PositionalSigma\" Float 1 AAAgQQ== \"ColorSigma\" Float 1 zczMPQ== 4 \"sampleSize\" 1 1 \"method\" 1 1 \"SIGMA\" 1 1 \"BSIGMA\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel BoxBlur2D : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n\n  int sampleSize;  //The horizontal radius of our box blur\n  int method;  //The vertical radius of our box blur\n    float SIGMA;\n    float BSIGMA;\n\n\n\nlocal:\n  int _filterSize;\n\n\n\n  void define() \{\n    defineParam(sampleSize, \"SampleSize\", 5); \n    defineParam(method, \"Method\", 0); \n    defineParam(SIGMA, \"PositionalSigma\", 10.0f);\n    defineParam(BSIGMA, \"ColorSigma\", 0.1f);         \n  \}\n\n\nfloat normpdf(float x, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*x*x/(sigma*sigma))/sigma;\n\}\n\nfloat normpdf3(float3 v, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*dot(v,v)/(sigma*sigma))/sigma;\n\}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    src.setRange(-sampleSize, -sampleSize, sampleSize, sampleSize);\n    _filterSize = (2 * sampleSize + 1);\n  \}\n\n\n\n  void process() \{\n    float4 sum = 0.0f;\n    float4 srcsample = src(0,0);\n    float2 mvsample = float2(mv(0),mv(1));\n    float4 col_output = float4(0.0);\n    float3 tmp_colour = float3(0.0); //Temp Storage\n    float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n\n    if (method==0)\{\n      for(int j = -sampleSize; j <= sampleSize; j++)\n          sum += bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n      col_output = sum / (float)_filterSize;\n    \}\n    else if (method==1) \{\n        float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n        float kernelB\[200];\n\n        \n        //create the 1-D kernel\n        float Z = 0.0;\n\n        for (int j = 0; j <= _filterSize; ++j)\n        \{\n          kernelB\[_filterSize+j] = kernelB\[_filterSize-j] = normpdf(float(j), SIGMA);\n        \}\n            \n        float3 cc;\n        float factor;\n        float bZ = 1.0f/normpdf(0.0f, BSIGMA);\n        //read out the texels\n        for (int i=-_filterSize; i <= _filterSize; ++i)\n        \{\n            srcsample = bilinear(src,((float)i*mvsample.x),((float)i*mvsample.y));\n            cc = float3(srcsample.x,srcsample.y,srcsample.z);\n            factor = normpdf3(cc-c, BSIGMA)*bZ*kernelB\[_filterSize]*kernelB\[_filterSize+i];\n            Z += factor;\n            tmp_colour += factor*cc;\n        \}    \n        tmp_colour = tmp_colour/Z;\n        col_output = float4(tmp_colour.x,tmp_colour.y,tmp_colour.z, 1.0f);\n    \}        \n    else if (method==2)  \{ //\"Weighted Blur\"\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          temp_sample = bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n      \}\n    \n    else \{\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          for(int i = -sampleSize; i <= sampleSize; i++)\{\n          temp_sample = src(i,j);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n          \}\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n    \}\n\n\n    dst() = col_output;\n\n  \}\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   BoxBlur2D_SampleSize {{parent.parent.ElementBlur}}
+   BoxBlur2D_Method {{min(max(parent.parent.algorithm,2)-2,3)}}
+   BoxBlur2D_PositionalSigma 60000
+   BoxBlur2D_ColorSigma {{max(parent.parent.selectiveThreshold,0.00001)}}
+   rebuild_finalise ""
+   name BlinkScript1
+   xpos -477
+   ypos 861
+  }
+push $Nb6101d00
+  VectorBlur2 {
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv forward
+   scale {{parent.parent.ElementBlur}}
+   motion_falloff 1
+   soft_lines true
+   name VectorBlur3
+   xpos -643
+   ypos 858
+  }
+push $N631f5000
+  Blur {
+   size {{parent.parent.ElementBlur}}
+   name Blur1
+   xpos -798
+   ypos 850
+  }
+  Switch {
+   inputs 3
+   which {{min(parent.parent.algorithm,2)}}
+   name Switch4
+   xpos -643
+   ypos 938
+  }
+  Dot {
+   name Dot7
+   xpos -609
+   ypos 1204
+  }
+  Merge2 {
+   inputs 2
+   operation plus
+   name Merge2
+   xpos -911
+   ypos 1200
+  }
+  Output {
+   name Output1
+   xpos -911
+   ypos 1275
+  }
+  TransformGeo {
+   inputs 0
+   rotate {0 0 {parent.parent.LimtZipDirection*360}}
+   name TransformGeo1
+   xpos -1412
+   ypos 1079
+  }
+ end_group
+ Merge2 {
+  inputs 2+1
+  operation copy
+  invert_mask true
+  name Merge8
+  xpos 862
+  ypos 478
+  disable {{!parent.Switch2.which}}
+ }
+set N908fa800 [stack 0]
+push $Nb60fd800
+clone $Cb54e5400 {
+  inputs 2
+  xpos 1103
+  ypos 530
+  selected false
+ }
+set N908fa400 [stack 0]
+ Dot {
+  name Dot5
+  xpos 1137
+  ypos 1171
+ }
+push $N4f794400
+push $N69087c00
+ Group {
+  inputs 2
+  name GradientBlur1
+  xpos 657
+  ypos 1127
+  addUserKnob {20 User}
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+ }
+  Input {
+   inputs 0
+   name InputMask
+   xpos -1205
+   ypos 237
+   number 1
+  }
+  Dot {
+   name Dot9
+   xpos -1171
+   ypos 378
+  }
+set N908f9800 [stack 0]
+  Dot {
+   name Dot1
+   xpos -1171
+   ypos 767
+  }
+set N908f9400 [stack 0]
+  Input {
+   inputs 0
+   name InputImg
+   xpos -935
+   ypos 233
+  }
+  Dot {
+   name Dot8
+   xpos -901
+   ypos 595
+  }
+set N908f8c00 [stack 0]
+  Dot {
+   name Dot4
+   xpos -1310
+   ypos 595
+  }
+  Shuffle2 {
+   inputs 2
+   fromInput1 {{0} B A}
+   fromInput2 {{1} B A}
+   in2 rgba
+   mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.red 1 0 rgba.alpha 0 3"
+   name Shuffle2
+   xpos -1344
+   ypos 763
+  }
+set N908f8400 [stack 0]
+push $N908f9400
+push $N908f9800
+  Dot {
+   name Dot2
+   xpos -729
+   ypos 378
+  }
+  Matrix {
+   channels {rgba.red -rgba.green -rgba.blue none}
+   matrix {
+       {-1 -2 -1}
+       {0 0 0}
+       {1 2 1}
+     }
+   name Matrix3
+   xpos -763
+   ypos 441
+  }
+  Matrix {
+   channels {-rgba.red rgba.green -rgba.blue none}
+   matrix {
+       {-1 0 1}
+       {-2 0 2}
+       {-1 0 1}
+     }
+   name Matrix4
+   xpos -763
+   ypos 467
+  }
+  Expression {
+   temp_name3 Le
+   temp_expr3 "sqrt((Red*Red) + (Green*Green))+0.00000001"
+   expr0 Red/Le
+   expr1 Green/Le
+   expr3 Le
+   name NVO
+   xpos -763
+   ypos 493
+  }
+push $N908f8c00
+  ShuffleCopy {
+   inputs 2
+   alpha alpha2
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 motion
+   name ShuffleCopy5
+   label "\[python nuke.thisNode().knob('in').value()] >> \[python nuke.thisNode().knob('out').value()]"
+   xpos -763
+   ypos 585
+  }
+  Group {
+   name Allign_Vec
+   xpos -763
+   ypos 956
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos 229
+    ypos 70
+   }
+   Expression {
+    channel0 {forward.u -forward.v}
+    expr0 forward.v
+    channel1 {-forward.u forward.v}
+    expr1 -forward.u
+    channel2 {-rgba.red -rgba.green -rgba.blue none}
+    expr2 0
+    channel3 {none none none -rgba.alpha}
+    expr3 0
+    name Expression1
+    xpos 229
+    ypos 164
+   }
+   Grade {
+    channels forward
+    white 0.5
+    black_clamp false
+    name Grade1
+    xpos 229
+    ypos 190
+   }
+   Output {
+    name Output1
+    xpos 229
+    ypos 314
+   }
+  end_group
+  Shuffle2 {
+   fromInput1 {{0} B}
+   in1 motion
+   fromInput2 {{0} B}
+   mappings "4 forward.u 0 0 rgba.red 0 0 forward.v 0 1 rgba.green 0 1 backward.u 0 2 rgba.blue 0 2 backward.v 0 3 rgba.alpha 0 3"
+   name Shuffle1
+   xpos -763
+   ypos 999
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   mix 0
+   name Merge3
+   xpos -1205
+   ypos 999
+  }
+set Nc26b9400 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   name ColorMatrix1
+   xpos -1114
+   ypos 1039
+  }
+  Grade {
+   multiply {{parent.parent.limitZip} 1 1 1}
+   multiply_panelDropped true
+   black_clamp false
+   name Grade2
+   xpos -1114
+   ypos 1065
+  }
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   invert true
+   name ColorMatrix2
+   xpos -1114
+   ypos 1091
+  }
+push $Nc26b9400
+  Switch {
+   inputs 2
+   which {{parent.parent.limitZip<1}}
+   name Switch1
+   xpos -1205
+   ypos 1091
+  }
+push $N908f8400
+  Grade {
+   channels alpha
+   gamma 0.22
+   name Grade1
+   xpos -1476
+   ypos 757
+   disable true
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 17
+   ProgramGroup 1
+   KernelDescription "2 \"ZipBlur\" iterate pixelWise 559a64662798659776aa36ad3c5a17fd281c3d3393e8b212ba84cc657645b4de 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 1 \"radius\" Float 1 AABAQA== 1 \"radius\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel ZipBlur : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  float radius;  //The vertical radius of our box blur\n\n\nlocal:\n  int _filterSize;\n\n\n  void define() \{\n    defineParam(radius, \"radius\", 3.0f); \n  \}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    int xRadius = int(_filterSize)+1;\n    src.setRange(-xRadius, -xRadius, xRadius, xRadius);\n  \}\n\n  void process() \{\n    float4 sum = 0.0f;\n    float2 mvsample = float2(mv(0),mv(1));\n    float4 aSample = bilinear(src,radius*mvsample.x,radius*mvsample.y);\n    float4 bSample = bilinear(src,-radius*mvsample.x,-radius*mvsample.y);\n    aSample.w = 1.0f-aSample.w;\n    bSample.w = 1.0f-bSample.w;\n    dst() = ((aSample*aSample.w)+(bSample*bSample.w))/(aSample.w+bSample.w);\n\n  \}\n\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   ZipBlur_radius {{parent.parent.nuclearOption}}
+   rebuild_finalise ""
+   name BlinkScript4
+   xpos -1476
+   ypos 1085
+  }
+push $N908f8c00
+  Dot {
+   name Dot3
+   xpos -901
+   ypos 1176
+  }
+  Merge2 {
+   inputs 2+1
+   operation copy
+   name Merge4
+   xpos -1344
+   ypos 1172
+  }
+  Output {
+   name Output1
+   xpos -1476
+   ypos 1223
+  }
+  TransformGeo {
+   inputs 0
+   rotate {0 0 {parent.parent.LimtZipDirection*360}}
+   name TransformGeo1
+   xpos -1000
+   ypos 1064
+  }
+ end_group
+push $Nb60fd000
+clone $C5b56000 {
+  xpos 655
+  ypos 474
+  selected false
+ }
+ Dot {
+  name Dot11
+  xpos 689
+  ypos 508
+ }
+set Na057a000 [stack 0]
+clone $C5b56000 {
+  xpos 655
+  ypos 526
+  selected false
+ }
+ Dot {
+  name Dot9
+  xpos 689
+  ypos 560
+ }
+push $N4f796400
+push $N908fa400
+push $Na057a000
+push $N908fa800
+ Group {
+  inputs 2
+  name GradientBlur9
+  xpos 862
+  ypos 504
+  disable {{!(parent.itterations>6)}}
+  addUserKnob {20 User}
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+ }
+  Input {
+   inputs 0
+   name InputMask
+   xpos -1205
+   ypos 237
+   number 1
+  }
+  Dot {
+   name Dot9
+   xpos -1171
+   ypos 378
+  }
+set Na0579000 [stack 0]
+  Dot {
+   name Dot1
+   xpos -1171
+   ypos 767
+  }
+set Na0578c00 [stack 0]
+push $Na0579000
+  Dot {
+   name Dot2
+   xpos -872
+   ypos 378
+  }
+set Na0578800 [stack 0]
+  Dot {
+   name Dot3
+   xpos -609
+   ypos 378
+  }
+push $Na0578800
+  Matrix {
+   channels {rgba.red -rgba.green -rgba.blue none}
+   matrix {
+       {-1 -2 -1}
+       {0 0 0}
+       {1 2 1}
+     }
+   name Matrix3
+   xpos -906
+   ypos 441
+  }
+  Matrix {
+   channels {-rgba.red rgba.green -rgba.blue none}
+   matrix {
+       {-1 0 1}
+       {-2 0 2}
+       {-1 0 1}
+     }
+   name Matrix4
+   xpos -906
+   ypos 467
+  }
+  Expression {
+   temp_name3 Le
+   temp_expr3 "sqrt((Red*Red) + (Green*Green))+0.00000001"
+   expr0 Red/Le
+   expr1 Green/Le
+   expr3 Le
+   name NVO
+   xpos -906
+   ypos 493
+  }
+  Input {
+   inputs 0
+   name InputImg
+   xpos -1078
+   ypos 233
+  }
+  Dot {
+   name Dot8
+   xpos -1044
+   ypos 595
+  }
+set Na8952c00 [stack 0]
+  ShuffleCopy {
+   inputs 2
+   alpha blue
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 motion
+   name ShuffleCopy5
+   label "\[python nuke.thisNode().knob('in').value()] >> \[python nuke.thisNode().knob('out').value()]"
+   xpos -906
+   ypos 585
+  }
+  VectorBlur2 {
+   inputs 1+1
+   channels rgba
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv motion
+   scale {{parent.parent.Detail}}
+   motion_falloff {{parent.parent.detailFalloff}}
+   soft_lines {{parent.parent.Softlining}}
+   name VectorBlur1
+   xpos -643
+   ypos 585
+  }
+  Dot {
+   name Dot11
+   xpos -609
+   ypos 690
+  }
+set Na8951c00 [stack 0]
+  Dot {
+   name Dot12
+   xpos -609
+   ypos 746
+  }
+set Na8951800 [stack 0]
+  Group {
+   name Allign_Vec1
+   xpos -643
+   ypos 799
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos 229
+    ypos 70
+   }
+   Expression {
+    channel0 {forward.u -forward.v}
+    expr0 forward.v
+    channel1 {-forward.u forward.v}
+    expr1 -forward.u
+    channel2 {-rgba.red -rgba.green -rgba.blue none}
+    expr2 0
+    channel3 {none none none -rgba.alpha}
+    expr3 0
+    name Expression1
+    xpos 229
+    ypos 164
+   }
+   Grade {
+    channels forward
+    white 0.5
+    black_clamp false
+    name Grade1
+    xpos 229
+    ypos 190
+   }
+   Output {
+    name Output1
+    xpos 229
+    ypos 314
+   }
+  end_group
+set Na056e400 [stack 0]
+  Shuffle2 {
+   fromInput1 {{0} B}
+   in1 motion
+   fromInput2 {{0} B}
+   mappings "4 forward.u 0 0 rgba.red 0 0 forward.v 0 1 rgba.green 0 1 backward.u 0 2 rgba.blue 0 2 backward.v 0 3 rgba.alpha 0 3"
+   name Shuffle3
+   xpos -477
+   ypos 799
+  }
+set Na8950400 [stack 0]
+  Dot {
+   name Dot13
+   xpos -251
+   ypos 803
+  }
+  Dot {
+   name Dot14
+   xpos -251
+   ypos 985
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   name Merge3
+   xpos -1205
+   ypos 981
+   disable true
+  }
+set Nae38f400 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   name ColorMatrix1
+   xpos -1299
+   ypos 1046
+  }
+  Grade {
+   multiply {{parent.parent.limitZip} 1 1 1}
+   multiply_panelDropped true
+   black_clamp false
+   name Grade2
+   xpos -1299
+   ypos 1072
+  }
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   invert true
+   name ColorMatrix2
+   xpos -1299
+   ypos 1098
+  }
+push $Nae38f400
+  Switch {
+   inputs 2
+   which {{parent.parent.limitZip<1}}
+   name Switch3
+   xpos -1205
+   ypos 1151
+  }
+push $Na0578c00
+push $Na8952c00
+  Dot {
+   name Dot4
+   xpos -1044
+   ypos 690
+  }
+push $Na8951c00
+  Merge2 {
+   inputs 2
+   operation minus
+   invert_mask true
+   name Merge1
+   xpos -911
+   ypos 686
+  }
+set Nae38dc00 [stack 0]
+push $Nae38dc00
+  Group {
+   inputs 2
+   name Compressor
+   selected true
+   xpos -911
+   ypos 712
+   disable {{!parent.parent.compression}}
+   addUserKnob {20 User}
+   addUserKnob {41 size T Blur1.size}
+   addUserKnob {41 multiply T Grade4.multiply}
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos -431
+    ypos 124
+   }
+set Nae38d800 [stack 0]
+push $Nae38d800
+   Blur {
+    size {{parent.parent.parent.CompressionRadius}}
+    name Blur1
+    selected true
+    xpos -431
+    ypos 164
+   }
+set Nae38d400 [stack 0]
+   Merge2 {
+    inputs 2
+    operation minus
+    name Merge4
+    xpos -345
+    ypos 170
+   }
+   Grade {
+    white 25
+    multiply {{parent.parent.parent.compression_level}}
+    black_clamp false
+    name Grade4
+    xpos -345
+    ypos 196
+   }
+   Expression {
+    expr0 r>0?(r/(r+1)):-(-r/(-r+1))
+    expr1 g>0?(g/(g+1)):-(-g/(-g+1))
+    expr2 b>0?(b/(b+1)):-(-b/(-b+1))
+    name Expression2
+    xpos -345
+    ypos 222
+   }
+   Grade {
+    white {{parent.Grade4.white}}
+    multiply {{parent.Grade4.multiply}}
+    gamma {{parent.Grade4.gamma}}
+    reverse true
+    black_clamp false
+    name Grade5
+    xpos -345
+    ypos 248
+   }
+push $Nae38d400
+   Merge2 {
+    inputs 2
+    operation plus
+    name Merge5
+    xpos -431
+    ypos 248
+   }
+   Output {
+    name Output1
+    xpos -431
+    ypos 348
+   }
+  end_group
+set Nf710b900 [stack 0]
+  Shuffle2 {
+   inputs 2
+   fromInput1 {{0} B A}
+   fromInput2 {{1} B A}
+   in2 rgba
+   mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.red 1 0 rgba.alpha 0 3"
+   name Shuffle2
+   xpos -1030
+   ypos 763
+  }
+  Grade {
+   channels alpha
+   gamma 0.31
+   name Grade1
+   xpos -1030
+   ypos 822
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 18
+   ProgramGroup 1
+   KernelDescription "2 \"ZipBlur\" iterate pixelWise d734f3d395bbb94244668173872317cbf77f3d5355c28821b93568a5317f0d0a 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 1 \"radius\" Float 1 AABAQA== 1 \"radius\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel ZipBlur : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  float radius;  //The vertical radius of our box blur\n\n\nlocal:\n  int _filterSize;\n\n\n  void define() \{\n    defineParam(radius, \"radius\", 3.0f); \n  \}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    int xRadius = int(_filterSize)+1;\n    src.setRange(-xRadius, -xRadius, xRadius, xRadius);\n  \}\n\n  void process() \{\n    float4 sum = 0.0f;\n    float2 mvsample = float2(mv(0),mv(1));\n    //float4 aSample = bilinear(src,radius*mvsample.x,radius*mvsample.y);\n    //float4 bSample = bilinear(src,-radius*mvsample.x,-radius*mvsample.y);\n    float4 aSample = src(radius*mvsample.x,radius*mvsample.y);\n    float4 bSample = src(-radius*mvsample.x,-radius*mvsample.y);\n    aSample.w = 1.0f-aSample.w;\n    bSample.w = 1.0f-bSample.w;\n    dst() = ((aSample*aSample.w)+(bSample*bSample.w))/(aSample.w+bSample.w);\n\n  \}\n\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   ZipBlur_radius {{parent.parent.nuclearOption}}
+   rebuild_finalise ""
+   name BlinkScript4
+   xpos -1030
+   ypos 1145
+  }
+push $Nf710b900
+  Switch {
+   inputs 2
+   which {{parent.parent.nuclearOption>0}}
+   name Switch2
+   xpos -911
+   ypos 1151
+  }
+push $Na8950400
+push $Na8951800
+  Expression {
+   expr3 1-a
+   name Expression1
+   xpos -567
+   ypos 742
+  }
+  Dot {
+   name Dot15
+   xpos -347
+   ypos 746
+  }
+  Grade {
+   channels alpha
+   gamma {{parent.parent.WeightDistribution}}
+   name Grade3
+   xpos -381
+   ypos 861
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 26
+   ProgramGroup 1
+   KernelDescription "2 \"BoxBlur2D\" iterate pixelWise b192d98157b51825d06f8b741e01ddbad1333554bc2cd266b9a98e88df5be905 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 4 \"SampleSize\" Int 1 BQAAAA== \"Method\" Int 1 AAAAAA== \"PositionalSigma\" Float 1 AAAgQQ== \"ColorSigma\" Float 1 zczMPQ== 4 \"sampleSize\" 1 1 \"method\" 1 1 \"SIGMA\" 1 1 \"BSIGMA\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel BoxBlur2D : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n\n  int sampleSize;  //The horizontal radius of our box blur\n  int method;  //The vertical radius of our box blur\n    float SIGMA;\n    float BSIGMA;\n\n\n\nlocal:\n  int _filterSize;\n\n\n\n  void define() \{\n    defineParam(sampleSize, \"SampleSize\", 5); \n    defineParam(method, \"Method\", 0); \n    defineParam(SIGMA, \"PositionalSigma\", 10.0f);\n    defineParam(BSIGMA, \"ColorSigma\", 0.1f);         \n  \}\n\n\nfloat normpdf(float x, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*x*x/(sigma*sigma))/sigma;\n\}\n\nfloat normpdf3(float3 v, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*dot(v,v)/(sigma*sigma))/sigma;\n\}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    src.setRange(-sampleSize, -sampleSize, sampleSize, sampleSize);\n    _filterSize = (2 * sampleSize + 1);\n  \}\n\n\n\n  void process() \{\n    float4 sum = 0.0f;\n    float4 srcsample = src(0,0);\n    float2 mvsample = float2(mv(0),mv(1));\n    float4 col_output = float4(0.0);\n    float3 tmp_colour = float3(0.0); //Temp Storage\n    float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n\n    if (method==0)\{\n      for(int j = -sampleSize; j <= sampleSize; j++)\n          sum += bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n      col_output = sum / (float)_filterSize;\n    \}\n    else if (method==1) \{\n        float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n        float kernelB\[200];\n\n        \n        //create the 1-D kernel\n        float Z = 0.0;\n\n        for (int j = 0; j <= _filterSize; ++j)\n        \{\n          kernelB\[_filterSize+j] = kernelB\[_filterSize-j] = normpdf(float(j), SIGMA);\n        \}\n            \n        float3 cc;\n        float factor;\n        float bZ = 1.0f/normpdf(0.0f, BSIGMA);\n        //read out the texels\n        for (int i=-_filterSize; i <= _filterSize; ++i)\n        \{\n            srcsample = bilinear(src,((float)i*mvsample.x),((float)i*mvsample.y));\n            cc = float3(srcsample.x,srcsample.y,srcsample.z);\n            factor = normpdf3(cc-c, BSIGMA)*bZ*kernelB\[_filterSize]*kernelB\[_filterSize+i];\n            Z += factor;\n            tmp_colour += factor*cc;\n        \}    \n        tmp_colour = tmp_colour/Z;\n        col_output = float4(tmp_colour.x,tmp_colour.y,tmp_colour.z, 1.0f);\n    \}        \n    else if (method==2)  \{ //\"Weighted Blur\"\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          temp_sample = bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n      \}\n    \n    else \{\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          for(int i = -sampleSize; i <= sampleSize; i++)\{\n          temp_sample = src(i,j);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n          \}\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n    \}\n\n\n    dst() = col_output;\n\n  \}\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   BoxBlur2D_SampleSize {{parent.parent.ElementBlur}}
+   BoxBlur2D_Method {{min(max(parent.parent.algorithm,2)-2,3)}}
+   BoxBlur2D_PositionalSigma 60000
+   BoxBlur2D_ColorSigma {{max(parent.parent.selectiveThreshold,0.00001)}}
+   rebuild_finalise ""
+   name BlinkScript1
+   xpos -477
+   ypos 861
+  }
+push $Na056e400
+  VectorBlur2 {
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv forward
+   scale {{parent.parent.ElementBlur}}
+   motion_falloff 1
+   soft_lines true
+   name VectorBlur3
+   xpos -643
+   ypos 858
+  }
+push $Na8951800
+  Blur {
+   size {{parent.parent.ElementBlur}}
+   name Blur1
+   xpos -798
+   ypos 850
+  }
+  Switch {
+   inputs 3
+   which {{min(parent.parent.algorithm,2)}}
+   name Switch4
+   xpos -643
+   ypos 938
+  }
+  Dot {
+   name Dot7
+   xpos -609
+   ypos 1204
+  }
+  Merge2 {
+   inputs 2
+   operation plus
+   name Merge2
+   xpos -911
+   ypos 1200
+  }
+  Output {
+   name Output1
+   xpos -911
+   ypos 1275
+  }
+  TransformGeo {
+   inputs 0
+   rotate {0 0 {parent.parent.LimtZipDirection*360}}
+   name TransformGeo1
+   xpos -1412
+   ypos 1079
+  }
+ end_group
+ Merge2 {
+  inputs 2+1
+  operation copy
+  invert_mask true
+  name Merge9
+  xpos 862
+  ypos 530
+  disable {{!parent.Switch2.which}}
+ }
+ Group {
+  inputs 2
+  name GradientBlur10
+  xpos 862
+  ypos 556
+  disable {{!(parent.itterations>7)}}
+  addUserKnob {20 User}
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+ }
+  Input {
+   inputs 0
+   name InputMask
+   xpos -1205
+   ypos 237
+   number 1
+  }
+  Dot {
+   name Dot9
+   xpos -1171
+   ypos 378
+  }
+set Ne9966800 [stack 0]
+  Dot {
+   name Dot1
+   xpos -1171
+   ypos 767
+  }
+set Ne9966400 [stack 0]
+push $Ne9966800
+  Dot {
+   name Dot2
+   xpos -872
+   ypos 378
+  }
+set Ne9966000 [stack 0]
+  Dot {
+   name Dot3
+   xpos -609
+   ypos 378
+  }
+push $Ne9966000
+  Matrix {
+   channels {rgba.red -rgba.green -rgba.blue none}
+   matrix {
+       {-1 -2 -1}
+       {0 0 0}
+       {1 2 1}
+     }
+   name Matrix3
+   xpos -906
+   ypos 441
+  }
+  Matrix {
+   channels {-rgba.red rgba.green -rgba.blue none}
+   matrix {
+       {-1 0 1}
+       {-2 0 2}
+       {-1 0 1}
+     }
+   name Matrix4
+   xpos -906
+   ypos 467
+  }
+  Expression {
+   temp_name3 Le
+   temp_expr3 "sqrt((Red*Red) + (Green*Green))+0.00000001"
+   expr0 Red/Le
+   expr1 Green/Le
+   expr3 Le
+   name NVO
+   xpos -906
+   ypos 493
+  }
+  Input {
+   inputs 0
+   name InputImg
+   xpos -1078
+   ypos 233
+  }
+  Dot {
+   name Dot8
+   xpos -1044
+   ypos 595
+  }
+set Ne9964800 [stack 0]
+  ShuffleCopy {
+   inputs 2
+   alpha blue
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 motion
+   name ShuffleCopy5
+   label "\[python nuke.thisNode().knob('in').value()] >> \[python nuke.thisNode().knob('out').value()]"
+   xpos -906
+   ypos 585
+  }
+  VectorBlur2 {
+   inputs 1+1
+   channels rgba
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv motion
+   scale {{parent.parent.Detail}}
+   motion_falloff {{parent.parent.detailFalloff}}
+   soft_lines {{parent.parent.Softlining}}
+   name VectorBlur1
+   xpos -643
+   ypos 585
+  }
+  Dot {
+   name Dot11
+   xpos -609
+   ypos 690
+  }
+set N4676b400 [stack 0]
+  Dot {
+   name Dot12
+   xpos -609
+   ypos 746
+  }
+set N4676b000 [stack 0]
+  Group {
+   name Allign_Vec1
+   xpos -643
+   ypos 799
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos 229
+    ypos 70
+   }
+   Expression {
+    channel0 {forward.u -forward.v}
+    expr0 forward.v
+    channel1 {-forward.u forward.v}
+    expr1 -forward.u
+    channel2 {-rgba.red -rgba.green -rgba.blue none}
+    expr2 0
+    channel3 {none none none -rgba.alpha}
+    expr3 0
+    name Expression1
+    xpos 229
+    ypos 164
+   }
+   Grade {
+    channels forward
+    white 0.5
+    black_clamp false
+    name Grade1
+    xpos 229
+    ypos 190
+   }
+   Output {
+    name Output1
+    xpos 229
+    ypos 314
+   }
+  end_group
+set N49d31600 [stack 0]
+  Shuffle2 {
+   fromInput1 {{0} B}
+   in1 motion
+   fromInput2 {{0} B}
+   mappings "4 forward.u 0 0 rgba.red 0 0 forward.v 0 1 rgba.green 0 1 backward.u 0 2 rgba.blue 0 2 backward.v 0 3 rgba.alpha 0 3"
+   name Shuffle3
+   xpos -477
+   ypos 799
+  }
+set N46769c00 [stack 0]
+  Dot {
+   name Dot13
+   xpos -251
+   ypos 803
+  }
+  Dot {
+   name Dot14
+   xpos -251
+   ypos 985
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   name Merge3
+   xpos -1205
+   ypos 981
+   disable true
+  }
+set N46769000 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   name ColorMatrix1
+   xpos -1299
+   ypos 1046
+  }
+  Grade {
+   multiply {{parent.parent.limitZip} 1 1 1}
+   multiply_panelDropped true
+   black_clamp false
+   name Grade2
+   xpos -1299
+   ypos 1072
+  }
+  ColorMatrix {
+   matrix {
+       {{parent.TransformGeo1.matrix.0} {parent.TransformGeo1.matrix.1} 0}
+       {{parent.TransformGeo1.matrix.4} {parent.TransformGeo1.matrix.5} 0}
+       {0 0 1}
+     }
+   invert true
+   name ColorMatrix2
+   xpos -1299
+   ypos 1098
+  }
+push $N46769000
+  Switch {
+   inputs 2
+   which {{parent.parent.limitZip<1}}
+   name Switch3
+   xpos -1205
+   ypos 1151
+  }
+push $Ne9966400
+push $Ne9964800
+  Dot {
+   name Dot4
+   xpos -1044
+   ypos 690
+  }
+push $N4676b400
+  Merge2 {
+   inputs 2
+   operation minus
+   invert_mask true
+   name Merge1
+   xpos -911
+   ypos 686
+  }
+set N1fbff400 [stack 0]
+push $N1fbff400
+  Group {
+   inputs 2
+   name Compressor
+   selected true
+   xpos -911
+   ypos 712
+   disable {{!parent.parent.compression}}
+   addUserKnob {20 User}
+   addUserKnob {41 size T Blur1.size}
+   addUserKnob {41 multiply T Grade4.multiply}
+  }
+   Input {
+    inputs 0
+    name Input1
+    xpos -431
+    ypos 124
+   }
+set N1fbff000 [stack 0]
+push $N1fbff000
+   Blur {
+    size {{parent.parent.parent.CompressionRadius}}
+    name Blur1
+    selected true
+    xpos -431
+    ypos 164
+   }
+set N1fbfec00 [stack 0]
+   Merge2 {
+    inputs 2
+    operation minus
+    name Merge4
+    xpos -345
+    ypos 170
+   }
+   Grade {
+    white 25
+    multiply {{parent.parent.parent.compression_level}}
+    black_clamp false
+    name Grade4
+    xpos -345
+    ypos 196
+   }
+   Expression {
+    expr0 r>0?(r/(r+1)):-(-r/(-r+1))
+    expr1 g>0?(g/(g+1)):-(-g/(-g+1))
+    expr2 b>0?(b/(b+1)):-(-b/(-b+1))
+    name Expression2
+    xpos -345
+    ypos 222
+   }
+   Grade {
+    white {{parent.Grade4.white}}
+    multiply {{parent.Grade4.multiply}}
+    gamma {{parent.Grade4.gamma}}
+    reverse true
+    black_clamp false
+    name Grade5
+    xpos -345
+    ypos 248
+   }
+push $N1fbfec00
+   Merge2 {
+    inputs 2
+    operation plus
+    name Merge5
+    xpos -431
+    ypos 248
+   }
+   Output {
+    name Output1
+    xpos -431
+    ypos 348
+   }
+  end_group
+set N7ff7ab00 [stack 0]
+  Shuffle2 {
+   inputs 2
+   fromInput1 {{0} B A}
+   fromInput2 {{1} B A}
+   in2 rgba
+   mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.red 1 0 rgba.alpha 0 3"
+   name Shuffle2
+   xpos -1030
+   ypos 763
+  }
+  Grade {
+   channels alpha
+   gamma 0.31
+   name Grade1
+   xpos -1030
+   ypos 822
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 18
+   ProgramGroup 1
+   KernelDescription "2 \"ZipBlur\" iterate pixelWise d734f3d395bbb94244668173872317cbf77f3d5355c28821b93568a5317f0d0a 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 1 \"radius\" Float 1 AABAQA== 1 \"radius\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel ZipBlur : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  float radius;  //The vertical radius of our box blur\n\n\nlocal:\n  int _filterSize;\n\n\n  void define() \{\n    defineParam(radius, \"radius\", 3.0f); \n  \}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    int xRadius = int(_filterSize)+1;\n    src.setRange(-xRadius, -xRadius, xRadius, xRadius);\n  \}\n\n  void process() \{\n    float4 sum = 0.0f;\n    float2 mvsample = float2(mv(0),mv(1));\n    //float4 aSample = bilinear(src,radius*mvsample.x,radius*mvsample.y);\n    //float4 bSample = bilinear(src,-radius*mvsample.x,-radius*mvsample.y);\n    float4 aSample = src(radius*mvsample.x,radius*mvsample.y);\n    float4 bSample = src(-radius*mvsample.x,-radius*mvsample.y);\n    aSample.w = 1.0f-aSample.w;\n    bSample.w = 1.0f-bSample.w;\n    dst() = ((aSample*aSample.w)+(bSample*bSample.w))/(aSample.w+bSample.w);\n\n  \}\n\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   ZipBlur_radius {{parent.parent.nuclearOption}}
+   rebuild_finalise ""
+   name BlinkScript4
+   xpos -1030
+   ypos 1145
+  }
+push $N7ff7ab00
+  Switch {
+   inputs 2
+   which {{parent.parent.nuclearOption>0}}
+   name Switch2
+   xpos -911
+   ypos 1151
+  }
+push $N46769c00
+push $N4676b000
+  Expression {
+   expr3 1-a
+   name Expression1
+   xpos -567
+   ypos 742
+  }
+  Dot {
+   name Dot15
+   xpos -347
+   ypos 746
+  }
+  Grade {
+   channels alpha
+   gamma {{parent.parent.WeightDistribution}}
+   name Grade3
+   xpos -381
+   ypos 861
+  }
+  BlinkScript {
+   inputs 2
+   recompileCount 26
+   ProgramGroup 1
+   KernelDescription "2 \"BoxBlur2D\" iterate pixelWise b192d98157b51825d06f8b741e01ddbad1333554bc2cd266b9a98e88df5be905 3 \"src\" Read Ranged2D \"mv\" Read Point \"dst\" Write Point 4 \"SampleSize\" Int 1 BQAAAA== \"Method\" Int 1 AAAAAA== \"PositionalSigma\" Float 1 AAAgQQ== \"ColorSigma\" Float 1 zczMPQ== 4 \"sampleSize\" 1 1 \"method\" 1 1 \"SIGMA\" 1 1 \"BSIGMA\" 1 1 3 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"_filterSize\" Int 1 1 AAAAAA=="
+   kernelSource "kernel BoxBlur2D : public ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> mv;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n\n  int sampleSize;  //The horizontal radius of our box blur\n  int method;  //The vertical radius of our box blur\n    float SIGMA;\n    float BSIGMA;\n\n\n\nlocal:\n  int _filterSize;\n\n\n\n  void define() \{\n    defineParam(sampleSize, \"SampleSize\", 5); \n    defineParam(method, \"Method\", 0); \n    defineParam(SIGMA, \"PositionalSigma\", 10.0f);\n    defineParam(BSIGMA, \"ColorSigma\", 0.1f);         \n  \}\n\n\nfloat normpdf(float x, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*x*x/(sigma*sigma))/sigma;\n\}\n\nfloat normpdf3(float3 v, float sigma)\n\{\n  return 0.39894f*exp(-0.5f*dot(v,v)/(sigma*sigma))/sigma;\n\}\n\n\n  void init() \{\n    //Set the range we need to access from the source \n    src.setRange(-sampleSize, -sampleSize, sampleSize, sampleSize);\n    _filterSize = (2 * sampleSize + 1);\n  \}\n\n\n\n  void process() \{\n    float4 sum = 0.0f;\n    float4 srcsample = src(0,0);\n    float2 mvsample = float2(mv(0),mv(1));\n    float4 col_output = float4(0.0);\n    float3 tmp_colour = float3(0.0); //Temp Storage\n    float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n\n    if (method==0)\{\n      for(int j = -sampleSize; j <= sampleSize; j++)\n          sum += bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n      col_output = sum / (float)_filterSize;\n    \}\n    else if (method==1) \{\n        float3 c = float3(srcsample.x,srcsample.y,srcsample.z);\n        float kernelB\[200];\n\n        \n        //create the 1-D kernel\n        float Z = 0.0;\n\n        for (int j = 0; j <= _filterSize; ++j)\n        \{\n          kernelB\[_filterSize+j] = kernelB\[_filterSize-j] = normpdf(float(j), SIGMA);\n        \}\n            \n        float3 cc;\n        float factor;\n        float bZ = 1.0f/normpdf(0.0f, BSIGMA);\n        //read out the texels\n        for (int i=-_filterSize; i <= _filterSize; ++i)\n        \{\n            srcsample = bilinear(src,((float)i*mvsample.x),((float)i*mvsample.y));\n            cc = float3(srcsample.x,srcsample.y,srcsample.z);\n            factor = normpdf3(cc-c, BSIGMA)*bZ*kernelB\[_filterSize]*kernelB\[_filterSize+i];\n            Z += factor;\n            tmp_colour += factor*cc;\n        \}    \n        tmp_colour = tmp_colour/Z;\n        col_output = float4(tmp_colour.x,tmp_colour.y,tmp_colour.z, 1.0f);\n    \}        \n    else if (method==2)  \{ //\"Weighted Blur\"\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          temp_sample = bilinear(src,(float)j*mvsample.x,(float)j*mvsample.y);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n      \}\n    \n    else \{\n      float weightsum = 0.0f;\n      float4 temp_sample;\n      for(int j = -sampleSize; j <= sampleSize; j++)\{\n          for(int i = -sampleSize; i <= sampleSize; i++)\{\n          temp_sample = src(i,j);\n          weightsum += temp_sample.w;\n          sum += temp_sample * temp_sample.w;\n          \}\n      \}\n      sum = sum /(weightsum/(float)_filterSize);\n      col_output = sum / (float)_filterSize; \n    \}\n\n\n    dst() = col_output;\n\n  \}\n\};"
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   rebuild ""
+   BoxBlur2D_SampleSize {{parent.parent.ElementBlur}}
+   BoxBlur2D_Method {{min(max(parent.parent.algorithm,2)-2,3)}}
+   BoxBlur2D_PositionalSigma 60000
+   BoxBlur2D_ColorSigma {{max(parent.parent.selectiveThreshold,0.00001)}}
+   rebuild_finalise ""
+   name BlinkScript1
+   xpos -477
+   ypos 861
+  }
+push $N49d31600
+  VectorBlur2 {
+   useGPUIfAvailable {{parent.parent.usegpu}}
+   uv forward
+   scale {{parent.parent.ElementBlur}}
+   motion_falloff 1
+   soft_lines true
+   name VectorBlur3
+   xpos -643
+   ypos 858
+  }
+push $N4676b000
+  Blur {
+   size {{parent.parent.ElementBlur}}
+   name Blur1
+   xpos -798
+   ypos 850
+  }
+  Switch {
+   inputs 3
+   which {{min(parent.parent.algorithm,2)}}
+   name Switch4
+   xpos -643
+   ypos 938
+  }
+  Dot {
+   name Dot7
+   xpos -609
+   ypos 1204
+  }
+  Merge2 {
+   inputs 2
+   operation plus
+   name Merge2
+   xpos -911
+   ypos 1200
+  }
+  Output {
+   name Output1
+   xpos -911
+   ypos 1275
+  }
+  TransformGeo {
+   inputs 0
+   rotate {0 0 {parent.parent.LimtZipDirection*360}}
+   name TransformGeo1
+   xpos -1412
+   ypos 1079
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{max(0,min(parent.algorithm,6)-5)}}
+  name Switch1
+  xpos 864
+  ypos 1129
+ }
+ Merge2 {
+  inputs 2+1
+  operation copy
+  invert_mask true
+  name Merge3
+  xpos 864
+  ypos 1167
+ }
+ OCIOLogConvert {
+  operation "log to lin"
+  name OCIOLogConvert2
+  xpos 864
+  ypos 1215
+  disable {{!parent.processinlog}}
+ }
+ Output {
+  name Output1
+  xpos 864
+  ypos 1313
+ }
+end_group

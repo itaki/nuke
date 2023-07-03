@@ -1,0 +1,520 @@
+#! /Applications/Nuke7.0v5/NukeX7.0v5.app/../Nuke7.0v5.app/Contents/MacOS/Nuke7.0v5 -nx
+version 7.0 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="22" w="2560" h="1574" screen="0">
+        <splitter orientation="1">
+            <split size="1619"/>
+            <splitter orientation="1">
+                <split size="61"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="1554"/>
+                <splitter orientation="2">
+                    <split size="774"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"/>
+                    </dock>
+                    <split size="774"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="937"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name /Users/robot/Downloads/Noise/Noise_3.nk
+ frame 78
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x7171c600
+ label "Here is a simple noise that has \nbeen masked with a rectangle \nand and a Min Merge. Note the \nunsatisfactory, hard-edged result."
+ note_font "Verdana Bold Bold Bold Bold"
+ note_font_size 20
+ xpos -797
+ ypos -398
+ bdwidth 457
+ bdheight 456
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode2
+ tile_color 0x7171c600
+ label "Hre is minus blend mode has been used to\nachieve a more complex edge."
+ note_font "Verdana Bold Bold Bold Bold Bold"
+ note_font_size 20
+ xpos -207
+ ypos -422
+ bdwidth 457
+ bdheight 456
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0x7171c600
+ label "Here a similar procedure has been used to\nmake an 'eventfull' hard-edged shape using\na roto as guide. A script very much like this \none was used to make Rorchach's mask \nin the film 'Watchmen'    \n   "
+ note_font "Verdana Bold Bold Bold Bold Bold Bold"
+ note_font_size 20
+ xpos 1596
+ ypos -382
+ bdwidth 457
+ bdheight 456
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode5
+ tile_color 0x7171c600
+ label "Using the preceding script as a model, this cloud set was made. \nTo make it look more cloud-like it was given greater volume by \nthe adition of an extra noise of different size. "
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold"
+ note_font_size 20
+ xpos 372
+ ypos -425
+ bdwidth 1097
+ bdheight 819
+}
+Noise {
+ inputs 0
+ zoffset {{curve i x1 0 l x30 1.76}}
+ gain 0.48
+ translate {{curve i x1 0 l x30 789.7380981} 0}
+ center {1024 778}
+ name Noise3
+ xpos -759
+ ypos -227
+}
+set C8e24130 [stack 0]
+Rectangle {
+ inputs 0
+ area {-160 690 2495 1720}
+ name Rectangle2
+ xpos -558
+ ypos -270
+}
+Invert {
+ name Invert2
+ xpos -558
+ ypos -246
+}
+Blur {
+ size 400
+ name Blur3
+ xpos -558
+ ypos -212
+}
+Merge2 {
+ inputs 2
+ operation min
+ name Merge5
+ xpos -657
+ ypos -77
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0 0.2500038147 1 1}
+ name Constant2
+ xpos -459
+ ypos -135
+}
+Merge2 {
+ inputs 2
+ name Merge3
+ xpos -580
+ ypos -10
+}
+clone $C8e24130 {
+ inputs 0
+ xpos -167
+ ypos -297
+ selected false
+}
+Rectangle {
+ inputs 0
+ area {-160 690 2495 1720}
+ softness 100
+ name Rectangle1
+ xpos 27
+ ypos -325
+}
+Blur {
+ size 500
+ name Blur1
+ xpos 27
+ ypos -301
+}
+Merge2 {
+ inputs 2
+ operation minus
+ sRGB true
+ name Merge4
+ xpos -79
+ ypos -179
+}
+Shuffle {
+ alpha green
+ name Shuffle1
+ xpos -79
+ ypos -155
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0 0.2500038147 1 1}
+ name Constant1
+ xpos 102
+ ypos -188
+}
+Merge2 {
+ inputs 2
+ name Merge2
+ xpos -13
+ ypos -34
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ label " \n      Animated! (different clods using the Noise node)\n"
+ note_font "Verdana Bold Bold Bold Bold Bold"
+ note_font_size 30
+ xpos -21
+ ypos -666
+}
+clone $C8e24130 {
+ inputs 0
+ xpos 1660
+ ypos -147
+ selected false
+}
+Roto {
+ inputs 0
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44800000 x44428000}
+    {a}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {p
+        {x43160000 xc1700000}
+        {x44610000 x449ec000}
+        {xc3160000 x41700000}
+        {x43110000 x43b40000}
+        {x440ac000 x448ac000}
+        {xc3110000 xc3b40000}
+        {x41200000 x434d0000}
+        {x44124000 x44408000}
+        {xc1200000 xc34d0000}
+        {xc31b0000 x43938000}
+        {x43de8000 x43cf8000}
+        {x431b0000 xc3938000}
+        {xc3ca8000 xc30c0000}
+        {x44688000 x42f00000}
+        {x43ca8000 x430c0000}
+        {x43b40000 xc3910000}
+        {x44cda000 x44430000}
+        {xc3b40000 x43910000}
+        {0 xc2e60000}
+        {x44a50000 x44a28000}
+        {0 x42e60000}}}
+      {cc
+       {f 8192}
+       {p
+        {x43160000 xc1700000}
+        {}
+        {xc3160000 x41700000}
+        {x43110000 x43b40000}
+        {}
+        {xc3110000 xc3b40000}
+        {x41200000 x434d0000}
+        {}
+        {xc1200000 xc34d0000}
+        {xc31b0000 x43938000}
+        {}
+        {x431b0000 xc3938000}
+        {xc3ca8000 xc30c0000}
+        {}
+        {x43ca8000 x430c0000}
+        {x43b40000 xc3910000}
+        {}
+        {xc3b40000 x43910000}
+        {0 xc2e60000}
+        {}
+        {0 x42e60000}}}}
+     {t x44615b75 x444c76d9}
+     {a spx x44800000 spy x44428000 sb 1 ltn x41b80000 ltm x41b80000 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ colorOverlay 0
+ lifetime_type "all frames"
+ lifetime_start 23
+ lifetime_end 23
+ view {}
+ motionblur_on true
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+ name Roto1
+ xpos 1906
+ ypos -210
+}
+Blur {
+ size 400
+ name Blur2
+ xpos 1906
+ ypos -186
+}
+Invert {
+ name Invert1
+ xpos 1906
+ ypos -152
+}
+Merge2 {
+ inputs 2
+ operation minus
+ name Merge1
+ xpos 1754
+ ypos -45
+}
+ColorLookup {
+ lut {master {curve K 0 S x0.01706418395 -0.0007462501526 C x0.03598381951 0.9913265109 s0.150000006 v0.7736393809 K x1 1}
+   red {}
+   green {}
+   blue {}
+   alpha {}}
+ name ColorLookup1
+ xpos 1754
+ ypos -21
+}
+Noise {
+ inputs 0
+ zoffset {{curve i x1 0 l x30 1.76}}
+ gain 0.48
+ translate {{curve i x1 0 l x30 789.7380981} 0}
+ center {1024 778}
+ name Noise1
+ xpos 594
+ ypos -282
+}
+set N65cfce0 [stack 0]
+Rectangle {
+ inputs 0
+ area {-160 690 2495 1720}
+ softness 100
+ name Rectangle3
+ xpos 788
+ ypos -310
+}
+Blur {
+ size 500
+ name Blur4
+ xpos 788
+ ypos -286
+}
+Merge2 {
+ inputs 2
+ operation minus
+ sRGB true
+ name Merge6
+ xpos 682
+ ypos -164
+}
+Shuffle {
+ alpha green
+ name Shuffle2
+ xpos 682
+ ypos -140
+}
+set N65fafb0 [stack 0]
+Blur {
+ channels alpha
+ size 30.5
+ name Blur6
+ xpos 518
+ ypos -95
+}
+Multiply {
+ channels alpha
+ value 4
+ name Multiply1
+ xpos 518
+ ypos -61
+}
+set N1dc13480 [stack 0]
+Transform {
+ translate {4 4}
+ center {1024 778}
+ name Transform1
+ xpos 446
+ ypos 88
+}
+push $N1dc13480
+Merge2 {
+ inputs 2
+ operation minus
+ output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+ name Merge7
+ xpos 518
+ ypos 174
+}
+Noise {
+ inputs 0
+ size 540
+ zoffset {{parent.Noise1.zoffset i x1 0 l x30 1.76}}
+ gain 0.395
+ gamma 2
+ translate {{curve i x1 0 l x30 789.7380981} 0}
+ center {1024 778}
+ name Noise2
+ xpos 1093
+ ypos -271
+}
+Rectangle {
+ inputs 0
+ area {-172 474 2483 1744}
+ softness 100
+ name Rectangle4
+ xpos 1286
+ ypos -299
+}
+Blur {
+ size 500
+ name Blur5
+ xpos 1286
+ ypos -275
+}
+Merge2 {
+ inputs 2
+ operation minus
+ sRGB true
+ name Merge8
+ xpos 1180
+ ypos -153
+}
+Shuffle {
+ alpha green
+ name Shuffle3
+ xpos 1180
+ ypos -119
+}
+push $N65fafb0
+Merge2 {
+ inputs 2
+ name Merge9
+ xpos 895
+ ypos 12
+}
+Dot {
+ name Dot1
+ xpos 929
+ ypos 81
+}
+set N89e32c0 [stack 0]
+Dot {
+ name Dot2
+ xpos 806
+ ypos 81
+}
+ColorLookup {
+ lut {master {curve C 0 S x0.385848999 0.1117647886 x0.7327492237 0.866666615 C x1 1}
+   red {}
+   green {}
+   blue {}
+   alpha {}}
+ name ColorLookup2
+ xpos 772
+ ypos 150
+}
+push $N89e32c0
+Unpremult {
+ name Unpremult1
+ xpos 895
+ ypos 116
+}
+Add {
+ inputs 1+1
+ channels rgb
+ value 0.14
+ maskChannelMask rgba.green
+ name Add1
+ xpos 895
+ ypos 150
+}
+Add {
+ inputs 1+1
+ channels rgb
+ value 3
+ name Add2
+ xpos 895
+ ypos 174
+}
+Premult {
+ name Premult1
+ xpos 895
+ ypos 198
+}
+set N1dd0fb90 [stack 0]
+Constant {
+ inputs 0
+ channels rgb
+ color {0 0.2500038147 1 1}
+ name Constant3
+ xpos 1105
+ ypos 229
+}
+Merge2 {
+ inputs 2
+ name Merge10
+ xpos 895
+ ypos 253
+}
+push $N65cfce0
+push $N1dd0fb90
+Viewer {
+ inputs 2
+ frame 78
+ frame_range 1-30
+ input_process false
+ translate {-0.01400000043 -0.1159999967}
+ rotate 180
+ name Viewer1
+ xpos -258
+ ypos 716
+}

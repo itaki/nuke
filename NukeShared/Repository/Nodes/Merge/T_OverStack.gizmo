@@ -1,0 +1,76 @@
+#! C:/Program Files/Nuke11.3v1/nuke-11.3.1.dll -nx
+version 10.5 v1
+Group {
+ name T_OverStack
+ knobChanged "#Code for knobchange\nfrom math import floor\n\nthisNode = nuke.thisNode()\nthisKnob = nuke.thisKnob()\n\n\nif thisKnob.name() == 'amount':\n\n    amount = int(floor(thisNode\['amount'].value()))\n\n    thisNode.begin()\n    dotIN = nuke.toNode('Dot_In')\n    dotOUT = nuke.toNode('Dot_Out')\n    mergeMaster = nuke.toNode('MergeMaster')\n    Xpos = nuke.toNode('MergeMaster').xpos()\n    Ypos = nuke.toNode('MergeMaster').ypos()\n\n    for n in nuke.allNodes('Merge2'):\n        if n.name() not in \['MergeMaster']:\n           nuke.delete(n)\n\n    for n in range(amount):\n        mergeNew = nuke.nodes.Merge2(xpos = Xpos-(n+1)*110, ypos = Ypos)\n        mergeNew.setName('Merge_' + str(n+1))\n        mergeNew\['mix'].setExpression('parent.mix')\n        mergeNew.setInput(1, dotIN)\n        if n == 0:\n            mergeNew.setInput(0, mergeMaster)\n        else :\n            mergeNew.setInput(0, nuke.toNode('Merge_' + str(n)))\n        if n == amount - 1:\n            dotOUT.setInput(0, nuke.toNode('Merge_' + str(n+1)))"
+ label v1.0
+ addUserKnob {20 controls l Controls}
+ addUserKnob {7 amount l Amount R 0 10}
+ amount 1
+ addUserKnob {7 mix l Mix}
+ mix 1
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 copyright1 l "" +STARTLINE T "<b>T_OverStack v1.0</b> - Petar Tsonev (c)"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -40
+  ypos -10
+ }
+ Dot {
+  name Dot_In
+  label Dot_In
+  note_font "Verdana Bold Bold"
+  note_font_size 40
+  xpos -6
+  ypos 186
+ }
+set N30fdf000 [stack 0]
+push $N30fdf000
+ Dot {
+  name Dot1
+  xpos -6
+  ypos 378
+ }
+set N30fdec00 [stack 0]
+ Dot {
+  name Dot2
+  xpos 214
+  ypos 378
+ }
+ Dot {
+  name Dot3
+  xpos 214
+  ypos 618
+ }
+push $N30fdec00
+ Merge2 {
+  inputs 2
+  mix {{"(parent.amount - floor(parent.amount))*parent.mix"}}
+  name MergeMaster
+  selected true
+  xpos -40
+  ypos 614
+ }
+ Merge2 {
+  inputs 2
+  mix {{parent.mix}}
+  name Merge_1
+  xpos -150
+  ypos 614
+ }
+ Dot {
+  name Dot_Out
+  label Dot_Out
+  note_font "Verdana Bold Bold"
+  note_font_size 40
+  xpos -6
+  ypos 1290
+ }
+ Output {
+  name Output1
+  xpos -40
+  ypos 1430
+ }
+end_group

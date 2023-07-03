@@ -1,0 +1,795 @@
+Group {
+ name HairKey
+ knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\n\nif k.name() in ('bgPrep', 'showPanel'):\n    operation = n\['bgPrep'].value()\n    if operation == 'colour choice':\n        n\['bgCol'].setVisible(True)\n        n\['bgSpread'].setVisible(False)\n          \n    elif operation == 'plate colour':\n        n\['bgCol'].setVisible(False)\n        n\['bgSpread'].setVisible(True)\n            \n    else:\n        n\['bgCol'].setVisible(False)\n        n\['bgSpread'].setVisible(False)\n\nif k.name() in ('despalg', 'showPanel'):\n    operation = n\['despalg'].value()\n    if operation == 'none':\n        n\['screencolour1'].setVisible(False)\n        \n    else:\n        n\['screencolour1'].setVisible(True)"
+ tile_color 0xfff721ff
+ label "\[value blendmode]"
+ selected true
+ addUserKnob {20 Controls}
+ addUserKnob {4 blendmode l "hair type" t "Changes how the effect is applied based on the type of hair; the shown options are for easier handling :)\n\nbright1 = plus\nbright2 = screen\ndark = multiply" M {bright1 bright2 dark "" "" ""}}
+ addUserKnob {4 screencolour1 l "screen colour" t "Selects the screen colour which is important for the despill-operation. If the input is already despilled, set the despill to \"none\".\n\nNote: if despill is set to \"none\", the background preparation won't work as expected." -STARTLINE M {R G B "" "" "" ""}}
+ screencolour1 G
+ addUserKnob {4 logprocess l "process in" t "Changes the processing from lin to log." -STARTLINE M {linear log "" ""}}
+ addUserKnob {26 sep00 l "" +STARTLINE T "  "}
+ addUserKnob {4 bgPrep l "bg preparation" t "Applies a preparation of the background before the actual effect is applied.\n\nNote: if despill is set to \"none\", the background preparation won't work as expected." M {darken "plate colour" "colour choice" "" "" ""}}
+ bgPrep "plate colour"
+ addUserKnob {7 backprep l mix t "Mix for the bg preparation" -STARTLINE}
+ backprep 1
+ addUserKnob {7 bgSpread l spread t "Adjusts the spread for the original plate colour. You want to increase this for frizzy hair, but generally keep it as low as you can" R 0 5}
+ bgSpread 1
+ addUserKnob {18 bgCol l "colour choice" t "Select the colour for your colour choice of the bg preparation" +HIDDEN}
+ bgCol {0.15 0.12 0.1}
+ addUserKnob {6 bgCol_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 sep01 l " " T " "}
+ addUserKnob {4 despalg l despill t "Sets the despill algorithm for the operation (despills source and cleanplate alike). \n\nIf your connected clips are already despilled, set it to 'none'. In this config, the background preparation won't work as expected." M {none average max min ""}}
+ despalg average
+ addUserKnob {18 hairgain l gain t "Sets the gain of the operation, boosts or dampens the effect, or tone it with individual colour controls." R 0 3}
+ hairgain 1
+ addUserKnob {6 hairgain_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 hairgain_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 hairgain_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {18 hairgamma l gamma t "Sets the gamma of the operation." R 0 3}
+ hairgamma 1
+ addUserKnob {6 hairgamma_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 hairgamma_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {41 saturation t "Desaturates the apllied effect. Can be handy if it's boosted a lot." T Saturation1.saturation}
+ addUserKnob {26 sep02 l " " T " "}
+ addUserKnob {6 invmask l "invert mask" t "Inverts the connected mask." +STARTLINE}
+ addUserKnob {26 credit t "lp_HairKey v1.4\n(c)2020 lucas pfaff" -STARTLINE +INVISIBLE T "lp_HairKey v1.4\n(c)2020 lucas pfaff"}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos 1308
+  ypos -425
+  number 3
+ }
+ Invert {
+  name Invert2
+  xpos 1308
+  ypos -341
+  disable {{1-invmask}}
+ }
+ Switch {
+  which {{"\[exists parent.input3]?0:1"}}
+  name Switch9
+  xpos 1308
+  ypos -267
+ }
+ Dot {
+  name Dot38
+  xpos 1342
+  ypos -173
+ }
+set N6c04c000 [stack 0]
+ Dot {
+  name Dot37
+  xpos 1342
+  ypos 492
+ }
+set N6c091c00 [stack 0]
+ Dot {
+  name Dot20
+  xpos 1342
+  ypos 711
+ }
+set N6c091800 [stack 0]
+ Dot {
+  name Dot19
+  xpos 1342
+  ypos 756
+ }
+set N6c091400 [stack 0]
+ Dot {
+  name Dot11
+  xpos 1342
+  ypos 805
+ }
+ Input {
+  inputs 0
+  name cleanplate
+  xpos -837
+  ypos -1290
+  number 2
+ }
+ Colorspace {
+  colorspace_out Cineon
+  name Colorspace3
+  label "\[value colorspace_in] -> \[value colorspace_out]"
+  xpos -837
+  ypos -979
+  disable {{1-logprocess}}
+ }
+ Dot {
+  name Dot4
+  xpos -803
+  ypos -822
+ }
+set N6c090400 [stack 0]
+ Dot {
+  name Dot9
+  xpos -685
+  ypos -821
+ }
+set N6c090000 [stack 0]
+ Dot {
+  name Dot21
+  xpos -475
+  ypos -821
+ }
+set N6c0a9c00 [stack 0]
+ Expression {
+  expr2 b>min(rg)?min(r,g):b
+  name Expression13
+  label "blue min"
+  xpos -451
+  ypos -761
+ }
+push $N6c0a9c00
+ Expression {
+  expr1 g>min(r,b)?min(r,b):g
+  name Expression14
+  label "green min"
+  xpos -509
+  ypos -721
+ }
+push $N6c0a9c00
+ Expression {
+  expr0 r>min(g,b)?min(g,b):r
+  name Expression15
+  label "red min"
+  xpos -562
+  ypos -761
+ }
+ Switch {
+  inputs 3
+  which {{screencolour1}}
+  name Switch1
+  xpos -509
+  ypos -643
+ }
+push $N6c090000
+ Expression {
+  expr2 b>max(rg)?max(r,g):b
+  name Expression5
+  label "blue max"
+  xpos -664
+  ypos -758
+ }
+push $N6c090000
+ Expression {
+  expr1 g>max(r,b)?max(r,b):g
+  name Expression6
+  label "green max"
+  xpos -719
+  ypos -719
+ }
+push $N6c090000
+ Expression {
+  expr0 r>max(g,b)?max(g,b):r
+  name Expression7
+  label "red max"
+  xpos -772
+  ypos -759
+ }
+ Switch {
+  inputs 3
+  which {{screencolour1}}
+  name Switch3
+  xpos -719
+  ypos -638
+ }
+push $N6c090400
+ Dot {
+  name Dot10
+  xpos -931
+  ypos -822
+ }
+set N6c0a8000 [stack 0]
+ Expression {
+  expr2 b>(r+g)/2?(r+g)/2:b
+  name Expression10
+  label "blue avg"
+  xpos -903
+  ypos -761
+ }
+push $N6c0a8000
+ Expression {
+  expr1 g>(r+b)/2?(r+b)/2:g
+  name Expression11
+  label "green avg"
+  xpos -965
+  ypos -723
+ }
+push $N6c0a8000
+ Expression {
+  expr0 r>(g+b)/2?(g+b)/2:r
+  name Expression12
+  label "red avg"
+  xpos -1028
+  ypos -761
+ }
+ Switch {
+  inputs 3
+  which {{screencolour1}}
+  name Switch6
+  xpos -965
+  ypos -638
+ }
+push $N6c090400
+ Switch {
+  inputs 4
+  which {{despalg}}
+  name Switch7
+  xpos -839
+  ypos -553
+ }
+ Dot {
+  name Dot26
+  xpos -805
+  ypos -473
+ }
+set N6c0e9000 [stack 0]
+ Colorspace {
+  colorspace_out HSV
+  name Colorspace5
+  xpos -839
+  ypos -418
+  disable {{(Multiply1.value<0?0:blendmode==2?0:1) x791 1}}
+ }
+ Grade {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  add 0.5
+  black_clamp false
+  name Grade1
+  xpos -839
+  ypos -394
+  disable {{(Multiply1.value<0?0:blendmode==2?0:1) x791 1}}
+ }
+ Colorspace {
+  colorspace_in HSV
+  name Colorspace6
+  xpos -839
+  ypos -370
+  disable {{(Multiply1.value<0?0:blendmode==2?0:1) x791 1}}
+ }
+ Dot {
+  name Dot2
+  xpos -805
+  ypos 11
+ }
+ Input {
+  inputs 0
+  name img
+  xpos 141
+  ypos -1292
+  number 1
+ }
+ Colorspace {
+  colorspace_out Cineon
+  name Colorspace2
+  label "\[value colorspace_in] -> \[value colorspace_out]"
+  xpos 141
+  ypos -973
+  disable {{1-logprocess}}
+ }
+ Dot {
+  name Dot6
+  xpos 175
+  ypos -814
+ }
+set N6c12b400 [stack 0]
+ Dot {
+  name Dot8
+  xpos 293
+  ypos -813
+ }
+set N6c12b000 [stack 0]
+ Dot {
+  name Dot22
+  xpos 506
+  ypos -813
+ }
+set N6c12ac00 [stack 0]
+ Expression {
+  expr2 b>min(rg)?min(r,g):b
+  name Expression16
+  label "blue min"
+  xpos 530
+  ypos -753
+ }
+push $N6c12ac00
+ Expression {
+  expr1 g>min(r,b)?min(r,b):g
+  name Expression17
+  label "green min"
+  xpos 472
+  ypos -713
+ }
+push $N6c12ac00
+ Expression {
+  expr0 r>min(g,b)?min(g,b):r
+  name Expression18
+  label "red min"
+  xpos 419
+  ypos -753
+ }
+ Switch {
+  inputs 3
+  which {{screencolour1}}
+  name Switch10
+  xpos 472
+  ypos -635
+ }
+push $N6c12b000
+ Expression {
+  expr2 b>max(rg)?max(r,g):b
+  name Expression2
+  label "blue max"
+  xpos 313
+  ypos -749
+ }
+push $N6c12b000
+ Expression {
+  expr1 g>max(r,b)?max(r,b):g
+  name Expression8
+  label "green max"
+  xpos 259
+  ypos -711
+ }
+push $N6c12b000
+ Expression {
+  expr0 r>max(g,b)?max(g,b):r
+  name Expression9
+  label "red max"
+  xpos 211
+  ypos -750
+ }
+ Switch {
+  inputs 3
+  which {{screencolour1}}
+  name Switch5
+  xpos 259
+  ypos -628
+ }
+push $N6c12b400
+ Dot {
+  name Dot3
+  xpos 47
+  ypos -814
+ }
+set N6c15b000 [stack 0]
+ Expression {
+  expr2 b>(r+g)/2?(r+g)/2:b
+  name Expression3
+  label "blue avg"
+  xpos 75
+  ypos -753
+ }
+push $N6c15b000
+ Expression {
+  expr1 g>(r+b)/2?(r+b)/2:g
+  name Expression1
+  label "green avg"
+  xpos 13
+  ypos -715
+ }
+push $N6c15b000
+ Expression {
+  expr0 r>(g+b)/2?(g+b)/2:r
+  name Expression4
+  label "red avg"
+  xpos -50
+  ypos -753
+ }
+ Switch {
+  inputs 3
+  which {{screencolour1}}
+  name Switch2
+  tile_color 0xcbcbcbff
+  xpos 13
+  ypos -627
+ }
+push $N6c12b400
+ Switch {
+  inputs 4
+  which {{despalg}}
+  name Switch4
+  xpos 139
+  ypos -532
+ }
+ Dot {
+  name Dot24
+  xpos 173
+  ypos -474
+ }
+set N6c15a000 [stack 0]
+ Dot {
+  name Dot29
+  xpos 173
+  ypos -364
+ }
+set N6c19d000 [stack 0]
+ Colorspace {
+  colorspace_out HSV
+  name Colorspace9
+  xpos 139
+  ypos -281
+  disable {{(Multiply1.value<0?0:blendmode==2?0:1) x791 1}}
+ }
+ Grade {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  add 0.5
+  black_clamp false
+  name Grade3
+  xpos 139
+  ypos -257
+  disable {{(Multiply1.value<0?0:blendmode==2?0:1) x791 1}}
+ }
+ Colorspace {
+  colorspace_in HSV
+  name Colorspace10
+  xpos 139
+  ypos -233
+  disable {{(Multiply1.value<0?0:blendmode==2?0:1) x791 1}}
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge2
+  xpos 139
+  ypos 8
+ }
+ Multiply {
+  value {{hairgain} {hairgain} {hairgain} {hairgain}}
+  name Multiply1
+  xpos 139
+  ypos 53
+ }
+ Gamma {
+  value {{hairgamma}}
+  name Gamma1
+  xpos 139
+  ypos 98
+ }
+ Invert {
+  name Invert1
+  xpos 139
+  ypos 152
+  disable {{blendmode==2?0:1 x791 1}}
+ }
+ Colorspace {
+  colorspace_out HSV
+  name Colorspace7
+  xpos 139
+  ypos 226
+  disable {{(Multiply1.value<0&blendmode==2?0:1) x791 1}}
+ }
+ Grade {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  add 0.5
+  black_clamp false
+  name Grade2
+  xpos 139
+  ypos 250
+  disable {{(Multiply1.value<0&blendmode==2?0:1) x791 1}}
+ }
+ Colorspace {
+  colorspace_in HSV
+  name Colorspace8
+  xpos 139
+  ypos 274
+  disable {{(Multiply1.value<0&blendmode==2?0:1) x791 1}}
+ }
+ Saturation {
+  mode Average
+  name Saturation1
+  xpos 139
+  ypos 392
+ }
+ Dot {
+  name Dot1
+  xpos 173
+  ypos 711
+ }
+ Dot {
+  name Dot7
+  xpos 732
+  ypos 711
+ }
+set N6c1d4800 [stack 0]
+ Dot {
+  name Dot15
+  xpos 732
+  ypos 805
+ }
+push $N6c091c00
+push $N6c15a000
+push $N6c15b000
+ Dot {
+  name Dot23
+  xpos -129
+  ypos -814
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge6
+  xpos -163
+  ypos -477
+  disable {{"despalg > 0 ? 0 : 1"}}
+ }
+ Saturation {
+  saturation 0
+  name Saturation2
+  xpos -163
+  ypos -429
+ }
+push $N6c0e9000
+push $N6c0a9c00
+ Dot {
+  name Dot25
+  xpos -324
+  ypos -821
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge7
+  xpos -358
+  ypos -476
+  disable {{"despalg > 0 ? 0 : 1"}}
+ }
+ Saturation {
+  saturation 0
+  name Saturation3
+  xpos -358
+  ypos -429
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge5
+  xpos -358
+  ypos -314
+ }
+ Clamp {
+  name Clamp1
+  xpos -358
+  ypos -272
+ }
+ Dot {
+  name Dot27
+  xpos -324
+  ypos -173
+ }
+ Dot {
+  name Dot28
+  xpos 377
+  ypos -173
+ }
+set N6c233c00 [stack 0]
+ Dot {
+  name Dot42
+  xpos 377
+  ypos -87
+ }
+push $N6c19d000
+ Dot {
+  name Dot30
+  xpos 476
+  ypos -364
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.alpha
+  name Copy1
+  xpos 442
+  ypos -94
+ }
+ Invert {
+  channels alpha
+  name Invert3
+  xpos 442
+  ypos -6
+ }
+ Dot {
+  name Dot32
+  xpos 476
+  ypos 66
+ }
+set N6c232c00 [stack 0]
+ Dot {
+  name Dot33
+  xpos 375
+  ypos 66
+ }
+ Dot {
+  name Dot31
+  xpos 375
+  ypos 324
+ }
+push $N6c233c00
+ Dot {
+  name Dot36
+  xpos 621
+  ypos -173
+ }
+set N6c232000 [stack 0]
+ Grade {
+  white 0
+  add {{bgCol} {bgCol} {bgCol} {bgCol}}
+  black_clamp false
+  name Grade4
+  label "\[value channels]"
+  xpos 587
+  ypos 127
+ }
+ Dot {
+  name Dot35
+  xpos 621
+  ypos 264
+ }
+push $N6c232c00
+ Premult {
+  name Premult1
+  xpos 442
+  ypos 108
+ }
+ Blur {
+  size {{(input.width*input.height)/60000*bgSpread}}
+  name Blur1
+  label "\[value size]"
+  xpos 442
+  ypos 146
+ }
+ Unpremult {
+  name Unpremult1
+  xpos 442
+  ypos 205
+ }
+ Switch {
+  inputs 2
+  which {{"bgPrep > 1 ? 1 : 0 "}}
+  name Switch11
+  xpos 442
+  ypos 261
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 442
+  ypos 317
+ }
+ Premult {
+  name Premult2
+  xpos 442
+  ypos 377
+ }
+ Dot {
+  name Dot34
+  xpos 476
+  ypos 492
+ }
+push $N6c04c000
+push $N6c232000
+ Input {
+  inputs 0
+  name bg
+  xpos 841
+  ypos -408
+ }
+ Colorspace {
+  colorspace_out Cineon
+  name Colorspace1
+  label "\[value colorspace_in] -> \[value colorspace_out]"
+  selected true
+  xpos 841
+  ypos -319
+  disable {{1-logprocess}}
+ }
+ Merge2 {
+  inputs 2+1
+  operation multiply
+  mix {{backprep}}
+  name Merge8
+  xpos 841
+  ypos -176
+  disable {{"bgPrep == 0 ? 0 : 1"}}
+ }
+ Merge2 {
+  inputs 2+1
+  mix {{backprep}}
+  name Merge9
+  xpos 841
+  ypos 489
+  disable {{"bgPrep > 0 ? 0 : 1"}}
+ }
+ Dot {
+  name Dot5
+  xpos 875
+  ypos 679
+ }
+set N6c282800 [stack 0]
+ Dot {
+  name Dot12
+  xpos 985
+  ypos 679
+ }
+set N6c282400 [stack 0]
+ Dot {
+  name Dot13
+  xpos 1095
+  ypos 679
+ }
+ Merge2 {
+  inputs 2+1
+  operation multiply
+  name Merge4
+  xpos 1061
+  ypos 802
+ }
+ Dot {
+  name Dot14
+  xpos 1095
+  ypos 870
+ }
+push $N6c091400
+push $N6c1d4800
+ Dot {
+  name Dot17
+  xpos 789
+  ypos 711
+ }
+set N6c2a5400 [stack 0]
+ Dot {
+  name Dot16
+  xpos 789
+  ypos 756
+ }
+push $N6c282400
+ Merge2 {
+  inputs 2+1
+  operation screen
+  name Merge3
+  xpos 951
+  ypos 753
+ }
+ Dot {
+  name Dot18
+  xpos 985
+  ypos 835
+ }
+push $N6c091800
+push $N6c2a5400
+push $N6c282800
+ Merge2 {
+  inputs 2+1
+  operation plus
+  name Merge1
+  xpos 841
+  ypos 708
+ }
+ Switch {
+  inputs 3
+  which {{blendmode}}
+  name Switch8
+  xpos 841
+  ypos 867
+ }
+ Colorspace {
+  colorspace_in Cineon
+  name Colorspace4
+  label "\[value colorspace_in] -> \[value colorspace_out]"
+  xpos 841
+  ypos 1116
+  disable {{1-logprocess}}
+ }
+ Output {
+  name Output1
+  xpos 841
+  ypos 1267
+ }
+end_group

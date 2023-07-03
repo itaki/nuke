@@ -1,0 +1,399 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1" focus="true">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/lgere/.nuke/Particles/Weather/Clouds.nk
+ frame 60
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x335959ff
+ label "<b>author: ozgur taparli        ."
+ note_font_size 20
+ xpos 10181
+ ypos 201
+}
+Group {
+ inputs 0
+ name Cloud_Maker
+ tile_color 0xff0000ff
+ xpos 10027
+ ypos 257
+ addUserKnob {20 FluffyCloud_01}
+ addUserKnob {26 BasicSphericalGeo l "Basic Spherical Geo"}
+ addUserKnob {41 columns l "geo samples" -STARTLINE T Sphere1.columns}
+ addUserKnob {41 scaling l "Cloud Geo Scaler" T Sphere1.scaling}
+ addUserKnob {26 GeoDisplacer l "Geo Displace Setup"}
+ addUserKnob {41 weight T DisplaceGeo1.weight}
+ addUserKnob {41 scale T DisplaceGeo1.scale}
+ addUserKnob {26 CloudSeedSetter l "Cloud Seed Setter"}
+ addUserKnob {41 first_frame l "Cloud Seed" +INVISIBLE T FrameHold3.first_frame}
+ addUserKnob {26 noiseSpecs l "Noise Values"}
+ addUserKnob {41 size l x/ysize T Noise3.size}
+ addUserKnob {41 zoffset l z T Noise3.zoffset}
+ addUserKnob {41 gain T Noise3.gain}
+ addUserKnob {41 gamma T Noise3.gamma}
+ addUserKnob {26 opac l Opacity}
+ addUserKnob {41 temp_expr0 l "Cloud Opacity" T ParticleExpression1.temp_expr0}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  format "128 128 0 0 128 128 1 128x128"
+  name Constant3
+  xpos -311
+  ypos 364
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  format "256 256 0 0 256 256 1 square_256"
+  name Constant5
+  xpos -483
+  ypos 403
+ }
+ Noise {
+  output rgb
+  size 45
+  zoffset {{curve x100 0.5}}
+  gain 0.125
+  gamma 0.24
+  center {960 540}
+  name Noise3
+  xpos -483
+  ypos 508
+ }
+ Roto {
+  output alpha
+  premultiply rgb
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t x44700000 x44070000}
+    {a}
+    {curvegroup Ellipse2 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc17d9c0f 0}
+        {x430f836a x42969386}
+        {x417d9c0f 0}
+        {0 xc17bd773}
+        {x434760a6 x426613f2}
+        {0 x417bd773}
+        {x417d9c0f 0}
+        {x430f836a x430449c3}
+        {xc17d9c0f 0}
+        {0 x417bd773}
+        {x42e5a06f x42cf9386}
+        {0 xc17bd773}}}
+      {cc
+       {f 8192}
+       {px 1
+        {xc21f91ec xbed53501}
+        {x40c89920 xc2394404}
+        {x421f9206 x3ed09b52}
+        {xbf49bd84 xc1fa75c3}
+        {x41eccccd 0}
+        {x3f4ae579 x41fa758e}
+        {x4219f86c x3bf33ffe}
+        {0 x41eccccd}
+        {xc219f86c xb6fffff6}
+        {x3ec8ff97 x41ec0f28}
+        {xc1eccccd 0}
+        {xbec6b24a xc1ec0f5c}}}}
+     {t
+   {{1 x429a999a}}
+   {{1 x42493333}}  0
+   {{1 0}}
+   {{1 0}}  0 0 0
+   {{1 0}}
+   {{1 1}}
+   {{1 1}}  1
+   {{1 0}}}
+     {a spx 0 spy 0 sb 1 nv x40000000 tt x40c00000 view2 x40000000}}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc1e5c534 0}
+        {x42ffa74b x42758bac}
+        {x418e7528 0}
+        {xc115f960 xc1442158}
+        {x431b3333 x42c46666}
+        {x40b7d6e0 x40f06ae0}
+        {0 xc11cda18}
+        {x432ddc6a x42f276e7}
+        {0 x41251b78}
+        {x40c9df60 xc0f75ec0}
+        {x431a999a x430e999a}
+        {xc1176790 x413986f0}
+        {x4189dcc0 0}
+        {x42fae09b x432b869c}
+        {xc1130d90 0}
+        {x40efc130 x40708080}
+        {x42b20000 x432ccccd}
+        {xc17ebd40 xc0ff88a0}
+        {0 x418c5754}
+        {x428bb454 x42f276e7}
+        {0 xc1ce625c}}}
+      {cc
+       {f 8192}
+       {px 1
+        {xc2909208 xbf2eb900}
+        {x410f48a8 xc25062d0}
+        {x4233448c x3ed3fb80}
+        {xc1811c90 xc1c76222}
+        {x4220ca00 xc203d9c0}
+        {x411e4400 x417467c0}
+        {xbf0ae900 xc19bfdd4}
+        {x42687380 xc180f48c}
+        {x3f131000 x41a43374}
+        {x4192ad70 xc0d5e480}
+        {x424651e4 x41ecc388}
+        {xc1b5cf60 x41048fd0}
+        {x41d32738 x41129aa0}
+        {x40d22630 x428a390e}
+        {xc1a8ae68 xc0ea3b20}
+        {x415d5918 xc083b4c0}
+        {xc1e9dfc0 x421c7698}
+        {xc20caca4 x41276850}
+        {x3ef7a980 x42038bda}
+        {xc2568a73 0}
+        {xbf340500 xc2417380}}}}
+     {t
+   {{1 x429a999a}}
+   {{1 x42493333}}  0
+   {{1 0}}
+   {{1 0}}  0 0 0
+   {{1 0}}
+   {{1 1}}
+   {{1 1}}  1
+   {{1 0}}}
+     {a spx 0 spy 0 sb 1 nv x40000000 tt x40c00000 view2 x40000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 tt 5 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { addPoints str 1 ssx 1 ssy 1 sf 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay {0 0 0 0}
+  lifetime_type "all frames"
+  motionblur_shutter_offset_type centred
+  source_translate_round false
+  source_black_outside true
+  name Roto2
+  xpos -483
+  ypos 558
+ }
+ Blur {
+  channels alpha
+  size 21
+  name Blur1
+  xpos -483
+  ypos 615
+ }
+ Shuffle {
+  alpha red
+  name Shuffle1
+  xpos -483
+  ypos 666
+ }
+ BlendMat {
+  surfaceblend modulate
+  name BlendMat2
+  xpos -483
+  ypos 725
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  format "512 512 0 0 512 512 1 square_512"
+  name Constant4
+  xpos 276
+  ypos 431
+ }
+ Noise {
+  size 43
+  zoffset 3.18
+  lacunarity 1.78
+  center {1024 778}
+  name Noise2
+  xpos 276
+  ypos 634
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  format "512 512 0 0 512 512 1 square_512"
+  name Constant1
+  xpos 116
+  ypos 361
+ }
+ Dot {
+  name Dot7
+  xpos 150
+  ypos 520
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  format "512 512 0 0 512 512 1 square_512"
+  name Constant2
+  xpos -32
+  ypos 288
+ }
+ Noise {
+  zoffset {{"frame/25 + (parent.fogBox_seed*10)"}}
+  gain 0.606
+  gamma 0.55
+  center {960 540}
+  name Noise1
+  xpos -32
+  ypos 425
+ }
+ Merge2 {
+  inputs 2
+  mix {{"1 - parent.fogBox_randomDensity"}}
+  name Merge1
+  xpos -32
+  ypos 599
+  disable true
+ }
+ Sphere {
+  rows 10
+  columns 4
+  name Sphere1
+  xpos -32
+  ypos 672
+ }
+ DisplaceGeo {
+  inputs 2
+  scale 0.425
+  weight {3 1 1}
+  filter_size 24
+  name DisplaceGeo1
+  xpos -32
+  ypos 745
+ }
+ Input {
+  inputs 0
+  name ParticleMerge
+  xpos 285
+  ypos 701
+ }
+ ParticleEmitter {
+  inputs 3
+  start_frame -42
+  rate 20
+  lifetime_variation 3
+  velocity 0
+  velocity_variation 0.01
+  size 5
+  size_variation 4
+  name ParticleEmitter3
+  xpos -32
+  ypos 829
+ }
+ ParticleExpression {
+  temp_name0 dropOpacity
+  temp_expr0 .05
+  temp_expr0_pp false
+  opacityexpr dropOpacity
+  name ParticleExpression1
+  xpos -32
+  ypos 883
+ }
+ Scene {
+  name Scene3
+  xpos -22
+  ypos 961
+ }
+ FrameHold {
+  name FrameHold3
+  xpos -32
+  ypos 1107
+ }
+ Output {
+  name Output1
+  xpos -32
+  ypos 1240
+ }
+end_group
+Viewer {
+ frame_range 1-100
+ name Viewer1
+ xpos 10850
+ ypos -9
+ hide_input true
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x969600ff
+ label "<b>http://www.nukepedia.com/gizmos/particles/cloud_maker_v1        ."
+ note_font_size 20
+ selected true
+ xpos 10179
+ ypos 257
+}

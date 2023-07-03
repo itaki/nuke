@@ -1,0 +1,842 @@
+#v1.2
+set cut_paste_input [stack 0]
+version 12.2 v9
+push $cut_paste_input
+push 0
+Group {
+ inputs 2
+ name SoftMerge1
+ onCreate "\n\nn = nuke.thisNode()\nn\['mix_transition'].setDefaultValue(\[1])\nn\['mix_blurRGB'].setDefaultValue(\[1])\nn\['blur_red'].setDefaultValue(\[1])\nn\['blur_green'].setDefaultValue(\[1])\nn\['blur_blue'].setDefaultValue(\[1])\n\n"
+ knobChanged "\n\nn = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == \"inputChange\":\n\n    if n.inputs() == 2 and n.input(2) ==  None:\n        try:\n            n.begin()\n            merge = nuke.toNode('Merge1')\n            nuke.toNode('mask')\['label'].setValue(merge\['maskChannelMask'].value())\n            merge.setInput(2, None)\n\n        finally:\n            n\['maskChannelMask'].setValue('none')\n            n.end()\n\n    elif n.inputs() == 3:\n        try:\n            n.begin()\n            nuke.toNode('Merge1').setInput(2, nuke.toNode('mask'))\n\n        finally:\n            nuke.toNode('Merge1')\['maskChannelMask'].setValue(nuke.toNode('mask')\['label'].value())\n            n.end()\n"
+ tile_color 0x4a5ec5ff
+ selected true
+ xpos 138
+ ypos -140
+ addUserKnob {20 User l SoftMerge}
+ addUserKnob {41 operation T Merge1.operation}
+ addUserKnob {41 sRGB l "Video colorspace" -STARTLINE T Merge1.sRGB}
+ addUserKnob {41 screen_alpha l "alpha masking" -STARTLINE T Merge1.screen_alpha}
+ addUserKnob {41 bbox l "set bbox to " T Merge1.bbox}
+ addUserKnob {41 metainput l "metadata from" -STARTLINE T Merge1.metainput}
+ addUserKnob {41 rangeinput l "range from" -STARTLINE T Merge1.rangeinput}
+ addUserKnob {26 ""}
+ addUserKnob {41 Achannels l "A channels" T Merge1.Achannels}
+ addUserKnob {41 Bchannels l "B channels" T Merge1.Bchannels}
+ addUserKnob {41 output T Merge1.output}
+ addUserKnob {41 also_merge l "also merge" T Merge1.also_merge}
+ addUserKnob {26 ""}
+ addUserKnob {26 merge_mask l mask T " "}
+ addUserKnob {41 maskChannelMask l "" -STARTLINE T Merge1.maskChannelMask}
+ addUserKnob {41 maskChannelInput l "" -STARTLINE +INVISIBLE T Merge1.maskChannelInput}
+ addUserKnob {41 inject -STARTLINE T Merge1.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge1.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Merge1.fringe}
+ addUserKnob {41 mix T Merge1.mix}
+ addUserKnob {26 v_spacer_1 l "" +STARTLINE T " "}
+ addUserKnob {20 startGroup_options l "Edge Options:" n 1}
+ addUserKnob {26 v_spacer_2 l "" +STARTLINE T " "}
+ addUserKnob {7 radius l Transition: t "Amount (in pixels) and direction (negative values -> inward direction). \n(Outward direction it's implemented but not supported at the moment)." R -200 0}
+ addUserKnob {7 mix_transition l mix t "Dissolve between no effect at 0 and the full effect at 1."}
+ addUserKnob {6 enableGPU l "Enable GPU" t "Enable GPU processing on the BlinkScript nodes. It is prone to output incorrect results in some cases." +INVISIBLE +STARTLINE}
+ addUserKnob {26 divider_1_1 l "" +STARTLINE}
+ addUserKnob {26 h_spacer_1 l "" +STARTLINE T "  "}
+ addUserKnob {26 txt_blurTransition l "Blur Transition:" -STARTLINE T " "}
+ addUserKnob {6 blur l "" t "Enable blur for the transition (alpha)." -STARTLINE}
+ addUserKnob {41 size_blurTransition l size T Blur1.size}
+ addUserKnob {41 filter T Blur1.filter}
+ addUserKnob {41 mix_blurTransition l mix T Blur1.mix}
+ addUserKnob {26 v_spacer_3 l "" +STARTLINE T " "}
+ addUserKnob {26 txt_blurRGB l "Also RGB:" T " "}
+ addUserKnob {6 blur_rgb l "" t "Enable blur for the rgb channels within the transition area." -STARTLINE}
+ addUserKnob {26 h_spacer_2 l "" -STARTLINE T "    "}
+ addUserKnob {26 braket_1 l "" -STARTLINE T "\{   "}
+ addUserKnob {6 blur_red l "&nbsp;<font color=#ff3300>red</font>" -STARTLINE}
+ addUserKnob {6 blur_green l "&nbsp;<font color=#00cc00>green</font>" -STARTLINE}
+ addUserKnob {6 blur_blue l "&nbsp;<font color=#0066ff>blue</font>" -STARTLINE}
+ addUserKnob {26 braket_2 l "" -STARTLINE T "\}"}
+ addUserKnob {26 v_spacer_4 l "" -STARTLINE T "    "}
+ addUserKnob {6 gang_rgb l "Sync with 'Blur Transition'" t "Sync  blur rgb values with blur transition values." -STARTLINE}
+ addUserKnob {14 size_blurRGB l size R 0 100}
+ addUserKnob {4 filter_blurRGB l filter M {gaussian box triangle quadratic "" ""}}
+ addUserKnob {7 mix_blurRGB l mix}
+ addUserKnob {26 divider_1 l "" +STARTLINE}
+ addUserKnob {26 h_spacer_3 l "" +STARTLINE T "  "}
+ addUserKnob {26 txt_replaceAlpha l "Replace Alpha:" -STARTLINE T " "}
+ addUserKnob {6 replace_alpha l "" t "Copy the alpha channel from the SoftMerge operation to the input rgba.a channel." -STARTLINE}
+ addUserKnob {20 endGroup_options l endGroup n -1}
+ addUserKnob {20 info_tab l Info}
+ addUserKnob {26 h_spacer4 l "" +STARTLINE T " "}
+ addUserKnob {26 txt_info_1 l "" +STARTLINE T "<font color=#e1f2a2>SoftMerge</font>"}
+ addUserKnob {26 text_info_2 l "" +STARTLINE T "\nIt's a Merge node that offers an edge transition function which works under four controls for all the operations:\n\n- Transition:\nAmount (in pixels) and direction (negative values -> inward direction). \n(Outward direction it's implemented but not supported at the moment).\n\n- Blur transition:\nSmooth the transition values, the linear progression, while preserving the RGB.\n\n- Blur RGB:\nSmooth the RGB values within the transition area.\n\n- Replace Alpha:\nGenerate an alpha channel representing the operation.\n"}
+ addUserKnob {26 divider_2 l "" +STARTLINE}
+ addUserKnob {26 text_info_3 l "" +STARTLINE T "<font color=#e1f2a2>Author:</font> Guillermo Algora\n\n"}
+ addUserKnob {26 text_info_4 l "" +STARTLINE T "<font color=#e1f2a2>v.</font> 1.2"}
+}
+ Input {
+  inputs 0
+  name mask
+  label none
+  xpos 1573
+  ypos 822
+  number 2
+ }
+ Input {
+  inputs 0
+  name B
+  xpos 1408
+  ypos 568
+ }
+ Dot {
+  name Dot9
+  label INPUTB
+  xpos 1436
+  ypos 700
+ }
+set N4c129600 [stack 0]
+ Dot {
+  name Dot16
+  tile_color 0x949494ff
+  note_font_size 22
+  note_font_color 0xffffffff
+  xpos 1724
+  ypos 700
+ }
+ Dot {
+  name Dot7
+  tile_color 0x949494ff
+  note_font_size 22
+  note_font_color 0xffffffff
+  xpos 1724
+  ypos 2617
+ }
+set N4c128800 [stack 0]
+push $N4c128800
+push $N4c129600
+ Dot {
+  name Dot21
+  tile_color 0x949494ff
+  note_font_size 22
+  note_font_color 0xffffffff
+  xpos 1194
+  ypos 700
+ }
+set N4c128100 [stack 0]
+ Dot {
+  name Dot14
+  tile_color 0x949494ff
+  note_font_size 22
+  note_font_color 0xffffffff
+  xpos 1194
+  ypos 2178
+ }
+set N345db900 [stack 0]
+ Dot {
+  name Dot18
+  tile_color 0x949494ff
+  note_font_size 22
+  note_font_color 0xffffffff
+  xpos 1194
+  ypos 2298
+ }
+push $N345db900
+ Input {
+  inputs 0
+  name A
+  xpos 938
+  ypos 764
+  number 1
+ }
+ Dot {
+  name Dot10
+  tile_color 0x949494ff
+  note_font_size 22
+  note_font_color 0xffffffff
+  xpos 966
+  ypos 826
+ }
+set N345da400 [stack 0]
+ Dot {
+  name Dot12
+  tile_color 0x949494ff
+  note_font_size 22
+  note_font_color 0xffffffff
+  xpos 966
+  ypos 1995
+ }
+set N345d9d00 [stack 0]
+ Dot {
+  name Dot17
+  tile_color 0x949494ff
+  note_font_size 22
+  note_font_color 0xffffffff
+  xpos 966
+  ypos 2102
+ }
+push $N345d9d00
+push $N345da400
+push $N4c129600
+ Merge2 {
+  inputs 2
+  maskChannelMask none
+  name Merge1
+  xpos 1408
+  ypos 828
+ }
+ Dot {
+  name Dot13
+  xpos 1436
+  ypos 934
+ }
+set N345d8800 [stack 0]
+ Dot {
+  name Dot1
+  xpos 33
+  ypos 934
+ }
+set N345d8100 [stack 0]
+push $N4c128100
+ Dot {
+  name Dot8
+  xpos 462
+  ypos 700
+ }
+set N347e7900 [stack 0]
+ MergeExpression {
+  inputs 2
+  channel0 {rgba.red -rgba.green -rgba.blue none}
+  expr0 Ar
+  channel1 {-rgba.red rgba.green -rgba.blue none}
+  expr1 Ag
+  channel2 {-rgba.red -rgba.green rgba.blue none}
+  expr2 Ab
+  expr3 "clamp(Ar != Br || Ag != Bg || Ab != Bb)"
+  name MergeExpression1
+  xpos -156
+  ypos 936
+ }
+ Dot {
+  name Dot3
+  tile_color 0x949494ff
+  note_font_size 22
+  note_font_color 0xffffffff
+  xpos -128
+  ypos 1024
+ }
+set N347e6b00 [stack 0]
+ Dot {
+  name Dot6
+  xpos 602
+  ypos 1024
+ }
+set N347e6400 [stack 0]
+ BlinkScript {
+  recompileCount 3
+  ProgramGroup 1
+  KernelDescription "2 \"MergeMap\" iterate componentWise e5127c8525f2a780e0b7479aac2c4a6779831a041794dfb5b1a5a5708a9bb343 2 \"src\" Read Random \"dst\" Write Random 2 \"radius\" Int 1 AAAAAA== \"mix\" Float 1 AAAAAA== 2 \"radius\" 1 1 \"mix\" 1 1 2 \"absRadius\" Int 1 1 AAAAAA== \"percentaje\" Float 1 1 AAAAAA=="
+  kernelSource "kernel MergeMap : ImageComputationKernel<eComponentWise> \{\n\n  Image<eRead, eAccessRandom> src; // Input: absolute difference of B and merged.\n  Image<eReadWrite, eAccessRandom, eEdgeClamped> dst; // Output: transition map.\n\n  // PARAMETERS\n  param:\n    int radius;\n    float mix;\n\n  local:\n    int absRadius;\n    float percentaje;\n\n  // INIT()\n  void init() \{\n    absRadius = abs(radius);\n    percentaje = (float)1/(absRadius+1);\n  \}\n \n  // PROCESS()\n  void process(int3 pos) \{\n\n    if (pos.z == 3) \{ // Process only alpha channel.\n\n      float value;\n\n      // FUNCTION TO DETECT EDGE: \n      // radius >= 0 check edge from the \"inside\" (pixel is 1), else from the \"outside\" (pixel is 0).\n\n      if (radius >= 0 ? src(pos.x, pos.y) == 1 : src(pos.x, pos.y) == 0) \{ \n\n        dst(pos.x, pos.y) = 1; // And then make it 1.\n\n        // Nested loop: 1 pixel offset to check edge.\n        for (int i = -1; i <= 1; i++) \{ // x offset.\n          for (int j = -1; j <= 1; j++) \{ // y offset.\n\n            if (i == 0 && j == 0) continue; // No need to do x = 0, y = 0.\n\n            // To asses if it's edge: if radius > 0, check if adyacent pixel is 0; else 1.\n            if (radius >= 0 ? src(pos.x + i, pos.y + j) == 0 : src(pos.x + i, pos.y + j) == 1) \{ \n\n              // TRANSITION FUNCTION:\n              // If it's edge, perform transition with K as radius and i, j as direction.\n              \n              for (int k = 1; k <= absRadius; k++) \{\n                \n                value = 1 - (percentaje * k); // Onion ring value.\n\n                // Cross. \n                if (value > dst(pos.x + i*k, pos.y + j)) dst(pos.x + i*k, pos.y + j) = value; // Horizontal\n                if (value > dst(pos.x + i, pos.y + j*k)) dst(pos.x + i, pos.y + j*k) = value; // Vertical\n                if (value > dst(pos.x + i*k, pos.y + j*k)) dst(pos.x + i*k, pos.y + j*k) = value; // Diagonals             \n\n                // Fill corners\n                if (k > 2) \{ // No need to fill corners with a radius less than 3.\n                 \n                  for (int l = 1; l <= k-2; l++) \{ // Procedural scaling loop: e.g. radius 3 -> k = 1 -> loop of 1, but if radius is 7 -> k = 5 -> loop of 5.\n                    \n                    // Bottom left\n                    if (value > dst(pos.x - k, pos.y - k + l)) dst(pos.x - k, pos.y - k + l) = value;\n                    if (value > dst(pos.x - k + l, pos.y - k)) dst(pos.x - k + l, pos.y - k) = value;\n\n                    // Bottom right\n                    if (value > dst(pos.x + k - l, pos.y - k)) dst(pos.x + k - l, pos.y - k) = value;\n                    if (value > dst(pos.x + k, pos.y - k + l)) dst(pos.x + k, pos.y - k + l) = value;\n\n                    // Top left\n                    if (value > dst(pos.x - k, pos.y + k - l)) dst(pos.x - k, pos.y + k - l) = value;\n                    if (value > dst(pos.x - k + l, pos.y + k)) dst(pos.x - k + l, pos.y + k) = value;\n\n                    // Top right\n                    if (value > dst(pos.x + k - l, pos.y + k)) dst(pos.x + k - l, pos.y + k) = value;\n                    if (value > dst(pos.x + k, pos.y + k - l)) dst(pos.x + k, pos.y + k - l) = value;\n\n                  //FILL CORNERS\n                  \}\n                \}\n\n              //K\n              \}\n            //IF EDGE\n            \}\n          //J\n          \}\n        //I          \n        \}\n      //PIXEL IS 1 OR 0\n      \}\n    //ALPHA\n    \}\n\n//END\n  \}\n\};\n\n\n\n"
+  useGPUIfAvailable {{SoftMerge1.enableGPU}}
+  rebuild ""
+  MergeMap_radius {{SoftMerge1.radius}}
+  MergeMap_mix {{SoftMerge1.mix_transition}}
+  rebuild_finalise ""
+  name BlinkScript1
+  xpos 750
+  ypos 1020
+  disable {{"SoftMerge1.radius == 0 || SoftMerge1.mix_transition == 0"}}
+ }
+ BlinkScript {
+  recompileCount 5
+  ProgramGroup 1
+  KernelDescription "2 \"Invert\" iterate componentWise 726e2462ee3925c5bfe450bdda8e01310ac4ff323ae59c7762fcf8ccd7acc87d 2 \"src\" Read Point \"dst\" Write Point 0 0 0"
+  kernelSource "kernel Invert : ImageComputationKernel<eComponentWise> \{\n\n  Image<eRead, eAccessPoint> src; \n  Image<eWrite, eAccessPoint> dst;\n\n  // PROCESS()\n  void process(int3 pos) \{\n\n    if (pos.z == 3) \{ // Process only alpha channel)\n\n        dst() = 1 - src();\n\n    //ALPHA\n    \}\n\n//END\n  \}\n\};"
+  useGPUIfAvailable {{SoftMerge1.enableGPU}}
+  rebuild ""
+  rebuild_finalise ""
+  name BlinkScript2
+  xpos 750
+  ypos 1101
+  disable {{"BlinkScript1.MergeMap_radius > -1"}}
+ }
+ Blur {
+  channels alpha
+  name Blur1
+  xpos 750
+  ypos 1172
+  disable {{!SoftMerge1.blur}}
+ }
+ Dot {
+  name Dot25
+  xpos 778
+  ypos 1304
+ }
+set N349df900 [stack 0]
+ Dot {
+  name Dot15
+  xpos 778
+  ypos 1591
+ }
+set N349df200 [stack 0]
+ MergeExpression {
+  inputs 2
+  channel0 none
+  channel1 none
+  channel2 none
+  expr3 "Ba * Aa"
+  name MergeExpression3
+  xpos 756
+  ypos 1997
+  disable {{"!(\[string equal \"over\" \[value Merge1.operation]] || \[string equal \"atop\" \[value Merge1.operation]] || \[string equal \"matte\" \[value Merge1.operation]] || \[string equal \"xor\" \[value Merge1.operation]] || \[string equal \"stencil\" \[value Merge1.operation]] || \[string equal \"out\" \[value Merge1.operation]]) || (SoftMerge1.radius > 0)"}}
+ }
+ MergeExpression {
+  inputs 2
+  channel0 none
+  channel1 none
+  channel2 none
+  expr3 "Ba * (1-Aa)"
+  name MergeExpression8
+  xpos 756
+  ypos 2104
+  disable {{"!(\[string equal \"mask\" \[value Merge1.operation]]) || (SoftMerge1.radius > 0)"}}
+ }
+ MergeExpression {
+  inputs 2
+  channel0 none
+  channel1 none
+  channel2 none
+  expr3 "Ba * Aa"
+  name MergeExpression7
+  xpos 756
+  ypos 2180
+  disable {{"!(\[string equal \"under\" \[value Merge1.operation]]) || (SoftMerge1.radius > 0)"}}
+ }
+ MergeExpression {
+  inputs 2
+  channel0 none
+  channel1 none
+  channel2 none
+  expr3 "Ba * (1-Aa)"
+  name MergeExpression9
+  xpos 756
+  ypos 2300
+  disable {{"!(\[string equal \"xor\" \[value Merge1.operation]]) || (SoftMerge1.radius > 0)"}}
+ }
+ Dot {
+  name Dot2
+  tile_color 0x949494ff
+  note_font_size 22
+  note_font_color 0xffffffff
+  xpos 784
+  ypos 2455
+ }
+push $N349df200
+push $N347e6400
+push $N349df900
+ Dot {
+  name Dot5
+  xpos 334
+  ypos 1304
+ }
+set N349dc800 [stack 0]
+ Expression {
+  channel0 none
+  channel1 none
+  channel2 none
+  channel3 alpha
+  expr3 "clamp(a == 1 ? 0 : 1)"
+  name Expression2
+  xpos 172
+  ypos 1463
+ }
+push $N349dc800
+ Expression {
+  channel0 none
+  channel1 none
+  channel2 none
+  channel3 alpha
+  expr3 "clamp(a == 0 ? 0 : 1)"
+  name Expression1
+  xpos 182
+  ypos 1306
+ }
+push $N347e6b00
+ Group {
+  name Filler
+  tile_color 0x1fff00ff
+  xpos -156
+  ypos 1173
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 363
+   ypos -31
+  }
+  Premult {
+   name Premult1
+   xpos 363
+   ypos 55
+  }
+  Dot {
+   name Parameters
+   label Parameters
+   note_font_size 25
+   xpos 397
+   ypos 133
+   addUserKnob {20 User}
+   addUserKnob {14 transition l Transition R 0 100}
+   transition {{"SoftMerge1.radius < 0 ? max(SoftMerge1.Blur1.size.w * SoftMerge1.blur, SoftMerge1.Blur2.size.w* SoftMerge1.blur_rgb) : (SoftMerge1.radius + max(SoftMerge1.Blur1.size.w * SoftMerge1.blur, SoftMerge1.Blur2.size.w* SoftMerge1.blur_rgb))"} {"SoftMerge1.radius < 0 ? max(SoftMerge1.Blur1.size.h * SoftMerge1.blur, SoftMerge1.Blur2.size.h* SoftMerge1.blur_rgb) : (SoftMerge1.radius + max(SoftMerge1.Blur1.size.h * SoftMerge1.blur, SoftMerge1.Blur2.size.h* SoftMerge1.blur_rgb))"}}
+   addUserKnob {14 format l Format R 0 100}
+   format {{"input.width - input.bbox.x"} {"input.format.height - input.bbox.y"}}
+   addUserKnob {16 area l Area}
+   area {{"min(max(transition.w, transition.h), max(format.w,format.h))"}}
+   addUserKnob {16 exponent l Exponent}
+   exponent {{"(((area / 10) / 10) / 10) *2"}}
+  }
+set N341ddd00 [stack 0]
+  Blur {
+   size {{SoftMerge1.Filler.Parameters.exponent}}
+   name Blur1
+   selected true
+   xpos 218
+   ypos 261
+  }
+  Unpremult {
+   name Unpremult2
+   xpos 218
+   ypos 310
+  }
+  Expression {
+   expr3 "r > 0 ? 1 : 0"
+   name Expression2
+   xpos 218
+   ypos 349
+  }
+push $N341ddd00
+  EdgeBlur {
+   size {{SoftMerge1.Filler.Blur1.size}}
+   edge_mult 1
+   name EdgeBlur1
+   xpos 363
+   ypos 261
+  }
+  Merge2 {
+   inputs 2
+   operation under
+   name Merge3
+   xpos 363
+   ypos 349
+  }
+set N342c3200 [stack 0]
+  Blur {
+   size {{SoftMerge1.Filler.Blur1.size*2}}
+   name Blur2
+   xpos 216
+   ypos 458
+  }
+  Unpremult {
+   name Unpremult3
+   xpos 216
+   ypos 502
+  }
+  Expression {
+   expr3 "r > 0 ? 1 : 0"
+   name Expression3
+   xpos 216
+   ypos 555
+  }
+push $N342c3200
+  EdgeBlur {
+   size {{SoftMerge1.Filler.Blur2.size}}
+   edge_mult 1
+   name EdgeBlur2
+   xpos 363
+   ypos 458
+  }
+  Merge2 {
+   inputs 2
+   operation under
+   name Merge4
+   xpos 363
+   ypos 555
+  }
+set N342c0800 [stack 0]
+  Blur {
+   size {{SoftMerge1.Filler.Blur2.size*2}}
+   name Blur3
+   xpos 216
+   ypos 643
+  }
+  Unpremult {
+   name Unpremult4
+   xpos 216
+   ypos 689
+  }
+  Expression {
+   expr3 "r > 0 ? 1 : 0"
+   name Expression4
+   xpos 216
+   ypos 742
+  }
+push $N342c0800
+  EdgeBlur {
+   size {{SoftMerge1.Filler.Blur3.size}}
+   edge_mult 1
+   name EdgeBlur3
+   xpos 363
+   ypos 644
+  }
+  Merge2 {
+   inputs 2
+   operation under
+   name Merge5
+   xpos 363
+   ypos 742
+  }
+set N34291d00 [stack 0]
+  Blur {
+   size {{SoftMerge1.Filler.Blur3.size*2}}
+   name Blur4
+   xpos 216
+   ypos 862
+  }
+  Unpremult {
+   name Unpremult5
+   xpos 216
+   ypos 907
+  }
+  Expression {
+   expr3 "r > 0 ? 1 : 0"
+   name Expression5
+   xpos 216
+   ypos 960
+  }
+push $N34291d00
+  EdgeBlur {
+   size {{SoftMerge1.Filler.Blur4.size}}
+   edge_mult 1
+   name EdgeBlur4
+   xpos 363
+   ypos 862
+  }
+  Merge2 {
+   inputs 2
+   operation under
+   name Merge6
+   xpos 363
+   ypos 960
+  }
+set N34257200 [stack 0]
+  Blur {
+   size {{SoftMerge1.Filler.Blur4.size*2}}
+   name Blur5
+   xpos 216
+   ypos 1066
+  }
+  Unpremult {
+   name Unpremult6
+   xpos 216
+   ypos 1112
+  }
+  Expression {
+   expr3 "r > 0 ? 1 : 0"
+   name Expression6
+   xpos 216
+   ypos 1165
+  }
+push $N34257200
+  EdgeBlur {
+   size {{SoftMerge1.Filler.Blur5.size}}
+   edge_mult 1
+   name EdgeBlur5
+   xpos 363
+   ypos 1068
+  }
+  Merge2 {
+   inputs 2
+   operation under
+   name Merge7
+   xpos 363
+   ypos 1165
+  }
+set N34254800 [stack 0]
+  Blur {
+   size {{SoftMerge1.Filler.Blur5.size*2}}
+   name Blur6
+   xpos 216
+   ypos 1281
+  }
+  Unpremult {
+   name Unpremult7
+   xpos 216
+   ypos 1326
+  }
+  Expression {
+   expr3 "r > 0 ? 1 : 0"
+   name Expression7
+   xpos 216
+   ypos 1379
+  }
+push $N34254800
+  EdgeBlur {
+   size {{SoftMerge1.Filler.Blur6.size}}
+   edge_mult 1
+   name EdgeBlur6
+   xpos 363
+   ypos 1283
+  }
+  Merge2 {
+   inputs 2
+   operation under
+   name Merge8
+   xpos 363
+   ypos 1379
+  }
+set N34225d00 [stack 0]
+  Blur {
+   size {{SoftMerge1.Filler.Blur6.size*2}}
+   name Blur7
+   xpos 216
+   ypos 1515
+  }
+  Unpremult {
+   name Unpremult8
+   xpos 216
+   ypos 1559
+  }
+  Expression {
+   expr3 "r > 0 ? 1 : 0"
+   name Expression8
+   xpos 216
+   ypos 1612
+  }
+push $N34225d00
+  EdgeBlur {
+   size {{SoftMerge1.Filler.Blur7.size}}
+   edge_mult 1
+   name EdgeBlur7
+   xpos 363
+   ypos 1516
+  }
+  Merge2 {
+   inputs 2
+   operation under
+   name Merge9
+   xpos 363
+   ypos 1612
+  }
+set N24ff3200 [stack 0]
+  Blur {
+   size {{SoftMerge1.Filler.Blur7.size*2}}
+   name Blur8
+   xpos 216
+   ypos 1755
+  }
+  Unpremult {
+   name Unpremult9
+   xpos 216
+   ypos 1791
+  }
+  Expression {
+   expr3 "r > 0 ? 1 : 0"
+   name Expression9
+   xpos 216
+   ypos 1844
+  }
+push $N24ff3200
+  EdgeBlur {
+   size {{SoftMerge1.Filler.Blur8.size}}
+   edge_mult 1
+   name EdgeBlur8
+   xpos 363
+   ypos 1756
+  }
+  Merge2 {
+   inputs 2
+   operation under
+   name Merge10
+   xpos 363
+   ypos 1844
+  }
+set N24ff0800 [stack 0]
+  Blur {
+   size {{SoftMerge1.Filler.Blur8.size*2}}
+   name Blur9
+   xpos 216
+   ypos 1972
+  }
+  Unpremult {
+   name Unpremult10
+   xpos 216
+   ypos 2008
+  }
+  Expression {
+   expr3 "r > 0 ? 1 : 0"
+   name Expression10
+   xpos 216
+   ypos 2061
+  }
+set N24fc3200 [stack 0]
+  Blur {
+   size {{SoftMerge1.Filler.Blur9.size*2}}
+   name Blur10
+   xpos 216
+   ypos 2216
+  }
+  Unpremult {
+   name Unpremult11
+   xpos 216
+   ypos 2252
+  }
+  Expression {
+   expr3 "r > 0 ? 1 : 0"
+   name Expression11
+   xpos 216
+   ypos 2305
+  }
+push $N24fc3200
+push $N24ff0800
+  EdgeBlur {
+   size {{SoftMerge1.Filler.Blur9.size}}
+   edge_mult 1
+   name EdgeBlur9
+   xpos 363
+   ypos 1971
+  }
+  Merge2 {
+   inputs 2
+   operation under
+   name Merge11
+   xpos 363
+   ypos 2061
+  }
+  EdgeBlur {
+   size {{SoftMerge1.Filler.Blur10.size}}
+   edge_mult 1
+   name EdgeBlur10
+   xpos 363
+   ypos 2216
+  }
+  Merge2 {
+   inputs 2
+   operation under
+   name Merge12
+   xpos 363
+   ypos 2305
+  }
+  Output {
+   name Output1
+   xpos 363
+   ypos 2380
+  }
+ end_group
+push $N345d8100
+ Keymix {
+  inputs 3
+  channels rgb
+  bbox B
+  name Keymix1
+  xpos 5
+  ypos 1306
+  disable {{"SoftMerge1.radius <= 0 && (SoftMerge1.blur * SoftMerge1.mix_blurTransition * SoftMerge1.size_blurTransition) == 0 ? 1 : 0"}}
+ }
+set N24f8a400 [stack 0]
+ Blur {
+  channels rgb
+  size {{"SoftMerge1.gang_rgb==1 ? SoftMerge1.Blur1.size : SoftMerge1.size_blurRGB"}}
+  filter {{"SoftMerge1.gang_rgb==1 ? SoftMerge1.Blur1.filter : SoftMerge1.filter_blurRGB" x100 1}}
+  quality {{SoftMerge1.Blur1.quality}}
+  mix {{"SoftMerge1.gang_rgb==1 ? SoftMerge1.Blur1.mix : SoftMerge1.mix_blurRGB"}}
+  name Blur2
+  label (rgb)
+  xpos -155
+  ypos 1457
+ }
+push $N24f8a400
+ MergeExpression {
+  inputs 2+1
+  expr0 "this.blur_red ? Ar : Br"
+  expr1 "this.blur_green ? Ag : Bg"
+  expr2 "this.blur_blue ? Ab : Bb"
+  channel3 {none none none -rgba.alpha}
+  name MergeExpression2
+  selected true
+  xpos 5
+  ypos 1463
+  disable {{!SoftMerge1.blur_rgb x100 1}}
+  addUserKnob {20 User}
+  addUserKnob {6 blur_red +STARTLINE}
+  blur_red {{SoftMerge1.blur_red}}
+  addUserKnob {6 blur_green +STARTLINE}
+  blur_green {{SoftMerge1.blur_green}}
+  addUserKnob {6 blur_blue +STARTLINE}
+  blur_blue {{SoftMerge1.blur_blue}}
+ }
+ Dot {
+  name Dot20
+  xpos 33
+  ypos 1591
+ }
+push $N347e7900
+ BlinkScript {
+  inputs 4
+  recompileCount 5
+  ProgramGroup 1
+  KernelDescription "2 \"MergeMix\" iterate pixelWise dd3e0e7b24e7dfcec7980c5c4119e6c95b5dd515433a7cd4ad752cc7e9db321a 5 \"B\" Read Point \"Merged\" Read Point \"CoreMap\" Read Point \"Map\" Read Point \"dst\" Write Point 1 \"blur_rgb\" Int 1 AAAAAA== 1 \"blur_rgb\" 1 1 0"
+  kernelSource "kernel MergeMix : ImageComputationKernel<ePixelWise> \{\n\n  Image<eRead, eAccessPoint, eEdgeClamped> B; // Merge's B input.\n  Image<eRead, eAccessPoint, eEdgeClamped> Merged; // Merge's Merged output.\n  Image<eRead, eAccessPoint, eEdgeClamped> CoreMap; // Absolute difference of B and Merged.\n  Image<eRead, eAccessPoint, eEdgeClamped> Map; // Transition Map.\n\n  Image<eWrite, eAccessPoint> dst; // Output\n\n  // PARAMETERS\n  param:\n    int blur_rgb;\n\n  // PROCESS\n  void process(int2 pos) \{\n\n    if (Map().w == 0) \{\n      dst() = B();\n    \}\n    \n    else if (Map().w == 1) \{\n      dst() = Merged();\n    \}\n\n    // If grey (Transition):\n    else \{\n      dst() = B() + ( Merged() - B() ) * Map().w;   \n    \}\n\n///END\n  \}\n\};\n\n\n\n"
+  useGPUIfAvailable {{SoftMerge1.enableGPU}}
+  rebuild ""
+  MergeMix_blur_rgb {{SoftMerge1.blur_rgb}}
+  rebuild_finalise ""
+  name BlinkScript3
+  xpos 434
+  ypos 1587
+ }
+ Dot {
+  name Dot4
+  xpos 462
+  ypos 1729
+ }
+push $N345d8800
+ MergeExpression {
+  inputs 2
+  expr0 Ar
+  expr1 Ag
+  expr2 Ab
+  name MergeExpression4
+  xpos 1402
+  ypos 1731
+  disable {{"(SoftMerge1.radius == 0 || SoftMerge1.mix_transition == 0) && (SoftMerge1.blur * SoftMerge1.Blur1.size * SoftMerge1.Blur1.mix == 0)"}}
+ }
+ MergeExpression {
+  inputs 2
+  channel0 none
+  channel1 none
+  channel2 none
+  expr3 Aa
+  name MergeExpression5
+  xpos 1402
+  ypos 2457
+  disable {{!SoftMerge1.replace_alpha}}
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch1
+  xpos 1402
+  ypos 2619
+  disable {{"!(\[string equal \"none\" \[value Merge1.Achannels]] || \[string equal \"none\" \[value Merge1.output]])"}}
+ }
+ Switch {
+  inputs 2
+  which {{"\[python 0\\ if\\ nuke.thisGroup().input(1)\\ else\\ 1]"}}
+  name Switch2
+  xpos 1402
+  ypos 2701
+ }
+ Output {
+  name Output1
+  xpos 1402
+  ypos 2810
+ }
+end_group
+

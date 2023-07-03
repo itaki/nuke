@@ -1,0 +1,301 @@
+#! C:/Program Files/Nuke6.2v2/Nuke6.2.exe -nx
+version 6.2 v2
+Gizmo {
+ inputs 2
+ help "This Node creates a Noise out of a given Pattern. The Pattern Input should be an RGBA Image of the given Pattern, and the time Input should be a gradient in the AlphaChannel for the size of the pattern"
+ addUserKnob {20 NoiseControls l Noise}
+ addUserKnob {26 divider1 l repetition}
+ addUserKnob {41 format l outputFormat T formatAdjust.format}
+ addUserKnob {3 repeatPattern l repeatIt}
+ repeatPattern 64
+ addUserKnob {7 sizeControlRepetition l adjustRepetition -STARTLINE}
+ sizeControlRepetition 0.75
+ addUserKnob {26 divider2 l noise}
+ addUserKnob {4 switchNoiseType l noiseType M {decreasing increasing}}
+ switchNoiseType increasing
+ addUserKnob {6 filteringCheck l filtering -STARTLINE}
+ addUserKnob {6 moreWhiteCheck l whiteBigger +STARTLINE}
+ moreWhiteCheck true
+ addUserKnob {41 size l amount T moreWhite.size}
+ addUserKnob {6 moreBlackCheck l blackBigger +STARTLINE}
+ moreBlackCheck true
+ addUserKnob {41 size_1 l amount T moreBlack.size}
+ addUserKnob {20 centerTransform l center n 1}
+ addUserKnob {12 centerTrans_translate l translate}
+ addUserKnob {7 centerTrans_rotate l rotate R -180 180}
+ addUserKnob {14 centerTrans_scale l scale R 0.1 10}
+ centerTrans_scale 1
+ addUserKnob {12 centerTrans_center l center}
+ centerTrans_center {960 540}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 colorAdjustmentsGroup l colorAdjustments n 1}
+ colorAdjustmentsGroup 0
+ addUserKnob {41 gamma l preGamma T EditAlpha.gamma}
+ addUserKnob {41 gamma_1 l postGamma T adjustGradient.gamma}
+ addUserKnob {20 ccrGroup l gradientCorrection n 1}
+ ccrGroup 0
+ addUserKnob {41 blackpoint T editVisibility.blackpoint}
+ addUserKnob {41 whitepoint T editVisibility.whitepoint}
+ addUserKnob {41 multiply T editVisibility.multiply}
+ addUserKnob {41 gamma_2 l gamma T editVisibility.gamma}
+ addUserKnob {41 white l gain T editVisibility.white}
+ addUserKnob {41 black l lift T editVisibility.black}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+}
+ BackdropNode {
+  inputs 0
+  name filtering
+  tile_color 0x67adadff
+  xpos 785
+  ypos -1
+  bdwidth 107
+  bdheight 125
+ }
+add_layer {format format.x format.y format.repeat}
+ Constant {
+  inputs 0
+  channels format
+  color {0 0 {parent.repeatPattern i} 1}
+  format "1920 1080 0 0 1920 1080 1 HD"
+  name RepeatConstant
+  xpos 378
+  ypos -419
+ }
+ Ramp {
+  output {format.x -format.y -format.repeat}
+  p0 {0 0}
+  p1 {1920 0}
+  name xPos
+  xpos 488
+  ypos -395
+ }
+ Ramp {
+  output {-format.x format.y -format.repeat}
+  p0 {0 0}
+  p1 {0 1080}
+  name yPos
+  xpos 610
+  ypos -395
+ }
+ Grade {
+  channels format
+  gamma {{parent.sizeControlRepetition i}}
+  name sizeControl
+  xpos 720
+  ypos -395
+ }
+ Reformat {
+  format "1920 1080 0 0 1920 1080 1 HD"
+  resize distort
+  name formatAdjust
+  xpos 830
+  ypos -395
+ }
+ Input {
+  inputs 0
+  name time
+  xpos 1018
+  ypos -497
+ }
+ ShuffleCopy {
+  inputs 2
+  in format
+  red red
+  green green
+  blue blue
+  out format
+  name ShuffleCopy1
+  xpos 1018
+  ypos -395
+ }
+ TransformMasked {
+  channels format
+  translate {{parent.centerTrans_translate.x} {parent.centerTrans_translate.y}}
+  rotate {{parent.centerTrans_rotate}}
+  scale {{parent.centerTrans_scale.w} {parent.centerTrans_scale.h}}
+  center {{parent.centerTrans_center.x} {parent.centerTrans_center.y}}
+  filter Impulse
+  motionblur 1
+  shuttercustomoffset 0.17
+  maskChannelInput rgba.alpha
+  name centerTrans
+  xpos 1028
+  ypos -359
+ }
+ Grade {
+  channels alpha
+  gamma 2.5
+  name EditAlpha
+  xpos 1028
+  ypos -321
+ }
+set N1b4b63b0 [stack 0]
+ Expression {
+  temp_name0 repeat
+  temp_expr0 format.repeat
+  channel0 {-format.x -format.y format.repeat}
+  expr0 repeat/(sin(a)*2+2.5)
+  channel1 {-format.x -format.y -format.repeat}
+  channel2 {-format.x -format.y -format.repeat}
+  name changeRepeatIncreasing
+  xpos 954
+  ypos -286
+ }
+push $N1b4b63b0
+ Expression {
+  temp_name0 repeat
+  temp_expr0 format.repeat
+  channel0 {-format.x -format.y format.repeat}
+  expr0 repeat*(a*.2)
+  channel1 {-format.x -format.y -format.repeat}
+  channel2 {-format.x -format.y -format.repeat}
+  name changeRepeatDecreasing
+  xpos 1090
+  ypos -287
+ }
+ Switch {
+  inputs 2
+  which {{parent.switchNoiseType i}}
+  name SwitchNoiseTypes
+  xpos 1027
+  ypos -252
+ }
+ Expression {
+  temp_name0 repeat
+  temp_expr0 format.repeat
+  channel0 {-format.x -format.y format.repeat}
+  expr0 repeat>1000?1000:repeat
+  name limit
+  xpos 1027
+  ypos -219
+ }
+ Expression {
+  temp_name0 x
+  temp_expr0 format.x
+  temp_name1 y
+  temp_expr1 format.y
+  temp_name2 repeat
+  temp_expr2 format.repeat
+  channel0 {forward.u -forward.v -backward.u -backward.v}
+  expr0 (x*repeat)-(floor(x*repeat))
+  channel1 {-forward.u forward.v -backward.u -backward.v}
+  expr1 (y*repeat)-(floor(y*repeat))
+  channel2 {-forward.u -forward.v -backward.u -backward.v}
+  channel3 {none none none -rgba.alpha}
+  name mapIt
+  xpos 1027
+  ypos -171
+ }
+ Remove {
+  channels {format.x format.y -format.repeat}
+  name removeFormat
+  xpos 1027
+  ypos -107
+ }
+set N1b4b7120 [stack 0]
+ Grade {
+  channels alpha
+  gamma 0.5
+  name adjustGradient
+  xpos 911
+  ypos -107
+ }
+push $N1b4b7120
+ Input {
+  inputs 0
+  name pattern
+  xpos 1194
+  ypos -41
+  number 1
+ }
+ STMap {
+  inputs 2
+  uv motion
+  name STMap1
+  xpos 1027
+  ypos -47
+ }
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy2
+  xpos 911
+  ypos -41
+ }
+set N1b4b7be0 [stack 0]
+push $N1b4b7be0
+ Blur {
+  channels rgb
+  size 2
+  name Blur2
+  xpos 802
+  ypos 29
+ }
+ Sharpen {
+  channels rgb
+  size 10
+  name Sharpen1
+  xpos 802
+  ypos 87
+ }
+ Switch {
+  inputs 2
+  which {{parent.filteringCheck i}}
+  name filteringOnOff
+  xpos 911
+  ypos 87
+ }
+ Grade {
+  channels alpha
+  gamma 0.2
+  name editVisibility
+  xpos 911
+  ypos 142
+ }
+set N1b541a40 [stack 0]
+ FilterErode {
+  channels rgb
+  size -2.4
+  maskChannelInput rgba.alpha
+  name moreWhite
+  xpos 819
+  ypos 185
+ }
+push $N1b541a40
+ Switch {
+  inputs 2
+  which {{parent.moreWhiteCheck i}}
+  name moreWhiteOnOff
+  xpos 899
+  ypos 230
+ }
+set N43d66c0 [stack 0]
+ FilterErode {
+  channels rgb
+  size 2.2
+  maskChannelInput rgba.alpha
+  invert_mask true
+  name moreBlack
+  xpos 987
+  ypos 274
+ }
+push $N43d66c0
+ Switch {
+  inputs 2
+  which {{parent.moreBlackCheck i}}
+  name moreBlackOnOff
+  xpos 912
+  ypos 326
+ }
+ Premult {
+  name Premult1
+  selected true
+  xpos 912
+  ypos 379
+ }
+ Output {
+  name Output1
+  xpos 912
+  ypos 437
+ }
+end_group

@@ -1,0 +1,1855 @@
+#! C:/Program Files/Nuke11.3v1/nuke-11.3.1.dll -nx
+version 10.5 v1
+Group {
+ name T_SteelWool
+ tile_color 0xff5f00ff
+ label v1.0
+ addUserKnob {20 main l Main}
+ addUserKnob {26 text_49 l "<b>Main Controls</b>" T " "}
+ addUserKnob {26 text_50 l " " T " "}
+ addUserKnob {26 text_51 l " " T "The main controls the drive the steel wool.<br>Use the rest of the controls to fully change the look."}
+ addUserKnob {26 text_26 l " " T " "}
+ addUserKnob {26 text_23 l " " T "<b>Note:</b> Make sure that the <b>Driving_Shapes</b> RGBA <br>channels are all the same and not blurred. Blurring <br>will not produce a burning edge. The edge can be <br>turned off and steel wool blurred for that same effect."}
+ addUserKnob {26 text_52 l " " T " "}
+ addUserKnob {26 text_53 l clamp T " "}
+ addUserKnob {6 clamp_on l on -STARTLINE}
+ clamp_on true
+ addUserKnob {6 color_rgba_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+ addUserKnob {26 text_55 l " " T " "}
+ addUserKnob {26 text_54 l "<b>Steel Wool</b>" T " "}
+ addUserKnob {26 text_56 l " " T " "}
+ addUserKnob {14 main_size l size R 0 100}
+ main_size 1
+ addUserKnob {7 swsspeed l speed}
+ swsspeed 0.04
+ addUserKnob {26 text_60 l " " T " "}
+ addUserKnob {7 randop l "rand opacity"}
+ randop 0.4
+ addUserKnob {14 density R 0 100}
+ density 1
+ addUserKnob {14 density_size l "density size" R 0 100}
+ density_size 2
+ addUserKnob {26 text_61 l " " T " "}
+ addUserKnob {19 sw_CC l "steel wool CC" R 0 5}
+ sw_CC 1
+ addUserKnob {6 sw_CC_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 color_rgba_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 text_59 l " " T " "}
+ addUserKnob {26 text_57 l "<b>Burning Edge</b>" T " "}
+ addUserKnob {26 text_58 l " " T " "}
+ addUserKnob {26 text_62 l visibility T " "}
+ addUserKnob {6 edgeon l on -STARTLINE}
+ edgeon true
+ addUserKnob {26 text_63 l " " T " "}
+ addUserKnob {7 main_edgemult l "edge size mult" R 0 3}
+ main_edgemult 1
+ addUserKnob {19 edge_CC l "edge CC" R 0 5}
+ edge_CC 1
+ addUserKnob {6 edge_CC_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 edge_CC_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {26 copyright1 l "" +STARTLINE T "<b>T_SteelWool v1.0</b> - Petar Tsonev (c)"}
+ addUserKnob {20 distortion l Distortion}
+ addUserKnob {26 dc l "<b>Distortion Controls</b>" T " "}
+ addUserKnob {26 text_48 l " " T " "}
+ addUserKnob {26 text_47 l " " T "Controls for the distortion applied to the steel wool."}
+ addUserKnob {26 text_32 l " " T " "}
+ addUserKnob {7 distoffset l offset}
+ distoffset 0.25
+ addUserKnob {14 distamount l amount R 0 100}
+ distamount 15
+ addUserKnob {26 text_33 l " " T " "}
+ addUserKnob {26 ""}
+ addUserKnob {20 mainDist l "Main Distortion" n 1}
+ mainDist 0
+ addUserKnob {6 showMainDist l "show noise" +STARTLINE}
+ addUserKnob {26 text l "" +STARTLINE T " "}
+ addUserKnob {14 maindsize l size R 0 100}
+ maindsize 480
+ addUserKnob {7 maindlac l lacunarity R 0 10}
+ maindlac 1.68
+ addUserKnob {7 maindgain l gain}
+ maindgain 0.77
+ addUserKnob {7 maindgamma l gamma}
+ maindgamma 0.565
+ addUserKnob {26 text_1 l " " T " "}
+ addUserKnob {7 speedMainDist l speed}
+ speedMainDist 0.005
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 microDist l "Micro Distortion" n 1}
+ microDist 0
+ addUserKnob {6 showMicroDist l "show noise" +STARTLINE}
+ addUserKnob {26 text_2 l " " T " "}
+ addUserKnob {14 microdsize l size R 0 100}
+ microdsize 48
+ addUserKnob {7 microdlac l lacunarity R 0 10}
+ microdlac 1.68
+ addUserKnob {7 microdgain l gain}
+ microdgain 0.77
+ addUserKnob {7 microdgamma l gamma}
+ microdgamma 0.565
+ addUserKnob {26 text_3 l " " T " "}
+ addUserKnob {7 speedMicroDist l speed}
+ speedMicroDist 0.005
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 copyright2 l "" +STARTLINE T "<b>T_SteelWool v1.0</b> - Petar Tsonev (c)"}
+ addUserKnob {20 steelWool l "Steel Wool"}
+ addUserKnob {26 swtext l "<b>Steel Wool Controls</b>" T " "}
+ addUserKnob {26 text_42 l " " T " "}
+ addUserKnob {26 text_41 l " " T "Controls for the look of the steel wool."}
+ addUserKnob {26 text_30 l " " T " "}
+ addUserKnob {14 swedgeErode l "edge erode" R 0 100}
+ swedgeErode -5
+ addUserKnob {7 swedgeBlur l "edge blur" R 0 100}
+ swedgeBlur 11.5
+ addUserKnob {26 dummy1 l " " T " "}
+ addUserKnob {7 swgain l gain R 0 4}
+ swgain 1.85
+ addUserKnob {7 swgamma l gamma R 0 5}
+ swgamma 0.51
+ addUserKnob {19 swColor l color}
+ swColor {1.97 0.83528 0.197 1}
+ addUserKnob {6 swColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 swColor_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 swColor_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 swColor_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 swColor_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 swColor_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 color_rgba_panelDropped_1_1 l "panel dropped state" +HIDDEN +STARTLINE}
+ addUserKnob {7 swintensity l intensity}
+ swintensity 0.5
+ addUserKnob {26 text_31 l " " T " "}
+ addUserKnob {26 ""}
+ addUserKnob {20 sNoise l "Small Noise" n 1}
+ sNoise 0
+ addUserKnob {6 swsshow l "show noise" +STARTLINE}
+ addUserKnob {26 text_4 l " " T " "}
+ addUserKnob {14 sn_size l size R 0 100}
+ sn_size 4.5
+ addUserKnob {41 lacunarity T Noise18.lacunarity}
+ addUserKnob {41 gain T Noise18.gain}
+ addUserKnob {41 gamma_1 l gamma T Noise18.gamma}
+ addUserKnob {26 text_6 l " " T " "}
+ addUserKnob {7 swsopacity l opacity}
+ swsopacity 1
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 mNoise l "Medium Noise" n 1}
+ mNoise 0
+ addUserKnob {6 swmshow l "show noise" +STARTLINE}
+ addUserKnob {26 text_5 l " " T " "}
+ addUserKnob {14 mn_size l size R 0 100}
+ mn_size 4.5
+ addUserKnob {41 lacunarity_1 l lacunarity T Noise16.lacunarity}
+ addUserKnob {41 gain_1 l gain T Noise16.gain}
+ addUserKnob {41 gamma_2 l gamma T Noise16.gamma}
+ addUserKnob {26 text_7 l " " T " "}
+ addUserKnob {7 swmopacity l opacity}
+ swmopacity 1
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 lNoise l "Large Noise" n 1}
+ lNoise 0
+ addUserKnob {6 swlshow l "show noise" +STARTLINE}
+ addUserKnob {26 text_8 l " " T " "}
+ addUserKnob {14 ln_size l size R 0 100}
+ ln_size 10
+ addUserKnob {41 lacunarity_2 l lacunarity T Noise17.lacunarity}
+ addUserKnob {41 gain_2 l gain T Noise17.gain}
+ addUserKnob {41 gamma_3 l gamma T Noise17.gamma}
+ addUserKnob {26 text_9 l " " T " "}
+ addUserKnob {7 swlopacity l opacity}
+ swlopacity 0.5
+ addUserKnob {20 endGroup_4 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 xlNoise l "XLarge Noise" n 1}
+ xlNoise 0
+ addUserKnob {6 swxlshow l "show noise" +STARTLINE}
+ addUserKnob {26 text_10 l " " T " "}
+ addUserKnob {14 xln_size l size R 0 100}
+ xln_size 30
+ addUserKnob {41 lacunarity_3 l lacunarity T Noise6.lacunarity}
+ addUserKnob {41 gain_3 l gain T Noise6.gain}
+ addUserKnob {41 gamma_4 l gamma T Noise6.gamma}
+ addUserKnob {26 text_11 l " " T " "}
+ addUserKnob {7 swxlopacity l opacity}
+ swxlopacity 1
+ addUserKnob {14 swxlblur l blur R 0 100}
+ swxlblur 20
+ addUserKnob {20 endGroup_5 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 swGlow l Glow n 1}
+ swGlow 0
+ addUserKnob {41 channels l Channels T Natural_Glow2.channels}
+ addUserKnob {41 tint l Tint T Natural_Glow2.tint}
+ addUserKnob {41 tolerance l Tolerance T Natural_Glow2.tolerance}
+ addUserKnob {41 saturation l Saturation T Natural_Glow2.saturation}
+ addUserKnob {41 brightness l Brightness T Natural_Glow2.brightness}
+ addUserKnob {41 size l Size T Natural_Glow2.size}
+ addUserKnob {26 "" -STARTLINE T " "}
+ addUserKnob {26 text_20 l " " T " "}
+ addUserKnob {41 falloff l Falloff T Natural_Glow2.falloff}
+ addUserKnob {41 crop l "crop to format" -STARTLINE T Natural_Glow2.crop}
+ addUserKnob {41 operation l Operation T Natural_Glow2.operation}
+ addUserKnob {26 "" -STARTLINE T " "}
+ addUserKnob {26 text_21 l " " T " "}
+ addUserKnob {41 white l Gain T Natural_Glow2.white}
+ addUserKnob {41 gamma l Gamma T Natural_Glow2.gamma}
+ addUserKnob {20 endGroup_6 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 copyright3 l "" +STARTLINE T "<b>T_SteelWool v1.0</b> - Petar Tsonev (c)"}
+ addUserKnob {20 burningEdge l "Burning Edge"}
+ addUserKnob {26 betext l "<b>Burning Edge Controls</b>" T " "}
+ addUserKnob {26 text_44 l " " T " "}
+ addUserKnob {26 text_43 l " " T "Controls for the look of the burning edge."}
+ addUserKnob {26 text_28 l " " T " "}
+ addUserKnob {7 bethreshold l threshold R 0 5}
+ bethreshold 1.38
+ addUserKnob {14 beerode l erode R 0 100}
+ beerode -1
+ addUserKnob {14 beblur l blur R 0 100}
+ addUserKnob {26 text_12 l " " T " "}
+ addUserKnob {7 begain l gain R 0 4}
+ begain 1.08
+ addUserKnob {7 begamma l gamma R 0 5}
+ begamma 0.48
+ addUserKnob {19 becolor l color}
+ becolor {1.97 1.15442 0.197 1}
+ addUserKnob {6 becolor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 becolor_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 becolor_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 becolor_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 becolor_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 color_rgba_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 beintensity l intensity}
+ beintensity 1
+ addUserKnob {26 text_29 l " " T " "}
+ addUserKnob {26 ""}
+ addUserKnob {20 benoise l "Burning Edge Noise" n 1}
+ benoise 0
+ addUserKnob {6 beshow l "show noise" +STARTLINE}
+ addUserKnob {26 text_13 l " " T " "}
+ addUserKnob {14 edge_size l size R 0 100}
+ edge_size 200
+ addUserKnob {41 lacunarity_4 l lacunarity T Noise5.lacunarity}
+ addUserKnob {41 gain_4 l gain T Noise5.gain}
+ addUserKnob {41 gamma_5 l gamma T Noise5.gamma}
+ addUserKnob {26 text_14 l " " T " "}
+ addUserKnob {7 beopacity l opacity}
+ beopacity 1
+ addUserKnob {26 text_16 l " " T " "}
+ addUserKnob {26 text_19 l "<b>Extra Cuts</b>"}
+ addUserKnob {26 text_15 l "<b>Extra 1</b>"}
+ addUserKnob {41 zoffset_1 l offset T Noise4.zoffset}
+ addUserKnob {7 e1opacity l opacity}
+ e1opacity 1
+ addUserKnob {26 text_17 l "<b>Extra 2</b>"}
+ addUserKnob {41 zoffset_2 l offset T Noise8.zoffset}
+ addUserKnob {7 e2opacity l opacity}
+ e2opacity 1
+ addUserKnob {26 text_18 l "<b>Extra 3</b>"}
+ addUserKnob {41 zoffset_3 l offset T Noise7.zoffset}
+ addUserKnob {7 e3opacity l opacity}
+ e3opacity 1
+ addUserKnob {20 endGroup_7 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 beglow l Glow n 1}
+ beglow 0
+ addUserKnob {41 channels_1 l Channels T Natural_Glow1.channels}
+ addUserKnob {41 tint_1 l Tint T Natural_Glow1.tint}
+ addUserKnob {41 tolerance_1 l Tolerance T Natural_Glow1.tolerance}
+ addUserKnob {41 saturation_1 l Saturation T Natural_Glow1.saturation}
+ addUserKnob {41 brightness_1 l Brightness T Natural_Glow1.brightness}
+ addUserKnob {41 size_6 l Size T Natural_Glow1.size}
+ addUserKnob {26 "" -STARTLINE T " "}
+ addUserKnob {41 falloff_1 l Falloff T Natural_Glow1.falloff}
+ addUserKnob {41 operation_1 l Operation T Natural_Glow1.operation}
+ addUserKnob {26 "" -STARTLINE T " "}
+ addUserKnob {41 white_1 l Gain T Natural_Glow1.white}
+ addUserKnob {41 gamma_6 l Gamma T Natural_Glow1.gamma}
+ addUserKnob {20 endGroup_8 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 copyright4 l "" +STARTLINE T "<b>T_SteelWool v1.0</b> - Petar Tsonev (c)"}
+ addUserKnob {20 mask l "Mask Generation"}
+ addUserKnob {26 text_22 l "<b>Mask Controls</b>" T " "}
+ addUserKnob {26 text_46 l " " T " "}
+ addUserKnob {26 text_45 l " " T "Masks are created here and are based on steel wool <br>that is generated. Can be used to have a burning leading <br>edge or any specific CC required for each part of the <br>element underneath the steel wool."}
+ addUserKnob {26 text_24 l " " T " "}
+ addUserKnob {26 ""}
+ addUserKnob {20 i_group l "Inner Mask (inner_mask)" n 1}
+ i_group 0
+ addUserKnob {6 ishow l "show mask" +STARTLINE}
+ addUserKnob {26 text_25 l " " T " "}
+ addUserKnob {14 inerode l erode R 0 100}
+ addUserKnob {14 inblur l blur R 0 100}
+ addUserKnob {7 inopacity l opacity}
+ inopacity 1
+ addUserKnob {20 endGroup_9 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 e_group l "Edge Mask (edge_mask)" n 1}
+ e_group 0
+ addUserKnob {6 eshow l "show mask" +STARTLINE}
+ addUserKnob {26 text_36 l " " T " "}
+ addUserKnob {14 eerode l erode R 0 100}
+ addUserKnob {14 eblur l blur R 0 100}
+ eblur 0.01
+ addUserKnob {7 eopacity l opacity}
+ eopacity 1
+ addUserKnob {20 endGroup_10 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 l_group l "Lead Mask (lead_mask)" n 1}
+ l_group 0
+ addUserKnob {6 lshow l "show mask" +STARTLINE}
+ addUserKnob {26 text_38 l " " T " "}
+ addUserKnob {14 lerode l erode R 0 100}
+ lerode 30
+ addUserKnob {14 lblur l blur R 0 100}
+ lblur 30
+ addUserKnob {7 lopacity l opacity}
+ lopacity 1
+ addUserKnob {26 text_40 l " " T " "}
+ addUserKnob {26 text_39 l Distortion}
+ addUserKnob {7 loffset l offset}
+ loffset 0.25
+ addUserKnob {14 lamount l amount R 0 100}
+ lamount 50
+ addUserKnob {20 endGroup_11 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 copyright5 l "" +STARTLINE T "<b>T_SteelWool v1.0</b> - Petar Tsonev (c)"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x211f1a01
+  label "Edge Mask & Distortion Mask "
+  note_font_size 42
+  xpos -905
+  ypos -751
+  bdwidth 711
+  bdheight 687
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x1a212001
+  label "Outside Edge"
+  note_font_size 42
+  xpos 33
+  ypos -47
+  bdwidth 374
+  bdheight 1245
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x1a212101
+  label "Lead Mask"
+  note_font_size 42
+  xpos -1666
+  ypos 2026
+  bdwidth 396
+  bdheight 544
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode7
+  tile_color 0x14161201
+  label "Steel Wool Noises"
+  note_font_size 42
+  xpos -1370
+  ypos 912
+  bdwidth 680
+  bdheight 287
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x1e181d01
+  label "Edge Break Up Noises"
+  note_font_size 42
+  xpos -710
+  ypos 1642
+  bdwidth 430
+  bdheight 298
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x24261e01
+  label "Edge Mask"
+  note_font_size 42
+  xpos -881
+  ypos -524
+  bdwidth 222
+  bdheight 407
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0x1c161601
+  label "Distortion Mask"
+  note_font_size 42
+  xpos -604
+  ypos -446
+  bdwidth 328
+  bdheight 220
+  z_order 1
+ }
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width {{Driving_Shapes.width}}
+  box_height {{Driving_Shapes.height}}
+  box_fixed true
+  resize none
+  name Format
+  xpos -810
+  ypos -586
+ }
+set N274a1800 [stack 0]
+ Dot {
+  name Dot6
+  xpos -556
+  ypos -582
+ }
+set N274a1000 [stack 0]
+ Dot {
+  name Dot7
+  xpos -446
+  ypos -582
+ }
+set N274a0c00 [stack 0]
+ Noise {
+  output {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  size {{parent.microdsize}}
+  zoffset {{"frame * parent.speedMicroDist"}}
+  lacunarity {{parent.microdlac}}
+  gain {{parent.microdgain}}
+  gamma {{parent.microdgamma}}
+  translate {5000 5000}
+  center {960 540}
+  name micro_Distort
+  xpos -480
+  ypos -304
+ }
+set N274a0800 [stack 0]
+push $N274a1000
+ Noise {
+  output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  size {{parent.maindsize}}
+  zoffset {{"frame * parent.speedMainDist"}}
+  lacunarity {{parent.maindlac}}
+  gain {{parent.maindgain}}
+  gamma {{parent.maindgamma}}
+  translate {5000 5000}
+  center {960 540}
+  name main_Distort
+  xpos -590
+  ypos -360
+ }
+set N274a0400 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos -590
+  ypos -298
+ }
+set N274a0000 [stack 0]
+ Dot {
+  name Dot3
+  xpos -556
+  ypos 474
+ }
+set N274a1c00 [stack 0]
+ Dot {
+  name Dot28
+  xpos -556
+  ypos 570
+ }
+ Dot {
+  name Dot29
+  xpos -1656
+  ypos 570
+ }
+ Dot {
+  name Dot30
+  xpos -1656
+  ypos 2394
+ }
+ Blur {
+  size 6
+  name Blur9
+  xpos -1580
+  ypos 2384
+ }
+push $N274a0c00
+ Dot {
+  name Dot8
+  xpos -336
+  ypos -582
+ }
+ Dot {
+  name Dot9
+  xpos -336
+  ypos 1002
+ }
+set N274d0800 [stack 0]
+ Dot {
+  name Dot10
+  xpos -336
+  ypos 1050
+ }
+set N274d0400 [stack 0]
+ Dot {
+  name Dot11
+  xpos -336
+  ypos 1098
+ }
+set N274d0000 [stack 0]
+ Dot {
+  name Dot12
+  xpos -336
+  ypos 1146
+ }
+set N274efc00 [stack 0]
+ Dot {
+  name Dot13
+  xpos -336
+  ypos 1722
+ }
+set N274ef800 [stack 0]
+ Dot {
+  name Dot15
+  xpos -446
+  ypos 1722
+ }
+set N274ef400 [stack 0]
+ Dot {
+  name Dot16
+  xpos -556
+  ypos 1722
+ }
+set N274ef000 [stack 0]
+ Dot {
+  name Dot17
+  xpos -666
+  ypos 1722
+ }
+ Noise {
+  size {{parent.Noise5.size}}
+  zoffset 55
+  lacunarity {{parent.Noise5.lacunarity}}
+  gain {{parent.Noise5.gain}}
+  gamma {{parent.Noise5.gamma}}
+  translate {5000 5000}
+  center {960 540}
+  name Noise7
+  xpos -700
+  ypos 1766
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Grade {
+  channels rgba
+  white {{parent.e3opacity}}
+  name Grade10
+  xpos -700
+  ypos 1816
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Clamp {
+  name Clamp1
+  xpos -700
+  ypos 1856
+  disable {{"parent.clamp_on == 0 ? 1 : 0"}}
+ }
+ set C274ee000 [stack 0]
+push $N274ef000
+ Noise {
+  size {{parent.Noise5.size}}
+  zoffset 20
+  lacunarity {{parent.Noise5.lacunarity}}
+  gain {{parent.Noise5.gain}}
+  gamma {{parent.Noise5.gamma}}
+  translate {5000 5000}
+  center {960 540}
+  name Noise8
+  xpos -590
+  ypos 1766
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Grade {
+  channels rgba
+  white {{parent.e2opacity}}
+  name Grade9
+  xpos -590
+  ypos 1814
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+clone $C274ee000 {
+  xpos -590
+  ypos 1856
+  selected false
+ }
+push $N274ef400
+ Noise {
+  size {{parent.Noise5.size}}
+  zoffset 2
+  lacunarity {{parent.Noise5.lacunarity}}
+  gain {{parent.Noise5.gain}}
+  gamma {{parent.Noise5.gamma}}
+  translate {5000 5000}
+  center {960 540}
+  name Noise4
+  xpos -480
+  ypos 1766
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Grade {
+  channels rgba
+  white {{parent.e1opacity}}
+  name Grade8
+  xpos -480
+  ypos 1814
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+clone $C274ee000 {
+  xpos -480
+  ypos 1856
+  selected false
+ }
+push $N274ef800
+ Noise {
+  size {{parent.main_edgemult*parent.edge_size}}
+  lacunarity 1.2
+  gain 1
+  translate {5000 5000}
+  center {960 540}
+  name Noise5
+  xpos -370
+  ypos 1766
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+set N27514400 [stack 0]
+ Grade {
+  channels rgba
+  white {{parent.beopacity}}
+  name Grade7
+  xpos -370
+  ypos 1814
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+clone $C274ee000 {
+  xpos -370
+  ypos 1856
+  selected false
+ }
+push $N274a1c00
+ Input {
+  inputs 0
+  name Driving_Shapes
+  xpos -1360
+  ypos -682
+ }
+ Grade {
+  white 0.75
+  name Grade34
+  label Intensity
+  xpos -1360
+  ypos -544
+ }
+ Dot {
+  name Dot1
+  xpos -1326
+  ypos -294
+ }
+set N2cbd9000 [stack 0]
+ Dot {
+  name Dot5
+  xpos -1326
+  ypos 42
+ }
+set N2cbd8c00 [stack 0]
+ EdgeDetectWrapper {
+  channels rgba
+  threshold {{parent.bethreshold}}
+  name EdgeDetect1
+  xpos 180
+  ypos 32
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Dilate {
+  size {{parent.beerode}}
+  name Dilate3
+  xpos 180
+  ypos 128
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Blur {
+  size {{parent.beblur}}
+  name Blur3
+  xpos 180
+  ypos 224
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  out forward
+  name ShuffleCopy3
+  label forward
+  xpos 180
+  ypos 464
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ IDistort {
+  uv forward
+  uv_offset {{parent.distoffset}}
+  uv_scale {{parent.distamount}}
+  name IDistort2
+  label "Main Dist"
+  xpos 180
+  ypos 649
+ }
+ set C2cc05800 [stack 0]
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  label alpha
+  xpos 180
+  ypos 848
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Grade {
+  white {{parent.begain}}
+  gamma {{parent.begamma}}
+  name Grade26
+  label "Edge Sharpen"
+  xpos 180
+  ypos 992
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Grade {
+  white {{parent.becolor.r} {parent.becolor.g} {parent.becolor.b} {parent.becolor.a}}
+  name Grade25
+  label "Edge Color"
+  xpos 180
+  ypos 1040
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Grade {
+  channels rgba
+  white {{parent.beintensity}}
+  name Grade6
+  label Intensity
+  xpos 180
+  ypos 1088
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Grade {
+  white {{parent.edge_CC.r} {parent.edge_CC.g} {parent.edge_CC.b} {parent.edge_CC.a}}
+  name Grade16
+  xpos 180
+  ypos 1150
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Dot {
+  name Dot18
+  xpos 214
+  ypos 1914
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge6
+  xpos -370
+  ypos 1910
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge15
+  xpos -480
+  ypos 1910
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge16
+  xpos -590
+  ypos 1910
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge17
+  xpos -700
+  ypos 1910
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Group {
+  name Natural_Glow1
+  onCreate "thisNode = nuke.thisNode()\nthisKnob = nuke.thisKnob()\n\nthisNode\['falloff'].setValue(6)"
+  knobChanged "thisNode = nuke.thisNode()\nthisKnob = nuke.thisKnob()\n\n\nif thisKnob.name() == 'falloff':\n\n    falloff = int(thisNode\['falloff'].value())\n\n    thisNode.begin()\n    dotIN = nuke.toNode('Dot_In')\n    dotOUT = nuke.toNode('Dot_Out')\n    merge = nuke.toNode('Merge_Glow')\n    Xpos = nuke.toNode('GlowMaster').xpos()\n    Ypos = nuke.toNode('GlowMaster').ypos()\n\n    for n in nuke.allNodes('Glow2'):\n        if n.name() not in \['GlowMaster']:\n           nuke.delete(n)\n\n    nuke.delete(merge)\n    merge = nuke.nodes.Merge2(xpos = Xpos, ypos = Ypos + 144)\n    merge.setName('Merge_Glow')\n    merge\['operation'].setValue('screen')\n    merge.setInput(0, nuke.toNode('GlowMaster'))\n    merge\['Achannels'].setExpression('parent.GlowMaster.channels')\n    merge\['Bchannels'].setExpression('parent.GlowMaster.channels')\n    merge\['output'].setExpression('parent.GlowMaster.channels')\n    dotOUT.setInput(0,merge)\n\n\n    for n in range(falloff):\n        glow = nuke.nodes.Glow2(xpos = Xpos-(n+1)*110, ypos = Ypos)\n        glow.setName('Glow_'+str(n+1))\n        glow\['channels'].setExpression('parent.GlowMaster.channels')\n        glow\['tint'].setExpression('parent.GlowMaster.tint')\n        glow\['tolerance'].setExpression('parent.GlowMaster.tolerance')\n        glow\['saturation'].setExpression('parent.GlowMaster.saturation')\n        glow\['brightness'].setExpression('parent.GlowMaster.brightness')\n        glow\['effect_only'].setExpression('parent.GlowMaster.effect_only')\n        glow\['size'].setValue(\[0,0])\n        glow\['size'].setExpression('parent.size*pow(2,int(\[string range \[value name] 5 end]))')\n        glow\['crop'].setExpression('parent.crop')\n        glow.setInput(0, dotIN)\n        if n==0:\n            merge.setInput(n+1, glow)\n        else :\n            merge.setInput(n+2, glow)\n\nif thisKnob.name() == 'operation':\n\n    opValue = thisNode\['operation'].value()\n    \n    if opValue == 'screen':\n        nuke.toNode('Merge_Glow')\['operation'].setValue('screen')\n    elif opValue == 'plus':\n        nuke.toNode('Merge_Glow')\['operation'].setValue('plus')"
+  tile_color 0xffbf00ff
+  xpos -810
+  ypos 1910
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+  addUserKnob {20 controls l Controls}
+  addUserKnob {41 channels l Channels T GlowMaster.channels}
+  addUserKnob {41 tint l Tint T GlowMaster.tint}
+  addUserKnob {7 tolerance l Tolerance}
+  addUserKnob {41 saturation l Saturation T GlowMaster.saturation}
+  addUserKnob {7 brightness l Brightness R 0 5}
+  brightness 1
+  addUserKnob {7 size l Size R 0 10}
+  size 0.45
+  addUserKnob {26 dummy l "" +STARTLINE T " "}
+  addUserKnob {3 falloff l Falloff}
+  falloff 6
+  addUserKnob {6 crop l "crop to format" -STARTLINE}
+  crop true
+  addUserKnob {4 operation l Operation M {screen plus "" ""}}
+  operation plus
+  addUserKnob {26 dummy2 l "" +STARTLINE T " "}
+  addUserKnob {4 mask l Mask M {none alpha}}
+  addUserKnob {6 invert -STARTLINE}
+  addUserKnob {26 dummy3 l "" +STARTLINE T " "}
+  addUserKnob {41 white l Gain T GradeGlow.white}
+  addUserKnob {41 gamma l Gamma T GradeGlow.gamma}
+ }
+  Input {
+   inputs 0
+   name mask
+   xpos 180
+   ypos -585
+   number 1
+  }
+  Invert {
+   name Invert1
+   xpos 180
+   ypos -399
+   disable {{"parent.invert == 1 ? 0 : 1"}}
+  }
+  Input {
+   inputs 0
+   name source
+   xpos -40
+   ypos -873
+  }
+  Dot {
+   name Dot2
+   xpos -6
+   ypos -726
+  }
+set N2cc44000 [stack 0]
+  Merge2 {
+   inputs 2
+   operation stencil
+   name Merge1
+   xpos -40
+   ypos -393
+   disable {{"parent.mask == 1 ? 0 : 1"}}
+  }
+  Dot {
+   name Dot_In
+   label "In\n"
+   note_font_size 25
+   xpos -6
+   ypos -54
+  }
+set N2cc7b800 [stack 0]
+  Glow2 {
+   channels {{{parent.GlowMaster.channels}}}
+   tint {{parent.GlowMaster.tint}}
+   tolerance {{parent.GlowMaster.tolerance}}
+   brightness {{parent.GlowMaster.brightness}}
+   saturation {{parent.GlowMaster.saturation}}
+   effect_only {{parent.GlowMaster.effect_only}}
+   size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+   crop {{parent.crop}}
+   name Glow_6
+   xpos -700
+   ypos 134
+  }
+push $N2cc7b800
+  Glow2 {
+   channels {{{parent.GlowMaster.channels}}}
+   tint {{parent.GlowMaster.tint}}
+   tolerance {{parent.GlowMaster.tolerance}}
+   brightness {{parent.GlowMaster.brightness}}
+   saturation {{parent.GlowMaster.saturation}}
+   effect_only {{parent.GlowMaster.effect_only}}
+   size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+   crop {{parent.crop}}
+   name Glow_5
+   xpos -590
+   ypos 134
+  }
+push $N2cc7b800
+  Glow2 {
+   channels {{{parent.GlowMaster.channels}}}
+   tint {{parent.GlowMaster.tint}}
+   tolerance {{parent.GlowMaster.tolerance}}
+   brightness {{parent.GlowMaster.brightness}}
+   saturation {{parent.GlowMaster.saturation}}
+   effect_only {{parent.GlowMaster.effect_only}}
+   size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+   crop {{parent.crop}}
+   name Glow_4
+   xpos -480
+   ypos 134
+  }
+push $N2cc7b800
+  Glow2 {
+   channels {{{parent.GlowMaster.channels}}}
+   tint {{parent.GlowMaster.tint}}
+   tolerance {{parent.GlowMaster.tolerance}}
+   brightness {{parent.GlowMaster.brightness}}
+   saturation {{parent.GlowMaster.saturation}}
+   effect_only {{parent.GlowMaster.effect_only}}
+   size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+   crop {{parent.crop}}
+   name Glow_3
+   xpos -370
+   ypos 134
+  }
+push $N2cc7b800
+  Glow2 {
+   channels {{{parent.GlowMaster.channels}}}
+   tint {{parent.GlowMaster.tint}}
+   tolerance {{parent.GlowMaster.tolerance}}
+   brightness {{parent.GlowMaster.brightness}}
+   saturation {{parent.GlowMaster.saturation}}
+   effect_only {{parent.GlowMaster.effect_only}}
+   size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+   crop {{parent.crop}}
+   name Glow_2
+   xpos -260
+   ypos 134
+  }
+push 0
+push $N2cc7b800
+  Glow2 {
+   channels {{{parent.GlowMaster.channels}}}
+   tint {{parent.GlowMaster.tint}}
+   tolerance {{parent.GlowMaster.tolerance}}
+   brightness {{parent.GlowMaster.brightness}}
+   saturation {{parent.GlowMaster.saturation}}
+   effect_only {{parent.GlowMaster.effect_only}}
+   size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+   crop {{parent.crop}}
+   name Glow_1
+   xpos -150
+   ypos 134
+  }
+push $N2cc7b800
+  Glow2 {
+   channels rgba
+   tolerance {{parent.tolerance}}
+   brightness {{parent.brightness}}
+   effect_only true
+   size {{parent.size}}
+   name GlowMaster
+   xpos -40
+   ypos 134
+  }
+set N2ecb9c00 [stack 0]
+  Merge2 {
+   inputs 7+1
+   operation screen
+   Achannels {{{parent.GlowMaster.channels}}}
+   Bchannels {{{parent.GlowMaster.channels}}}
+   output {{{parent.GlowMaster.channels}}}
+   name Merge_Glow
+   xpos -40
+   ypos 278
+  }
+  Dot {
+   name Dot_Out
+   label Out
+   note_font_size 25
+   xpos -6
+   ypos 378
+  }
+push $N2cc7b800
+  Dot {
+   name Dot5
+   xpos 104
+   ypos -54
+  }
+  Grade {
+   channels {{{parent.GradeGlow.channels}}}
+   white {{"parent.brightness <= 1 ? 1 - parent.brightness : 0"}}
+   name GradeInput
+   xpos 70
+   ypos 134
+  }
+  Merge2 {
+   inputs 2
+   operation screen
+   name Merge3
+   xpos 70
+   ypos 374
+  }
+  Grade {
+   channels rgba
+   white 0.8
+   gamma {1.083 0.745 0.745 1}
+   name GradeGlow
+   xpos 70
+   ypos 471
+  }
+set N2ecb8400 [stack 0]
+  Dot {
+   name Dot4
+   xpos 214
+   ypos 475
+  }
+push $N2cc44000
+  Dot {
+   name Dot1
+   xpos 434
+   ypos -726
+  }
+  Dot {
+   name Dot3
+   xpos 434
+   ypos 619
+  }
+  Merge2 {
+   inputs 2
+   operation screen
+   name Merge2
+   xpos 180
+   ypos 615
+  }
+push $N2ecb8400
+  Switch {
+   inputs 2
+   which {{parent.mask}}
+   name Switch1
+   xpos 70
+   ypos 615
+  }
+  Output {
+   name Output1
+   xpos 70
+   ypos 807
+  }
+push $N2ecb9c00
+  Viewer {
+   frame_range 1-100
+   name Viewer1
+   xpos -480
+   ypos 567
+  }
+ end_group
+add_layer {edge_mask edge_mask.red edge_mask.green edge_mask.blue edge_mask.alpha}
+ Shuffle {
+  black alpha
+  white alpha
+  red2 alpha
+  green2 alpha
+  out2 edge_mask
+  name Shuffle3
+  label edge_mask
+  xpos -920
+  ypos 1904
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Dilate {
+  channels edge_mask
+  size {{parent.eerode}}
+  name Dilate5
+  xpos -1030
+  ypos 1904
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Blur {
+  channels edge_mask
+  size {{parent.eblur}}
+  name Blur5
+  xpos -1030
+  ypos 1952
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Grade {
+  channels edge_mask
+  white {{parent.eopacity}}
+  name Grade12
+  xpos -1140
+  ypos 1952
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  crop false
+  name Crop2
+  xpos -1250
+  ypos 1958
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+push $N274efc00
+ Noise {
+  output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  type turbulence
+  size {{"parent.density_size*10 + parent.xln_size"}}
+  zoffset {{"parent.Noise18.zoffset * .5"}}
+  lacunarity 1
+  gain 0.6
+  gamma 0.55
+  center {960 540}
+  name Noise6
+  label xlarge
+  xpos -810
+  ypos 1129
+ }
+set N2ed2b400 [stack 0]
+ Grade {
+  channels rgba
+  white {{parent.swxlopacity}}
+  name Grade5
+  xpos -920
+  ypos 1142
+ }
+ Grade {
+  channels rgba
+  white {{parent.density}}
+  name Grade14
+  xpos -1030
+  ypos 1142
+ }
+ set C2ed2ac00 [stack 0]
+clone $C274ee000 {
+  xpos -1140
+  ypos 1136
+  selected false
+ }
+ Blur {
+  size {{parent.swxlblur}}
+  name Blur6
+  xpos -1250
+  ypos 1136
+ }
+push $N274d0000
+ Noise {
+  output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  type turbulence
+  size {{"parent.density_size*5 + parent.ln_size"}}
+  zoffset {{parent.Noise18.zoffset}}
+  lacunarity 1
+  gain 0.85
+  gamma 1
+  center {960 540}
+  name Noise17
+  label large
+  xpos -810
+  ypos 1081
+ }
+set N2ed2a000 [stack 0]
+ Grade {
+  channels rgba
+  white {{parent.swlopacity}}
+  name Grade4
+  xpos -920
+  ypos 1094
+ }
+clone $C2ed2ac00 {
+  xpos -1030
+  ypos 1094
+  selected false
+ }
+clone $C274ee000 {
+  xpos -1140
+  ypos 1088
+  selected false
+ }
+push $N274d0400
+ Noise {
+  output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  type turbulence
+  size {{"parent.main_size*1.5 + 2 + parent.sn_size"}}
+  zoffset {{parent.Noise18.zoffset}}
+  lacunarity 1
+  gain 0.73
+  gamma 1
+  center {960 540}
+  name Noise16
+  label medium
+  xpos -810
+  ypos 1033
+ }
+set N2ed71000 [stack 0]
+ Grade {
+  channels rgba
+  white {{parent.swmopacity}}
+  name Grade3
+  xpos -920
+  ypos 1046
+ }
+clone $C274ee000 {
+  xpos -1140
+  ypos 1040
+  selected false
+ }
+push $N274d0800
+ Noise {
+  output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  type turbulence
+  size {{"parent.main_size + parent.sn_size"}}
+  zoffset {{"frame * parent.swsspeed"}}
+  lacunarity 1
+  gain 0.89
+  gamma 1
+  center {960 540}
+  name Noise18
+  label small
+  xpos -810
+  ypos 985
+ }
+set N2ed70400 [stack 0]
+ Grade {
+  channels rgba
+  white {{parent.swsopacity}}
+  name Grade2
+  xpos -920
+  ypos 998
+ }
+clone $C274ee000 {
+  xpos -1140
+  ypos 992
+  selected false
+ }
+push $N274a1c00
+push $N2cbd9000
+ Dot {
+  name Dot4
+  xpos -1106
+  ypos -294
+ }
+ Dilate {
+  size -1
+  name Dilate1
+  xpos -1140
+  ypos -256
+ }
+ Blur {
+  size 11.5
+  name Blur1
+  xpos -1140
+  ypos -160
+ }
+push $N274a0000
+push $N274a1800
+ Noise {
+  cliptype none
+  size 260
+  lacunarity 1.5
+  gain 0.81
+  gamma {{parent.randop}}
+  translate {5000 5000}
+  center {960 540}
+  name Noise1
+  xpos -810
+  ypos -394
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  out forward
+  name ShuffleCopy1
+  xpos -810
+  ypos -298
+ }
+ IDistort {
+  uv forward
+  uv_offset 0.3
+  uv_scale 74
+  name IDistort6
+  xpos -810
+  ypos -208
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge2
+  xpos -810
+  ypos -154
+ }
+ Dot {
+  name Dot2
+  xpos -776
+  ypos 330
+ }
+push $N2cbd8c00
+ Dilate {
+  size {{parent.swedgeErode}}
+  name Dilate2
+  xpos -1360
+  ypos 128
+ }
+ Blur {
+  size {{parent.swedgeBlur}}
+  name Blur2
+  xpos -1360
+  ypos 224
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  xpos -1360
+  ypos 326
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  out forward
+  name ShuffleCopy2
+  label forward
+  xpos -1360
+  ypos 464
+ }
+add_layer {inner_mask inner_mask.red inner_mask.green inner_mask.blue inner_mask.alpha}
+ Shuffle {
+  black red
+  white red
+  red2 red
+  green2 red
+  out2 inner_mask
+  name Shuffle2
+  label inner_mask
+  xpos -1360
+  ypos 608
+ }
+ Dilate {
+  channels inner_mask
+  size {{parent.inerode}}
+  name Dilate4
+  xpos -1360
+  ypos 656
+ }
+ Blur {
+  channels inner_mask
+  size {{parent.inblur}}
+  name Blur4
+  xpos -1360
+  ypos 704
+ }
+ Grade {
+  channels inner_mask
+  white {{parent.inopacity}}
+  name Grade11
+  xpos -1360
+  ypos 752
+ }
+clone $C2cc05800 {
+  xpos -1360
+  ypos 793
+  selected false
+ }
+set N31211800 [stack 0]
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge31
+  xpos -1360
+  ypos 998
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge32
+  xpos -1360
+  ypos 1046
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge33
+  xpos -1360
+  ypos 1094
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge7
+  xpos -1360
+  ypos 1142
+ }
+ Grade {
+  white {{parent.swgain}}
+  gamma {{parent.swgamma}}
+  name Grade27
+  label "Edge Contrast"
+  xpos -1360
+  ypos 1376
+ }
+ Grade {
+  white {{parent.swColor.r} {parent.swColor.g} {parent.swColor.b} {parent.swColor.a}}
+  name Grade28
+  label "Edge Color"
+  xpos -1360
+  ypos 1424
+ }
+ Grade {
+  white {{parent.swintensity}}
+  name Grade13
+  label "Inner Intensity"
+  xpos -1360
+  ypos 1472
+ }
+ Grade {
+  white {{parent.sw_CC.r} {parent.sw_CC.g} {parent.sw_CC.b} {parent.sw_CC.a}}
+  name Grade17
+  xpos -1360
+  ypos 1526
+ }
+ Group {
+  name Natural_Glow2
+  onCreate "thisNode = nuke.thisNode()\nthisKnob = nuke.thisKnob()\n\nthisNode\['falloff'].setValue(6)"
+  knobChanged "thisNode = nuke.thisNode()\nthisKnob = nuke.thisKnob()\n\n\nif thisKnob.name() == 'falloff':\n\n    falloff = int(thisNode\['falloff'].value())\n\n    thisNode.begin()\n    dotIN = nuke.toNode('Dot_In')\n    dotOUT = nuke.toNode('Dot_Out')\n    merge = nuke.toNode('Merge_Glow')\n    Xpos = nuke.toNode('GlowMaster').xpos()\n    Ypos = nuke.toNode('GlowMaster').ypos()\n\n    for n in nuke.allNodes('Glow2'):\n        if n.name() not in \['GlowMaster']:\n           nuke.delete(n)\n\n    nuke.delete(merge)\n    merge = nuke.nodes.Merge2(xpos = Xpos, ypos = Ypos + 144)\n    merge.setName('Merge_Glow')\n    merge\['operation'].setValue('screen')\n    merge.setInput(0, nuke.toNode('GlowMaster'))\n    merge\['Achannels'].setExpression('parent.GlowMaster.channels')\n    merge\['Bchannels'].setExpression('parent.GlowMaster.channels')\n    merge\['output'].setExpression('parent.GlowMaster.channels')\n    dotOUT.setInput(0,merge)\n\n\n    for n in range(falloff):\n        glow = nuke.nodes.Glow2(xpos = Xpos-(n+1)*110, ypos = Ypos)\n        glow.setName('Glow_'+str(n+1))\n        glow\['channels'].setExpression('parent.GlowMaster.channels')\n        glow\['tint'].setExpression('parent.GlowMaster.tint')\n        glow\['tolerance'].setExpression('parent.GlowMaster.tolerance')\n        glow\['saturation'].setExpression('parent.GlowMaster.saturation')\n        glow\['brightness'].setExpression('parent.GlowMaster.brightness')\n        glow\['effect_only'].setExpression('parent.GlowMaster.effect_only')\n        glow\['size'].setValue(\[0,0])\n        glow\['size'].setExpression('parent.size*pow(2,int(\[string range \[value name] 5 end]))')\n        glow\['crop'].setExpression('parent.crop')\n        glow.setInput(0, dotIN)\n        if n==0:\n            merge.setInput(n+1, glow)\n        else :\n            merge.setInput(n+2, glow)\n\nif thisKnob.name() == 'operation':\n\n    opValue = thisNode\['operation'].value()\n    \n    if opValue == 'screen':\n        nuke.toNode('Merge_Glow')\['operation'].setValue('screen')\n    elif opValue == 'plus':\n        nuke.toNode('Merge_Glow')\['operation'].setValue('plus')"
+  tile_color 0xffbf00ff
+  xpos -1360
+  ypos 1718
+  addUserKnob {20 controls l Controls}
+  addUserKnob {41 channels l Channels T GlowMaster.channels}
+  addUserKnob {41 tint l Tint T GlowMaster.tint}
+  addUserKnob {7 tolerance l Tolerance}
+  addUserKnob {41 saturation l Saturation T GlowMaster.saturation}
+  addUserKnob {7 brightness l Brightness R 0 5}
+  brightness 1
+  addUserKnob {7 size l Size R 0 10}
+  size 0.45
+  addUserKnob {26 dummy l "" +STARTLINE T " "}
+  addUserKnob {3 falloff l Falloff}
+  falloff 6
+  addUserKnob {6 crop l "crop to format" -STARTLINE}
+  crop true
+  addUserKnob {4 operation l Operation M {screen plus "" ""}}
+  addUserKnob {26 dummy2 l "" +STARTLINE T " "}
+  addUserKnob {4 mask l Mask M {none alpha}}
+  addUserKnob {6 invert -STARTLINE}
+  addUserKnob {26 dummy3 l "" +STARTLINE T " "}
+  addUserKnob {41 white l Gain T GradeGlow.white}
+  addUserKnob {41 gamma l Gamma T GradeGlow.gamma}
+ }
+  Input {
+   inputs 0
+   name mask
+   xpos 180
+   ypos -585
+   number 1
+  }
+  Invert {
+   name Invert1
+   xpos 180
+   ypos -399
+   disable {{"parent.invert == 1 ? 0 : 1"}}
+  }
+  Input {
+   inputs 0
+   name source
+   xpos -40
+   ypos -873
+  }
+  Dot {
+   name Dot2
+   xpos -6
+   ypos -726
+  }
+set N3124e800 [stack 0]
+  Merge2 {
+   inputs 2
+   operation stencil
+   name Merge1
+   xpos -40
+   ypos -393
+   disable {{"parent.mask == 1 ? 0 : 1"}}
+  }
+  Dot {
+   name Dot_In
+   label "In\n"
+   note_font_size 25
+   xpos -6
+   ypos -54
+  }
+set N3124e000 [stack 0]
+  Glow2 {
+   channels {{{parent.GlowMaster.channels}}}
+   tint {{parent.GlowMaster.tint}}
+   tolerance {{parent.GlowMaster.tolerance}}
+   brightness {{parent.GlowMaster.brightness}}
+   saturation {{parent.GlowMaster.saturation}}
+   effect_only {{parent.GlowMaster.effect_only}}
+   size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+   crop {{parent.crop}}
+   name Glow_6
+   xpos -700
+   ypos 134
+  }
+push $N3124e000
+  Glow2 {
+   channels {{{parent.GlowMaster.channels}}}
+   tint {{parent.GlowMaster.tint}}
+   tolerance {{parent.GlowMaster.tolerance}}
+   brightness {{parent.GlowMaster.brightness}}
+   saturation {{parent.GlowMaster.saturation}}
+   effect_only {{parent.GlowMaster.effect_only}}
+   size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+   crop {{parent.crop}}
+   name Glow_5
+   xpos -590
+   ypos 134
+  }
+push $N3124e000
+  Glow2 {
+   channels {{{parent.GlowMaster.channels}}}
+   tint {{parent.GlowMaster.tint}}
+   tolerance {{parent.GlowMaster.tolerance}}
+   brightness {{parent.GlowMaster.brightness}}
+   saturation {{parent.GlowMaster.saturation}}
+   effect_only {{parent.GlowMaster.effect_only}}
+   size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+   crop {{parent.crop}}
+   name Glow_4
+   xpos -480
+   ypos 134
+  }
+push $N3124e000
+  Glow2 {
+   channels {{{parent.GlowMaster.channels}}}
+   tint {{parent.GlowMaster.tint}}
+   tolerance {{parent.GlowMaster.tolerance}}
+   brightness {{parent.GlowMaster.brightness}}
+   saturation {{parent.GlowMaster.saturation}}
+   effect_only {{parent.GlowMaster.effect_only}}
+   size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+   crop {{parent.crop}}
+   name Glow_3
+   xpos -370
+   ypos 134
+  }
+push $N3124e000
+  Glow2 {
+   channels {{{parent.GlowMaster.channels}}}
+   tint {{parent.GlowMaster.tint}}
+   tolerance {{parent.GlowMaster.tolerance}}
+   brightness {{parent.GlowMaster.brightness}}
+   saturation {{parent.GlowMaster.saturation}}
+   effect_only {{parent.GlowMaster.effect_only}}
+   size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+   crop {{parent.crop}}
+   name Glow_2
+   xpos -260
+   ypos 134
+  }
+push 0
+push $N3124e000
+  Glow2 {
+   channels {{{parent.GlowMaster.channels}}}
+   tint {{parent.GlowMaster.tint}}
+   tolerance {{parent.GlowMaster.tolerance}}
+   brightness {{parent.GlowMaster.brightness}}
+   saturation {{parent.GlowMaster.saturation}}
+   effect_only {{parent.GlowMaster.effect_only}}
+   size {{"parent.size*pow(2,int(\[string range \[value name] 5 end]))"} {"parent.size*pow(2,int(\[string range \[value name] 5 end]))"}}
+   crop {{parent.crop}}
+   name Glow_1
+   xpos -150
+   ypos 134
+  }
+push $N3124e000
+  Glow2 {
+   channels rgba
+   tolerance {{parent.tolerance}}
+   brightness {{parent.brightness}}
+   effect_only true
+   size {{parent.size}}
+   name GlowMaster
+   xpos -40
+   ypos 134
+  }
+set N31924400 [stack 0]
+  Merge2 {
+   inputs 7+1
+   operation screen
+   Achannels {{{parent.GlowMaster.channels}}}
+   Bchannels {{{parent.GlowMaster.channels}}}
+   output {{{parent.GlowMaster.channels}}}
+   name Merge_Glow
+   xpos -40
+   ypos 278
+  }
+  Dot {
+   name Dot_Out
+   label Out
+   note_font_size 25
+   xpos -6
+   ypos 378
+  }
+push $N3124e000
+  Dot {
+   name Dot5
+   xpos 104
+   ypos -54
+  }
+  Grade {
+   channels {{{parent.GradeGlow.channels}}}
+   white {{"parent.brightness <= 1 ? 1 - parent.brightness : 0"}}
+   name GradeInput
+   xpos 70
+   ypos 134
+  }
+  Merge2 {
+   inputs 2
+   operation screen
+   name Merge3
+   xpos 70
+   ypos 374
+  }
+  Grade {
+   channels rgba
+   white 1.5
+   gamma {0.898 0.836 0.838 1}
+   name GradeGlow
+   selected true
+   xpos 70
+   ypos 471
+  }
+set N3196ec00 [stack 0]
+  Dot {
+   name Dot4
+   xpos 214
+   ypos 475
+  }
+push $N3124e800
+  Dot {
+   name Dot1
+   xpos 434
+   ypos -726
+  }
+  Dot {
+   name Dot3
+   xpos 434
+   ypos 619
+  }
+  Merge2 {
+   inputs 2
+   operation screen
+   name Merge2
+   xpos 180
+   ypos 615
+  }
+push $N3196ec00
+  Switch {
+   inputs 2
+   which {{parent.mask}}
+   name Switch1
+   xpos 70
+   ypos 615
+  }
+  Output {
+   name Output1
+   xpos 70
+   ypos 807
+  }
+push $N31924400
+  Viewer {
+   frame_range 1-100
+   name Viewer1
+   xpos -480
+   ypos 567
+  }
+ end_group
+ Crop {
+  box {0 0 {width} {height}}
+  crop false
+  name Crop3
+  xpos -1360
+  ypos 1908
+ }
+ Merge2 {
+  inputs 2
+  also_merge edge_mask
+  name Merge5
+  xpos -1360
+  ypos 1958
+  disable {{"parent.edgeon == 0 ? 1 : 0"}}
+ }
+ Dot {
+  name Dot24
+  xpos -1326
+  ypos 2106
+ }
+set N31990800 [stack 0]
+ Dot {
+  name Dot25
+  xpos -1436
+  ypos 2106
+ }
+add_layer {lead_mask lead_mask.red lead_mask.green lead_mask.blue lead_mask.alpha}
+ Shuffle {
+  in inner_mask
+  green red
+  blue red
+  alpha red
+  out lead_mask
+  name Shuffle6
+  label lead_mask
+  xpos -1470
+  ypos 2144
+ }
+ Dilate {
+  channels lead_mask
+  size {{parent.lerode}}
+  name Dilate6
+  xpos -1470
+  ypos 2192
+ }
+ Clamp {
+  channels lead_mask
+  name Clamp9
+  xpos -1470
+  ypos 2240
+ }
+ Blur {
+  channels lead_mask
+  size {{parent.lblur}}
+  name Blur8
+  xpos -1470
+  ypos 2288
+ }
+ Grade {
+  channels lead_mask
+  white {{parent.lopacity}}
+  name Grade15
+  xpos -1470
+  ypos 2336
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  out forward
+  name ShuffleCopy5
+  xpos -1470
+  ypos 2390
+ }
+ IDistort {
+  channels lead_mask
+  uv forward
+  uv_offset {{parent.loffset}}
+  uv_scale {{parent.lamount}}
+  name IDistort8
+  xpos -1470
+  ypos 2432
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  crop false
+  name Crop1
+  xpos -1470
+  ypos 2494
+ }
+ Dot {
+  name Dot26
+  xpos -1436
+  ypos 2538
+ }
+push $N31990800
+ ShuffleCopy {
+  inputs 2
+  in lead_mask
+  red red
+  green green
+  blue blue
+  out lead_mask
+  name ShuffleCopy4
+  label lead_mask
+  xpos -1360
+  ypos 2528
+ }
+set N31a03c00 [stack 0]
+ Shuffle {
+  in lead_mask
+  name Shuffle7
+  label "\[value in]"
+  xpos -1800
+  ypos 2624
+ }
+push $N31a03c00
+ Shuffle {
+  in edge_mask
+  name Shuffle5
+  label "\[value in]"
+  xpos -1690
+  ypos 2624
+ }
+push $N31a03c00
+ Shuffle {
+  in inner_mask
+  name Shuffle4
+  label "\[value in]"
+  xpos -1580
+  ypos 2624
+ }
+push $N27514400
+push $N2ed70400
+push $N2ed71000
+push $N2ed2a000
+push $N2ed2b400
+push $N274a0000
+ Dot {
+  name Dot21
+  xpos -556
+  ypos 2682
+ }
+push $N274a0800
+ Dot {
+  name Dot20
+  xpos -446
+  ypos 2730
+ }
+push $N274a0400
+ Dot {
+  name Dot19
+  xpos -556
+  ypos 2730
+ }
+push $N31a03c00
+ Dot {
+  name Dot14
+  xpos -1326
+  ypos 2634
+ }
+ Switch {
+  inputs 12
+  which {{"showMainDist & showMicroDist == 1 ? 3\n: showMicroDist == 1 ? 2\n: showMainDist == 1 ? 1\n: swxlshow == 1 ? 4\n: swlshow == 1 ? 5\n: swmshow == 1 ? 6\n: swsshow == 1 ? 7\n: beshow == 1 ? 8\n: lshow == 1 ? 11\n: eshow == 1 ? 10\n: ishow == 1 ? 9\n: 0"}}
+  name Switch1
+  xpos -1360
+  ypos 2726
+ }
+ Output {
+  name Output1
+  xpos -1360
+  ypos 2870
+ }
+push $N31211800
+ Viewer {
+  frame_range 1-100
+  name Viewer1
+  xpos -1207
+  ypos -586
+ }
+end_group

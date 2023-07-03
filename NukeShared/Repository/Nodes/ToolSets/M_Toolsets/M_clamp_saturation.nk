@@ -1,0 +1,39 @@
+set cut_paste_input [stack 0]
+version 10.5 v3
+BackdropNode {
+inputs 0
+name BackdropNode2
+tile_color 0x284450ff
+label "clamp saturation"
+note_font_size 24.5
+selected true
+xpos -17334
+ypos 3942
+bdwidth 223
+bdheight 311
+}
+push $cut_paste_input
+Colorspace {
+colorspace_out HSV
+name Colorspace1
+label "Linear -> HSV"
+selected true
+xpos -17261
+ypos 4033
+}
+Clamp {
+channels {-rgba.red rgba.green -rgba.blue none}
+name Clamp4
+label Green
+selected true
+xpos -17261
+ypos 4090
+}
+Colorspace {
+colorspace_in HSV
+name Colorspace2
+label "HSV -> Linear"
+selected true
+xpos -17261
+ypos 4153
+}

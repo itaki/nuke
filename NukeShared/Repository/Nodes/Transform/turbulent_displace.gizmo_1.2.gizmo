@@ -1,0 +1,219 @@
+#! C:/Program Files/Nuke12.2v4/nuke-12.2.4.dll -nx
+version 12.2 v4
+add_layer {displace displace.blur}
+Gizmo {
+ inputs 2
+ tile_color 0xffde00ff
+ gl_color 0xff0000ff
+ note_font "Verdana Bold Italic"
+ addUserKnob {20 User}
+ addUserKnob {26 displacementnoise l "displacement noise options"}
+ addUserKnob {41 opacity T Noise_MAIN.opacity}
+ addUserKnob {41 type T Noise_MAIN.type}
+ addUserKnob {41 size l x/ysize T Noise_MAIN.size}
+ addUserKnob {41 zoffset l evolution T Noise_MAIN.zoffset}
+ addUserKnob {41 octaves T Noise_MAIN.octaves}
+ addUserKnob {41 lacunarity T Noise_MAIN.lacunarity}
+ addUserKnob {41 gain T Noise_MAIN.gain}
+ addUserKnob {41 gamma T Noise_MAIN.gamma}
+ addUserKnob {41 translate T Noise_U.translate}
+ addUserKnob {41 invert_1 l invert T Noise_MAIN.invert}
+ addUserKnob {26 blur_1 l "blur options"}
+ addUserKnob {41 blur l "blur channel" T IDistort1.blur}
+ addUserKnob {41 blur_scale l "blur amount" T IDistort1.blur_scale}
+ addUserKnob {41 size_2 l "noise blur size " T Blur1.size}
+ addUserKnob {41 opacity_1 l opacity T Noise_for_blur.opacity}
+ addUserKnob {41 type_1 l type T Noise_for_blur.type}
+ addUserKnob {41 size_1 l x/ysize T Noise_for_blur.size}
+ addUserKnob {41 zoffset_1 l z T Noise_for_blur.zoffset}
+ addUserKnob {41 octaves_1 l octaves T Noise_for_blur.octaves}
+ addUserKnob {41 lacunarity_1 l lacunarity T Noise_for_blur.lacunarity}
+ addUserKnob {41 gain_1 l gain T Noise_for_blur.gain}
+ addUserKnob {41 gamma_1 l gamma T Noise_for_blur.gamma}
+ addUserKnob {41 invert T Noise_for_blur.invert}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos -251
+  ypos 306
+  number 1
+ }
+ Dot {
+  name Dot3
+  xpos -217
+  ypos 405
+ }
+ Noise {
+  inputs 0
+  size 110
+  zoffset {{frame/70}}
+  lacunarity 1.1
+  gain 0.7
+  center {1024 778}
+  name Noise_for_blur
+  xpos -513
+  ypos 86
+ }
+ Blur {
+  name Blur1
+  xpos -513
+  ypos 117
+ }
+ Dot {
+  name Dot4
+  xpos -479
+  ypos 171
+ }
+ Noise {
+  inputs 0
+  opacity {{parent.Noise_MAIN.opacity}}
+  size {{parent.Noise_MAIN.size}}
+  zoffset {{parent.Noise_MAIN.zoffset}}
+  octaves {{parent.Noise_MAIN.octaves}}
+  nyquist {{parent.Noise_MAIN.nyquist}}
+  lacunarity {{parent.Noise_MAIN.lacunarity}}
+  gain {{parent.Noise_MAIN.gain}}
+  gamma {{parent.Noise_MAIN.gamma}}
+  translate {10 0}
+  center {960 540}
+  color {{parent.Noise_MAIN.color}}
+  name Noise_U
+  tile_color 0xf40000ff
+  gl_color 0xffffffff
+  xpos -493
+  ypos -104
+ }
+ Noise {
+  inputs 0
+  opacity {1}
+  size {350}
+  zoffset {{frame/40}}
+  octaves {10}
+  lacunarity {2}
+  gain {0.5}
+  gamma {0.5}
+  center {960 540}
+  name Noise_MAIN
+  xpos -369
+  ypos -192
+ }
+set Ndcf0d800 [stack 0]
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  xpos -493
+  ypos -4
+ }
+push $Ndcf0d800
+ Noise {
+  inputs 0
+  opacity {{parent.Noise_MAIN.opacity}}
+  size {{parent.Noise_MAIN.size}}
+  zoffset {{parent.Noise_MAIN.zoffset}}
+  octaves {{parent.Noise_MAIN.octaves}}
+  nyquist {{parent.Noise_MAIN.nyquist}}
+  lacunarity {{parent.Noise_MAIN.lacunarity}}
+  gain {{parent.Noise_MAIN.gain}}
+  gamma {{parent.Noise_MAIN.gamma}}
+  translate {{parent.Noise_U.translate.y*-1} {parent.Noise_U.translate.x*-1}}
+  center {960 540}
+  color {{parent.Noise_MAIN.color}}
+  name Noise_V
+  tile_color 0xf200ff
+  xpos -253
+  ypos -104
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge2
+  xpos -253
+  ypos -4
+ }
+ Shuffle2 {
+  inputs 2
+  fromInput1 {{0} B A}
+  fromInput2 {{1} B A}
+  in2 rgba
+  mappings "4 rgba.red 0 0 rgba.red 0 0 black -1 -1 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3 rgba.green 1 1 rgba.green 0 1"
+  name Shuffle1
+  xpos -369
+  ypos 78
+ }
+ Shuffle2 {
+  inputs 2
+  fromInput1 {{0} B A}
+  fromInput2 {{1} B A}
+  in2 rgba
+  mappings "4 rgba.red 1 0 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1"
+  name Shuffle3
+  xpos -369
+  ypos 168
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant2
+  xpos -491
+  ypos 283
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 white -1 -1 rgba.alpha 0 3"
+  name Shuffle2
+  xpos -491
+  ypos 355
+ }
+ Dot {
+  name Dot2
+  xpos -457
+  ypos 405
+ }
+ Merge2 {
+  inputs 2+1
+  name Merge3
+  xpos -369
+  ypos 402
+ }
+ Dot {
+  name Dot1
+  xpos -335
+  ypos 504
+ }
+ Input {
+  inputs 0
+  name source
+  xpos -73
+  ypos 403
+ }
+add_layer {distort distort.u distort.v}
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 distort.u
+  from1 rgba.green
+  to1 distort.v
+  from2 rgba.blue
+  to2 displace.blur
+  name Copy1
+  xpos -73
+  ypos 483
+ }
+ IDistort {
+  uv distort
+  uv_scale 100
+  blur -displace.blur
+  blur_scale {36}
+  name IDistort1
+  xpos -73
+  ypos 559
+ }
+ Output {
+  name Output1
+  xpos -73
+  ypos 637
+ }
+end_group

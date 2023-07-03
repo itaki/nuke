@@ -1,0 +1,392 @@
+set cut_paste_input [stack 0]
+version 12.2 v3
+push $cut_paste_input
+Group {
+ name DespillToBG
+ selected true
+ xpos -555
+ ypos 36
+ addUserKnob {20 User l main}
+ addUserKnob {68 sto l "screen type" t "- auto - The screen type will be controlled by \n  the screen color.\n- picking a primary color acts as an override so for example you can pick a blue-ish screen color but still despill green tones.\n" M {auto green blue red "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+ sto green
+ addUserKnob {18 sc l "screen color"}
+ sc {0.08 0.4 0.1}
+ addUserKnob {6 sc_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {41 which l "color / clean plate" T Dissolve2.which}
+ addUserKnob {18 tc l "target color"}
+ tc {0.2 0.2 0.2}
+ addUserKnob {6 tc_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {41 which_bg l "color / bg" T Dissolve1.which}
+ addUserKnob {7 balance t "- determines which colors get affected more by the despill operation. \nlower : red\nhigher : green / blue" R 0 2}
+ balance 1
+ addUserKnob {7 gain t "Increasing gain will affect a wider range of colors." R 0.5 3.5}
+ gain 1
+ addUserKnob {26 ""}
+ addUserKnob {6 enableErode l "enable erode" +STARTLINE}
+ addUserKnob {6 spillmatte l "spillmatte output" t "- spillmatte output to alpha channel.\nThis channel is normalised, so the picked color has an alpha value of 1. \nIn ordner not to clamp values above 1 you might choose to grade this mask down a bit." -STARTLINE}
+ addUserKnob {7 erode t "For blurry edges, eroding the despill matte is an alternative to increasing the gain." R 0.1 50}
+ erode 1
+ addUserKnob {7 erodeMix l mix}
+ erodeMix 1
+ addUserKnob {26 ""}
+ addUserKnob {7 falloff t "- controls the gamma on the despill matte." R 0.5 1.5}
+ falloff 1
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannelMask l mask -STARTLINE T mrg.maskChannelMask}
+ addUserKnob {41 inject -STARTLINE T mrg.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T mrg.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T mrg.fringe}
+ addUserKnob {6 alpha_unpremult l Unpremult +STARTLINE}
+ addUserKnob {7 mix}
+ mix 1
+ addUserKnob {26 ""}
+ addUserKnob {20 info l "info / advanced" n 1}
+ addUserKnob {26 jm l "" +STARTLINE T "By Geraud Mottais | Based on Despill to Color by Johannes Masanz\nVersion: 1.2"}
+ addUserKnob {26 ""}
+ addUserKnob {7 ir l "increase range" t "compensates for screen values higher than 1" R 0 100}
+ ir 50
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos -272
+  ypos 718
+  number 1
+ }
+set N5efab000 [stack 0]
+ Input {
+  inputs 0
+  name Clean_Plate
+  xpos 535
+  ypos -261
+  number 3
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.sc} {parent.sc} {parent.sc} 0}
+  name Constant1
+  xpos 733
+  ypos -187
+ }
+set N5efaa800 [stack 0]
+ Switch {
+  inputs 2
+  which {{"\[exists input3]"}}
+  name Switch1
+  xpos 535
+  ypos -163
+ }
+push $N5efaa800
+ Dissolve {
+  inputs 2
+  which 1
+  name Dissolve2
+  xpos 535
+  ypos -124
+ }
+ Dot {
+  name Dot2
+  xpos 569
+  ypos -45
+ }
+set N393c0400 [stack 0]
+ Dot {
+  name Dot12
+  xpos 569
+  ypos 40
+ }
+set N5efa9c00 [stack 0]
+ Expression {
+  temp_name0 avr
+  temp_expr0 r*clamp(0.1,parent.gain,inf)-(g*(1-(parent.balance-1))+b*parent.balance)/2
+  temp_name1 avg
+  temp_expr1 g*clamp(0.1,parent.gain,inf)-(b*(1-(parent.balance-1))+r*parent.balance)/2
+  temp_name2 avb
+  temp_expr2 b*clamp(0.1,parent.gain,inf)-(g*(1-(parent.balance-1))+r*parent.balance)/2
+  expr3 parent.sto==0?b>g?(b>r?avb:avr):(r>g?avr:avg):parent.sto==1?avg:parent.sto==2?avb:parent.sto==3?avr:1
+  name Expression1
+  xpos 535
+  ypos 85
+ }
+set N5efa9800 [stack 0]
+ Expression {
+  expr3 1/a
+  name Expression2
+  xpos 399
+  ypos 85
+ }
+set N5efa9400 [stack 0]
+push $N393c0400
+ Input {
+  inputs 0
+  name source
+  xpos -84
+  ypos -140
+ }
+ Dot {
+  name Dot6
+  xpos -50
+  ypos -45
+ }
+set N5efa8c00 [stack 0]
+ MergeExpression {
+  inputs 2
+  temp_name0 which
+  temp_expr0 parent.sto==0?Ab>Ag?(Ab>Ar?1:2):(Ar>Ag?2:0):parent.sto-1
+  expr0 which==0?r:which==1?r:which==2?g:1
+  expr1 which==0?g:which==1?b:which==2?r:1
+  expr2 which==0?b:which==1?g:which==2?b:1
+  name MergeExpression1
+  xpos 257
+  ypos -48
+ }
+ Expression {
+  channel3 alpha
+  expr3 parent.gain<1?min((g*parent.gain-(r*parent.balance+b*(1-(parent.balance-1)))/2),(g-(r*parent.balance+b*(1-(parent.balance-1)))/2)):(g*parent.gain-(r*parent.balance+b*(1-(parent.balance-1)))/2)
+  name exp2
+  xpos 257
+  ypos -1
+ }
+ ChannelMerge {
+  inputs 2
+  operation multiply
+  name ChannelMerge1
+  xpos 257
+  ypos 73
+ }
+ FilterErode {
+  size {{-parent.erode}}
+  filter gaussian
+  mix {{parent.erodeMix}}
+  name erode1
+  xpos 257
+  ypos 185
+  disable {{1-parent.enableErode}}
+ }
+set N5ef3f400 [stack 0]
+ Expression {
+  expr3 a>=1?0:1
+  name exp4
+  xpos 384
+  ypos 226
+ }
+push $N5ef3f400
+ Grade {
+  channels alpha
+  gamma {{parent.falloff}}
+  black_clamp false
+  name falloff1
+  xpos 255
+  ypos 232
+ }
+set N5ef3ec00 [stack 0]
+push $N5ef3ec00
+ Merge2 {
+  inputs 2+1
+  operation copy
+  name mrg1
+  xpos 255
+  ypos 277
+ }
+set N5ef3e800 [stack 0]
+push $N5efab000
+push $N5efa9800
+ Dot {
+  name Dot9
+  xpos 569
+  ypos 395
+ }
+ Grade {
+  channels alpha
+  white {{1/(parent.ir+1)}}
+  name Grade1
+  xpos 417
+  ypos 386
+ }
+push $N5ef3e800
+ Clamp {
+  name Clamp1
+  xpos 255
+  ypos 317
+ }
+ ChannelMerge {
+  inputs 2
+  operation multiply
+  name ChannelMerge2
+  xpos 255
+  ypos 380
+ }
+push $N5efa9400
+ Dot {
+  name Dot10
+  xpos 433
+  ypos 147
+ }
+ Dot {
+  name Dot13
+  xpos 748
+  ypos 147
+ }
+set N5ef3d000 [stack 0]
+push $N5efa9c00
+ Dot {
+  name Dot14
+  xpos 914
+  ypos 40
+ }
+ MergeExpression {
+  inputs 2
+  expr0 Br*clamp(1/clamp((1/Aa)/(parent.ir+1)),0,inf)
+  expr1 Bg*clamp(1/clamp((1/Aa)/(parent.ir+1)),0,inf)
+  expr2 Bb*clamp(1/clamp((1/Aa)/(parent.ir+1)),0,inf)
+  name MergeExpression2
+  xpos 880
+  ypos 144
+ }
+ Dot {
+  name Dot15
+  xpos 914
+  ypos 339
+ }
+push $N5ef3d000
+ Expression {
+  channel0 rgb
+  expr0 clamp(1/clamp((1/a)/(parent.ir+1)),0,inf)
+  expr3 0
+  name Expression3
+  xpos 714
+  ypos 207
+ }
+ Dot {
+  name Dot11
+  xpos 748
+  ypos 264
+ }
+ Input {
+  inputs 0
+  name BG
+  xpos 1094
+  ypos 77
+  number 2
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{tc} {tc} {tc} 0}
+  name Target_color
+  xpos 1276
+  ypos 158
+ }
+ Dissolve {
+  inputs 2
+  which 1
+  name Dissolve1
+  xpos 1094
+  ypos 176
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  bbox B
+  name Merge3
+  xpos 1094
+  ypos 261
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  bbox B
+  name Merge4
+  xpos 1094
+  ypos 336
+ }
+ Dot {
+  name Dot5
+  xpos 1128
+  ypos 610
+ }
+push $N5efa8c00
+ Dot {
+  name Dot3
+  xpos -50
+  ypos 414
+ }
+set N5eed5c00 [stack 0]
+ Dot {
+  name Dot4
+  xpos 166
+  ypos 414
+ }
+ Unpremult {
+  channels all
+  name Unpremult1
+  xpos 132
+  ypos 533
+  disable {{1-alpha_unpremult}}
+ }
+ Merge2 {
+  inputs 2+1
+  operation plus
+  bbox B
+  name Merge2
+  xpos 132
+  ypos 607
+ }
+ Premult {
+  name Premult1
+  xpos 132
+  ypos 658
+  disable {{1-alpha_unpremult}}
+ }
+ Dot {
+  name Dot1
+  xpos 166
+  ypos 721
+ }
+push $N5eed5c00
+ Merge2 {
+  inputs 2+1
+  operation copy
+  bbox B
+  maskChannelInput -rgba.alpha
+  mix {{parent.mix}}
+  name mrg
+  xpos -84
+  ypos 718
+ }
+ Shuffle {
+  alpha black
+  name sh
+  tile_color 0x9e3c6300
+  xpos -84
+  ypos 762
+  disable {{1-spillmatte}}
+  addUserKnob {20 Presets}
+  addUserKnob {26 a l "All Channels"}
+  addUserKnob {6 redAll l Red +STARTLINE}
+  addUserKnob {6 greenAll l Green +STARTLINE}
+  addUserKnob {6 blueAll l Blue +STARTLINE}
+  addUserKnob {6 alphaAll l Alpha +STARTLINE}
+  addUserKnob {6 noAlpha l "No Alpha" +STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {6 auto_label l "Auto Label" -STARTLINE}
+  auto_label true
+ }
+ Copy {
+  inputs 2+1
+  from0 rgba.alpha
+  to0 rgba.alpha
+  bbox B
+  name cpy
+  xpos -84
+  ypos 801
+  disable {{1-spillmatte}}
+ }
+ Output {
+  name Output
+  xpos -84
+  ypos 855
+ }
+end_group

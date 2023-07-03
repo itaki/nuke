@@ -1,0 +1,331 @@
+#! C:/Program Files/Nuke9.0v7/nuke-9.0.7.dll -nx
+version 9.0 v7
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1920" h="1160" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1241" stretch="1"/>
+            <splitter orientation="2">
+                <split size="643"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="452"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                    <page id="DAG.2"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/postyr/Desktop/FrameMedian.nk
+ frame 30
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x254125ff
+ label example
+ note_font "Verdana Italic"
+ note_font_size 42
+ xpos 45
+ ypos -394
+ bdwidth 438
+ bdheight 341
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode2
+ tile_color 0x71c67100
+ label FrameMedian
+ note_font_size 42
+ xpos 69
+ ypos 144
+ bdwidth 267
+ bdheight 128
+}
+Camera2 {
+ inputs 0
+ translate {1.502936482 1.151078582 1.728930831}
+ rotate {-26.67800173 40.99999659 0}
+ name Camera1
+ xpos 275
+ ypos -214
+}
+Sphere {
+ inputs 0
+ name Sphere1
+ xpos 55
+ ypos -298
+}
+push 0
+ParticleEmitter {
+ inputs 2
+ emit_from bbox
+ rate {{(frame==1)*2000}}
+ lifetime 100
+ velocity 0.007
+ size 0.01
+ spread 1
+ name ParticleEmitter1
+ xpos 165
+ ypos -298
+}
+ParticleExpression {
+ colexpr v(random,random,random)
+ colexpr_onlynew true
+ name ParticleExpression1
+ xpos 165
+ ypos -272
+}
+push 0
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ motion_vectors_type distance
+ name BAD_WEATHER
+ xpos 165
+ ypos -194
+}
+ColorWheel {
+ inputs 0
+ gamma 0.45
+ name CleanPlate
+ xpos 393
+ ypos -129
+}
+Merge2 {
+ inputs 2
+ name Merge1
+ xpos 165
+ ypos -106
+}
+Dot {
+ name Dot1
+ xpos 199
+ ypos 18
+}
+set N3b4c400 [stack 0]
+FrameBlend {
+ numframes 100
+ startframe 1
+ endframe 100
+ userange true
+ name FrameBlend1
+ xpos 309
+ ypos 8
+}
+push $N3b4c400
+Group {
+ name FrameMedian
+ tile_color 0x2f66ff
+ xpos 165
+ ypos 222
+ addUserKnob {20 User}
+ addUserKnob {26 ""}
+ addUserKnob {4 Method l "Calculation Method" M {"Frame Range" "Specified Frames" "" ""}}
+ addUserKnob {26 FrameRange_line l "<b><font color=#70EE70>Frame Range</font><b>"}
+ addUserKnob {7 MaxFrames l "Sample Frames" R 1 20}
+ MaxFrames 15
+ addUserKnob {3 FramesFrom l "Frame Range From"}
+ FramesFrom 1
+ addUserKnob {3 Frames l To -STARTLINE}
+ Frames 100
+ addUserKnob {26 devider_specframe l "<b><font color=#70EE70>Specified Frames</font><b>"}
+ addUserKnob {1 frame_list l frames}
+ frame_list "\[43, 53, 63, 73, 83]"
+ addUserKnob {22 ToggleFrame l "Toggle Frame" T "tempval = nuke.thisNode().knob(\"frame_list\").value()\ntempval = eval(tempval)\nfound = False\nfor index, item in enumerate(tempval):\n    if item==nuke.frame():\n        tempval.pop(index)\n        found = True\n        break\nif not found:\n        tempval.append(nuke.frame()) \ntempval.sort()\nnuke.thisNode().knob(\"frame_list\").setValue(str(tempval))" +STARTLINE}
+ addUserKnob {22 clear l Clear -STARTLINE T "nuke.thisNode().knob(\"frame_list\").setValue(\"\[]\")"}
+ addUserKnob {26 Help}
+ addUserKnob {26 Info l "" -STARTLINE T "The input plate must be stabelized before running this node.\n\n\[Frame Range]\nA: Set the frame range to the desidred input frame range\nB: Set the number of frames you want to sample from.\n\n\[Specified Frames]\nA: Go to a frame that you want to include and hit \"Toggle Frame\".\n(If you want to remove a frame, just go to that frame and hit \n\"Toggle Frame\" again.)"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -634
+  ypos -250
+ }
+set N3b4dc00 [stack 0]
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_19
+  xpos 237
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_18
+  xpos 119
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_17
+  xpos 17
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_16
+  xpos -93
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_15
+  xpos -203
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_14
+  xpos -313
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_13
+  xpos -423
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_12
+  xpos -533
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_11
+  xpos -643
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_10
+  xpos -753
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_9
+  xpos -863
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_8
+  xpos -973
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_7
+  xpos -1083
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_6
+  xpos -1193
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_5
+  xpos -1303
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[int(nuke.thisNode().name().split(\"_\")\[1])]\}]"}}
+  name TO_4
+  xpos -1413
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[int(nuke.thisNode().name().split(\"_\")\[1])]\}]"}}
+  name TO_3
+  xpos -1523
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[int(nuke.thisNode().name().split(\"_\")\[1])]\}]"}}
+  name TO_2
+  xpos -1633
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[int(nuke.thisNode().name().split(\"_\")\[1])]\}]"}}
+  name TO_1
+  xpos -1743
+  ypos -112
+ }
+push $N3b4dc00
+ FrameHold {
+  first_frame {{"parent.Method==0?floor(parent.FramesFrom+(((parent.Frames-parent.FramesFrom)/parent.MaxFrames)*\[lindex \[split \[value name] _] 1])):\[python \{eval(nuke.thisParent().knob(\"frame_list\").value())\[min(len(eval(nuke.thisParent().knob(\"frame_list\").value()))-1,int(nuke.thisNode().name().split(\"_\")\[1]))]\}]"}}
+  name TO_0
+  xpos -1868
+  ypos -112
+ }
+ BlinkScript {
+  inputs 20
+  ProgramGroup 1
+  KernelDescription "1 \"CleanPlater\" iterate componentWise e23f2c1acd3c540d820e06225fe9058ef919b69ea31e669235276c5ae236c0a7 21 \"src1\" Read Point \"src2\" Read Point \"src3\" Read Point \"src4\" Read Point \"src5\" Read Point \"src6\" Read Point \"src7\" Read Point \"src8\" Read Point \"src9\" Read Point \"src10\" Read Point \"src11\" Read Point \"src12\" Read Point \"src13\" Read Point \"src14\" Read Point \"src15\" Read Point \"src16\" Read Point \"src17\" Read Point \"src18\" Read Point \"src19\" Read Point \"src20\" Read Point \"dst\" Write Point 1 \"Frames\" Int 1 AQAAAA=="
+  kernelSource "kernel CleanPlater : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessPoint, eEdgeClamped> src1; \n  Image<eRead, eAccessPoint, eEdgeClamped> src2;\n  Image<eRead, eAccessPoint, eEdgeClamped> src3;  \n  Image<eRead, eAccessPoint, eEdgeClamped> src4;\n  Image<eRead, eAccessPoint, eEdgeClamped> src5;\n  Image<eRead, eAccessPoint, eEdgeClamped> src6;\n  Image<eRead, eAccessPoint, eEdgeClamped> src7; \n  Image<eRead, eAccessPoint, eEdgeClamped> src8;\n  Image<eRead, eAccessPoint, eEdgeClamped> src9; \n  Image<eRead, eAccessPoint, eEdgeClamped> src10;\n  Image<eRead, eAccessPoint, eEdgeClamped> src11; \n  Image<eRead, eAccessPoint, eEdgeClamped> src12;\n  Image<eRead, eAccessPoint, eEdgeClamped> src13;  \n  Image<eRead, eAccessPoint, eEdgeClamped> src14;\n  Image<eRead, eAccessPoint, eEdgeClamped> src15;\n  Image<eRead, eAccessPoint, eEdgeClamped> src16;\n  Image<eRead, eAccessPoint, eEdgeClamped> src17; \n  Image<eRead, eAccessPoint, eEdgeClamped> src18;\n  Image<eRead, eAccessPoint, eEdgeClamped> src19; \n  Image<eRead, eAccessPoint, eEdgeClamped> src20;\n  Image<eWrite> dst;\n  param:\n    int frames;\n  void define() \{\n    defineParam(frames, \"Frames\", 1);\n  \}\n  void process() \{\n    float values\[] = \{src1(),src2(),src3(),src4(),src5(),src6(),src7(),src8(),src9(),src10(),src11(),src12(),src13(),src14(),src15(),src16(),src17(),src18(),src19(),src20(),\};\n    float outputS = median(values,  frames);\n    dst() = outputS;\n   \}\n\};"
+  useGPUIfAvailable false
+  vectorize false
+  rebuild ""
+  CleanPlater_Frames {{"parent.Method==0?parent.MaxFrames:\[python \{len(eval(nuke.thisParent().knob(\"frame_list\").value()))\}]"}}
+  name BlinkScript3
+  xpos -643
+  ypos 80
+ }
+ Output {
+  name Output1
+  xpos -643
+  ypos 144
+ }
+end_group
+push $N3b4c400
+Viewer {
+ frame 30
+ frame_range 1-100
+ name Viewer1
+ xpos 21
+ ypos 14
+}

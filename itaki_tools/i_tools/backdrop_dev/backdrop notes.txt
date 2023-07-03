@@ -1,0 +1,31 @@
+['Input', Foreground, Background, 'Reference', 
+                'Grain',
+                'Element',
+                'Retime',
+                'Transformations', 'Tracker', 'Stabilize', Matchmove
+                'Clean-Up', 'Beauty', 'Make-up', 'Removal', 'Hole Fill', 
+                'Keyer', 'Key OUT', 'Key IN', 'Additive_Key', 'Edge_Fixes', 'Despill'
+                'Effects', 'Defocus', 'Glow', 'Lens_Flare', 'Godrays', 'Light_Wrap'
+                'Roto','Matte',
+                'Cleanup','Rig_Removal',
+                'CG', 'CG:Beauty', 'CG:Diffuse', 'CG:Reflection', 'CG:Refraction', 'CG:Shadow', 'CG:Specular', 'CG_Motion_Vectors', 'CG:Z-Depth', 'CG:Matte'
+                'Shuffle',
+                '3D', 'Camera_Tracker', 'Camera_Rig', 'Projection', '3D_Elements',
+                'Set_Extension',
+                'Particles',
+                'Color_Correction',
+                'Deep',
+                'Controllers',
+                'TEST VIEWER',
+                'Write',
+                'Previous_Versions',
+                'Temp'
+
+                Slate
+                Master
+                
+
+
+
+backdrop_presets is the old VERSION
+backdrops.py is the new VERSION

@@ -1,0 +1,460 @@
+#! C:/Program Files/Nuke13.0v1/nuke-13.0.1.dll -nx
+version 13.0 v1
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1351" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="768"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="541"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "C:/Users/lgere/OneDrive/VFX/PARTICLES/PYRO and SPARKS/sparks_particle_v01.nk"
+ frame 52
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ monitorOutLUT rec709
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x7171c600
+ label "particle shape"
+ note_font "Bitstream Vera Sans Bold"
+ note_font_size 60
+ xpos -125
+ ypos -308
+ bdwidth 684
+ bdheight 614
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode2
+ tile_color 0x444444ff
+ label "particle setup"
+ note_font "Bitstream Vera Sans Bold"
+ note_font_size 42
+ xpos -162
+ ypos 430
+ bdwidth 756
+ bdheight 969
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0x444444ff
+ label "chromatic aberration"
+ note_font_size 42
+ xpos -160
+ ypos 1491
+ bdwidth 509
+ bdheight 465
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0x335959ff
+ label "<b>author: Satheesh Rengasamy        ."
+ note_font_size 20
+ xpos 407
+ ypos 1621
+}
+Camera2 {
+ inputs 0
+ translate {0 0 6.360000134}
+ focal 25.6
+ name Camera2
+ xpos 378
+ ypos 1087
+}
+set Nfcc4cc00 [stack 0]
+Light2 {
+ inputs 0
+ depthmap_slope_bias 0.01
+ name Light1
+ xpos -71
+ ypos 901
+}
+DirectLight {
+ inputs 0
+ rotate {-11 11 -31}
+ depthmap_slope_bias 0.01
+ name DirectLight1
+ xpos -73
+ ypos 993
+}
+push $Nfcc4cc00
+Roto {
+ inputs 0
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44800000 x44100000}
+    {a}
+    {curvegroup Rectangle1 576 bezier
+     {{cc
+       {f 8192}
+       {px x452ba000
+        {{{xc03af6be 0 1 x3e2c94f7 1}}
+	 {{xc00dd1f6 0 1 xbdab6955 1}}}
+        {{{x44794fcf 0 1 xbf792157 1}}
+	 {{x440cc000 -}}}
+        {{{x403af6be 0 1 x3f3f544c 1}}
+	 {{x400dd1f6 0 1 xbe02e947 1}}}
+        {{{xc03af6be 0 1 xbf3f53f8 1}}
+	 {{x400dd1f6 0 1 xbe02e947 1}}}
+        {{{x447cf000 0 1 x3f791f92 1}}
+	 {{x440cc000 -}}}
+        {{{x403af6be 0 1 xbe2c94f7 1}}
+	 {{xc00dd1f6 0 1 xbdab6955 1}}}
+        {{{x403af6be 0 1 xbe2c94f7 1}}
+	 {{x400dd1f6 0 1 x3dab6963 1}}}
+        {{{x447cf000 0 1 x3f791f92 1}}
+	 {{x440a0000 -}}}
+        {{{xc03af6be 0 1 xbf3f53f8 1}}
+	 {{xc00dd1f6 0 1 x3e02e947 1}}}
+        {{{x403af6be 0 1 x3f3f544c 1}}
+	 {{xc00dd1f6 0 1 x3e02e947 1}}}
+        {{{x44794fcf 0 1 xbf792157 1}}
+	 {{x440a0000 -}}}
+        {{{xc03af6be 0 1 x3e2c94f7 1}}
+	 {{x400dd1f6 0 1 x3dab6955 1}}}}}     idem}
+     {t
+      {{x4530b000 x447b2000}}
+      {{x4530b000 x440b6000}}     0
+      {{x4530b000 0}}
+      {{x4530b000 0}}     0 0 0
+      {{x4530b000 0}}
+      {{x4530b000 1}}
+      {{x4530b000 1}}     1
+      {{x4530b000 0}}}
+     {a spx x44800000 spy x44100000 sb 1 ltn x4530b000 ltm x4530b000 tt x40e00000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ colorOverlay 0
+ lifetime_type "all frames"
+ lifetime_start 2827
+ lifetime_end 2827
+ motionblur_shutter_offset_type centred
+ source_translate_round false
+ source_black_outside true
+ name Roto2
+ xpos 376
+ ypos -132
+}
+Blur {
+ channels alpha
+ size 6
+ name Blur1
+ xpos 376
+ ypos -75
+}
+Noise {
+ inputs 0
+ premult rgb
+ size 5.9
+ center {1024 576}
+ name Noise1
+ xpos 150
+ ypos -153
+}
+Merge2 {
+ inputs 2
+ operation mask
+ name Merge2
+ label "Bbox: \[value bbox]"
+ note_font_size 20
+ xpos 150
+ ypos -84
+}
+set Nfcbef000 [stack 0]
+Grade {
+ white 4
+ multiply {3.099999905 1.232070804 0.4196932316 1}
+ name Grade2
+ xpos 150
+ ypos -15
+}
+Glow {
+ brightness 3.7
+ size 0.7
+ name Glow2
+ xpos 150
+ ypos 29
+}
+push $Nfcbef000
+Blur {
+ size 10
+ name Blur2
+ xpos 4
+ ypos -75
+}
+Grade {
+ white 0.64
+ multiply {0.5699999928 0.2091356963 0 1}
+ name Grade3
+ xpos 4
+ ypos 10
+}
+Glow {
+ brightness 3.7
+ size 29
+ name Glow1
+ xpos 4
+ ypos 107
+}
+Merge2 {
+ inputs 2
+ name Merge3
+ label "Bbox: \[value bbox]"
+ note_font_size 20
+ xpos 150
+ ypos 92
+}
+Grade {
+ white 2.08
+ name Grade4
+ xpos 150
+ ypos 159
+}
+Crop {
+ box {904.7999878 550.7999878 1104 563.9500122}
+ reformat true
+ crop false
+ name Crop1
+ xpos 150
+ ypos 206
+}
+Card2 {
+ inputs 0
+ translate {1.898435831 1.08999783 -9.341064453}
+ rotate {7.21636146 {curve i x2821.899902 -98.11528927 x2829 -132.7573635 x2831.899902 -97.11528927 x2832 -92.11528927} 0}
+ scaling {1 2 1}
+ uniform_scale 0.205
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card2
+ xpos 443
+ ypos 635
+}
+Card2 {
+ inputs 0
+ translate {1.89943462 1.03000003 -9.276600838}
+ rotate {19.03070974 -89.1152198 0}
+ scaling {1 2 1}
+ uniform_scale 0.205
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card1
+ xpos 313
+ ypos 580
+}
+MergeGeo {
+ inputs 2
+ name MergeGeo1
+ xpos 313
+ ypos 635
+}
+push 0
+ParticleEmitter {
+ inputs 3
+ start_frame -5
+ emit_from edges
+ rate {{curve x1 2 x10 0 x14 0 x16 3 x23 2 x32 0 x39 0 x42 0 x43 6 x52 4 x57 0 x65 0 x66 3 x70 0 x82 0 x84 0.08916323927 x85 10 x95 0 x100 5}}
+ rate_variation 0.485
+ lifetime 15
+ lifetime_variation 0.47
+ halflife 15
+ velocity_variation 0.37
+ size 0.03
+ mass_variation 1
+ spread 0.105
+ start_frame_animation random
+ seed 25
+ name ParticleEmitter1
+ xpos 150
+ ypos 635
+}
+ParticleBounce {
+ out_new_channels {a}
+ out_bounce 0.33
+ out_friction 0.3
+ in_new_channels {a}
+ in_bounce 0.045
+ in_friction 0.095
+ object cylinder
+ bounceaxis_translate {-4.631808758 0.9867098331 -9.140000343}
+ bounceaxis_rotate {0 0 -7}
+ bounceaxis_scaling {1 3 3}
+ bounceaxis_uniform_scale 5
+ seed 25
+ name ParticleBounce1
+ xpos 150
+ ypos 735
+}
+ParticleGravity {
+ to {0.01 -0.1 0}
+ name ParticleGravity1
+ xpos 150
+ ypos 808
+}
+ParticleBounce {
+ out_bounce_mode kill
+ in_bounce 0.155
+ in_friction 0.165
+ bounceaxis_translate {-0.5999985933 -3.299999952 -9.140000343}
+ bounceaxis_scaling {1 5 1}
+ bounceaxis_uniform_scale 100
+ name ParticleBounce2
+ xpos 150
+ ypos 858
+}
+ParticleDirectionalForce {
+ strength {-0.011 0.015 0}
+ name ParticleDirectionalForce1
+ xpos 150
+ ypos 910
+}
+Scene {
+ inputs 4
+ name Scene2
+ xpos 160
+ ypos 1007
+}
+push 0
+ScanlineRender {
+ inputs 3
+ samples 12
+ shutter 0.2
+ shutteroffset centred
+ motion_vectors_type off
+ MB_channel none
+ name ScanlineRender1
+ xpos 150
+ ypos 1107
+}
+Blur {
+ name Blur3
+ xpos 150
+ ypos 1667
+}
+set Nfcb0a000 [stack 0]
+push $Nfcb0a000
+Shuffle {
+ green red
+ blue red
+ alpha red
+ name Shuffle1
+ label "\[value in]--->\[value out]"
+ note_font_size 20
+ xpos -60
+ ypos 1658
+}
+Blur {
+ size 0.9
+ name Blur4
+ xpos -60
+ ypos 1752
+}
+push $Nfcb0a000
+ShuffleCopy {
+ inputs 2
+ red red
+ name ShuffleCopy1
+ xpos 23
+ ypos 1820
+}
+Merge2 {
+ inputs 2
+ name Merge6
+ label "Bbox: \[value bbox]"
+ note_font_size 20
+ xpos 150
+ ypos 1808
+}
+Viewer {
+ frame_range 1-100
+ input_process false
+ name Viewer1
+ xpos 150
+ ypos 2051
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0x969600ff
+ label "<b>https://satheeshnuketutorials.blogspot.com/2013/09/nuke-particle-templates.html               ."
+ note_font_size 20
+ xpos 407
+ ypos 1684
+}

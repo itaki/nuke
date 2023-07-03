@@ -1,0 +1,237 @@
+set cut_paste_input [stack 0]
+version 11.3 v2
+BackdropNode {
+ inputs 0
+ name BackdropNode13
+ tile_color 0x4cae5001
+ label "<center>IBK stacked"
+ note_font_size 30
+ selected true
+ xpos 9105
+ ypos 13667
+ bdwidth 827
+ bdheight 1059
+ z_order 2
+}
+Roto {
+ inputs 0
+ output alpha
+ cliptype none
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x44800000 x44428000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {1024 778}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ view {}
+ motionblur_on true
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ name Roto35
+ label "Additional cutout"
+ selected true
+ xpos 9698
+ ypos 13906
+}
+Clamp {
+ minimum 1
+ MinClampTo_enable true
+ name Clamp5
+ selected true
+ xpos 9698
+ ypos 13993
+}
+Dot {
+ name Dot243
+ selected true
+ xpos 9732
+ ypos 14089
+}
+push $cut_paste_input
+Dot {
+ name Dot248
+ selected true
+ xpos 9284
+ ypos 13834
+}
+set N8a526000 [stack 0]
+Dot {
+ name Dot249
+ selected true
+ xpos 9527
+ ypos 13834
+}
+IBKColourV3 {
+ name IBKColourV3_11
+ selected true
+ xpos 9493
+ ypos 13941
+ screen_type green
+ Size 0
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+Merge2 {
+ inputs 2
+ operation stencil
+ name Merge25
+ selected true
+ xpos 9493
+ ypos 14085
+}
+IBKColourV3 {
+ name IBKColourV3_12
+ selected true
+ xpos 9493
+ ypos 14190
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_11.off.r} {parent.IBKColourV3_11.off.g} {parent.IBKColourV3_11.off.b}}
+ mult {{parent.IBKColourV3_11.mult.r} {parent.IBKColourV3_11.mult.g} {parent.IBKColourV3_11.mult.b}}
+ multi 1
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_13
+ selected true
+ xpos 9492
+ ypos 14246
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_12.off.r} {parent.IBKColourV3_12.off.g} {parent.IBKColourV3_12.off.b}}
+ mult {{parent.IBKColourV3_12.mult.r} {parent.IBKColourV3_12.mult.g} {parent.IBKColourV3_12.mult.b}}
+ multi {{(parent.IBKColourV3_12.multi)*2}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_14
+ selected true
+ xpos 9492
+ ypos 14281
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_13.off.r} {parent.IBKColourV3_13.off.g} {parent.IBKColourV3_13.off.b}}
+ mult {{parent.IBKColourV3_13.mult.r} {parent.IBKColourV3_13.mult.g} {parent.IBKColourV3_13.mult.b}}
+ multi {{(parent.IBKColourV3_13.multi)*2}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_15
+ selected true
+ xpos 9492
+ ypos 14318
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_14.off.r} {parent.IBKColourV3_14.off.g} {parent.IBKColourV3_14.off.b}}
+ mult {{parent.IBKColourV3_14.mult.r} {parent.IBKColourV3_14.mult.g} {parent.IBKColourV3_14.mult.b}}
+ multi {{(parent.IBKColourV3_14.multi)*2}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_16
+ selected true
+ xpos 9493
+ ypos 14351
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_15.off.r} {parent.IBKColourV3_15.off.g} {parent.IBKColourV3_15.off.b}}
+ mult {{parent.IBKColourV3_15.mult.r} {parent.IBKColourV3_15.mult.g} {parent.IBKColourV3_15.mult.b}}
+ multi {{(parent.IBKColourV3_15.multi)*2}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_17
+ selected true
+ xpos 9493
+ ypos 14388
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_16.off.r} {parent.IBKColourV3_16.off.g} {parent.IBKColourV3_16.off.b}}
+ mult {{parent.IBKColourV3_16.mult.r} {parent.IBKColourV3_16.mult.g} {parent.IBKColourV3_16.mult.b}}
+ multi {{(parent.IBKColourV3_16.multi)*2}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_18
+ selected true
+ xpos 9493
+ ypos 14425
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_17.off.r} {parent.IBKColourV3_17.off.g} {parent.IBKColourV3_17.off.b}}
+ mult {{parent.IBKColourV3_17.mult.r} {parent.IBKColourV3_17.mult.g} {parent.IBKColourV3_17.mult.b}}
+ multi {{(parent.IBKColourV3_17.multi)*2}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_19
+ selected true
+ xpos 9493
+ ypos 14459
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_18.off.r} {parent.IBKColourV3_18.off.g} {parent.IBKColourV3_18.off.b}}
+ mult {{parent.IBKColourV3_18.mult.r} {parent.IBKColourV3_18.mult.g} {parent.IBKColourV3_18.mult.b}}
+ multi {{(parent.IBKColourV3_18.multi)*2}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+IBKColourV3 {
+ name IBKColourV3_20
+ selected true
+ xpos 9493
+ ypos 14500
+ screen_type green
+ Size 0.1
+ off {{parent.IBKColourV3_19.off.r} {parent.IBKColourV3_19.off.g} {parent.IBKColourV3_19.off.b}}
+ mult {{parent.IBKColourV3_19.mult.r} {parent.IBKColourV3_19.mult.g} {parent.IBKColourV3_19.mult.b}}
+ multi {{(parent.IBKColourV3_19.multi)*2}}
+ addUserKnob {20 User}
+ addUserKnob {22 ColorStacker T "----\t\t\t" +STARTLINE}
+}
+Dot {
+ name Dot250
+ selected true
+ xpos 9527
+ ypos 14576
+}
+push $N8a526000
+IBKGizmoV3 {
+ inputs 2
+ name IBKGizmoV3_2
+ xpos 9250
+ ypos 14572
+ st C-green
+ colour {0 1 0}
+}

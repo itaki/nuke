@@ -1,0 +1,47 @@
+#! /software/Nuke/Linux64/Nuke6.2v3/Nuke6.2 -nx
+version 6.2 v3
+Gizmo {
+ help "Copy a track animation curve into each of the four points. Position your image using a transform or another corner pin before this node, then set the Reference Frame to this frame.\n\nThe 'From' values will be set to match the 'to' values on your reference frame."
+ tile_color 0xe564e5ff
+ addUserKnob {20 tab1 l "Corner Stabilize"}
+ addUserKnob {26 blurb l "" +STARTLINE T "Four-point stabilize\n\nCopy four tracked animation curves \nfrom a tracker node into each point. \nThen choose your reference frame."}
+ addUserKnob {26 ""}
+ addUserKnob {41 to1 l "Bottom Left" T CornerPin2D3.to1}
+ addUserKnob {41 to2 l "Bottom Right" T CornerPin2D3.to2}
+ addUserKnob {41 to3 l "Top Right" T CornerPin2D3.to3}
+ addUserKnob {41 to4 l "Top Left" T CornerPin2D3.to4}
+ addUserKnob {26 ""}
+ addUserKnob {3 refFrame l "Ref Frame"}
+ refFrame 1
+ addUserKnob {22 setFrameButton l "Set to this frame" -STARTLINE T "nuke.thisNode()\['refFrame'].setValue(nuke.frame())"}
+ addUserKnob {41 invert l Stabilize t "Untick this box if you want to match-move" T CornerPin2D3.invert}
+ addUserKnob {26 ""}
+ addUserKnob {26 blurb2 l "" +STARTLINE T "Tip: use a cameraTracker node, track, \nselect four good tracks, right click and \n'export user tracks'. Then copy them from \nthe Tracking tab."}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 534
+  ypos -279
+ }
+ CornerPin2D {
+  to1 {0 0}
+  to2 {2048 0}
+  to3 {2048 1556}
+  to4 {0 1556}
+  invert true
+  from1 {{to1(refFrame)} {to1(refFrame)}}
+  from2 {{to2(refFrame)} {to2(refFrame)}}
+  from3 {{to3(refFrame)} {to3(refFrame)}}
+  from4 {{to4(refFrame)} {to4(refFrame)}}
+  name CornerPin2D3
+  selected true
+  xpos 534
+  ypos -220
+ }
+ Output {
+  name Output1
+  xpos 534
+  ypos -152
+ }
+end_group
