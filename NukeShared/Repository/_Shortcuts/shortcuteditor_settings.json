@@ -1,0 +1,7 @@
+{
+ "overrides": {
+  "Nodes/Keyer/Keyer": "V",
+  "Nodes/Transform/Tracker": "Shift+T"
+ },
+ "version": 1
+}
