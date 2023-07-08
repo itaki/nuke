@@ -1,3 +1,27 @@
+# Use TCL to get the special name of the shot
+# https://www.youtube.com/watch?v=PQ2yvlwV9TA
+[lindex [split [basename [value [topnode].file]] _.]2]
+[lindex [split [basename [value root.name]] _.]2]
+
+# To load the cccc file in the footage directory
+[join [lrange [file split [value [topnode].file]] 0 end-1] /]/support_files/[lindex [split [basename [value [topnode].file]] .] 0]_BP01_V01.ccc
+# this one is better
+[file dirname [value [topnode].file]]/support_files/[lindex [split [basename [value [topnode].file]] .] 0]_BP01_V01.ccc
+# using only the script location
+[file dirname [value root.name]]/Footage/[lindex [split [file dirname [value root.name]] /] end]/support_files/[lindex [split [file dirname [value root.name]] /] end]_BP01_V01.ccc
+
+# get the matte file from only the directory
+[file dirname [value root.name]]/Footage/[lindex [split [file dirname [value root.name]] /] end]_matte.mov
+
+# Load the cube file
+[join [lrange [file split [value [topnode].file]] 0 end-1] /]/support_files/Watts_Low.cube
+# this one is better
+[file dirname [value [topnode].file]]/support_files/Watts_Low.cube
+#using only the script location
+[file dirname [value root.name]]/Footage/[lindex [split [file dirname [value root.name]] /] end]/support_files/Watts_Low.cube
+
+
+
 #GETTING A KNOB’S VALUE OF A SPECIFIC NODE:
 
 #First frame of current read/write:

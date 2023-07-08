@@ -170,9 +170,9 @@ nuke.knobDefault("Write.tiff.datatype","16 bit")
 # StickyNote > default text size: 40pt  
 #nuke.knobDefault("StickyNote.tile_color", "(0.333, 0.333, 0.333)") # this isn't the right way to talk to the node
 #nuke.knobDefault("StickyNote.note_font_color", "1, 1, 1") # nor is this
-nuke.knobDefault("StickyNote.note_font_size", "20")
-nuke.knobDefault("StickyNote.note_font", "Gotham-Book")
-nuke.knobDefault("StickyNote.tile_color","3758031103")  
+# nuke.knobDefault("StickyNote.note_font_size", "20")
+# nuke.knobDefault("StickyNote.note_font", "Gotham-Book")
+# nuke.knobDefault("StickyNote.tile_color","3758031103")  
 # RotoPaint > Set default tool to brush, set default lifetime for brush and clone to "all frames"  
 nuke.knobDefault("RotoPaint.toolbox", "brush {{brush ltt 0} {clone ltt 0}}")  
 # Invert -> set to only alpha
