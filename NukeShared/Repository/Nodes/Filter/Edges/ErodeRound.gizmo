@@ -1,6 +1,7 @@
 #! C:/Program Files/Nuke11.3v4/nuke-11.3.4.dll -nx
 version 11.3 v4
-Gizmo {
+Group {
+ name ErodeRound
  inputs 2
  addUserKnob {20 ErodeRound}
  addUserKnob {6 gpu l "Use GPU if available" +STARTLINE}

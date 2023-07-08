@@ -1,0 +1,1331 @@
+set cut_paste_input [stack 0]
+Group {
+ inputs 0
+ name MacbethColorChecker
+ tile_color 0xffbf00ff
+ label "\[value gamut]"
+ postage_stamp true
+ addUserKnob {20 MacbethColorChecker_tab l MacbethColorChecker}
+ addUserKnob {41 gamut T XYZD65ToGamut.gamut}
+ addUserKnob {3 patch_resolution l "patch resolution"}
+ patch_resolution 128
+ addUserKnob {7 gap R 10 50}
+ gap 10
+}
+ Constant {
+  inputs 0
+  format "512 512 0 0 512 512 1 square_512"
+  name Constant1
+  xpos 840
+  ypos -346
+  postage_stamp false
+ }
+ Reformat {
+  type "to box"
+  box_width {{parent.patch_resolution}}
+  box_height {{parent.patch_resolution}}
+  box_fixed true
+  filter impulse
+  black_outside true
+  name Reformat1
+  xpos 840
+  ypos -298
+ }
+ Radial {
+  replace true
+  area {{center.x-(box_size.w/2)} {center.y-(box_size.h/2*input.pixel_aspect)} {center.x+(box_size.w/2)} {center.y+(box_size.h/2*input.pixel_aspect)}}
+  softness 0
+  name RadialSize
+  xpos 840
+  ypos -250
+  addUserKnob {20 Size}
+  addUserKnob {12 center}
+  center {{width/2} {height/2}}
+  addUserKnob {14 box_size R 0 100}
+  box_size {{parent.parent.sample_size}}
+ }
+set N196aeca0 [stack 0]
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+push $N196aeca0
+ ContactSheet {
+  inputs 24
+  width {{"rint(parent.patch_resolution * 6 + gap * 7)"}}
+  height {{"rint(parent.patch_resolution * 4 + gap * 5)"}}
+  rows 4
+  columns 6
+  startframe 1
+  endframe 1
+  name ContactSheet1
+  xpos 840
+  ypos -202
+ }
+ Dot {
+  name Dot1
+  label " "
+  note_font "Helvetica Bold"
+  note_font_size 24
+  note_font_color 0xa5a5a501
+  xpos 874
+  ypos -150
+ }
+ Group {
+  inputs 0
+  name ColorChecker24_After_November_2014
+  xpos 1170
+  ypos -417
+  postage_stamp true
+  addUserKnob {20 colorchecker_tab l "ColorChecker24 - After November 2014"}
+  addUserKnob {3 patch_resolution}
+  patch_resolution {{parent.patch_resolution}}
+ }
+  Group {
+   inputs 0
+   name bluish_green
+   xpos 622
+   ypos -321
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.30451114 0.4143554688 0.344352688 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob "bluish green"
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 6
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name blue_flower
+   xpos 512
+   ypos -321
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.2419823988 0.2287175998 0.3282104382 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob "blue flower"
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 5
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name foliage
+   xpos 402
+   ypos -321
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.1114392339 0.1346792679 0.05239320311 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob foliage
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 4
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name blue_sky
+   xpos 292
+   ypos -321
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.1652470004 0.1785519348 0.2546024121 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob "blue sky"
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 3
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name light_skin
+   xpos 180
+   ypos -321
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.3811104477 0.336202304 0.1852590702 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob "light skin"
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 2
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 63
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+    xpos 262
+    ypos 135
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name dark_skin
+   xpos 70
+   ypos -321
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.1136398927 0.09832436105 0.047793811 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob "dark skin"
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 1
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 290
+    ypos 63
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+    xpos 290
+    ypos 158
+   }
+   Output {
+    name Output
+    xpos 290
+    ypos 230
+   }
+  end_group
+  Group {
+   inputs 0
+   name orange_yellow
+   xpos 622
+   ypos -201
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.4769723742 0.4293377578 0.06005041429 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob "orange yellow"
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 12
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name yellow_green
+   xpos 512
+   ypos -201
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.3427379502 0.4331759409 0.08330791241 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob "yellow green"
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 11
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name purple
+   xpos 401
+   ypos -201
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.08353888545 0.06276662955 0.1042075686 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob purple
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 10
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name moderate_red
+   xpos 290
+   ypos -201
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.2915036416 0.188999956 0.09736350318 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob "moderate red"
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 9
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name purplish_blue
+   xpos 180
+   ypos -201
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.1200518326 0.1091090233 0.2874447494 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob "purplish blue"
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 8
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name orange
+   xpos 74
+   ypos -201
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.4073691399 0.3126416159 0.05130591012 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob orange
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 7
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name cyan
+   xpos 622
+   ypos -81
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.1247966941 0.180609913 0.2913392383 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob cyan
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 18
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name magenta
+   xpos 512
+   ypos -81
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.299122798 0.1895114577 0.2213469194 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob magenta
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 17
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name yellow
+   xpos 399
+   ypos -81
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.5888922356 0.5992976803 0.07077420003 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob yellow
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 16
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+    xpos 262
+    ypos 125
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 182
+   }
+  end_group
+  Group {
+   inputs 0
+   name red
+   xpos 292
+   ypos -81
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.2143728424 0.127800835 0.03868150726 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob red
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 15
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name green
+   xpos 182
+   ypos -81
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.1413517689 0.2233437582 0.07287461742 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob green
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 14
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name blue
+   xpos 72
+   ypos -81
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.06809095613 0.05596214063 0.2077405936 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob blue
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 13
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name black_2
+   xpos 623
+   ypos 39
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.03042544265 0.03151319431 0.02656724434 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob "black 2 (1.5 D)"
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 24
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+    xpos 262
+    ypos 125
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name neutral_3
+   xpos 512
+   ypos 39
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.08448968042 0.08817234828 0.07391630753 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob "neutral 3.5 (1.05 D)"
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 23
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name neutral_5
+   xpos 403
+   ypos 39
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.1835495863 0.1906228754 0.1566717383 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob "neutral 5 (.70 D)"
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 22
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name neutral_6
+   xpos 292
+   ypos 39
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.3495921991 0.3648652066 0.3013565492 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob "neutral 6.5 (.44 D)"
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 21
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name neutral_8
+   xpos 179
+   ypos 39
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.5665335579 0.5899709702 0.4828473821 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob "neutral 8 (.23 D)"
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 20
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  Group {
+   inputs 0
+   name white_9
+   xpos 70
+   ypos 39
+   postage_stamp true
+   addUserKnob {20 sample_Tab l Sample}
+   addUserKnob {19 colour_RGBA_Color_Knob l Colour}
+   colour_RGBA_Color_Knob {0.8436985288 0.8806903203 0.6936778752 1}
+   addUserKnob {1 name_Text_Knob l Name}
+   name_Text_Knob "white 9.5 (.05 D)"
+   addUserKnob {1 index_Text_Knob l Index}
+   index_Text_Knob 19
+   addUserKnob {3 resolution}
+   resolution {{parent.patch_resolution}}
+  }
+   Constant {
+    inputs 0
+    color {{parent.colour_RGBA_Color_Knob.r} {parent.colour_RGBA_Color_Knob.g} {parent.colour_RGBA_Color_Knob.b} {parent.colour_RGBA_Color_Knob.a}}
+    format "512 512 0 0 512 512 1 square_512"
+    name Constant
+    xpos 262
+    ypos 53
+   }
+   Reformat {
+    type "to box"
+    box_width {{parent.resolution}}
+    box_height {{parent.resolution}}
+    box_fixed true
+    filter impulse
+    black_outside true
+    name Reformat1
+    xpos 262
+    ypos 134
+   }
+   Output {
+    name Output
+    xpos 262
+    ypos 173
+   }
+  end_group
+  ContactSheet {
+   inputs 24
+   width {{"rint(parent.patch_resolution * 6 + gap * 7)"}}
+   height {{"rint(parent.patch_resolution * 4 + gap * 5)"}}
+   rows 4
+   columns 6
+   startframe 1
+   endframe 1
+   name ContactSheet
+   xpos 620
+   ypos 206
+  }
+  Output {
+   name Output
+   xpos 620
+   ypos 326
+  }
+ end_group
+ ColorMatrix {
+  matrix {
+      {0.9598786831 -0.0293238461 0.06578332186}
+      {-0.02120095305 0.9988456964 0.02618063986}
+      {0.001372883562 0.004445131868 1.313236713}
+    }
+  name ColorMatrix
+  label "D50 to D65 - CAT02"
+  note_font Helvetica
+  xpos 1170
+  ypos -327
+ }
+ Group {
+  name XYZD65ToGamut
+  tile_color 0x429940ff
+  xpos 1170
+  ypos -274
+  cached true
+  addUserKnob {20 InputGamut_to_XYZ_tab l InputGamut_to_XYZ}
+  addUserKnob {4 gamut M {ACES ACEScg P3D65 Rec.2020 Rec.709 "Arri WideGamut 3" "Arri WideGamut 4" "Red WideGamut RGB" "Sony SGamut3" "Sony SGamut3.Cine" "Panasonic V-Gamut" "Blackmagic Wide Gamut" "Filmlight E-Gamut" "DaVinci Wide Gamut"}}
+  gamut ACEScg
+  addUserKnob {41 matrix T ColorMatrix.matrix}
+  addUserKnob {41 invert -STARTLINE T ColorMatrix.invert}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 290
+   ypos -610
+  }
+  Dot {
+   name Dot1
+   xpos 324
+   ypos -546
+  }
+set N76d09200 [stack 0]
+  ColorMatrix {
+   matrix {
+       {{"SwitchGamut.input\[value SwitchGamut.which].matrix"} {"SwitchGamut.input\[value SwitchGamut.which].matrix"} {"SwitchGamut.input\[value SwitchGamut.which].matrix"}}
+       {{"SwitchGamut.input\[value SwitchGamut.which].matrix"} {"SwitchGamut.input\[value SwitchGamut.which].matrix"} {"SwitchGamut.input\[value SwitchGamut.which].matrix"}}
+       {{"SwitchGamut.input\[value SwitchGamut.which].matrix"} {"SwitchGamut.input\[value SwitchGamut.which].matrix"} {"SwitchGamut.input\[value SwitchGamut.which].matrix"}}
+     }
+   name ColorMatrix
+   xpos 290
+   ypos -370
+  }
+  Output {
+   name Output
+   xpos 290
+   ypos -250
+  }
+push $N76d09200
+  Dot {
+   name Dot391
+   label " XYZ D65 to *RGB -- CAT02"
+   xpos 434
+   ypos -546
+  }
+set N76cc37a0 [stack 0]
+  ColorMatrix {
+   matrix {
+       {1.516672042 -0.2814780479 -0.1469636332}
+       {-0.4649171012 1.251423776 0.1748846089}
+       {0.06484904707 0.1091393437 0.7614146215}
+     }
+   name ColorMatrix4
+   label "XYZ D65 to DaVinci Wide Gamut"
+   xpos 1830
+   ypos -471
+  }
+push $N76cc37a0
+  ColorMatrix {
+   matrix {
+       {1.52505277 -0.3159135109 -0.1226582646}
+       {-0.50915256 1.333327409 0.1382843651}
+       {0.09571534531 0.05089744385 0.7879557703}
+     }
+   name ColorMatrix3
+   label "XYZ D65 to Filmlight E-Gamut"
+   xpos 1720
+   ypos -471
+  }
+push $N76cc37a0
+  ColorMatrix {
+   matrix {
+       {1.866357736 -0.5183905088 -0.2346067165}
+       {-0.6003298545 1.378119951 0.1767281098}
+       {0.002451481064 0.08638160934 0.8367677153}
+     }
+   name ColorMatrix15
+   label "XYZ D65 to Blackmagic Wide Gamut"
+   xpos 1610
+   ypos -471
+  }
+push $N76cc37a0
+  ColorMatrix {
+   matrix {
+       {1.589011774 -0.3132044845 -0.1809648515}
+       {-0.5340529104 1.396011433 0.102457671}
+       {0.01117944884 0.003194128241 0.9055353563}
+     }
+   name ColorMatrix14
+   label "XYZ D65 to Panasonic V-Gamut"
+   xpos 1500
+   ypos -471
+  }
+push $N76cc37a0
+  ColorMatrix {
+   matrix {
+       {1.846778969 -0.525986123 -0.2105452114}
+       {-0.4441532629 1.259442903 0.1493999729}
+       {0.0408554212 0.01564088931 0.8682072487}
+     }
+   name ColorMatrix13
+   label "XYZ D65 to Sony SGamut3.Cine"
+   xpos 1390
+   ypos -471
+  }
+push $N76cc37a0
+  ColorMatrix {
+   matrix {
+       {1.507399899 -0.2458221374 -0.1716116808}
+       {-0.5181517271 1.355391241 0.1258786682}
+       {0.01551169816 -0.007872771427 0.9119163656}
+     }
+   name ColorMatrix12
+   label "XYZ D65 to Sony SGamut3"
+   xpos 1280
+   ypos -471
+  }
+push $N76cc37a0
+  ColorMatrix {
+   matrix {
+       {1.41280648 -0.177523201 -0.151770732}
+       {-0.4862032769 1.290696427 0.1574006147}
+       {-0.03713901085 0.2863759998 0.6876797789}
+     }
+   name ColorMatrix11
+   label "XYZ D65 to RED Wide Gamut RGB"
+   xpos 1170
+   ypos -471
+  }
+push $N76cc37a0
+  ColorMatrix {
+   matrix {
+       {1.509215472 -0.2505973452 -0.1688114753}
+       {-0.4915454517 1.361245546 0.09728294201}
+       {0 0 0.9182249512}
+     }
+   name ColorMatrix10
+   label "XYZ D65 to Arri Wide Gamut 4"
+   xpos 1060
+   ypos -471
+  }
+push $N76cc37a0
+  ColorMatrix {
+   matrix {
+       {1.789065551 -0.4825338638 -0.2000757929}
+       {-0.6398486599 1.396399957 0.1944322918}
+       {-0.04153154585 0.08233537355 0.8788684803}
+     }
+   name ColorMatrix9
+   label "XYZ D65 to Arri Wide Gamut"
+   xpos 950
+   ypos -471
+  }
+push $N76cc37a0
+  ColorMatrix {
+   matrix {
+       {3.240969942 -1.537383178 -0.4986107603}
+       {-0.9692436363 1.875967502 0.04155505741}
+       {0.0556300797 -0.2039769589 1.056971514}
+     }
+   name ColorMatrix8
+   label "XYZ D65 to Rec709"
+   xpos 840
+   ypos -471
+  }
+push $N76cc37a0
+  ColorMatrix {
+   matrix {
+       {1.716651188 -0.3556707838 -0.2533662814}
+       {-0.6666843518 1.616481237 0.01576854581}
+       {0.01763985745 -0.04277061326 0.9421031212}
+     }
+   name ColorMatrix7
+   label "XYZ D65 to Rec2020"
+   xpos 730
+   ypos -471
+  }
+push $N76cc37a0
+  ColorMatrix {
+   matrix {
+       {2.493496912 -0.9313836179 -0.4027107845}
+       {-0.8294889696 1.76266406 0.02362468584}
+       {0.03584583024 -0.07617238927 0.956884524}
+     }
+   name ColorMatrix6
+   label "XYZ D65 to P3D65"
+   xpos 620
+   ypos -471
+  }
+push $N76cc37a0
+  ColorMatrix {
+   matrix {
+       {1.658854308 -0.3118569754 -0.2431560071}
+       {-0.6622832871 1.612199571 0.0158591266}
+       {0.01148056646 -0.009236324924 0.9166865134}
+     }
+   name ColorMatrix19
+   label "XYZ D65 to ACES AP1"
+   xpos 510
+   ypos -471
+  }
+push $N76cc37a0
+  ColorMatrix {
+   matrix {
+       {1.062366107 0.008406953654 -0.01665578963}
+       {-0.4939413716 1.371109525 0.09031658697}
+       {-0.0003346685774 -0.001037458272 0.9194696473}
+     }
+   name ColorMatrix5
+   label "XYZ D65 to ACES AP0"
+   xpos 400
+   ypos -471
+  }
+  Switch {
+   inputs 14
+   which {{gamut}}
+   name SwitchGamut
+   xpos 400
+   ypos -372
+  }
+ end_group
+ Grid {
+  number {6 4}
+  size {{parent.gap}}
+  color 0
+  name Grid1
+  xpos 1170
+  ypos -225
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 mask.a
+  name Copy1
+  xpos 1170
+  ypos -160
+ }
+ Output {
+  name Output
+  xpos 1170
+  ypos -58
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  tile_color 0x767676ff
+  gl_color 0x767676ff
+  label "<pre>\n<font size=6><b>Macbeth ColorChecker Classic (After 2014)</b><font>\nhttps://github.com/colour-science/colour/blob/master/colour/characterisation/datasets/colour_checkers/chromaticity_coordinates.py#L336"
+  note_font_size 14
+  xpos 1330
+  ypos -438
+ }
+end_group

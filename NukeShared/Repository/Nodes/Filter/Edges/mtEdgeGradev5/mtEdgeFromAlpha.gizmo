@@ -1,0 +1,179 @@
+Group {
+ name mtEdgeFromAlpha
+ tile_color 0xffbf00ff
+ note_font "Verdana Bold"
+ note_font_size 12
+ addUserKnob {20 EdgeFromAlpha}
+ addUserKnob {7 outsize l "out size" R -100 100}
+ outsize 1
+ addUserKnob {41 size_1 l "out blur" T Blur2.size}
+ addUserKnob {26 text l "    " T "   "}
+ addUserKnob {41 size l "in size" T FilterErode1.size}
+ addUserKnob {41 size_2 l "in blur" T Blur1.size}
+ addUserKnob {26 text_1 l "   " T "   "}
+ addUserKnob {7 double l "general size" R -100 100}
+ addUserKnob {41 size_4 l "general blur" T Blur3.size}
+ addUserKnob {26 text_3 l "   " T "   "}
+ addUserKnob {20 group l "grade alpha" n 1}
+ group 0
+ addUserKnob {41 blackpoint l "Pre BP" T Grade2.blackpoint}
+ addUserKnob {41 whitepoint l "Pre WP" T Grade2.whitepoint}
+ addUserKnob {7 double_1 l intensity R 0 4}
+ double_1 1
+ addUserKnob {7 double_2 l gamma R 0 4}
+ double_2 1
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {6 boolean l "Copy To RGB input" +STARTLINE}
+ addUserKnob {6 boolean_1 l "Shuffle Edge into new Layer (inside rgb)" -STARTLINE}
+ addUserKnob {26 text_2 l "" +STARTLINE T "<span style=\"color:#665\"><br/><b>v1 EdgeFromAlpha</b> - <span style=\"color:#665\">Miguel Torija. </a>"}
+}
+ Input {
+  inputs 0
+  name Alpha
+  xpos 358
+  ypos -235
+ }
+ Dot {
+  name Dot5
+  xpos 392
+  ypos -163
+ }
+set Na4ff7000 [stack 0]
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle1
+  xpos 358
+  ypos -102
+ }
+ Grade {
+  channels alpha
+  white_clamp true
+  name Grade2
+  xpos 358
+  ypos -78
+ }
+ Dot {
+  name Dot1
+  xpos 392
+  ypos -21
+ }
+set Na4ff6c00 [stack 0]
+ Dot {
+  name Dot2
+  xpos 648
+  ypos -21
+ }
+ FilterErode {
+  size {{outsize*-1}}
+  name FilterErode2
+  xpos 614
+  ypos 41
+ }
+ Blur {
+  name Blur2
+  xpos 614
+  ypos 77
+ }
+ Dot {
+  name Dot3
+  xpos 648
+  ypos 226
+ }
+push $Na4ff6c00
+ FilterErode {
+  name FilterErode1
+  xpos 358
+  ypos 37
+ }
+ Blur {
+  name Blur1
+  xpos 358
+  ypos 73
+ }
+ Merge2 {
+  inputs 2
+  operation xor
+  name Merge1
+  xpos 358
+  ypos 223
+ }
+ FilterErode {
+  size {{double*-1}}
+  name FilterErode3
+  xpos 358
+  ypos 269
+ }
+ Blur {
+  name Blur3
+  xpos 358
+  ypos 305
+ }
+ Grade {
+  channels alpha
+  multiply {{double_1}}
+  gamma {{double_2}}
+  white_clamp true
+  name Grade1
+  xpos 358
+  ypos 341
+ }
+ Dot {
+  name Dot4
+  xpos 392
+  ypos 406
+ }
+set Na817e400 [stack 0]
+ Dot {
+  name Dot8
+  xpos 392
+  ypos 481
+ }
+set Na11d8000 [stack 0]
+push $Na817e400
+push $Na4ff7000
+ Dot {
+  name Dot6
+  xpos 199
+  ypos -163
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 165
+  ypos 397
+  disable {{boolean?0:1}}
+ }
+add_layer {EdgeFromAlpha EdgeFromAlpha.red}
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 EdgeFromAlpha.red
+  name Copy2
+  xpos 165
+  ypos 470
+  disable {{boolean_1?0:1}}
+ }
+ Dot {
+  name Dot7
+  xpos 199
+  ypos 575
+ }
+push $Na11d8000
+ Switch {
+  inputs 2
+  which {{boolean||boolean_1?1:0}}
+  name Switch1
+  xpos 358
+  ypos 572
+ }
+ Output {
+  name Output1
+  xpos 358
+  ypos 692
+ }
+end_group

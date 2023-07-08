@@ -1,0 +1,22 @@
+set cut_paste_input [stack 0]
+push $cut_paste_input
+VectorDistort {
+ referenceFrame {{rff}}
+ holdFrame {{hof}}
+ frameDistance {{frd}}
+ outputMode {{outm}}
+ blurSize {{blur}}
+ channels all
+ imageFilter {{flt}}
+ addUserKnob {20 Params}
+ addUserKnob {3 rff l "ref frame"}
+ rff 1001
+ addUserKnob {22 set l set -STARTLINE T "nuke.thisNode()['rff'].setValue(nuke.frame())"}
+ addUserKnob {6 hof l "hold frame"}
+ addUserKnob {4 frd l "frame distance" M {1 2 4 8 16 32 64}}
+ frd 8
+ addUserKnob {7 blur R 0 32}
+ addUserKnob {4 outm l output M {"warped src" stmap "stmap inverse"}}
+ addUserKnob {4 flt l filter M {impulse cubic keys simon riffman mitchell parzen notch lanczos4 lanczos6 sinc4}}
+ flt 1
+}

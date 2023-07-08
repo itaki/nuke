@@ -1,0 +1,643 @@
+Group {
+ name mtEdgeGrade
+ inputs 3
+ knobChanged "knobA = nuke.thisKnob()\nif knobA.name() == \"method\":\n    \n    nodeA = nuke.thisNode()\n    currentIndexA = knobA.getValue()\n\n    # set visibility\n    nodeA.knob(\"xorSize\").setVisible(currentIndexA == 1)\n    nodeA.knob(\"xorBlur\").setVisible(currentIndexA == 1)\n    nodeA.knob(\"Invertxor\").setVisible(currentIndexA == 1)"
+ tile_color 0xffbf00ff
+ note_font "Verdana Bold"
+ note_font_size 12
+ addUserKnob {20 MT_EdgeGrade}
+ addUserKnob {4 method l Method M {Classic xor "" "" "" ""}}
+ addUserKnob {6 UnpremultPremult l Unpremult -STARTLINE}
+ addUserKnob {6 check l Check -STARTLINE}
+ addUserKnob {41 disable_1 l Invert t "Invert your input alpha to create a different effect" -STARTLINE T Invert3.disable}
+ addUserKnob {26 ""}
+ addUserKnob {41 size l "Edge Size" T FilterErode4.size}
+ addUserKnob {7 xorSize l "Edge B" +HIDDEN R -100 100}
+ addUserKnob {41 size_1 l Blur T Blur3.size}
+ addUserKnob {7 xorBlur l "Blur B" +HIDDEN R 0 100}
+ addUserKnob {6 Invertxor l "Invert xor" +HIDDEN +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 spaceinf l "   " T "    "}
+ addUserKnob {41 channels T Grade3.channels}
+ addUserKnob {41 blackpoint T Grade3.blackpoint}
+ addUserKnob {41 whitepoint T Grade3.whitepoint}
+ addUserKnob {41 black l lift T Grade3.black}
+ addUserKnob {41 white l gain T Grade3.white}
+ addUserKnob {41 multiply T Grade3.multiply}
+ addUserKnob {41 add l offset T Grade3.add}
+ addUserKnob {41 gamma T Grade3.gamma}
+ addUserKnob {26 space5_1 l "  " T "  "}
+ addUserKnob {41 saturation T ColorCorrect3.saturation}
+ addUserKnob {41 contrast T ColorCorrect3.contrast}
+ addUserKnob {41 reverse T Grade3.reverse}
+ addUserKnob {41 black_clamp l "black clamp" -STARTLINE T Grade3.black_clamp}
+ addUserKnob {41 white_clamp l "white clamp" -STARTLINE T Grade3.white_clamp}
+ addUserKnob {26 blank l "" +STARTLINE T "     "}
+ addUserKnob {26 ""}
+ addUserKnob {41 mix T Keymix1.mix}
+ addUserKnob {26 space5 l "    " T "   "}
+ addUserKnob {6 newAlpha l "Extract Edge" t "It creates a new layer with the edge alpha inside" +STARTLINE}
+ addUserKnob {6 recover l "Original alpha" t "Injecting an alpha to other input can cause some artifacts, if thats the case, activate this checkbox to recover the original alpha after the grade." -STARTLINE}
+ addUserKnob {26 _1 l "" +STARTLINE T "<span style=\"color:#665\"><br/><b>V5.5 EdgeGrade</b> - <span style=\"color:#665\">Miguel Torija</a>\n\n"}
+ addUserKnob {20 advance l Advance}
+ addUserKnob {20 xorextra l "Alpha Grade" n 1}
+ xorextra 0
+ addUserKnob {41 blackpoint_1 l blackpoint T Grade1.blackpoint}
+ addUserKnob {41 whitepoint_1 l whitepoint T Grade1.whitepoint}
+ addUserKnob {41 gamma_1 l gamma T Grade1.gamma}
+ addUserKnob {41 white_1 l gain T Grade1.white}
+ addUserKnob {26 space l "" +STARTLINE T "       "}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 BrokenEdges l "Broken Edges" t "Based on Aitor Echeveste Broken Edges Gizmo" n 1}
+ BrokenEdges 0
+ addUserKnob {6 activateBrokenEdges l "Activate Broken Edges" t "Based on Aitor Echeveste Broken Edges Gizmo" +STARTLINE}
+ addUserKnob {4 smartsimple l <b>method</b> M {Smart Simple "" ""}}
+ addUserKnob {4 lightDark l <b>Luma</b> -STARTLINE M {Light Dark ""}}
+ addUserKnob {26 space34 l "   " T ""}
+ addUserKnob {7 multiply_1 l multiply R 0 4}
+ multiply_1 1
+ addUserKnob {7 tolerance R -1 1}
+ addUserKnob {41 size_4 l "Pre Blur" T Blur4.size}
+ addUserKnob {41 size_5 l "Post Blur" T Blur2.size}
+ addUserKnob {7 noiseSizeKnob l "Simple size" R 1 300}
+ noiseSizeKnob 10
+ addUserKnob {26 space23 l "   " T ""}
+ addUserKnob {6 maskBroken l "Mask out Alpha" +STARTLINE}
+ maskBroken true
+ addUserKnob {6 alphaint l "Mask in Alpha" -STARTLINE}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+}
+ Input {
+  inputs 0
+  name InjectAlpha
+  xpos -589
+  ypos 123
+  number 2
+ }
+ Input {
+  inputs 0
+  name InputInput
+  xpos -431
+  ypos -285
+ }
+ Dot {
+  name Dot3
+  xpos -397
+  ypos -224
+ }
+set Nfef98400 [stack 0]
+ Dot {
+  name Dot5
+  xpos -560
+  ypos -224
+ }
+ Shuffle {
+  alpha white
+  name Shuffle1
+  xpos -594
+  ypos -179
+  disable {{"\[string first \".a\" \[channels \[input this 0]]]>-1"}}
+ }
+ Dot {
+  name Dot1
+  xpos -560
+  ypos -134
+ }
+push $Nfef98400
+ Shuffle {
+  alpha white
+  name Shuffle2
+  xpos -431
+  ypos -191
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy_Check_Alpha
+  xpos -431
+  ypos -143
+  disable {{"!\[exists parent.input0]"}}
+ }
+set Nfeebec00 [stack 0]
+ Dot {
+  name Dot13
+  xpos -397
+  ypos 5
+ }
+set Nfeebe800 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  selected true
+  xpos -431
+  ypos 117
+  disable {{"!\[exists parent.input2]"}}
+ }
+ Dot {
+  name Dot23
+  xpos -397
+  ypos 186
+ }
+set Nfeebe000 [stack 0]
+ Dot {
+  name Dot24
+  xpos -619
+  ypos 186
+ }
+ Dot {
+  name Dot25
+  xpos -619
+  ypos 1878
+ }
+push $Nfeebe800
+ Dot {
+  name Dot14
+  xpos -746
+  ypos 5
+ }
+ Dot {
+  name Dot12
+  xpos -746
+  ypos 1808
+ }
+ Input {
+  inputs 0
+  name Mask
+  xpos -558
+  ypos 1202
+  number 1
+ }
+ Dot {
+  name Dot26
+  xpos -524
+  ypos 1385
+ }
+set Nfeebc800 [stack 0]
+ Dot {
+  name Dot39
+  label Mask
+  xpos -147
+  ypos 1652
+  hide_input true
+ }
+push $Nfeebe000
+ Dot {
+  name Dot19
+  xpos -126
+  ypos 186
+ }
+set N80b53c00 [stack 0]
+ Dot {
+  name Dot9
+  xpos 759
+  ypos 186
+ }
+set N80b53800 [stack 0]
+ Dot {
+  name Dot27
+  xpos 976
+  ypos 186
+ }
+set N80b53400 [stack 0]
+ FilterErode {
+  name FilterErode4
+  xpos 942
+  ypos 240
+ }
+ Blur {
+  channels alpha
+  name Blur3
+  xpos 942
+  ypos 276
+ }
+ Dot {
+  name Dot11
+  xpos 976
+  ypos 362
+ }
+set N80b52800 [stack 0]
+push $N80b53800
+ FilterErode {
+  size {{xorSize}}
+  name FilterErode1
+  xpos 726
+  ypos 239
+ }
+ Blur {
+  size {{xorBlur}}
+  name Blur1
+  xpos 726
+  ypos 275
+ }
+ Merge2 {
+  inputs 2
+  operation xor
+  name Merge1
+  xpos 726
+  ypos 359
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos 726
+  ypos 416
+  disable {{Invertxor?0:1 x1 0}}
+ }
+ Dot {
+  name Dot10
+  xpos 760
+  ypos 470
+ }
+push $N80b52800
+ Invert {
+  channels alpha
+  name Invert3
+  xpos 942
+  ypos 415
+ }
+ Switch {
+  inputs 2
+  which {{method}}
+  name Switch2
+  xpos 942
+  ypos 467
+ }
+ Grade {
+  channels alpha
+  white_clamp true
+  name Grade1
+  xpos 942
+  ypos 545
+ }
+ Dot {
+  name Dot35
+  xpos 976
+  ypos 604
+ }
+set N80b50400 [stack 0]
+ Grade {
+  channels alpha
+  blackpoint 0.9
+  whitepoint 0.9
+  white_clamp true
+  name Grade5
+  xpos 473
+  ypos 595
+ }
+ Dot {
+  name Dot36
+  xpos 507
+  ypos 706
+ }
+ Blur {
+  size 10
+  name Blur5
+  xpos 473
+  ypos 890
+ }
+push $N80b50400
+ Dot {
+  name Dot22
+  xpos 976
+  ypos 654
+ }
+set N80afb000 [stack 0]
+ Dot {
+  name Dot21
+  xpos 976
+  ypos 825
+ }
+set N80afac00 [stack 0]
+ Noise {
+  inputs 0
+  size {{noiseSizeKnob}}
+  translate {35 -152}
+  center {1024 778}
+  name Noise1
+  xpos 62
+  ypos 272
+ }
+ Grade {
+  channels all
+  multiply {{multiply_1}}
+  add {{tolerance}}
+  name Grade4
+  xpos 62
+  ypos 344
+ }
+ Dot {
+  name Dot33
+  xpos 96
+  ypos 576
+ }
+push $N80b53c00
+ Saturation {
+  saturation 0
+  name Saturation2
+  xpos -160
+  ypos 291
+ }
+ Grade {
+  multiply {{multiply_1}}
+  add {{tolerance}}
+  name Grade2
+  xpos -160
+  ypos 343
+ }
+ Shuffle {
+  alpha red
+  name Shuffle4
+  xpos -160
+  ypos 380
+ }
+ Remove {
+  operation keep
+  channels alpha
+  name Remove1
+  xpos -160
+  ypos 413
+ }
+ Invert {
+  channels alpha
+  name Invert2
+  xpos -160
+  ypos 481
+  disable {{lightDark}}
+ }
+ Switch {
+  inputs 2
+  which {{smartsimple}}
+  name Switch4
+  xpos -160
+  ypos 573
+ }
+ Clamp {
+  name Clamp1
+  xpos -160
+  ypos 647
+ }
+ Dot {
+  name Dot29
+  xpos -126
+  ypos 717
+ }
+ Blur {
+  name Blur4
+  xpos 12
+  ypos 708
+ }
+push $N80afb000
+ Dot {
+  name Dot20
+  xpos 315
+  ypos 654
+ }
+ MergeExpression {
+  inputs 2
+  expr3 A.a<B.a?1:0
+  name MergeExpression2
+  xpos 281
+  ypos 714
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge2
+  xpos 281
+  ypos 822
+  disable {{maskBroken?0:1 x1 0}}
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  xpos 281
+  ypos 896
+  disable {{alphaint?0:1}}
+ }
+ Blur {
+  name Blur2
+  xpos 281
+  ypos 995
+ }
+ Dot {
+  name Dot28
+  xpos 315
+  ypos 1124
+ }
+push $N80afac00
+ Switch {
+  inputs 2
+  which 1
+  name Switch3
+  xpos 942
+  ypos 1121
+  disable {{activateBrokenEdges?0:1}}
+ }
+ Dot {
+  name Dot18
+  xpos 976
+  ypos 1203
+ }
+set N80a85800 [stack 0]
+ Dot {
+  name Dot34
+  xpos 976
+  ypos 1316
+ }
+set N80a85400 [stack 0]
+ Dot {
+  name Dot38
+  xpos 976
+  ypos 1706
+ }
+ Dot {
+  name Dot37
+  xpos 131
+  ypos 1701
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge4
+  xpos -181
+  ypos 1697
+ }
+ Shuffle {
+  inputs 0
+  alpha white
+  name Shuffle3
+  xpos -565
+  ypos 1602
+ }
+push $Nfeebc800
+push $N80a85400
+push $N80a85800
+push $Nfeebec00
+ Dot {
+  name Dot2
+  label Copy_Check_Alpha
+  xpos 1308
+  ypos 258
+  hide_input true
+ }
+push $N80b53400
+ Dot {
+  name Dot30
+  xpos 1186
+  ypos 186
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  xpos 1152
+  ypos 249
+  disable {{"!\[exists parent.input2]"}}
+ }
+ Unpremult {
+  channels all
+  name Unpremult3
+  xpos 1152
+  ypos 318
+  disable {{"UnpremultPremult == 1 ? 0: 1"}}
+ }
+ Dot {
+  name Dot16
+  xpos 1186
+  ypos 584
+ }
+set N80a36c00 [stack 0]
+ Grade {
+  name Grade3
+  xpos 1152
+  ypos 694
+ }
+ ColorCorrect {
+  name ColorCorrect3
+  xpos 1152
+  ypos 795
+ }
+push $N80a36c00
+ Dot {
+  name Dot17
+  xpos 1331
+  ypos 584
+ }
+ Dot {
+  name Dot15
+  xpos 1331
+  ypos 1203
+ }
+ Keymix {
+  inputs 3
+  name Keymix2
+  xpos 1152
+  ypos 1194
+ }
+ Premult {
+  channels all
+  name Premult4
+  xpos 1152
+  ypos 1254
+  disable {{"UnpremultPremult == 1 ? 0: 1"}}
+ }
+add_layer {EdgeGrade EdgeGrade.alpha}
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 EdgeGrade.alpha
+  name Copy4
+  xpos 1152
+  ypos 1307
+  disable {{newAlpha?0:1}}
+ }
+ Dot {
+  name Dot31
+  xpos 1186
+  ypos 1385
+ }
+set N80a34c00 [stack 0]
+push $Nfeebe000
+ Dot {
+  name Dot7
+  xpos -397
+  ypos 1295
+ }
+set N80a34800 [stack 0]
+ Keymix {
+  inputs 3
+  name Keymix3
+  xpos -431
+  ypos 1375
+ }
+push $N80a34c00
+ Dot {
+  name Dot4
+  xpos 1186
+  ypos 1496
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch1
+  xpos -431
+  ypos 1492
+  disable {{"!\[exists parent.input1]" x1 0}}
+ }
+push $N80a34800
+ Dot {
+  name Dot8
+  xpos -259
+  ypos 1295
+ }
+ Dot {
+  name Dot6
+  xpos -259
+  ypos 1605
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -431
+  ypos 1596
+ }
+ Grade {
+  inputs 1+1
+  channels {rgba.red -rgba.green -rgba.blue none}
+  white 4
+  multiply 4
+  name Grade6
+  xpos -431
+  ypos 1697
+  disable {{check?0:1}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -431
+  ypos 1799
+  disable {{recover?0:1 x1 1}}
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox3
+  xpos -431
+  ypos 1875
+ }
+ Dot {
+  name Dot32
+  xpos -397
+  ypos 1926
+ }
+ Output {
+  name Output1
+  xpos -431
+  ypos 1991
+ }
+end_group

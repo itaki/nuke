@@ -1,0 +1,60 @@
+set cut_paste_input [stack 0]
+push $cut_paste_input
+Kronos {
+ input.first {{start}}
+ input.last {{end}}
+ retimedChannels all
+ timing2 Frame
+ timingFrame2 {{"spe?((t-start)*speed)+start:f"}}
+ motionEstimation {{moe}}
+ vectorDetailReg {{vd}}
+ strengthReg {{vds}}
+ resampleType {{rst}}
+ Shutter 1
+ shutterSamples {{shs}}
+ shutterTime {{sht}}
+ autoShutterTime {{ast}}
+ output {{outp}}
+ Advanced 1
+ matteChannel {{mc}}
+ flickerCompensation {{flc}}
+ Tolerances 1
+ weightRed {{wr}}
+ weightGreen {{wg}}
+ weightBlue {{wb}}
+ vectorSpacing {{vsp}}
+ showVectors {{svec}}
+ name Kronos4
+ addUserKnob {20 Params}
+ addUserKnob {3 start}
+ start 1001
+ addUserKnob {3 end -STARTLINE}
+ end 1500
+ addUserKnob {6 spe l use t "calculate frame using speed and start" +STARTLINE}
+ addUserKnob {7 speed -STARTLINE R 0.1 6}
+ speed 1
+ addUserKnob {7 f l frame R 0 10000}
+ f 1001
+ addUserKnob {7 vd l "vector detail"}
+ vd 1
+ addUserKnob {7 vds l strength R 0 1.5}
+ vds 1.5
+ addUserKnob {4 rst l "resample type" M {bilinear lanczos4 lanczos6}}
+ addUserKnob {4 moe l " motion estimation" M {regularized local} -STARTLINE}
+ addUserKnob {3 shs l "shutter samples"}
+ shs 1
+ addUserKnob {7 sht l "shutter time" R 0 10}
+ addUserKnob {6 ast l "automatic shutter time" +STARTLINE}
+ addUserKnob {4 outp l output M {result matte fg bg}}
+ addUserKnob {4 mc l matte M {none "source alpha" "source alpha inverted" "matte luminance" "matte inverted luminance" "matte alpha" "matte inverted alpha"}}
+ addUserKnob {6 flc l "flicker compensation" +STARTLINE} 
+ addUserKnob {7 wr l "weight red"}
+ wr 0.3
+ addUserKnob {7 wg l "weight green"}
+ wg 0.6
+ addUserKnob {7 wb l "weight blue"}
+ wb 0.1
+ addUserKnob {3 vsp l "vector spacing"}
+ vsp 20
+ addUserKnob {6 svec l "show vectors"}
+}

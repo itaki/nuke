@@ -1,0 +1,118 @@
+set cut_paste_input [stack 0]
+version 12.0 v8
+push $cut_paste_input
+Group {
+ name FillMatte
+ tile_color 0x979797ff
+ selected true
+ xpos -4220
+ ypos 17150
+ addUserKnob {20 FillMatte_tab l FillMatte}
+ addUserKnob {6 preview +STARTLINE}
+ addUserKnob {41 wp T BlackWhite.wp}
+ addUserKnob {41 bp T BlackWhite.bp}
+ addUserKnob {41 erode T FilterErode1.size}
+ addUserKnob {41 filter T FilterErode1.filter}
+ addUserKnob {41 blur T Blur1.size}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannelMask l mask -STARTLINE T NodeWrapper.maskChannelMask}
+ addUserKnob {41 invert_mask l invert -STARTLINE T NodeWrapper.invert_mask}
+ addUserKnob {41 mix T NodeWrapper.mix}
+}
+ FilterErode {
+  inputs 0
+  channels alpha
+  name inside_hard_erode
+  label "\[value size]"
+  xpos -472
+  ypos 253
+ }
+ FilterErode {
+  channels alpha
+  filter gaussian
+  name inside_soft_erode
+  label "\[value size]"
+  xpos -472
+  ypos 319
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos -40
+  ypos 110
+ }
+set N54defa50 [stack 0]
+ Dot {
+  name Dot1
+  xpos -6
+  ypos 204
+ }
+set N53d3c3a0 [stack 0]
+ Expression {
+  channel0 rgba
+  expr0 clamp(a/(wp-bp)-bp/(wp-bp))
+  name BlackWhite
+  xpos -150
+  ypos 201
+  addUserKnob {20 Param}
+  addUserKnob {7 bp}
+  addUserKnob {7 wp}
+  wp 0.465
+ }
+ FilterErode {
+  channels rgba
+  size 5
+  name FilterErode1
+  xpos -150
+  ypos 231
+ }
+ Blur {
+  channels rgba
+  size 3.3
+  name Blur1
+  xpos -150
+  ypos 261
+ }
+ Dot {
+  name Dot3
+  xpos -116
+  ypos 286
+ }
+set N9b44810 [stack 0]
+ Input {
+  inputs 0
+  name Inputmask
+  xpos 174
+  ypos 350
+  number 1
+ }
+push $N9b44810
+push $N53d3c3a0
+ ChannelMerge {
+  inputs 2
+  name ChannelMerge1
+  xpos -40
+  ypos 279
+ }
+push $N54defa50
+ NodeWrapper {
+  inputs 2+1
+  channels rgba
+  maskChannelMask none
+  name NodeWrapper
+  xpos 70
+  ypos 350
+ }
+ Switch {
+  inputs 2
+  which {{preview}}
+  name SwitchPreview
+  xpos -40
+  ypos 441
+ }
+ Output {
+  name Output
+  xpos -40
+  ypos 500
+ }
+end_group

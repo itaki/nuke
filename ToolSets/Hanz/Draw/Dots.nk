@@ -1,0 +1,10 @@
+set cut_paste_input [stack 0]
+push $cut_paste_input
+Expression {
+ channel0 rgba
+ expr0 !(x%sp.w)&&!(y%sp.h)
+ name Dots
+ addUserKnob {20 Params}
+ addUserKnob {14 sp l spacing R 0 100}
+ sp 100
+}

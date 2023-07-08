@@ -1,0 +1,2362 @@
+set cut_paste_input [stack 0]
+version 14.0 v3
+BackdropNode {
+inputs 0
+name BackdropNode1
+tile_color 0x27023601
+label "<center><img src=\"Read.png\"> Input"
+note_font_size 30
+selected true
+xpos 490
+ypos -699
+bdwidth 172
+bdheight 332
+}
+BackdropNode {
+inputs 0
+name BackdropNode2
+tile_color 0x4b4b4b01
+label "<center><img src=\"SideBySide.png\"> Reference"
+note_font_size 30
+selected true
+xpos 856
+ypos -692
+bdwidth 345
+bdheight 334
+}
+BackdropNode {
+inputs 0
+name BackdropNode3
+tile_color 0x270236ff
+label "<center><img src=\"Grain.png\"> Regrain"
+note_font Verdana
+note_font_size 50
+note_font_color 0xffffffff
+selected true
+xpos 48
+ypos 4969
+bdwidth 1023
+bdheight 633
+}
+BackdropNode {
+inputs 0
+name input_and_degrain_backdrop
+tile_color 0x27023601
+label "<center><img src=\"denoise.png\"> Degrain"
+note_font_size 50
+note_font_color 0xffffffff
+selected true
+xpos 192
+ypos -304
+bdwidth 664
+bdheight 1235
+}
+StickyNote {
+inputs 0
+name StickyNote1
+tile_color 0x555555ff
+label "Adjust your noise profile\nAnd set your write path."
+note_font Gotham-Book
+note_font_size 20
+note_font_color 0xffffffff
+selected true
+xpos 617
+ypos 191
+}
+Read {
+inputs 0
+file_type dpx
+file ../_Assets/ADM_141_010/ADM_141_010.%04d.dpx
+format "4096 2480 0 0 4096 2480 1 ADM_4K"
+first 1001
+last 1125
+origfirst 1001
+origlast 1125
+origset true
+colorspace sRGB
+name Read1
+selected true
+xpos 501
+ypos -614
+addUserKnob {20 User}
+addUserKnob {26 names l "Create shuffle nodes from all layers"}
+addUserKnob {22 setShuffle l "Create Shuffle nodes" -STARTLINE T "\{newNode()\}"}
+addUserKnob {22 selLayer l "Select your Layers" -STARTLINE T "\{mylayerPanel()\}"}
+addUserKnob {26 names l "Create shuffle nodes from all layers"}
+addUserKnob {22 setShuffle l "Create Shuffle nodes" -STARTLINE T "\{newNode()\}"}
+addUserKnob {26 name l "Select the layers needed to create shuffle nodes"}
+addUserKnob {22 selLayer l "Select your Layers" -STARTLINE T "\{mylayerPanel()\}"}
+}
+Dot {
+name Dot2
+label " PUT COLOR TRANSFORMS HERE"
+note_font "Verdana Bold Italic"
+note_font_size 15
+note_font_color 0xe9ff55ff
+selected true
+xpos 535
+ypos -519
+}
+OCIOFileTransform {
+file ../../global_assets/LUTs/ADM_Scanity_Rec709.cube
+version 3
+working_space Gamma2.2
+name OCIOFileTransform3
+selected true
+xpos 500
+ypos -482
+}
+OCIOCDLTransform {
+slope {0.9653 0.9874 0.9873}
+offset {-0.0024 0 0.0024}
+power {1.0119 0.9958 0.9923}
+working_space sRGB
+read_from_file true
+file ../../../global_assets/LUTs/ADM_VFX_CDLs_20230307/ADM_141_010.cc
+cccid ADM_008_010
+name OCIOCDLTransform2
+selected true
+xpos 500
+ypos -458
+}
+ColorCorrect {
+gamma 0.97
+shadows.offset 0.0012
+midtones.gamma 0.95
+highlights.gamma 0.9
+lookup {shadow {}
+  midtone {}
+  highlight {curve x0.1471922249 0 s0 x0.5487040281 1 s0}}
+name custom_per_shot_CC1
+selected true
+xpos 500
+ypos -434
+}
+Transform {
+translate {14 0}
+scale 1.018
+center {2048 1240}
+name editorial_transform3
+selected true
+xpos 499
+ypos -410
+}
+set N64011400 [stack 0]
+Dot {
+name Dot1
+label " ADD READ NODE HERE"
+note_font "Verdana Bold Italic"
+note_font_size 15
+note_font_color 0xe9ff55ff
+selected true
+xpos 533
+ypos -74
+}
+NoOp {
+name Anchor_30b4e26841
+help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.anchorOnCreate()\n    except:\n        pass"
+knobChanged stamps.anchorKnobChanged()
+autolabel "nuke.thisNode().knob(\"title\").value()"
+tile_color 0xffffff01
+note_font_size 20
+selected true
+xpos 499
+ypos -18
+addUserKnob {20 anchor_tab l "Anchor Stamp"}
+addUserKnob {26 identifier -STARTLINE +HIDDEN T anchor}
+addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+title PLATE_ORIGINAL
+addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T PLATE_ORIGINAL}
+addUserKnob {26 prev_name l "" +STARTLINE +HIDDEN T Anchor_30b4e26841}
+addUserKnob {3 showing l "" +STARTLINE +HIDDEN}
+addUserKnob {1 tags l Tags t "Comma-separated tags you can define for each Anchor, that will help you find it when invoking the Stamp Selector by pressing the Stamps shortkey with nothing selected."}
+tags 2D,
+addUserKnob {26 line1 l "" +STARTLINE}
+addUserKnob {26 stamps_label l Stamps: T " "}
+addUserKnob {22 createStamp l new t "Create a new Stamp for this Anchor." -STARTLINE T stamps.stampCreateWired(nuke.thisNode())}
+addUserKnob {22 selectStamps l select t "Reconnect all of this Anchor's Stamps." -STARTLINE T stamps.wiredSelectSimilar(nuke.thisNode().name())}
+addUserKnob {22 reconnectStamps l reconnect -STARTLINE T stamps.anchorReconnectWired()}
+addUserKnob {22 zoomNext l "zoom next" t "Navigate to this Anchor's next Stamp on the Node Graph." -STARTLINE T stamps.wiredZoomNext(nuke.thisNode().name())}
+addUserKnob {26 line2 l "" +STARTLINE}
+addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+set N64011c00 [stack 0]
+PostageStamp {
+name Stamp5
+help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.wiredOnCreate()\n    except:\n        pass\n"
+knobChanged "import stamps; stamps.wiredKnobChanged()"
+autolabel "nuke.thisNode().knob(\"title\").value()"
+tile_color 0x1000001
+note_font Verdana
+note_font_size 20
+selected true
+xpos 269
+ypos 878
+hide_input true
+addUserKnob {20 wired_tab l "Wired Stamp"}
+addUserKnob {26 identifier -STARTLINE +HIDDEN T wired}
+addUserKnob {3 lockCallbacks l "" +STARTLINE +HIDDEN}
+addUserKnob {6 toReconnect -STARTLINE +HIDDEN}
+addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+title PLATE_ORIGINAL
+addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T PLATE_ORIGINAL}
+addUserKnob {26 tags l Tags: t "Tags of this stamp's Anchor, for information purpose only.\nClick \"show anchor\" to change them." T <i>2D</i>}
+addUserKnob {26 backdrops l Backdrops: t "Labels of backdrop nodes which contain this stamp's Anchor." T "<i><center><img src=\"Read.png\"> Input</i>"}
+addUserKnob {26 line1 l "" +STARTLINE}
+addUserKnob {6 postageStamp_show l "postage stamp" t "Enable the postage stamp thumbnail in this node.\nYou're seeing this because the class of this node includes the postage_stamp knob." +STARTLINE}
+addUserKnob {26 anchor_label l Anchor: T " "}
+addUserKnob {22 show_anchor l " show anchor " t "Show the properties panel for this Stamp's Anchor." -STARTLINE T stamps.wiredShowAnchor()}
+addUserKnob {22 zoom_anchor l "zoom anchor" t "Navigate to this Stamp's Anchor on the Node Graph." -STARTLINE T stamps.wiredZoomAnchor()}
+addUserKnob {26 stamps_label l Stamps: T " "}
+addUserKnob {22 zoomNext l " zoom next " t "Navigate to this Stamp's next sibling on the Node Graph." -STARTLINE T stamps.wiredZoomNext()}
+addUserKnob {22 selectSimilar l " select similar " t "Select all similar Stamps to this one on the Node Graph." -STARTLINE T stamps.wiredSelectSimilar()}
+addUserKnob {26 space_1 l "" +STARTLINE T " "}
+addUserKnob {26 reconnect_label l Reconnect: t "Reconnect by the stored Anchor name." T " "}
+addUserKnob {22 reconnect_this l this t "Reconnect this Stamp to its Anchor, by its stored Anchor name." -STARTLINE T "n = nuke.thisNode()\ntry:\n    n.setInput(0,nuke.toNode(n.knob(\"anchor\").value()))\nexcept:\n    nuke.message(\"Unable to reconnect.\")\ntry:\n    import stamps\n    stamps.wiredGetStyle(n)\nexcept:\n    pass\n"}
+addUserKnob {22 reconnect_similar l similar t "Reconnect this Stamp and similar ones to their Anchor, by their stored anchor name." -STARTLINE T stamps.wiredReconnectSimilar()}
+addUserKnob {22 reconnect_all l all t "Reconnect all the Stamps to their Anchors, by their stored anchor names." -STARTLINE T stamps.wiredReconnectAll()}
+addUserKnob {26 space_2 l "" +STARTLINE T " "}
+addUserKnob {20 advanced_reconnection l "Advanced Reconnection" n 2}
+addUserKnob {26 reconnect_by_title_label l "<font color=gold>By Title:" t "Reconnect by searching for a matching title." T " "}
+addUserKnob {22 reconnect_by_title_this l this t "Look for an Anchor that shares this Stamp's title, and connect this Stamp to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitle()}
+addUserKnob {22 reconnect_by_title_similar l similar t "Look for an Anchor that shares this Stamp's title, and connect this Stamp and similar ones to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSimilar()}
+addUserKnob {22 reconnect_by_title_selected l selected t "For each Stamp selected, look for an Anchor that shares its title, and connect to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSelected()}
+addUserKnob {26 reconnect_by_selection_label l "<font color=orangered>By Selection:" t "Force reconnect to a selected Anchor." T " "}
+addUserKnob {22 reconnect_by_selection_this l this t "Force reconnect this Stamp to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelection()}
+addUserKnob {22 reconnect_by_selection_similar l similar t "Force reconnect this Stamp and similar ones to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSimilar()}
+addUserKnob {22 reconnect_by_selection_selected l selected t "Force reconnect all selected Stamps to an also selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSelected()}
+addUserKnob {1 anchor l Anchor}
+anchor Anchor_30b4e26841
+addUserKnob {6 auto_reconnect_by_title l "<font color=#ED9977>&nbsp; auto-reconnect by title" t "When creating this stamp again (like on copy-paste), auto-reconnect it by title instead of doing it by the saved anchor's name, and auto-turn this off immediately.\nIMPORTANT: Should be off by default. Only use this for setting up templates." +STARTLINE}
+addUserKnob {26 line2 l "" +STARTLINE}
+addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+StickyNote {
+inputs 0
+name StickyNote3
+label "Offset 977"
+note_font Gotham-Book
+note_font_size 20
+selected true
+xpos 1070
+ypos -508
+}
+push $N64011400
+Read {
+inputs 0
+file_type mov
+file /Volumes/Dettifoss/HBJ/ADM/ADM_141_010/_Assets/ADM_141_010.mp4
+format "1920 1080 0 0 1920 1080 1 HD_1080"
+last 141
+origlast 141
+origset true
+colorspace sRGB
+name Read3
+selected true
+xpos 952
+ypos -611
+addUserKnob {20 User}
+addUserKnob {26 names l "Create shuffle nodes from all layers"}
+addUserKnob {22 setShuffle l "Create Shuffle nodes" -STARTLINE T "\{newNode()\}"}
+addUserKnob {22 selLayer l "Select your Layers" -STARTLINE T "\{mylayerPanel()\}"}
+addUserKnob {26 names l "Create shuffle nodes from all layers"}
+addUserKnob {22 setShuffle l "Create Shuffle nodes" -STARTLINE T "\{newNode()\}"}
+addUserKnob {26 name l "Select the layers needed to create shuffle nodes"}
+addUserKnob {22 selLayer l "Select your Layers" -STARTLINE T "\{mylayerPanel()\}"}
+}
+TimeOffset {
+time_offset 977
+time ""
+name TimeOffset1
+selected true
+xpos 952
+ypos -501
+}
+Reformat {
+format "4096 2480 0 0 4096 2480 1 ADM_4K"
+name Reformat1
+selected true
+xpos 952
+ypos -467
+}
+Merge2 {
+inputs 2
+operation difference
+output rgb
+name Merge1
+selected true
+xpos 952
+ypos -410
+}
+StickyNote {
+inputs 0
+name StickyNote2
+label "Make sure you analyze in the\nDasGrain Node"
+note_font Gotham-Book
+note_font_size 20
+selected true
+xpos 86
+ypos 5234
+}
+push $N64011c00
+Dot {
+name Dot11
+selected true
+xpos 533
+ypos 111
+}
+set N64025400 [stack 0]
+Dot {
+name Dot10
+selected true
+xpos 269
+ypos 111
+}
+Dot {
+name Dot13
+selected true
+xpos 269
+ypos 685
+}
+push $N64025400
+Denoise2 {
+profileCurve {profile {curve 0 x0.125 0 0 0 0 0 0 0 0}}
+serializeKnob "0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00
+0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 0.000000000e+00 
+18446744073709551615"
+name Denoise1
+selected true
+xpos 351
+ypos 207
+}
+push $N64025400
+OFXcom.absoft.neatvideo5_v5 {
+DNP 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L9FzFbdZ+50/4YMlx2kLrU/xkzXXeRu9XwGjReeJK81vEbNV95k73X8hw2UHqUvtjzHTdRe5W/2fQeOFJ8lrDa9R85U32Xsdv2EDpUfpiy3PcRO1V/mbPd+BI8VnCatN75Ez1XcZu13/oUPlhynLbQ+xU/WXOdt9H8FjBadJ640v0XMVt1n7nT/hgyXHaQutT/GTNdd5G71fAaNF54krzW8Rs1X3mTvdfyHDZQepS+2PMdN1F7lb/Z9B44UnyWsNr1HzlTfZex2/YQOlR+mLLc9xE7VX+Zs934EjxWcJq03vkTPVdxm7Xf+hQ+WHKcttD7FT9Zc5230fwWMFp0nrjS/RcxW3WfudP+GDJcdpC61P8ZM113kbvV8Bo0XniSvNbxGzVfeZO91/IcNlB6lL7Y8x03UXuVv9n0HjhSfJaw2vUfOVN9l7Hb9hA6VH6Ystz3ETtVf5mz3fgSPFZwmrTe+RM9V3Gbtd/6FD5Ycpy20PsVP1lznbfR/BYwWnSeuNL9FzFbdZ+50/4YMlx2kLrU/xkzXXeRu9XwGjReeJK81vEbNV95k73X8hw2UHqUvtjzHTdRe5W/2fQeOFJ8lrDa9R85U32Xsdv2EDpUfpiy3PcRO1V/mbPd+BI8VnCatN75Ez1XcZu13/oUPlhynLbQ+xU/WXOdt9H8FjBadJ640v0XMVt1n7nT/hgyXHaQutT/GTNdd5G71fAaNF54krzW8Rs1X3mTvdfyHDZQepS+2PMdN1F7lb/Z9B44UnyWsNr1HzlTfZex2/YQOlR+mLLc9xE7VX+Zs934EjxWcJq03vkTPVdxm7Xf+hQ+WHKcttD7FT9Zc5230fwWMFp0nrjS/RcxW3WfudP+GDJcdpC61P8ZM113kbvV8Bo0XniSvNbxGzVfeZO91/IcNlB6lL7Y8x03UXuVv9n0HjhSfJaw2vUfOVN9l7Hb9hA6VH6Ystz3ETtVf5mz3fgSPFZwmrTe+RM9V3Gbtd/6FD5Ycpy20PsVP1lznbfR/BYwWnSeuNL9FzFbdZ+50/4YMlx2kLrU/xkzXXeRu9XwGjReeJK81vEbNV95k73X8hw2UHqUvtjzHTdRe5W/2fQeOFJ8lrDa9R85U32Xsdv2EDpUfpiy3PcRO1V/mbPd+BI8VnCatN75Ez1XcZu9kd7FQC9Z9BIQkJ14nPNZdGpYRcIlcfgc39/2Ez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E7VX+Zs934EjxWcJq03vkTPVdxm7Xf+hQ+WHKcttD7FT9Zc5230fwWMFp0nrjS/RcxW3WfudP+GDJcdpC61P8ZM113kbvV8Bo0XniSvNbxGzVfeZO91/IcNlB6lL7Y8x03UXuVv9n0HjhSfJaw2vUfOVN9l7Hb9hA6VH6Ystz3ETtVf5mz3fgSPFZwmrTe+RM9V3Gbtd/6FD5Ycpy20PsVP1lznbfR/BYwWnSeuNL9FzFbdZ+50/4YMlx2kLrU/xkzXXeRu9XwGjReeJK81vEbNV95k73X8hw2UHqUvtjzHTdRe5W/2fQeOFJ8lrDa9R85U32Xsdv2EDpUfpiy3PcRO1V/mbPd+BI8VnCatN75Ez1XcZu13/oUPlhynLbQ+xU/WXOdt9H8FjBadJ640v0XMVt1n7nT/hgyXHaQutT/GTNdd5G71fAaNF54krzW8Rs1X3mTvdfyHDZQepS+2PMdN1F7lb/Z9B44UnyWsNr1HzlTfZex2/YQOlR+mLLc9xE7VX+Zs934EjxWcJq03vkTPVdxm7Xf+hQ+WHKcttD7FT9Zc5230fwWMFp0nrjS/RcxW3WfudP+GDJcdpC61P8ZM113kbvV8Bo0XniSvNbxGzVfeZO91/IcNlB6lL7Y8x03UXuVv9n0HjhSfJaw2vUfOVN9l7Hb9hA6VH6Ystz3ETtVf5mz3fgSPFZwmrTe+RM9V3Gbtd/6FD5Ycpy20PsVP1lznbfR/BYwWnSeuNL9FzFbdZ+50/4YMlx2kLrU/xkzXXeRu9XwGjReeJK81vEbNV95k73X8hw2UHqUvtjzHTdRe5W/2fQeOFJ8lrDa9R85U32Xsdv2EDpUfpiy3PcRO1V/mbPd+BI8VnCatN75Ez1XcZu13/oUPlhynLbQ+xU/WXOdt9H8FjBadJ640v0XMVt1n7nT/hgyXHaQutT/GTNdd5G71fAaNF54krzW8Rs1X3mTvdfyHDZQepS+2PMdN1F7lb/Z9B44UnyWsNr1HzlTfZex2/YQOlR+mLLc9xE7VX+Zs934EjxWcJq03vkTPVdxm7Xf/glQzUF6HPERsNzbPGWr8hvBv65ubDy1UQNLcZhJ4khhKCT/Fsy6q2Nydz5eqPfuIFTADKMeWtsyqJaHj75OpsD8+CBmMlviL5dEXXhuXEnHIeiRSRA1v6kt1lhKfZ623O2m7w32bExDv/Xvxw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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+ProfileName "Unspecified device (4176x2530p).dnp"
+NFP NTBkAPotAAAAAAAAAAABAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAAAAAAIA/AACAPwAAgD8AAIA/zcxMP83MTD8BAAAAAADAPwAAwD8AAIA/AACAPwAAgD8AAAAAAAAAP5qZmT4AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAIA/AACAPwAAgD8AAQAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAEBAQEBAQEBAQEAAAABAQEBAQEBAQEBAQEBAQEBAQEBAQAAAQAAAAAA4D8AAAAAAAAAAAAAwD8AAAAAAAAAAAAAgD8BAQEBAAEAAQEBAQEBAQEBAQAAAAEAAAABAAAAAAAAAAAAQD8AAIA/AACAPwAAgD8BAQEBAQEBAQAAgD8AAIA/AQAAAAAAAAAAAAAAAAAAAAAAgD8AAIA/AACAPwAAgD8AAIA/AQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUwZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+PresetName "custom preset"
+ParamsHash1 -669060676
+ParamsHash2 260
+ParamsHash3 0
+name RN_heavy1
+selected true
+xpos 499
+ypos 212
+}
+Switch {
+inputs 2
+name Which_Denoise
+selected true
+xpos 499
+ypos 281
+}
+set N65015200 [stack 0]
+Write {
+channels rgba
+file ../_Assets/ADM_141_010_degrain/ADM_141_010_dg.%04d.dpx
+colorspace sRGB
+file_type dpx
+reading true
+checkHashOnRead false
+version 3
+name write_degrain
+selected true
+xpos 499
+ypos 341
+postage_stamp true
+}
+NoOp {
+name Anchor_1d492c9841
+help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.anchorOnCreate()\n    except:\n        pass"
+knobChanged stamps.anchorKnobChanged()
+autolabel "nuke.thisNode().knob(\"title\").value()"
+tile_color 0xffffff01
+note_font_size 20
+selected true
+xpos 498
+ypos 529
+addUserKnob {20 anchor_tab l "Anchor Stamp"}
+addUserKnob {26 identifier -STARTLINE +HIDDEN T anchor}
+addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+title PLATE_DEGRAINED
+addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T PLATE_DEGRAINED}
+addUserKnob {26 prev_name l "" +STARTLINE +HIDDEN T Anchor_1d492c9841}
+addUserKnob {3 showing l "" +STARTLINE +HIDDEN}
+addUserKnob {1 tags l Tags t "Comma-separated tags you can define for each Anchor, that will help you find it when invoking the Stamp Selector by pressing the Stamps shortkey with nothing selected."}
+tags "2D, File Out,"
+addUserKnob {26 line1 l "" +STARTLINE}
+addUserKnob {26 stamps_label l Stamps: T " "}
+addUserKnob {22 createStamp l new t "Create a new Stamp for this Anchor." -STARTLINE T stamps.stampCreateWired(nuke.thisNode())}
+addUserKnob {22 selectStamps l select t "Reconnect all of this Anchor's Stamps." -STARTLINE T stamps.wiredSelectSimilar(nuke.thisNode().name())}
+addUserKnob {22 reconnectStamps l reconnect -STARTLINE T stamps.anchorReconnectWired()}
+addUserKnob {22 zoomNext l "zoom next" t "Navigate to this Anchor's next Stamp on the Node Graph." -STARTLINE T stamps.wiredZoomNext(nuke.thisNode().name())}
+addUserKnob {26 line2 l "" +STARTLINE}
+addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+set Nb0008600 [stack 0]
+Merge2 {
+inputs 2
+operation minus
+name Merge2
+selected true
+xpos 498
+ypos 682
+}
+NoOp {
+name Anchor_1af3552601
+help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.anchorOnCreate()\n    except:\n        pass"
+knobChanged stamps.anchorKnobChanged()
+autolabel "nuke.thisNode().knob(\"title\").value()"
+tile_color 0xffffff01
+note_font_size 20
+selected true
+xpos 498
+ypos 742
+addUserKnob {20 anchor_tab l "Anchor Stamp"}
+addUserKnob {26 identifier -STARTLINE +HIDDEN T anchor}
+addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+title GRAIN
+addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T GRAIN}
+addUserKnob {26 prev_name l "" +STARTLINE +HIDDEN T Anchor_1af3552601}
+addUserKnob {3 showing l "" +STARTLINE +HIDDEN}
+addUserKnob {1 tags l Tags t "Comma-separated tags you can define for each Anchor, that will help you find it when invoking the Stamp Selector by pressing the Stamps shortkey with nothing selected."}
+tags 2D,
+addUserKnob {26 line1 l "" +STARTLINE}
+addUserKnob {26 stamps_label l Stamps: T " "}
+addUserKnob {22 createStamp l new t "Create a new Stamp for this Anchor." -STARTLINE T stamps.stampCreateWired(nuke.thisNode())}
+addUserKnob {22 selectStamps l select t "Reconnect all of this Anchor's Stamps." -STARTLINE T stamps.wiredSelectSimilar(nuke.thisNode().name())}
+addUserKnob {22 reconnectStamps l reconnect -STARTLINE T stamps.anchorReconnectWired()}
+addUserKnob {22 zoomNext l "zoom next" t "Navigate to this Anchor's next Stamp on the Node Graph." -STARTLINE T stamps.wiredZoomNext(nuke.thisNode().name())}
+addUserKnob {26 line2 l "" +STARTLINE}
+addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+PostageStamp {
+name Stamp1
+help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.wiredOnCreate()\n    except:\n        pass\n"
+knobChanged "import stamps; stamps.wiredKnobChanged()"
+autolabel "nuke.thisNode().knob(\"title\").value()"
+tile_color 0x1000001
+note_font Verdana
+note_font_size 20
+selected true
+xpos 720
+ypos 874
+hide_input true
+addUserKnob {20 wired_tab l "Wired Stamp"}
+addUserKnob {26 identifier -STARTLINE +HIDDEN T wired}
+addUserKnob {3 lockCallbacks l "" +STARTLINE +HIDDEN}
+addUserKnob {6 toReconnect -STARTLINE +HIDDEN}
+addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+title GRAIN
+addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T GRAIN}
+addUserKnob {26 tags l Tags: t "Tags of this stamp's Anchor, for information purpose only.\nClick \"show anchor\" to change them." T <i>2D</i>}
+addUserKnob {26 backdrops l Backdrops: t "Labels of backdrop nodes which contain this stamp's Anchor." T "<i><center><img src=\"Grain.png\"> Grain,<center><img src=\"Read.png\"> Input</i>"}
+addUserKnob {26 line1 l "" +STARTLINE}
+addUserKnob {6 postageStamp_show l "postage stamp" t "Enable the postage stamp thumbnail in this node.\nYou're seeing this because the class of this node includes the postage_stamp knob." +STARTLINE}
+addUserKnob {26 anchor_label l Anchor: T " "}
+addUserKnob {22 show_anchor l " show anchor " t "Show the properties panel for this Stamp's Anchor." -STARTLINE T stamps.wiredShowAnchor()}
+addUserKnob {22 zoom_anchor l "zoom anchor" t "Navigate to this Stamp's Anchor on the Node Graph." -STARTLINE T stamps.wiredZoomAnchor()}
+addUserKnob {26 stamps_label l Stamps: T " "}
+addUserKnob {22 zoomNext l " zoom next " t "Navigate to this Stamp's next sibling on the Node Graph." -STARTLINE T stamps.wiredZoomNext()}
+addUserKnob {22 selectSimilar l " select similar " t "Select all similar Stamps to this one on the Node Graph." -STARTLINE T stamps.wiredSelectSimilar()}
+addUserKnob {26 space_1 l "" +STARTLINE T " "}
+addUserKnob {26 reconnect_label l Reconnect: t "Reconnect by the stored Anchor name." T " "}
+addUserKnob {22 reconnect_this l this t "Reconnect this Stamp to its Anchor, by its stored Anchor name." -STARTLINE T "n = nuke.thisNode()\ntry:\n    n.setInput(0,nuke.toNode(n.knob(\"anchor\").value()))\nexcept:\n    nuke.message(\"Unable to reconnect.\")\ntry:\n    import stamps\n    stamps.wiredGetStyle(n)\nexcept:\n    pass\n"}
+addUserKnob {22 reconnect_similar l similar t "Reconnect this Stamp and similar ones to their Anchor, by their stored anchor name." -STARTLINE T stamps.wiredReconnectSimilar()}
+addUserKnob {22 reconnect_all l all t "Reconnect all the Stamps to their Anchors, by their stored anchor names." -STARTLINE T stamps.wiredReconnectAll()}
+addUserKnob {26 space_2 l "" +STARTLINE T " "}
+addUserKnob {20 advanced_reconnection l "Advanced Reconnection" n 2}
+addUserKnob {26 reconnect_by_title_label l "<font color=gold>By Title:" t "Reconnect by searching for a matching title." T " "}
+addUserKnob {22 reconnect_by_title_this l this t "Look for an Anchor that shares this Stamp's title, and connect this Stamp to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitle()}
+addUserKnob {22 reconnect_by_title_similar l similar t "Look for an Anchor that shares this Stamp's title, and connect this Stamp and similar ones to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSimilar()}
+addUserKnob {22 reconnect_by_title_selected l selected t "For each Stamp selected, look for an Anchor that shares its title, and connect to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSelected()}
+addUserKnob {26 reconnect_by_selection_label l "<font color=orangered>By Selection:" t "Force reconnect to a selected Anchor." T " "}
+addUserKnob {22 reconnect_by_selection_this l this t "Force reconnect this Stamp to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelection()}
+addUserKnob {22 reconnect_by_selection_similar l similar t "Force reconnect this Stamp and similar ones to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSimilar()}
+addUserKnob {22 reconnect_by_selection_selected l selected t "Force reconnect all selected Stamps to an also selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSelected()}
+addUserKnob {1 anchor l Anchor}
+anchor Anchor_1af3552601
+addUserKnob {6 auto_reconnect_by_title l "<font color=#ED9977>&nbsp; auto-reconnect by title" t "When creating this stamp again (like on copy-paste), auto-reconnect it by title instead of doing it by the saved anchor's name, and auto-turn this off immediately.\nIMPORTANT: Should be off by default. Only use this for setting up templates." +STARTLINE}
+addUserKnob {26 line2 l "" +STARTLINE}
+addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+push $N65015200
+Write {
+channels rgba
+file /Volumes/Dettifoss/HBJ/ADM/ADM_141_010/_Assets/ADM_141_010_degrain.mov
+colorspace sRGB
+file_type mov
+mov64_format "mov (QuickTime / MOV)"
+mov64_codec appr
+mov_prores_codec_profile "ProRes 4:4:4:4 XQ 12-bit"
+mov_h264_codec_profile "High 4:2:0 8-bit"
+mov64_pixel_format {{0}}
+mov64_quality High
+mov64_fast_start true
+mov64_write_timecode true
+mov64_gop_size 12
+mov64_b_frames 0
+mov64_bitrate 20000
+mov64_bitrate_tolerance 4000000
+mov64_quality_min 1
+mov64_quality_max 3
+checkHashOnRead false
+version 1
+name Write3
+selected true
+xpos 704
+ypos 288
+postage_stamp true
+}
+Read {
+inputs 0
+file_type mov
+file /Volumes/Dettifoss/HBJ/ADM/ADM_141_010/_Assets/ADM_141_010_degrain.mov
+format "4096 2480 0 0 4096 2480 1 ADM_4K"
+last 125
+frame_mode offset
+frame -999
+origlast 125
+origset true
+colorspace sRGB
+name Read2
+selected true
+xpos 704
+ypos 404
+addUserKnob {20 User}
+addUserKnob {26 names l "Create shuffle nodes from all layers"}
+addUserKnob {22 setShuffle l "Create Shuffle nodes" -STARTLINE T "\{newNode()\}"}
+addUserKnob {22 selLayer l "Select your Layers" -STARTLINE T "\{mylayerPanel()\}"}
+addUserKnob {26 names l "Create shuffle nodes from all layers"}
+addUserKnob {22 setShuffle l "Create Shuffle nodes" -STARTLINE T "\{newNode()\}"}
+addUserKnob {26 name l "Select the layers needed to create shuffle nodes"}
+addUserKnob {22 selLayer l "Select your Layers" -STARTLINE T "\{mylayerPanel()\}"}
+}
+push $N64011c00
+PostageStamp {
+name Stamp4
+help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.wiredOnCreate()\n    except:\n        pass\n"
+knobChanged "import stamps; stamps.wiredKnobChanged()"
+autolabel "nuke.thisNode().knob(\"title\").value()"
+tile_color 0x1000001
+note_font Verdana
+note_font_size 20
+selected true
+xpos 499
+ypos 38
+hide_input true
+addUserKnob {20 wired_tab l "Wired Stamp"}
+addUserKnob {26 identifier -STARTLINE +HIDDEN T wired}
+addUserKnob {3 lockCallbacks l "" +STARTLINE +HIDDEN}
+addUserKnob {6 toReconnect -STARTLINE +HIDDEN}
+addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+title PLATE_ORIGINAL
+addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T PLATE_ORIGINAL}
+addUserKnob {26 tags l Tags: t "Tags of this stamp's Anchor, for information purpose only.\nClick \"show anchor\" to change them." T <i>2D</i>}
+addUserKnob {26 backdrops l Backdrops: t "Labels of backdrop nodes which contain this stamp's Anchor." T "<i><center><img src=\"Read.png\"> Input</i>"}
+addUserKnob {26 line1 l "" +STARTLINE}
+addUserKnob {6 postageStamp_show l "postage stamp" t "Enable the postage stamp thumbnail in this node.\nYou're seeing this because the class of this node includes the postage_stamp knob." +STARTLINE}
+addUserKnob {26 anchor_label l Anchor: T " "}
+addUserKnob {22 show_anchor l " show anchor " t "Show the properties panel for this Stamp's Anchor." -STARTLINE T stamps.wiredShowAnchor()}
+addUserKnob {22 zoom_anchor l "zoom anchor" t "Navigate to this Stamp's Anchor on the Node Graph." -STARTLINE T stamps.wiredZoomAnchor()}
+addUserKnob {26 stamps_label l Stamps: T " "}
+addUserKnob {22 zoomNext l " zoom next " t "Navigate to this Stamp's next sibling on the Node Graph." -STARTLINE T stamps.wiredZoomNext()}
+addUserKnob {22 selectSimilar l " select similar " t "Select all similar Stamps to this one on the Node Graph." -STARTLINE T stamps.wiredSelectSimilar()}
+addUserKnob {26 space_1 l "" +STARTLINE T " "}
+addUserKnob {26 reconnect_label l Reconnect: t "Reconnect by the stored Anchor name." T " "}
+addUserKnob {22 reconnect_this l this t "Reconnect this Stamp to its Anchor, by its stored Anchor name." -STARTLINE T "n = nuke.thisNode()\ntry:\n    n.setInput(0,nuke.toNode(n.knob(\"anchor\").value()))\nexcept:\n    nuke.message(\"Unable to reconnect.\")\ntry:\n    import stamps\n    stamps.wiredGetStyle(n)\nexcept:\n    pass\n"}
+addUserKnob {22 reconnect_similar l similar t "Reconnect this Stamp and similar ones to their Anchor, by their stored anchor name." -STARTLINE T stamps.wiredReconnectSimilar()}
+addUserKnob {22 reconnect_all l all t "Reconnect all the Stamps to their Anchors, by their stored anchor names." -STARTLINE T stamps.wiredReconnectAll()}
+addUserKnob {26 space_2 l "" +STARTLINE T " "}
+addUserKnob {20 advanced_reconnection l "Advanced Reconnection" n 2}
+addUserKnob {26 reconnect_by_title_label l "<font color=gold>By Title:" t "Reconnect by searching for a matching title." T " "}
+addUserKnob {22 reconnect_by_title_this l this t "Look for an Anchor that shares this Stamp's title, and connect this Stamp to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitle()}
+addUserKnob {22 reconnect_by_title_similar l similar t "Look for an Anchor that shares this Stamp's title, and connect this Stamp and similar ones to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSimilar()}
+addUserKnob {22 reconnect_by_title_selected l selected t "For each Stamp selected, look for an Anchor that shares its title, and connect to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSelected()}
+addUserKnob {26 reconnect_by_selection_label l "<font color=orangered>By Selection:" t "Force reconnect to a selected Anchor." T " "}
+addUserKnob {22 reconnect_by_selection_this l this t "Force reconnect this Stamp to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelection()}
+addUserKnob {22 reconnect_by_selection_similar l similar t "Force reconnect this Stamp and similar ones to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSimilar()}
+addUserKnob {22 reconnect_by_selection_selected l selected t "Force reconnect all selected Stamps to an also selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSelected()}
+addUserKnob {1 anchor l Anchor}
+anchor Anchor_30b4e26841
+addUserKnob {6 auto_reconnect_by_title l "<font color=#ED9977>&nbsp; auto-reconnect by title" t "When creating this stamp again (like on copy-paste), auto-reconnect it by title instead of doing it by the saved anchor's name, and auto-turn this off immediately.\nIMPORTANT: Should be off by default. Only use this for setting up templates." +STARTLINE}
+addUserKnob {26 line2 l "" +STARTLINE}
+addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+push $N64011400
+Write {
+channels rgba
+file /Volumes/Dettifoss/HBJ/ADM/ADM_141_010/_Assets/ADM_141_010.mov
+colorspace sRGB
+file_type mov
+mov64_format "mov (QuickTime / MOV)"
+mov64_codec appr
+mov_prores_codec_profile "ProRes 4:4:4:4 XQ 12-bit"
+mov_h264_codec_profile "High 4:2:0 8-bit"
+mov64_pixel_format {{0}}
+mov64_quality High
+mov64_fast_start true
+mov64_write_timecode true
+mov64_gop_size 12
+mov64_b_frames 0
+mov64_bitrate 20000
+mov64_bitrate_tolerance 4000000
+mov64_quality_min 1
+mov64_quality_max 3
+checkHashOnRead false
+version 1
+name Write5
+selected true
+xpos 326
+ypos -414
+}
+push $Nb0008600
+PostageStamp {
+name Stamp6
+help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.wiredOnCreate()\n    except:\n        pass\n"
+knobChanged "import stamps; stamps.wiredKnobChanged()"
+autolabel "nuke.thisNode().knob(\"title\").value()"
+tile_color 0x1000001
+note_font Verdana
+note_font_size 20
+selected true
+xpos 170
+ypos 5154
+hide_input true
+addUserKnob {20 wired_tab l "Wired Stamp"}
+addUserKnob {26 identifier -STARTLINE +HIDDEN T wired}
+addUserKnob {3 lockCallbacks l "" +STARTLINE +HIDDEN}
+addUserKnob {6 toReconnect -STARTLINE +HIDDEN}
+addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+title PLATE_DEGRAINED
+addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T PLATE_DEGRAINED}
+addUserKnob {26 tags l Tags: t "Tags of this stamp's Anchor, for information purpose only.\nClick \"show anchor\" to change them." T "<i>2D, File Out</i>"}
+addUserKnob {26 backdrops l Backdrops: t "Labels of backdrop nodes which contain this stamp's Anchor." +HIDDEN T " "}
+addUserKnob {26 line1 l "" +STARTLINE}
+addUserKnob {6 postageStamp_show l "postage stamp" t "Enable the postage stamp thumbnail in this node.\nYou're seeing this because the class of this node includes the postage_stamp knob." +STARTLINE}
+addUserKnob {26 anchor_label l Anchor: T " "}
+addUserKnob {22 show_anchor l " show anchor " t "Show the properties panel for this Stamp's Anchor." -STARTLINE T stamps.wiredShowAnchor()}
+addUserKnob {22 zoom_anchor l "zoom anchor" t "Navigate to this Stamp's Anchor on the Node Graph." -STARTLINE T stamps.wiredZoomAnchor()}
+addUserKnob {26 stamps_label l Stamps: T " "}
+addUserKnob {22 zoomNext l " zoom next " t "Navigate to this Stamp's next sibling on the Node Graph." -STARTLINE T stamps.wiredZoomNext()}
+addUserKnob {22 selectSimilar l " select similar " t "Select all similar Stamps to this one on the Node Graph." -STARTLINE T stamps.wiredSelectSimilar()}
+addUserKnob {26 space_1 l "" +STARTLINE T " "}
+addUserKnob {26 reconnect_label l Reconnect: t "Reconnect by the stored Anchor name." T " "}
+addUserKnob {22 reconnect_this l this t "Reconnect this Stamp to its Anchor, by its stored Anchor name." -STARTLINE T "n = nuke.thisNode()\ntry:\n    n.setInput(0,nuke.toNode(n.knob(\"anchor\").value()))\nexcept:\n    nuke.message(\"Unable to reconnect.\")\ntry:\n    import stamps\n    stamps.wiredGetStyle(n)\nexcept:\n    pass\n"}
+addUserKnob {22 reconnect_similar l similar t "Reconnect this Stamp and similar ones to their Anchor, by their stored anchor name." -STARTLINE T stamps.wiredReconnectSimilar()}
+addUserKnob {22 reconnect_all l all t "Reconnect all the Stamps to their Anchors, by their stored anchor names." -STARTLINE T stamps.wiredReconnectAll()}
+addUserKnob {26 space_2 l "" +STARTLINE T " "}
+addUserKnob {20 advanced_reconnection l "Advanced Reconnection" n 2}
+addUserKnob {26 reconnect_by_title_label l "<font color=gold>By Title:" t "Reconnect by searching for a matching title." T " "}
+addUserKnob {22 reconnect_by_title_this l this t "Look for an Anchor that shares this Stamp's title, and connect this Stamp to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitle()}
+addUserKnob {22 reconnect_by_title_similar l similar t "Look for an Anchor that shares this Stamp's title, and connect this Stamp and similar ones to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSimilar()}
+addUserKnob {22 reconnect_by_title_selected l selected t "For each Stamp selected, look for an Anchor that shares its title, and connect to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSelected()}
+addUserKnob {26 reconnect_by_selection_label l "<font color=orangered>By Selection:" t "Force reconnect to a selected Anchor." T " "}
+addUserKnob {22 reconnect_by_selection_this l this t "Force reconnect this Stamp to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelection()}
+addUserKnob {22 reconnect_by_selection_similar l similar t "Force reconnect this Stamp and similar ones to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSimilar()}
+addUserKnob {22 reconnect_by_selection_selected l selected t "Force reconnect all selected Stamps to an also selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSelected()}
+addUserKnob {1 anchor l Anchor}
+anchor Anchor_1d492c9841
+addUserKnob {6 auto_reconnect_by_title l "<font color=#ED9977>&nbsp; auto-reconnect by title" t "When creating this stamp again (like on copy-paste), auto-reconnect it by title instead of doing it by the saved anchor's name, and auto-turn this off immediately.\nIMPORTANT: Should be off by default. Only use this for setting up templates." +STARTLINE}
+addUserKnob {26 line2 l "" +STARTLINE}
+addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+push $N64011c00
+PostageStamp {
+name Stamp7
+help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.wiredOnCreate()\n    except:\n        pass\n"
+knobChanged "import stamps; stamps.wiredKnobChanged()"
+autolabel "nuke.thisNode().knob(\"title\").value()"
+tile_color 0x1000001
+note_font Verdana
+note_font_size 20
+selected true
+xpos 352
+ypos 5153
+hide_input true
+addUserKnob {20 wired_tab l "Wired Stamp"}
+addUserKnob {26 identifier -STARTLINE +HIDDEN T wired}
+addUserKnob {3 lockCallbacks l "" +STARTLINE +HIDDEN}
+addUserKnob {6 toReconnect -STARTLINE +HIDDEN}
+addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+title PLATE_ORIGINAL
+addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T PLATE_ORIGINAL}
+addUserKnob {26 tags l Tags: t "Tags of this stamp's Anchor, for information purpose only.\nClick \"show anchor\" to change them." T <i>2D</i>}
+addUserKnob {26 backdrops l Backdrops: t "Labels of backdrop nodes which contain this stamp's Anchor." T "<i><center><img src=\"Read.png\"> Input</i>"}
+addUserKnob {26 line1 l "" +STARTLINE}
+addUserKnob {6 postageStamp_show l "postage stamp" t "Enable the postage stamp thumbnail in this node.\nYou're seeing this because the class of this node includes the postage_stamp knob." +STARTLINE}
+addUserKnob {26 anchor_label l Anchor: T " "}
+addUserKnob {22 show_anchor l " show anchor " t "Show the properties panel for this Stamp's Anchor." -STARTLINE T stamps.wiredShowAnchor()}
+addUserKnob {22 zoom_anchor l "zoom anchor" t "Navigate to this Stamp's Anchor on the Node Graph." -STARTLINE T stamps.wiredZoomAnchor()}
+addUserKnob {26 stamps_label l Stamps: T " "}
+addUserKnob {22 zoomNext l " zoom next " t "Navigate to this Stamp's next sibling on the Node Graph." -STARTLINE T stamps.wiredZoomNext()}
+addUserKnob {22 selectSimilar l " select similar " t "Select all similar Stamps to this one on the Node Graph." -STARTLINE T stamps.wiredSelectSimilar()}
+addUserKnob {26 space_1 l "" +STARTLINE T " "}
+addUserKnob {26 reconnect_label l Reconnect: t "Reconnect by the stored Anchor name." T " "}
+addUserKnob {22 reconnect_this l this t "Reconnect this Stamp to its Anchor, by its stored Anchor name." -STARTLINE T "n = nuke.thisNode()\ntry:\n    n.setInput(0,nuke.toNode(n.knob(\"anchor\").value()))\nexcept:\n    nuke.message(\"Unable to reconnect.\")\ntry:\n    import stamps\n    stamps.wiredGetStyle(n)\nexcept:\n    pass\n"}
+addUserKnob {22 reconnect_similar l similar t "Reconnect this Stamp and similar ones to their Anchor, by their stored anchor name." -STARTLINE T stamps.wiredReconnectSimilar()}
+addUserKnob {22 reconnect_all l all t "Reconnect all the Stamps to their Anchors, by their stored anchor names." -STARTLINE T stamps.wiredReconnectAll()}
+addUserKnob {26 space_2 l "" +STARTLINE T " "}
+addUserKnob {20 advanced_reconnection l "Advanced Reconnection" n 2}
+addUserKnob {26 reconnect_by_title_label l "<font color=gold>By Title:" t "Reconnect by searching for a matching title." T " "}
+addUserKnob {22 reconnect_by_title_this l this t "Look for an Anchor that shares this Stamp's title, and connect this Stamp to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitle()}
+addUserKnob {22 reconnect_by_title_similar l similar t "Look for an Anchor that shares this Stamp's title, and connect this Stamp and similar ones to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSimilar()}
+addUserKnob {22 reconnect_by_title_selected l selected t "For each Stamp selected, look for an Anchor that shares its title, and connect to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSelected()}
+addUserKnob {26 reconnect_by_selection_label l "<font color=orangered>By Selection:" t "Force reconnect to a selected Anchor." T " "}
+addUserKnob {22 reconnect_by_selection_this l this t "Force reconnect this Stamp to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelection()}
+addUserKnob {22 reconnect_by_selection_similar l similar t "Force reconnect this Stamp and similar ones to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSimilar()}
+addUserKnob {22 reconnect_by_selection_selected l selected t "Force reconnect all selected Stamps to an also selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSelected()}
+addUserKnob {1 anchor l Anchor}
+anchor Anchor_30b4e26841
+addUserKnob {6 auto_reconnect_by_title l "<font color=#ED9977>&nbsp; auto-reconnect by title" t "When creating this stamp again (like on copy-paste), auto-reconnect it by title instead of doing it by the saved anchor's name, and auto-turn this off immediately.\nIMPORTANT: Should be off by default. Only use this for setting up templates." +STARTLINE}
+addUserKnob {26 line2 l "" +STARTLINE}
+addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+set Nb000c400 [stack 0]
+push $Nb000c400
+push $Nb0008600
+PostageStamp {
+name Stamp3
+help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.wiredOnCreate()\n    except:\n        pass\n"
+knobChanged "import stamps; stamps.wiredKnobChanged()"
+autolabel "nuke.thisNode().knob(\"title\").value()"
+tile_color 0x1000001
+note_font Verdana
+note_font_size 20
+selected true
+xpos 498
+ypos 875
+hide_input true
+addUserKnob {20 wired_tab l "Wired Stamp"}
+addUserKnob {26 identifier -STARTLINE +HIDDEN T wired}
+addUserKnob {3 lockCallbacks l "" +STARTLINE +HIDDEN}
+addUserKnob {6 toReconnect -STARTLINE +HIDDEN}
+addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+title PLATE_DEGRAINED
+addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T PLATE_DEGRAINED}
+addUserKnob {26 tags l Tags: t "Tags of this stamp's Anchor, for information purpose only.\nClick \"show anchor\" to change them." T "<i>2D, File Out</i>"}
+addUserKnob {26 backdrops l Backdrops: t "Labels of backdrop nodes which contain this stamp's Anchor." +HIDDEN T " "}
+addUserKnob {26 line1 l "" +STARTLINE}
+addUserKnob {6 postageStamp_show l "postage stamp" t "Enable the postage stamp thumbnail in this node.\nYou're seeing this because the class of this node includes the postage_stamp knob." +STARTLINE}
+addUserKnob {26 anchor_label l Anchor: T " "}
+addUserKnob {22 show_anchor l " show anchor " t "Show the properties panel for this Stamp's Anchor." -STARTLINE T stamps.wiredShowAnchor()}
+addUserKnob {22 zoom_anchor l "zoom anchor" t "Navigate to this Stamp's Anchor on the Node Graph." -STARTLINE T stamps.wiredZoomAnchor()}
+addUserKnob {26 stamps_label l Stamps: T " "}
+addUserKnob {22 zoomNext l " zoom next " t "Navigate to this Stamp's next sibling on the Node Graph." -STARTLINE T stamps.wiredZoomNext()}
+addUserKnob {22 selectSimilar l " select similar " t "Select all similar Stamps to this one on the Node Graph." -STARTLINE T stamps.wiredSelectSimilar()}
+addUserKnob {26 space_1 l "" +STARTLINE T " "}
+addUserKnob {26 reconnect_label l Reconnect: t "Reconnect by the stored Anchor name." T " "}
+addUserKnob {22 reconnect_this l this t "Reconnect this Stamp to its Anchor, by its stored Anchor name." -STARTLINE T "n = nuke.thisNode()\ntry:\n    n.setInput(0,nuke.toNode(n.knob(\"anchor\").value()))\nexcept:\n    nuke.message(\"Unable to reconnect.\")\ntry:\n    import stamps\n    stamps.wiredGetStyle(n)\nexcept:\n    pass\n"}
+addUserKnob {22 reconnect_similar l similar t "Reconnect this Stamp and similar ones to their Anchor, by their stored anchor name." -STARTLINE T stamps.wiredReconnectSimilar()}
+addUserKnob {22 reconnect_all l all t "Reconnect all the Stamps to their Anchors, by their stored anchor names." -STARTLINE T stamps.wiredReconnectAll()}
+addUserKnob {26 space_2 l "" +STARTLINE T " "}
+addUserKnob {20 advanced_reconnection l "Advanced Reconnection" n 2}
+addUserKnob {26 reconnect_by_title_label l "<font color=gold>By Title:" t "Reconnect by searching for a matching title." T " "}
+addUserKnob {22 reconnect_by_title_this l this t "Look for an Anchor that shares this Stamp's title, and connect this Stamp to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitle()}
+addUserKnob {22 reconnect_by_title_similar l similar t "Look for an Anchor that shares this Stamp's title, and connect this Stamp and similar ones to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSimilar()}
+addUserKnob {22 reconnect_by_title_selected l selected t "For each Stamp selected, look for an Anchor that shares its title, and connect to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSelected()}
+addUserKnob {26 reconnect_by_selection_label l "<font color=orangered>By Selection:" t "Force reconnect to a selected Anchor." T " "}
+addUserKnob {22 reconnect_by_selection_this l this t "Force reconnect this Stamp to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelection()}
+addUserKnob {22 reconnect_by_selection_similar l similar t "Force reconnect this Stamp and similar ones to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSimilar()}
+addUserKnob {22 reconnect_by_selection_selected l selected t "Force reconnect all selected Stamps to an also selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSelected()}
+addUserKnob {1 anchor l Anchor}
+anchor Anchor_1d492c9841
+addUserKnob {6 auto_reconnect_by_title l "<font color=#ED9977>&nbsp; auto-reconnect by title" t "When creating this stamp again (like on copy-paste), auto-reconnect it by title instead of doing it by the saved anchor's name, and auto-turn this off immediately.\nIMPORTANT: Should be off by default. Only use this for setting up templates." +STARTLINE}
+addUserKnob {26 line2 l "" +STARTLINE}
+addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+Dot {
+name Dot3
+label " TO COMP"
+note_font "Verdana Bold Italic"
+note_font_size 15
+note_font_color 0xe9ff55ff
+selected true
+xpos 532
+ypos 5067
+}
+CopyMetaData {
+inputs 2
+name CopyMetaData1
+selected true
+xpos 498
+ypos 5158
+}
+Group {
+inputs 3
+name DasGrain
+help "DasGrain makes regraining as simple as clicking a few buttons.\n\nFollow the steps in the Help tab and you'll have a perfect regrain in no time!"
+onCreate "import random\n\ntestimonials = \[\n    \"Such an elegant solution, love it!\",\n    \"Your gizmo is beyond expectation\",\n    \"Totally awesome!\",\n    \"DasGrain is officially the best thing ever\",\n    \"It's really working!\",\n    \"Das bringt Tr&auml;nen in meine Augen\",\n    \"DasGrain is the salvation we waited for\",\n    \"I save a lot of time, and definitely my nerves :)\",\n    \"It's alright\",\n    \"My new favourite node, thanks!<br>Having said that, ...\"\n    ]\n\nnode = nuke.thisNode()\nnode\['testimonial'].setValue('<br><br><br><i>&laquo;%s&raquo;</i><br>&mdash; anonymous<br><br>' % random.choice(testimonials))\nnode\['box'].setFlag(nuke.NO_ANIMATION)"
+knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == 'box':\n    this_frame = nuke.frame()\n    n\['sample_frame'].setValue(this_frame)\n\nif k.name() == 'scatter':\n    n\['divider04'].setVisible(k.value() == False)\n    n\['divider05'].setVisible(k.value() == True)"
+tile_color 0x7f7f7fff
+selected true
+xpos 498
+ypos 5248
+addUserKnob {20 DasGrain_tab l DasGrain}
+addUserKnob {41 output t "<strong>regrained comp</strong> it is what it sais\n<strong>plate grain</strong> plate minus degrained plate\n<strong>normalised grain</strong> check if the normalization worked. It should be as even as possible. This is what you want to output if you want to prerender a grain plate. Later you can plug it into the <i>external grain</i> input of another DasGrain\n<strong>adapted grain</strong> check if the adaptation worked. Output this if you want to further manipulate the grain (who knows what the sup is gonna come up with...). After, simply plus it to your comp (at that point the comp has to be in the <i>camera</i> colorspace, as set in the <i>Analyze</i> tab).\n<strong>grain QC</strong> check if voronoi seams are visible (&#8594; edgeblend), or the scattered grain looks different to the original plate grain (&#8594; maybe bad sample area or wrong luminance degrain amount)" T Output.output}
+addUserKnob {4 meta l "metadata from" t "Chances are you want to use the metadata from the plate, but who am I to assume :)" M {COMP PLATE}}
+addUserKnob {26 spacer01_1 l " " T " "}
+addUserKnob {20 GrainGroupBegin l "" +STARTLINE n -2}
+addUserKnob {20 Analyze_tab l Analyze}
+addUserKnob {26 text l <strong>Colorspace}
+addUserKnob {41 project_colorspace l project t "set this to the project color space" T OCIOColorSpace1.in_colorspace}
+addUserKnob {22 python_button l "What's this all about?" -STARTLINE T "nuke.message(\"Regraining in other color spaces than the camera native linear space can lead to unexpected behaviour.\\n\\nFor example converting Alexa plates to ACEScg might introduce negative values due to ACEScg's smaller gamut. In that case converting back to ARRI Linear ALEXA Wide Gamut will probably help.\\nJust set <i>project</i> to ACEScg and <i>camera</i> to ARRI Linear ALEXA Wide Gamut.\\n\\nThis might be transferable to other cameras, but I've only tested with Alexas.\\n---------\\nBypass by setting both knobs to the same value.\")"}
+addUserKnob {41 camera_colorspace l camera t "set this to the camera native linear space" T OCIOColorSpace1.out_colorspace}
+addUserKnob {26 text_2 l " " T " "}
+addUserKnob {26 level l "<strong>Degrain amount"}
+addUserKnob {78 luminance t "Leave this at 1 if you're working on a completely degrained plate.\n\nIn case you decided to leave some luminance grain in the degrained plate (use the DegrainHelper node for this!), set this to the same value as in the DegrainHelper in order to compensate.\n\nIf the luminance degrain amount was set to 0.8, this needs to be set to 0.8 as well.\n\nYou need to select a mask of all elements that cover the plate, otherwise the grain of whole comp will be too strong " n 1}
+luminance 1
+addUserKnob {26 divider01 l " "}
+addUserKnob {41 degrain_amount_mask l "degrain amount mask" t "Use this channel from the mask input to specify in what area of the comp the missing luminance grain needs to be compensated." T Multiply1.maskChannelMask}
+addUserKnob {41 invert_mask l invert -STARTLINE T Multiply1.invert_mask}
+addUserKnob {26 spacer02 l " " T " "}
+addUserKnob {26 divider02 l <strong>Analyze}
+addUserKnob {3 number_of_frames l "number of frames" t "Set the number of sample frames to be spread across the input range.\n\nMore frames lead to higher accuracy.\n\nIf there are particularly bright or dark frames, set them manually in the knob below to make sure they are part of the analysis.\n\nIf you want to set all sample frames manually, set this to 0 and add the frames in the knob below."}
+number_of_frames 10
+addUserKnob {1 additional_frames l "additional frames" t "Set additional frames like this:\n\n1001,1020,1053 (single frames)\n1020-1040 (frame ranges)\n1020-1040x4 (frame ranges with step)"}
+addUserKnob {3 sample_count l "sample count" t "The samples are spread across the sample range (which gets calculated automatically) based on the AlexaV3LogC curve. This results in more samples in the dark areas and less samples in the brights.\n\nMore samples lead to a more detailed response curve (while the accuracy is limited by the quality of the degrain)."}
+sample_count 20
+addUserKnob {22 analyze l Analyze t "this is where the magic happens" T "import base64\nthis = nuke.thisNode()\n\n\ndef _sample_count(this):\n    \"\"\"returns the sample count\"\"\"\n\n    sample_count = int(this\['sample_count'].value())\n\n    if sample_count <= 0:\n        raise RuntimeError('Enter a sample count greater than 0')\n\n    else:\n        return sample_count\n\n\ndef _generate_frame_list(this):\n    \"\"\"converts the frames submitted by the user into a list\"\"\"\n\n    frame_list = \[]\n    number_of_frames = int(this\['number_of_frames'].value())\n    additional_frames = this\['additional_frames'].value()\n\n    if number_of_frames < 1 and additional_frames is '':\n        raise RuntimeError('Either set the number of frames > 0\\nor define additional frames')\n\n    first_frame = max(this.input(1).firstFrame(), this.input(2).firstFrame())\n    last_frame = min(this.input(1).lastFrame(), this.input(2).lastFrame())\n\n    if number_of_frames > 0:\n        distance = (last_frame - first_frame) / (number_of_frames)\n        frame = first_frame + distance / 2\n\n        for x in range(number_of_frames):\n            int_frame = int(round(frame))\n            if int_frame not in frame_list:\n                frame_list.append(int_frame)\n\n            frame += distance\n\n    frange = nuke.FrameRanges(additional_frames.split(','))\n\n    for r in frange:\n        for f in r:\n            if f >= first_frame and f <= last_frame:\n                if f not in frame_list:\n                    frame_list.append(f)\n\n    frame_list.sort()\n\n    return frame_list\n\n\ndef _setup_for_multiframe(frame_list):\n    \"\"\" arranges all sample frames next to each other, starting at frame 0\n    and sets the frame number knob of the FrameBlend node\"\"\"\n\n    time_warp = nuke.toNode('TimeWarp1')\n    time_warp\['lookup'].clearAnimated()\n    time_warp\['lookup'].setAnimated()\n    anim_list = \[]\n\n    for n, frame in enumerate(frame_list):\n        anim_list.append(nuke.AnimationKey(n, frame))\n\n    anim = time_warp\['lookup'].animation(0)\n    anim.addKey(anim_list)\n\n    frame_blend = nuke.toNode('FrameBlend1')\n    frame_blend\['endframe'].setValue(len(frame_list)-1)\n\n\ndef _generate_sample_list(sample_count, sample_range, sample_radius):\n    \"\"\"generate a list of sample values spread equally between the\n    min and max values of the sample range\"\"\"\n\n    sample_list = \[]\n\n    for item in range(0, sample_count):\n        sample_list.append(float(item) / sample_count * (sample_range\[1] - sample_range\[0]) + sample_range\[0] + sample_radius)\n\n    return sample_list\n\n\ndef _get_sample_range(channel, channel_list, frame_list):\n    \"\"\" samples the minimum and maximum values of the given frame range and\n    sets the sample range to those values\"\"\"\n\n    curve_tool = nuke.toNode('CurveTool_Range')\n    min_knob = curve_tool\['minlumapixvalue']\n    max_knob = curve_tool\['maxlumapixvalue']\n\n    min_knob.setAnimated()\n    max_knob.setAnimated()\n\n    curve_tool\['channels'].setValue(channel)\n\n    nuke.execute(curve_tool, nuke.FrameRanges(frame_list))\n\n    index = channel_list.index(channel)\n    min_list = \[key.y for key in min_knob.animation(index).keys()]\n    max_list = \[key.y for key in max_knob.animation(index).keys()]\n\n    min_value = min(min_list)\n    max_value = max(max_list)\n\n    min_knob.clearAnimated()\n    max_knob.clearAnimated()\n    curve_tool\['minlumapixdata'].clearAnimated()\n    curve_tool\['maxlumapixdata'].clearAnimated()\n\n    return \[min_value, max_value]\n\n\ndef _sample_it(keyer, curve_tool, sample, sample_radius):\n    \"\"\"analyze the grain level per channel and sample value in the sample range\"\"\"\n\n    keyer\['temp_expr0'].setValue(str(sample - sample_radius))\n    keyer\['temp_expr1'].setValue(str(sample + sample_radius))\n\n    intensity_knob = curve_tool\['intensitydata']\n    intensity_knob.clearAnimated()\n    intensity_knob.setAnimated()\n\n    nuke.execute(curve_tool, nuke.frame(), nuke.frame())\n    sample_values = intensity_knob.value()\n    intensity_knob.clearAnimated()\n\n    return sample_values\n\n\ndef check_inputs(this):\n    if this.input(1) is None:\n        raise RuntimeError('no plate connected')\n\n    if this.input(2) is None:\n        raise RuntimeError('no degrained plate connected')\n\n    def format_tuple(node):\n        return node.format().width(), node.format().height(), node.format().pixelAspect()\n\n    if format_tuple(this.input(1)) != format_tuple(this.input(2)):\n        raise RuntimeError(\"Format missmatch: Make sure the formats of plate and degrained plate match.\")\n\n\ndef start(this):\n    \"\"\"let's do this!\"\"\"\n\n    check_inputs(this)\n\n    with this:\n        frame_list = _generate_frame_list(this)\n        _setup_for_multiframe(frame_list)\n        sample_count = _sample_count(this)\n\n        blank = base64.b64decode('cmVkIHtjdXJ2ZX0KZ3JlZW4ge2N1cnZlfQpibHVlIHtjdXJ2ZX0=').decode('ascii')\n\n        lut = nuke.toNode('Sampler1')\['lut']\n        lut.fromScript(blank)\n\n        channel_list = \['red', 'green', 'blue']\n\n        keyer = nuke.toNode('Expression2')\n        copy = nuke.toNode('Copy2')\n\n        curve_tool = nuke.toNode('CurveTool')\n        pixel = curve_tool\['ROI'].value()\[2] * curve_tool\['ROI'].value()\[3]\n\n        task = nuke.ProgressTask('Analysing...')\n        step = 100.0 / 3 / sample_count\n        progress = step\n\n        time_warp = nuke.toNode('TimeWarp1')\n        frame_blend = nuke.toNode('FrameBlend1')\n\n        time_warp\['disable'].setValue(False)\n        frame_blend\['disable'].setValue(False)\n\n        for channel in channel_list:\n            task.setMessage('\{\} range'.format(channel))\n\n            copy\['from0'].setValue('rgba.\{\}'.format(channel))\n\n            sample_range = _get_sample_range(channel, channel_list, frame_list)\n            sample_radius = (sample_range\[1] - sample_range\[0]) / sample_count / 2\n            sample_list = _generate_sample_list(sample_count, sample_range, sample_radius)\n\n            for sample in sample_list:\n                if task.isCancelled():\n                    return\n\n                task.setProgress(int(progress))\n\n                sample_values = _sample_it(keyer, curve_tool, sample, sample_radius)\n\n                task.setMessage('\{\} channel at \{\}'.format(channel, round(sample, 2)))\n\n                if sample_values\[3] * pixel >= 10:\n                    lut.setValueAt(sample_values\[0] / sample_values\[3], sample_values\[1] / sample_values\[3], channel_list.index(channel))\n\n                progress += step\n\n        time_warp\['lookup'].clearAnimated()\n        time_warp\['disable'].setValue(True)  # hopefully prevents slowing down the comp\n        frame_blend\['disable'].setValue(True)  # hopefully prevents slowing down the comp\n\n    del task\n\n\nstart(this)\n" +STARTLINE}
+addUserKnob {26 divider03 l " "}
+addUserKnob {41 analysis_mask l "analysis mask" t "Use this channel from the mask input to control what area of the plate will be analyzed.\n\nUsefull if the degrain is obviously bad in some areas." T ChannelMerge1.A}
+addUserKnob {6 invert_1 l invert -STARTLINE}
+addUserKnob {20 Adjust_tab l Adjust}
+addUserKnob {22 whatsthis l "What am I looking at?" T "nuke.message(\"After the analysis you'll see the sampled grain response curves here. On the x-axis is the brightness of the image and on the y-axis the grain intensity. Grain increases with brightness, so <strong>the slope of the curves should always be positive</strong> (they should always go up &#8599;).<br><br>The quality of the curves depends entirely on the quality of the degrain. If the curves look wrong (for example they go up and down), try to improve the degrain first. If they still look wrong and the resulting regrain doesn't work well enough, you can try to improve the curves here by deleting/correcting all points that don't follow an upwards trend.<br><br>You can also extend the curves (again: with an upwards trend) if the comp has values that don't exist in the plate.<br><br>Note: The curve is used for both the normalization as well as the adaptation of the grain, so it doesn't give direct control of the grain intensity.\")" +STARTLINE}
+addUserKnob {41 lut l "" +STARTLINE T Sampler1.lut}
+addUserKnob {20 Replace_tab l Replace}
+addUserKnob {6 external_grain l "use external grain" t "Use external grain from a second DasGrain, with the output set to 'normalised grain', to replace masked area.\nConnect it to the 'external grain' input of this DasGrain (it's a bit hidden on the left side of the node)." +STARTLINE}
+addUserKnob {26 divider04 l <strong>Scatter}
+addUserKnob {26 divider05 l <strong>Scatter +HIDDEN T "<span style=\"color:red\">Make sure you're sampling an area without any plate detail.</a>"}
+addUserKnob {6 scatter l activate t "Activates the scatter function. It generates a new grain based on the plate grain in the sample box using a Voronoi noise." +STARTLINE}
+addUserKnob {41 useGPUIfAvailable l "Use GPU if available" -STARTLINE T VoronoiScatter.useGPUIfAvailable}
+addUserKnob {15 box l "sample box" t "Define an area that is used as a source for the scatter function. The plate grain in this area should be as even as possible, without any visible detail."}
+box {100 100 500 300}
+addUserKnob {3 sample_frame l "sample frame" t "The frame at which the grain is being sampled. Is set automatically once the sample box is changed." +DISABLED}
+sample_frame 1
+addUserKnob {4 stereo l "stereo behaviour" t "randomize offset per view: same voronoy pattern for all views, but different offset\n\nrandomize pattern per view: different voronoy pattern for every view" M {none "randomize offset per view" "randomize pattern per view" ""}}
+addUserKnob {26 spacer06 l "" +STARTLINE T " "}
+addUserKnob {6 overlay l "overlay cell pattern" t "Overlay the cell pattern of the voronoy noise. Useful to check where the seams are and if distortion or blending is necessary." +STARTLINE}
+addUserKnob {7 cell_size l "cell size" t "Cell size of the scatter. Shoudn't be too small, as lower grain frequencies might break.\nCan't be too big either, to prevent it from breaking the border of the samplebox (will error if it does)." R 5 100}
+cell_size 40
+addUserKnob {26 spacer07 l "" +STARTLINE T " "}
+addUserKnob {20 concealer l "edge concealer" n 1}
+concealer 0
+addUserKnob {26 concealer_help l " " T "If you can see the voronoi pattern in the grain QC output,\nincrease the edge blend size."}
+addUserKnob {3 edge_blend_size l "edge blend size" t "Set the output to grain QC. If you see the cell seams, increase the edge blend size to conceal them.\n\nThis is a bit hacky and slow."}
+addUserKnob {26 tip l "" -STARTLINE T "sloooow - keep this below 3 if possible"}
+addUserKnob {26 distortion_help l " " T "\nDistortion might help as well, if somehow the straight\nseams are visible (you might want to toggle the overlay\nwhile adjusting)."}
+addUserKnob {7 amplitude R 0 50}
+addUserKnob {7 frequency R 0 50}
+frequency 15
+addUserKnob {20 endGroup n -1}
+addUserKnob {26 divider06 l "" +STARTLINE}
+addUserKnob {41 replace_mask l "replace mask" t "Use this channel from the mask input to specify where you want to use scattered grain instead of the adapted plate grain." -STARTLINE T Merge9.maskChannelMask}
+addUserKnob {41 invert_mask_1 l invert -STARTLINE T Merge9.invert_mask}
+addUserKnob {20 GrainGroupEnd l "" +STARTLINE n -3}
+addUserKnob {20 Help_tab l Help}
+addUserKnob {26 basic_setup l "" +STARTLINE T "<font size=\"5\">Basic setup</font>"}
+addUserKnob {26 ""}
+addUserKnob {26 explanation l "" +STARTLINE T "<strong>Bold</strong> steps are always necessary"}
+addUserKnob {26 steps l "" +STARTLINE T "<br><strong>1. This should be the only regrain node in your comp.<br>2. Connect <i>plate</i>, <i>degrained plate</i> and <i>comp</i>.<br>&nbsp;&nbsp;&nbsp;&nbsp;The comp should be done on the degrained plate!</strong><br>3. Set the <i>luminance degrain amount</i>.<br><strong>4. Press the <i>Analyze</i> button.</strong><br>5. Correct the response curves in the <i>Adjust</i> tab.<br>6. Move the <i>sample box</i> to an area without any plate detail and activate <i>scatter</i>.<br>7. If necessary, activate <i>edge blend</i> and/or <i>distortion</i> to conceal seams."}
+addUserKnob {26 in_depth l "" +STARTLINE T "<br>For an in depth explanation of the steps, read the tooltips and check out this video:<br><a href=\"https://vimeo.com/284820390/\"><span style=\"color:#C8C8C8;\">https://vimeo.com/284820390</a>"}
+addUserKnob {26 pushthebutton l "" +STARTLINE T "<br><br>If the result is not as expected and you don't know why, push this button:"}
+addUserKnob {22 troubleshoot l Troubleshoot t HEEEEEEELP T "import base64\n\nmessages = \[]\n\nthis = nuke.thisNode()\n\n#########################\n\nif this.input(0) is None or this.input(1) is None or this.input(2) is None:\n    messages.append(\"<font color='red'><strong>ERROR</strong></font> Plate, degrained plate and comp need to be connected to the appropriate inputs.\")\n\n#########################\n\nelse:\n\n    def format_to_tuple(g):\n        \"\"\"returns (1024, 786, 2.0)\n        \"\"\"\n        return (g.format().width(), g.format().height(), g.format().pixelAspect())\n\n    format_set = set(\[\n        format_to_tuple(this.input(0)),\n        format_to_tuple(this.input(1)),\n        format_to_tuple(this.input(2)),\n        ])\n    if len(format_set) != 1:\n        messages.append(\"<font color='orange'><strong>WARNING</strong></font> Format missmatch: Make sure formats of plate, degrained plate and comp match.\")\n\n    if (this.input(1).firstFrame() != this.input(2).firstFrame()) or (this.input(1).lastFrame() != this.input(2).lastFrame()):\n        messages.append(\"<font color='orange'><strong>WARNING</strong></font> The frame ranges of plate and degrained plate don't match. Double check that they belong together.\")\n\n#########################\n\nmessages.append(\"Double check that plate and degrained plate haven't been modified in any way (paint, despill, etc).\")\n\n#########################\n\nif this\['luminance'].getValue() == 1:\n    messages.append(\"Are you working on a completely degrained plate? If not, you might have to set the luminance degrain amount.\")\n\n#########################\n\nblank = base64.b64decode('cmVkIHtjdXJ2ZX0KZ3JlZW4ge2N1cnZlfQpibHVlIHtjdXJ2ZX0=').decode('ascii')\n\nwith this:\n    Sampler = nuke.toNode('Sampler1')     \n    if Sampler\['lut'].toScript() == blank:\n        messages.append(\"<font color='red'><strong>ERROR</strong></font> You haven't pressed the Analyze button yet!\")\n\n#########################\n\nclass BadThings(Exception): pass\n\ndef thingy():\n    with this:\n        Sampler = nuke.toNode('Sampler1')\n        list = this\['lut'].toScript().replace('\}','').split('\\n')\n        for item in list:\n            sample_value = 0\n            for value in item.split(' '):\n                try:\n                    value == float(value)\n                    if value < sample_value:\n                        raise BadThings(\"<font color='orange'><strong>WARNING</strong></font> Check and fix the response curves. Their slopes should always be positive (the curves should always go up &#8599;).\")\n                        \n                    else:\n                        sample_value = value\n                except ValueError:\n                    # Ignore non-numeric things like x-values of \"x5.46\" and channel names like \"red\{\" etc\n                    pass\ntry:\n    thingy()\nexcept BadThings as e:\n    messages.append(str(e))\n    \n#########################\n\nif this\['scatter'].value() == True:\n    if this\['box'].getValue() == \[100.0, 100.0, 500.0, 300.0]:\n        messages.append(\"<font color='orange'><strong>WARNING</strong></font> Scatter has been activated, but the sample box is still in its default position. Are you sure that's a good area to sample?\")\n\n#########################\n\nmessages.append(\"Did you copy/paste DasGrain from another script? Make sure to reanalyze and to reset the sample area if you are using scatter.\")\n\n#########################\n\nif len(messages) > 0:\n    nuke.message(\"<font size=\\\"5\\\">Things worth checking</font><br><br>\"\n                               \"%s<br><br><br>If any of this doesn't make sense to you, it might be worth checking out the video on vimeo.\" % (\n                                  \"<hr>\".join(\"%s: %s\" % (i+1, m) for i, m in enumerate(messages))))\n" +STARTLINE}
+addUserKnob {26 dont_despair l "" +STARTLINE T "<br>If it still doesn't work and you're about to flip the table, send me a <a href=\"mailto:holtzf+nuke@gmail.com?subject=Help with DasGrain v1.7.8\"><span style=\"color:#C8C8C8;\">mail</a>.<br>I'm happy to help! :)"}
+addUserKnob {20 Info_tab l Info}
+addUserKnob {26 dasname l "" +STARTLINE T "<font size='5'>DasGrain</font> v1.8<br>"}
+addUserKnob {26 text_1 l "" +STARTLINE T "DasGrain makes regraining as simple as clicking a few buttons.<br>Follow the steps in the <i>Help</i> tab and you'll have a perfect\nregrain<br>in no time!"}
+addUserKnob {26 ""}
+addUserKnob {26 info l "" +STARTLINE T "Last change: 2021-03-07\n\n"}
+addUserKnob {26 name_1 l "" +STARTLINE T "Fabian Holtz"}
+addUserKnob {26 mail l "" +STARTLINE T "<a href=\"mailto:holtzf+nuke@gmail.com?subject=Help with DasGrain v1.7.8\"><span style=\"color:#C8C8C8;\">holtzf+nuke@gmail.com</a>"}
+addUserKnob {26 testimonial l "" +STARTLINE T "<br><br><br><i>&laquo;It's really working!&raquo;</i><br>&mdash; anonymous<br><br>"}
+addUserKnob {26 ""}
+addUserKnob {26 credit l "" +STARTLINE T "<br>VoronoiScatter based on <a href=\"http://www.nukepedia.com/blink/image/voronoi/\"><span style=\"color:#C8C8C8;\">Ivan Busquets' implementation</a> of<br> libNoise's\nVoronoi generator"}
+addUserKnob {26 thanks l "" +STARTLINE T "<br>Special thanks to Ben Dickson for bearing with my questions and<br>problems and RSP comp for the valuable feedback."}
+}
+BackdropNode {
+inputs 0
+name BackdropNode1
+tile_color 0x7f7f7fff
+label "normalise grain"
+note_font_size 30
+xpos 170
+ypos 1662
+bdwidth 320
+bdheight 110
+}
+BackdropNode {
+inputs 0
+name BackdropNode11
+tile_color 0x7f7f7fff
+label "add grain"
+note_font_size 30
+xpos 830
+ypos 2766
+bdwidth 320
+bdheight 110
+}
+BackdropNode {
+inputs 0
+name BackdropNode13
+tile_color 0x7f7f7fff
+label scatter
+note_font_size 30
+xpos -50
+ypos 2022
+bdwidth 320
+bdheight 110
+}
+BackdropNode {
+inputs 0
+name BackdropNode14
+tile_color 0x7f7f7fff
+label "analyze grain"
+note_font_size 30
+xpos -159
+ypos 606
+bdwidth 319
+bdheight 877
+}
+BackdropNode {
+inputs 0
+name BackdropNode2
+tile_color 0x7f7f7fff
+label "grain response curve"
+note_font_size 30
+xpos 610
+ypos 2574
+bdwidth 320
+bdheight 110
+}
+BackdropNode {
+inputs 0
+name BackdropNode3
+tile_color 0x7f7f7fff
+label QC
+note_font_size 30
+xpos 1050
+ypos 3222
+bdwidth 320
+bdheight 110
+}
+BackdropNode {
+inputs 0
+name BackdropNode4
+tile_color 0x7f7f7fff
+label "grain response curve"
+note_font_size 30
+xpos 610
+ypos 1422
+bdwidth 320
+bdheight 110
+}
+BackdropNode {
+inputs 0
+name BackdropNode5
+tile_color 0x7f7f7fff
+label "adapt grain"
+note_font_size 30
+xpos 170
+ypos 2574
+bdwidth 320
+bdheight 110
+}
+BackdropNode {
+inputs 0
+name BackdropNode6
+tile_color 0x7f7f7fff
+label "sample range"
+note_font_size 30
+xpos -490
+ypos 606
+bdwidth 320
+bdheight 110
+}
+BackdropNode {
+inputs 0
+name BackdropNode7
+tile_color 0x7f7f7fff
+label "luminance level"
+note_font_size 30
+xpos 280
+ypos -282
+bdwidth 760
+bdheight 685
+}
+BackdropNode {
+inputs 0
+name BackdropNode8
+tile_color 0x7f7f7fff
+label "plate grain"
+note_font_size 30
+xpos 170
+ypos 606
+bdwidth 320
+bdheight 110
+}
+BackdropNode {
+inputs 0
+name BackdropNode9
+tile_color 0x7f7f7fff
+label replace
+note_font_size 30
+xpos 60
+ypos 2191
+bdwidth 540
+bdheight 226
+}
+Input {
+inputs 0
+name DEGRAINED_PLATE
+label "\[value number]"
+note_font_size 30
+xpos 730
+ypos -896
+number 2
+}
+OCIOColorSpace {
+in_colorspace {{OCIOColorSpace1.in_colorspace}}
+out_colorspace {{OCIOColorSpace1.out_colorspace}}
+name OCIOColorSpace2
+xpos 730
+ypos -490
+}
+Dot {
+name Dot9
+xpos 764
+ypos -390
+}
+set N87b26200 [stack 0]
+Dot {
+name Dot28
+xpos 764
+ypos -198
+}
+set N87b26600 [stack 0]
+Dot {
+name Dot32
+xpos 764
+ypos 234
+}
+set N87b26a00 [stack 0]
+push $N87b26600
+Dot {
+name Dot27
+xpos 624
+ypos -198
+}
+Colorspace {
+colorspace_out YCbCr
+name Colorspace1
+xpos 590
+ypos -130
+}
+Dot {
+name Dot7
+xpos 624
+ypos -54
+}
+set N87ad7600 [stack 0]
+Input {
+inputs 0
+name PLATE
+label "\[value number]"
+note_font_size 30
+xpos 290
+ypos -892
+number 1
+}
+Dot {
+name Dot50
+xpos 324
+ypos -726
+}
+set N87b27e00 [stack 0]
+OCIOColorSpace {
+in_colorspace scene_linear
+out_colorspace scene_linear
+name OCIOColorSpace1
+xpos 290
+ypos -490
+}
+Dot {
+name Dot29
+xpos 324
+ypos -198
+}
+set N87b28600 [stack 0]
+Dot {
+name Dot6
+xpos 464
+ypos -198
+}
+Colorspace {
+colorspace_out YCbCr
+name Colorspace2
+xpos 430
+ypos -130
+}
+Merge2 {
+inputs 2
+operation from
+bbox B
+Achannels rgb
+Bchannels rgb
+output rgb
+name Merge4
+xpos 430
+ypos -58
+}
+Multiply {
+channels rgb
+value {{"1 / parent.luminance - 1"} 0 0 0}
+name Multiply6
+xpos 430
+ypos 14
+}
+Dot {
+name Dot31
+xpos 464
+ypos 90
+}
+push $N87ad7600
+Merge2 {
+inputs 2
+operation plus
+bbox B
+Achannels rgb
+Bchannels rgb
+output rgb
+name Merge5
+xpos 590
+ypos 86
+}
+Colorspace {
+colorspace_in YCbCr
+name Colorspace3
+xpos 590
+ypos 158
+}
+Merge2 {
+inputs 2
+operation from
+bbox B
+Achannels rgb
+Bchannels rgb
+output rgb
+name Merge6
+xpos 590
+ypos 230
+}
+Dot {
+name Dot35
+xpos 624
+ypos 306
+}
+set N87b31600 [stack 0]
+push $N87b26a00
+Merge2 {
+inputs 2
+operation from
+bbox B
+Achannels rgb
+Bchannels rgb
+output rgb
+name Merge7
+xpos 730
+ypos 302
+disable {{"Multiply6.value.r == 0"}}
+}
+Dot {
+name Dot2
+xpos 764
+ypos 522
+}
+set N87b36400 [stack 0]
+Dot {
+name Dot30
+xpos 764
+ypos 690
+}
+set N87b37000 [stack 0]
+Dot {
+name Dot55
+xpos 764
+ypos 1170
+}
+set N87b37400 [stack 0]
+Input {
+inputs 0
+name mask
+label "\[value number]"
+note_font_size 30
+xpos 1170
+ypos -896
+number 3
+}
+Dot {
+name Dot39
+xpos 1204
+ypos 258
+}
+set N87b37c00 [stack 0]
+Dot {
+name Dot26
+xpos 1204
+ypos 1074
+}
+set N87b38000 [stack 0]
+Invert {
+name Invert2
+xpos 180
+ypos 1064
+disable {{!parent.invert_1}}
+}
+push $N87b37000
+push $N87b28600
+Merge2 {
+inputs 2
+operation from
+bbox B
+Achannels rgb
+Bchannels rgb
+output rgb
+name Merge27
+xpos 290
+ypos 686
+}
+Dot {
+name Dot3
+xpos 324
+ypos 786
+}
+set N87b38c00 [stack 0]
+Dot {
+name Dot5
+xpos 104
+ypos 786
+}
+set N87b39800 [stack 0]
+push $N87b39800
+Copy {
+inputs 2
+from0 {{{parent.Copy2.from0}}}
+to0 rgba.red
+name Copy3
+xpos 70
+ypos 848
+}
+Expression {
+expr0 abs(r)
+channel1 {none none none rgba.alpha}
+expr1 "r == 0"
+channel2 none
+channel3 none
+name Expression4
+xpos 70
+ypos 926
+}
+set N87b3a000 [stack 0]
+push $N87b36400
+Colorspace {
+colorspace_out AlexaV3LogC
+name Colorspace5
+xpos 70
+ypos 518
+}
+Clamp {
+maximum_enable false
+name Clamp2
+xpos -40
+ypos 512
+}
+Dot {
+name Dot1
+xpos -116
+ypos 522
+}
+set N87b3fc00 [stack 0]
+Dot {
+name Dot48
+xpos -116
+ypos 786
+}
+set N87b40000 [stack 0]
+push $N87b40000
+Copy {
+inputs 2
+from0 rgba.blue
+to0 rgba.red
+name Copy2
+xpos -150
+ypos 848
+}
+Expression {
+temp_name0 min
+temp_expr0 0.48167217150330544
+temp_name1 max
+temp_expr1 0.5014760494232178
+channel0 {none none none rgba.alpha}
+expr0 "r >= min && r <= max"
+channel1 none
+channel2 none
+channel3 none
+name Expression2
+xpos -150
+ypos 926
+}
+Dot {
+name Dot4
+xpos -116
+ypos 1002
+}
+ChannelMerge {
+inputs 2
+operation stencil
+name ChannelMerge2
+xpos -40
+ypos 985
+}
+push $N87b3a000
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy1
+xpos 70
+ypos 992
+}
+ChannelMerge {
+inputs 2
+A -rgba.green
+operation multiply
+name ChannelMerge1
+xpos 70
+ypos 1057
+disable {{!A}}
+}
+Copy {
+inputs 2
+from0 {{{parent.Copy2.from0}}}
+to0 rgba.green
+name Copy4
+xpos 70
+ypos 1160
+}
+Premult {
+channels {rgba.red rgba.green -rgba.blue none}
+name Premult1
+xpos 70
+ypos 1238
+}
+TimeWarp {
+lookup 1119
+time ""
+filter nearest
+name TimeWarp1
+xpos 70
+ypos 1286
+disable true
+}
+FrameBlend {
+channels {rgba.red rgba.green -rgba.blue rgba.alpha}
+startframe 0
+endframe 9
+userange true
+name FrameBlend1
+xpos 70
+ypos 1352
+disable true
+}
+CurveTool {
+avgframes 0
+channels {rgba.red rgba.green -rgba.blue rgba.alpha}
+ROI {0 0 {width} {height}}
+intensitydata {6.983662299e-06 0.0001004976929 0 0.0002233689864}
+name CurveTool
+xpos 70
+ypos 1424
+}
+push $N87b3fc00
+Dot {
+name Dot16
+xpos -336
+ypos 522
+}
+CurveTool {
+operation "Max Luma Pixel"
+channels {-rgba.red -rgba.green rgba.blue none}
+ROI {0 0 {width} {height}}
+maxlumapixdata {1153 53}
+maxlumapixvalue {0 0 0.4965051413}
+minlumapixdata {3978 8}
+minlumapixvalue {0 0 0.1070229411}
+name CurveTool_Range
+xpos -370
+ypos 680
+}
+Sampler {
+inputs 0
+lut {red {curve x0.004190296866 0.000953187615 x0.00825256668 0.001815382432 x0.01217608247 0.002401410986 x0.01632633619 0.003192996435 x0.02167780139 0.004277412451 x0.02827052027 0.005346791396 x0.03602411598 0.006345690038 x0.0455609709 0.007263698024 x0.05916237086 0.008220183194 x0.06795085967 0.008620417709 x0.08921544999 0.009565201225 x0.1082980409 0.01007312199 x0.1316114813 0.01212613821 x0.1591171473 0.0136342651 x0.1960885078 0.01417709996 x0.2421092391 0.01679107536 x0.2957104743 0.01866288681 x0.3516415656 0.01927480442 x0.3946593106 0.01976553456 x0.4948662221 0.01593372914}
+  green {curve x0.003813451622 0.000616904722 x0.007997152396 0.001329306462 x0.01174487546 0.001908660954 x0.01614977047 0.002489042067 x0.02156099305 0.00321340477 x0.02964071929 0.004273449114 x0.03410692513 0.004977940762 x0.04560440406 0.006217906232 x0.0566117242 0.007759789766 x0.07080701739 0.009506932274 x0.08728232235 0.01121119198 x0.1073468104 0.01286652359 x0.1303474903 0.01442144289 x0.1600124091 0.01552647987 x0.1984921694 0.01707859876 x0.2430659533 0.01898639157 x0.2974022329 0.0218367789 x0.3512415588 0.02379534669 x0.4085848033 0.02422606016 x0.4839976728 0.01983123665}
+  blue {curve x0.004164250102 0.0008470237837 x0.007753062062 0.00176529614 x0.01153175719 0.00259443233 x0.01637325995 0.003607810024 x0.02062058635 0.00491122757 x0.02778862603 0.00657545693 x0.03432904184 0.008385762328 x0.04350187629 0.01040468276 x0.05429698899 0.01253503054 x0.06692753732 0.01463738468 x0.08196054399 0.01690592294 x0.1009313241 0.01908621271 x0.1235580742 0.02144050928 x0.1521073878 0.0236901813 x0.185433507 0.02608115525 x0.2263093442 0.02818393731 x0.2741981149 0.03096315321 x0.3269512355 0.03334560059 x0.3737969398 0.03415471049 x0.4499178529 0.03126513851}}
+name Sampler1
+onCreate "n = nuke.thisNode()\nn\['sampler'].setEnabled(False)"
+knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\np = nuke.thisParent()\n\nif k.name() == 'lut':\n    with p:\n        for c in \['ColorLookup1','ColorLookup2']:\n           nuke.toNode(c)\['lut'].fromScript(k.toScript())"
+xpos 840
+ypos 1502
+}
+push $N87b27e00
+Dot {
+name Dot51
+xpos 115
+ypos -726
+}
+Input {
+inputs 0
+name COMP
+label "\[value number]"
+note_font_size 30
+xpos 950
+ypos -896
+}
+Dot {
+name Dot49
+xpos 984
+ypos -605
+}
+set N87b56200 [stack 0]
+Switch {
+inputs 2
+which {{parent.meta}}
+name Switch1
+xpos 81
+ypos -609
+}
+Dot {
+name Dot54
+xpos 115
+ypos -486
+}
+Dot {
+name Dot52
+xpos -685
+ypos -486
+}
+Dot {
+name Dot53
+xpos -685
+ypos 3762
+}
+push $N87b37c00
+Dot {
+name Dot40
+xpos 874
+ypos 258
+}
+push $N87b31600
+Dot {
+name Dot34
+xpos 624
+ypos 378
+}
+Multiply {
+inputs 1+1
+channels rgb
+value 0
+maskChannelMask -rgba.red
+name Multiply1
+xpos 840
+ypos 374
+}
+push $N87b56200
+OCIOColorSpace {
+in_colorspace {{OCIOColorSpace1.in_colorspace}}
+out_colorspace {{OCIOColorSpace1.out_colorspace}}
+name OCIOColorSpace3
+xpos 950
+ypos -490
+}
+Dot {
+name Dot44
+xpos 984
+ypos -390
+}
+set N87b58e00 [stack 0]
+Merge2 {
+inputs 2
+operation from
+bbox B
+Achannels rgb
+Bchannels rgb
+output rgb
+name Merge8
+xpos 950
+ypos 374
+disable {{"Multiply6.value.r == 0"}}
+}
+Dot {
+name Dot18
+xpos 984
+ypos 2658
+}
+set N87b59600 [stack 0]
+ColorLookup {
+lut {master {}
+  red {curve x0.004190296866 0.000953187615 x0.00825256668 0.001815382432 x0.01217608247 0.002401410986 x0.01632633619 0.003192996435 x0.02167780139 0.004277412451 x0.02827052027 0.005346791396 x0.03602411598 0.006345690038 x0.0455609709 0.007263698024 x0.05916237086 0.008220183194 x0.06795085967 0.008620417709 x0.08921544999 0.009565201225 x0.1082980409 0.01007312199 x0.1316114813 0.01212613821 x0.1591171473 0.0136342651 x0.1960885078 0.01417709996 x0.2421092391 0.01679107536 x0.2957104743 0.01866288681 x0.3516415656 0.01927480442 x0.3946593106 0.01976553456 x0.4948662221 0.01593372914}
+  green {curve x0.003813451622 0.000616904722 x0.007997152396 0.001329306462 x0.01174487546 0.001908660954 x0.01614977047 0.002489042067 x0.02156099305 0.00321340477 x0.02964071929 0.004273449114 x0.03410692513 0.004977940762 x0.04560440406 0.006217906232 x0.0566117242 0.007759789766 x0.07080701739 0.009506932274 x0.08728232235 0.01121119198 x0.1073468104 0.01286652359 x0.1303474903 0.01442144289 x0.1600124091 0.01552647987 x0.1984921694 0.01707859876 x0.2430659533 0.01898639157 x0.2974022329 0.0218367789 x0.3512415588 0.02379534669 x0.4085848033 0.02422606016 x0.4839976728 0.01983123665}
+  blue {curve x0.004164250102 0.0008470237837 x0.007753062062 0.00176529614 x0.01153175719 0.00259443233 x0.01637325995 0.003607810024 x0.02062058635 0.00491122757 x0.02778862603 0.00657545693 x0.03432904184 0.008385762328 x0.04350187629 0.01040468276 x0.05429698899 0.01253503054 x0.06692753732 0.01463738468 x0.08196054399 0.01690592294 x0.1009313241 0.01908621271 x0.1235580742 0.02144050928 x0.1521073878 0.0236901813 x0.185433507 0.02608115525 x0.2263093442 0.02818393731 x0.2741981149 0.03096315321 x0.3269512355 0.03334560059 x0.3737969398 0.03415471049 x0.4499178529 0.03126513851}
+  alpha {}}
+name ColorLookup2
+xpos 730
+ypos 2654
+}
+push $N87b38000
+Dot {
+name Dot38
+xpos 1204
+ypos 1842
+}
+Dot {
+name Dot37
+xpos 544
+ypos 1842
+}
+Dot {
+name Dot22
+xpos 544
+ypos 2271
+}
+set N87b62400 [stack 0]
+Dot {
+name Dot20
+xpos 544
+ypos 2391
+}
+push $N87b62400
+Dot {
+name Dot17
+xpos 434
+ypos 2271
+}
+set N87b62c00 [stack 0]
+Dot {
+name Dot13
+xpos 214
+ypos 2271
+}
+Input {
+inputs 0
+name external_grain
+label "\[value number]"
+note_font_size 30
+xpos -150
+ypos 1716
+number 4
+}
+Dot {
+name Dot21
+xpos -116
+ypos 1938
+}
+push $N87b37400
+ColorLookup {
+channels rgb
+lut {master {}
+  red {curve x0.004190296866 0.000953187615 x0.00825256668 0.001815382432 x0.01217608247 0.002401410986 x0.01632633619 0.003192996435 x0.02167780139 0.004277412451 x0.02827052027 0.005346791396 x0.03602411598 0.006345690038 x0.0455609709 0.007263698024 x0.05916237086 0.008220183194 x0.06795085967 0.008620417709 x0.08921544999 0.009565201225 x0.1082980409 0.01007312199 x0.1316114813 0.01212613821 x0.1591171473 0.0136342651 x0.1960885078 0.01417709996 x0.2421092391 0.01679107536 x0.2957104743 0.01866288681 x0.3516415656 0.01927480442 x0.3946593106 0.01976553456 x0.4948662221 0.01593372914}
+  green {curve x0.003813451622 0.000616904722 x0.007997152396 0.001329306462 x0.01174487546 0.001908660954 x0.01614977047 0.002489042067 x0.02156099305 0.00321340477 x0.02964071929 0.004273449114 x0.03410692513 0.004977940762 x0.04560440406 0.006217906232 x0.0566117242 0.007759789766 x0.07080701739 0.009506932274 x0.08728232235 0.01121119198 x0.1073468104 0.01286652359 x0.1303474903 0.01442144289 x0.1600124091 0.01552647987 x0.1984921694 0.01707859876 x0.2430659533 0.01898639157 x0.2974022329 0.0218367789 x0.3512415588 0.02379534669 x0.4085848033 0.02422606016 x0.4839976728 0.01983123665}
+  blue {curve x0.004164250102 0.0008470237837 x0.007753062062 0.00176529614 x0.01153175719 0.00259443233 x0.01637325995 0.003607810024 x0.02062058635 0.00491122757 x0.02778862603 0.00657545693 x0.03432904184 0.008385762328 x0.04350187629 0.01040468276 x0.05429698899 0.01253503054 x0.06692753732 0.01463738468 x0.08196054399 0.01690592294 x0.1009313241 0.01908621271 x0.1235580742 0.02144050928 x0.1521073878 0.0236901813 x0.185433507 0.02608115525 x0.2263093442 0.02818393731 x0.2741981149 0.03096315321 x0.3269512355 0.03334560059 x0.3737969398 0.03415471049 x0.4499178529 0.03126513851}
+  alpha {}}
+name ColorLookup1
+xpos 730
+ypos 1502
+}
+Dot {
+name Dot24
+xpos 764
+ypos 1746
+}
+push $N87b38c00
+Dot {
+name Dot33
+xpos 324
+ypos 1386
+}
+MergeExpression {
+inputs 2
+temp_name0 target
+temp_expr0 .01
+expr0 "Br * (target / Ar)"
+expr1 "Bg * (target / Ag)"
+expr2 "Bb * (target / Ab)"
+channel3 none
+name MergeExpression1
+xpos 290
+ypos 1742
+}
+Dot {
+name Dot15
+xpos 324
+ypos 1842
+}
+set N87b5d600 [stack 0]
+Dot {
+name Dot25
+xpos 104
+ypos 1842
+}
+Switch {
+inputs 2
+which {{parent.external_grain}}
+name Switch2
+xpos 70
+ypos 1934
+}
+Group {
+name VoronoiScatter
+xpos 70
+ypos 2102
+disable {{!parent.scatter}}
+addUserKnob {20 User}
+addUserKnob {41 useGPUIfAvailable l "Use GPU if available" T VoroNoise.useGPUIfAvailable}
+addUserKnob {41 vectorize l "Vectorize on CPU" -STARTLINE T VoroNoise.vectorize}
+addUserKnob {15 box}
+box {{parent.box x1004 0 x1036 -75} {parent.box x1004 100 x1036 120} {parent.box x1004 496 x1036 325} {parent.box x1004 916 x1036 320}}
+addUserKnob {3 sample_frame l "sample frame"}
+sample_frame {{parent.sample_frame}}
+addUserKnob {7 cell_size l "cell size" R 0 100}
+cell_size {{parent.cell_size}}
+addUserKnob {6 overlay_pattern l "overlay pattern" -STARTLINE}
+overlay_pattern {{parent.overlay}}
+addUserKnob {3 edge_blend_size l "edge blend size"}
+edge_blend_size {{parent.edge_blend_size}}
+addUserKnob {7 amplitude R 0 100}
+amplitude {{parent.amplitude}}
+addUserKnob {7 frequency R 0 100}
+frequency {{parent.frequency}}
+addUserKnob {41 VoroNoise_Seed l Seed T VoroNoise.VoroNoise_Seed}
+}
+Input {
+inputs 0
+name Input1
+xpos 180
+ypos -879
+}
+Dot {
+name Dot14
+xpos 214
+ypos -750
+}
+set N87b6ae00 [stack 0]
+Dot {
+name Dot16
+xpos 434
+ypos -750
+}
+Remove {
+name Remove1
+xpos 400
+ypos -687
+}
+Dot {
+name Dot6
+xpos 434
+ypos -606
+}
+set N87b6ba00 [stack 0]
+Dot {
+name Dot15
+xpos 654
+ypos -606
+}
+set N87b6be00 [stack 0]
+Dot {
+name Dot7
+xpos 874
+ypos -606
+}
+Noise {
+output {rgba.red -rgba.green -rgba.blue none}
+replace true
+size {{parent.frequency} {"parent.frequency * pixel_aspect"}}
+zoffset {{"x + 1000"}}
+gamma 1
+name Noise1
+xpos 840
+ypos -514
+}
+Noise {
+output {-rgba.red rgba.green -rgba.blue none}
+replace true
+size {{parent.Noise1.size} {parent.Noise1.size}}
+zoffset {{x}}
+gamma 1
+name Noise2
+xpos 840
+ypos -466
+}
+Clamp {
+name Clamp1
+xpos 840
+ypos -424
+}
+Dot {
+name Dot11
+xpos 874
+ypos -366
+}
+push $N87b6be00
+BlinkScript {
+ProgramGroup 1
+KernelDescription "2 \"VoroNoise\" iterate pixelWise c117be128a07c11b6d82fd34148d66b3bcac41976ec9c2082affe38e890c2c0f 2 \"src\" Read Point \"dst\" Write Point 6 \"Frequency\" Float 1 AABIQg== \"Seed\" Int 1 AAAAAA== \"aspect ratio\" Float 1 AACAPw== \"width\" Int 1 AAAAAA== \"height\" Int 1 AAAAAA== \"Randomness\" Float 1 AAAAPw== 6 \"frequency\" 1 1 \"seed\" 1 1 \"aspect_ratio\" 1 1 \"width\" 1 1 \"height\" 1 1 \"randomness\" 1 1 0"
+kernelSource "// Voronoi.blink\n// A test implementation of libNoise's Voronoi generator using Blink\n// Ivan Busquets - August 2013\n// Modified for DasGrain by Fabian Holtz - April 2019\n\n#define X_NOISE_GEN  1619\n#define Y_NOISE_GEN  31337\n#define Z_NOISE_GEN  6971\n#define SEED_NOISE_GEN  1013\n#define SQRT_3 1.73205081\n\ninline int IntValueNoise3D (int x, int y, int z, int seed)\n\{\n  // All constants are primes and must remain prime in order for this noise\n  // function to work correctly.\n  int n = (\n      X_NOISE_GEN    * x\n    + Y_NOISE_GEN    * y\n    + Z_NOISE_GEN    * z\n    + SEED_NOISE_GEN * seed)\n    & 0x7fffffff;\n  n = (n >> 13) ^ n;\n  return (n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff;\n\}\n\ninline float ValueNoise3D (int x, int y, int z, int seed)\n\{\n  return 1.0 - ((float)IntValueNoise3D (x, y, z, seed) / 1073741824.0);\n\}\n\nkernel VoroNoise : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead> src;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  float frequency;\n  int seed;\n  float aspect_ratio;\n  int width;\n  int height;\n  float randomness;\n\n\n  void define() \{\n    defineParam(frequency, \"Frequency\", 50.0f);\n    defineParam(aspect_ratio, \"aspect ratio\", 1.0f);\n    defineParam(seed, \"Seed\", 0);\n    defineParam(randomness, \"Randomness\", 0.5f);\n  \}\n\n\n\n\n  void process(int2 pos) \{\n   float x = pos.x * aspect_ratio * frequency / width;\n   float y = pos.y * frequency / width;\n   int xInt = (x > 0.0) ? x : x - 1;\n   int yInt = (y > 0.0) ? y : y - 1;\n\n\n    float minDist = 2147483647.0;\n    float xCandidate = 0;\n    float yCandidate = 0;\n\n    float dist;\n\nfor (int yCur = yInt - 2; yCur <= yInt + 2; yCur++) \{\n      for (int xCur = xInt - 2; xCur <= xInt + 2; xCur++) \{\n\n        // Calculate the position and distance to the seed point inside of\n        // this unit cube. Limited by the randomness value\n        float xPos = xCur + (ValueNoise3D (xCur, yCur, 0, seed    ) + 1 ) * randomness + (1-randomness) - 1;\n        float yPos = yCur + (ValueNoise3D (xCur, yCur, 0, seed + 1) + 1 ) * randomness + (1-randomness) - 1;\n\n        float xDist = xPos - x;\n        float yDist = yPos - y;\n\n        dist = pow(xDist, 2) + pow(yDist, 2);\n        if (dist < minDist) \{\n          // This seed point is closer to any others found so far, so record\n          // this seed point.\n          minDist = dist;\n          xCandidate = xPos;\n          yCandidate = yPos;\n\t\}\n    \}\n\}\n\n    SampleType(dst) sample(0.0f);\n\n    sample.x = xCandidate / aspect_ratio / frequency;\n    sample.y = yCandidate / height * width / frequency;\n    sample.z = 0;\n\n    dst() = sample;\n\}\n\};"
+rebuild ""
+VoroNoise_Frequency {{"width / parent.cell_size"}}
+VoroNoise_Seed {{"(x + (parent.parent.stereo == 2 ? \[lsearch \[value root.views] \[view]] / 2 : 0)) * 5"}}
+"VoroNoise_aspect ratio" {{pixel_aspect}}
+VoroNoise_width {{width}}
+VoroNoise_height {{height}}
+rebuild_finalise ""
+name VoroNoise
+xpos 620
+ypos -520
+}
+Copy {
+inputs 2
+from0 rgba.red
+to0 forward.u
+from1 rgba.green
+to1 forward.v
+name Copy1
+xpos 620
+ypos -382
+disable {{"parent.amplitude == 0"}}
+}
+IDistort {
+uv forward
+uv_offset 0.5
+uv_scale {{parent.amplitude} {"uv_scale.w * pixel_aspect"}}
+filter impulse
+name IDistort1
+xpos 620
+ypos -280
+disable {{"parent.amplitude == 0"}}
+}
+Dot {
+name Dot5
+xpos 654
+ypos -246
+}
+NoTimeBlur {
+rounding floor
+name NoTimeBlur3
+xpos 620
+ypos -154
+}
+Transform {
+translate {{"floor((x * size) % 1 * (size)) - int(size / 2)"} {"floor(x % 1 * (size)) - int(size/2)"}}
+filter impulse
+black_outside false
+name Transform1
+xpos 620
+ypos -58
+disable {{"parent.edge_blend_size < 1"}}
+addUserKnob {20 User}
+addUserKnob {3 size}
+size {{"parent.edge_blend_size + 1"}}
+}
+Dot {
+name Dot9
+xpos 654
+ypos 42
+}
+set N87b76800 [stack 0]
+push $N87b6ba00
+Expression {
+expr0 "(x + .5) / width"
+expr1 "(y + .5) / height"
+expr2 0
+name STMapGenerator
+xpos 400
+ypos -514
+}
+NoTimeBlur {
+rounding floor
+name NoTimeBlur2
+xpos 400
+ypos -154
+}
+Merge2 {
+inputs 2
+operation from
+Achannels {rgba.red rgba.green -rgba.blue none}
+Bchannels {rgba.red rgba.green -rgba.blue none}
+output {rgba.red rgba.green -rgba.blue none}
+name Merge2
+xpos 400
+ypos 38
+}
+Dot {
+name Dot10
+xpos 434
+ypos 210
+}
+push $N87b76800
+Expression {
+temp_name0 view_index
+temp_expr0 "parent.parent.stereo == 1 ? \[lsearch \[value root.views] \[view]] / 2 : 0"
+expr0 "random((r + view_index) * 1000000, 0) * (maxx - minx) + minx"
+expr1 "random((g + view_index) * 1000000, 0) * (maxy - miny) + miny"
+channel2 none
+channel3 none
+name Expression3
+xpos 620
+ypos 110
+addUserKnob {20 User}
+addUserKnob {7 frequency R 0 100}
+frequency {{parent.parent.cell_size}}
+addUserKnob {7 multiplier R 0 3}
+multiplier 0.5
+addUserKnob {15 shrink}
+shrink {{"frequency * multiplier + ceil(parent.edge_blend_size / 2) + IDistort1.uv_scale.w / 2"} {"frequency * multiplier + ceil(parent.edge_blend_size / 2) + IDistort1.uv_scale.h / 2"} {"frequency * multiplier + floor(parent.edge_blend_size / 2) + IDistort1.uv_scale.w / 2"} {"frequency * multiplier + floor(parent.edge_blend_size / 2) + IDistort1.uv_scale.h / 2"}}
+addUserKnob {26 ""}
+addUserKnob {7 minx}
+minx {{"(parent.box.x + shrink.x + .5) / width"}}
+addUserKnob {7 maxx}
+maxx {{"(parent.box.r - shrink.r - .5) / width"}}
+addUserKnob {7 miny}
+miny {{"(parent.box.y + shrink.y + .5) / height"}}
+addUserKnob {7 maxy}
+maxy {{"(parent.box.t - shrink.t - .5) / height"}}
+}
+Merge2 {
+inputs 2
+operation plus
+Achannels {rgba.red rgba.green -rgba.blue none}
+Bchannels {rgba.red rgba.green -rgba.blue none}
+output {rgba.red rgba.green -rgba.blue none}
+name Merge3
+xpos 620
+ypos 206
+}
+Expression {
+expr0 "(r + (maxx - minx) - minx) % (maxx - minx) + minx"
+expr1 "(g + (maxy - miny) - miny) % (maxy - miny) + miny"
+channel2 none
+channel3 none
+name Expression7
+xpos 620
+ypos 278
+addUserKnob {20 User}
+addUserKnob {7 minx}
+minx {{"(parent.box.x + rint(x % 1 * parent.edge_blend_size) + .5) / width"}}
+addUserKnob {7 maxx}
+maxx {{"(parent.box.r + rint(x % 1 * parent.edge_blend_size) - .5) / width"}}
+addUserKnob {7 miny}
+miny {{"(parent.box.y + rint(x % 1 * parent.edge_blend_size) + .5) / height"}}
+addUserKnob {7 maxy}
+maxy {{"(parent.box.t + rint(x % 1 * parent.edge_blend_size) - .5) / height"}}
+}
+Dot {
+name Dot3
+xpos 654
+ypos 354
+}
+set N87b7d400 [stack 0]
+Dot {
+name Dot13
+xpos 654
+ypos 546
+}
+push $N87b7d400
+Dot {
+name Dot8
+xpos 874
+ypos 354
+}
+Blur {
+channels rgb
+size {{pixel_aspect} 1}
+name Blur1
+label "\[value size]"
+xpos 840
+ypos 440
+}
+Difference {
+inputs 2
+name Difference2
+xpos 840
+ypos 536
+}
+Expression {
+channel0 {none none none rgba.alpha}
+expr0 "a > 1e-9"
+channel1 none
+channel2 none
+channel3 none
+name Expression2
+xpos 840
+ypos 614
+}
+Shuffle {
+red alpha
+green alpha
+blue alpha
+name Shuffle1
+label "\[value in]:\[value out]"
+xpos 840
+ypos 680
+}
+Dot {
+name Dot4
+xpos 874
+ypos 762
+}
+push $N87b7d400
+push $N87b6ae00
+FrameHold {
+firstFrame {{parent.sample_frame}}
+name FrameHold1
+xpos 180
+ypos -256
+}
+NoTimeBlur {
+rounding floor
+name NoTimeBlur1
+xpos 180
+ypos -154
+}
+STMap {
+inputs 2
+channels rgb
+uv rgb
+filter impulse
+name STMap1
+xpos 180
+ypos 350
+}
+set N87b83200 [stack 0]
+TimeBlur {
+divisions {{"max(Transform1.size == 1 ? 2 : pow2(Transform1.size), 1)"}}
+shutter 1
+shuttercustomoffset {{"1 / divisions / 2"}}
+name TimeBlur1
+xpos 180
+ypos 446
+disable {{"parent.edge_blend_size < 1"}}
+}
+set N87b83a00 [stack 0]
+push $N87b83200
+Dot {
+name Dot1
+xpos -6
+ypos 354
+}
+Difference {
+inputs 2
+name Difference1
+xpos -40
+ypos 440
+}
+Expression {
+channel0 {none none none rgba.alpha}
+expr0 "a > 1e-10"
+channel1 none
+channel2 none
+channel3 none
+name Expression1
+xpos -40
+ypos 494
+}
+Blur {
+channels alpha
+size {{parent.parent.edge_blend_size}}
+name Blur2
+xpos -40
+ypos 536
+}
+Grade {
+channels alpha
+blackpoint 0.5
+white_clamp true
+name Grade2
+xpos -40
+ypos 584
+}
+Dot {
+name Dot2
+xpos -6
+ypos 666
+}
+push $N87b83a00
+Grade {
+inputs 1+1
+white 1.4
+black_clamp false
+name Grade1
+xpos 180
+ypos 662
+disable {{"parent.edge_blend_size < 1"}}
+}
+Merge2 {
+inputs 2
+Achannels rgb
+Bchannels rgb
+output rgb
+name Merge1
+xpos 180
+ypos 758
+disable {{!parent.overlay_pattern}}
+}
+Assert {
+expression {{"Expression3.maxx > Expression3.minx && Expression3.maxy > Expression3.miny"}}
+message "increase sample box size or decrease cell size"
+name error
+xpos 180
+ypos 854
+}
+Output {
+name Output1
+xpos 180
+ypos 950
+}
+end_group
+Multiply {
+inputs 1+1
+channels rgb
+value 1.8
+maskChannelMask {{{parent.Merge9.maskChannelMask}}}
+invert_mask {{!Merge9.invert_mask}}
+name Multiply7
+xpos 70
+ypos 2315
+disable {{"!maskChannelMask || !\[exists parent.input3.name]"}}
+}
+Dot {
+name Dot23
+xpos 104
+ypos 2391
+}
+push $N87b62c00
+push $N87b5d600
+Multiply {
+inputs 1+1
+channels rgb
+value 1.8
+maskChannelMask {{{parent.Merge9.maskChannelMask}}}
+invert_mask {{parent.Merge9.invert_mask}}
+name Multiply2
+xpos 290
+ypos 2315
+disable {{"!maskChannelMask || (!parent.scatter && !parent.external_grain)"}}
+}
+Merge2 {
+inputs 2+1
+operation copy
+Achannels rgb
+Bchannels rgb
+output rgb
+maskChannelMask -rgba.alpha
+name Merge9
+xpos 290
+ypos 2387
+disable {{"!(parent.scatter || parent.external_grain)"}}
+}
+Dot {
+name Dot11
+xpos 324
+ypos 2490
+}
+set N87b90200 [stack 0]
+MergeExpression {
+inputs 2
+temp_name0 reverse
+temp_expr0 "1 / MergeExpression1.temp_expr0"
+expr0 "Br * Ar * reverse"
+expr1 "Bg * Ag * reverse"
+expr2 "Bb * Ab * reverse"
+name MergeExpression2
+xpos 290
+ypos 2654
+}
+Dot {
+name Dot8
+xpos 324
+ypos 2850
+}
+push $N87b59600
+Merge2 {
+inputs 2
+operation plus
+bbox B
+Achannels rgb
+Bchannels rgb
+output rgb
+name Merge3
+xpos 950
+ypos 2846
+}
+Dot {
+name Dot42
+xpos 984
+ypos 3018
+}
+set N87b91a00 [stack 0]
+OCIOColorSpace {
+in_colorspace {{OCIOColorSpace1.out_colorspace}}
+out_colorspace {{OCIOColorSpace1.in_colorspace}}
+name OCIOColorSpace4
+xpos 950
+ypos 3086
+}
+Dot {
+name Dot19
+xpos 984
+ypos 3162
+}
+set N87b92a00 [stack 0]
+Dot {
+name Dot41
+xpos 1204
+ypos 3162
+}
+set N87b92e00 [stack 0]
+Dot {
+name Dot36
+xpos 1314
+ypos 3162
+}
+Blur {
+channels rgb
+size 1
+name Blur1
+xpos 1280
+ypos 3254
+}
+push $N87b92e00
+Merge2 {
+inputs 2
+operation difference
+bbox B
+Achannels rgb
+Bchannels rgb
+output rgb
+name Merge10
+xpos 1170
+ypos 3254
+}
+Multiply {
+channels rgb
+value 50
+name Multiply3
+xpos 1170
+ypos 3302
+}
+Dot {
+name Dot43
+xpos 1204
+ypos 3402
+}
+push $N87b58e00
+Dot {
+name Dot45
+xpos 1424
+ypos -390
+}
+push $N87b91a00
+Merge2 {
+inputs 2
+operation from
+Achannels rgb
+Bchannels rgb
+output rgb
+name Merge11
+xpos 1390
+ypos 3014
+}
+Dot {
+name Dot46
+xpos 1424
+ypos 3522
+}
+push $N87b90200
+Dot {
+name Dot14
+xpos 104
+ypos 2490
+}
+Dot {
+name Dot12
+xpos 104
+ypos 3402
+}
+push $N87b26200
+Dot {
+name Dot47
+xpos -556
+ypos -390
+}
+push $N87b28600
+Merge2 {
+inputs 2
+operation from
+Achannels rgb
+Bchannels rgb
+output rgb
+name Merge12
+xpos -590
+ypos -202
+}
+Dot {
+name Dot10
+xpos -556
+ypos 3522
+}
+push $N87b92a00
+Switch {
+inputs 5
+which {{output}}
+name Output
+xpos 950
+ypos 3656
+addUserKnob {20 User}
+addUserKnob {4 output M {"regrained comp" "plate grain" "normalised grain" "adapted grain" "grain QC"}}
+}
+CopyMetaData {
+inputs 2
+mergeMode "Meta only"
+name CopyMetaData1
+xpos 950
+ypos 3758
+}
+Output {
+name Output1
+xpos 950
+ypos 3854
+}
+end_group
+set N87af3800 [stack 0]
+Dot {
+name Dot5
+label " INVERT COLOR TRANSFORMS HERE"
+note_font "Verdana Bold Italic"
+note_font_size 15
+note_font_color 0xe9ff55ff
+selected true
+xpos 532
+ypos 5392
+}
+ColorCorrect {
+gamma {{(1-parent.custom_per_shot_CC1.gamma)+1}}
+shadows.gamma {{(1-parent.custom_per_shot_CC1.shadows.gamma)+1}}
+shadows.offset {{(1-parent.custom_per_shot_CC1.shadows.offset)}}
+midtones.gamma {{(1-parent.custom_per_shot_CC1.midtones.gamma)+1}}
+highlights.gamma {{(1-parent.custom_per_shot_CC1.highlights.gamma)+1}}
+highlights.offset {{parent.custom_per_shot_CC1.highlights.offset}}
+lookup {shadow {}
+  midtone {}
+  highlight {curve x0.1471922249 0 s0 x0.5487040281 1 s0}}
+name custom_per_shot_CC2
+selected true
+xpos 496
+ypos 5431
+disable true
+}
+OCIOCDLTransform {
+slope {0.9653 0.9874 0.9873}
+offset {-0.0024 0 0.0024}
+power {1.0119 0.9958 0.9923}
+invert true
+working_space sRGB
+read_from_file true
+file "\[python \{nuke.toNode('OCIOCDLTransform2').knob('file').getValue()\}]"
+cccid ADM_008_010
+name OCIOCDLTransform1
+selected true
+xpos 496
+ypos 5463
+hide_input true
+}
+OCIOFileTransform {
+file "\[python \{nuke.toNode('OCIOFileTransform3').knob('file').getValue()\}]"
+version 3
+invert true
+working_space Gamma2.2
+name OCIOFileTransform1
+selected true
+xpos 496
+ypos 5495
+hide_input true
+}
+Write {
+channels rgba
+file file.dpx
+colorspace sRGB
+file_type dpx
+checkHashOnRead false
+name Write1
+selected true
+xpos 498
+ypos 5534
+}
+push $N87af3800
+Write {
+channels rgba
+file /Volumes/Dettifoss/HBJ/ADM/ADM_141_010/RENDERS/ADM_141_010_v01.mov
+colorspace sRGB
+file_type mov
+mov64_format "mov (QuickTime / MOV)"
+mov64_codec appr
+mov_prores_codec_profile "ProRes 4:4:4:4 XQ 12-bit"
+mov_h264_codec_profile "High 4:2:0 8-bit"
+mov64_pixel_format {{0}}
+mov64_quality High
+mov64_fast_start true
+mov64_write_timecode true
+mov64_gop_size 12
+mov64_b_frames 0
+mov64_bitrate 20000
+mov64_bitrate_tolerance 4000000
+mov64_quality_min 1
+mov64_quality_max 3
+checkHashOnRead false
+version 2
+name Write2
+selected true
+xpos 805
+ypos 5248
+}

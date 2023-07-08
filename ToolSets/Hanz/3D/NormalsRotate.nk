@@ -1,0 +1,57 @@
+set cut_paste_input [stack 0]
+push $cut_paste_input
+Group {
+ name NormalsRotate
+ addUserKnob {20 Params}
+ addUserKnob {41 n T Shuffle1.in}
+ addUserKnob {6 up l unpremult t "unpremult n layer by rgba.alpha\n" -STARTLINE}
+ addUserKnob {7 rx l x R -180 180}
+ addUserKnob {7 ry l y R -180 180}
+ addUserKnob {7 rz l z R -180 180}
+}
+ Axis2 {
+  inputs 0
+  display off
+  selectable false
+  rot_order XYZ
+  rotate {{rx} {ry} {rz}}
+  name Axis1
+  xpos 80
+  ypos 90
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos -40
+  ypos -10
+ }
+ Shuffle {
+  in none
+  in2 rgba
+  alpha alpha2
+  name Shuffle1
+  xpos -40
+  ypos 39
+ }
+ Unpremult {
+  name Unpremult1
+  xpos -40
+  ypos 63
+  disable {{!up}}
+ }
+ ColorMatrix {
+  matrix {
+      {{Axis1.world_matrix.0} {Axis1.world_matrix.1} {Axis1.world_matrix.2}}
+      {{Axis1.world_matrix.4} {Axis1.world_matrix.5} {Axis1.world_matrix.6}}
+      {{Axis1.world_matrix.8} {Axis1.world_matrix.9} {Axis1.world_matrix.10}}
+    }
+  name ColorMatrix1
+  xpos -40
+  ypos 110
+ }
+ Output {
+  name Output
+  xpos -40
+  ypos 182
+ }
+end_group

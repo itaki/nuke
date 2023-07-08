@@ -1,0 +1,148 @@
+set cut_paste_input [stack 0]
+push $cut_paste_input
+Group {
+ name ReGrainSimple
+ tile_color 0x7f7f7fff
+ addUserKnob {20 Params}
+ addUserKnob {41 lut l "" +STARTLINE T LUT.lut}
+ addUserKnob {41 lg l log t "LUT in log range" T lin_to_log.lg}
+ addUserKnob {41 value l intensity t "global rgb grain intensity multiplier" T Multiply1.value}
+}
+ Input {
+  inputs 0
+  name Input
+  label "\[value number]"
+  xpos 70
+  ypos -40
+ }
+ Dot {
+  name Dot1
+  xpos 104
+  ypos 114
+ }
+set Ncc0a8800 [stack 0]
+ Expression {
+  temp_name0 lgr
+  temp_expr0 LUT.lut.red(r>sp?(log(r/0.18)/log(2)-mn)/(mx-mn):(r-sp)/ls+lo)
+  temp_name1 lgg
+  temp_expr1 LUT.lut.green(g>sp?(log(g/0.18)/log(2)-mn)/(mx-mn):(g-sp)/ls+lo)
+  temp_name2 lgb
+  temp_expr2 LUT.lut.blue(b>sp?(log(b/0.18)/log(2)-mn)/(mx-mn):(b-sp)/ls+lo)
+  expr0 lg?lgr>lo?0.18*2**(lgr*(mx-mn)+mn):ls*(lgr-lo)+sp:LUT.lut.red(r)
+  expr1 lg?lgg>lo?0.18*2**(lgg*(mx-mn)+mn):ls*(lgg-lo)+sp:LUT.lut.green(g)
+  expr2 lg?lgb>lo?0.18*2**(lgb*(mx-mn)+mn):ls*(lgb-lo)+sp:LUT.lut.blue(b)
+  name lg2ApplyLUTlx1
+  xpos -40
+  ypos 111
+  addUserKnob {20 Params}
+  addUserKnob {6 lg l log t "apply LUT in log encoding" +STARTLINE}
+  lg {{parent.lin_to_log.lg}}
+  addUserKnob {7 mn R -12 0}
+  mn {{parent.lin_to_log.mn}}
+  addUserKnob {7 mx R 0 12}
+  mx {{parent.lin_to_log.mx}}
+  addUserKnob {7 sp t "splice point"}
+  sp {{parent.lin_to_log.sp}}
+  addUserKnob {7 lo t "linear offset"}
+  lo {{(log(sp/0.18)/log(2)-mn)/(mx-mn)}}
+  addUserKnob {7 ls t "linear slope"}
+  ls {{sp*(mx-mn)*log(2)}}
+ }
+ Input {
+  inputs 0
+  name Inputgrn
+  label "\[value number]"
+  xpos -150
+  ypos -40
+  number 1
+ }
+ Reformat {
+  type "to box"
+  box_width {{Input.width}}
+  box_height {{Input.height}}
+  box_fixed true
+  box_pixel_aspect {{Input.pixel_aspect}}
+  filter Lanczos4
+  pbb true
+  name Reformat
+  xpos -150
+  ypos 14
+ }
+ TimeClip {
+  time ""
+  first {{input.first_frame}}
+  before loop
+  last {{input.last_frame}}
+  after loop
+  origset true
+  name TimeClip1
+  xpos -150
+  ypos 56
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  bbox B
+  output rgb
+  name Merge1
+  xpos -150
+  ypos 110
+ }
+ Multiply {
+  channels rgb
+  name Multiply1
+  xpos -150
+  ypos 159
+ }
+ Dot {
+  name Dot2
+  xpos -116
+  ypos 210
+ }
+push $Ncc0a8800
+ Merge2 {
+  inputs 2
+  operation plus
+  bbox B
+  output rgb
+  name Merge2
+  xpos 70
+  ypos 206
+ }
+ Output {
+  name Output
+  xpos 70
+  ypos 278
+ }
+push $Ncc0a8800
+ Expression {
+  expr0 r>sp?(log(r/0.18)/log(2)-mn)/(mx-mn):(r-sp)/ls+lo
+  expr1 g>sp?(log(g/0.18)/log(2)-mn)/(mx-mn):(g-sp)/ls+lo
+  expr2 b>sp?(log(b/0.18)/log(2)-mn)/(mx-mn):(b-sp)/ls+lo
+  name lin_to_log
+  xpos 180
+  ypos 111
+  disable {{!lg}}
+  addUserKnob {20 Params}
+  addUserKnob {6 lg l log t "use log encoding for LUT so values appear evenly distributed over stops" +STARTLINE}
+  lg true
+  addUserKnob {7 mn R -12 0}
+  mn -8
+  addUserKnob {7 mx R 0 12}
+  mx 7
+  addUserKnob {7 sp t "splice point"}
+  sp {{2**-8}}
+  addUserKnob {7 lo t "linear offset"}
+  lo {{(log(sp/0.18)/log(2)-mn)/(mx-mn)}}
+  addUserKnob {7 ls t "linear slope"}
+  ls {{sp*(mx-mn)*log(2)}}
+ }
+ Sampler {
+  lut {red {curve}
+    green {curve}
+    blue {curve}}
+  name LUT
+  xpos 180
+  ypos 134
+ }
+end_group

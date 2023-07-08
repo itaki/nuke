@@ -1,0 +1,14 @@
+set cut_paste_input [stack 0]
+version 14.0 v3
+push $cut_paste_input
+Vectorfield {
+ vfield_file ../../global_assets/LUTs/main.cube
+ version 23
+ file_type cube
+ colorspaceIn sRGB
+ colorspaceOut sRGB
+ name VIEWER_INPUT
+ selected true
+ xpos 300
+ ypos -415
+}

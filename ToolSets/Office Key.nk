@@ -1,0 +1,1682 @@
+set cut_paste_input [stack 0]
+version 14.0 v3
+BackdropNode {
+ inputs 0
+ name BackdropNode10
+ tile_color 0x7f0001
+ label "<center><img src=\"Keyer.png\"> Depill Screen"
+ note_font_size 30
+ selected true
+ xpos -1208
+ ypos 2273
+ bdwidth 110
+ bdheight 284
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode11
+ tile_color 0x191901
+ label "<center><img src=\"Radial.png\"> Create Keymix mask"
+ note_font_size 30
+ selected true
+ xpos -1288
+ ypos 2660
+ bdwidth 346
+ bdheight 334
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode12
+ tile_color 0x7f5f0001
+ label "<center><img src=\"Read.png\"> Add back alpha"
+ note_font_size 30
+ selected true
+ xpos -611
+ ypos 3019
+ bdwidth 110
+ bdheight 244
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode6
+ tile_color 0x5800ff
+ label "<center><img src=\"Keyer.png\"> Key In"
+ note_font_size 30
+ selected true
+ xpos -875
+ ypos 1896
+ bdwidth 141
+ bdheight 241
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode7
+ tile_color 0x7f0001
+ label "<center><img src=\"Keyer.png\"> Keyer"
+ note_font_size 30
+ selected true
+ xpos -634
+ ypos 2017
+ bdwidth 144
+ bdheight 407
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode8
+ tile_color 0x36615401
+ label "<center><img src=\"DustBust.png\"> Bring back blue stuff\n"
+ note_font_size 30
+ selected true
+ xpos -2055
+ ypos 3236
+ bdwidth 269
+ bdheight 384
+}
+Roto {
+ inputs 0
+ output alpha
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t x450b0000 x44c18000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {px x434e0000
+        {{{0 -}}
+      {{0 -}}}
+        {{{xc3060000 -}}
+      {{x453d0000 -}}}
+        {{{0 -}}
+      {{0 -}}}
+        {{{0 -}}
+      {{0 -}}}
+        {{{x44abe66c xc045c935 1 0 1}}
+      {{x45308668 xbf177ee7 1 0 1}}}
+        {{{0 -}}
+      {{0 -}}}
+        {{{0 -}}
+      {{0 -}}}
+        {{{x44af9665 xc01349c1 1 0 1}}
+      {{x44988333 xbfeba90b 1 0 1}}}
+        {{{0 -}}
+      {{0 -}}}
+        {{{x42c00000 -}}
+      {{xc1200000 -}}}
+        {{{x44778000 -}}
+      {{x445ccccc -}}}
+        {{{xc2c00000 -}}
+      {{x41200000 -}}}
+        {{{0 -}}
+      {{0 -}}}
+        {{{xc34a0000 -}}
+      {{x448ec000 -}}}
+        {{{0 -}}
+      {{0 -}}}}}     idem}
+     {tx x434e0000 x44233333 x44ddc000}
+     {a fx x422c0000 fy x422c0000 osw x41200000 osf 0 str 1 spx x450b0000 spy x44c18000 sb 1 ltn x434e0000 ltm x434e0000 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {2224 1548}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ lifetime_start 206
+ lifetime_end 206
+ motionblur_shutter_offset_type centred
+ feather 43
+ source_black_outside true
+ name Roto1
+ selected true
+ xpos -2045
+ ypos 3423
+ addUserKnob {20 button +HIDDEN +INVISIBLE}
+ addUserKnob {22 createPowerRelative -STARTLINE T "import aePowerPinFun\naePowerPinFun.createPowerRelative()"}
+ addUserKnob {22 createPowerAbsolute -STARTLINE T "import aePowerPinFun\naePowerPinFun.createPowerAbsolute()"}
+ addUserKnob {22 createPowerStabilize -STARTLINE T "import aePowerPinFun\naePowerPinFun.createPowerStabilize()"}
+ addUserKnob {20 button +HIDDEN +INVISIBLE}
+ addUserKnob {22 createPowerRelative -STARTLINE T "import aePowerPinFun\naePowerPinFun.createPowerRelative()"}
+ addUserKnob {22 createPowerAbsolute -STARTLINE T "import aePowerPinFun\naePowerPinFun.createPowerAbsolute()"}
+ addUserKnob {22 createPowerStabilize -STARTLINE T "import aePowerPinFun\naePowerPinFun.createPowerStabilize()"}
+}
+push $cut_paste_input
+PostageStamp {
+ name Stamp9
+ help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+ onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.wiredOnCreate()\n    except:\n        pass\n"
+ knobChanged "import stamps; stamps.wiredKnobChanged()"
+ autolabel "nuke.thisNode().knob(\"title\").value()"
+ tile_color 0x1000001
+ note_font Verdana
+ note_font_size 20
+ selected true
+ xpos -601
+ ypos 1785
+ hide_input true
+ addUserKnob {20 wired_tab l "Wired Stamp"}
+ addUserKnob {26 identifier -STARTLINE +HIDDEN T wired}
+ addUserKnob {3 lockCallbacks l "" +STARTLINE +HIDDEN}
+ addUserKnob {6 toReconnect -STARTLINE +HIDDEN}
+ addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+ title Beauty_Plate
+ addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T Beauty_Plate}
+ addUserKnob {26 tags l Tags: t "Tags of this stamp's Anchor, for information purpose only.\nClick \"show anchor\" to change them." T <i>2D</i>}
+ addUserKnob {26 backdrops l Backdrops: t "Labels of backdrop nodes which contain this stamp's Anchor." +HIDDEN T " "}
+ addUserKnob {26 line1 l "" +STARTLINE}
+ addUserKnob {6 postageStamp_show l "postage stamp" t "Enable the postage stamp thumbnail in this node.\nYou're seeing this because the class of this node includes the postage_stamp knob." +STARTLINE}
+ addUserKnob {26 anchor_label l Anchor: T " "}
+ addUserKnob {22 show_anchor l " show anchor " t "Show the properties panel for this Stamp's Anchor." -STARTLINE T stamps.wiredShowAnchor()}
+ addUserKnob {22 zoom_anchor l "zoom anchor" t "Navigate to this Stamp's Anchor on the Node Graph." -STARTLINE T stamps.wiredZoomAnchor()}
+ addUserKnob {26 stamps_label l Stamps: T " "}
+ addUserKnob {22 zoomNext l " zoom next " t "Navigate to this Stamp's next sibling on the Node Graph." -STARTLINE T stamps.wiredZoomNext()}
+ addUserKnob {22 selectSimilar l " select similar " t "Select all similar Stamps to this one on the Node Graph." -STARTLINE T stamps.wiredSelectSimilar()}
+ addUserKnob {26 space_1 l "" +STARTLINE T " "}
+ addUserKnob {26 reconnect_label l Reconnect: t "Reconnect by the stored Anchor name." T " "}
+ addUserKnob {22 reconnect_this l this t "Reconnect this Stamp to its Anchor, by its stored Anchor name." -STARTLINE T "n = nuke.thisNode()\ntry:\n    n.setInput(0,nuke.toNode(n.knob(\"anchor\").value()))\nexcept:\n    nuke.message(\"Unable to reconnect.\")\ntry:\n    import stamps\n    stamps.wiredGetStyle(n)\nexcept:\n    pass\n"}
+ addUserKnob {22 reconnect_similar l similar t "Reconnect this Stamp and similar ones to their Anchor, by their stored anchor name." -STARTLINE T stamps.wiredReconnectSimilar()}
+ addUserKnob {22 reconnect_all l all t "Reconnect all the Stamps to their Anchors, by their stored anchor names." -STARTLINE T stamps.wiredReconnectAll()}
+ addUserKnob {26 space_2 l "" +STARTLINE T " "}
+ addUserKnob {20 advanced_reconnection l "Advanced Reconnection" n 2}
+ addUserKnob {26 reconnect_by_title_label l "<font color=gold>By Title:" t "Reconnect by searching for a matching title." T " "}
+ addUserKnob {22 reconnect_by_title_this l this t "Look for an Anchor that shares this Stamp's title, and connect this Stamp to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitle()}
+ addUserKnob {22 reconnect_by_title_similar l similar t "Look for an Anchor that shares this Stamp's title, and connect this Stamp and similar ones to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSimilar()}
+ addUserKnob {22 reconnect_by_title_selected l selected t "For each Stamp selected, look for an Anchor that shares its title, and connect to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSelected()}
+ addUserKnob {26 reconnect_by_selection_label l "<font color=orangered>By Selection:" t "Force reconnect to a selected Anchor." T " "}
+ addUserKnob {22 reconnect_by_selection_this l this t "Force reconnect this Stamp to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelection()}
+ addUserKnob {22 reconnect_by_selection_similar l similar t "Force reconnect this Stamp and similar ones to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSimilar()}
+ addUserKnob {22 reconnect_by_selection_selected l selected t "Force reconnect all selected Stamps to an also selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSelected()}
+ addUserKnob {1 anchor l Anchor}
+ anchor Anchor_26da62100a
+ addUserKnob {6 auto_reconnect_by_title l "<font color=#ED9977>&nbsp; auto-reconnect by title" t "When creating this stamp again (like on copy-paste), auto-reconnect it by title instead of doing it by the saved anchor's name, and auto-turn this off immediately.\nIMPORTANT: Should be off by default. Only use this for setting up templates." +STARTLINE}
+ addUserKnob {26 line2 l "" +STARTLINE}
+ addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+ addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+Dot {
+ name Dot4
+ selected true
+ xpos -567
+ ypos 1874
+}
+Dot {
+ name Dot18
+ selected true
+ xpos -567
+ ypos 1983
+}
+set N1e72e200 [stack 0]
+Dot {
+ name Dot1
+ selected true
+ xpos -831
+ ypos 1981
+}
+set N1e71ac00 [stack 0]
+Dot {
+ name Dot14
+ selected true
+ xpos -1164
+ ypos 1981
+}
+set N1e712800 [stack 0]
+Dot {
+ name Dot6
+ selected true
+ xpos -1855
+ ypos 1981
+}
+Merge2 {
+ inputs 2
+ operation stencil
+ name Merge5
+ selected true
+ xpos -1889
+ ypos 3427
+}
+push $N1e71ac00
+Primatte3 {
+ data { 5
+    30393 37484 47360
+    65552
+    0 5
+    30234 30234 30234 0
+    619.051 268.64 418.863 868.756 407.795 1011.39 2405.67 326.796 324.521 2176.05 1154.58 676.628 975.762 687.064 630.667 1022.77 1724.44 291.625 373.657 1600.58 271.489 428.081 381.099 659.668 594.935 1251.07 354.517 1576.71 688.42 798.014 1337.56 569.359 460.248 1338.37 880.972 461.676 2310.27 711.622 1937.74 474.483 320.469 413.299 1139.61 487.685 1991.21 397.946 307.77 305.791 2167.9 592.992 1003.3 17319.9 15346.4 7392.44 714.496 788.705 886.569 13538.9 9202.78 20515.4 718.068 413.759 401.31 368.108 339.894 681.351
+    51967.2 130560 130560 130560 130560 28628.7 25215 87825.6 130560 130560 8486.69 130560 130560 130560 130560 21354.6 130560 130560 130560 16725.6 130560 40027.7 130560 130560 130560 130560 14395 7555.34 43491 130560 130560 130560 130560 130560 130560 130560 8485.49 130560 130560 130560 130560 130560 16807.7 65918.7 11692.8 130560 130560 86803.2 130560 130560 130560 38964.5 89936.7 130560 18710.1 67514 10795.5 22911.3 49359 130560 130560 130560 130560 130560 130560 130560
+    51967.2 130560 130560 130560 130560 28628.7 25215 87825.6 130560 130560 8486.69 130560 130560 130560 130560 21354.6 130560 130560 130560 16725.6 130560 40027.7 130560 130560 130560 130560 14395 7555.34 43491 130560 130560 130560 130560 130560 130560 130560 8485.49 130560 130560 130560 130560 130560 16807.7 65918.7 11692.8 130560 130560 86803.2 130560 130560 130560 38964.5 89936.7 130560 18710.1 67514 10795.5 22911.3 49359 130560 130560 130560 130560 130560 130560 130560
+    -1.37693e+07 -2.22551e+14 -2.22551e+14 -9.23424e+08 8.54027e+13 8.54027e+13
+    -1.33976e+07 -2.22551e+14 -2.22551e+14 -4.10288e+08 6.85883e+13 6.85883e+13
+    -2.77944e+06 -2.22551e+14 -2.22551e+14 -5.66978e+08 -4.23871e+13 -4.23871e+13
+    -2.72514e+06 -2.22551e+14 -2.22551e+14 -9.425e+07 -5.92015e+13 -5.92015e+13
+    -7.99695e+06 -2.22551e+14 -2.22551e+14 4.55284e+08 5.92015e+13 5.92015e+13
+    -7.78103e+06 -2.22551e+14 -2.22551e+14 7.26532e+08 4.23871e+13 4.23871e+13
+    -6.09088e+06 -2.22551e+14 -2.22551e+14 3.06995e+08 -6.85883e+13 -6.85883e+13
+    -5.97184e+06 -2.22551e+14 -2.22551e+14 1.31268e+09 -8.54027e+13 -8.54027e+13
+    -1.25159e+10 -4.06321e+14 -4.06321e+14 -3.07234e+11 1.69454e+14 1.69454e+14
+    -3.82465e+08 -3.57149e+11 -3.57149e+11 3.67265e+09 1.34614e+12 1.34614e+12
+    -7.81018e+06 -5.5713e+13 -5.5713e+13 2.57861e+08 8.22961e+13 8.22961e+13
+    -1.39981e+09 -9.00324e+11 -9.00324e+11 -2.7381e+10 2.23748e+12 2.23748e+12
+    -6.84762e+06 -4.06321e+14 -4.06321e+14 -4.74185e+08 -5.05577e+13 -5.05577e+13
+    -6.91156e+07 -4.06321e+14 -4.06321e+14 4.26693e+08 -4.34232e+13 -4.34232e+13
+    -3.92143e+07 -4.06321e+14 -4.06321e+14 -1.86156e+09 -4.10875e+12 -4.10875e+12
+    -3.67429e+09 -4.06321e+14 -4.06321e+14 1.68427e+10 -2.07091e+14 -2.07091e+14
+    -5.84069e+09 -7.57979e+11 -7.57979e+11 9.02192e+10 4.36084e+11 4.36084e+11
+    -7.24771e+07 -5.82285e+13 -5.82285e+13 4.5369e+09 3.09884e+14 3.09884e+14
+    -1.5554e+07 -4.06321e+14 -4.06321e+14 -1.14704e+09 4.34232e+13 4.34232e+13
+    -2.91071e+07 -1.07877e+13 -1.07877e+13 2.33651e+09 -9.91774e+12 -9.91774e+12
+    -4.38071e+08 -4.06321e+14 -4.06321e+14 -3.31312e+10 1.21922e+14 1.21922e+14
+    -6.28102e+06 -4.06321e+14 -4.06321e+14 -6.09567e+07 -8.1061e+13 -8.1061e+13
+    -1.07753e+09 -4.06322e+14 -4.06322e+14 -5.12689e+10 -1.76588e+14 -1.76588e+14
+    -1.21758e+10 -3.00019e+12 -3.00019e+12 4.49196e+11 3.59164e+12 3.59164e+12
+    -4.42976e+10 -9.20521e+13 -9.20521e+13 -1.33386e+12 2.68356e+14 2.68356e+14
+    -1.72385e+08 -4.04037e+11 -4.04037e+11 5.46257e+09 1.00276e+12 1.00276e+12
+    -1.94072e+07 -3.48754e+14 -3.48754e+14 -9.89448e+08 8.01678e+13 8.01678e+13
+    -6.17531e+08 -3.93123e+11 -3.93123e+11 3.19009e+10 6.47524e+11 6.47524e+11
+    -6.62758e+07 -5.24559e+14 -5.24559e+14 -1.33415e+09 1.21988e+12 1.21988e+12
+    -4.0617e+07 -5.24559e+14 -5.24559e+14 -1.20282e+09 -1.71472e+14 -1.71472e+14
+    -5.00239e+08 -5.24559e+14 -5.24559e+14 2.66375e+10 -9.76259e+13 -9.76259e+13
+    -2.07343e+10 -1.5655e+14 -1.5655e+14 5.23324e+11 -1.51502e+14 -1.51502e+14
+    -1.37475e+09 -1.53612e+14 -1.53612e+14 -1.63578e+11 2.91391e+14 2.91391e+14
+    -1.04805e+08 -3.43665e+13 -3.43665e+13 4.66606e+09 1.24256e+14 1.24256e+14
+    -4.98538e+06 -2.73326e+14 -2.73326e+14 -5.30777e+08 1.02677e+14 1.02677e+14
+    -8.00365e+07 -3.96202e+13 -3.96202e+13 -1.78001e+09 -6.86801e+13 -6.86801e+13
+    -9.10515e+06 -4.06321e+14 -4.06321e+14 -1.10027e+09 3.75944e+13 3.75944e+13
+    -1.80685e+07 -4.06321e+14 -4.06321e+14 -6.82999e+08 2.71004e+13 2.71004e+13
+    -1.33897e+07 -4.06321e+14 -4.06321e+14 1.37626e+09 -7.46324e+13 -7.46324e+13
+    -3.62729e+09 -2.79896e+14 -2.79896e+14 2.8314e+11 -2.07677e+14 -2.07677e+14
+    -1.34339e+08 -2.22551e+14 -2.22551e+14 -1.22999e+09 7.5277e+13 7.5277e+13
+    -3.68411e+08 -1.83541e+11 -1.83541e+11 5.94764e+09 3.96334e+11 3.96334e+11
+    -2.98052e+07 -4.98381e+12 -4.98381e+12 -2.06931e+09 8.20305e+12 8.20305e+12
+    -3.51278e+07 -1.25119e+12 -1.25119e+12 8.8322e+09 2.70505e+12 2.70505e+12
+    -7.64256e+06 -2.22551e+14 -2.22551e+14 -4.62624e+08 -6.19535e+13 -6.19535e+13
+    -7.29902e+07 -8.85828e+13 -8.85828e+13 1.56288e+09 -2.24935e+13 -2.24935e+13
+    -7.66541e+07 -2.22551e+14 -2.22551e+14 2.78344e+09 2.83383e+13 2.83383e+13
+    -2.4118e+07 -2.22551e+14 -2.22551e+14 1.67648e+09 -9.95054e+13 -9.95054e+13
+    -1.1514e+09 -2.37519e+13 -2.37519e+13 -3.88261e+10 7.82836e+13 7.82836e+13
+    -5.33944e+07 -4.17316e+11 -4.17316e+11 -1.61667e+10 1.45935e+12 1.45935e+12
+    -3.92302e+07 -4.06321e+14 -4.06321e+14 -1.3411e+09 1.4348e+14 1.4348e+14
+    -3.78766e+08 -1.96761e+11 -1.96761e+11 -1.01879e+10 2.01356e+12 2.01356e+12
+    -1.71105e+08 -4.06321e+14 -4.06321e+14 3.99005e+09 2.18645e+13 2.18645e+13
+    -2.12524e+07 -4.06321e+14 -4.06321e+14 -4.52856e+08 -1.61109e+14 -1.61109e+14
+    -2.19892e+08 -4.06321e+14 -4.06321e+14 -5.85431e+09 -9.65403e+13 -9.65403e+13
+    -2.90775e+09 -1.21263e+14 -1.21263e+14 -5.04232e+10 -2.54516e+14 -2.54516e+14
+    -3.00361e+10 -5.69208e+12 -5.69208e+12 5.98762e+10 1.39566e+13 1.39566e+13
+    -8.37679e+07 -3.88726e+13 -3.88726e+13 -6.34398e+08 6.35647e+11 6.35647e+11
+    -9.36834e+06 -5.24559e+14 -5.24559e+14 -4.87301e+08 4.2299e+13 4.2299e+13
+    -4.28084e+07 -2.29352e+13 -2.29352e+13 -5.23191e+08 6.05557e+13 6.05557e+13
+    -1.20762e+08 -5.24559e+14 -5.24559e+14 -1.52132e+10 1.30393e+14 1.30393e+14
+    -8.60019e+06 -5.24559e+14 -5.24559e+14 8.54114e+07 -6.81309e+13 -6.81309e+13
+    -6.59354e+08 -5.24559e+14 -5.24559e+14 2.47671e+10 -2.00967e+14 -2.00967e+14
+    -1.50713e+11 -2.08271e+13 -2.08271e+13 2.20307e+12 1.53346e+12 1.53346e+12
+    -1.22289e+09 -2.51251e+13 -2.51251e+13 -3.67866e+10 8.73765e+13 8.73765e+13
+    -4.19267e+07 -2.10113e+14 -2.10113e+14 8.38314e+08 2.12932e+14 2.12932e+14
+    -6.94947e+06 -4.06321e+14 -4.06321e+14 5.27996e+08 -2.71004e+13 -2.71004e+13
+    -7.89965e+06 -1.38e+14 -1.38e+14 -1.22245e+08 -1.35776e+13 -1.35776e+13
+    -6.18097e+07 -4.06321e+14 -4.06321e+14 -3.55327e+09 1.29289e+14 1.29289e+14
+    -7.47968e+06 -4.06321e+14 -4.06321e+14 -1.04614e+09 7.09111e+12 7.09111e+12
+    -1.40161e+08 -4.06322e+14 -4.06322e+14 3.80589e+09 -1.66327e+14 -1.66327e+14
+    -2.51858e+09 -5.40562e+13 -5.40562e+13 4.05435e+11 -5.29675e+13 -5.29675e+13
+    -2.02246e+09 -4.06321e+14 -4.06321e+14 -5.2311e+10 1.811e+14 1.811e+14
+    -2.94666e+08 -1.26379e+11 -1.26379e+11 1.06502e+10 2.86401e+11 2.86401e+11
+    -2.60061e+07 -8.9988e+13 -8.9988e+13 -2.34659e+09 1.22579e+14 1.22579e+14
+    -1.48804e+08 -2.608e+11 -2.608e+11 -1.44526e+10 1.36085e+12 1.36085e+12
+    -4.07058e+07 -4.06321e+14 -4.06321e+14 -7.32556e+08 -5.89202e+13 -5.89202e+13
+    -1.14389e+08 -4.06321e+14 -4.06321e+14 -4.91918e+09 -1.4348e+14 -1.4348e+14
+    -2.3907e+08 -4.06321e+14 -4.06321e+14 -1.26982e+10 -1.57556e+13 -1.57556e+13
+    -4.26795e+08 -4.06321e+14 -4.06321e+14 2.19987e+10 -1.98729e+14 -1.98729e+14
+    -1.60855e+08 -1.05652e+12 -1.05652e+12 5.85635e+09 1.13264e+13 1.13264e+13
+    -1.93344e+07 -9.76677e+12 -9.76677e+12 1.87031e+09 5.69315e+13 5.69315e+13
+    -4.57338e+07 -2.22551e+14 -2.22551e+14 4.05416e+08 5.45395e+13 5.45395e+13
+    -6.8266e+07 -8.65797e+11 -8.65797e+11 -6.12272e+09 -5.98713e+12 -5.98713e+12
+    -2.25166e+08 -2.22551e+14 -2.22551e+14 4.11855e+09 4.90758e+13 4.90758e+13
+    -6.17798e+06 -2.22551e+14 -2.22551e+14 -1.72959e+07 -7.87679e+13 -7.87679e+13
+    -2.9836e+07 -2.22551e+14 -2.22551e+14 3.51395e+08 -8.26909e+13 -8.26909e+13
+    -1.3261e+08 -1.1348e+13 -1.1348e+13 2.33542e+10 -4.44962e+13 -4.44962e+13
+    -7.67382e+10 -1.98313e+14 -1.98313e+14 -1.59434e+12 2.63154e+14 2.63154e+14
+    -1.68564e+08 -3.66853e+12 -3.66853e+12 5.19539e+09 1.01634e+13 1.01634e+13
+    -7.24896e+06 -2.34601e+14 -2.34601e+14 4.99756e+08 1.08046e+14 1.08046e+14
+    -5.50629e+08 -4.58089e+12 -4.58089e+12 4.01449e+10 2.58236e+12 2.58236e+12
+    -1.14132e+07 -5.24559e+14 -5.24559e+14 -8.00063e+08 1.20158e+13 1.20158e+13
+    -3.44256e+07 -5.24559e+14 -5.24559e+14 1.17179e+09 -4.2299e+13 -4.2299e+13
+    -4.55081e+07 -5.24559e+14 -5.24559e+14 3.69375e+09 -8.25899e+13 -8.25899e+13
+    -5.81872e+10 -3.61344e+14 -3.61344e+14 -3.63693e+11 -2.25059e+14 -2.25059e+14
+    -5.07421e+08 -1.37395e+14 -1.37395e+14 -5.96967e+10 2.66712e+14 2.66712e+14
+    -4.23142e+07 -1.87931e+14 -1.87931e+14 -1.06573e+09 6.95657e+13 6.95657e+13
+    -5.2e+06 -3.63425e+14 -3.63425e+14 -3.90064e+07 -4.5679e+13 -4.5679e+13
+    -8.07876e+06 -1.8349e+14 -1.8349e+14 -3.14834e+08 2.96621e+13 2.96621e+13
+    -1.325e+07 -3.63425e+14 -3.63425e+14 3.40689e+08 8.89914e+13 8.89914e+13
+    -1.05907e+07 -3.63425e+14 -3.63425e+14 -8.13649e+08 4.5679e+13 4.5679e+13
+    -2.19556e+07 -3.63425e+14 -3.63425e+14 7.08426e+08 -1.13171e+14 -1.13171e+14
+    -5.57105e+08 -2.50347e+14 -2.50347e+14 8.78005e+10 -2.11629e+14 -2.11629e+14
+    -5.18051e+09 -3.63425e+14 -3.63425e+14 -3.00253e+11 1.42414e+14 1.42414e+14
+    -5.27364e+08 -1.13021e+11 -1.13021e+11 -2.98527e+09 5.57023e+11 5.57023e+11
+    -1.4716e+07 -2.46763e+13 -2.46763e+13 -1.01781e+09 3.37457e+13 3.37457e+13
+    -1.84507e+08 -4.59723e+11 -4.59723e+11 3.75211e+10 1.50337e+11 1.50337e+11
+    -1.19574e+07 -3.63425e+14 -3.63425e+14 -5.50078e+08 -7.93481e+13 -7.93481e+13
+    -1.31187e+08 -3.63425e+14 -3.63425e+14 2.91214e+09 -8.89961e+13 -8.89961e+13
+    -1.44561e+08 -3.63425e+14 -3.63425e+14 6.40489e+09 2.15045e+13 2.15045e+13
+    -6.95083e+08 -3.63425e+14 -3.63425e+14 3.52142e+10 -1.76078e+14 -1.76078e+14
+    -3.5163e+09 -1.38074e+12 -1.38074e+12 -1.22885e+11 4.08124e+12 4.08124e+12
+    -3.64406e+07 -5.74225e+12 -5.74225e+12 -3.27473e+09 1.8743e+13 1.8743e+13
+    -3.42093e+07 -3.63425e+14 -3.63425e+14 2.90138e+08 8.89961e+13 8.89961e+13
+    -1.25607e+08 -8.30056e+11 -8.30056e+11 1.46517e+10 5.30681e+12 5.30681e+12
+    -3.03917e+08 -3.63425e+14 -3.63425e+14 -1.27708e+10 7.49221e+13 7.49221e+13
+    -8.8663e+06 -3.63425e+14 -3.63425e+14 -1.06154e+08 -1.2266e+14 -1.2266e+14
+    -2.52168e+08 -3.63425e+14 -3.63425e+14 7.24228e+09 -1.32766e+14 -1.32766e+14
+    -6.05875e+09 -1.38946e+13 -1.38946e+13 2.98228e+11 2.70751e+12 2.70751e+12
+    -6.9569e+11 -4.01846e+13 -4.01846e+13 4.07277e+12 9.81911e+13 9.81911e+13
+    -1.35975e+08 -3.71147e+12 -3.71147e+12 2.24534e+09 1.02516e+13 1.02516e+13
+    -1.0193e+07 -4.02707e+14 -4.02707e+14 4.62648e+08 2.18094e+14 2.18094e+14
+    -3.01194e+08 -3.52589e+12 -3.52589e+12 -2.43259e+10 4.07197e+12 4.07197e+12
+    -3.24506e+07 -6.05708e+14 -6.05708e+14 -1.38422e+09 5.82885e+13 5.82885e+13
+    -2.32018e+07 -6.05708e+14 -6.05708e+14 4.97813e+08 -1.14404e+14 -1.14404e+14
+    -3.51036e+08 -6.05708e+14 -6.05708e+14 -1.0285e+10 -1.54694e+14 -1.54694e+14
+    -5.34778e+11 -1.24523e+14 -1.24523e+14 -4.14741e+12 -8.51566e+13 -8.51566e+13
+    -1 -1 -1 -1
+    -1 -1 999999 999999
+    -1 -1 -1 -1
+    0.05 1.732 1.732
+    0.05 1.732 1.732
+    0.05 0.866 0.866
+    0.05 0.866 0.866
+    0.05 0.866 0.866
+    0.05 0.866 0.866
+    0.05 0.866 0.866
+    0.05 0.866 0.866
+  }
+
+ primEdgedata { 5
+    30393 37484 47360
+    65552
+    0 5
+    30234 30234 30234 0
+    619.051 268.64 418.863 868.756 407.795 1011.39 2405.67 326.796 324.521 2176.05 1154.58 676.628 975.762 687.064 630.667 1022.77 1724.44 291.625 373.657 1600.58 271.489 428.081 381.099 659.668 594.935 1251.07 354.517 1576.71 688.42 798.014 1337.56 569.359 460.248 1338.37 880.972 461.676 2310.27 711.622 1937.74 474.483 320.469 413.299 1139.61 487.685 1991.21 397.946 307.77 305.791 2167.9 592.992 1003.3 17319.9 15346.4 7392.44 714.496 788.705 886.569 13538.9 9202.78 20515.4 718.068 413.759 401.31 368.108 339.894 681.351
+    51967.2 130560 130560 130560 130560 29730.6 30254 87825.6 130560 130560 12287.4 130560 130560 130560 130560 25012.2 130560 130560 130560 19746.6 130560 40027.7 130560 130560 130560 130560 24595.5 13788.1 43491 130560 130560 130560 130560 130560 130560 130560 15667.4 130560 130560 130560 130560 130560 22073.8 97276.6 13802 130560 130560 86803.2 130560 130560 130560 39454.5 89936.7 130560 18710.1 67514 14894.3 34084.8 130560 130560 130560 130560 130560 130560 130560 130560
+    51967.2 130560 130560 130560 130560 29730.6 30254 87825.6 130560 130560 12287.4 130560 130560 130560 130560 25012.2 130560 130560 130560 19746.6 130560 40027.7 130560 130560 130560 130560 24595.5 13788.1 43491 130560 130560 130560 130560 130560 130560 130560 15667.4 130560 130560 130560 130560 130560 22073.8 97276.6 13802 130560 130560 86803.2 130560 130560 130560 39454.5 89936.7 130560 18710.1 67514 14894.3 34084.8 130560 130560 130560 130560 130560 130560 130560 130560
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    -1 -1 -1 -1
+    -1 -1 999999 999999
+    -1 -1 -1 -1
+    0.05 1.732 1.732
+    0.05 1.732 1.732
+    0.05 0.866 0.866
+    0.05 0.866 0.866
+    0.05 0.866 0.866
+    0.05 0.866 0.866
+    0.05 0.866 0.866
+    0.05 0.866 0.866
+  }
+
+ primBodydata { 5
+    30393 37484 47360
+    65552
+    0 5
+    30234 30234 30234 0
+    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    51967.2 130560 130560 130560 130560 28628.7 25215 87825.6 130560 130560 8486.69 130560 130560 130560 130560 21354.6 130560 130560 130560 16725.6 130560 40027.7 130560 130560 130560 130560 14395 7555.34 43491 130560 130560 130560 130560 130560 130560 130560 8485.49 130560 130560 130560 130560 130560 16807.7 65918.7 11692.8 130560 130560 86803.2 130560 130560 130560 38964.5 89936.7 130560 18710.1 67514 10795.5 22911.3 49359 130560 130560 130560 130560 130560 130560 130560
+    51967.2 130560 130560 130560 130560 28628.7 25215 87825.6 130560 130560 8486.69 130560 130560 130560 130560 21354.6 130560 130560 130560 16725.6 130560 40027.7 130560 130560 130560 130560 14395 7555.34 43491 130560 130560 130560 130560 130560 130560 130560 8485.49 130560 130560 130560 130560 130560 16807.7 65918.7 11692.8 130560 130560 86803.2 130560 130560 130560 38964.5 89936.7 130560 18710.1 67514 10795.5 22911.3 49359 130560 130560 130560 130560 130560 130560 130560
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    0 0 0 0 0 0
+    -1 -1 -1 -1
+    -1 -1 999999 999999
+    -1 -1 -1 -1
+    0.05 1.732 1.732
+    0.05 1.732 1.732
+    0.05 0.866 0.866
+    0.05 0.866 0.866
+    0.05 0.866 0.866
+    0.05 0.866 0.866
+    0.05 0.866 0.866
+    0.05 0.866 0.866
+  }
+
+ crop {0 0 4448 3096}
+ "Adjust Lighting" 0
+ "Hybrid Matte" 0
+ "Fine Tuning" 0
+ name Primatte1
+ selected true
+ xpos -865
+ ypos 2079
+}
+FilterErode {
+ size 21
+ name FilterErode1
+ selected true
+ xpos -865
+ ypos 2103
+}
+push $N1e72e200
+OFXuk.co.thefoundry.keylight.keylight_v201 {
+ inputs 2
+ show "Final Result"
+ unPreMultiply false
+ screenColour {0.1750830263 0.2705830336 0.4600830078}
+ screenGain 1
+ screenBalance 0.95
+ alphaBias {0.5 0.7099999785 0.4499999881}
+ despillBias {0.5 0.5 0.5}
+ gangBiases true
+ preBlur 0
+ "Screen Matte" 0
+ screenClipMin 0
+ screenClipMax 1
+ screenClipRollback 0
+ screenGrowShrink 0
+ screenSoftness 0
+ screenDespotBlack 0
+ screenDespotWhite 0
+ screenReplaceMethod "Soft Colour"
+ screenReplaceColour {0.5 0.5 0.5}
+ Tuning 0
+ midPoint 0.5
+ lowGain 1
+ midGain 1
+ highGain 1
+ "Inside Mask" 0
+ sourceAlphaHandling Ignore
+ insideReplaceMethod "Soft Colour"
+ insideReplaceColour {0.5 0.5 0.5}
+ Crops 0
+ SourceXMethod Colour
+ SourceYMethod Colour
+ SourceEdgeColour 0
+ SourceCropL 0
+ SourceCropR 1
+ SourceCropB 0
+ SourceCropT 1
+ balanceSet false
+ insideComponent Alpha
+ outsideComponent None
+ cacheBreaker true
+ name Keylight1
+ selected true
+ xpos -601
+ ypos 2107
+}
+Dot {
+ name Dot15
+ selected true
+ xpos -567
+ ypos 2152
+}
+set N1dd51a00 [stack 0]
+Dot {
+ name Dot16
+ selected true
+ xpos -786
+ ypos 2152
+}
+Dot {
+ name Dot3
+ selected true
+ xpos -1008
+ ypos 2150
+}
+set N1dbe6a00 [stack 0]
+Dot {
+ name Dot5
+ selected true
+ xpos -1459
+ ypos 2150
+}
+Dot {
+ name Dot19
+ selected true
+ xpos -1459
+ ypos 3111
+}
+Roto {
+ inputs 0
+ output alpha
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x450b0000 x44c18000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {px x43320000
+        {0 0}
+        {x448ec000 x451d4000}
+        {0 0}
+        {0 0}
+        {x44930000 x44874000}
+        {0 0}
+        {0 0}
+        {xc2a40000 x44814000}
+        {0 0}
+        {0 0}
+        {xc3480000 x45284000}
+        {0 0}}}     idem}
+     {tx x43320000 x43fe8000 x44e4e000}
+     {a fx x40600000 fy x40600000 osw x41200000 osf 0 str 1 spx x450b0000 spy x44c18000 sb 1 ltn x43320000 ltm x43320000 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {2224 1548}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ lifetime_start 178
+ lifetime_end 178
+ motionblur_shutter_offset_type centred
+ feather 3.5
+ source_black_outside true
+ name Roto3
+ selected true
+ xpos -1278
+ ypos 2883
+ addUserKnob {20 button +HIDDEN +INVISIBLE}
+ addUserKnob {22 createPowerRelative -STARTLINE T "import aePowerPinFun\naePowerPinFun.createPowerRelative()"}
+ addUserKnob {22 createPowerAbsolute -STARTLINE T "import aePowerPinFun\naePowerPinFun.createPowerAbsolute()"}
+ addUserKnob {22 createPowerStabilize -STARTLINE T "import aePowerPinFun\naePowerPinFun.createPowerStabilize()"}
+ addUserKnob {20 button +HIDDEN +INVISIBLE}
+ addUserKnob {22 createPowerRelative -STARTLINE T "import aePowerPinFun\naePowerPinFun.createPowerRelative()"}
+ addUserKnob {22 createPowerAbsolute -STARTLINE T "import aePowerPinFun\naePowerPinFun.createPowerAbsolute()"}
+ addUserKnob {22 createPowerStabilize -STARTLINE T "import aePowerPinFun\naePowerPinFun.createPowerStabilize()"}
+}
+Invert {
+ channels alpha
+ name Invert1
+ selected true
+ xpos -1278
+ ypos 2915
+}
+push 0
+PostageStamp {
+ name Stamp10
+ help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+ onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.wiredOnCreate()\n    except:\n        pass\n"
+ knobChanged "import stamps; stamps.wiredKnobChanged()"
+ autolabel "nuke.thisNode().knob(\"title\").value()"
+ tile_color 0x1000001
+ note_font Verdana
+ note_font_size 20
+ selected true
+ xpos -1271
+ ypos 2745
+ hide_input true
+ addUserKnob {20 wired_tab l "Wired Stamp"}
+ addUserKnob {26 identifier -STARTLINE +HIDDEN T wired}
+ addUserKnob {3 lockCallbacks l "" +STARTLINE +HIDDEN}
+ addUserKnob {6 toReconnect -STARTLINE +HIDDEN}
+ addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+ title Backdrop_plate
+ addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T Backdrop_plate}
+ addUserKnob {26 tags l Tags: t "Tags of this stamp's Anchor, for information purpose only.\nClick \"show anchor\" to change them." T <i>2D</i>}
+ addUserKnob {26 backdrops l Backdrops: t "Labels of backdrop nodes which contain this stamp's Anchor." +HIDDEN T " "}
+ addUserKnob {26 line1 l "" +STARTLINE}
+ addUserKnob {6 postageStamp_show l "postage stamp" t "Enable the postage stamp thumbnail in this node.\nYou're seeing this because the class of this node includes the postage_stamp knob." +STARTLINE}
+ addUserKnob {26 anchor_label l Anchor: T " "}
+ addUserKnob {22 show_anchor l " show anchor " t "Show the properties panel for this Stamp's Anchor." -STARTLINE T stamps.wiredShowAnchor()}
+ addUserKnob {22 zoom_anchor l "zoom anchor" t "Navigate to this Stamp's Anchor on the Node Graph." -STARTLINE T stamps.wiredZoomAnchor()}
+ addUserKnob {26 stamps_label l Stamps: T " "}
+ addUserKnob {22 zoomNext l " zoom next " t "Navigate to this Stamp's next sibling on the Node Graph." -STARTLINE T stamps.wiredZoomNext()}
+ addUserKnob {22 selectSimilar l " select similar " t "Select all similar Stamps to this one on the Node Graph." -STARTLINE T stamps.wiredSelectSimilar()}
+ addUserKnob {26 space_1 l "" +STARTLINE T " "}
+ addUserKnob {26 reconnect_label l Reconnect: t "Reconnect by the stored Anchor name." T " "}
+ addUserKnob {22 reconnect_this l this t "Reconnect this Stamp to its Anchor, by its stored Anchor name." -STARTLINE T "n = nuke.thisNode()\ntry:\n    n.setInput(0,nuke.toNode(n.knob(\"anchor\").value()))\nexcept:\n    nuke.message(\"Unable to reconnect.\")\ntry:\n    import stamps\n    stamps.wiredGetStyle(n)\nexcept:\n    pass\n"}
+ addUserKnob {22 reconnect_similar l similar t "Reconnect this Stamp and similar ones to their Anchor, by their stored anchor name." -STARTLINE T stamps.wiredReconnectSimilar()}
+ addUserKnob {22 reconnect_all l all t "Reconnect all the Stamps to their Anchors, by their stored anchor names." -STARTLINE T stamps.wiredReconnectAll()}
+ addUserKnob {26 space_2 l "" +STARTLINE T " "}
+ addUserKnob {20 advanced_reconnection l "Advanced Reconnection" n 2}
+ addUserKnob {26 reconnect_by_title_label l "<font color=gold>By Title:" t "Reconnect by searching for a matching title." T " "}
+ addUserKnob {22 reconnect_by_title_this l this t "Look for an Anchor that shares this Stamp's title, and connect this Stamp to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitle()}
+ addUserKnob {22 reconnect_by_title_similar l similar t "Look for an Anchor that shares this Stamp's title, and connect this Stamp and similar ones to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSimilar()}
+ addUserKnob {22 reconnect_by_title_selected l selected t "For each Stamp selected, look for an Anchor that shares its title, and connect to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSelected()}
+ addUserKnob {26 reconnect_by_selection_label l "<font color=orangered>By Selection:" t "Force reconnect to a selected Anchor." T " "}
+ addUserKnob {22 reconnect_by_selection_this l this t "Force reconnect this Stamp to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelection()}
+ addUserKnob {22 reconnect_by_selection_similar l similar t "Force reconnect this Stamp and similar ones to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSimilar()}
+ addUserKnob {22 reconnect_by_selection_selected l selected t "Force reconnect all selected Stamps to an also selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSelected()}
+ addUserKnob {1 anchor l Anchor}
+ anchor Anchor_1c7085a99a
+ addUserKnob {6 auto_reconnect_by_title l "<font color=#ED9977>&nbsp; auto-reconnect by title" t "When creating this stamp again (like on copy-paste), auto-reconnect it by title instead of doing it by the saved anchor's name, and auto-turn this off immediately.\nIMPORTANT: Should be off by default. Only use this for setting up templates." +STARTLINE}
+ addUserKnob {26 line2 l "" +STARTLINE}
+ addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+ addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+Keyer {
+ operation "luminance key"
+ range {0.1018219237 0.2450001263 1 1}
+ name Keyer1
+ selected true
+ xpos -1271
+ ypos 2794
+}
+push $N1dbe6a00
+Merge2 {
+ inputs 2
+ name Merge9
+ selected true
+ xpos -1042
+ ypos 2798
+}
+FilterErode {
+ size 40
+ name FilterErode3
+ selected true
+ xpos -1042
+ ypos 2841
+}
+Merge2 {
+ inputs 2
+ name Merge10
+ selected true
+ xpos -1042
+ ypos 2919
+}
+push $N1e712800
+push $N1dbe6a00
+Merge2 {
+ inputs 2
+ operation minus
+ name Merge2
+ selected true
+ xpos -1198
+ ypos 2358
+}
+Saturation {
+ saturation 0
+ mode Maximum
+ name Saturation1
+ selected true
+ xpos -1198
+ ypos 2414
+}
+Grade {
+ multiply 0.54
+ name Grade2
+ selected true
+ xpos -1198
+ ypos 2438
+}
+push $N1dbe6a00
+Merge2 {
+ inputs 2
+ name Merge7
+ selected true
+ xpos -1198
+ ypos 2482
+}
+push $N1dd51a00
+FilterErode {
+ size 0.2
+ name FilterErode2
+ selected true
+ xpos -601
+ ypos 2203
+}
+Group {
+ name ColorSmear
+ note_font Verdana
+ selected true
+ xpos -601
+ ypos 2334
+ addUserKnob {20 User}
+ addUserKnob {26 smearing l Smearing T ""}
+ addUserKnob {6 already_premulted l "Input is premultiplied?" t "Click checkbox \"on\" if image is already premulted" +STARTLINE}
+ already_premulted true
+ addUserKnob {7 pre_choke l Pre-choke R 0 30}
+ pre_choke 15.6
+ addUserKnob {7 pre_contrast l "Pre Contrast" R 0 0.5}
+ pre_contrast 0.084
+ addUserKnob {7 pre_blur l Pre-blur R 0 100}
+ pre_blur 59.5
+ addUserKnob {7 post_blur l "Post Blur" R 0 100}
+ post_blur 5.5
+ addUserKnob {26 ""}
+ addUserKnob {26 Masking}
+ addUserKnob {6 xor_edge_detect l "Use XOR edge detect method?" t "XOR edge detect will isolate edge mask to areas that are blurred. Regular edge detect method will apply smear evenly all the way around." +STARTLINE}
+ addUserKnob {7 dilate_mask l "Dilate Mask" R 0 30}
+ dilate_mask 2.8
+ addUserKnob {7 blur_mask l "Blur Mask" R 0 100}
+ blur_mask 3.5
+ addUserKnob {6 output_premulted l "Premultiply output" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {6 outputmask l "Output smear mask?" +STARTLINE}
+ outputmask true
+ addUserKnob {26 smearmask_description l " (uses 'smearmask.a' channel - handy for regraining later)" -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 RestoreDetail l "Restore Detail"}
+ addUserKnob {7 sharpness l Sharpness R 0 10}
+ sharpness 10
+ addUserKnob {7 amount l Amount}
+ amount 0.1
+ addUserKnob {26 ""}
+ addUserKnob {26 credit l "" +STARTLINE T "Colour Smear v2.1 by Richard Frazer - www.richardfrazer.com"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x7171c600
+  label "Restore detail"
+  note_font Verdana
+  note_font_size 42
+  xpos -833
+  ypos 14
+  bdwidth 546
+  bdheight 976
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode18
+  tile_color 0x7171c600
+  label "unpremult / blur trick"
+  note_font Verdana
+  note_font_size 42
+  xpos 653
+  ypos 25
+  bdwidth 856
+  bdheight 999
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode19
+  tile_color 0x7171c600
+  label "mask to smear back over shot"
+  note_font Verdana
+  note_font_size 42
+  xpos -239
+  ypos 27
+  bdwidth 649
+  bdheight 976
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode20
+  tile_color 0x7171c600
+  label "colour smear\n<-- in here goes plate with alpha (unpremulted) "
+  note_font Verdana
+  note_font_size 42
+  xpos -1098
+  ypos -281
+  bdwidth 2603
+  bdheight 277
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote20
+  label "bigger blur will smear\ncolour out further\nbut may cause\nbleed\nin areas of high contrast"
+  note_font Verdana
+  note_font_size 31
+  xpos 1122
+  ypos 405
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote23
+  label "xor way \nisolates areas\nwith highest\namounts of blur\n(i.e\nmotion blur)"
+  note_font Verdana
+  note_font_size 31
+  xpos -338
+  ypos 288
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote25
+  label "tweak the \ndilate and \nblur to make\nnice"
+  note_font Verdana
+  xpos -1
+  ypos 581
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote24
+  label "choose which works best"
+  note_font Verdana
+  note_font_size 31
+  xpos -115
+  ypos 774
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote22
+  label "this way \nsmears evenly\naround all\nedges"
+  note_font Verdana
+  note_font_size 31
+  xpos 211
+  ypos 235
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote27
+  label "shuffle original alpha back in"
+  note_font Verdana
+  note_font_size 31
+  xpos -1369
+  ypos 1645
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote26
+  label "smear back over edges"
+  note_font Verdana
+  note_font_size 31
+  xpos -1057
+  ypos 1295
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote19
+  label "choke back alpha first\nso that no background\ncolour is bought in"
+  note_font Verdana
+  note_font_size 31
+  xpos 1131
+  ypos 229
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "mask input - \nareas with solid matte\nwill be excluded from \nbeing effected"
+  note_font Verdana
+  note_font_size 31
+  xpos 1716
+  ypos -149
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote21
+  label "just to soften areas\nwith hard edges"
+  note_font Verdana
+  note_font_size 31
+  xpos 682
+  ypos 670
+ }
+ Input {
+  inputs 0
+  name IMG
+  label "Your main image input"
+  note_font Verdana
+  xpos -1238
+  ypos -298
+ }
+ Dot {
+  name Dot29
+  note_font Verdana
+  xpos -1204
+  ypos -109
+ }
+set N1ddb0200 [stack 0]
+ Dot {
+  name Dot7
+  xpos -1204
+  ypos 1270
+ }
+ Dot {
+  name Dot18
+  note_font Verdana
+  xpos -1204
+  ypos 1564
+ }
+set N1ddb0a00 [stack 0]
+push $N1ddb0200
+ Unpremult {
+  name Unpremult2
+  note_font Verdana
+  xpos -1073
+  ypos -108
+ }
+push $N1ddb0200
+ Switch {
+  inputs 2
+  which {{"\[value parent.already_premulted]" i}}
+  name Switch1
+  note_font Verdana
+  xpos -1073
+  ypos -56
+ }
+ Dot {
+  name Dot30
+  note_font Verdana
+  xpos -901
+  ypos -52
+ }
+set N1ddb1800 [stack 0]
+ Dot {
+  name Dot5
+  xpos -562
+  ypos -52
+ }
+set N1ddb1c00 [stack 0]
+ Dot {
+  name Dot17
+  note_font Verdana
+  xpos 42
+  ypos -52
+ }
+set N1ddb2000 [stack 0]
+ Dot {
+  name Dot38
+  note_font Verdana
+  xpos 42
+  ypos 122
+ }
+set N1ddb2400 [stack 0]
+ Dot {
+  name Dot145
+  note_font Verdana
+  xpos -39
+  ypos 122
+ }
+set N1ddb2800 [stack 0]
+ Dot {
+  name Dot138
+  note_font Verdana
+  xpos -92
+  ypos 185
+ }
+push $N1ddb2800
+ Dot {
+  name Dot39
+  note_font Verdana
+  xpos 4
+  ypos 193
+ }
+ Merge2 {
+  inputs 2
+  operation xor
+  name Merge14
+  note_font Verdana
+  xpos -71
+  ypos 243
+ }
+ Dilate {
+  channels alpha
+  size {{"\[value parent.dilate_mask]" i}}
+  name Dilate2
+  note_font Verdana
+  xpos -71
+  ypos 319
+ }
+ Grade {
+  channels alpha
+  gamma 2
+  black_clamp false
+  name Grade16
+  note_font Verdana
+  xpos -71
+  ypos 394
+ }
+ Clamp {
+  name Clamp2
+  note_font Verdana
+  xpos -71
+  ypos 432
+ }
+ Blur {
+  size {{"\[value parent.blur_mask]" i}}
+  name Blur13
+  note_font Verdana
+  xpos -71
+  ypos 516
+ }
+ Dot {
+  name Dot156
+  note_font Verdana
+  xpos -37
+  ypos 659
+ }
+push $N1ddb2400
+ Dot {
+  name Dot20
+  note_font Verdana
+  xpos 119
+  ypos 122
+ }
+ Dilate {
+  channels alpha
+  size {{"-\[value parent.dilate_mask]" i}}
+  name Dilate4
+  note_font Verdana
+  xpos 85
+  ypos 271
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.022
+  whitepoint 0.69
+  gamma 0.94
+  black_clamp false
+  name Grade18
+  note_font Verdana
+  xpos 85
+  ypos 344
+ }
+ Invert {
+  channels alpha
+  name Invert4
+  note_font Verdana
+  xpos 85
+  ypos 392
+ }
+ Clamp {
+  name Clamp8
+  note_font Verdana
+  xpos 85
+  ypos 430
+ }
+ Blur {
+  size {{"\[value parent.blur_mask]" i}}
+  name Blur17
+  note_font Verdana
+  xpos 85
+  ypos 510
+ }
+ Dot {
+  name Dot147
+  note_font Verdana
+  xpos 119
+  ypos 670
+ }
+ Switch {
+  inputs 2
+  which {{"\[value parent.xor_edge_detect]" i}}
+  name Switch3
+  note_font Verdana
+  xpos 7
+  ypos 747
+ }
+push $N1ddb2000
+ Dot {
+  name Dot71
+  note_font Verdana
+  xpos 1045
+  ypos -52
+ }
+ Dot {
+  name Dot1
+  note_font Verdana
+  xpos 1045
+  ypos 100
+ }
+set N1ddc1600 [stack 0]
+push $N1ddc1600
+ Input {
+  inputs 0
+  name OMIT
+  label "The area to omit from being affected"
+  note_font Verdana
+  xpos 1582
+  ypos -260
+  number 1
+ }
+ Dot {
+  name Dot2
+  note_font Verdana
+  xpos 1616
+  ypos 50
+ }
+set N1ddc1e00 [stack 0]
+ Merge2 {
+  inputs 2
+  operation out
+  name Merge1
+  note_font Verdana
+  xpos 1088
+  ypos 147
+ }
+ Switch {
+  inputs 2
+  name Switch4
+  note_font Verdana
+  xpos 1011
+  ypos 209
+ }
+ FilterErode {
+  channels alpha
+  size {{"\[value parent.pre_choke]" i}}
+  name FilterErode2
+  note_font Verdana
+  xpos 1011
+  ypos 280
+ }
+ Grade {
+  channels alpha
+  blackpoint {{"\[value parent.pre_contrast]"}}
+  whitepoint {{"1-\[value parent.pre_contrast]"}}
+  black_clamp false
+  name Grade19
+  note_font Verdana
+  xpos 1011
+  ypos 341
+ }
+ Clamp {
+  channels alpha
+  name Clamp4
+  note_font Verdana
+  xpos 1011
+  ypos 390
+ }
+ Premult {
+  name Premult3
+  note_font Verdana
+  xpos 1011
+  ypos 471
+ }
+ Blur {
+  size {{"\[value parent.pre_blur]" i}}
+  name Blur8
+  note_font Verdana
+  xpos 1011
+  ypos 560
+ }
+ Unpremult {
+  name Unpremult1
+  note_font Verdana
+  xpos 1011
+  ypos 643
+ }
+ Blur {
+  size {{"\[value parent.post_blur]" i}}
+  name Blur20
+  note_font Verdana
+  xpos 1011
+  ypos 704
+ }
+ Dot {
+  name Dot61
+  note_font Verdana
+  xpos 1045
+  ypos 795
+ }
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy1
+  note_font Verdana
+  xpos 7
+  ypos 901
+ }
+ Premult {
+  name Premult4
+  note_font Verdana
+  xpos 7
+  ypos 1045
+ }
+ Dot {
+  name Dot4
+  note_font Verdana
+  xpos 41
+  ypos 1122
+ }
+set N1c977e00 [stack 0]
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge5
+  xpos -498
+  ypos 1611
+ }
+push $N1ddb0a00
+push $N1ddb1c00
+ Dot {
+  name Dot6
+  xpos -562
+  ypos 162
+ }
+set N1c9b3200 [stack 0]
+push $N1c9b3200
+ Blur {
+  size {{"\[value parent.sharpness]" i}}
+  name Blur1
+  xpos -728
+  ypos 211
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge3
+  xpos -596
+  ypos 283
+ }
+ ColorCorrect {
+  saturation 0
+  name ColorCorrect1
+  xpos -596
+  ypos 375
+ }
+ Dot {
+  name Dot8
+  xpos -554
+  ypos 1268
+ }
+push $N1c977e00
+push $N1c977e00
+push $N1ddc1e00
+ Dot {
+  name Dot3
+  note_font Verdana
+  xpos 1616
+  ypos 967
+ }
+ Merge2 {
+  inputs 2
+  operation out
+  name Merge2
+  note_font Verdana
+  xpos 76
+  ypos 1192
+ }
+ Switch {
+  inputs 2
+  name Switch5
+  note_font Verdana
+  xpos 7
+  ypos 1253
+ }
+ Unpremult {
+  name Unpremult3
+  xpos -471
+  ypos 1330
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  mix {{"\[value parent.amount]"}}
+  name Merge4
+  xpos -588
+  ypos 1352
+ }
+ Premult {
+  name Premult1
+  xpos -588
+  ypos 1393
+ }
+push $N1ddb1800
+ Merge2 {
+  inputs 2
+  name Merge13
+  note_font Verdana
+  xpos -935
+  ypos 1393
+ }
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy2
+  note_font Verdana
+  xpos -1238
+  ypos 1725
+ }
+set N1ddd7800 [stack 0]
+ Premult {
+  name Premult10
+  note_font Verdana
+  xpos -1130
+  ypos 1789
+ }
+push $N1ddd7800
+ Switch {
+  inputs 2
+  which {{"\[value parent.output_premulted]" i}}
+  name Switch2
+  note_font Verdana
+  xpos -1238
+  ypos 1878
+ }
+ Dot {
+  name Dot9
+  xpos -1204
+  ypos 1996
+ }
+set N1dddae00 [stack 0]
+add_layer {smearmask smearmask.red smearmask.a}
+ ShuffleCopy {
+  inputs 2
+  alpha alpha2
+  black alpha
+  out2 {smearmask.red -smearmask.a}
+  name ShuffleCopy3
+  note_font Verdana
+  xpos -1140
+  ypos 2066
+ }
+push $N1dddae00
+ Switch {
+  inputs 2
+  which {{"\[value parent.outputmask]"}}
+  name Switch6
+  note_font Verdana
+  selected true
+  xpos -1238
+  ypos 2141
+ }
+ Dot {
+  name Dot19
+  note_font Verdana
+  xpos -1204
+  ypos 2343
+ }
+ Output {
+  name Output1
+  note_font Verdana
+  xpos -1238
+  ypos 2422
+ }
+end_group
+Premult {
+ name Premult1
+ selected true
+ xpos -601
+ ypos 2360
+}
+Keymix {
+ inputs 3
+ name Keymix1
+ selected true
+ xpos -601
+ ypos 2915
+}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy2
+ selected true
+ xpos -601
+ ypos 3104
+}
+Premult {
+ name Premult3
+ selected true
+ xpos -601
+ ypos 3188
+}
+Merge2 {
+ inputs 2
+ name Merge6
+ selected true
+ xpos -601
+ ypos 3427
+}

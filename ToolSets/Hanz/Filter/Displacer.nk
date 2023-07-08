@@ -1,0 +1,67 @@
+set cut_paste_input [stack 0]
+push $cut_paste_input
+Group {
+ name Displacer
+ addUserKnob {20 Displacer_tab l Displacer}
+ addUserKnob {41 uv_scale l scale T IDistort1.uv_scale}
+ addUserKnob {41 blur T Blur1.size}
+ addUserKnob {41 filter T IDistort1.filter}
+}
+ Input {
+  inputs 0
+  name Inputctrl
+  xpos -150
+  ypos 87
+  number 1
+ }
+ Expression {
+  temp_name0 u0
+  temp_expr0 a(x+1,y)-a(x-1,y)
+  temp_name1 v0
+  temp_expr1 a(x,y+1)-a(x,y-1)
+  temp_name2 l
+  temp_expr2 sqrt(u0**2+v0**2)
+  expr0 u0*width
+  expr1 v0*width
+  expr2 0
+  expr3 l
+  name VectorGradient4x
+  xpos -150
+  ypos 134
+ }
+ Blur {
+  channels rgba
+  name Blur1
+  xpos -150
+  ypos 183
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos -40
+  ypos 86
+ }
+ MergeExpression {
+  inputs 2
+  channel0 {forward.u -forward.v}
+  expr0 Ar
+  channel1 forward
+  expr1 Ag
+  expr3 Aa
+  name MergeExpression1
+  xpos -40
+  ypos 183
+ }
+ IDistort {
+  channels rgba
+  uv forward
+  name IDistort1
+  xpos -40
+  ypos 231
+ }
+ Output {
+  name Output
+  xpos -40
+  ypos 278
+ }
+end_group

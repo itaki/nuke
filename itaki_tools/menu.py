@@ -11,6 +11,7 @@ from i_tools import backdrop_presets
 from i_tools import backdropper
 from i_tools import script_library
 from i_tools import attach_closest_node
+from i_tools import defaults
 
 
 import node_color_toolbar
