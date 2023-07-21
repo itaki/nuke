@@ -1,4 +1,4 @@
-Gizmo {
+Group {
  name X_Tesla6
  help "With this gizmo you can create lightning and electricity effects"
  tile_color 0x5c89ffff

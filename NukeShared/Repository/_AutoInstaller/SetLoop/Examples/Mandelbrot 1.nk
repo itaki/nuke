@@ -1,0 +1,2569 @@
+set cut_paste_input [stack 0]
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x464646ff
+ label colours
+ note_font_size 42
+ selected true
+ xpos -2627
+ ypos -3537
+ bdwidth 553
+ bdheight 861
+}
+BackdropNode {
+ inputs 0
+ name SetLoop
+ tile_color 0x1c1c1cff
+ gl_color 0xafaf64ff
+ label <center>SetLoop
+ note_font "Verdana Italic Italic Italic"
+ note_font_color 0x626262ff
+ selected true
+ xpos -2239
+ ypos -4161
+ bdwidth 299
+ bdheight 538
+ z_order 1
+ addUserKnob {20 Loop}
+ addUserKnob {26 SetLoop_bd l "" +STARTLINE T "Keep the loop within this backdrop!\nResize the backdrop if necessary.\nGo to EndLoop for configuration."}
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ label "GradientEditor by Mads Hagbarth Damsbo\n\ndownload from NukePedia to have full functionality,\nit makes gradients easy to make\n\n|\nV"
+ selected true
+ xpos -2617
+ ypos -3457
+}
+Expression {
+ inputs 0
+ temp_name0 aspect
+ temp_expr0 height/width
+ channel0 {rgba.red -rgba.green -rgba.blue none}
+ expr0 "((x / aspect * xsize) / width) + (xslide / aspect)"
+ expr1 "((y * ysize) / height) + yslide"
+ expr2 aspect
+ name Expression_UV
+ selected true
+ xpos -2130
+ ypos -4364
+ addUserKnob {20 User}
+ addUserKnob {7 xsize R -3 3}
+ xsize 4.35
+ addUserKnob {7 ysize R -3 3}
+ ysize {{xsize}}
+ addUserKnob {7 xslide}
+ xslide -2.675
+ addUserKnob {7 yslide}
+ yslide -2.175
+}
+Dot {
+ name Dot5
+ selected true
+ xpos -2096
+ ypos -4215
+}
+set Ned443c00 [stack 0]
+Dot {
+ name Dot9
+ selected true
+ xpos -2355
+ ypos -4215
+}
+Dot {
+ name Dot10
+ selected true
+ xpos -2355
+ ypos -3929
+}
+set Ned443400 [stack 0]
+push $Ned443400
+push $Ned443c00
+Group {
+ name StartLoop
+ tile_color 0xa50000ff
+ note_font "Verdana Italic Italic Italic"
+ selected true
+ xpos -2130
+ ypos -4068
+ addUserKnob {20 Loop}
+ addUserKnob {26 loopbegin l "" +STARTLINE T "go to EndLoop for configuration"}
+}
+ Read {
+  inputs 0
+  file_type exr
+  localizationPolicy off
+  origset true
+  raw true
+  name FeedbackReader
+  tile_color 0xa50000ff
+  selected true
+  xpos 139
+  ypos 139
+  postage_stamp false
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos 0
+ }
+ Switch {
+  inputs 2
+  name FeedbackSwitch
+  tile_color 0xa50000ff
+  xpos 0
+  ypos 146
+  addUserKnob {20 SetLoopInfo l Info}
+  addUserKnob {26 info l "" +STARTLINE T "when feedback writing is enabled,\nthis switch will be set to 0 on the first iteration \nand to 1 on iterations after that\n\nthe read node on input 1 will be updated to always read the most recent feedback"}
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 300
+ }
+end_group
+MergeExpression {
+ inputs 2
+ temp_name0 valid
+ temp_expr0 "hypot(Br, Bg) < 2"
+ expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+ expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+ channel3 alpha
+ expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+ name MergeExpression_CalcLoop
+ selected true
+ xpos -2130
+ ypos -3933
+}
+Group {
+ inputs 2
+ name EndLoop
+ knobChanged "import SetLoop\nSetLoop.onKnobChanged(nuke.thisNode(), nuke.thisKnob())"
+ tile_color 0xa50000ff
+ label "iteration: \[value scroll]"
+ note_font Verdana
+ note_font_color 0xffffffff
+ selected true
+ xpos -2130
+ ypos -3732
+ lifetimeStart 1
+ lifetimeEnd 300
+ mapsize {0.1540511727 0.174929841}
+ addUserKnob {20 Loop}
+ addUserKnob {26 ""}
+ addUserKnob {3 loops t "amount of loops to create"}
+ loops 100
+ addUserKnob {4 method t "'sequential' loops like an iterator\n\n'parallel' creates multiple instances of the same input and merges them together\n\n'geometry' is like 'parallel' but for geo" -STARTLINE M {sequential parallel geometry}}
+ addUserKnob {68 buildMethod l "" t "- in this group node (live)\n\ncopies the nodes to loop over into this group node for a live loop within Nuke\n\n\n- iterations to exr (baked)\n\nkeeps the group empty and writes each iteration as a sequence on top of an exr of the previous one, faster but not live" -STARTLINE M {"in this group node (live)" "iterations to exr (baked)" ""}}
+ addUserKnob {26 method_storage l INVISIBLE t "method_storage is used for remembering when to enable and disable the right knobs" -STARTLINE +INVISIBLE T sequential}
+ addUserKnob {26 ""}
+ addUserKnob {6 relinkextinputs l "relink external inputs" t "relink nodes that are not in the loop via extra inputs in this group node" +STARTLINE}
+ relinkextinputs true
+ addUserKnob {6 relinkextexpressions l "relink external expressions" t "attempt to fix expressions when they're moved into this group by:\n\n- changing 'parent.' to 'root.' when the nodes they refer to are not in the loop\n \n- adding 'root.' in expressions before nodes that are not within the loop\n\n\nchanges are only made to nodes in the loop itself, and they will be printed in the script editor panel" +STARTLINE}
+ relinkextexpressions true
+ addUserKnob {6 removeexprparent l "remove 'parent.'" t "automatically removes the 'parent.'-part for all expressions on nodes in the backdrop, which often fixes common relinking issues\n\nmake a copy of the nodes in the backdrop before setting the loop with this enabled, as it permanently alters the expressions on knobs\n\nall changes will be printed in the script editor panel" -STARTLINE}
+ addUserKnob {6 addIterationKnob l "add iteration knob" t "add a knob called 'iteration' to all nodes in the loop, with an integer value representing their looping index\n\nthe original nodes (the ones in the backdrop in the main graph) will also get this knob, starting at 0" +STARTLINE}
+ addUserKnob {2 dirPath l directory t "path to the directory to store the sequence of iterations in (exr), ending with '/'" +HIDDEN}
+ addUserKnob {3 onFrame l frame t "frame to iterate over" +HIDDEN}
+ onFrame 1
+ addUserKnob {4 datatype t "iterations are written to raw exr" +HIDDEN M {"16 bit half" "32 bit float" ""}}
+ addUserKnob {26 ""}
+ addUserKnob {26 empty1 l "" +STARTLINE T " "}
+ addUserKnob {22 set t "build the loop" T "import SetLoop\nSetLoop.set(nuke.thisNode())" +STARTLINE}
+ addUserKnob {26 stats l "" t "current stats" -STARTLINE T "method:\t\tsequential\nnodes in total:\t205\nnodes per loop:\t1\nloops:\t\t100"}
+ addUserKnob {3 iteration t "this read-only knob will update to always show the current iteration when writing feedback images to a sequence\n\nreference to this value in expressions using\n'EndLoop.iteration'" +DISABLED +HIDDEN}
+ addUserKnob {22 startFeedback l "start feedback write" t "start writing individual iterations to image files" +HIDDEN T "import SetLoop\nSetLoop.startFeedback(nuke.thisNode())" +STARTLINE}
+ addUserKnob {22 readFeedback l "read feedback sequence" t "get the feedback sequence" -STARTLINE +HIDDEN T "import SetLoop\nSetLoop.getFeedback(nuke.thisNode())"}
+ addUserKnob {26 empty2 l "" +STARTLINE T " "}
+ addUserKnob {26 lineScroll l "" +STARTLINE}
+ addUserKnob {7 scroll t "animate the loop level" R 0 100}
+ scroll 100
+ addUserKnob {6 invert t "invert the direction of the scroll\n\n- only available with method 'parallel'" -STARTLINE +DISABLED}
+ addUserKnob {6 blend t "blends the loop levels when scroll is not a round number" +STARTLINE}
+ addUserKnob {7 spread t "feather the loop levels\n\n- only available with method 'parallel' and 'blend' enabled" -STARTLINE +DISABLED R 1 250}
+ spread 1
+ addUserKnob {26 empty3 l "" +STARTLINE T " "}
+ addUserKnob {4 parallelOperation l operation t "the merge operation to use\n\n- only available with method 'parallel'" +DISABLED M {atop average color-burn color-dodge conjoint-over copy difference disjoint-over divide exclusion from geometric hard-light hypot in mask matte max min minus multiply out over overlay plus screen soft-light stencil under xor "" "" "" "" "" "" ""}}
+ parallelOperation over
+ addUserKnob {26 empty4 l "" +STARTLINE T " "}
+ addUserKnob {7 offset t "offset the iteration knob value on all nodes in the loop\n\n- only available when 'add iteration knob' is enabled" +DISABLED R -10 10}
+ addUserKnob {26 ""}
+ addUserKnob {26 empty5 l "" +STARTLINE T " "}
+ addUserKnob {26 version l "" +STARTLINE T "SetLoop 1.9"}
+ addUserKnob {26 me l "" +STARTLINE T "Max van Leeuwen"}
+ addUserKnob {26 website l "" t "see my website for examples/tutorials" +STARTLINE T "<a href=\"https://www.maxvanleeuwen.com/setloop\"><font color=\"#b2b2b2\">maxvanleeuwen.com/setloop</font></a>"}
+ addUserKnob {20 CustomTab l Custom}
+ addUserKnob {26 customInfo l "" +STARTLINE T "room for custom knobs that can be referenced to from expressions in the loop"}
+ addUserKnob {26 ""}
+ addUserKnob {26 empty6 l "" +STARTLINE T " "}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -40
+  ypos -10
+ }
+ Dot {
+  name LoopAnchor_0
+  xpos -6
+  ypos 16
+ }
+set Nfead2c00 [stack 0]
+ Input {
+  inputs 0
+  name Dot10
+  number 1
+ }
+set Nfead2800 [stack 0]
+push $Nfead2c00
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop
+  xpos 70
+  ypos 12
+ }
+ Dot {
+  name LoopAnchor_1
+  xpos 104
+  ypos 38
+ }
+set Nfead2000 [stack 0]
+push $Nfead2800
+push $Nfead2000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop1
+  xpos 180
+  ypos 34
+ }
+ Dot {
+  name LoopAnchor_2
+  xpos 214
+  ypos 60
+ }
+set N2344b800 [stack 0]
+push $Nfead2800
+push $N2344b800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop2
+  xpos 290
+  ypos 56
+ }
+ Dot {
+  name LoopAnchor_3
+  xpos 324
+  ypos 82
+ }
+set N2344b000 [stack 0]
+push $Nfead2800
+push $N2344b000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop3
+  xpos 400
+  ypos 78
+ }
+ Dot {
+  name LoopAnchor_4
+  xpos 434
+  ypos 104
+ }
+set N2344a800 [stack 0]
+push $Nfead2800
+push $N2344a800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop4
+  xpos 510
+  ypos 100
+ }
+ Dot {
+  name LoopAnchor_5
+  xpos 544
+  ypos 126
+ }
+set N2344a000 [stack 0]
+push $Nfead2800
+push $N2344a000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop5
+  xpos 620
+  ypos 122
+ }
+ Dot {
+  name LoopAnchor_6
+  xpos 654
+  ypos 148
+ }
+set Ne68f1800 [stack 0]
+push $Nfead2800
+push $Ne68f1800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop6
+  xpos 730
+  ypos 144
+ }
+ Dot {
+  name LoopAnchor_7
+  xpos 764
+  ypos 170
+ }
+set Ne68f1000 [stack 0]
+push $Nfead2800
+push $Ne68f1000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop7
+  xpos 840
+  ypos 166
+ }
+ Dot {
+  name LoopAnchor_8
+  xpos 874
+  ypos 192
+ }
+set Ne68f0800 [stack 0]
+push $Nfead2800
+push $Ne68f0800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop8
+  xpos 950
+  ypos 188
+ }
+ Dot {
+  name LoopAnchor_9
+  xpos 984
+  ypos 214
+ }
+set Ne68f0000 [stack 0]
+push $Nfead2800
+push $Ne68f0000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop9
+  xpos 1060
+  ypos 210
+ }
+ Dot {
+  name LoopAnchor_10
+  xpos 1094
+  ypos 236
+ }
+set Nf68ed800 [stack 0]
+push $Nfead2800
+push $Nf68ed800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop10
+  xpos 1170
+  ypos 232
+ }
+ Dot {
+  name LoopAnchor_11
+  xpos 1204
+  ypos 258
+ }
+set Nf68ed000 [stack 0]
+push $Nfead2800
+push $Nf68ed000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop11
+  xpos 1280
+  ypos 254
+ }
+ Dot {
+  name LoopAnchor_12
+  xpos 1314
+  ypos 280
+ }
+set Nf68ec800 [stack 0]
+push $Nfead2800
+push $Nf68ec800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop12
+  xpos 1390
+  ypos 276
+ }
+ Dot {
+  name LoopAnchor_13
+  xpos 1424
+  ypos 302
+ }
+set Nf68ec000 [stack 0]
+push $Nfead2800
+push $Nf68ec000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop13
+  xpos 1500
+  ypos 298
+ }
+ Dot {
+  name LoopAnchor_14
+  xpos 1534
+  ypos 324
+ }
+set N503bd800 [stack 0]
+push $Nfead2800
+push $N503bd800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop14
+  xpos 1610
+  ypos 320
+ }
+ Dot {
+  name LoopAnchor_15
+  xpos 1644
+  ypos 346
+ }
+set N503bd000 [stack 0]
+push $Nfead2800
+push $N503bd000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop15
+  xpos 1720
+  ypos 342
+ }
+ Dot {
+  name LoopAnchor_16
+  xpos 1754
+  ypos 368
+ }
+set N503bc800 [stack 0]
+push $Nfead2800
+push $N503bc800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop16
+  xpos 1830
+  ypos 364
+ }
+ Dot {
+  name LoopAnchor_17
+  xpos 1864
+  ypos 390
+ }
+set N503bc000 [stack 0]
+push $Nfead2800
+push $N503bc000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop17
+  xpos 1940
+  ypos 386
+ }
+ Dot {
+  name LoopAnchor_18
+  xpos 1974
+  ypos 412
+ }
+set N8a73800 [stack 0]
+push $Nfead2800
+push $N8a73800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop18
+  xpos 2050
+  ypos 408
+ }
+ Dot {
+  name LoopAnchor_19
+  xpos 2084
+  ypos 434
+ }
+set N8a73000 [stack 0]
+push $Nfead2800
+push $N8a73000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop19
+  xpos 2160
+  ypos 430
+ }
+ Dot {
+  name LoopAnchor_20
+  xpos 2194
+  ypos 456
+ }
+set N8a72800 [stack 0]
+push $Nfead2800
+push $N8a72800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop20
+  xpos 2270
+  ypos 452
+ }
+ Dot {
+  name LoopAnchor_21
+  xpos 2304
+  ypos 478
+ }
+set N8a72000 [stack 0]
+push $Nfead2800
+push $N8a72000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop21
+  xpos 2380
+  ypos 474
+ }
+ Dot {
+  name LoopAnchor_22
+  xpos 2414
+  ypos 500
+ }
+set Nf5219800 [stack 0]
+push $Nfead2800
+push $Nf5219800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop22
+  xpos 2490
+  ypos 496
+ }
+ Dot {
+  name LoopAnchor_23
+  xpos 2524
+  ypos 522
+ }
+set Nf5219000 [stack 0]
+push $Nfead2800
+push $Nf5219000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop23
+  xpos 2600
+  ypos 518
+ }
+ Dot {
+  name LoopAnchor_24
+  xpos 2634
+  ypos 544
+ }
+set Nf5218800 [stack 0]
+push $Nfead2800
+push $Nf5218800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop24
+  xpos 2710
+  ypos 540
+ }
+ Dot {
+  name LoopAnchor_25
+  xpos 2744
+  ypos 566
+ }
+set Nf5218000 [stack 0]
+push $Nfead2800
+push $Nf5218000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop25
+  xpos 2820
+  ypos 562
+ }
+ Dot {
+  name LoopAnchor_26
+  xpos 2854
+  ypos 588
+ }
+set N8ff3800 [stack 0]
+push $Nfead2800
+push $N8ff3800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop26
+  xpos 2930
+  ypos 584
+ }
+ Dot {
+  name LoopAnchor_27
+  xpos 2964
+  ypos 610
+ }
+set N8ff3000 [stack 0]
+push $Nfead2800
+push $N8ff3000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop27
+  xpos 3040
+  ypos 606
+ }
+ Dot {
+  name LoopAnchor_28
+  xpos 3074
+  ypos 632
+ }
+set N8ff2800 [stack 0]
+push $Nfead2800
+push $N8ff2800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop28
+  xpos 3150
+  ypos 628
+ }
+ Dot {
+  name LoopAnchor_29
+  xpos 3184
+  ypos 654
+ }
+set N8ff2000 [stack 0]
+push $Nfead2800
+push $N8ff2000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop29
+  xpos 3260
+  ypos 650
+ }
+ Dot {
+  name LoopAnchor_30
+  xpos 3294
+  ypos 676
+ }
+set Nede85800 [stack 0]
+push $Nfead2800
+push $Nede85800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop30
+  xpos 3370
+  ypos 672
+ }
+ Dot {
+  name LoopAnchor_31
+  xpos 3404
+  ypos 698
+ }
+set Nede85000 [stack 0]
+push $Nfead2800
+push $Nede85000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop31
+  xpos 3480
+  ypos 694
+ }
+ Dot {
+  name LoopAnchor_32
+  xpos 3514
+  ypos 720
+ }
+set Nede84800 [stack 0]
+push $Nfead2800
+push $Nede84800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop32
+  xpos 3590
+  ypos 716
+ }
+ Dot {
+  name LoopAnchor_33
+  xpos 3624
+  ypos 742
+ }
+set Nede84000 [stack 0]
+push $Nfead2800
+push $Nede84000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop33
+  xpos 3700
+  ypos 738
+ }
+ Dot {
+  name LoopAnchor_34
+  xpos 3734
+  ypos 764
+ }
+set Ndc2f5800 [stack 0]
+push $Nfead2800
+push $Ndc2f5800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop34
+  xpos 3810
+  ypos 760
+ }
+ Dot {
+  name LoopAnchor_35
+  xpos 3844
+  ypos 786
+ }
+set Ndc2f5000 [stack 0]
+push $Nfead2800
+push $Ndc2f5000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop35
+  xpos 3920
+  ypos 782
+ }
+ Dot {
+  name LoopAnchor_36
+  xpos 3954
+  ypos 808
+ }
+set Ndc2f4800 [stack 0]
+push $Nfead2800
+push $Ndc2f4800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop36
+  xpos 4030
+  ypos 804
+ }
+ Dot {
+  name LoopAnchor_37
+  xpos 4064
+  ypos 830
+ }
+set Ndc2f4000 [stack 0]
+push $Nfead2800
+push $Ndc2f4000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop37
+  xpos 4140
+  ypos 826
+ }
+ Dot {
+  name LoopAnchor_38
+  xpos 4174
+  ypos 852
+ }
+set Ne3cab800 [stack 0]
+push $Nfead2800
+push $Ne3cab800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop38
+  xpos 4250
+  ypos 848
+ }
+ Dot {
+  name LoopAnchor_39
+  xpos 4284
+  ypos 874
+ }
+set Ne3cab000 [stack 0]
+push $Nfead2800
+push $Ne3cab000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop39
+  xpos 4360
+  ypos 870
+ }
+ Dot {
+  name LoopAnchor_40
+  xpos 4394
+  ypos 896
+ }
+set Ne3caa800 [stack 0]
+push $Nfead2800
+push $Ne3caa800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop40
+  xpos 4470
+  ypos 892
+ }
+ Dot {
+  name LoopAnchor_41
+  xpos 4504
+  ypos 918
+ }
+set Ne3caa000 [stack 0]
+push $Nfead2800
+push $Ne3caa000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop41
+  xpos 4580
+  ypos 914
+ }
+ Dot {
+  name LoopAnchor_42
+  xpos 4614
+  ypos 940
+ }
+set Na9a57800 [stack 0]
+push $Nfead2800
+push $Na9a57800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop42
+  xpos 4690
+  ypos 936
+ }
+ Dot {
+  name LoopAnchor_43
+  xpos 4724
+  ypos 962
+ }
+set Na9a57000 [stack 0]
+push $Nfead2800
+push $Na9a57000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop43
+  xpos 4800
+  ypos 958
+ }
+ Dot {
+  name LoopAnchor_44
+  xpos 4834
+  ypos 984
+ }
+set Na9a56800 [stack 0]
+push $Nfead2800
+push $Na9a56800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop44
+  xpos 4910
+  ypos 980
+ }
+ Dot {
+  name LoopAnchor_45
+  xpos 4944
+  ypos 1006
+ }
+set Na9a56000 [stack 0]
+push $Nfead2800
+push $Na9a56000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop45
+  xpos 5020
+  ypos 1002
+ }
+ Dot {
+  name LoopAnchor_46
+  xpos 5054
+  ypos 1028
+ }
+set N16ad800 [stack 0]
+push $Nfead2800
+push $N16ad800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop46
+  xpos 5130
+  ypos 1024
+ }
+ Dot {
+  name LoopAnchor_47
+  xpos 5164
+  ypos 1050
+ }
+set N16ad000 [stack 0]
+push $Nfead2800
+push $N16ad000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop47
+  xpos 5240
+  ypos 1046
+ }
+ Dot {
+  name LoopAnchor_48
+  xpos 5274
+  ypos 1072
+ }
+set N16ac800 [stack 0]
+push $Nfead2800
+push $N16ac800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop48
+  xpos 5350
+  ypos 1068
+ }
+ Dot {
+  name LoopAnchor_49
+  xpos 5384
+  ypos 1094
+ }
+set N16ac000 [stack 0]
+push $Nfead2800
+push $N16ac000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop49
+  xpos 5460
+  ypos 1090
+ }
+ Dot {
+  name LoopAnchor_50
+  xpos 5494
+  ypos 1116
+ }
+set N4fe09800 [stack 0]
+push $Nfead2800
+push $N4fe09800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop50
+  xpos 5570
+  ypos 1112
+ }
+ Dot {
+  name LoopAnchor_51
+  xpos 5604
+  ypos 1138
+ }
+set N4fe09000 [stack 0]
+push $Nfead2800
+push $N4fe09000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop51
+  xpos 5680
+  ypos 1134
+ }
+ Dot {
+  name LoopAnchor_52
+  xpos 5714
+  ypos 1160
+ }
+set N4fe08800 [stack 0]
+push $Nfead2800
+push $N4fe08800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop52
+  xpos 5790
+  ypos 1156
+ }
+ Dot {
+  name LoopAnchor_53
+  xpos 5824
+  ypos 1182
+ }
+set N4fe08000 [stack 0]
+push $Nfead2800
+push $N4fe08000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop53
+  xpos 5900
+  ypos 1178
+ }
+ Dot {
+  name LoopAnchor_54
+  xpos 5934
+  ypos 1204
+ }
+set N8d0bf800 [stack 0]
+push $Nfead2800
+push $N8d0bf800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop54
+  xpos 6010
+  ypos 1200
+ }
+ Dot {
+  name LoopAnchor_55
+  xpos 6044
+  ypos 1226
+ }
+set N8d0bf000 [stack 0]
+push $Nfead2800
+push $N8d0bf000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop55
+  xpos 6120
+  ypos 1222
+ }
+ Dot {
+  name LoopAnchor_56
+  xpos 6154
+  ypos 1248
+ }
+set N8d0be800 [stack 0]
+push $Nfead2800
+push $N8d0be800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop56
+  xpos 6230
+  ypos 1244
+ }
+ Dot {
+  name LoopAnchor_57
+  xpos 6264
+  ypos 1270
+ }
+set N8d0be000 [stack 0]
+push $Nfead2800
+push $N8d0be000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop57
+  xpos 6340
+  ypos 1266
+ }
+ Dot {
+  name LoopAnchor_58
+  xpos 6374
+  ypos 1292
+ }
+set N1c7b3800 [stack 0]
+push $Nfead2800
+push $N1c7b3800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop58
+  xpos 6450
+  ypos 1288
+ }
+ Dot {
+  name LoopAnchor_59
+  xpos 6484
+  ypos 1314
+ }
+set N1c7b3000 [stack 0]
+push $Nfead2800
+push $N1c7b3000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop59
+  xpos 6560
+  ypos 1310
+ }
+ Dot {
+  name LoopAnchor_60
+  xpos 6594
+  ypos 1336
+ }
+set N1c7b2800 [stack 0]
+push $Nfead2800
+push $N1c7b2800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop60
+  xpos 6670
+  ypos 1332
+ }
+ Dot {
+  name LoopAnchor_61
+  xpos 6704
+  ypos 1358
+ }
+set N1c7b2000 [stack 0]
+push $Nfead2800
+push $N1c7b2000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop61
+  xpos 6780
+  ypos 1354
+ }
+ Dot {
+  name LoopAnchor_62
+  xpos 6814
+  ypos 1380
+ }
+set N3ab07800 [stack 0]
+push $Nfead2800
+push $N3ab07800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop62
+  xpos 6890
+  ypos 1376
+ }
+ Dot {
+  name LoopAnchor_63
+  xpos 6924
+  ypos 1402
+ }
+set N3ab07000 [stack 0]
+push $Nfead2800
+push $N3ab07000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop63
+  xpos 7000
+  ypos 1398
+ }
+ Dot {
+  name LoopAnchor_64
+  xpos 7034
+  ypos 1424
+ }
+set N3ab06800 [stack 0]
+push $Nfead2800
+push $N3ab06800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop64
+  xpos 7110
+  ypos 1420
+ }
+ Dot {
+  name LoopAnchor_65
+  xpos 7144
+  ypos 1446
+ }
+set N3ab06000 [stack 0]
+push $Nfead2800
+push $N3ab06000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop65
+  xpos 7220
+  ypos 1442
+ }
+ Dot {
+  name LoopAnchor_66
+  xpos 7254
+  ypos 1468
+ }
+set N31ef800 [stack 0]
+push $Nfead2800
+push $N31ef800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop66
+  xpos 7330
+  ypos 1464
+ }
+ Dot {
+  name LoopAnchor_67
+  xpos 7364
+  ypos 1490
+ }
+set N31ef000 [stack 0]
+push $Nfead2800
+push $N31ef000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop67
+  xpos 7440
+  ypos 1486
+ }
+ Dot {
+  name LoopAnchor_68
+  xpos 7474
+  ypos 1512
+ }
+set N31ee800 [stack 0]
+push $Nfead2800
+push $N31ee800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop68
+  xpos 7550
+  ypos 1508
+ }
+ Dot {
+  name LoopAnchor_69
+  xpos 7584
+  ypos 1534
+ }
+set N31ee000 [stack 0]
+push $Nfead2800
+push $N31ee000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop69
+  xpos 7660
+  ypos 1530
+ }
+ Dot {
+  name LoopAnchor_70
+  xpos 7694
+  ypos 1556
+ }
+set N23633800 [stack 0]
+push $Nfead2800
+push $N23633800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop70
+  xpos 7770
+  ypos 1552
+ }
+ Dot {
+  name LoopAnchor_71
+  xpos 7804
+  ypos 1578
+ }
+set N23633000 [stack 0]
+push $Nfead2800
+push $N23633000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop71
+  xpos 7880
+  ypos 1574
+ }
+ Dot {
+  name LoopAnchor_72
+  xpos 7914
+  ypos 1600
+ }
+set N23632800 [stack 0]
+push $Nfead2800
+push $N23632800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop72
+  xpos 7990
+  ypos 1596
+ }
+ Dot {
+  name LoopAnchor_73
+  xpos 8024
+  ypos 1622
+ }
+set N23632000 [stack 0]
+push $Nfead2800
+push $N23632000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop73
+  xpos 8100
+  ypos 1618
+ }
+ Dot {
+  name LoopAnchor_74
+  xpos 8134
+  ypos 1644
+ }
+set Na6f49800 [stack 0]
+push $Nfead2800
+push $Na6f49800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop74
+  xpos 8210
+  ypos 1640
+ }
+ Dot {
+  name LoopAnchor_75
+  xpos 8244
+  ypos 1666
+ }
+set Na6f49000 [stack 0]
+push $Nfead2800
+push $Na6f49000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop75
+  xpos 8320
+  ypos 1662
+ }
+ Dot {
+  name LoopAnchor_76
+  xpos 8354
+  ypos 1688
+ }
+set Na6f48800 [stack 0]
+push $Nfead2800
+push $Na6f48800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop76
+  xpos 8430
+  ypos 1684
+ }
+ Dot {
+  name LoopAnchor_77
+  xpos 8464
+  ypos 1710
+ }
+set Na6f48000 [stack 0]
+push $Nfead2800
+push $Na6f48000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop77
+  xpos 8540
+  ypos 1706
+ }
+ Dot {
+  name LoopAnchor_78
+  xpos 8574
+  ypos 1732
+ }
+set N5af3800 [stack 0]
+push $Nfead2800
+push $N5af3800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop78
+  xpos 8650
+  ypos 1728
+ }
+ Dot {
+  name LoopAnchor_79
+  xpos 8684
+  ypos 1754
+ }
+set N5af3000 [stack 0]
+push $Nfead2800
+push $N5af3000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop79
+  xpos 8760
+  ypos 1750
+ }
+ Dot {
+  name LoopAnchor_80
+  xpos 8794
+  ypos 1776
+ }
+set N5af2800 [stack 0]
+push $Nfead2800
+push $N5af2800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop80
+  xpos 8870
+  ypos 1772
+ }
+ Dot {
+  name LoopAnchor_81
+  xpos 8904
+  ypos 1798
+ }
+set N5af2000 [stack 0]
+push $Nfead2800
+push $N5af2000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop81
+  xpos 8980
+  ypos 1794
+ }
+ Dot {
+  name LoopAnchor_82
+  xpos 9014
+  ypos 1820
+ }
+set N1fb41800 [stack 0]
+push $Nfead2800
+push $N1fb41800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop82
+  xpos 9090
+  ypos 1816
+ }
+ Dot {
+  name LoopAnchor_83
+  xpos 9124
+  ypos 1842
+ }
+set N1fb41000 [stack 0]
+push $Nfead2800
+push $N1fb41000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop83
+  xpos 9200
+  ypos 1838
+ }
+ Dot {
+  name LoopAnchor_84
+  xpos 9234
+  ypos 1864
+ }
+set N1fb40800 [stack 0]
+push $Nfead2800
+push $N1fb40800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop84
+  xpos 9310
+  ypos 1860
+ }
+ Dot {
+  name LoopAnchor_85
+  xpos 9344
+  ypos 1886
+ }
+set N1fb40000 [stack 0]
+push $Nfead2800
+push $N1fb40000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop85
+  xpos 9420
+  ypos 1882
+ }
+ Dot {
+  name LoopAnchor_86
+  xpos 9454
+  ypos 1908
+ }
+set N2eccd800 [stack 0]
+push $Nfead2800
+push $N2eccd800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop86
+  xpos 9530
+  ypos 1904
+ }
+ Dot {
+  name LoopAnchor_87
+  xpos 9564
+  ypos 1930
+ }
+set N2eccd000 [stack 0]
+push $Nfead2800
+push $N2eccd000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop87
+  xpos 9640
+  ypos 1926
+ }
+ Dot {
+  name LoopAnchor_88
+  xpos 9674
+  ypos 1952
+ }
+set N2eccc800 [stack 0]
+push $Nfead2800
+push $N2eccc800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop88
+  xpos 9750
+  ypos 1948
+ }
+ Dot {
+  name LoopAnchor_89
+  xpos 9784
+  ypos 1974
+ }
+set N2eccc000 [stack 0]
+push $Nfead2800
+push $N2eccc000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop89
+  xpos 9860
+  ypos 1970
+ }
+ Dot {
+  name LoopAnchor_90
+  xpos 9894
+  ypos 1996
+ }
+set N20bf800 [stack 0]
+push $Nfead2800
+push $N20bf800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop90
+  xpos 9970
+  ypos 1992
+ }
+ Dot {
+  name LoopAnchor_91
+  xpos 10004
+  ypos 2018
+ }
+set N20bf000 [stack 0]
+push $Nfead2800
+push $N20bf000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop91
+  xpos 10080
+  ypos 2014
+ }
+ Dot {
+  name LoopAnchor_92
+  xpos 10114
+  ypos 2040
+ }
+set N20be800 [stack 0]
+push $Nfead2800
+push $N20be800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop92
+  xpos 10190
+  ypos 2036
+ }
+ Dot {
+  name LoopAnchor_93
+  xpos 10224
+  ypos 2062
+ }
+set N20be000 [stack 0]
+push $Nfead2800
+push $N20be000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop93
+  xpos 10300
+  ypos 2058
+ }
+ Dot {
+  name LoopAnchor_94
+  xpos 10334
+  ypos 2084
+ }
+set N77bb1800 [stack 0]
+push $Nfead2800
+push $N77bb1800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop94
+  xpos 10410
+  ypos 2080
+ }
+ Dot {
+  name LoopAnchor_95
+  xpos 10444
+  ypos 2106
+ }
+set N77bb1000 [stack 0]
+push $Nfead2800
+push $N77bb1000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop95
+  xpos 10520
+  ypos 2102
+ }
+ Dot {
+  name LoopAnchor_96
+  xpos 10554
+  ypos 2128
+ }
+set N77bb0800 [stack 0]
+push $Nfead2800
+push $N77bb0800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop96
+  xpos 10630
+  ypos 2124
+ }
+ Dot {
+  name LoopAnchor_97
+  xpos 10664
+  ypos 2150
+ }
+set N77bb0000 [stack 0]
+push $Nfead2800
+push $N77bb0000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop97
+  xpos 10740
+  ypos 2146
+ }
+ Dot {
+  name LoopAnchor_98
+  xpos 10774
+  ypos 2172
+ }
+set N31ccf800 [stack 0]
+push 0
+push $Nfead2800
+push $N31ccf800
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop98
+  xpos 10850
+  ypos 2168
+ }
+ Dot {
+  name LoopAnchor_99
+  xpos 10884
+  ypos 2194
+ }
+set N31ccf000 [stack 0]
+push $Nfead2800
+push $N31ccf000
+ MergeExpression {
+  inputs 2
+  temp_name0 valid
+  temp_expr0 "hypot(Br, Bg) < 2"
+  expr0 "valid ? pow(Br,2) - pow(Bg,2) + Ar : Br"
+  expr1 "valid ? Br * Bg * 2 + Ag : Bg"
+  channel3 alpha
+  expr3 "valid ? Ba + 1/(EndLoop.loops+1) : Ba"
+  name MergeExpression_CalcLoop99
+  selected true
+  xpos 10960
+  ypos 2190
+ }
+ Dot {
+  name LoopAnchor_100
+  selected true
+ }
+ Dissolve {
+  inputs 101+1
+  which {{"parent.loops - (parent.blend ? parent.scroll : floor(parent.scroll))"}}
+  name Dissolve1
+ }
+ Output {
+  name Output1
+ }
+end_group
+Dot {
+ name Dot11
+ selected true
+ xpos -2096
+ ypos -3356
+}
+set Nbc024800 [stack 0]
+Dot {
+ name Dot13
+ selected true
+ xpos -2096
+ ypos -3024
+}
+push $Nbc024800
+Dot {
+ name Dot12
+ selected true
+ xpos -2226
+ ypos -3356
+}
+Shuffle {
+ red alpha
+ green alpha
+ blue alpha
+ name Shuffle_AlphaToRGB
+ selected true
+ xpos -2260
+ ypos -3338
+}
+Grade {
+ gamma 4.5
+ name Grade_Falloff
+ selected true
+ xpos -2260
+ ypos -3312
+}
+Group {
+ inputs 0
+ name GradientEditor1
+ tile_color 0x4b19ffff
+ selected true
+ xpos -2548
+ ypos -3302
+ addUserKnob {20 User l Gradient}
+ addUserKnob {26 headline l "" +STARTLINE T "<font size=\"6\">GradientEditor</font><font size=\"4\">v0.9</font>\n"}
+ addUserKnob {26 headline2 l "" +STARTLINE T "by Mads Hagbarth Damsbo - 2016"}
+ addUserKnob {26 devider_header l "<b><font color=#00E0E0>INPUT MAPPING</font><b>"}
+ addUserKnob {4 Type M {Input Generator}}
+ Type Generator
+ addUserKnob {4 sample_type l Sample -STARTLINE M {Magnitude Maximum Average Red Green Blue Alpha "" "" ""}}
+ sample_type Average
+ addUserKnob {41 in l From -STARTLINE T Shuffle1.in}
+ addUserKnob {6 Invert l Reverse -STARTLINE}
+ addUserKnob {26 deviderMain l "<b><font color=#00E0E0>GRADIENT</font><b>"}
+ addUserKnob {52 ui l "" +STARTLINE T ColorGradientUi.ColorWheelKnob_GRADIENT() +STARTLINE}
+ addUserKnob {7 input_valueLow l Interval R -1 1}
+ addUserKnob {4 lowCont l "" -STARTLINE M {Hold Loop Bounce}}
+ lowCont Bounce
+ addUserKnob {7 input_valueHigh l "" -STARTLINE R 0 2}
+ input_valueHigh 1
+ addUserKnob {4 highCont l "" -STARTLINE M {Hold Loop Bounce ""}}
+ highCont Bounce
+ addUserKnob {4 Interpolation l INVISIBLE +INVISIBLE M {Constant Linear Smooth Catmull-Rom Cubic Horizontal ""}}
+ Interpolation Smooth
+ addUserKnob {6 PreserceLuma l "Preserve Luma" +STARTLINE}
+ addUserKnob {26 devider_phasing l "<b><font color=#00E0E0>PHASING</font><b>"}
+ addUserKnob {7 Phase R 0 10}
+ addUserKnob {7 Frequency R 0 10}
+ Frequency 1
+ addUserKnob {26 devider_Input l "<b><font color=#00E0E0>PREMULT</font><b>"}
+ addUserKnob {41 colorspace_in l " colorspace " T Colorspace2.colorspace_in}
+ addUserKnob {41 alpha l "Unpremult by" T Unpremult1.alpha}
+ addUserKnob {6 Premult -STARTLINE}
+ addUserKnob {20 responsecurve_tab l "Response Curve"}
+ addUserKnob {26 CurveInfo l "" +STARTLINE T "Use the master curve to control the response curve"}
+ addUserKnob {26 ""}
+ addUserKnob {41 lut l "" +STARTLINE T ColorLookup2.lut}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -3
+  ypos -76
+ }
+set N3aa89400 [stack 0]
+ Dot {
+  name Dot1
+  xpos 351
+  ypos -73
+ }
+ Dot {
+  name Dot2
+  xpos 351
+  ypos 642
+ }
+push $N3aa89400
+ Expression {
+  expr0 x/width
+  expr1 x/width
+  expr2 x/width
+  expr3 1
+  name Expression1
+  xpos 112
+  ypos -25
+ }
+push $N3aa89400
+ Shuffle {
+  name Shuffle1
+  xpos -3
+  ypos -43
+ }
+ Unpremult {
+  alpha -rgba.alpha
+  name Unpremult1
+  xpos -3
+  ypos -19
+ }
+ Switch {
+  inputs 2
+  which {{parent.Type}}
+  name Switch1
+  xpos -3
+  ypos 20
+ }
+set N82c4bc00 [stack 0]
+ Dot {
+  name Dot3
+  xpos -225
+  ypos 88
+ }
+ Colorspace {
+  colorspace_out YCbCr
+  name Colorspace1
+  xpos -467
+  ypos 135
+ }
+push $N82c4bc00
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle5
+  xpos 260
+  ypos 149
+ }
+push $N82c4bc00
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle4
+  xpos 174
+  ypos 150
+ }
+push $N82c4bc00
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle3
+  xpos 85
+  ypos 148
+ }
+push $N82c4bc00
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle2
+  xpos -3
+  ypos 148
+ }
+push $N82c4bc00
+ Saturation {
+  saturation 0
+  mode Average
+  name Saturation2
+  xpos -113
+  ypos 145
+ }
+push $N82c4bc00
+ Saturation {
+  saturation 0
+  mode Maximum
+  name Saturation1
+  xpos -232
+  ypos 147
+ }
+push $N82c4bc00
+ Expression {
+  temp_name3 VectorLength_3D
+  temp_expr3 sqrt(Red*Red+Green*Green+Blue*Blue)
+  expr0 VectorLength_3D
+  expr1 VectorLength_3D
+  expr2 VectorLength_3D
+  name Vector_Length3D
+  xpos -336
+  ypos 148
+ }
+ Switch {
+  inputs 7
+  which {{parent.sample_type}}
+  name Switch3
+  selected true
+  xpos -3
+  ypos 367
+ }
+ Grade {
+  blackpoint {{parent.input_valueLow}}
+  whitepoint {{parent.input_valueHigh}}
+  multiply {{parent.Frequency}}
+  add {{parent.Phase}}
+  black_clamp false
+  name Grade1
+  xpos -3
+  ypos 391
+ }
+ Invert {
+  name Invert1
+  xpos -3
+  ypos 415
+  disable {{!parent.Invert}}
+ }
+ Expression {
+  temp_name0 antR
+  temp_expr0 (floor(r/2)-(floor((r+1)/2)-1))
+  temp_name1 antG
+  temp_expr1 (floor(g/2)-(floor((g+1)/2)-1))
+  temp_name2 antB
+  temp_expr2 (floor(b/2)-(floor((b+1)/2)-1))
+  expr0 r<=parent.input_valueLow?parent.lowCont==0?r:parent.lowCont==1?r-floor(r):((1-(r-floor(r)))*(1-antR))+(((r-floor(r)))*(antR)):parent.highCont==0?r:parent.highCont==1?r-floor(r):((1-(r-floor(r)))*(1-antR))+(((r-floor(r)))*(antR))
+  expr1 g<=parent.input_valueLow?parent.lowCont==0?g:parent.lowCont==1?g-floor(g):((1-(g-floor(g)))*(1-antG))+(((g-floor(g)))*(antG)):parent.highCont==0?g:parent.highCont==1?g-floor(g):((1-(g-floor(g)))*(1-antG))+(((g-floor(g)))*(antG))
+  expr2 b<=parent.input_valueLow?parent.lowCont==0?b:parent.lowCont==1?b-floor(b):((1-(b-floor(b)))*(1-antB))+(((b-floor(b)))*(antB)):parent.highCont==0?b:parent.highCont==1?b-floor(b):((1-(b-floor(b)))*(1-antB))+(((b-floor(b)))*(antB))
+  name Expression2
+  xpos -3
+  ypos 491
+ }
+ ColorLookup {
+  lut {master {curve 0 1}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name ColorLookup2
+  xpos -3
+  ypos 562
+ }
+ ColorLookup {
+  lut {master {}
+    red {curve x0.3365018964 0 x0.8193916082 0 x0.8992395401 0 L x1 1}
+    green {curve x0.3365018964 0 x0.8193916082 0 x0.8992395401 1 L x1 1}
+    blue {curve x0.3365018964 0 x0.8193916082 0.7843137255 x0.8992395401 0.9176623178 L x1 1}
+    alpha {curve x0.3365018964 1 x0.8193916082 1 x0.8992395401 1 L x1 1}}
+  name ColorLookup1
+  xpos -2
+  ypos 586
+  addUserKnob {20 User}
+  addUserKnob {22 chek +STARTLINE}
+ }
+ Colorspace {
+  colorspace_in sRGB
+  name Colorspace2
+  xpos -2
+  ypos 669
+ }
+set N9ad31c00 [stack 0]
+ Colorspace {
+  colorspace_out YCbCr
+  name Colorspace8
+  xpos -334
+  ypos 669
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  name ShuffleCopy2
+  xpos -467
+  ypos 669
+ }
+ Colorspace {
+  colorspace_in YCbCr
+  name Colorspace9
+  xpos -467
+  ypos 708
+ }
+push $N9ad31c00
+ Switch {
+  inputs 2
+  which {{parent.PreserceLuma}}
+  name Switch2
+  xpos -2
+  ypos 708
+ }
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy1
+  xpos -2
+  ypos 788
+ }
+ Premult {
+  name Premult1
+  xpos -2
+  ypos 812
+  disable {{!parent.Premult}}
+ }
+ Output {
+  name Output1
+  xpos -2
+  ypos 866
+ }
+end_group
+Dot {
+ name Dot15
+ selected true
+ xpos -2514
+ ypos -3204
+}
+STMap {
+ inputs 2
+ channels rgb
+ uv rgb
+ name STMap2
+ selected true
+ xpos -2260
+ ypos -3207
+}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy1
+ selected true
+ xpos -2260
+ ypos -3035
+}
+Dot {
+ name Dot6
+ label Mandelbrot
+ note_font_size 30
+ selected true
+ xpos -2226
+ ypos -2584
+}

@@ -1,6 +1,7 @@
 #! /Applications/Nuke11.1v1/Nuke11.1v1.app/Contents/MacOS/libnuke-11.1.1.dylib -nx
 version 11.1 v1
-Gizmo {
+Group {
+name WireRemover
 inputs 2
 addUserKnob {20 wireRemover l WireRemover t "Wire Remover by Daniel van der Kaaden"}
 addUserKnob {41 method l Method T NoOp2.method}

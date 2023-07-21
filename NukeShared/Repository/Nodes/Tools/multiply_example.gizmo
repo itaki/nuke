@@ -1,0 +1,24 @@
+set cut_paste_input [stack 0]
+version 12.2 v10
+push $cut_paste_input
+Group {
+ name MULTIPLY
+ selected true
+ xpos -622
+ ypos -182
+ addUserKnob {20 User}
+ addUserKnob {22 add_mult l "Add a Multiply" T "### Start below this function...\n\n# We have to define this function first, so that we can add it to the \"remove\" button.\ndef remove_knobs():    \n    \n    # Get the my_knob and remove button.\n    knob_name = nuke.thisKnob().name()\[:-7]\n    knob_name_remove = nuke.thisKnob()\n    \n    # Delete them!\n    nuke.thisNode().removeKnob(nuke.thisNode().knob(knob_name))\n    nuke.thisNode().removeKnob(knob_name_remove)\n    \n    # Dive into the group and find the node with the label that matches the knobs that were\n    # just removed. DELETE THE NODE!\n    nuke.thisNode().begin()\n    for node in nuke.allNodes():\n        if knob_name in node.knob('label').value():\n            nuke.delete(node)\n\n\n### Here is how to dynamically add/remove nodes.\n\n# Add controls to the node...\ncount = nuke.thisNode().knob('knob_count').setValue(nuke.thisNode().knob('knob_count').value()+1)\nknob_counter = str(int(nuke.thisNode().knob('knob_count').value()))\n\n\nknob_name = \"my_knob_\"+knob_counter\n\n\n\n# Multiply knob\nnuke.thisNode().addKnob(nuke.Double_Knob(knob_name, \"Multiply_\"+knob_counter))\n# Remove button -- this holds the fucntino we defined at the start.\nnuke.thisNode().addKnob(nuke.PyScript_Knob(knob_name+\"_remove\", \"remove\", \"remove_knobs()\"))\n\n\n# There is a child/parent relationship when diving inside of nodes.\n# By default, when we write python, it executes in \"root\", or the \"parent\" nuke script...\n# If we want to execute code inside a group, we have to \"begin\" working inside of it.\nnuke.thisNode().begin()\n\n# We want to create nodes between the input and output nodes. We can take advantage of inbuilt functionality,\n# and select the last node before the Output node, so when the next node is created, it will be the last in the stack.\nnuke.toNode('Output1').input(0).setSelected(True)\n\n# Create the node!\nmultiply_node = nuke.createNode('Multiply')\n\n# Expression-link to the knob we just created.\nmultiply_node.knob('value').setExpression(\"parent.my_knob_\"+knob_counter)\nmultiply_node.knob('label').setValue(\"Linked to: \"+\"my_knob_\"+knob_counter)\n\n# End working in the group.\nnuke.thisNode().end()" +STARTLINE}
+ addUserKnob {3 knob_count -STARTLINE +HIDDEN}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 0
+ }
+ Output {
+  name Output1
+  selected true
+  xpos 0
+  ypos 532
+ }
+end_group

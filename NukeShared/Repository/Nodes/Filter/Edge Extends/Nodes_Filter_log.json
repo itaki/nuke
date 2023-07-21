@@ -4,8 +4,8 @@
         "shot": "Filter",
         "directory": "/Users/itakidev/nuke/NukeShared/Repository/Nodes/Filter/Edge Extends",
         "number_of_sessions": 0,
-        "shot_clock": "0:00:02",
-        "work_time": "0:00:02",
+        "shot_clock": "0:00:04",
+        "work_time": "0:00:04",
         "idle_time": "0:00:00"
     },
     "sessions": [
@@ -16,6 +16,15 @@
             "notes": [],
             "idle_time": 0,
             "end_time": "2023-03-23T23:49:37.015200",
+            "status": "saved"
+        },
+        {
+            "filename": "Gaussian_edge_extend.nk",
+            "artist": "itakidev",
+            "start_time": "2023-07-13T15:56:15.464875",
+            "notes": [],
+            "idle_time": 0,
+            "end_time": "2023-07-13T15:56:18.447973",
             "status": "saved"
         }
     ]

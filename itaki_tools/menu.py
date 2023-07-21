@@ -26,8 +26,8 @@ itaki_menu.addCommand('Preset Backdrop', 'backdrop_presets.backdrop_presets()', 
 #itaki_menu.addCommand('new preset backdrop', 'bm.create_popup_menu()', 'shift+v')
 
 # Get closest node script
-itaki_menu.addCommand('Attach input to closest node', 'attach_closest_node.connect_to_closest()', 'a')
-itaki_menu.addCommand('Attach output to closest node', 'attach_closest_node.connect_to_closest(direction=1)', 'alt+a')
+itaki_menu.addCommand('Attach input to closest node', 'attach_closest_node.connect_to_closest()', 'a', shortcutContext=2)
+itaki_menu.addCommand('Attach output to closest node', 'attach_closest_node.connect_to_closest(direction=1)', 'alt+a', shortcutContext=2)
 
 
 

@@ -37,7 +37,7 @@ def backdrop_presets():
                 'Grain',
                 'Element',
                 'Retime',
-                'Transformations', 'Tracker',
+                'Transformations', 'Tracker', 'Mocha',
                 'Keyer', 'Additive_Key', 'Edge_Fixes', 'Despill',
                 'Effects', 'Defocus', 'Glow', 'Lens_Flare', 'Godrays', 'Light_Wrap',
                 'Roto','Matte',
@@ -101,6 +101,11 @@ def backdrop_presets():
         presetIcon = 'Tracker.png'
         presetColor = colorsys.hsv_to_rgb(0.2, 1, 0.5)
 
+    if customPreset == 'Mocha':
+        presetLabel = 'Mocha'
+        presetIcon = 'Tracker.png'
+        presetColor = colorsys.hsv_to_rgb(0.2, 1, 0.5)
+
     if customPreset == 'Keyer':
         presetLabel = 'Keyer'
         presetIcon = 'Keyer.png'
@@ -121,7 +126,7 @@ def backdrop_presets():
         presetIcon = 'HueCorrect.png'
         presetColor = colorsys.hsv_to_rgb(0.682, 0.528, 0.5)
 
-    if customPreset == 'FX':
+    if customPreset == 'Effects':
         presetLabel = 'FX'
         presetIcon = ':qrc/images/ToolbarFilter.png'
         presetColor = colorsys.hsv_to_rgb(0.812, 1, 0.5)

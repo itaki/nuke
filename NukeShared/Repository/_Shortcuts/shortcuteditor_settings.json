@@ -1,6 +1,8 @@
 {
  "overrides": {
+  "Nodes/Color/Invert": "Shift+I",
   "Nodes/Keyer/Keyer": "V",
+  "Nodes/Merge/Premult": "Shift+P",
   "Nodes/Transform/Tracker": "Shift+T"
  },
  "version": 1
