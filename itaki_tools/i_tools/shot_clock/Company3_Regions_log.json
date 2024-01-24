@@ -1,0 +1,283 @@
+{
+    "header": {
+        "project_name": "Company3",
+        "shot": "Regions",
+        "directory": "/Volumes/Dettifoss/Company3/Regions/20230814",
+        "number_of_sessions": 0,
+        "shot_clock": "3 days, 12:46:24",
+        "work_time": "1 day, 6:39:24",
+        "idle_time": "2 days, 6:07:00"
+    },
+    "sessions": [
+        {
+            "filename": "20230814_spins_v01.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-14T21:36:30.027289",
+            "notes": [],
+            "idle_time": 0,
+            "end_time": "2023-08-14T21:43:46.746704",
+            "status": "saved"
+        },
+        {
+            "filename": "20230814_spins_v02.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-14T21:46:15.853554",
+            "notes": [],
+            "idle_time": 0,
+            "end_time": "2023-08-14T21:50:18.337913",
+            "status": "saved"
+        },
+        {
+            "filename": "20230814_spins_v01.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-14T21:50:59.855655",
+            "notes": [],
+            "idle_time": 0,
+            "end_time": "2023-08-14T21:51:59.866231",
+            "status": "unsaved"
+        },
+        {
+            "filename": "20230814_spins_v01.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-14T21:57:49.728727",
+            "notes": [],
+            "idle_time": 1320,
+            "end_time": "2023-08-14T22:31:50.045410",
+            "status": "unsaved"
+        },
+        {
+            "filename": "20230814_spins_v01.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-15T07:18:25.753684",
+            "notes": [],
+            "idle_time": 4080,
+            "end_time": "2023-08-15T09:04:18.086094",
+            "status": "unsaved"
+        },
+        {
+            "filename": "20230814_spins_v01.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-15T09:11:00.768881",
+            "notes": [],
+            "idle_time": 12240,
+            "end_time": "2023-08-15T15:23:05.310637",
+            "status": "unsaved"
+        },
+        {
+            "filename": "20230814_spins_v02.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-15T15:22:46.088989",
+            "notes": [],
+            "idle_time": 2040,
+            "end_time": "2023-08-15T16:58:47.815222",
+            "status": "unsaved"
+        },
+        {
+            "filename": "20230814_spins_v02.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-15T18:19:15.287778",
+            "notes": [],
+            "idle_time": 120,
+            "end_time": "2023-08-15T18:48:15.502897",
+            "status": "unsaved"
+        },
+        {
+            "filename": "20230814_spins_v02.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-15T18:29:53.451680",
+            "notes": [],
+            "idle_time": 60,
+            "end_time": "2023-08-15T18:47:58.563662",
+            "status": "saved"
+        },
+        {
+            "filename": "20230814_spins_v02.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-15T18:48:09.878896",
+            "notes": [],
+            "idle_time": 60,
+            "end_time": "2023-08-15T19:17:10.325222",
+            "status": "unsaved"
+        },
+        {
+            "filename": "20230814_spins_v02.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-15T19:24:22.790126",
+            "notes": [],
+            "idle_time": 4260,
+            "end_time": "2023-08-15T21:25:23.720680",
+            "status": "unsaved"
+        },
+        {
+            "filename": "20230814_spins_v02.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-15T21:25:28.914574",
+            "notes": [],
+            "idle_time": 40500,
+            "end_time": "2023-08-16T09:30:35.232815",
+            "status": "unsaved"
+        },
+        {
+            "filename": "20230814_spins_v02.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-15T21:25:38.960045",
+            "notes": [],
+            "idle_time": 0,
+            "end_time": "2023-08-15T21:30:38.993697",
+            "status": "unsaved"
+        },
+        {
+            "filename": "20230814_spins_v03.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-16T09:32:45.910041",
+            "notes": [],
+            "idle_time": 2460,
+            "end_time": "2023-08-16T10:33:46.470668",
+            "status": "unsaved"
+        },
+        {
+            "filename": "teebo_spins_v04.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-16T10:38:47.836601",
+            "notes": [],
+            "idle_time": 60,
+            "end_time": "2023-08-16T10:46:47.846567",
+            "status": "unsaved"
+        },
+        {
+            "filename": "teebo_spins_v04.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-16T10:47:05.804820",
+            "notes": [],
+            "idle_time": 0,
+            "end_time": "2023-08-16T10:47:13.909284",
+            "status": "saved"
+        },
+        {
+            "filename": "teebo_spins_v04.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-16T10:47:48.831917",
+            "notes": [],
+            "idle_time": 20520,
+            "end_time": "2023-08-16T17:12:56.663377",
+            "status": "unsaved"
+        },
+        {
+            "filename": "teebo_spins_v04.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-16T17:13:22.455957",
+            "notes": [],
+            "idle_time": 0,
+            "end_time": "2023-08-16T17:19:24.629445",
+            "status": "saved"
+        },
+        {
+            "filename": "teebo_spins_v04.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-16T17:21:05.046188",
+            "notes": [],
+            "idle_time": 55140,
+            "end_time": "2023-08-17T10:21:15.179586",
+            "status": "unsaved"
+        },
+        {
+            "filename": "teebo_spins_v05.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-17T10:21:06.726621",
+            "notes": [],
+            "idle_time": 120,
+            "end_time": "2023-08-17T10:48:08.353928",
+            "status": "unsaved"
+        },
+        {
+            "filename": "teebo_spins_v05.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-17T10:47:49.988622",
+            "notes": [],
+            "idle_time": 360,
+            "end_time": "2023-08-17T11:10:05.576191",
+            "status": "saved"
+        },
+        {
+            "filename": "teebo_spins_v05.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-17T11:10:15.232981",
+            "notes": [],
+            "idle_time": 4980,
+            "end_time": "2023-08-17T13:37:16.337158",
+            "status": "unsaved"
+        },
+        {
+            "filename": "teebo_spins_v06.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-17T11:58:33.171894",
+            "notes": [],
+            "idle_time": 1740,
+            "end_time": "2023-08-17T13:26:49.946789",
+            "status": "saved"
+        },
+        {
+            "filename": "teebo_spins_v07.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-18T07:11:00.298138",
+            "notes": [],
+            "idle_time": 4740,
+            "end_time": "2023-08-18T10:00:39.596279",
+            "status": "unsaved"
+        },
+        {
+            "filename": "teebo_spins_v07.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-18T10:00:38.509622",
+            "notes": [],
+            "idle_time": 0,
+            "end_time": "2023-08-18T10:33:50.393053",
+            "status": "saved"
+        },
+        {
+            "filename": "teebo_spins_v08.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-18T10:33:59.999699",
+            "notes": [],
+            "idle_time": 420,
+            "end_time": "2023-08-18T11:21:08.818271",
+            "status": "saved"
+        },
+        {
+            "filename": "teebo_spins_v09.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-18T11:21:21.127986",
+            "notes": [],
+            "idle_time": 480,
+            "end_time": "2023-08-18T12:01:23.590328",
+            "status": "unsaved"
+        },
+        {
+            "filename": "teebo_spins_v09.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-18T14:05:01.150240",
+            "notes": [],
+            "idle_time": 3660,
+            "end_time": "2023-08-18T16:15:01.560958",
+            "status": "unsaved"
+        },
+        {
+            "filename": "teebo_spins_v11.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-18T17:42:19.659624",
+            "notes": [],
+            "idle_time": 28260,
+            "end_time": "2023-08-19T13:21:46.181255",
+            "status": "unsaved"
+        },
+        {
+            "filename": "teebo_spins_v11.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-21T12:07:44.429557",
+            "notes": [],
+            "idle_time": 7200,
+            "end_time": "2023-08-21T15:02:16.504872",
+            "status": "unsaved"
+        }
+    ]
+}

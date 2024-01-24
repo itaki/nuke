@@ -1,29 +1,57 @@
 import nuke
+
+working_format = 'Regions'
+# examples are 'UHD_4K_sRGB', 'Regions', 'Horizon'
 # Set default formats. Note this expects an empty formats.tcl in the NUKE_PATH to clear the existing default formats.
-default_formats = [
+custom_formats = [
     '1560 1560 1 square_1.5K',
+    '4448 3096 1 Regions',
     '3072 1620 1 C3-Nemours',
     '4312 2274 1 Horizon',
-    '4448 3096 1 TL',
 
 ]
-for f in default_formats:
-    nuke.addFormat(f)
+
+project_settings = {
+    'UHD_4K_sRGB': {'format':'UHD_4K', 'fps':'23.976', 'first_frame':'1', 'colorspace':'sRGB'},
+    'Regions': {'format':'Regions', 'fps':'23.976', 'first_frame':'1', 'colorspace':'Log3G12'},
+    'Horizon': {'format':'Horizon', 'fps':'24', 'first_frame':'1001', 'colorspace':'linear'},
+}
+
+
+def add_formats(custom_formats):
+    '''Adds formats from the custom_formats list to the format list in Nuke'''
+    for f in custom_formats:
+        nuke.addFormat(f)
+
+def set_project(settings='UHD_4K'):
+    print(settings)
+    '''When given a format, will set the startup and format settings'''
+    nuke.knobDefault('Root.format', settings['format'])
+    nuke.knobDefault('Read.frame_mode', 'start at')
+    nuke.knobDefault('Read.frame',settings['first_frame'])
+    nuke.knobDefault('Read.colorspace', settings['colorspace'])
+    nuke.knobDefault('Root.fps', settings['fps']) 
+
+# Start the script
+add_formats(custom_formats)
+set_project(settings=project_settings[working_format])
+
+''' these are just notes for now'''
 # SET DEFAULT FORMAT
 #nuke.knobDefault('Root.format', 'HD_1080') # 1920x1080
 #nuke.knobDefault('Root.format', 'UHD_4K') # 3840x2160
 #nuke.knobDefault('Root.format', '4K_DCP') # 4096x2160
-nuke.knobDefault('Root.format', 'Horizon') # 4312x2274
-nuke.knobDefault('Read.frame_mode', 'start at')
-nuke.knobDefault('Read.frame','1001')
-nuke.knobDefault('Read.colorspace','linear') #
+# nuke.knobDefault('Root.format', 'Horizon') # 4312x2274
+# nuke.knobDefault('Read.frame_mode', 'start at')
+# nuke.knobDefault('Read.frame','1001')
+# nuke.knobDefault('Read.colorspace','linear') #
 #nuke.knobDefault('Root.format', 'TL') # 4448x3096 
 
 #nuke.knobDefault('Root.proxy_format', 'SD_540p')
 
 # SET FRAME RATE
 #nuke.knobDefault("Root.fps", "23.976") 
-nuke.knobDefault("Root.fps", "24") 
+# nuke.knobDefault("Root.fps", "24") 
 #nuke.knobDefault("Root.fps", "29.976") 
 
 

@@ -1,0 +1,569 @@
+#! C:/Program Files/Nuke8.0v4/nuke-8.0.v4.dll -nx
+version 8.0 v4
+Gizmo {
+ inputs 4
+ lock_connections true
+ addUserKnob {20 User l DeSpill}
+ addUserKnob {6 externalkeyer l "External DeSpill Keyer" t "Enable external DeSpill keyer input (Internal Spill Keyer will be disabled)" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {6 beforeandafter l Before/After t "Compare before and after the DeSpill operation" +STARTLINE}
+ addUserKnob {4 view_1 l View M {"Final ReSult" "Spill Keyer" "DeSpill Map" "Source Key" "" "" "" "" "" ""}}
+ view_1 "Spill Keyer"
+ addUserKnob {20 spillkeyer l "Spill Keyer" n 1}
+ addUserKnob {41 screenColour l "Screen Colour" T Keylight1.screenColour}
+ addUserKnob {41 screenGain l "Screen Gain" T Keylight1.screenGain}
+ addUserKnob {41 screenBalance l "Screen Balance" T Keylight1.screenBalance}
+ addUserKnob {41 preBlur l "Screen PreBlur" T Keylight1.preBlur}
+ addUserKnob {41 highGain l "Highlights Gain" T Keylight1.highGain}
+ addUserKnob {20 DeSpillTuning l "DeSpill Tuning" n 1}
+ DeSpillTuning 0
+ addUserKnob {41 midGain l "Midtones Gain" T Keylight1.midGain}
+ addUserKnob {41 lowGain l "Shadow Gain" T Keylight1.lowGain}
+ addUserKnob {41 midPoint l "Mid Tones At" T Keylight1.midPoint}
+ addUserKnob {20 endGroup_4 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {7 saturation l "Spill Saturation" R -1 1}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 transparency l Transparency n 1}
+ transparency 0
+ addUserKnob {4 transparency_1 l "" +STARTLINE M {Blur Defocus ""}}
+ addUserKnob {41 size l "Blur Size" T Blur1.size}
+ addUserKnob {41 defocus l "Defocus Size" T Defocus1.defocus}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {20 Grade_1 l Grade n 1}
+ Grade_1 0
+ addUserKnob {41 blackpoint T Grade1.blackpoint}
+ addUserKnob {41 whitepoint T Grade1.whitepoint}
+ addUserKnob {41 black l lift T Grade1.black}
+ addUserKnob {41 white l gain T Grade1.white}
+ addUserKnob {41 multiply T Grade1.multiply}
+ addUserKnob {41 add l offset T Grade1.add}
+ addUserKnob {41 gamma T Grade1.gamma}
+ addUserKnob {41 reverse T Grade1.reverse}
+ addUserKnob {41 black_clamp l "black clamp" T Grade1.black_clamp}
+ addUserKnob {41 white_clamp l "white clamp" T Grade1.white_clamp}
+ addUserKnob {26 ""}
+ addUserKnob {41 enable_mix_luminance l "" -STARTLINE T Grade1.enable_mix_luminance}
+ addUserKnob {41 mix_luminance l "" -STARTLINE T Grade1.mix_luminance}
+ addUserKnob {41 mix T Grade1.mix}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 transform l "FG Transform"}
+ addUserKnob {41 matrix T Transform1.matrix}
+ addUserKnob {6 transform_1 l On/Off +STARTLINE}
+ addUserKnob {41 translate T Transform1.translate}
+ addUserKnob {41 rotate T Transform1.rotate}
+ addUserKnob {41 scale T Transform1.scale}
+ addUserKnob {41 skewX l "skew X" T Transform1.skewX}
+ addUserKnob {41 skewY l "skew Y" T Transform1.skewY}
+ addUserKnob {41 skew_order l "skew order" T Transform1.skew_order}
+ addUserKnob {41 center T Transform1.center}
+ addUserKnob {41 invert_matrix l invert T Transform1.invert_matrix}
+ addUserKnob {41 filter T Transform1.filter}
+ addUserKnob {41 clamp T Transform1.clamp}
+ addUserKnob {41 black_outside l "black outside" T Transform1.black_outside}
+ addUserKnob {41 motionblur T Transform1.motionblur}
+ addUserKnob {41 shutter T Transform1.shutter}
+ addUserKnob {41 shutteroffset l "shutter offset" T Transform1.shutteroffset}
+ addUserKnob {41 shuttercustomoffset l "" -STARTLINE T Transform1.shuttercustomoffset}
+ addUserKnob {20 fg_grade l "FG Grade"}
+ addUserKnob {6 fg_grade_2 l On/Off +STARTLINE}
+ addUserKnob {41 channels T Grade2.channels}
+ addUserKnob {41 blackpoint_1 l blackpoint T Grade2.blackpoint}
+ addUserKnob {41 whitepoint_1 l whitepoint T Grade2.whitepoint}
+ addUserKnob {41 black_1 l lift T Grade2.black}
+ addUserKnob {41 white_1 l gain T Grade2.white}
+ addUserKnob {41 multiply_1 l multiply T Grade2.multiply}
+ addUserKnob {41 add_1 l offset T Grade2.add}
+ addUserKnob {41 gamma_1 l gamma T Grade2.gamma}
+ addUserKnob {26 "" l "  "}
+ addUserKnob {41 reverse_1 l reverse T Grade2.reverse}
+ addUserKnob {41 black_clamp_1 l "black clamp" T Grade2.black_clamp}
+ addUserKnob {41 white_clamp_1 l "white clamp" T Grade2.white_clamp}
+ addUserKnob {20 Mask n 1}
+ Mask 0
+ addUserKnob {26 "" l mask}
+ addUserKnob {41 maskChannelInput l "" -STARTLINE T Grade2.maskChannelInput}
+ addUserKnob {41 inject T Grade2.inject}
+ addUserKnob {41 invert_mask l invert T Grade2.invert_mask}
+ addUserKnob {41 fringe T Grade2.fringe}
+ addUserKnob {41 unpremult l "(un)premult by" T Grade2.unpremult}
+ addUserKnob {41 invert_unpremult l invert T Grade2.invert_unpremult}
+ addUserKnob {26 "" l "mix luminance"}
+ addUserKnob {20 endGroup_5 l endGroup n -1}
+ addUserKnob {41 enable_mix_luminance_1 l "" -STARTLINE T Grade2.enable_mix_luminance}
+ addUserKnob {41 mix_luminance_1 l "" -STARTLINE T Grade2.mix_luminance}
+ addUserKnob {20 lightwrap l LightWrap}
+ addUserKnob {6 lightwrap_1 l On/Off +STARTLINE}
+ addUserKnob {41 Diffuse T LightWrap2.Diffuse}
+ addUserKnob {41 Intensity T LightWrap2.Intensity}
+ addUserKnob {41 onlywrap l "Generate wrap only" T LightWrap2.onlywrap}
+ addUserKnob {41 disableluma l "Disable luminance based wrap" T LightWrap2.disableluma}
+ addUserKnob {41 enableglow l "Enable Glow" T LightWrap2.enableglow}
+ addUserKnob {41 FGBlur T LightWrap2.FGBlur}
+ addUserKnob {41 BGBlur T LightWrap2.BGBlur}
+ addUserKnob {41 Saturation T LightWrap2.Saturation}
+ addUserKnob {41 LumaTolerance T LightWrap2.LumaTolerance}
+ addUserKnob {41 highlightmerge l "Highlight Merge" T LightWrap2.highlightmerge}
+ addUserKnob {41 useconstant l "Use constant highlight" T LightWrap2.useconstant}
+ addUserKnob {41 constantcolor l Constant T LightWrap2.constantcolor}
+ addUserKnob {26 ""}
+ addUserKnob {20 CCorrect n 1}
+ addUserKnob {41 white_2 l white T LightWrap2.white}
+ addUserKnob {41 gray l "midtone bias" T LightWrap2.gray}
+ addUserKnob {20 master l "@b;master" n 1}
+ master 0
+ addUserKnob {41 contrast T LightWrap2.contrast}
+ addUserKnob {41 gamma_2 l gamma T LightWrap2.gamma}
+ addUserKnob {41 gain T LightWrap2.gain}
+ addUserKnob {41 offset T LightWrap2.offset}
+ addUserKnob {20 "" n -1}
+ addUserKnob {20 shadows l "@b;shadows" n 1}
+ shadows 0
+ addUserKnob {41 shadows_gamma l gamma T LightWrap2.shadows_gamma}
+ addUserKnob {41 shadows_gain l gain T LightWrap2.shadows_gain}
+ addUserKnob {41 shadows_offset l offset T LightWrap2.shadows_offset}
+ addUserKnob {20 "" n -1}
+ addUserKnob {20 midtones l "@b;midtones" n 1}
+ midtones 0
+ addUserKnob {41 midtones_gamma l gamma T LightWrap2.midtones_gamma}
+ addUserKnob {41 midtones_gain l gain T LightWrap2.midtones_gain}
+ addUserKnob {41 midtones_offset l offset T LightWrap2.midtones_offset}
+ addUserKnob {20 "" n -1}
+ addUserKnob {20 highlights l "@b;highlights" n 1}
+ highlights 0
+ addUserKnob {41 highlights_gamma l gamma T LightWrap2.highlights_gamma}
+ addUserKnob {41 highlights_gain l gain T LightWrap2.highlights_gain}
+ addUserKnob {41 highlights_offset l offset T LightWrap2.highlights_offset}
+ addUserKnob {41 mix_1 l mix T LightWrap2.mix}
+ addUserKnob {20 endGroup n -1}
+}
+ Input {
+  inputs 0
+  name Source_Key
+  xpos 206
+  ypos -202
+  number 2
+ }
+set N3f4a9140 [stack 0]
+ Dot {
+  name Dot15
+  xpos 578
+  ypos -199
+ }
+ Dot {
+  name Dot14
+  xpos 578
+  ypos 594
+ }
+ Dot {
+  name Dot22
+  xpos -97
+  ypos 594
+ }
+set N3f4a7930 [stack 0]
+ Input {
+  inputs 0
+  name Source
+  xpos 267
+  ypos -352
+  number 1
+ }
+set N3f4a7250 [stack 0]
+ Dot {
+  name Dot2
+  xpos 301
+  ypos -30
+ }
+ Input {
+  inputs 0
+  name External_DeSpill_Keyer
+  xpos 626
+  ypos -287
+ }
+ Dot {
+  name Dot16
+  xpos 660
+  ypos -90
+ }
+set N3f4a6800 [stack 0]
+push $N3f4a7250
+ OFXuk.co.thefoundry.keylight.keylight_v201 {
+  show "Final Result"
+  unPreMultiply false
+  screenColour {0 0 0}
+  screenGain 1
+  screenBalance 0.5
+  alphaBias {0.5 0.5 0.5}
+  despillBias {0.5 0.5 0.5}
+  gangBiases true
+  preBlur 0
+  "Screen Matte" 0
+  screenClipMin 0
+  screenClipMax 1
+  screenClipRollback 0
+  screenGrowShrink 0
+  screenSoftness 0
+  screenDespotBlack 0
+  screenDespotWhite 0
+  screenReplaceMethod "Soft Colour"
+  screenReplaceColour {0.5 0.5 0.5}
+  Tuning 0
+  midPoint 0.5
+  lowGain 1
+  midGain 1
+  highGain 1
+  "Inside Mask" 0
+  sourceAlphaHandling Ignore
+  insideReplaceMethod "Soft Colour"
+  insideReplaceColour {0.5 0.5 0.5}
+  Crops 0
+  SourceXMethod Colour
+  SourceYMethod Colour
+  SourceEdgeColour 0
+  SourceCropL 0
+  SourceCropR 1
+  SourceCropB 0
+  SourceCropT 1
+  balanceSet true
+  insideComponent None
+  outsideComponent None
+  cacheBreaker true
+  name Keylight1
+  xpos 390
+  ypos -148
+ }
+set N3f4a75c0 [stack 0]
+ Switch {
+  inputs 2
+  which {{externalkeyer}}
+  name Switch9
+  xpos 390
+  ypos -93
+ }
+set N3f5ecc00 [stack 0]
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  xpos 390
+  ypos -33
+ }
+ Saturation {
+  saturation {{Ego_DeSpill_V3.saturation}}
+  mode Maximum
+  name Saturation1
+  xpos 390
+  ypos -2
+ }
+set N3f4a8380 [stack 0]
+ Dot {
+  name Dot6
+  xpos 424
+  ypos 450
+ }
+ Dot {
+  name Dot20
+  xpos -101
+  ypos 450
+ }
+set N3f4a86f0 [stack 0]
+push $N3f4a6800
+ Dot {
+  name Dot3
+  xpos 660
+  ypos 474
+ }
+push $N3f4a9140
+ Dot {
+  name Dot19
+  xpos -929
+  ypos -198
+ }
+ Dot {
+  name Dot26
+  xpos -940
+  ypos 306
+ }
+ Input {
+  inputs 0
+  name Bg
+  xpos -803
+  ypos -249
+  number 3
+ }
+set N3f2735b0 [stack 0]
+ Dot {
+  name Dot25
+  xpos -996
+  ypos -246
+ }
+ Merge2 {
+  inputs 2
+  name Merge5
+  xpos -1030
+  ypos 375
+ }
+push $N3f2735b0
+ Dot {
+  name Dot4
+  xpos -769
+  ypos -140
+ }
+set N3f273920 [stack 0]
+ Shuffle {
+  alpha black
+  name Shuffle2
+  xpos -513
+  ypos -143
+ }
+set N3f272110 [stack 0]
+ Dot {
+  name Dot11
+  xpos -326
+  ypos -139
+ }
+push $N3f4a8380
+push $N3f4a9140
+push $N3f5ecc00
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 206
+  ypos -99
+ }
+add_layer {Dispill DeSpill.luma}
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 DeSpill.luma
+  name Copy2
+  xpos 206
+  ypos -8
+ }
+ Premult {
+  name Premult1
+  xpos 206
+  ypos 37
+ }
+set N3f274370 [stack 0]
+ Transform {
+  center {1200 675}
+  name Transform1
+  xpos 206
+  ypos 133
+ }
+ Dot {
+  name Dot7
+  xpos 128
+  ypos 136
+ }
+push $N3f274370
+ Switch {
+  inputs 2
+  which {{transform_1}}
+  name Switch3
+  xpos 94
+  ypos 38
+ }
+set N3f5ebd80 [stack 0]
+ Dot {
+  name Dot10
+  xpos 128
+  ypos -87
+ }
+ Grade {
+  maskChannelInput rgba.alpha
+  name Grade2
+  xpos -40
+  ypos -96
+ }
+push $N3f5ebd80
+ Switch {
+  inputs 2
+  which {{fg_grade_2}}
+  name Switch4
+  xpos -40
+  ypos 39
+ }
+set N3f5e9940 [stack 0]
+ Remove {
+  channels Dispill
+  name Remove1
+  xpos -223
+  ypos -63
+ }
+ LightWrap {
+  inputs 2
+  name LightWrap2
+  xpos -360
+  ypos -57
+  master 1
+  shadows 1
+  midtones 1
+  highlights 1
+ }
+push $N3f5e9940
+ Switch {
+  inputs 2
+  which {{lightwrap_1}}
+  name Switch5
+  xpos -360
+  ypos 40
+ }
+push $N3f272110
+ Merge2 {
+  inputs 2
+  also_merge all
+  maskChannelInput -rgba.blue
+  invert_mask true
+  name Merge2
+  xpos -513
+  ypos 40
+ }
+set N3f276cb0 [stack 0]
+ Dot {
+  name Dot8
+  xpos -479
+  ypos 223
+ }
+set N3f277390 [stack 0]
+ Dot {
+  name Dot9
+  xpos -386
+  ypos 223
+ }
+ Dot {
+  name Dot1
+  xpos -386
+  ypos 324
+ }
+push $N3f276cb0
+ Shuffle {
+  in Dispill
+  name Shuffle1
+  xpos -660
+  ypos 40
+ }
+push $N3f273920
+ Defocus {
+  defocus 50
+  name Defocus1
+  xpos -734
+  ypos -102
+ }
+push $N3f273920
+ Blur {
+  size 50
+  name Blur1
+  xpos -878
+  ypos -101
+ }
+ Switch {
+  inputs 2
+  which {{transparency_1 x35 0}}
+  name Switch1
+  xpos -803
+  ypos -48
+ }
+ Grade {
+  name Grade1
+  xpos -803
+  ypos -3
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge3
+  xpos -803
+  ypos 40
+ }
+ Dot {
+  name Dot5
+  xpos -769
+  ypos 324
+ }
+push $N3f277390
+ Merge2 {
+  inputs 2+1
+  operation plus
+  name Merge4
+  xpos -513
+  ypos 321
+ }
+ Switch {
+  inputs 2
+  which {{beforeandafter}}
+  name Switch6
+  xpos -513
+  ypos 375
+ }
+set N3f5ecfa0 [stack 0]
+ Switch {
+  inputs 4
+  which {{Ego_DeSpill_V3.Switch2.which}}
+  name Switch10
+  xpos -513
+  ypos 519
+ }
+ Dot {
+  name Dot18
+  xpos -479
+  ypos 594
+ }
+push $N3f4a7930
+push $N3f4a86f0
+push $N3f4a75c0
+ Dot {
+  name Dot13
+  xpos 500
+  ypos -145
+ }
+ Dot {
+  name Dot12
+  xpos 500
+  ypos 522
+ }
+ Dot {
+  name Dot23
+  xpos -82
+  ypos 522
+ }
+push $N3f5ecfa0
+ Dot {
+  name Dot24
+  xpos -362
+  ypos 378
+ }
+ Dot {
+  name Dot21
+  xpos -362
+  ypos 522
+ }
+ Switch {
+  inputs 4
+  which {{view_1}}
+  name Switch2
+  xpos -296
+  ypos 519
+ }
+ Dot {
+  name Dot17
+  xpos -262
+  ypos 594
+ }
+ Switch {
+  inputs 2
+  which {{externalkeyer}}
+  name Switch8
+  xpos -417
+  ypos 591
+ }
+ Output {
+  name Output1
+  xpos -417
+  ypos 687
+ }
+end_group

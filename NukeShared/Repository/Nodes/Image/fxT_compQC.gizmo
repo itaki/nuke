@@ -1,0 +1,1522 @@
+Group {
+inputs 2
+help "QC Node to check technical comp issues.\n\nDeveloped by Tor Andreassen"
+onCreate "nuke.thisNode()\['missingFrames'].setValue('')\nnuke.thisNode()\['meName'].setValue(nuke.thisNode().name())\n"
+knobChanged "if nuke.thisKnob().name()=='mode':\n    n=nuke.thisNode()\n\n    val=n\['mode'].value()\n\n    if val == 'negative values':\n        n.knob('negative_values_over').setVisible(True)\n        n.knob('negative_values_over').setValue(False)\n    else:\n        n.knob('negative_values_over').setValue(False)\n        n.knob('negative_values_over').setVisible(False)"
+tile_color 0xf8ff00ff
+label "\[value mode]"
+addUserKnob {20 fxT_compQCTAB l fxT_compQC}
+addUserKnob {1 meName l "" +STARTLINE +INVISIBLE}
+meName fxT_compQC
+addUserKnob {26 aboutNode l "" +STARTLINE T "<font color='grey'>QC node to quality check your comp output</font><br /><br />\n<font color='light cyan'>PS: it's reccomended to render your comp<br /> before running this node<br /></font>"}
+addUserKnob {26 ""}
+addUserKnob {4 mode t "choose QC mode from this dropdown menu" M {"blacks / log" nans/infs "highpass filter comp" "highpass filter plate" "clipping pixels" "saturation check" "negative values" "grain check" "comp difference with plate" comp "" "" "" "" "" "" "" "" "" "" ""}}
+addUserKnob {26 spacer_1 l "" -STARTLINE T "          "}
+addUserKnob {6 flopComp l "flop comp" t "flop comp to see the image a way you are not use to seeing it, to possibly spot issues you didn't see when watching the comp the regular way." -STARTLINE}
+addUserKnob {6 negative_values_over l "display negative values over input" t "check to display negative values over input (plate or comp)" -STARTLINE +HIDDEN}
+addUserKnob {26 ""}
+addUserKnob {20 highPassSettingGROUP l "highPass setting" n 1}
+addUserKnob {4 highpassMethod l "highPass type" t "choose the highPass type that best fits your input." M {"method 1" "method 2" "method 3"}}
+highpassMethod "method 2"
+addUserKnob {7 highpassFilter l "highPass filter" t "adjust the highPass filter value to see the highPass filter better." R 0 20}
+highpassFilter 10
+addUserKnob {7 highpassMult l "highPass mult" t "highPass filter multiplyer for boosting overall visability." R 0 5}
+highpassMult 4
+addUserKnob {20 endGroup n -1}
+addUserKnob {26 ""}
+addUserKnob {7 clippingValue l "clipping value" t "max allowed pixel value for clipping pixels mode.\n\n(this value should be based on camera parameters)" R 0 50}
+clippingValue 50
+addUserKnob {7 grainVisibility l "grain visibility" t "adjust the grain visibility for the grain check mode.\n\nBoost it if it's hard to see the \"noise-pixels\" representing the grain pattern in your comp.\n\n" R 1 15}
+grainVisibility 1.4
+addUserKnob {7 saturationValue l "saturation value" t "choose the value of the saturation, defalt is 4, adjust accordingly if nessasary." R 2 8}
+saturationValue 4
+addUserKnob {26 ""}
+addUserKnob {22 shuffleIt l "shuffle it!" t "Shuffle all QC layers as channels.\n\nThis button is a toggle, click again to remove.\n\nUseful to quickly a/b between various QC layers." -STARTLINE T "def channelToggle():\n    shuffleCopies = \['ShuffleCopy1','ShuffleCopy2','ShuffleCopy3','ShuffleCopy4','ShuffleCopy5','ShuffleCopy6','ShuffleCopy7','ShuffleCopy8','ShuffleCopy9','ShuffleCopy10','ShuffleCopy11']\n\n    #check if channels are enabled to toggle them if needed\n    mee = nuke.thisNode().name()\n\n    if nuke.toNode(mee)\['chan'].value()==True:\n        toNode = nuke.toNode(mee)\n\n        for i in shuffleCopies:\n            nuke.toNode(i)\['disable'].setValue(True)\n        nuke.toNode(mee)\['chan'].setValue(False)\n    else:\n        for i in shuffleCopies:\n            nuke.toNode(i)\['disable'].setValue(False)\n        nuke.toNode(mee)\['chan'].setValue(True)\nchannelToggle()\n\n\ndef shuffleAll():\n\n    me = nuke.thisNode()\n    xpos = me.xpos()\n    ypos = me.ypos()\n    me.setSelected('True')\n\n    # all elements to shuffle\n    shufflelist = \['qcLog','qcNanInf','qcHighPassComp','qcHighPassPlate','qcClipped','qcSaturation','qcNegativeValues','qcGrain','qcDifference','qcComp','qcPlate'] \n\n    posmult = int(len(shufflelist)/2) # our number of elements divided by two so we will have positive and negative xpos offset\n    xposoffset = 90 # offset value for xpos\n    totaloffset = -1*(xposoffset * posmult) # multiplier for the amount of elements on our shuffle list\n\n    #go to Root\n    mee = nuke.thisNode().name()\n    with nuke.Root():\n\n        #check if shuffles layer shuffles exist, if they exist; delete them, if they dont exist; create them\n        if nuke.toNode(mee)\['shuffles'].value()==True:\n            toNode = nuke.toNode(mee)\n            x = toNode.dependent() # find downstream dependent nodes (shuffles)\n\n            for i in x:\n                if i.Class()=='Shuffle':\n                    nuke.delete(i)\n            nuke.toNode(mee)\['shuffles'].setValue(False)\n\n        else:\n            # itterate trhough the layers we want to shuffle\n            for e in shufflelist:\n\n                shName = 'QC_'+str(e)\n                sh = nuke.nodes.Shuffle(name = shName )\n                sh.setXpos(xpos + totaloffset)\n                sh.setYpos(ypos + 40)\n                sh\['in'].setValue(e)\n                sh.setInput(0, me)\n                sh\['label'].setValue(e)\n                sh\['hide_input'].setValue(True)\n                totaloffset = totaloffset + xposoffset\n                nuke.toNode(mee)\['shuffles'].setValue(True)\n\n                #set a different color on shuffles that are just the comp/plate/animPlate\n                if nuke.toNode('QC_qcComp'):\n                    nuke.toNode('QC_qcComp')\['tile_color'].setValue(4293783039)\n                if nuke.toNode('QC_qcPlate'):\n                    nuke.toNode('QC_qcPlate')\['tile_color'].setValue(4293783039)\n\n\nshuffleAll()\n"}
+addUserKnob {26 spacer_2 l "" -STARTLINE T "    "}
+addUserKnob {6 shuffles -STARTLINE +INVISIBLE}
+addUserKnob {6 chan -STARTLINE +INVISIBLE}
+addUserKnob {20 missingFramesTAB l missingFrames}
+addUserKnob {22 getMissingFrames t "Detect if comp output has missing frames.\n\nUseful to quickly find out if you need to rerender selective frames.\n\nIf there are frames missing, they will be displayed in the 'missingFrames' textfield.\n\nPS: This only detects actual missing frames, black or broken frames are not counted as a missing frame." T "import nuke\nimport os.path\n\ndef findMissingFrames():\n\n    if nuke.thisNode().input(0):\n        pass\n    else:\n        nuke.message('no comp input, please use comp input to test for missing frames')\n        return\n\n    if nuke.thisNode().input(0):\n        if nuke.thisNode().input(0).Class() == 'Read':\n            me =  nuke.thisNode().input(0)\n            root = nuke.Root() \n            startFrame = root.firstFrame()\n            endFrame =  root.lastFrame() \n    \n            missingFrames= \[]\n\n            for i in range(startFrame, endFrame+1):\n                nuke.frame(i)\n                if os.path.exists(nuke.filename( nuke.toNode(me.name()), nuke.REPLACE))==False:\n                    missingFrames.append(i)\n                    print('missingframe: ',i)\n    \n            # map list of missing frames to string list\n            list_string = map(str, missingFrames)\n    \n            #make display text\n            displayString =  ', '.join(list_string)\n            nuke.thisNode()\['missingFrames'].setValue(displayString)\n    \n            #reset missing frames list\n            missingFrames = \[]\n        \n        else:\n            nuke.message ('This function only works if your input is a Read node.\\n\\nInput your rendered comp sequence directly with no nodes inbetween, then try again.')\n            nuke.thisNode()\['missingFrames'].setValue('')\n            pass\n    else:\n        nuke.message('No input found\\n\\nThis function only works if your input is a Read node.\\n\\nInput your rendered comp sequence directly with no nodes inbetween, then try again.')\n        nuke.thisNode()\['missingFrames'].setValue('')\n\nfindMissingFrames()" +STARTLINE}
+addUserKnob {26 spacer l "" -STARTLINE T "     "}
+addUserKnob {26 info l "" -STARTLINE T "<font color='grey'>CLICK THIS TO FIND MISSING FRAMES</font>"}
+addUserKnob {26 ""}
+addUserKnob {1 missingFrames}
+addUserKnob {22 clearMissingFrames l clear t "Click to clear missing frames from textfield" -STARTLINE T "nuke.thisNode()\['missingFrames'].setValue('')"}
+addUserKnob {20 aboutTAB l about}
+addUserKnob {26 ""}
+addUserKnob {26 aboutInfo l "" +STARTLINE T "This is a QC node to check your comp for technical issues.\n\nGo through the stages in the drop down menu and check that there\nare no obvious issues.\n\nPS: negative values is not always a technical issue if the plate\ncontains negative values. However, it gives you an indication you have\n negative values if you did not intend to introduce them"}
+addUserKnob {26 ""}
+addUserKnob {26 copyright l "" +STARTLINE T "<font color='#454545'>// fxT_compQC v1.2 © Tor Andreassen</font>"}
+}
+BackdropNode {
+inputs 0
+name BackdropNode1
+tile_color 0x505a6101
+label nan/infs
+note_font Verdana
+note_font_size 50
+note_font_color 0xffffff01
+xpos -5347
+ypos 6
+bookmark false
+bdwidth 506
+bdheight 629
+z_order 1
+}
+BackdropNode {
+inputs 0
+name BackdropNode10
+tile_color 0x505a6101
+label "shuffle QC\nlayers"
+note_font Verdana
+note_font_size 50
+note_font_color 0xffffff01
+xpos -3027
+ypos 3486
+bookmark false
+bdwidth 4335
+bdheight 1383
+z_order 1
+}
+BackdropNode {
+inputs 0
+name BackdropNode2
+tile_color 0x505a6101
+label "highpass filter"
+note_font Verdana
+note_font_size 50
+note_font_color 0xffffff01
+xpos -4668
+ypos 4
+bookmark false
+bdwidth 2499
+bdheight 1278
+z_order 1
+}
+BackdropNode {
+inputs 0
+name BackdropNode3
+tile_color 0x505a6101
+label "clipping values (overbrights)"
+note_font Verdana
+note_font_size 50
+note_font_color 0xffffff01
+xpos -1754
+ypos 22
+bookmark false
+bdwidth 714
+bdheight 441
+z_order 1
+}
+BackdropNode {
+inputs 0
+name BackdropNode4
+tile_color 0x505a6101
+label log
+note_font Verdana
+note_font_size 50
+note_font_color 0xffffff01
+xpos -5676
+ypos 40
+bookmark false
+bdwidth 191
+bdheight 194
+z_order 1
+}
+BackdropNode {
+inputs 0
+name BackdropNode5
+tile_color 0x505a6101
+label saturation
+note_font Verdana
+note_font_size 50
+note_font_color 0xffffff01
+xpos -863
+ypos 49
+bookmark false
+bdwidth 254
+bdheight 193
+z_order 1
+}
+BackdropNode {
+inputs 0
+name BackdropNode6
+tile_color 0x505a6101
+label "negative\npixels"
+note_font Verdana
+note_font_size 50
+note_font_color 0xffffff01
+xpos -487
+ypos 18
+bookmark false
+bdwidth 236
+bdheight 286
+z_order 1
+}
+BackdropNode {
+inputs 0
+name BackdropNode7
+tile_color 0x5b4b7100
+label "FLOP COMP"
+note_font "Arial Black"
+note_font_size 20
+note_font_color 0xffffff01
+xpos 283
+ypos -429
+bookmark false
+bdwidth 1050
+bdheight 219
+z_order 1
+}
+BackdropNode {
+inputs 0
+name BackdropNode8
+tile_color 0x505a6101
+label "grain check"
+note_font Verdana
+note_font_size 50
+note_font_color 0xffffff01
+xpos -74
+ypos 22
+bookmark false
+bdwidth 420
+bdheight 492
+z_order 1
+}
+BackdropNode {
+inputs 0
+name BackdropNode9
+tile_color 0x505a6101
+label "mode\n(dropdown menu)"
+note_font Verdana
+note_font_size 50
+note_font_color 0xffffff01
+xpos -3040
+ypos 2201
+bookmark false
+bdwidth 4359
+bdheight 1053
+z_order 1
+}
+Input {
+inputs 0
+name plate
+label "\[value number]"
+xpos 460
+ypos -624
+number 1
+}
+Remove {
+operation keep
+channels rgba
+name Remove4
+label "rgba only"
+xpos 460
+ypos -521
+}
+Mirror2 {
+flop {{parent.flopComp}}
+name Mirror2_3
+label "flop comp option"
+xpos 460
+ypos -406
+}
+Dot {
+name Dot37
+label plate
+note_font_size 40
+xpos 488
+ypos -333
+}
+set Ndfa5800 [stack 0]
+Dot {
+name Dot80
+label plate
+note_font_size 40
+xpos 488
+ypos 2250
+}
+set Ndfa5400 [stack 0]
+Dot {
+name Dot53
+note_font_size 50
+xpos 461
+ypos 4794
+}
+Input {
+inputs 0
+name comp
+label "\[value number]"
+xpos 1039
+ypos -635
+}
+Remove {
+operation keep
+channels rgba
+name Remove1
+label "rgba only"
+xpos 1039
+ypos -530
+}
+Mirror2 {
+flop {{parent.flopComp}}
+name Mirror2_1
+label "flop comp option"
+xpos 1039
+ypos -413
+}
+Dot {
+name Dot26
+label comp
+note_font_size 40
+xpos 1073
+ypos -346
+}
+Dot {
+name Dot79
+label comp
+note_font_size 40
+xpos 1073
+ypos -99
+}
+set Ndf6b800 [stack 0]
+Dot {
+name Dot39
+label comp
+note_font_size 40
+xpos 1082
+ypos 2343
+}
+set Ndf6b400 [stack 0]
+Dot {
+name Dot38
+label comp
+note_font_size 25
+xpos 1073
+ypos 3201
+}
+Dot {
+name Dot36
+label "\n\ncomp"
+note_font_size 25
+xpos 139
+ypos 3201
+}
+set Ndf6ac00 [stack 0]
+Dot {
+name Dot50
+note_font_size 50
+xpos 127
+ypos 4661
+}
+push $Ndf6b400
+Remove {
+name Remove3
+label "grab format from comp input\nto avoid large bounding box from wrong root format"
+xpos 63
+ypos 2328
+}
+Text2 {
+font_size_toolbar 100
+font_width_toolbar 100
+font_height_toolbar 100
+message "no plate input"
+old_message {{110 111 32 112 108 97 116 101 32 105 110 112 117 116}
+  }
+box {0 {height} {width} 0}
+xjustify center
+yjustify center
+transforms {{0 2}
+  }
+cursor_position 14
+font {{ Arial : Regular : arial.ttf : 0 }}
+center {1024 778}
+cursor_initialised true
+autofit_bbox false
+initial_cursor_position {{0 822}
+  }
+group_animations {{0} imported: 0 selected: items: "root transform/"}
+animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+  }
+name Text3
+label "no plate info"
+xpos 63
+ypos 2472
+}
+push $Ndf6b400
+push $Ndfa5400
+MergeExpression {
+inputs 2
+expr3 (abs(Ar-Br)+abs(Ag-Bg)+abs(Ab-Bb))/3
+name MergeExpression1
+xpos 267
+ypos 2532
+addUserKnob {20 User}
+}
+Shuffle {
+red alpha
+green alpha
+blue alpha
+name Shuffle4
+tile_color 0xffffffff
+label allToAlpha
+xpos 267
+ypos 2575
+}
+Clamp {
+name Clamp4
+xpos 267
+ypos 2643
+}
+Switch {
+inputs 2
+which {{"!\[exists \[value meName].input1]"}}
+name Switch4
+label "plate input check"
+xpos 63
+ypos 2643
+}
+Dot {
+name Dot24
+label "\ncomp difference with plate"
+note_font_size 25
+xpos -372
+ypos 2646
+}
+set Ndf68c00 [stack 0]
+Dot {
+name Dot81
+note_font_size 50
+xpos -384
+ypos 4457
+}
+push $Ndf6b800
+Dot {
+name Dot57
+label "\n\ncomp"
+note_font_size 40
+xpos 72
+ypos -99
+}
+set Ndf68400 [stack 0]
+Dot {
+name Dot47
+xpos 72
+ypos 169
+}
+set Ndf13c00 [stack 0]
+Dot {
+name Dot48
+xpos -17
+ypos 169
+}
+Blur {
+channels rgba
+size 1
+name Blur3
+xpos -51
+ypos 209
+}
+Dot {
+name Dot51
+xpos -23
+ypos 250
+}
+push $Ndf13c00
+Merge2 {
+inputs 2
+operation from
+bbox B
+output rgb
+name Merge3
+xpos 38
+ypos 253
+}
+Grade {
+white {{grainVisibility*100}}
+name Grade6
+xpos 38
+ypos 319
+}
+Dot {
+name Dot54
+xpos 72
+ypos 391
+}
+push $Ndf13c00
+Dot {
+name Dot55
+xpos 164
+ypos 169
+}
+Merge2 {
+inputs 2
+operation plus
+bbox B
+output rgb
+name Merge6
+xpos 130
+ypos 388
+}
+Dot {
+name Dot30
+label grain
+note_font_size 25
+xpos 164
+ypos 1719
+}
+Dot {
+name Dot32
+label grain
+note_font_size 25
+xpos -588
+ypos 2612
+}
+set Ndf11400 [stack 0]
+Dot {
+name Dot46
+note_font_size 50
+xpos -600
+ypos 4385
+}
+push $Ndf68400
+Dot {
+name Dot4
+label "\n\ncomp"
+note_font_size 40
+xpos -386
+ypos -99
+}
+set Ndf10c00 [stack 0]
+Dot {
+name Dot31
+note_font "Verdana Bold"
+note_font_size 30
+xpos -386
+ypos -1
+}
+set Ndf10800 [stack 0]
+Expression {
+temp_name0 negDisplay
+temp_expr0 1
+expr0 r<0?negDisplay:0
+expr1 g<0?negDisplay:0
+expr2 b<0?negDisplay:0
+name Expression4
+label "display negative pixels\n"
+xpos -420
+ypos 135
+}
+Saturation {
+saturation 0
+name Saturation2
+label "Value:\[value saturation]"
+xpos -420
+ypos 175
+}
+Grade {
+channels {rgba.red rgba.green rgba.blue none}
+white {2.3 0.7 1.8 1}
+name Grade13
+label "make pixels more visible"
+xpos -420
+ypos 233
+}
+Dot {
+name Dot82
+note_font "Arial Black"
+note_font_size 24
+xpos -386
+ypos 328
+}
+set Ndecb400 [stack 0]
+push $Ndf10800
+Dot {
+name Dot35
+note_font "Arial Black"
+note_font_size 24
+xpos -207
+ypos -1
+}
+Merge2 {
+inputs 2
+operation plus
+output rgb
+name Merge11
+label "mix: \[value mix]"
+xpos -241
+ypos 319
+}
+Dot {
+name Dot40
+note_font "Arial Black"
+note_font_size 24
+xpos -207
+ypos 506
+}
+push $Ndecb400
+Switch {
+inputs 2
+which {{parent.negative_values_over}}
+name Switch3
+label "diplay negative values over input\n(option when negative values are chosen in dropdown)\n"
+xpos -420
+ypos 491
+}
+Dot {
+name Dot17
+label "negative values"
+note_font_size 25
+xpos -386
+ypos 1555
+}
+Dot {
+name Dot33
+label "negative values"
+note_font_size 25
+xpos -897
+ypos 2483
+}
+set Ndec9c00 [stack 0]
+Dot {
+name Dot45
+note_font_size 50
+xpos -909
+ypos 4263
+}
+push $Ndf10c00
+Dot {
+name Dot21
+label "\n\ncomp"
+note_font_size 40
+xpos -753
+ypos -99
+}
+set Ndec9400 [stack 0]
+Saturation {
+saturation {{parent.saturationValue}}
+name Saturation1
+label "Value:\[value saturation]"
+xpos -787
+ypos 161
+}
+Dot {
+name Dot16
+label saturation
+note_font_size 25
+xpos -762
+ypos 1401
+}
+Dot {
+name Dot34
+label saturation
+note_font_size 25
+xpos -1240
+ypos 2382
+}
+set Ndec8800 [stack 0]
+Dot {
+name Dot44
+note_font_size 50
+xpos -1252
+ypos 4178
+}
+push $Ndec9400
+Dot {
+name Dot23
+label "\n\ncomp"
+note_font_size 40
+xpos -1417
+ypos -99
+}
+set Nde77c00 [stack 0]
+Dot {
+name Dot75
+note_font_size 50
+xpos -1417
+ypos 106
+}
+set Nde77800 [stack 0]
+Dot {
+name Dot76
+note_font_size 50
+xpos -1201
+ypos 106
+}
+Expression {
+temp_name0 maxVal
+temp_expr0 parent.clippingValue
+channel0 rgba
+expr0 r>maxVal||g>maxVal||b>maxVal?sin(x)*10:0
+channel1 {-rgba.red rgba.green -rgba.blue none}
+expr1 0
+channel2 {-rgba.red -rgba.green rgba.blue none}
+name Expression2
+xpos -1235
+ypos 190
+}
+Dot {
+name Dot28
+note_font_size 50
+xpos -1201
+ypos 289
+}
+set Nde76c00 [stack 0]
+Position {
+translate {2 2}
+name Position1
+xpos -1235
+ypos 360
+}
+push $Nde77800
+Dot {
+name Dot77
+note_font_size 50
+xpos -1686
+ypos 106
+}
+Remove {
+name Remove2
+label "kill all channels"
+xpos -1720
+ypos 168
+}
+Shuffle {
+name Shuffle5
+label "bring back rgba"
+xpos -1720
+ypos 225
+}
+Dot {
+name Dot25
+note_font_size 50
+xpos -1686
+ypos 289
+}
+set Nde75800 [stack 0]
+Dot {
+name Dot27
+note_font_size 50
+xpos -1686
+ypos 363
+}
+Add {
+value {0 1 0 1}
+name Add2
+tile_color 0xff00ff
+xpos -1595
+ypos 356
+}
+push $Nde76c00
+push $Nde75800
+Add {
+value {1 0 0 1}
+name Add1
+tile_color 0xff0000ff
+xpos -1594
+ypos 282
+}
+push $Nde77800
+Multiply {
+value 0.3
+name Multiply1
+label "mult down comp"
+xpos -1451
+ypos 160
+}
+Merge2 {
+inputs 2+1
+name Merge1
+label "mix:\[value mix]"
+xpos -1451
+ypos 282
+}
+Merge2 {
+inputs 2+1
+name Merge4
+label "mix:\[value mix]"
+xpos -1451
+ypos 356
+}
+Dot {
+name Dot19
+label "clipping pixels"
+note_font_size 25
+xpos -1417
+ypos 2317
+}
+set Nde27800 [stack 0]
+Dot {
+name Dot43
+note_font_size 50
+xpos -1450
+ypos 4118
+}
+push $Nde77c00
+Dot {
+name Dot20
+note_font_size 50
+xpos -2248
+ypos -99
+}
+set Nde27000 [stack 0]
+Remove {
+name Remove5
+label "grab format from comp input\nto avoid large bounding box from wrong root format"
+xpos -2276
+ypos 868
+}
+Text2 {
+font_size_toolbar 100
+font_width_toolbar 100
+font_height_toolbar 100
+message "no plate input"
+old_message {{110 111 32 112 108 97 116 101 32 105 110 112 117 116}
+  }
+box {0 {height} {width} 0}
+xjustify center
+yjustify center
+transforms {{0 2}
+  }
+cursor_position 14
+font {{ Arial : Regular : arial.ttf : 0 }}
+center {960 540}
+cursor_initialised true
+autofit_bbox false
+initial_cursor_position {{0 1080}
+  }
+group_animations {{0} imported: 0 selected: items: "root transform/"}
+animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+  }
+name Text1
+label "no plate info"
+xpos -2276
+ypos 963
+}
+push $Ndfa5800
+Dot {
+name Dot78
+label plate
+note_font_size 40
+xpos -2831
+ypos -333
+}
+Dot {
+name Dot52
+label plate
+note_font_size 40
+xpos -2831
+ypos 165
+}
+set Nde26000 [stack 0]
+Dot {
+name Dot64
+note_font_size 50
+xpos -2966
+ypos 165
+}
+set Nde25c00 [stack 0]
+Blur {
+channels rgba
+size {{parent.highpassFilter}}
+name Blur4
+xpos -3000
+ypos 228
+}
+Invert {
+channels rgba
+name Invert2
+xpos -3000
+ypos 270
+}
+Dot {
+name Dot66
+xpos -2966
+ypos 345
+}
+push $Nde26000
+Merge2 {
+inputs 2
+name Merge7
+label "mix:\[value mix]"
+xpos -2865
+ypos 338
+}
+Grade {
+add -1.19
+black_clamp false
+name Grade7
+xpos -2865
+ypos 388
+addUserKnob {20 User}
+addUserKnob {22 "keep luma" -STARTLINE T keepLuma()}
+addUserKnob {22 "keep luma_1" l "keep luma" -STARTLINE T keepLuma()}
+}
+Grade {
+multiply {{parent.highpassMult==0?1:parent.highpassMult}}
+add 0.5
+name Grade8
+xpos -2865
+ypos 425
+addUserKnob {20 User}
+addUserKnob {22 "keep luma" -STARTLINE T keepLuma()}
+addUserKnob {22 "keep luma_1" l "keep luma" -STARTLINE T keepLuma()}
+}
+push $Nde25c00
+Dot {
+name Dot68
+note_font_size 50
+xpos -3090
+ypos 165
+}
+set Nddcbc00 [stack 0]
+Dot {
+name Dot69
+xpos -3090
+ypos 275
+}
+set Nddcb800 [stack 0]
+push $Nddcb800
+Blur {
+channels rgba
+size {{parent.highpassFilter}}
+name Blur5
+selected true
+xpos -3243
+ypos 272
+}
+Grade {
+add -0.01
+black_clamp false
+name Grade9
+xpos -3243
+ypos 338
+}
+Dot {
+name Dot70
+xpos -3209
+ypos 444
+}
+Merge2 {
+inputs 2
+operation minus
+name Merge8
+xpos -3124
+ypos 441
+}
+Grade {
+multiply {{parent.highpassMult==0?1:parent.highpassMult}}
+black_clamp false
+name Grade10
+xpos -3124
+ypos 497
+}
+push $Nddcbc00
+Dot {
+name Dot71
+note_font_size 50
+xpos -3382
+ypos 165
+}
+Clamp {
+channels rgba
+maximum_enable false
+name Clamp2
+xpos -3416
+ypos 330
+}
+Log2Lin {
+operation lin2log
+name Log2Lin3
+xpos -3416
+ypos 373
+}
+Dot {
+name Dot72
+note_font_size 41
+xpos -3382
+ypos 426
+}
+set Nddc9400 [stack 0]
+Blur {
+channels rgba
+size {{parent.highpassFilter}}
+name Blur7
+xpos -3513
+ypos 423
+}
+Dot {
+name Dot73
+xpos -3479
+ypos 489
+}
+push $Nddc9400
+Merge2 {
+inputs 2
+operation difference
+name Merge9
+xpos -3416
+ypos 486
+}
+Grade {
+multiply {{parent.highpassMult==0?1:parent.highpassMult}}
+black_clamp false
+name Grade12
+xpos -3416
+ypos 548
+}
+Dot {
+name Dot74
+note_font_size 50
+xpos -3391
+ypos 807
+}
+Switch {
+inputs 3
+which {{parent.highpassMethod}}
+name highPassTypeSwitch2
+xpos -2856
+ypos 813
+}
+Switch {
+inputs 2
+which {{"!\[exists \[value meName].input1]"}}
+name Switch2
+label "plate input check"
+xpos -2856
+ypos 963
+}
+Dot {
+name Dot14
+label PLATE
+note_font_size 50
+xpos -2822
+ypos 1154
+}
+Dot {
+name Dot18
+label "highpass filter plate"
+note_font_size 25
+xpos -1773
+ypos 2334
+}
+set Ndd5ec00 [stack 0]
+Dot {
+name Dot42
+note_font_size 50
+xpos -1785
+ypos 4042
+}
+push $Nde27000
+Dot {
+name Dot6
+label "\n\ncomp"
+note_font_size 40
+xpos -3597
+ypos -99
+}
+set Ndd5e400 [stack 0]
+Dot {
+name Dot8
+note_font_size 50
+xpos -3597
+ypos 124
+}
+set Ndd5e000 [stack 0]
+Dot {
+name Dot60
+note_font_size 50
+xpos -3732
+ypos 124
+}
+set Ndd5dc00 [stack 0]
+Blur {
+channels rgba
+size {{parent.highpassFilter}}
+name Blur1
+xpos -3766
+ypos 176
+}
+Invert {
+channels rgba
+name Invert1
+xpos -3766
+ypos 218
+}
+Dot {
+name Dot61
+xpos -3732
+ypos 304
+}
+push $Ndd5e000
+Merge2 {
+inputs 2
+name Merge2
+label "mix:\[value mix]"
+xpos -3631
+ypos 297
+}
+Grade {
+add -1.19
+black_clamp false
+name Grade2
+xpos -3631
+ypos 347
+addUserKnob {20 User}
+addUserKnob {22 "keep luma" -STARTLINE T keepLuma()}
+addUserKnob {22 "keep luma_1" l "keep luma" -STARTLINE T keepLuma()}
+}
+Grade {
+multiply {{parent.highpassMult==0?1:parent.highpassMult}}
+add 0.5
+name Grade3
+xpos -3631
+ypos 384
+addUserKnob {20 User}
+addUserKnob {22 "keep luma" -STARTLINE T keepLuma()}
+addUserKnob {22 "keep luma_1" l "keep luma" -STARTLINE T keepLuma()}
+}
+push $Ndd5dc00
+Dot {
+name Dot67
+note_font_size 50
+xpos -3865
+ypos 124
+}
+set Ndd13c00 [stack 0]
+Dot {
+name Dot13
+xpos -3865
+ypos 234
+}
+set Ndd13800 [stack 0]
+push $Ndd13800
+Blur {
+channels rgba
+size {{parent.highpassFilter}}
+name Blur6
+xpos -4018
+ypos 231
+}
+Grade {
+add -0.01
+black_clamp false
+name Grade11
+xpos -4018
+ypos 299
+}
+Dot {
+name Dot15
+xpos -3993
+ypos 394
+}
+Merge2 {
+inputs 2
+operation minus
+name Merge29
+xpos -3899
+ypos 400
+}
+Grade {
+multiply {{parent.highpassMult==0?1:parent.highpassMult}}
+black_clamp false
+name Grade4
+xpos -3899
+ypos 456
+}
+push $Ndd13c00
+Dot {
+name Dot65
+note_font_size 50
+xpos -4157
+ypos 124
+}
+Clamp {
+channels rgba
+maximum_enable false
+name Clamp1
+xpos -4191
+ypos 289
+}
+Log2Lin {
+operation lin2log
+name Log2Lin2
+xpos -4191
+ypos 332
+}
+Dot {
+name Dot62
+note_font_size 41
+xpos -4157
+ypos 385
+}
+set Ndd11400 [stack 0]
+Blur {
+channels rgba
+size {{parent.highpassFilter}}
+name Blur2
+xpos -4288
+ypos 382
+}
+Dot {
+name Dot63
+xpos -4254
+ypos 448
+}
+push $Ndd11400
+Merge2 {
+inputs 2
+operation difference
+name Merge5
+xpos -4191
+ypos 445
+}
+Grade {
+multiply {{parent.highpassMult==0?1:parent.highpassMult}}
+black_clamp false
+name Grade5
+xpos -4191
+ypos 507
+}
+Dot {
+name Dot22
+note_font_size 50
+xpos -4157
+ypos 798
+}
+Switch {
+inputs 3
+which {{parent.highpassMethod}}
+name highPassTypeSwitch1
+xpos -3631
+ypos 795
+}
+Dot {
+name Dot58
+label COMP
+note_font_size 50
+xpos -3599
+ypos 1204
+}
+Dot {
+name Dot59
+note_font_size 50
+xpos -3599
+ypos 1819
+}
+Dot {
+name Dot12
+label "highpass filter comp"
+note_font_size 25
+xpos -2008
+ypos 2488
+}
+set Nd972c00 [stack 0]
+Dot {
+name Dot41
+note_font_size 50
+xpos -2008
+ypos 3976
+}
+push $Ndd5e400
+Dot {
+name Dot56
+label "\n\ncomp"
+note_font_size 40
+xpos -5098
+ypos -97
+}
+set Nd972400 [stack 0]
+Dot {
+name Dot9
+xpos -5098
+ypos 210
+}
+set Nd972000 [stack 0]
+Expression {
+expr0 (isnan(r)||isinf(r))?400:0
+expr1 (isnan(g)||isinf(g))?400:0
+expr2 (isnan(b)||isinf(b))?400:0
+expr3 (isnan(a)||isinf(a))?1000:0
+name Expression1
+label "NAN || INF"
+xpos -4950
+ypos 201
+}
+Dilate {
+size 100
+name Dilate1
+xpos -4950
+ypos 255
+}
+Expression {
+channel3 alpha
+expr3 clamp(r+g+b+a)
+name Expression7
+xpos -4950
+ypos 344
+}
+push $Nd972000
+Expression {
+channel0 rgb
+expr0 "(floor(x/10)+floor(y/10)) % 2 == 0 ? 0.05 : 0.5"
+channel1 none
+channel2 none
+channel3 alpha
+expr3 1
+name checkerBoardExpression
+xpos -5273
+ypos 207
+}
+Grade {
+multiply {0 1 1 1}
+black_clamp false
+name Grade1
+xpos -5273
+ypos 248
+}
+Dot {
+name Dot2
+note_font_size 50
+xpos -5237
+ypos 347
+}
+push $Nd972000
+Keymix {
+inputs 3
+bbox B
+name Keymix1
+xpos -5132
+ypos 338
+}
+Dot {
+name Dot3
+note_font_size 50
+xpos -5098
+ypos 1794
+}
+Dot {
+name Dot11
+label "\n\nnan / infs"
+note_font_size 25
+xpos -2320
+ypos 2632
+}
+set Nd917800 [stack 0]
+Dot {
+name Dot7
+note_font_size 50
+xpos -2332
+ypos 3905
+}
+push $Nd972400
+Dot {
+name Dot1
+label "\n\ncomp"
+note_font_size 40
+xpos -5560
+ypos -97
+}
+OCIOColorSpace {
+in_colorspace scene_linear
+out_colorspace compositing_log
+name OCIOColorSpace2
+label "\[value out_colorspace]"
+xpos -5594
+ypos 127
+}
+Dot {
+name Dot29
+note_font_size 50
+xpos -5575
+ypos 2952
+}
+Dot {
+name Dot10
+label "\n\nblacks / log"
+note_font_size 25
+xpos -2471
+ypos 2952
+}
+set Nd916000 [stack 0]
+Dot {
+name Dot5
+note_font_size 50
+xpos -2483
+ypos 3838
+}
+push $Ndf6ac00
+push $Ndf68c00
+push $Ndf11400
+push $Ndec9c00
+push $Ndec8800
+push $Nde27800
+push $Ndd5ec00
+push $Nd972c00
+push $Nd917800
+push $Nd916000
+Switch {
+inputs 10
+which {{parent.mode}}
+name Switch1
+xpos -1573
+ypos 3207
+}
+add_layer {qcLog qcLog.red qcLog.green qcLog.blue qcLog.alpha}
+ShuffleCopy {
+inputs 2
+red red
+green green
+blue blue
+out qcLog
+name ShuffleCopy1
+label "\[value out]"
+xpos -1585
+ypos 3840
+disable true
+}
+add_layer {qcNanInf qcNanInf.red qcNanInf.green qcNanInf.blue qcNanInf.alpha}
+ShuffleCopy {
+inputs 2
+red red
+green green
+blue blue
+out qcNanInf
+name ShuffleCopy2
+label "\[value out]"
+xpos -1585
+ypos 3907
+disable true
+}
+add_layer {qcHighPassComp qcHighPassComp.red qcHighPassComp.green qcHighPassComp.blue qcHighPassComp.alpha}
+ShuffleCopy {
+inputs 2
+red red
+green green
+blue blue
+out qcHighPassComp
+name ShuffleCopy3
+label "\[value out]"
+xpos -1585
+ypos 3978
+disable true
+}
+add_layer {qcHighPassPlate qcHighPassPlate.red qcHighPassPlate.green qcHighPassPlate.blue qcHighPassPlate.alpha}
+ShuffleCopy {
+inputs 2
+red red
+green green
+blue blue
+out qcHighPassPlate
+name ShuffleCopy4
+label "\[value out]"
+xpos -1588
+ypos 4044
+disable true
+}
+add_layer {qcClipped qcClipped.red qcClipped.green qcClipped.blue qcClipped.alpha}
+ShuffleCopy {
+inputs 2
+red red
+green green
+blue blue
+out qcClipped
+name ShuffleCopy5
+label "\[value out]"
+xpos -1588
+ypos 4120
+disable true
+}
+add_layer {qcSaturation qcSaturation.red qcSaturation.green qcSaturation.blue qcSaturation.alpha}
+ShuffleCopy {
+inputs 2
+red red
+green green
+blue blue
+out qcSaturation
+name ShuffleCopy6
+label "\[value out]"
+xpos -1588
+ypos 4180
+disable true
+}
+add_layer {qcNegativeValues qcNegativeValues.red qcNegativeValues.green qcNegativeValues.blue qcNegativeValues.alpha}
+ShuffleCopy {
+inputs 2
+red red
+green green
+blue blue
+out qcNegativeValues
+name ShuffleCopy7
+label "\[value out]"
+xpos -1588
+ypos 4265
+disable true
+}
+add_layer {qcGrain qcGrain.red qcGrain.green qcGrain.blue qcGrain.alpha}
+ShuffleCopy {
+inputs 2
+red red
+green green
+blue blue
+out qcGrain
+name ShuffleCopy8
+label "\[value out]"
+xpos -1588
+ypos 4387
+disable true
+}
+add_layer {qcDifference qcDifference.red qcDifference.green qcDifference.blue qcDifference.alpha}
+ShuffleCopy {
+inputs 2
+red red
+green green
+blue blue
+out qcDifference
+name ShuffleCopy9
+label "\[value out]"
+xpos -1588
+ypos 4459
+disable true
+}
+add_layer {qcComp qcComp.red qcComp.green qcComp.blue qcComp.alpha}
+ShuffleCopy {
+inputs 2
+red red
+green green
+blue blue
+out qcComp
+name ShuffleCopy10
+label "\[value out]"
+xpos -1588
+ypos 4663
+disable true
+}
+add_layer {qcPlate qcPlate.red qcPlate.green qcPlate.blue qcPlate.alpha}
+ShuffleCopy {
+inputs 2
+red red
+green green
+blue blue
+out qcPlate
+name ShuffleCopy11
+label "\[value out]"
+xpos -1588
+ypos 4782
+disable true
+}
+Output {
+name Output1
+xpos -1588
+ypos 5130
+}
+StickyNote {
+inputs 0
+name StickyNote2
+tile_color 0x3b3b3bff
+label "<left>these setups are identical\nso the output is correct regardless if the output is the qc node\nof if the modes are viewd through the modes shuffled out (shuffle it!-button)\n--------"
+note_font_size 18
+xpos -4610
+ypos 1091
+}
+end_group

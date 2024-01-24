@@ -1,0 +1,2659 @@
+#! C:/Program Files (x86)/COMPOSITING/Nuke6.3v3/Nuke6.3.exe -nx
+version 6.3 v3
+Gizmo {
+ inputs 2
+ knobChanged "ls_node = nuke.thisNode(); \nls_knob = nuke.thisKnob();\nif ls_knob.name().endswith('_globAng'):\n    pfx = ls_knob.name().split('_')\[0];\n    ls_node.knobs()\[pfx+'_globAngle'].setVisible(ls_knob.value());\n    ls_node.knob(pfx+'_angle').setVisible(not ls_knob.value());"
+ addUserKnob {20 layerStyle l "Layer Style (Demo)"}
+ addUserKnob {41 operation l "Blend Mode:" t "Blend mode for merge operation between image and background input." T fill_merge.operation}
+ addUserKnob {41 overallOpacity l Opacity: t "Sets the master opacity for the layer." T global.overallOpacity}
+ addUserKnob {26 label_0_1 l % -STARTLINE}
+ addUserKnob {7 fill l Fill t "Sets the interior opacity for the layer." R 0 100}
+ fill 100
+ addUserKnob {26 label_0_2 l % -STARTLINE}
+ addUserKnob {41 ls_globAngle l "Global Light Angle" t "This angle will be used in any layer styles working with light." T global.ang}
+ addUserKnob {26 label_8 l ° -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {6 ls_dropShadow l "Drop Shadow" +STARTLINE}
+ ls_dropShadow true
+ addUserKnob {6 ls_innerShadow l "Inner Shadow" -STARTLINE}
+ ls_innerShadow true
+ addUserKnob {6 ls_outerGlow l "Outer Glow" +STARTLINE}
+ ls_outerGlow true
+ addUserKnob {6 ls_innerGlow l "Inner Glow" -STARTLINE}
+ ls_innerGlow true
+ addUserKnob {6 ls_bevel l "Bevel and Emboss" t "Only available in full gizmo. Go to http://www.creatogether.com/downloads/layerstyles/ ‎for the full version!" +DISABLED +STARTLINE}
+ addUserKnob {6 ls_overlay l "Color Overlay" t "Only available in full gizmo. Go to http://www.creatogether.com/downloads/layerstyles/ ‎for the full version!" +DISABLED +STARTLINE}
+ addUserKnob {6 ls_stroke l Stroke t "Only available in full gizmo. Go to http://www.creatogether.com/downloads/layerstyles/ ‎for the full version!" +DISABLED +STARTLINE}
+ addUserKnob {26 spacer l "                          " -STARTLINE T "      "}
+ addUserKnob {22 buy_btn l "Buy full version" t "Go to creatogether.com" -STARTLINE T "nuke.tcl('start', 'http://www.creatogether.com/downloads/layerstyles/')"}
+ addUserKnob {26 div_10 l "" +STARTLINE}
+ addUserKnob {26 chans_lbl l Channels:}
+ addUserKnob {6 chans_r l R t "Toggle red channel" -STARTLINE}
+ chans_r true
+ addUserKnob {6 chans_g l G t "Toggle green channel" -STARTLINE}
+ chans_g true
+ addUserKnob {6 chans_b l B t "Toggle blue channel" -STARTLINE}
+ chans_b true
+ addUserKnob {26 ""}
+ addUserKnob {6 ls_channels l "Into Separate Channels" t "Render layer styles into separate channels instead of changing the rgba channels. Note that you will have to set the blend modes yourself when merging the styles back in from their channels." +STARTLINE}
+ addUserKnob {20 blendif_grp l "Blend If" t "Basic Keyer" n 1}
+ blendif_grp 0
+ addUserKnob {4 blendif_chan l Channel M {gray red green blue "" "" "" "" "" ""}}
+ addUserKnob {41 range l "This Layer" t "Range of blending for the current layer." T blendif_keyer.range}
+ addUserKnob {41 range_1 l "Background Layer" t "Range of blending for the underlying layer." T blendif_keyer_bg.range}
+ addUserKnob {20 endGroup_8 l endGroup n -1}
+ addUserKnob {20 shadows l Shadow}
+ addUserKnob {20 ds_grp l "Drop Shadow" n 1}
+ addUserKnob {41 color l Color: T ds_color.color}
+ addUserKnob {7 ds_opacity l Opacity: R 0 100}
+ ds_opacity 100
+ addUserKnob {26 label_0 l % -STARTLINE}
+ addUserKnob {7 ds_angle l Angle: +HIDDEN R -180 180}
+ ds_angle 14
+ addUserKnob {41 ds_globAngle l "Global Light Angle:" T global.ang}
+ addUserKnob {6 ds_globAng l "Use Global Light" -STARTLINE}
+ ds_globAng true
+ addUserKnob {7 ds_dist l Distance: R 0 250}
+ ds_dist 38
+ addUserKnob {26 label_2 l px -STARTLINE}
+ addUserKnob {7 ds_spread l Spread: R 0 250}
+ addUserKnob {26 label_3 l % -STARTLINE}
+ addUserKnob {7 ds_size l Size: R 0 250}
+ addUserKnob {26 label_4 l px -STARTLINE}
+ addUserKnob {6 ds_knock l "Layer Knocks Out Drop Shadow" +STARTLINE}
+ addUserKnob {20 ds_cont_grp l Contour: n 1}
+ ds_cont_grp 0
+ addUserKnob {41 lut l "" -STARTLINE T ds_contour.lut}
+ addUserKnob {20 endGroup_4 l endGroup n -1}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 is_grp l "Inner Shadow" n 1}
+ is_grp 0
+ addUserKnob {41 is_col l Color: T is_color.color}
+ addUserKnob {7 is_opacity l Opacity R 0 100}
+ is_opacity 100
+ addUserKnob {26 label_5 l % -STARTLINE}
+ addUserKnob {41 is_blend l "Blend Mode:" T MergeByOpacity1.operation}
+ addUserKnob {7 is_angle l Angle: +HIDDEN R -180 180}
+ is_angle 173
+ addUserKnob {41 is_globAngle l "Global Light Angle" T global.ang}
+ addUserKnob {6 is_globAng l "Use Global Light" -STARTLINE}
+ is_globAng true
+ addUserKnob {7 is_dist l Distance: R 0 250}
+ is_dist 54
+ addUserKnob {26 label_6 l px -STARTLINE}
+ addUserKnob {7 is_choke l Choke: R 0 100}
+ is_choke 23
+ addUserKnob {26 label_1 l % -STARTLINE}
+ addUserKnob {7 is_size l Size: R 0 250}
+ is_size 88
+ addUserKnob {26 label_7 l px -STARTLINE}
+ addUserKnob {20 is_cont_grp l Contour: n 1}
+ is_cont_grp 0
+ addUserKnob {41 lut_1 l "" -STARTLINE T is_contour.lut}
+ addUserKnob {20 endGroup_5 l endGroup n -1}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 glows l Glow}
+ addUserKnob {20 og_grp l "Outer Glow" n 1}
+ addUserKnob {41 og_col l Color: T og_color.color}
+ addUserKnob {41 og_blendMode l "Blend Mode:" T MergeByOpacity2.operation}
+ addUserKnob {7 og_opacity l Opacity: R 0 100}
+ og_opacity 100
+ addUserKnob {26 label_12 l % -STARTLINE}
+ addUserKnob {7 og_spread l Spread: R 0 100}
+ og_spread 4
+ addUserKnob {26 label_14 l % -STARTLINE}
+ addUserKnob {7 og_size l Size: R 0 250}
+ og_size 98
+ addUserKnob {26 label_13 l px -STARTLINE}
+ addUserKnob {20 og_cont_grp l Contour: n 1}
+ og_cont_grp 0
+ addUserKnob {41 lut_2 l "" -STARTLINE T og_contour.lut}
+ addUserKnob {20 endGroup_6 l endGroup n -1}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 ig_grp l "Inner Glow" n 1}
+ ig_grp 0
+ addUserKnob {41 ig_col l Color: T ig_color.color}
+ addUserKnob {7 ig_opacity l Opacity: R 0 100}
+ ig_opacity 42
+ addUserKnob {26 label_15 l % -STARTLINE}
+ addUserKnob {41 ig_blend l "Blend Mode:" T ig_MergeByOpacity.operation}
+ addUserKnob {7 ig_choke l Choke: R 0 100}
+ ig_choke 41
+ addUserKnob {26 label_17 l % -STARTLINE}
+ addUserKnob {7 ig_size l Size: R 0 250}
+ ig_size 26
+ addUserKnob {26 label_16 l px -STARTLINE}
+ addUserKnob {20 ig_cont_grp l Contour: n 1}
+ ig_cont_grp 0
+ addUserKnob {20 endGroup_7 l endGroup n -1}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x8e5c37ff
+  gl_color 0x8e5c37ff
+  label "inner shadow"
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 22
+  xpos 815
+  ypos 458
+  bdwidth 123
+  bdheight 535
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0xbf924eff
+  gl_color 0x8e5c37ff
+  label "inner glow"
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 22
+  xpos 1121
+  ypos 1228
+  bdwidth 123
+  bdheight 535
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x8e5c37ff
+  gl_color 0x8e5c37ff
+  label dropshadow
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 22
+  xpos 640
+  ypos 64
+  bdwidth 148
+  bdheight 497
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0xbf924eff
+  gl_color 0x8e5c37ff
+  label "outer glow"
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 22
+  xpos 968
+  ypos 892
+  bdwidth 123
+  bdheight 464
+ }
+ Constant {
+  inputs 0
+  color {0 0 0 0}
+  name opacity
+  xpos 227
+  ypos -349
+ }
+ set C9a36e70 [stack 0]
+ Input {
+  inputs 0
+  name img
+  xpos 337
+  ypos -466
+ }
+ Unpremult {
+  name Unpremult1
+  xpos 337
+  ypos -422
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  mix {{1-global.overallOpacity/100}}
+  name merge_opacity
+  xpos 337
+  ypos -325
+ }
+ set C9a37800 [stack 0]
+ Shuffle {
+  red {{"parent.chans_r ? 1 : 0" i}}
+  green {{"parent.chans_g ? 2 : 0" i}}
+  blue {{"parent.chans_b ? 3 : 0" i}}
+  name Shuffle_RGB
+  xpos 337
+  ypos -200
+  addUserKnob {20 User}
+  addUserKnob {41 red_1 l red T Shuffle_RGB.red}
+  addUserKnob {41 green_1 l green T Shuffle_RGB.green}
+  addUserKnob {41 blue_1 l blue T Shuffle_RGB.blue}
+ }
+ Dot {
+  name Dot3
+  xpos 371
+  ypos -83
+ }
+set N9a37e60 [stack 0]
+ Dot {
+  name Dot5
+  xpos 371
+  ypos 177
+ }
+set N9a38190 [stack 0]
+ Dot {
+  name Dot1
+  xpos 371
+  ypos 195
+ }
+set N9a384c0 [stack 0]
+ Dot {
+  name Dot33
+  xpos 371
+  ypos 451
+ }
+set N9a387f0 [stack 0]
+ Dot {
+  name Dot6
+  xpos 371
+  ypos 534
+ }
+ Dot {
+  name Dot10
+  xpos 371
+  ypos 618
+ }
+set N9a38e50 [stack 0]
+ Dot {
+  name Dot14
+  xpos 371
+  ypos 1029
+ }
+set N9a39180 [stack 0]
+ Dot {
+  name Dot18
+  xpos 371
+  ypos 1095
+ }
+set N9a394b0 [stack 0]
+ Dot {
+  name Dot23
+  xpos 371
+  ypos 1381
+ }
+set N9b759d0 [stack 0]
+ Dot {
+  name Dot24
+  xpos 371
+  ypos 1453
+ }
+set N9b75d00 [stack 0]
+ Dot {
+  name Dot51
+  xpos 371
+  ypos 1786
+ }
+set N9b76030 [stack 0]
+ Dot {
+  name Dot47
+  xpos 371
+  ypos 2358
+ }
+set N9b76360 [stack 0]
+ Dot {
+  name Dot48
+  xpos 371
+  ypos 2446
+ }
+push $N9b76360
+ Premult {
+  name Premult15
+  xpos 1402
+  ypos 2355
+ }
+ Input {
+  inputs 0
+  name background
+  xpos 1631
+  ypos -165
+  number 1
+  addUserKnob {20 User}
+  addUserKnob {6 isConnected l "is connected" +STARTLINE}
+  isConnected {{"\[exists input1.disable]" i}}
+ }
+set N9b76cf0 [stack 0]
+ Dot {
+  name Dot46
+  label background
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 20
+  xpos 1570
+  ypos 2258
+  hide_input true
+ }
+ Merge2 {
+  inputs 2
+  name Merge10
+  xpos 1536
+  ypos 2355
+ }
+push $N9b75d00
+ Dot {
+  name Dot50
+  xpos 699
+  ypos 1453
+ }
+set N9b77680 [stack 0]
+push $N9b759d0
+ Constant {
+  inputs 0
+  channels rgb
+  color {0.3280061483 1 0.432046473 1}
+  name ig_color
+  xpos 1134
+  ypos 1300
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy5
+  xpos 1134
+  ypos 1372
+ }
+ Blur {
+  channels alpha
+  size {{ig_size}}
+  quality 100
+  name Blur4
+  xpos 1134
+  ypos 1408
+ }
+ Merge2 {
+  inputs 2
+  operation out
+  output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name Merge6
+  xpos 1134
+  ypos 1444
+ }
+ Grade {
+  channels alpha
+  multiply {{1+ig_choke/30}}
+  name Grade4
+  xpos 1134
+  ypos 1480
+ }
+ Dilate {
+  channels alpha
+  size {{ig_size<1?-0.5:0}}
+  name defringe1
+  xpos 1134
+  ypos 1516
+ }
+ ColorLookup {
+  channels alpha
+  name ig_contour
+  xpos 1134
+  ypos 1552
+ }
+ Premult {
+  name Premult6
+  xpos 1134
+  ypos 1588
+ }
+set N9b79000 [stack 0]
+ Dot {
+  name Dot44
+  xpos 1566
+  ypos 1591
+ }
+ Dot {
+  name Dot45
+  xpos 1566
+  ypos 2133
+ }
+push $N9a38e50
+ Dot {
+  name Dot2
+  xpos 571
+  ypos 618
+ }
+set N9bdd010 [stack 0]
+ Dilate {
+  channels alpha
+  size 0.5
+  name defringe
+  xpos 537
+  ypos 674
+ }
+ Shuffle {
+  red white
+  green white
+  blue white
+  name Shuffle1
+  xpos 537
+  ypos 710
+ }
+push $N9bdd010
+ Constant {
+  inputs 0
+  channels rgb
+  color {0 0.09100001305 0.1000000015 0}
+  name is_color
+  xpos 839
+  ypos 513
+ }
+ Shuffle {
+  alpha white
+  name floodAlpha
+  xpos 839
+  ypos 585
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name Merge2
+  xpos 839
+  ypos 609
+ }
+ Transform {
+  translate {{sin((180+(is_globAng?global.ang:is_angle))*0.0174532925)*is_dist i} {cos(((is_globAng?global.ang:is_angle)+180)*0.0174532925)*is_dist i}}
+  rotate {{0 i}}
+  scale {{1 i}}
+  skew {{0 i}}
+  center {1024 778}
+  name Transform1
+  xpos 839
+  ypos 645
+ }
+ Blur {
+  channels alpha
+  size {{is_size i}}
+  name Blur2
+  xpos 839
+  ypos 674
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge5
+  xpos 839
+  ypos 710
+ }
+ Grade {
+  channels alpha
+  multiply {{1+is_choke/100 i}}
+  name Grade2
+  xpos 839
+  ypos 734
+ }
+ Premult {
+  name Premult3
+  xpos 839
+  ypos 770
+ }
+set N9bdeff0 [stack 0]
+push $N9bdeff0
+ ColorLookup {
+  inputs 1+1
+  channels alpha
+  name is_contour
+  xpos 839
+  ypos 794
+ }
+set N9bdf320 [stack 0]
+ Dot {
+  name Dot41
+  label "inner shadow"
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 20
+  xpos 1705
+  ypos 1886
+  hide_input true
+ }
+push $N9b77680
+ Keyer {
+  input rgba
+  combine intersect
+  operation {{"parent.blendif_chan == 0 ? 6 : parent.blendif_chan-1" i x1 0}}
+  range {0 0 1 1}
+  name blendif_keyer
+  xpos 665
+  ypos 1625
+  addUserKnob {20 User}
+  addUserKnob {41 operation_1 l operation T blendif_keyer.operation}
+ }
+push $N9b76030
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy7
+  xpos 665
+  ypos 1777
+ }
+ Premult {
+  name Premult7
+  xpos 1409
+  ypos 1776
+ }
+push $N9a39180
+ Constant {
+  inputs 0
+  channels rgb
+  color {1 0.3299999833 0 0}
+  name og_color
+  xpos 989
+  ypos 948
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy4
+  xpos 989
+  ypos 1020
+ }
+ Blur {
+  channels alpha
+  size {{og_size i}}
+  quality 100
+  name Blur3
+  xpos 989
+  ypos 1056
+ }
+push $N9a394b0
+ Merge2 {
+  inputs 2
+  operation out
+  name Merge7
+  xpos 989
+  ypos 1092
+ }
+ Grade {
+  channels alpha
+  multiply {{1+og_spread/30 i}}
+  name Grade3
+  xpos 989
+  ypos 1116
+ }
+ Dilate {
+  channels alpha
+  size {{og_size<1?-0.5:0 i}}
+  name defringe2
+  xpos 989
+  ypos 1152
+ }
+ ColorLookup {
+  channels alpha
+  name og_contour
+  xpos 989
+  ypos 1188
+ }
+ Premult {
+  name Premult4
+  xpos 989
+  ypos 1224
+ }
+set N9cf79a0 [stack 0]
+push $N9cf79a0
+push $N9bdf320
+push $N9a38190
+push $N9a37e60
+ Constant {
+  inputs 0
+  channels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  color {{fill/100}}
+  name fill
+  xpos 499
+  ypos -128
+  postage_stamp false
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name Merge3
+  xpos 499
+  ypos -92
+ }
+set N9cf8000 [stack 0]
+ Switch {
+  inputs 2
+  which {{ds_knock i}}
+  name knockout_switch
+  xpos 499
+  ypos 174
+ }
+ Constant {
+  inputs 0
+  name black
+  xpos 402
+  ypos 390
+ }
+set N9cf8330 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 499
+  ypos 408
+ }
+push $N9a384c0
+ Constant {
+  inputs 0
+  channels rgb
+  color 0.09860000014
+  name ds_color
+  xpos 674
+  ypos 114
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 674
+  ypos 186
+ }
+ Dilate {
+  channels alpha
+  name Dilate1
+  xpos 674
+  ypos 222
+ }
+ Premult {
+  name Premult1
+  xpos 674
+  ypos 258
+ }
+ Transform {
+  translate {{sin((180+(ds_globAng?global.ang:ds_angle))*0.0174532925)*ds_dist i x1 414} {cos(((ds_globAng?global.ang:ds_angle)+180)*0.0174532925)*ds_dist i x1 -436}}
+  rotate {{0 i x1 0}}
+  scale {{1 i x1 0}}
+  skew {{0 i x1 0}}
+  center {1024 778}
+  name Transform2
+  xpos 674
+  ypos 282
+ }
+ Blur {
+  size {{ds_size i}}
+  quality 100
+  name Blur1
+  xpos 674
+  ypos 306
+ }
+ Grade {
+  channels alpha
+  multiply {{1+ds_spread/100 i}}
+  white_clamp true
+  name Grade1
+  xpos 674
+  ypos 342
+ }
+set N9cf9cb0 [stack 0]
+push $N9cf9cb0
+ ColorLookup {
+  inputs 1+1
+  channels alpha
+  lut {master {curve C 0 s1.139999986 1}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name ds_contour
+  xpos 674
+  ypos 378
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge1
+  xpos 674
+  ypos 414
+  disable {{curve i x1 0}}
+ }
+set N9cfa310 [stack 0]
+push $N9a387f0
+add_layer {dropShadow dropShadow.red dropShadow.green dropShadow.blue dropShadow.alpha}
+ ShuffleCopy {
+  inputs 2
+  alpha alpha2
+  black red
+  white green
+  red2 blue
+  green2 alpha
+  out2 dropShadow
+  name ds_channel
+  xpos 724
+  ypos 448
+ }
+push $N9cfa310
+push $N9cf8000
+push $N9a37e60
+ ShuffleCopy {
+  inputs 2
+  name img_fill
+  xpos 420
+  ypos -21
+ }
+ Premult {
+  name Premult12
+  xpos 420
+  ypos 3
+ }
+ Dot {
+  name Dot4
+  label "img w/ fill"
+  xpos 454
+  ypos 478
+  hide_input true
+ }
+set N9d89f30 [stack 0]
+ Merge2 {
+  inputs 2
+  mix {{ds_opacity/100 i}}
+  name MergeByOpacity
+  xpos 623
+  ypos 475
+ }
+ Switch {
+  inputs 2
+  which {{ls_channels}}
+  name channel_switch1
+  xpos 674
+  ypos 507
+ }
+set N9820aa0 [stack 0]
+push $N9d89f30
+ Dot {
+  name Dot40
+  xpos 454
+  ypos 534
+ }
+ Switch {
+  inputs 2
+  which {{ls_dropShadow i}}
+  name ds_switch
+  xpos 674
+  ypos 531
+ }
+ Dot {
+  name Dot32
+  xpos 708
+  ypos 863
+ }
+set N9d8a8c0 [stack 0]
+add_layer {innerShadow innerShadow.red innerShadow.green innerShadow.blue innerShadow.alpha}
+ ShuffleCopy {
+  inputs 2
+  alpha alpha2
+  black red
+  white green
+  red2 blue
+  green2 alpha
+  out2 innerShadow
+  name is_channel
+  xpos 878
+  ypos 860
+ }
+push $N9bdf320
+push $N9bdf320
+push $N9d8a8c0
+ Dot {
+  name Dot9
+  xpos 708
+  ypos 891
+ }
+set N9d8af20 [stack 0]
+ Merge2 {
+  inputs 2+1
+  operation multiply
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  mix {{is_opacity/100 i}}
+  name MergeByOpacity1
+  xpos 789
+  ypos 888
+ }
+ Switch {
+  inputs 2
+  which {{ls_channels}}
+  name channel_switch
+  xpos 839
+  ypos 931
+ }
+push $N9d8af20
+ Dot {
+  name Dot8
+  xpos 708
+  ypos 958
+ }
+ Switch {
+  inputs 2
+  which {{ls_innerShadow}}
+  name is_switch1
+  xpos 839
+  ypos 955
+ }
+ Dot {
+  name Dot34
+  xpos 873
+  ypos 1255
+ }
+set N9d8b8b0 [stack 0]
+add_layer {outerGlow outerGlow.red outerGlow.green outerGlow.blue outerGlow.alpha}
+ ShuffleCopy {
+  inputs 2
+  alpha alpha2
+  black red
+  white green
+  red2 blue
+  green2 alpha
+  out2 outerGlow
+  name og_channel
+  xpos 1033
+  ypos 1252
+ }
+push $N9cf79a0
+push $N9d8b8b0
+ Dot {
+  name Dot11
+  xpos 873
+  ypos 1273
+ }
+set N9d8bf10 [stack 0]
+ Merge2 {
+  inputs 2
+  operation screen
+  mix {{og_opacity/100 i}}
+  name MergeByOpacity2
+  xpos 936
+  ypos 1270
+  disable {{!ls_outerGlow i}}
+ }
+ set C9d8c240 [stack 0]
+ Switch {
+  inputs 2
+  which {{ls_channels}}
+  name channel_switch2
+  xpos 989
+  ypos 1303
+ }
+push $N9d8bf10
+ Dot {
+  name Dot17
+  xpos 873
+  ypos 1330
+ }
+ Switch {
+  inputs 2
+  which {{ls_outerGlow i}}
+  name og_switch
+  xpos 989
+  ypos 1327
+ }
+set N9e1a920 [stack 0]
+ Dot {
+  name Dot52
+  xpos 1550
+  ypos 1330
+ }
+push $N9cf8330
+ Dot {
+  name Dot38
+  label black
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 20
+  xpos 1092
+  ypos 359
+  hide_input true
+ }
+push $N9cfa310
+ Merge2 {
+  inputs 2
+  operation multiply
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  mix {{1-ds_opacity/100 i}}
+  name Merge11
+  xpos 1058
+  ypos 408
+ }
+ Dot {
+  name Dot53
+  xpos 1591
+  ypos 417
+ }
+push $N9820aa0
+push $N9b76cf0
+ NoOp {
+  name is_connected
+  xpos 1631
+  ypos -34
+ }
+ Keyer {
+  input rgba
+  operation {{"parent.blendif_chan == 0 ? 6 : parent.blendif_chan-1" i x1 6}}
+  range {0 0 1 1}
+  name blendif_keyer_bg
+  xpos 1631
+  ypos 110
+  addUserKnob {20 User}
+  addUserKnob {41 operation_1 l operation T blendif_keyer_bg.operation}
+ }
+ Premult {
+  name Premult14
+  xpos 1631
+  ypos 146
+ }
+ Merge2 {
+  inputs 2+1
+  operation multiply
+  name ds_blendMode
+  xpos 1631
+  ypos 507
+  disable {{!ls_dropShadow i x1 0}}
+ }
+clone $C9d8c240 {
+  inputs 2+1
+  xpos 1631
+  ypos 1224
+  selected false
+ }
+ Merge2 {
+  inputs 2
+  mix {{fill/100 i}}
+  name fill_merge
+  xpos 1631
+  ypos 1776
+ }
+set N9e7a590 [stack 0]
+ Merge2 {
+  inputs 2
+  mix {{is_opacity/100}}
+  name is_mergeByOpacity
+  xpos 1631
+  ypos 1940
+  disable {{!ls_innerShadow}}
+ }
+ Merge2 {
+  inputs 2
+  operation {{parent.ig_blend i}}
+  mix {{ig_opacity/100 i}}
+  name ig_mergeByOpacity
+  xpos 1631
+  ypos 2130
+  disable {{!ls_innerGlow i}}
+ }
+ Switch {
+  inputs 2
+  which {{ls_channels i}}
+  name chan_switch
+  xpos 1631
+  ypos 2395
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy6
+  xpos 1631
+  ypos 2437
+ }
+clone $C9a36e70 {
+  inputs 0
+  xpos 1205
+  ypos 2016
+  selected false
+ }
+push $N9b79000
+push $N9e1a920
+ Dot {
+  name Dot35
+  xpos 1023
+  ypos 1620
+ }
+set N9e7b580 [stack 0]
+add_layer {innerGlow innerGlow.red innerGlow.green innerGlow.blue innerGlow.alpha}
+ ShuffleCopy {
+  inputs 2
+  alpha alpha2
+  black red
+  white green
+  red2 blue
+  green2 alpha
+  out2 innerGlow
+  name ig_channel
+  xpos 1184
+  ypos 1617
+ }
+push $N9b79000
+push $N9e7b580
+ Dot {
+  name Dot25
+  xpos 1024
+  ypos 1641
+ }
+set N9e7bbe0 [stack 0]
+ Merge2 {
+  inputs 2
+  operation plus
+  mix {{ig_opacity/100 i}}
+  name ig_MergeByOpacity
+  xpos 1092
+  ypos 1638
+ }
+ Switch {
+  inputs 2
+  which {{ls_channels}}
+  name channel_switch3
+  xpos 1134
+  ypos 1693
+ }
+push $N9e7bbe0
+ Dot {
+  name Dot22
+  xpos 1024
+  ypos 1720
+ }
+ Switch {
+  inputs 2
+  which {{ls_innerGlow}}
+  name ig_switch
+  xpos 1134
+  ypos 1717
+ }
+ Dot {
+  name Dot15
+  xpos 1168
+  ypos 2103
+ }
+clone $C9a37800 {
+  inputs 2
+  xpos 1205
+  ypos 2100
+  selected false
+ }
+ Premult {
+  name Premult2
+  xpos 1205
+  ypos 2497
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists is_connected.input]" i}}
+  name BG_switch
+  xpos 1631
+  ypos 2497
+ }
+ Crop {
+  box {0 0 {img.width} {img.height}}
+  name Crop1
+  xpos 1631
+  ypos 2710
+ }
+ Output {
+  name Output1
+  xpos 1631
+  ypos 2734
+ }
+push $N9b76030
+push $N9cf8000
+push $N9e7a590
+ Viewer {
+  inputs 3
+  input_process false
+  name Viewer1
+  xpos -356
+  ypos 3977
+ }
+ NoOp {
+  inputs 0
+  name global
+  xpos 453
+  ypos -466
+  addUserKnob {20 User}
+  addUserKnob {7 ang l "Global Light Angle" t "This angle will be used in any layer styles working with light." R -180 180}
+  ang -56
+  addUserKnob {7 overallOpacity l Opacity t "Sets the master opacity for the layer." R 0 100}
+  overallOpacity 100
+ }
+ Gizmo {
+  inputs 0
+  name Gizmo1
+  knobChanged "ls_node = nuke.thisNode(); \nls_knob = nuke.thisKnob();\nif ls_knob.name().endswith('_globAng'):\n    pfx = ls_knob.name().split('_')\[0];\n    ls_node.knobs()\[pfx+'_globAngle'].setVisible(ls_knob.value());\n    ls_node.knob(pfx+'_angle').setVisible(not ls_knob.value());"
+  xpos 587
+  ypos -323
+ }
+  BackdropNode {
+   inputs 0
+   name BackdropNode2
+   tile_color 0x8e5c37ff
+   gl_color 0x8e5c37ff
+   label "inner shadow"
+   note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+   note_font_size 22
+   xpos 815
+   ypos 458
+   bdwidth 123
+   bdheight 535
+  }
+  BackdropNode {
+   inputs 0
+   name BackdropNode6
+   tile_color 0xbf924eff
+   gl_color 0x8e5c37ff
+   label "inner glow"
+   note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+   note_font_size 22
+   xpos 1121
+   ypos 1228
+   bdwidth 123
+   bdheight 535
+  }
+  BackdropNode {
+   inputs 0
+   name BackdropNode8
+   tile_color 0x525442ff
+   label shadow
+   note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+   note_font_size 20
+   xpos 1496
+   ypos 1901
+   bdwidth 228
+   bdheight 233
+  }
+  BackdropNode {
+   inputs 0
+   name BackdropNode7
+   tile_color 0x85886cff
+   label light
+   note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+   note_font_size 20
+   xpos 1261
+   ypos 1901
+   bdwidth 224
+   bdheight 210
+  }
+  BackdropNode {
+   inputs 0
+   name BackdropNode1
+   tile_color 0x8e5c37ff
+   gl_color 0x8e5c37ff
+   label dropshadow
+   note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+   note_font_size 22
+   xpos 640
+   ypos 64
+   bdwidth 148
+   bdheight 497
+  }
+  BackdropNode {
+   inputs 0
+   name BackdropNode5
+   tile_color 0xbf924eff
+   gl_color 0x8e5c37ff
+   label "outer glow"
+   note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+   note_font_size 22
+   xpos 968
+   ypos 892
+   bdwidth 123
+   bdheight 464
+  }
+  BackdropNode {
+   inputs 0
+   name BackdropNode4
+   tile_color 0x6d392fff
+   label "color overlay"
+   note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+   note_font_size 22
+   xpos 1750
+   ypos 2271
+   bdwidth 129
+   bdheight 280
+  }
+  BackdropNode {
+   inputs 0
+   name BackdropNode9
+   tile_color 0x6b7545ff
+   gl_color 0x8e5c37ff
+   label "bevel & emboss"
+   note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+   note_font_size 22
+   xpos 1270
+   ypos 1821
+   bdwidth 441
+   bdheight 605
+  }
+  BackdropNode {
+   inputs 0
+   name BackdropNode3
+   tile_color 0x6d2727ff
+   label stroke
+   note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+   note_font_size 22
+   xpos 1909
+   ypos 2486
+   bdwidth 351
+   bdheight 467
+  }
+  Constant {
+   inputs 0
+   color {0 0 0 0}
+   name opacity
+   xpos 227
+   ypos -349
+  }
+  set C9f4a4a0 [stack 0]
+  Input {
+   inputs 0
+   name img
+   xpos 337
+   ypos -466
+  }
+  Unpremult {
+   name Unpremult1
+   xpos 337
+   ypos -422
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   mix {{1-global.overallOpacity/100}}
+   name merge_opacity
+   xpos 337
+   ypos -325
+  }
+  set C9f4ae30 [stack 0]
+  Shuffle {
+   red {{"parent.chans_r ? 1 : 0" i}}
+   green {{"parent.chans_g ? 2 : 0" i}}
+   blue {{"parent.chans_b ? 3 : 0" i}}
+   name Shuffle_RGB
+   xpos 337
+   ypos -200
+   addUserKnob {20 User}
+   addUserKnob {41 red_1 l red T Shuffle_RGB.red}
+   addUserKnob {41 green_1 l green T Shuffle_RGB.green}
+   addUserKnob {41 blue_1 l blue T Shuffle_RGB.blue}
+  }
+  Dot {
+   name Dot3
+   xpos 371
+   ypos -83
+  }
+set N9f4b490 [stack 0]
+  Dot {
+   name Dot5
+   xpos 371
+   ypos 177
+  }
+set N9f4b7c0 [stack 0]
+  Dot {
+   name Dot1
+   xpos 371
+   ypos 195
+  }
+set N9f4baf0 [stack 0]
+  Dot {
+   name Dot33
+   xpos 371
+   ypos 451
+  }
+set N9f4be20 [stack 0]
+  Dot {
+   name Dot6
+   xpos 371
+   ypos 534
+  }
+  Dot {
+   name Dot10
+   xpos 371
+   ypos 618
+  }
+set N9f4c480 [stack 0]
+  Dot {
+   name Dot14
+   xpos 371
+   ypos 1029
+  }
+set N9f4c7b0 [stack 0]
+  Dot {
+   name Dot18
+   xpos 371
+   ypos 1095
+  }
+set N9f4cae0 [stack 0]
+  Dot {
+   name Dot23
+   xpos 371
+   ypos 1381
+  }
+set N9f62e50 [stack 0]
+  Dot {
+   name Dot24
+   xpos 371
+   ypos 1453
+  }
+set N9f63180 [stack 0]
+  Dot {
+   name Dot51
+   xpos 371
+   ypos 1786
+  }
+set N9f634b0 [stack 0]
+  Dot {
+   name Dot30
+   xpos 371
+   ypos 1944
+  }
+set N9f637e0 [stack 0]
+  Dot {
+   name Dot29
+   xpos 371
+   ypos 2114
+  }
+set N9f63b10 [stack 0]
+  Dot {
+   name Dot27
+   xpos 371
+   ypos 2167
+  }
+set N9f63e40 [stack 0]
+  Dot {
+   name Dot28
+   xpos 371
+   ypos 2257
+  }
+set N9f64170 [stack 0]
+  Dot {
+   name Dot13
+   xpos 371
+   ypos 2452
+  }
+set N9f644a0 [stack 0]
+  Dot {
+   name Dot39
+   xpos 371
+   ypos 2452
+  }
+set N9f647d0 [stack 0]
+  Dot {
+   name Dot21
+   xpos 371
+   ypos 2625
+  }
+set N9f64b00 [stack 0]
+  Dot {
+   name Dot12
+   xpos 371
+   ypos 2727
+  }
+set N9f64e30 [stack 0]
+  Dot {
+   name Dot7
+   xpos 371
+   ypos 2794
+  }
+set N9f65160 [stack 0]
+  Dot {
+   name Dot47
+   xpos 371
+   ypos 3099
+  }
+set N9f65490 [stack 0]
+  Dot {
+   name Dot48
+   xpos 371
+   ypos 3187
+  }
+push $N9f65490
+  Premult {
+   name Premult15
+   xpos 2226
+   ypos 3096
+  }
+  Input {
+   inputs 0
+   name background
+   xpos 2455
+   ypos -165
+   number 1
+   addUserKnob {20 User}
+   addUserKnob {6 isConnected l "is connected" +STARTLINE}
+   isConnected {{"\[exists input1.disable]" i}}
+  }
+set N9f65e20 [stack 0]
+  Dot {
+   name Dot46
+   label background
+   note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+   note_font_size 20
+   xpos 2394
+   ypos 3046
+   hide_input true
+  }
+  Merge2 {
+   inputs 2
+   name Merge10
+   xpos 2360
+   ypos 3096
+  }
+push $N9f65160
+push $N9f64e30
+push $N9f64b00
+  Constant {
+   inputs 0
+   channels rgb
+   color {0.5 0 0 0.5}
+   name st_color
+   xpos 2029
+   ypos 2531
+  }
+set N9f667b0 [stack 0]
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy8
+   xpos 2029
+   ypos 2616
+  }
+  Blur {
+   channels alpha
+   size {{"st_size * (st_pos==2 ? 1 : 2)" i}}
+   name Blur5
+   xpos 2029
+   ypos 2652
+  }
+  Keyer {
+   input alpha
+   operation "luminance key"
+   range {0.00106689225 0.001420418676 0.2022739325 0.2045402894}
+   name Keyer1
+   xpos 2029
+   ypos 2688
+  }
+  Merge2 {
+   inputs 2
+   operation in
+   name In
+   xpos 2029
+   ypos 2724
+   disable {{st_pos!=1 i x1 1}}
+  }
+push $N9f667b0
+  Dot {
+   name Dot49
+   xpos 2183
+   ypos 2558
+  }
+  Dot {
+   name Dot42
+   xpos 2183
+   ypos 2758
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy3
+   xpos 2029
+   ypos 2749
+  }
+  Merge2 {
+   inputs 2
+   operation from
+   Achannels alpha
+   Bchannels alpha
+   output alpha
+   name Merge12
+   xpos 2029
+   ypos 2785
+   disable {{st_pos!=0 i}}
+  }
+  Premult {
+   name Premult5
+   xpos 2029
+   ypos 2821
+  }
+set N9f68460 [stack 0]
+push $N9f68460
+push $N9f647d0
+  Constant {
+   inputs 0
+   color {0 0.25 0.2899999917 1}
+   name ov_color
+   xpos 1768
+   ypos 2327
+  }
+set N9f68ac0 [stack 0]
+  Dot {
+   name Dot54
+   xpos 2102
+   ypos 2354
+  }
+push $N9f63180
+  Dot {
+   name Dot50
+   xpos 699
+   ypos 1453
+  }
+set N9f68df0 [stack 0]
+push $N9f62e50
+  Constant {
+   inputs 0
+   channels rgb
+   color {0.3280061483 1 0.432046473 1}
+   name ig_color
+   xpos 1134
+   ypos 1300
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy5
+   xpos 1134
+   ypos 1372
+  }
+  Blur {
+   channels alpha
+   size {{ig_size}}
+   quality 100
+   name Blur4
+   xpos 1134
+   ypos 1408
+  }
+  Merge2 {
+   inputs 2
+   operation out
+   output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   name Merge6
+   xpos 1134
+   ypos 1444
+  }
+  Grade {
+   channels alpha
+   multiply {{1+ig_choke/30}}
+   name Grade4
+   xpos 1134
+   ypos 1480
+  }
+  Dilate {
+   channels alpha
+   size {{ig_size<1?-0.5:0}}
+   name defringe1
+   xpos 1134
+   ypos 1516
+  }
+  ColorLookup {
+   channels alpha
+   name ig_contour
+   xpos 1134
+   ypos 1552
+  }
+  Premult {
+   name Premult6
+   xpos 1134
+   ypos 1588
+  }
+set N9f6a770 [stack 0]
+  Dot {
+   name Dot44
+   xpos 2390
+   ypos 1591
+  }
+  Dot {
+   name Dot45
+   xpos 2390
+   ypos 2357
+  }
+push $N9f63b10
+push $N9f637e0
+  Constant {
+   inputs 0
+   color {0.5 0.5 0.5 0}
+   name midgrey
+   xpos 1451
+   ypos 1863
+  }
+  BumpBoss {
+   inputs 2
+   lightposition {454 1324}
+   bumpsize 21
+   height 2.7
+   intensity 1.5
+   center {786 1068}
+   name BumpBoss2
+   xpos 1451
+   ypos 1935
+  }
+set N18b00710 [stack 0]
+  ColorLookup {
+   lut {master {curve C x0.4999999404 0 s1.75 x1 0.9788556695}
+     red {}
+     green {}
+     blue {}
+     alpha {}}
+   name ColorLookup1
+   xpos 1382
+   ypos 2033
+  }
+  Constant {
+   inputs 0
+   channels rgb
+   color {0.6056159735 0.6200000048 0.4402000308 0}
+   name bev_light_color
+   xpos 1291
+   ypos 2033
+  }
+  ShuffleCopy {
+   inputs 2
+   alpha red
+   name ShuffleCopy2
+   xpos 1382
+   ypos 2057
+  }
+  Premult {
+   name Premult8
+   xpos 1382
+   ypos 2081
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   Achannels alpha
+   Bchannels alpha
+   output alpha
+   name Merge9
+   xpos 1382
+   ypos 2105
+  }
+  Premult {
+   name Premult11
+   xpos 1382
+   ypos 2141
+  }
+  Clamp {
+   name Clamp2
+   xpos 1382
+   ypos 2209
+  }
+push $N9f63e40
+push $N18b00710
+  ColorLookup {
+   lut {master {curve C x0.1607476473 0 s1.75 x0.4588784575 0.9788556695}
+     red {}
+     green {}
+     blue {}
+     alpha {}}
+   name ColorLookup2
+   xpos 1518
+   ypos 2030
+  }
+  Invert {
+   name Invert1
+   xpos 1518
+   ypos 2054
+  }
+  Constant {
+   inputs 0
+   channels rgb
+   color {0 0.5270000696 0.6200000048 0}
+   name bev_shadow_color
+   xpos 1628
+   ypos 2066
+  }
+  ShuffleCopy {
+   inputs 2
+   alpha red
+   name ShuffleCopy1
+   xpos 1518
+   ypos 2090
+  }
+  Premult {
+   name Premult9
+   xpos 1518
+   ypos 2134
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   Achannels alpha
+   Bchannels alpha
+   output alpha
+   name Merge8
+   xpos 1518
+   ypos 2158
+  }
+  Premult {
+   name Premult10
+   xpos 1518
+   ypos 2194
+  }
+  Clamp {
+   name Clamp1
+   xpos 1518
+   ypos 2218
+  }
+push $N9f64170
+  Merge2 {
+   inputs 2
+   operation multiply
+   mix {{bev_shadow_op/100 i}}
+   name mergeByOpacity_shadow
+   xpos 1518
+   ypos 2254
+  }
+  Merge2 {
+   inputs 2
+   operation screen
+   mix {{bev_light_op/100 i}}
+   name mergeByOpacity_light
+   xpos 1382
+   ypos 2276
+  }
+  Dilate {
+   size 0.5
+   name Dilate2
+   xpos 1382
+   ypos 2300
+  }
+set N18b04070 [stack 0]
+push $N9f4c480
+  Dot {
+   name Dot2
+   xpos 571
+   ypos 618
+  }
+set N18b043a0 [stack 0]
+  Dilate {
+   channels alpha
+   size 0.5
+   name defringe
+   xpos 537
+   ypos 674
+  }
+  Shuffle {
+   red white
+   green white
+   blue white
+   name Shuffle1
+   xpos 537
+   ypos 710
+  }
+push $N18b043a0
+  Constant {
+   inputs 0
+   channels rgb
+   color {0 0.09100001305 0.1000000015 0}
+   name is_color
+   xpos 839
+   ypos 513
+  }
+  Shuffle {
+   alpha white
+   name floodAlpha
+   xpos 839
+   ypos 585
+  }
+  Merge2 {
+   inputs 2
+   operation stencil
+   output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   name Merge2
+   xpos 839
+   ypos 609
+  }
+  Transform {
+   translate {{sin((180+(is_globAng?global.ang:is_angle))*0.0174532925)*is_dist i} {cos(((is_globAng?global.ang:is_angle)+180)*0.0174532925)*is_dist i}}
+   rotate {{0 i}}
+   scale {{1 i}}
+   skew {{0 i}}
+   center {1024 778}
+   name Transform1
+   xpos 839
+   ypos 645
+  }
+  Blur {
+   channels alpha
+   size {{is_size i}}
+   name Blur2
+   xpos 839
+   ypos 674
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   name Merge5
+   xpos 839
+   ypos 710
+  }
+  Grade {
+   channels alpha
+   multiply {{1+is_choke/100 i}}
+   name Grade2
+   xpos 839
+   ypos 734
+  }
+  Premult {
+   name Premult3
+   xpos 839
+   ypos 770
+  }
+set N18b06380 [stack 0]
+push $N18b06380
+  ColorLookup {
+   inputs 1+1
+   channels alpha
+   name is_contour
+   xpos 839
+   ypos 794
+  }
+set N18b066b0 [stack 0]
+  Dot {
+   name Dot41
+   label "inner shadow"
+   note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+   note_font_size 20
+   xpos 2529
+   ypos 1978
+   hide_input true
+  }
+push $N9f68df0
+  Keyer {
+   input rgba
+   combine intersect
+   operation {{"parent.blendif_chan == 0 ? 6 : parent.blendif_chan-1" i x1 0}}
+   range {0 0 1 1}
+   name blendif_keyer
+   xpos 665
+   ypos 1625
+   addUserKnob {20 User}
+   addUserKnob {41 operation_1 l operation T blendif_keyer.operation}
+  }
+push $N9f634b0
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy7
+   xpos 665
+   ypos 1777
+  }
+  Premult {
+   name Premult7
+   xpos 2233
+   ypos 1776
+  }
+push $N9f4c7b0
+  Constant {
+   inputs 0
+   channels rgb
+   color {1 0.3299999833 0 0}
+   name og_color
+   xpos 989
+   ypos 948
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy4
+   xpos 989
+   ypos 1020
+  }
+  Blur {
+   channels alpha
+   size {{og_size i}}
+   quality 100
+   name Blur3
+   xpos 989
+   ypos 1056
+  }
+push $N9f4cae0
+  Merge2 {
+   inputs 2
+   operation out
+   name Merge7
+   xpos 989
+   ypos 1092
+  }
+  Grade {
+   channels alpha
+   multiply {{1+og_spread/30 i}}
+   name Grade3
+   xpos 989
+   ypos 1116
+  }
+  Dilate {
+   channels alpha
+   size {{og_size<1?-0.5:0 i}}
+   name defringe2
+   xpos 989
+   ypos 1152
+  }
+  ColorLookup {
+   channels alpha
+   name og_contour
+   xpos 989
+   ypos 1188
+  }
+  Premult {
+   name Premult4
+   xpos 989
+   ypos 1224
+  }
+set N18c50410 [stack 0]
+push $N18c50410
+push $N18b066b0
+push $N9f4b7c0
+push $N9f4b490
+  Constant {
+   inputs 0
+   channels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   color {{fill/100}}
+   name fill
+   xpos 499
+   ypos -128
+   postage_stamp false
+  }
+  Merge2 {
+   inputs 2
+   operation multiply
+   Achannels alpha
+   Bchannels alpha
+   output alpha
+   name Merge3
+   xpos 499
+   ypos -92
+  }
+set N18c50a70 [stack 0]
+  Switch {
+   inputs 2
+   which {{ds_knock i}}
+   name knockout_switch
+   xpos 499
+   ypos 174
+  }
+  Constant {
+   inputs 0
+   name black
+   xpos 402
+   ypos 390
+  }
+set N18c50da0 [stack 0]
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy2
+   xpos 499
+   ypos 408
+  }
+push $N9f4baf0
+  Constant {
+   inputs 0
+   channels rgb
+   color {0.09860000014 0.1000000015 0.09878199548 0}
+   name ds_color
+   xpos 674
+   ypos 114
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy1
+   xpos 674
+   ypos 186
+  }
+  Dilate {
+   channels alpha
+   name Dilate1
+   xpos 674
+   ypos 222
+  }
+  Premult {
+   name Premult1
+   xpos 674
+   ypos 258
+  }
+  Transform {
+   translate {{sin((180+(ds_globAng?global.ang:ds_angle))*0.0174532925)*ds_dist i x1 414} {cos(((ds_globAng?global.ang:ds_angle)+180)*0.0174532925)*ds_dist i x1 -436}}
+   rotate {{0 i x1 0}}
+   scale {{1 i x1 0}}
+   skew {{0 i x1 0}}
+   center {1024 778}
+   name Transform2
+   xpos 674
+   ypos 282
+  }
+  Blur {
+   size {{ds_size i}}
+   quality 100
+   name Blur1
+   xpos 674
+   ypos 306
+  }
+  Grade {
+   channels alpha
+   multiply {{1+ds_spread/100 i}}
+   white_clamp true
+   name Grade1
+   xpos 674
+   ypos 342
+  }
+set N18c52720 [stack 0]
+push $N18c52720
+  ColorLookup {
+   inputs 1+1
+   channels alpha
+   lut {master {curve C 0 s1.139999986 1}
+     red {}
+     green {}
+     blue {}
+     alpha {}}
+   name ds_contour
+   xpos 674
+   ypos 378
+  }
+  Merge2 {
+   inputs 2
+   operation stencil
+   name Merge1
+   xpos 674
+   ypos 414
+   disable {{curve i x1 0}}
+  }
+set N18c52d80 [stack 0]
+push $N9f4be20
+  ShuffleCopy {
+   inputs 2
+   alpha alpha2
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 dropShadow
+   name ds_channel
+   xpos 724
+   ypos 448
+  }
+push $N18c52d80
+push $N18c50a70
+push $N9f4b490
+  ShuffleCopy {
+   inputs 2
+   name img_fill
+   xpos 420
+   ypos -21
+  }
+  Premult {
+   name Premult12
+   xpos 420
+   ypos 3
+  }
+  Dot {
+   name Dot4
+   label "img w/ fill"
+   xpos 454
+   ypos 478
+   hide_input true
+  }
+set N18c53a40 [stack 0]
+  Merge2 {
+   inputs 2
+   mix {{ds_opacity/100 i}}
+   name MergeByOpacity
+   xpos 623
+   ypos 475
+  }
+  Switch {
+   inputs 2
+   which {{ls_channels}}
+   name channel_switch1
+   xpos 674
+   ypos 507
+  }
+set N9e1bd00 [stack 0]
+push $N18c53a40
+  Dot {
+   name Dot40
+   xpos 454
+   ypos 534
+  }
+  Switch {
+   inputs 2
+   which {{ls_dropShadow i}}
+   name ds_switch
+   xpos 674
+   ypos 531
+  }
+  Dot {
+   name Dot32
+   xpos 708
+   ypos 863
+  }
+set N18c543d0 [stack 0]
+  ShuffleCopy {
+   inputs 2
+   alpha alpha2
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 innerShadow
+   name is_channel
+   xpos 878
+   ypos 860
+  }
+push $N18b066b0
+push $N18b066b0
+push $N18c543d0
+  Dot {
+   name Dot9
+   xpos 708
+   ypos 891
+  }
+set N18c54a30 [stack 0]
+  Merge2 {
+   inputs 2+1
+   operation multiply
+   Achannels rgb
+   Bchannels rgb
+   output rgb
+   mix {{is_opacity/100 i}}
+   name MergeByOpacity1
+   xpos 789
+   ypos 888
+  }
+  Switch {
+   inputs 2
+   which {{ls_channels}}
+   name channel_switch
+   xpos 839
+   ypos 931
+  }
+push $N18c54a30
+  Dot {
+   name Dot8
+   xpos 708
+   ypos 958
+  }
+  Switch {
+   inputs 2
+   which {{ls_innerShadow}}
+   name is_switch1
+   xpos 839
+   ypos 955
+  }
+  Dot {
+   name Dot34
+   xpos 873
+   ypos 1255
+  }
+set N18c553c0 [stack 0]
+  ShuffleCopy {
+   inputs 2
+   alpha alpha2
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 outerGlow
+   name og_channel
+   xpos 1033
+   ypos 1252
+  }
+push $N18c50410
+push $N18c553c0
+  Dot {
+   name Dot11
+   xpos 873
+   ypos 1273
+  }
+set N18c55a20 [stack 0]
+  Merge2 {
+   inputs 2
+   operation screen
+   mix {{og_opacity/100 i}}
+   name MergeByOpacity2
+   xpos 936
+   ypos 1270
+   disable {{!ls_outerGlow i}}
+  }
+  set C18c55d50 [stack 0]
+  Switch {
+   inputs 2
+   which {{ls_channels}}
+   name channel_switch2
+   xpos 989
+   ypos 1303
+  }
+push $N18c55a20
+  Dot {
+   name Dot17
+   xpos 873
+   ypos 1330
+  }
+  Switch {
+   inputs 2
+   which {{ls_outerGlow i}}
+   name og_switch
+   xpos 989
+   ypos 1327
+  }
+set N9e1cd90 [stack 0]
+  Dot {
+   name Dot52
+   xpos 2374
+   ypos 1330
+  }
+push $N18c50da0
+  Dot {
+   name Dot38
+   label black
+   note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+   note_font_size 20
+   xpos 1092
+   ypos 359
+   hide_input true
+  }
+push $N18c52d80
+  Merge2 {
+   inputs 2
+   operation multiply
+   Achannels alpha
+   Bchannels alpha
+   output alpha
+   mix {{1-ds_opacity/100 i}}
+   name Merge11
+   xpos 1058
+   ypos 408
+  }
+  Dot {
+   name Dot53
+   xpos 2415
+   ypos 417
+  }
+push $N9e1bd00
+push $N9f65e20
+  NoOp {
+   name is_connected
+   xpos 2455
+   ypos -34
+  }
+  Keyer {
+   input rgba
+   operation {{"parent.blendif_chan == 0 ? 6 : parent.blendif_chan-1" i x1 6}}
+   range {0 0 1 1}
+   name blendif_keyer_bg
+   xpos 2455
+   ypos 110
+   addUserKnob {20 User}
+   addUserKnob {41 operation_1 l operation T blendif_keyer_bg.operation}
+  }
+  Premult {
+   name Premult14
+   xpos 2455
+   ypos 146
+  }
+  Merge2 {
+   inputs 2+1
+   operation multiply
+   name ds_blendMode
+   xpos 2455
+   ypos 507
+   disable {{!ls_dropShadow i x1 0}}
+  }
+clone $C18c55d50 {
+   inputs 2+1
+   xpos 2455
+   ypos 1224
+   selected false
+  }
+  Merge2 {
+   inputs 2
+   mix {{fill/100 i}}
+   name fill_merge
+   xpos 2455
+   ypos 1776
+  }
+set N18dd2e50 [stack 0]
+  Merge2 {
+   inputs 2
+   mix {{is_opacity/100}}
+   name is_mergeByOpacity
+   xpos 2455
+   ypos 2032
+   disable {{!ls_innerShadow}}
+  }
+  Merge2 {
+   inputs 2
+   name bev_merge
+   xpos 2455
+   ypos 2306
+   disable {{!ls_bevel i}}
+  }
+  Merge2 {
+   inputs 2
+   operation {{parent.ig_blend i}}
+   mix {{ig_opacity/100 i}}
+   name ig_mergeByOpacity
+   xpos 2455
+   ypos 2354
+   disable {{!ls_innerGlow i}}
+  }
+  Dot {
+   name Dot43
+   xpos 2489
+   ypos 2401
+  }
+  Merge2 {
+   inputs 2+1
+   mix {{ov_opacity/100 i}}
+   name ov_mergeByOpacity
+   xpos 2455
+   ypos 2449
+   disable {{!ls_overlay i}}
+  }
+  set C18dd3e40 [stack 0]
+  Merge2 {
+   inputs 2+1
+   mix {{st_opacity/100 i}}
+   name mergeByOpacity
+   xpos 2455
+   ypos 2821
+   disable {{!ls_stroke i}}
+  }
+  set C18dd4170 [stack 0]
+  Switch {
+   inputs 2
+   which {{ls_channels i}}
+   name chan_switch
+   xpos 2455
+   ypos 3136
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy6
+   xpos 2455
+   ypos 3178
+  }
+clone $C9f4a4a0 {
+   inputs 0
+   xpos 1919
+   ypos 3013
+   selected false
+  }
+push $N9f68460
+push $N9f68ac0
+push $N18b04070
+push $N9f6a770
+push $N9e1cd90
+  Dot {
+   name Dot35
+   xpos 1023
+   ypos 1620
+  }
+set N18dd4b00 [stack 0]
+  ShuffleCopy {
+   inputs 2
+   alpha alpha2
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 innerGlow
+   name ig_channel
+   xpos 1184
+   ypos 1617
+  }
+push $N9f6a770
+push $N18dd4b00
+  Dot {
+   name Dot25
+   xpos 1024
+   ypos 1641
+  }
+set N18dd5160 [stack 0]
+  Merge2 {
+   inputs 2
+   operation plus
+   mix {{ig_opacity/100 i}}
+   name ig_MergeByOpacity
+   xpos 1092
+   ypos 1638
+  }
+  Switch {
+   inputs 2
+   which {{ls_channels}}
+   name channel_switch3
+   xpos 1134
+   ypos 1693
+  }
+push $N18dd5160
+  Dot {
+   name Dot22
+   xpos 1024
+   ypos 1720
+  }
+  Switch {
+   inputs 2
+   which {{ls_innerGlow}}
+   name ig_switch
+   xpos 1134
+   ypos 1717
+  }
+  Dot {
+   name Dot20
+   xpos 1168
+   ypos 2331
+  }
+set N18dd5af0 [stack 0]
+add_layer {bevelEmboss bevelEmboss.red bevelEmboss.green bevelEmboss.blue bevelEmboss.alpha}
+  ShuffleCopy {
+   inputs 2
+   alpha alpha2
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 bevelEmboss
+   name bev_channel
+   xpos 1473
+   ypos 2328
+  }
+push $N18b04070
+push $N18dd5af0
+  Dot {
+   name Dot31
+   xpos 1168
+   ypos 2347
+  }
+set N18dd6150 [stack 0]
+  Merge2 {
+   inputs 2
+   name merge
+   xpos 1382
+   ypos 2344
+  }
+  Switch {
+   inputs 2
+   which {{ls_channels}}
+   name channel_switch4
+   xpos 1382
+   ypos 2368
+  }
+push $N18dd6150
+  Dot {
+   name Dot19
+   xpos 1168
+   ypos 2395
+  }
+  Switch {
+   inputs 2
+   which {{ls_bevel i}}
+   name bev_switch
+   xpos 1382
+   ypos 2392
+  }
+set N18ec1a00 [stack 0]
+  Dot {
+   name Dot36
+   xpos 1416
+   ypos 2476
+  }
+set N18dd6ae0 [stack 0]
+add_layer {colorOverlay colorOverlay.red colorOverlay.green colorOverlay.blue colorOverlay.alpha}
+  ShuffleCopy {
+   inputs 2
+   alpha alpha2
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 colorOverlay
+   name ov_channel
+   xpos 1680
+   ypos 2473
+  }
+push $N9f644a0
+push $N9f68ac0
+push $N18ec1a00
+clone $C18dd3e40 {
+   inputs 2+1
+   xpos 1768
+   ypos 2436
+   selected false
+  }
+  Switch {
+   inputs 2
+   which {{ls_channels}}
+   name channel_switch5
+   xpos 1768
+   ypos 2489
+  }
+push $N18dd6ae0
+  Dot {
+   name Dot26
+   xpos 1416
+   ypos 2516
+  }
+  Switch {
+   inputs 2
+   which {{ls_overlay i}}
+   name ov_switch
+   xpos 1768
+   ypos 2513
+  }
+  Dot {
+   name Dot16
+   xpos 1802
+   ypos 2853
+  }
+set N18dd77a0 [stack 0]
+add_layer {stroke stroke.red stroke.green stroke.blue stroke.alpha}
+  ShuffleCopy {
+   inputs 2
+   alpha alpha2
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 stroke
+   name st_channel
+   xpos 2086
+   ypos 2850
+  }
+push $N9f68460
+push $N18dd77a0
+  Dot {
+   name Dot37
+   xpos 1802
+   ypos 2871
+  }
+set N18dd7e00 [stack 0]
+clone $C18dd4170 {
+   inputs 2
+   xpos 1970
+   ypos 2868
+   selected false
+  }
+  Switch {
+   inputs 2
+   which {{ls_channels}}
+   name channel_switch6
+   xpos 2029
+   ypos 2907
+  }
+push $N18dd7e00
+  Dot {
+   name Dot15
+   xpos 1802
+   ypos 2934
+  }
+  Switch {
+   inputs 2
+   which {{ls_stroke i}}
+   name st_switch
+   xpos 2029
+   ypos 2931
+  }
+clone $C9f4ae30 {
+   inputs 2
+   xpos 2029
+   ypos 3037
+   selected false
+  }
+  Premult {
+   name Premult2
+   xpos 2029
+   ypos 3238
+  }
+  Switch {
+   inputs 2
+   which {{"\[exists is_connected.input]" i}}
+   name BG_switch
+   xpos 2455
+   ypos 3238
+  }
+  Crop {
+   box {0 0 {img.width} {img.height}}
+   name Crop1
+   xpos 2455
+   ypos 3451
+  }
+  Output {
+   name Output1
+   xpos 2455
+   ypos 3475
+  }
+push $N9f65160
+push $N18c50a70
+push $N18dd2e50
+  Viewer {
+   inputs 3
+   input_process false
+   name Viewer1
+   xpos -356
+   ypos 3977
+  }
+  NoOp {
+   inputs 0
+   name global
+   xpos 453
+   ypos -466
+   addUserKnob {20 User}
+   addUserKnob {7 ang l "Global Light Angle" t "This angle will be used in any layer styles working with light." R -180 180}
+   ang -56
+   addUserKnob {7 overallOpacity l Opacity t "Sets the master opacity for the layer." R 0 100}
+   overallOpacity 100
+  }
+ end_group
+end_group

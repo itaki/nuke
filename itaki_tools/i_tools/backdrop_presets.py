@@ -33,7 +33,7 @@ script_library.test('oh my god it worked')
 def backdrop_presets():
     customPreset = None
     sep = '"'
-    presets = ['Input', 'Reference',
+    presets = ['Input', 'Reference', 'DISABLED',
                 'Grain',
                 'Element',
                 'Retime',
@@ -75,6 +75,11 @@ def backdrop_presets():
         presetLabel = 'Reference'
         presetIcon = 'SideBySide.png'
         presetColor = colorsys.hsv_to_rgb(0.682, 0, 0.298)
+
+    if customPreset == 'DISABLED':
+        presetLabel = 'DISABLED'
+        presetIcon = '🚫'
+        presetColor = colorsys.hsv_to_rgb(0, 0, 0)
 
     if customPreset == 'Grain':
         presetLabel = 'Grain'

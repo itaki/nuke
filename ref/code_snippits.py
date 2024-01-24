@@ -7,6 +7,16 @@ iconFolder = os.path.join(my_path, "path_from_this_file_to_the_image")
 #to swap out new node with regular nuke node
 nuke.menu( 'Nodes' ).addCommand( 'Image/Constant', "nuke.createNode( 'ConstantPro' )")
 
+#Use TCL in python
+#try this in a text node
+[full_name [topnode Name_of_node_to_get_the_topnode_of]]
+# From the tutorial: "Ben, how do I use topnode in my Python scripts?"
+# https://youtu.be/Yj_ySBOBYKE
+
+topnode_name = nuke.tcl("full_name [topnode %s]" % nuke.selectedNode().name())
+topnode = nuke.toNode(topnode_name)
+print(topnode.name())
+
 
 # to add unicode to a gizmo
 '''<span style='font-size:45px;'>&#x1F334;</span>

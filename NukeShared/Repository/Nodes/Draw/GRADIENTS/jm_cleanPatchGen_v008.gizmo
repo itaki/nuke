@@ -1,0 +1,900 @@
+Gizmo {
+help "A tool for cleaning, repairing, and patching plates.\nGenerates a gradient patch based on the source in the masked area.\n Works well on source with grain and high frequency detail extracted. \n\n jm_cleanPatchGen_v008\n -by Johannes Møgelvang"
+ inputs 2
+ addUserKnob {20 User}
+ addUserKnob {41 patchSize l "Patch Distance" T jPatch_control.patchSize}
+ addUserKnob {41 patchRotation l "Patch Rotation" t "Rotates the patching direction. Usefull when when only patching in one direction" T jPatch_control.patchRotation}
+ addUserKnob {41 sampleOffset l "Sample Offset" t "Offsets the sampling area inwards or outwards. Usefull when the mask alligns up to an edge." T jPatch_control.sampleOffset}
+ addUserKnob {41 patchByRimOnly l "Patch By Rim Only" T jPatch_control.patchByRimOnly}
+ addUserKnob {41 patchRimWidth l "Patch Mask Rim Thickness" T jPatch_control.patchRimWidth}
+ addUserKnob {41 patchingFilter l "Patching Filter" T jPatch_control.patchingFilter}
+ addUserKnob {41 patchCenterSoftenMultiplyer l "Patch Softening" T jPatch_control.patchCenterSoftenMultiplyer}
+ addUserKnob {26 maskOptions l "" +STARTLINE}
+ addUserKnob {41 maskBlurSize l "Mask Glow Size" T jPatch_control.maskBlurSize}
+ addUserKnob {41 BGplateBlurMultiplyer l "Glow Area Blur" T jPatch_control.BGplateBlurMultiplyer}
+ addUserKnob {41 maskBlurFalloff l "Mask Glow Falloff Slope" T jPatch_control.maskBlurFalloff}
+ addUserKnob {41 maskBlurMin l "Mask Blur Min" T jPatch_control.maskBlurMin}
+ addUserKnob {41 maskMultiply l "Mask Multiply" T jPatch_control.maskMultiply}
+ addUserKnob {41 maskBlurDirection l "Mask Glow Direction" T jPatch_control.maskBlurDirection}
+ addUserKnob {41 invertMask l "Invert Input Mask" T jPatch_control.invertMask}
+ addUserKnob {41 lazyMerge l "preview merge" T jPatch_control.lazyMerge}
+ addUserKnob {41 overlaySamplingSource l "preview sampling source overlay" T jPatch_control.overlaySamplingSource}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos 127
+  ypos 964
+  number 1
+ }
+ Dot {
+  name maskInput1
+  label mask
+  note_font_size 50
+  xpos 161
+  ypos 1004
+ }
+ Dot {
+  name Dot49
+  xpos 161
+  ypos 1235
+ }
+set N36beea40 [stack 0]
+ Invert {
+  name maskInvert5
+  xpos 127
+  ypos 1366
+  disable {{1-jPatch_control.invertMask}}
+ }
+ Input {
+  inputs 0
+  name source
+  xpos -347
+  ypos 874
+ }
+ Dot {
+  name sourceInput1
+  label source
+  note_font_size 50
+  xpos -313
+  ypos 914
+ }
+ Dot {
+  name Dot56
+  xpos -313
+  ypos 1138
+ }
+set N36bb94c0 [stack 0]
+ Dot {
+  name Dot63
+  xpos -313
+  ypos 1341
+ }
+set N36bbbb60 [stack 0]
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle6
+  label "\[value knob.in] --> \[value knob.out]"
+  xpos -70
+  ypos 1397
+ }
+ Merge2 {
+  inputs 2
+  bbox A
+  name Merge9
+  label "\[value bbox]"
+  xpos 127
+  ypos 1439
+ }
+ Dot {
+  name Dot64
+  xpos 161
+  ypos 1504
+ }
+set N36bcbfb0 [stack 0]
+ Dot {
+  name Dot83
+  xpos -16
+  ypos 1606
+ }
+set N36bb3570 [stack 0]
+ Invert {
+  name maskInvert1
+  xpos -50
+  ypos 1672
+  disable {{1-jPatch_control.invertMask}}
+ }
+ Dilate {
+  channels rgba
+  size {{parent.jPatch_control.sampleOffset}}
+  name Dilate1
+  xpos -50
+  ypos 1725
+ }
+ Invert {
+  name maskInvert2
+  xpos -50
+  ypos 1778
+  disable {{1-jPatch_control.invertMask}}
+ }
+ Blur {
+  size {{jPatch_control.patchRimWidth.w} {jPatch_control.patchRimWidth.h}}
+  crop false
+  name jPatch_edgeThickness1
+  xpos -50
+  ypos 1841
+ }
+set N36b97340 [stack 0]
+push $N36b97340
+ Merge2 {
+  inputs 2
+  operation xor
+  name jPatch_edgeMask1
+  label "\[value bbox]"
+  xpos -50
+  ypos 1901
+ }
+ Multiply {
+  value 2
+  name jPatch_edgeMaskBoost1
+  xpos -50
+  ypos 1952
+ }
+set N36b7f980 [stack 0]
+push $N36bcbfb0
+ Dot {
+  name Dot85
+  xpos 161
+  ypos 2056
+ }
+set N36b74190 [stack 0]
+ Switch {
+  inputs 2
+  which {{parent.jPatch_control.patchByRimOnly}}
+  name jPatch_maskTypeSelector2
+  xpos -50
+  ypos 2134
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  label "\[value knob.in] --> \[value knob.out]"
+  xpos -50
+  ypos 3743
+ }
+ ColorCorrect {
+  gain {0.2902841568 0 1 1}
+  name ColorCorrect3
+  xpos -50
+  ypos 3795
+ }
+ Dot {
+  name Dot11
+  xpos -16
+  ypos 4189
+ }
+push $N36beea40
+ Dot {
+  name Dot55
+  xpos 2476
+  ypos 1356
+ }
+push $N36bb94c0
+ Dot {
+  name Dot57
+  xpos 2002
+  ypos 1271
+ }
+ Dot {
+  name Dot58
+  xpos 2002
+  ypos 1557
+ }
+set N36b26fa0 [stack 0]
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle5
+  label "\[value knob.in] --> \[value knob.out]"
+  xpos 2245
+  ypos 1613
+ }
+ Merge2 {
+  inputs 2
+  bbox A
+  name Merge8
+  label "\[value bbox]"
+  xpos 2442
+  ypos 1653
+ }
+ Dot {
+  name Dot59
+  xpos 2476
+  ypos 1720
+ }
+set N36b37640 [stack 0]
+ Dot {
+  name Dot6
+  xpos 2476
+  ypos 1964
+ }
+ Dot {
+  name Dot7
+  xpos 2476
+  ypos 2823
+ }
+push $N36b37640
+ Invert {
+  name maskInvert4
+  xpos 2265
+  ypos 1771
+ }
+ Dot {
+  name Dot60
+  xpos 2299
+  ypos 1834
+ }
+set N36b44b20 [stack 0]
+ Blur {
+  size {{jPatch_control.patchRimWidth.w} {jPatch_control.patchRimWidth.h}}
+  crop false
+  name jPatch_edgeThickness
+  xpos 2265
+  ypos 1905
+ }
+set N36b471c0 [stack 0]
+push $N36b471c0
+ Merge2 {
+  inputs 2
+  operation xor
+  name jPatch_edgeMask
+  label "\[value bbox]"
+  xpos 2265
+  ypos 1968
+ }
+ Multiply {
+  value 2
+  name jPatch_edgeMaskBoost
+  xpos 2265
+  ypos 2023
+ }
+push $N36b26fa0
+ Dot {
+  name Dot61
+  xpos 2002
+  ypos 1828
+ }
+set N36b5b6c0 [stack 0]
+ Merge2 {
+  inputs 2
+  operation mask
+  bbox A
+  name jPatch_outlineMask
+  label "\[value bbox]"
+  xpos 2174
+  ypos 2105
+ }
+push $N36b44b20
+push $N36b5b6c0
+ Merge2 {
+  inputs 2
+  operation stencil
+  bbox A
+  name jPatch_holePunch
+  label "\[value bbox]"
+  xpos 1750
+  ypos 2097
+ }
+ Switch {
+  inputs 2
+  which {{parent.jPatch_control.patchByRimOnly}}
+  name jPatch_maskTypeSelector
+  xpos 1968
+  ypos 2227
+ }
+ Transform {
+  rotate {{parent.jPatch_control.patchRotation}}
+  center {{"((bbox.r - bbox.x) / 2) + bbox.x"} {"(bbox.h / 2) + bbox.y"}}
+  name rotateDirection5
+  xpos 1968
+  ypos 2369
+ }
+ Blur {
+  size {{jPatch_control.patchSize.w} {jPatch_control.patchSize.h}}
+  filter {{jPatch_control.patchingFilter}}
+  name jPatch_patchSize
+  xpos 1968
+  ypos 2436
+ }
+ Unpremult {
+  name jPatch_unpremult
+  xpos 1968
+  ypos 2506
+ }
+ Expression {
+  expr3 (r+g+b)>0.0000001?1:0
+  name jPatch_alphaGenerate
+  xpos 1968
+  ypos 2569
+ }
+ Blur {
+  size {{"jPatch_control.patchSize.w * jPatch_control.patchCenterSoftenMultiplyer.w"} {"jPatch_control.patchSize.h * jPatch_control.patchCenterSoftenMultiplyer.h"}}
+  crop false
+  name jPatch_softenPatchCenter
+  xpos 1968
+  ypos 2691
+ }
+ Transform {
+  rotate {{-parent.rotateDirection5.rotate}}
+  center {{parent.rotateDirection5.center} {parent.rotateDirection5.center}}
+  name unRotateDirection5
+  xpos 1968
+  ypos 2779
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge3
+  label "\[value bbox]"
+  xpos 1968
+  ypos 2957
+ }
+ Dot {
+  name Dot62
+  xpos 2002
+  ypos 3794
+ }
+push $N36bcbfb0
+ Dot {
+  name Dot65
+  xpos 826
+  ypos 1848
+ }
+set N3707bb40 [stack 0]
+ NoTimeBlur {
+  name NoTimeBlur3
+  xpos 792
+  ypos 1941
+  disable {{j_glowLogCONTROL.disableNoTimeBlur}}
+ }
+set Na14aac00 [stack 0]
+ Remove {
+  channels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Remove3
+  xpos 886
+  ypos 2013
+ }
+ Transform {
+  rotate {{parent.jPatch_control.patchRotation}}
+  center {{"((bbox.r - bbox.x) / 2) + bbox.x"} {"(bbox.h / 2) + bbox.y"}}
+  black_outside false
+  name rotateDirection4
+  xpos 886
+  ypos 2060
+ }
+ Blur {
+  channels rgba
+  size {{"(j_glowLogCONTROL.glowSize.w*(frame%1)**j_glowLogCONTROL.glowFallof) + j_glowLogCONTROL.blurMin.w"} {"(j_glowLogCONTROL.glowSize.h*(frame%1)**j_glowLogCONTROL.glowFallof) + j_glowLogCONTROL.blurMin.h"}}
+  filter {{j_glowLogCONTROL.filter x1 0}}
+  name masterBlur5
+  xpos 886
+  ypos 2107
+ }
+ Transform {
+  rotate {{-parent.rotateDirection4.rotate}}
+  center {{parent.rotateDirection4.center} {parent.rotateDirection4.center}}
+  black_outside false
+  name unRotateDirection4
+  xpos 886
+  ypos 2170
+ }
+ Dot {
+  name Dot67
+  xpos 920
+  ypos 2283
+ }
+push $Na14aac00
+ Dot {
+  name Dot68
+  xpos 719
+  ypos 2007
+ }
+ Transform {
+  rotate {{parent.jPatch_control.patchRotation}}
+  center {{"((bbox.r - bbox.x) / 2) + bbox.x"} {"(bbox.h / 2) + bbox.y"}}
+  black_outside false
+  name rotateDirection3
+  xpos 685
+  ypos 2052
+ }
+ Blur {
+  channels rgba
+  size {{"(j_glowLogCONTROL.glowSize.w*(frame%1)**j_glowLogCONTROL.glowFallof) + j_glowLogCONTROL.blurMin.w"} {"(j_glowLogCONTROL.glowSize.h*(frame%1)**j_glowLogCONTROL.glowFallof) + j_glowLogCONTROL.blurMin.h"}}
+  filter {{j_glowLogCONTROL.filter x1 0}}
+  name masterBlur6
+  xpos 685
+  ypos 2107
+ }
+ Transform {
+  rotate {{-parent.rotateDirection3.rotate}}
+  center {{parent.rotateDirection3.center} {parent.rotateDirection3.center}}
+  black_outside false
+  name unRotateDirection3
+  xpos 685
+  ypos 2164
+ }
+ Dot {
+  name Dot70
+  xpos 719
+  ypos 2278
+ }
+ Switch {
+  inputs 2
+  which {{j_glowLogCONTROL.onlyAlpha}}
+  name Switch3_rgbaOrA2
+  xpos 793
+  ypos 2326
+ }
+ TimeBlur {
+  divisions {{j_glowLogCONTROL.frameDivisions}}
+  shutter {{parent.j_glowLogCONTROL.frameDivisionShutter}}
+  shutteroffset end
+  shuttercustomoffset 0
+  name TimeBlur2_subFrameBlend2
+  xpos 793
+  ypos 2402
+ }
+set N370fdca0 [stack 0]
+ Multiply {
+  value {{parent.j_glowLogCONTROL.gain}}
+  name Multiply1_maskGain2
+  xpos 793
+  ypos 2557
+ }
+ Dot {
+  name Dot71
+  xpos 827
+  ypos 2630
+ }
+set N370e5010 [stack 0]
+ ColorLookup {
+  lut {master {curve 0 L x0.5 1 s0}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name ColorLookup3_maskOutward2
+  xpos 928
+  ypos 2697
+ }
+push 0
+push $N370e5010
+push $N370fdca0
+ Dot {
+  name Dot72
+  xpos 679
+  ypos 2473
+ }
+ Invert {
+  name Invert6
+  xpos 645
+  ypos 2511
+ }
+ Multiply {
+  value {{parent.j_glowLogCONTROL.gain}}
+  name Multiply2_maskGain2
+  xpos 645
+  ypos 2559
+ }
+ Invert {
+  name Invert7
+  xpos 645
+  ypos 2608
+ }
+ ColorLookup {
+  lut {master {curve x0.5 0 s0 L x1 1}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name ColorLookup4_maskInward2
+  xpos 645
+  ypos 2700
+ }
+ Dissolve {
+  inputs 3+1
+  which {{j_glowLogCONTROL.glowSpreadDirection+1}}
+  name Dissolve1_maksDirection2
+  xpos 793
+  ypos 2771
+ }
+set N4673d860 [stack 0]
+push $N3707bb40
+ Dot {
+  name Dot73
+  xpos 1106
+  ypos 1915
+ }
+ Dot {
+  name Dot74
+  xpos 1106
+  ypos 2836
+ }
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy4
+  label "\[value knob.in] --> \[value knob.out]\n\[value knob.in2] --> \[value knob.out2]"
+  xpos 895
+  ypos 2887
+ }
+push $N4673d860
+ Switch {
+  inputs 2
+  which {{j_glowLogCONTROL.onlyAlpha}}
+  name Switch4_mergeRgbBack2
+  xpos 793
+  ypos 2987
+ }
+ NoOp {
+  name j_glowLogCONTROL
+  xpos 795
+  ypos 3092
+  addUserKnob {20 User}
+  addUserKnob {6 channels_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {14 glowSize t "Main size control of the glow." R 0 1000}
+  glowSize {{jPatch_control.maskBlurSize.w} {jPatch_control.maskBlurSize.h}}
+  addUserKnob {7 glowFallof t "Shape of the glow fallof." R 0 5}
+  glowFallof {{jPatch_control.maskBlurFalloff}}
+  addUserKnob {14 blurMin t "Extra blur to soften edges if they are too sharp." R 0 100}
+  blurMin {{jPatch_control.maskBlurMin.w} {jPatch_control.maskBlurMin.h}}
+  addUserKnob {7 gain t "Glow booster." R 0 4}
+  gain {{jPatch_control.maskMultiply}}
+  addUserKnob {7 glowSpreadDirection t "-1 Glows inward\n 0 Glows in both directions\n 1 Glows outward\nWorks best in clean int values, but blending is possible. " R -1 1}
+  glowSpreadDirection {{jPatch_control.maskBlurDirection}}
+  addUserKnob {68 filter M {box triangle quadratic gaussian ""}}
+  filter gaussian
+  addUserKnob {6 onlyAlpha t "Only processes the alpha channel." +STARTLINE}
+  addUserKnob {6 disableNoTimeBlur l "disable NoTimeBlur" t "NoTimeBlur is on by default to prevent odd behaviour when input is moving.\nBut it can be disabled here if nesercary.  " +STARTLINE}
+  addUserKnob {7 frameDivisions t "Number of sub frame steps. \nUsusally not nesercary to adjust." R 0 10}
+  frameDivisions 10
+  addUserKnob {7 frameDivisionShutter t "Shutter length of the sub frame timeBlur. \nUsusally not nesercary to adjust."}
+  frameDivisionShutter 0.95
+ }
+set N676fd30 [stack 0]
+ Dot {
+  name Dot75
+  xpos 827
+  ypos 3688
+ }
+ Dot {
+  name Dot78
+  xpos -205
+  ypos 3947
+ }
+set N6776f40 [stack 0]
+ Dot {
+  name Dot79
+  xpos -205
+  ypos 4019
+ }
+push $N6776f40
+push $N36bbbb60
+ Dot {
+  name Dot80
+  xpos -313
+  ypos 1612
+ }
+set N677bc80 [stack 0]
+ Dot {
+  name Dot81
+  xpos -768
+  ypos 1888
+ }
+ Dot {
+  name Dot82
+  xpos -768
+  ypos 2457
+ }
+push $N36bb3570
+push $N677bc80
+ Merge2 {
+  inputs 2
+  operation stencil
+  name jPatch_holePunch1
+  label "\[value bbox]"
+  xpos -565
+  ypos 2027
+ }
+set N6783060 [stack 0]
+ Transform {
+  rotate {{parent.jPatch_control.patchRotation}}
+  center {{"((bbox.r - bbox.x) / 2) + bbox.x"} {"(bbox.h / 2) + bbox.y"}}
+  name rotateDirection2
+  xpos -565
+  ypos 2154
+ }
+ Blur {
+  size {{"jPatch_control.patchSize.w * jPatch_control.BGplateBlurMultiplyer.w"} {"jPatch_control.patchSize.h * jPatch_control.BGplateBlurMultiplyer.h"}}
+  crop false
+  name jPatch_rimMaskBGPunchSoften
+  xpos -565
+  ypos 2205
+ }
+ Transform {
+  rotate {{-parent.rotateDirection2.rotate}}
+  center {{parent.rotateDirection2.center} {parent.rotateDirection2.center}}
+  name unRotateDirection2
+  xpos -565
+  ypos 2265
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox9
+  xpos -565
+  ypos 2513
+ }
+ Dot {
+  name Dot84
+  xpos -531
+  ypos 3657
+ }
+push $N676fd30
+push $N36b74190
+ Dot {
+  name Dot9
+  xpos 161
+  ypos 2189
+ }
+ Dot {
+  name Dot86
+  xpos -125
+  ypos 2299
+ }
+ Transform {
+  rotate {{parent.jPatch_control.patchRotation}}
+  center {{"((bbox.r - bbox.x) / 2) + bbox.x"} {"(bbox.h / 2) + bbox.y"}}
+  black_outside false
+  name rotateDirection1
+  xpos -159
+  ypos 2354
+ }
+ Blur {
+  size {{jPatch_control.patchSize.w} {jPatch_control.patchSize.h}}
+  crop false
+  name jPatch_centerMask
+  xpos -159
+  ypos 2402
+ }
+ Transform {
+  rotate {{-parent.rotateDirection1.rotate}}
+  center {{parent.rotateDirection1.center} {parent.rotateDirection1.center}}
+  black_outside false
+  name unRotateDirection1
+  xpos -159
+  ypos 2450
+ }
+ ColorLookup {
+  lut {master {curve x0.5004688501 0 x1 1}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name ColorLookup4
+  xpos -159
+  ypos 2493
+ }
+push $N36b7f980
+push $N677bc80
+ Merge2 {
+  inputs 2
+  operation mask
+  bbox A
+  name jPatch_outlineMask1
+  label "\[value bbox]"
+  xpos -141
+  ypos 2034
+ }
+push $N6783060
+ Switch {
+  inputs 2
+  which {{parent.jPatch_control.patchByRimOnly}}
+  name jPatch_maskTypeSelector1
+  xpos -347
+  ypos 2137
+ }
+ Transform {
+  rotate {{parent.jPatch_control.patchRotation}}
+  center {{"((bbox.r - bbox.x) / 2) + bbox.x"} {"(bbox.h / 2) + bbox.y"}}
+  name rotateDirection
+  xpos -347
+  ypos 2194
+ }
+ Blur {
+  size {{jPatch_control.patchSize.w} {jPatch_control.patchSize.h}}
+  filter {{jPatch_control.patchingFilter}}
+  name jPatch_patchSize1
+  xpos -347
+  ypos 2236
+ }
+ Transform {
+  rotate {{-parent.rotateDirection.rotate}}
+  center {{parent.rotateDirection.center} {parent.rotateDirection.center}}
+  name unRotateDirection
+  xpos -347
+  ypos 2283
+ }
+ Unpremult {
+  name jPatch_unpremult1
+  xpos -347
+  ypos 2324
+ }
+ Expression {
+  expr3 (r+g+b)>0.0000001?1:0
+  name jPatch_alphaGenerate1
+  xpos -347
+  ypos 2375
+ }
+ Blur {
+  inputs 1+1
+  size {{"jPatch_control.patchSize.w * jPatch_control.patchCenterSoftenMultiplyer.w"} {"jPatch_control.patchSize.h * jPatch_control.patchCenterSoftenMultiplyer.h"}}
+  crop false
+  name jPatch_softenPatchCenter1
+  xpos -347
+  ypos 2567
+ }
+ Dot {
+  name Dot87
+  xpos -313
+  ypos 3325
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox10
+  xpos -347
+  ypos 3478
+  disable {{jPatch_control.invertMask}}
+ }
+ Dot {
+  name Dot88
+  xpos -313
+  ypos 3585
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name jPatch_rimMaskBGFiller
+  label "\[value bbox]"
+  xpos -347
+  ypos 3730
+ }
+ Dot {
+  name Dot89
+  xpos -313
+  ypos 3868
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name jPatch_patchMask
+  label "\[value bbox]"
+  xpos -347
+  ypos 3975
+  disable {{parent.jPatch_control.disablePatchMasking}}
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox11
+  xpos -347
+  ypos 4060
+  disable {{jPatch_control.invertMask}}
+ }
+ Switch {
+  inputs 2
+  which {{parent.jPatch_control.invertMask}}
+  name Switch_invertInputMaskHack
+  xpos -347
+  ypos 4154
+ }
+set Nd081ac00 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge6
+  label "\[value bbox]"
+  xpos -261
+  ypos 4219
+ }
+push $Nd081ac00
+ Switch {
+  inputs 2
+  which {{parent.jPatch_control.overlaySamplingSource}}
+  name Switch2
+  xpos -347
+  ypos 4283
+ }
+ Dot {
+  name Dot10
+  xpos -313
+  ypos 4347
+ }
+set N6706dd0 [stack 0]
+push $N36bb94c0
+ Dot {
+  name Dot3
+  xpos -974
+  ypos 1371
+ }
+ Dot {
+  name Dot4
+  xpos -974
+  ypos 3999
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge5
+  label "\[value bbox]"
+  xpos -435
+  ypos 4392
+ }
+push $N6706dd0
+ Switch {
+  inputs 2
+  which {{parent.jPatch_control.lazyMerge}}
+  name Switch1
+  xpos -347
+  ypos 4475
+ }
+ NoOp {
+  name jPatch_control
+  xpos -347
+  ypos 4571
+  addUserKnob {20 User}
+  addUserKnob {14 patchSize l "Patch Distance" t "Controls the patching distance (the blur before unpremult). \n\nTip: Set \"Patch Softening\" and \"Mask Glow Size\" temporarily to 0 while adjusting \"Patch Distance\" to be able to see the raw patch and be sure the patch doesn't have a hole in the middle." R 0 500}
+  patchSize 25
+  addUserKnob {7 patchRotation l "Patch Rotation" R -90 90}
+  addUserKnob {7 sampleOffset l "Sample Offset" R -25 25}
+  addUserKnob {6 patchByRimOnly l "Patch By Rim Only" t "Use the whole mask area or only the rim as source for the patch creation " +STARTLINE}
+  patchByRimOnly true
+  addUserKnob {14 patchRimWidth l "Patch Mask Rim Thickness" t "Width of the rim mask to use for patch creation" R 0 10}
+  patchRimWidth 2.1
+  addUserKnob {4 patchingFilter l "Patching Filter" M {box triangle quadratic gaussian ""}}
+  patchingFilter gaussian
+  addUserKnob {14 patchCenterSoftenMultiplyer l "Patch Softening" t "Controls the blurring of the patch center area to remove stretching." R 0 4}
+  patchCenterSoftenMultiplyer 1
+  addUserKnob {26 maskOptions l "" +STARTLINE}
+  addUserKnob {14 maskBlurSize l "Mask Glow Size" t "Main size control of the mask softening" R 0 500}
+  maskBlurSize 150
+  addUserKnob {14 BGplateBlurMultiplyer l "Glow Area Blur" t "Controls blurring in the semitransparent area around the patch." R 0 4}
+  BGplateBlurMultiplyer 1
+  addUserKnob {7 maskBlurFalloff l "Mask Glow Falloff Slope" t "Shape of the mask blur falloff" R 0 10}
+  maskBlurFalloff 2
+  addUserKnob {14 maskBlurMin l "Mask Blur Min" t "Extra blur on the mask to soften hard mask edges." R 0 100}
+  addUserKnob {7 maskMultiply l "Mask Multiply" t "Boost the mask." R 0 4}
+  maskMultiply 1.5
+  addUserKnob {7 maskBlurDirection l "Mask Glow Direction" t "-1 Mask blur inward\n 0 Mask blur in both directions\n 1 Mask blur outward\n " R -1 1}
+  maskBlurDirection 1
+  addUserKnob {6 disablePatchMasking l "Disable Patch Masking" +INVISIBLE +STARTLINE}
+  addUserKnob {6 invertMask l "Invert Input Mask" t "Inverts the mask input. \nGood for generating patches where the desired area can't be encompassed by the mask, and an open spline can be used for mask instead." +STARTLINE}
+  addUserKnob {6 lazyMerge l "preview Merge" +STARTLINE}
+  addUserKnob {6 overlaySamplingSource l "preview sampling source overlay" +STARTLINE}
+ }
+ Dot {
+  name patchOut1
+  label OUT
+  note_font_size 50
+  xpos -313
+  ypos 4658
+ }
+ Output {
+  name Output1
+  xpos -313
+  ypos 4758
+ }
+end_group

@@ -8,7 +8,8 @@ import nuke
 import time
 
 CURRENT_USER = getpass.getuser()
-# TESTING_FILE = '/Volumes/Dettifoss/nuke_dev/shotclock/shot_clock_v01.nk'
+TESTING = False
+TESTING_FILE = '/Volumes/Dettifoss/Company3/Regions/teebo_spin/Company3_Regions_log.json'
 # LOG_IN_PROJECT_DIR = True
 LOG_IN_USER_LOGS = False
 USER_LOGS = '/Volumes/panda/Dropbox (Personal)/_Library/nuke/_logs/'
@@ -126,7 +127,10 @@ class Logger():
     
     def get_project_path(self):
         '''Checks to see if the path to nk file exists '''
-        self.script_file = nuke.root()['name'].value() # get value from nuke
+        if TESTING:
+            self.script_file = TESTING_FILE
+        else:
+            self.script_file = nuke.root()['name'].value() # get value from nuke
         return True
 
     def extract_data_from_path(self):
@@ -158,6 +162,7 @@ class Logger():
                     "work_time" : 0,
                     "idle_time" : 0 
                     },
+                "daily_log" : {},
                 "sessions" :[]
                 }
 
@@ -199,6 +204,7 @@ class Logger():
                 self.log_data['header']['shot_clock'] = str(datetime.timedelta(seconds=self.all_sessions))      
                 self.log_data['header']['work_time'] = str(datetime.timedelta(seconds=self.all_work))
                 self.log_data['header']['idle_time'] = str(datetime.timedelta(seconds=self.all_idle))
+                self.log_data['daily_log'] = self.daily_log
                 self.save_log()
 
                 return
@@ -224,16 +230,32 @@ class Logger():
         self.all_work = 0
         self.all_idle = 0
         self.number_of_sessions = 0
+        self.daily_log = {}
         for session in self.log_data['sessions']:
-            start_time = datetime.datetime.timestamp(datetime.datetime.fromisoformat(session['start_time'])) # as timestamp
-            end_time = datetime.datetime.timestamp(datetime.datetime.fromisoformat(session['end_time'])) # as timestamp
-            idle_time = session['idle_time'] # as int
+            start_str = session['start_time']
+            start_time = datetime.datetime.fromisoformat(start_str)# as datetime
+            start_stamp = datetime.datetime.timestamp(start_time) # as timestamp
+            end_str = session['end_time']
+            end_time = datetime.datetime.fromisoformat(end_str) # as datetime
+            end_stamp = datetime.datetime.timestamp(end_time) # as timestamp
+            idle_stamp = session['idle_time'] # as int
+            session_stamp = end_stamp - start_stamp
+            work_stamp = session_stamp - idle_stamp
+            work_time = datetime.timedelta(seconds=work_stamp)
+            current_day = start_time.strftime('%Y-%m-%d')
+            if current_day not in self.daily_log:
+                self.daily_log[current_day] = {'start_time': start_str, 'sessions': 0, 'work stamp': 0, 'work': 0, 'idle stamp': 0, 'idle': 0, 'end_time': 0}
+            self.daily_log[current_day]['sessions'] += 1
+            self.daily_log[current_day]['work stamp'] += work_stamp
+            self.daily_log[current_day]['work'] = str(datetime.timedelta(seconds=self.daily_log[current_day]['work stamp']))
+            self.daily_log[current_day]['idle stamp'] += idle_stamp
+            self.daily_log[current_day]['idle'] = str(datetime.timedelta(seconds=self.daily_log[current_day]['idle stamp']))
+            self.daily_log[current_day]['end_time'] = end_str
 
-            session_time = end_time - start_time
-            work_time = session_time - idle_time
-            self.all_sessions += int(session_time)
-            self.all_work += int(work_time)
-            self.all_idle += int(idle_time)
+
+            self.all_sessions += int(session_stamp)
+            self.all_work += int(work_stamp)
+            self.all_idle += int(idle_stamp)
         self.number_of_sessions = len(self.log_data['sessions'])
 
     def calculate_idle_time(self):

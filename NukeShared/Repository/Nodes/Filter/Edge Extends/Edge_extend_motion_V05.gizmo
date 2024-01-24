@@ -1,0 +1,852 @@
+#! C:/Program Files/Nuke12.2v2/nuke-12.2.2.dll -nx
+version 12.2 v2
+Gizmo {
+ inputs 3
+ tile_color 0xff
+ lifetimeStart 1
+ lifetimeEnd 100
+ addUserKnob {20 edge t "By mohy eldin"}
+ addUserKnob {6 Preview +STARTLINE}
+ addUserKnob {6 Shrink_Edge -STARTLINE}
+ addUserKnob {41 Edge_Extend T IDistort3.uv_scale}
+ addUserKnob {41 edge_push T Erode_alpha.size}
+ addUserKnob {26 ""}
+ addUserKnob {41 blur_motion T Blur_motion.size}
+ addUserKnob {41 blur_alpha_in T Blur6.size}
+ addUserKnob {41 Filter_Erode T FilterErode3.size}
+ addUserKnob {26 ""}
+ addUserKnob {6 kill_edge +STARTLINE}
+ addUserKnob {6 preview_kill_edge -STARTLINE}
+ addUserKnob {41 color_kill T Clamp1.maximum}
+ addUserKnob {41 push_out T Erode2.size}
+ addUserKnob {41 blur_out T Erode2.blur}
+ addUserKnob {41 push_in T Erode1.size}
+ addUserKnob {41 blur_in T Erode1.blur}
+ addUserKnob {41 BLUR l blur T Blur1.size}
+ addUserKnob {26 ""}
+ addUserKnob {6 edge_color +STARTLINE}
+ addUserKnob {41 erode_edge_H T FilterErode6.size}
+ addUserKnob {41 extend_H T Blur5.size}
+ addUserKnob {41 erode_mask T FilterErode9.size}
+ addUserKnob {26 ""}
+ addUserKnob {6 color_edge +STARTLINE}
+ addUserKnob {6 preview_color_edge -STARTLINE}
+ addUserKnob {41 extend T Dilate3.size}
+ addUserKnob {41 fix T Blur3.size}
+ addUserKnob {41 size_1 l erode T FilterErode1.size}
+ addUserKnob {41 size_2 l blur T Blur2.size}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannelMask l "" +STARTLINE T Copy4.maskChannelMask}
+ addUserKnob {26 ""}
+ addUserKnob {41 mix_1 l mix T mix.mix_1}
+ addUserKnob {26 ""}
+ addUserKnob {26 _1 l "" +STARTLINE T "\n\n\nby mohy eldin   \nmo7y2007@gmail.com     \n\n Edge extend motion V05\n\n"}
+}
+ Input {
+  inputs 0
+  name Alpha_in
+  xpos -993
+  ypos -385
+ }
+ Dot {
+  name Dot4
+  xpos -959
+  ypos -345
+ }
+set Nb9d7ac00 [stack 0]
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos -993
+  ypos -275
+ }
+set Nb9d7a800 [stack 0]
+ Dot {
+  name Dot5
+  xpos -849
+  ypos -272
+ }
+set Nb9d7a400 [stack 0]
+ Dot {
+  name Dot10
+  xpos 267
+  ypos -52
+  hide_input true
+ }
+set Nb9d7a000 [stack 0]
+ Dot {
+  name Dot31
+  xpos 1130
+  ypos -52
+ }
+ Input {
+  inputs 0
+  name RGB
+  xpos -394
+  ypos -337
+  number 1
+ }
+ Dot {
+  name Dot6
+  xpos -360
+  ypos -297
+ }
+set Nb9d79400 [stack 0]
+ Dot {
+  name Dot32
+  xpos 1784
+  ypos -297
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 1750
+  ypos -61
+ }
+set Nb9d78c00 [stack 0]
+ Dot {
+  name Dot43
+  xpos 2080
+  ypos -52
+ }
+set Nb9d78800 [stack 0]
+push $Nb9d78800
+ Merge2 {
+  inputs 2
+  operation xor
+  name Merge13
+  xpos 2051
+  ypos 2731
+ }
+ Grade {
+  channels alpha
+  whitepoint 0.81
+  name Grade5
+  xpos 2049
+  ypos 2769
+ }
+ FilterErode {
+  size -7.5
+  name FilterErode1
+  xpos 2051
+  ypos 2808
+ }
+ Blur {
+  size 8.4
+  name Blur2
+  xpos 2051
+  ypos 2879
+ }
+set Nb9d2f400 [stack 0]
+push $Nb9d78800
+ Dot {
+  name Dot42
+  xpos 1952
+  ypos 631
+ }
+ Dot {
+  name Dot44
+  xpos 1952
+  ypos 2701
+ }
+set Nb9d2ec00 [stack 0]
+ Dot {
+  name Dot55
+  xpos 1593
+  ypos 2696
+ }
+set Nf052e800 [stack 0]
+ Dot {
+  name Dot47
+  xpos 1366
+  ypos 2696
+ }
+ Dot {
+  name Dot46
+  xpos 1360
+  ypos 2914
+ }
+set Nb9d2e400 [stack 0]
+ Dot {
+  name Dot49
+  xpos 1356
+  ypos 3288
+ }
+push $Nb9d2f400
+ Dot {
+  name Dot51
+  xpos 2050
+  ypos 2953
+ }
+set Nb9d2dc00 [stack 0]
+ Erode {
+  name Erode4
+  xpos 2016
+  ypos 3054
+ }
+set Nf50ed400 [stack 0]
+ Dot {
+  name Dot52
+  xpos 2050
+  ypos 3143
+ }
+set Nf052f400 [stack 0]
+push $Nf052e800
+ Dot {
+  name Dot54
+  xpos 1590
+  ypos 2851
+ }
+set Nf052ec00 [stack 0]
+ Dot {
+  name Dot53
+  xpos 1462
+  ypos 3143
+ }
+push $Nf052ec00
+ Blur {
+  size 10.5
+  name Blur4
+  xpos 1556
+  ypos 3048
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge15
+  xpos 1557
+  ypos 3140
+ }
+set Nf052fc00 [stack 0]
+push $Nb9d2dc00
+push $Nb9d2ec00
+ Unpremult {
+  name Unpremult1
+  xpos 1810
+  ypos 2725
+ }
+ Erode {
+  channels alpha
+  size 1
+  name Erode3
+  xpos 1704
+  ypos 2719
+ }
+ Premult {
+  name Premult1
+  xpos 1704
+  ypos 2762
+ }
+ Blur {
+  size 15.85
+  name Blur3
+  xpos 1704
+  ypos 2786
+ }
+ set Cb9d2cc00 [stack 0]
+clone $Cb9d2cc00 {
+  xpos 1704
+  ypos 2818
+  selected false
+ }
+ Unpremult {
+  name Unpremult2
+  xpos 1704
+  ypos 2867
+ }
+ Dot {
+  name Dot50
+  xpos 1738
+  ypos 2953
+ }
+push $Nb9d2f400
+push $Nb9d2ec00
+ Dilate {
+  size 1
+  name Dilate3
+  xpos 1918
+  ypos 2779
+ }
+push $Nb9d2e400
+ Merge2 {
+  inputs 2+1
+  name Merge14
+  xpos 1918
+  ypos 2898
+ }
+ Copy {
+  inputs 2+1
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  channels rgb
+  name Copy5
+  xpos 1918
+  ypos 2938
+ }
+ Merge2 {
+  inputs 2+1
+  operation multiply
+  name Merge16
+  xpos 1918
+  ypos 3140
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 1918
+  ypos 3271
+ }
+ Dot {
+  name Dot45
+  xpos 1952
+  ypos 3380
+ }
+set Nba11e800 [stack 0]
+ Grade {
+  inputs 1+1
+  white {4 1 1 1}
+  white_panelDropped true
+  name Grade4
+  xpos 2051
+  ypos 3445
+ }
+ Dot {
+  name Dot48
+  xpos 1788
+  ypos 3448
+ }
+push $Nba11e800
+ Switch {
+  inputs 2
+  which {{parent.preview_color_edge}}
+  name Switch9
+  xpos 1754
+  ypos 3379
+ }
+push $Nb9d7a400
+ Erode {
+  size 5.9
+  name Erode_alpha
+  xpos -883
+  ypos -194
+ }
+push $Nb9d7a800
+ LevelSet {
+  create_matte true
+  name LevelSet3
+  xpos -993
+  ypos -163
+ }
+ Blur {
+  channels motion
+  size 5
+  name Blur_motion
+  xpos -993
+  ypos -70
+ }
+ Multiply {
+  inputs 1+1
+  value 0
+  name Multiply3
+  xpos -883
+  ypos -70
+ }
+ Blur {
+  size 5
+  name Blur6
+  xpos -733
+  ypos -70
+ }
+set Nba11c800 [stack 0]
+ Shuffle {
+  red alpha
+  green red
+  blue alpha
+  name Shuffle2
+  xpos -733
+  ypos 2524
+ }
+push $Nf052f400
+ Dot {
+  name Dot58
+  xpos 2050
+  ypos 3232
+ }
+ Blur {
+  size 7.4
+  name Blur7
+  xpos 606
+  ypos 2200
+  hide_input true
+ }
+push $Nf052fc00
+ Dot {
+  name Dot59
+  xpos 1591
+  ypos 3176
+ }
+ Dot {
+  name Dot56
+  xpos 654
+  ypos 3176
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -130
+  ypos -276
+  number 2
+ }
+ Dot {
+  name Dot1
+  xpos -96
+  ypos -19
+ }
+set Nba0bf800 [stack 0]
+ Dot {
+  name Dot2
+  xpos -96
+  ypos 107
+ }
+set Nba0bf400 [stack 0]
+ Dot {
+  name Dot35
+  xpos -96
+  ypos 204
+ }
+set Nba0bf000 [stack 0]
+ Dot {
+  name Dot27
+  xpos -65
+  ypos 2091
+ }
+push $Nb9d78c00
+ Dot {
+  name Dot57
+  xpos 1784
+  ypos 85
+ }
+ Dot {
+  name Dot41
+  xpos 637
+  ypos 85
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.82
+  name Grade8
+  xpos 603
+  ypos 215
+  disable true
+ }
+ Dot {
+  name Dot33
+  xpos 637
+  ypos 305
+ }
+set Nba0bdc00 [stack 0]
+ FilterErode {
+  channels alpha
+  size 8.4
+  filter gaussian
+  name FilterErode9
+  xpos 603
+  ypos 759
+ }
+set Nba0bd800 [stack 0]
+push $Nba0bd800
+push $Nba0bd800
+push $Nba0bd800
+push $Nba0bd800
+push $Nba0bd800
+push $Nba0bd800
+push $Nba0bd800
+push $Nba0bd800
+push $Nba0bd800
+push $Nba0bdc00
+ Dot {
+  name Dot34
+  xpos 864
+  ypos 305
+ }
+ FilterErode {
+  size 2
+  name FilterErode6
+  xpos 830
+  ypos 363
+ }
+ Grade {
+  channels alpha
+  name Grade12
+  xpos 830
+  ypos 413
+ }
+ Premult {
+  name Premult6
+  xpos 830
+  ypos 459
+ }
+ Dot {
+  name Dot36
+  xpos 864
+  ypos 529
+ }
+ Blur {
+  inputs 1+1
+  size 3
+  invert_mask true
+  name Blur5
+  xpos 830
+  ypos 579
+ }
+ set Cba077c00 [stack 0]
+clone $Cba077c00 {
+  inputs 1+1
+  xpos 830
+  ypos 615
+  selected false
+ }
+clone $Cba077c00 {
+  inputs 1+1
+  xpos 830
+  ypos 651
+  selected false
+ }
+clone $Cba077c00 {
+  inputs 1+1
+  xpos 830
+  ypos 687
+  selected false
+ }
+clone $Cba077c00 {
+  inputs 1+1
+  xpos 830
+  ypos 723
+  selected false
+ }
+clone $Cba077c00 {
+  inputs 1+1
+  xpos 830
+  ypos 759
+  selected false
+ }
+clone $Cba077c00 {
+  inputs 1+1
+  xpos 830
+  ypos 795
+  selected false
+ }
+clone $Cba077c00 {
+  inputs 1+1
+  xpos 830
+  ypos 831
+  selected false
+ }
+clone $Cba077c00 {
+  inputs 1+1
+  xpos 830
+  ypos 867
+  selected false
+ }
+clone $Cba077c00 {
+  inputs 1+1
+  xpos 830
+  ypos 903
+  selected false
+ }
+ Unpremult {
+  name Unpremult6
+  xpos 830
+  ypos 982
+ }
+push $Nb9d7ac00
+ Dot {
+  name Dot28
+  xpos 676
+  ypos 1989
+  hide_input true
+ }
+ Copy {
+  inputs 2+1
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  channels rgb
+  name Copy3
+  xpos 830
+  ypos 2076
+ }
+ Dot {
+  name Dot26
+  xpos 864
+  ypos 2316
+ }
+ Merge2 {
+  inputs 2+1
+  operation multiply
+  name Merge17
+  xpos 606
+  ypos 2305
+ }
+push $Nb9d7a000
+ Erode {
+  size -24.8
+  name Erode2
+  xpos 173
+  ypos 56
+ }
+push $Nb9d7a000
+ Erode {
+  size 34.6
+  name Erode1
+  xpos 295
+  ypos 54
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge2
+  xpos 231
+  ypos 167
+ }
+ Blur {
+  size 37.4
+  name Blur1
+  xpos 231
+  ypos 287
+ }
+set Nba403400 [stack 0]
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle3
+  xpos 231
+  ypos 408
+ }
+push $Nba0bf400
+push $Nba0bf800
+push $Nba11c800
+ FilterErode {
+  size 5
+  name FilterErode3
+  xpos -640
+  ypos -70
+ }
+ Multiply {
+  value {{mix_1 x1 0.705}}
+  name mix
+  xpos -530
+  ypos -73
+  addUserKnob {20 User}
+  addUserKnob {7 mix_1}
+  mix_1 1
+ }
+push $Nb9d79400
+ Copy {
+  inputs 2+1
+  from0 forward.u
+  to0 forward.u
+  from1 forward.v
+  to1 forward.v
+  name Copy4
+  xpos -394
+  ypos -79
+ }
+ IDistort {
+  inputs 1+1
+  channels rgb
+  uv forward
+  uv_scale 3.2
+  blur_scale 1.1
+  name IDistort3
+  xpos -394
+  ypos 50
+ }
+ Dot {
+  name Dot8
+  xpos -360
+  ypos 263
+ }
+set Nba401c00 [stack 0]
+ Dot {
+  name Dot12
+  xpos 330
+  ypos 491
+  hide_input true
+ }
+ Grade {
+  inputs 1+1
+  white {3.96 1 1 1}
+  white_panelDropped true
+  name Grade2
+  xpos 231
+  ypos 488
+ }
+push $Nba403400
+push $Nba0bf000
+push $Nb9d79400
+ Dot {
+  name Dot11
+  xpos -16
+  ypos 52
+  hide_input true
+ }
+set Nba401000 [stack 0]
+ Clamp {
+  inputs 1+1
+  maximum {0.04938368499 0.050998725 0.05366475508 1}
+  MaxClampTo {0.02345671691 0.01697856933 0.01702393219 1}
+  name Clamp1
+  xpos -50
+  ypos 141
+ }
+push $Nba401000
+ Saturation {
+  saturation 0
+  name Saturation1
+  xpos 30
+  ypos 49
+ }
+ Merge2 {
+  inputs 2
+  operation average
+  name Merge4
+  xpos 30
+  ypos 209
+ }
+set Nba400400 [stack 0]
+push $Nba403400
+push $Nba400400
+push $Nba401c00
+ Merge2 {
+  inputs 2+1
+  operation geometric
+  name Merge3
+  xpos -38
+  ypos 260
+ }
+ Merge2 {
+  inputs 2+1
+  operation geometric
+  name Merge1
+  xpos 30
+  ypos 337
+ }
+ Switch {
+  inputs 2
+  which {{parent.preview_kill_edge}}
+  name Switch3
+  xpos 30
+  ypos 488
+ }
+push $Nba401c00
+ Switch {
+  inputs 2
+  which {{parent.kill_edge}}
+  name Switch2
+  xpos -394
+  ypos 488
+ }
+ Switch {
+  inputs 2
+  which {{parent.edge_color}}
+  name Switch10
+  xpos -396
+  ypos 2313
+ }
+ Dot {
+  name Dot7
+  xpos -361
+  ypos 2481
+ }
+set Nba396800 [stack 0]
+ Dot {
+  name Dot3
+  xpos -559
+  ypos 2490
+ }
+ Grade {
+  inputs 1+1
+  white {3.265 1 1 1}
+  white_panelDropped true
+  name Grade1
+  xpos -733
+  ypos 2612
+ }
+push $Nba396800
+ Switch {
+  inputs 2
+  which {{parent.Preview}}
+  name Switch1
+  xpos -395
+  ypos 2607
+ }
+set Nba395c00 [stack 0]
+ Dot {
+  name Dot14
+  xpos -130
+  ypos 2610
+ }
+set Nba395800 [stack 0]
+ Invert {
+  channels alpha
+  name Invert1
+  xpos -165
+  ypos 2682
+ }
+push $Nba395800
+ Dot {
+  name Dot13
+  xpos 75
+  ypos 2610
+ }
+ Dot {
+  name Dot9
+  xpos 75
+  ypos 2803
+ }
+ ChannelMerge {
+  inputs 2
+  operation stencil
+  name ChannelMerge1
+  xpos -165
+  ypos 2788
+ }
+push $Nba395c00
+ Switch {
+  inputs 2
+  which {{parent.Shrink_Edge}}
+  name Switch4
+  selected true
+  xpos -395
+  ypos 2800
+ }
+ Switch {
+  inputs 2
+  which {{parent.color_edge}}
+  name Switch8
+  xpos -395
+  ypos 3423
+ }
+ Output {
+  name Output1
+  xpos -395
+  ypos 4774
+ }
+push $Nb9d2f400
+push $Nf50ed400
+ Viewer {
+  inputs 2
+  frame_range 1-100
+  colour_sample_bbox {0.26171875 0.3666992188 0.2622070313 0.3671875}
+  name Viewer1
+  xpos -1786
+  ypos 3939
+ }
+end_group

@@ -2,7 +2,7 @@ import nuke
 
 toolbar = nuke.toolbar("Nodes")
 
-m = toolbar.addMenu("Birds3D", icon="Birds3D_Icon.png")
+m = toolbar.addMenu("Particles/Birds3D", icon="Birds3D_Icon.png")
 
 m_birds = m.addMenu("Birds")
 m_templates = m.addMenu("Templates")

@@ -1,0 +1,176 @@
+#! /usr/local/Nuke12.2v3/libnuke-12.2.3.so -nx
+version 12.2 v3
+Gizmo {
+ inputs 2
+ tile_color 0x33cc99ff
+ lock_connections true
+ addUserKnob {20 TJ_BumpCC_v2 t "With this gizmo you can swparate the dark and light color. Then you can change which color as you want."}
+ addUserKnob {20 TJ_Detail l Detail t "Separate the dark and light values by increase the detail knob value." n 1}
+ TJ_Detail 0
+ addUserKnob {41 channels T Detail.channels}
+ addUserKnob {41 size l Detail T Detail.size}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 TJ_White l White t "Increase the brightest part's indensity and fad value by adjust the core knob value. \nTweak the edgest spread size by adjusting edge knob value. \nThen change the color to as which color you want to change.\nThis only for bright part." n 1}
+ TJ_White 0
+ addUserKnob {41 whitepoint l Core T W_Core.whitepoint}
+ addUserKnob {41 size_1 l Edge T W_Edge.size}
+ addUserKnob {41 gamma T White1.gamma}
+ addUserKnob {41 white l Color T White1.white}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 TJ_Black l Black t "Increase the darkest part's indensity and fad value by adjust the core knob value. \nTweak the edgest spread size by adjusting edge knob value. \nThen change the color to as which color you want to change.\nThis only for dark part." n 1}
+ TJ_Black 0
+ addUserKnob {41 whitepoint_1 l Core T B_Core.whitepoint}
+ addUserKnob {41 size_2 l Edge T B_Edge.size}
+ addUserKnob {41 gamma_1 l gamma T Black1.gamma}
+ addUserKnob {41 white_1 l Color T Black1.white}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {41 mix T Keymix5.mix}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 _03 l "<b style=\"color:red;font-size:16px;\">TJ_G?zm0s</b>"}
+}
+ Input {
+  inputs 0
+  name Mask
+  xpos 359
+  ypos 446
+ }
+ Dot {
+  name Dot1
+  note_font_size 30
+  xpos 393
+  ypos 494
+ }
+ Input {
+  inputs 0
+  name Src
+  xpos 522
+  ypos 1
+  number 1
+ }
+ Dot {
+  name Dot44
+  xpos 556
+  ypos 42
+ }
+set N5240eb00 [stack 0]
+ Dot {
+  name Dot45
+  xpos 1131
+  ypos 42
+ }
+ Dot {
+  name Dot46
+  xpos 1131
+  ypos 106
+ }
+set N5240dd00 [stack 0]
+push $N5240dd00
+ Blur {
+  size 5.2
+  name Detail
+  xpos 944
+  ypos 96
+ }
+set N5240d600 [stack 0]
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge18
+  xpos 1097
+  ypos 180
+  postage_stamp true
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.blue 0 2 rgba.red 0 0 rgba.blue 0 2 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.blue 0 2 rgba.alpha 0 3"
+  name Shuffle3
+  xpos 1097
+  ypos 285
+ }
+ Grade {
+  channels alpha
+  whitepoint 0.12
+  white_clamp true
+  name B_Core
+  xpos 1097
+  ypos 358
+ }
+ Dot {
+  name Dot47
+  xpos 1131
+  ypos 494
+ }
+ FilterErode {
+  size {1 1}
+  name B_Edge
+  xpos 818
+  ypos 484
+ }
+push $N5240d600
+push $N5240dd00
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge19
+  xpos 944
+  ypos 184
+  postage_stamp true
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.blue 0 2 rgba.red 0 0 rgba.blue 0 2 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 rgba.blue 0 2 rgba.alpha 0 3"
+  name Shuffle4
+  xpos 944
+  ypos 286
+ }
+ Grade {
+  channels alpha
+  white_clamp true
+  name W_Core
+  xpos 944
+  ypos 363
+ }
+ FilterErode {
+  size {1 1}
+  name W_Edge
+  xpos 824
+  ypos 363
+ }
+push $N5240eb00
+ Dot {
+  name Dot48
+  xpos 556
+  ypos 373
+ }
+set N523bdd00 [stack 0]
+ Grade {
+  inputs 1+1
+  name White1
+  xpos 673
+  ypos 369
+ }
+ Grade {
+  inputs 1+1
+  gamma 1.6
+  name Black1
+  xpos 673
+  ypos 490
+ }
+push $N523bdd00
+ Keymix {
+  inputs 3
+  name Keymix5
+  xpos 522
+  ypos 484
+ }
+ Output {
+  name Output1
+  xpos 522
+  ypos 584
+ }
+end_group

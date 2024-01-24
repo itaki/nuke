@@ -1,0 +1,81 @@
+#! C:/Program Files/Nuke13.0v2/nuke-13.0.2.dll -nx
+version 13.0 v2
+Gizmo {
+ help "tested in 13.0v2"
+ addUserKnob {20 User}
+ addUserKnob {7 transition l "Transition width" R 0 1000}
+ transition 200
+ addUserKnob {12 tiling l "Number of tiles"}
+ tiling {2 2}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 107
+  ypos -21
+ }
+set Nc1907800 [stack 0]
+ Expression {
+  temp_name0 tr
+  temp_expr0 transition>0?transition:0
+  temp_name1 hi
+  temp_expr1 smoothstep(input.width,input.width-tr/2,x)
+  temp_name2 xm
+  temp_expr2 "(x+tr/2) / (input.width+tr) * (input.width)"
+  temp_name3 te
+  temp_expr3 (x-(input.width-tr/2))*(input.width/(input.width+tr))
+  expr0 "r(te,y)*(1-hi) + r(xm,y)*hi"
+  expr1 "g(te,y)*(1-hi) + g(xm,y)*hi"
+  expr2 "b(te,y)*(1-hi) + b(xm,y)*hi"
+  expr3 "a(te,y)*(1-hi) + a(xm,y)*hi"
+  name Expression1
+  xpos 31
+  ypos 39
+ }
+ Expression {
+  temp_name0 tr
+  temp_expr0 transition
+  temp_name1 hi
+  temp_expr1 smoothstep(input.height,input.height-tr/2,y)
+  temp_name2 ym
+  temp_expr2 "(y+tr/2) / (input.height+tr) * (input.height)"
+  temp_name3 te
+  temp_expr3 (y-(input.height-tr/2))*(input.height/(input.height+tr))
+  expr0 "r(x,te)*(1-hi) + r(x,ym)*hi"
+  expr1 "g(x,te)*(1-hi) + g(x,ym)*hi"
+  expr2 "b(x,te)*(1-hi) + b(x,ym)*hi"
+  expr3 "a(x,te)*(1-hi) + a(x,ym)*hi"
+  name Expression2
+  xpos 31
+  ypos 63
+ }
+push $Nc1907800
+ Switch {
+  inputs 2
+  which {{transition>0}}
+  name Switch1
+  selected true
+  xpos 107
+  ypos 124
+ }
+set Nc0e1ac00 [stack 0]
+ Tile {
+  rows {{tiling.x}}
+  columns {{tiling.y}}
+  name Tile1
+  xpos 107
+  ypos 169
+ }
+ Output {
+  name Output1
+  xpos 107
+  ypos 226
+ }
+push $Nc0e1ac00
+ Viewer {
+  frame_range 1-100
+  name Viewer1
+  xpos 302
+  ypos 188
+ }
+end_group

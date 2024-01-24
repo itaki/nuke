@@ -1,0 +1,298 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+Gizmo {
+ tile_color 0x4d06ff
+ lock_connections true
+ addUserKnob {20 Chroma}
+ addUserKnob {68 Method M {"Blue-Green Select" "Pick Color" ""}}
+ addUserKnob {26 ""}
+ addUserKnob {26 BlueGreenSelect l "Blue-Green Select"}
+ addUserKnob {41 Screen_Color l "Screen Color" T IBKColourV3_20.screen_type}
+ addUserKnob {41 DarkValue l "Dark value" T IBKColourV3_20.off}
+ addUserKnob {41 LightValue l "Light value" T IBKColourV3_20.mult}
+ addUserKnob {26 ""}
+ addUserKnob {41 PickColor l "Pick Color" T Keylight1.screenColour}
+ addUserKnob {6 PickingDone l "Picking Done" +STARTLINE}
+ PickingDone true
+ addUserKnob {26 ""}
+ addUserKnob {7 Erode R 0 100}
+ addUserKnob {41 Clean t "Bigger Value = More Clean\nSmaller Value = More Details\nJust balance the value with the shot need to get the best result and enjoy the magic." T Switch2.which}
+}
+ Input {
+  inputs 0
+  name Denoised_Plate
+  xpos 147
+  ypos -365
+ }
+set N5156b000 [stack 0]
+ Dot {
+  name Dot3
+  xpos 181
+  ypos -258
+ }
+set N5156ac00 [stack 0]
+ OFXuk.co.thefoundry.keylight.keylight_v201 {
+  show "Final Result"
+  unPreMultiply false
+  screenColour {0.186065346 0.7659674287 0.3351076841}
+  screenGain 1
+  screenBalance 0.5
+  alphaBias {0.5 0.5 0.5}
+  despillBias {0.5 0.5 0.5}
+  gangBiases true
+  preBlur 0
+  "Screen Matte" 1
+  screenClipMin 0.5
+  screenClipMax 0.51
+  screenClipRollback 0
+  screenGrowShrink 0
+  screenSoftness 0
+  screenDespotBlack 0
+  screenDespotWhite 0
+  screenReplaceMethod "Soft Colour"
+  screenReplaceColour {0.5 0.5 0.5}
+  Tuning 0
+  midPoint 0.5
+  lowGain 1
+  midGain 1
+  highGain 1
+  "Inside Mask" 0
+  sourceAlphaHandling Ignore
+  insideReplaceMethod "Soft Colour"
+  insideReplaceColour {0.5 0.5 0.5}
+  Crops 0
+  SourceXMethod Colour
+  SourceYMethod Colour
+  SourceEdgeColour 0
+  SourceCropL 0
+  SourceCropR 1
+  SourceCropB 0
+  SourceCropT 1
+  balanceSet true
+  insideComponent None
+  outsideComponent None
+  cacheBreaker true
+  name Keylight1
+  xpos 147
+  ypos -173
+ }
+ FilterErode {
+  size -3
+  name FilterErode1
+  xpos 147
+  ypos -104
+ }
+set N5156a000 [stack 0]
+ Invert {
+  channels alpha
+  name Invert1
+  xpos 257
+  ypos -24
+ }
+push $N5156a000
+ Switch {
+  inputs 2
+  which {{parent.PickingDone}}
+  name Pick
+  xpos 147
+  ypos -18
+ }
+push $N5156ac00
+ Dot {
+  name Dot1
+  xpos 365
+  ypos -258
+ }
+ Dot {
+  name Dot2
+  xpos 365
+  ypos 78
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 147
+  ypos 69
+ }
+push $N5156ac00
+ Dot {
+  name Dot4
+  xpos -3
+  ypos -258
+ }
+ IBKColourV3 {
+  name IBKColourV3_20
+  xpos -37
+  ypos -160
+  screen_type green
+  Size 1
+  erode 5
+ }
+ Switch {
+  inputs 2
+  which {{parent.Method}}
+  name Method
+  xpos -37
+  ypos 75
+ }
+ FilterErode {
+  size {{parent.Erode}}
+  name FilterErode2
+  selected true
+  xpos -37
+  ypos 130
+ }
+ Premult {
+  name Premult2
+  xpos -37
+  ypos 188
+ }
+ Blur {
+  channels rgba
+  maskChannelInput rgba.alpha
+  invert_mask true
+  name Blur12
+  xpos -37
+  ypos 252
+ }
+set N55b2f800 [stack 0]
+ Blur {
+  channels rgba
+  size 50
+  maskChannelInput rgba.alpha
+  invert_mask true
+  name Blur13
+  xpos -37
+  ypos 300
+ }
+set N55b2f400 [stack 0]
+ Blur {
+  channels rgba
+  size 50
+  maskChannelInput rgba.alpha
+  invert_mask true
+  name Blur14
+  xpos -37
+  ypos 346
+ }
+set N55b2f000 [stack 0]
+ Blur {
+  channels rgba
+  size 50
+  maskChannelInput rgba.alpha
+  invert_mask true
+  name Blur15
+  xpos -37
+  ypos 396
+ }
+set N55b2ec00 [stack 0]
+ Blur {
+  channels rgba
+  size 50
+  maskChannelInput rgba.alpha
+  invert_mask true
+  name Blur16
+  xpos -37
+  ypos 448
+ }
+set N55b2e800 [stack 0]
+ Blur {
+  channels rgba
+  size 50
+  maskChannelInput rgba.alpha
+  invert_mask true
+  name Blur17
+  xpos -37
+  ypos 496
+ }
+set N55b2e400 [stack 0]
+ Blur {
+  channels rgba
+  size 100
+  maskChannelInput rgba.alpha
+  invert_mask true
+  name Blur18
+  xpos -37
+  ypos 548
+ }
+set N55b2e000 [stack 0]
+ Blur {
+  channels rgba
+  size 100
+  maskChannelInput rgba.alpha
+  invert_mask true
+  name Blur19
+  xpos -37
+  ypos 609
+ }
+set N55b2dc00 [stack 0]
+ Blur {
+  channels rgba
+  size 100
+  maskChannelInput rgba.alpha
+  invert_mask true
+  name Blur20
+  xpos -37
+  ypos 674
+ }
+set N55b2d800 [stack 0]
+ Blur {
+  channels rgba
+  size 100
+  maskChannelInput rgba.alpha
+  invert_mask true
+  name Blur21
+  xpos -37
+  ypos 735
+ }
+set N55b2d400 [stack 0]
+ Blur {
+  channels rgba
+  size 200
+  maskChannelInput rgba.alpha
+  invert_mask true
+  name Blur22
+  xpos -37
+  ypos 793
+ }
+push $N55b2d400
+push $N55b2d800
+push $N55b2dc00
+push $N55b2e000
+push $N55b2e400
+push $N55b2e800
+push $N55b2ec00
+push $N55b2f000
+push $N55b2f400
+push $N55b2f800
+ Switch {
+  inputs 11
+  name Switch2
+  xpos -182
+  ypos 799
+ }
+ Unpremult {
+  name Unpremult1
+  xpos -182
+  ypos 911
+ }
+ Output {
+  name Output1
+  xpos -182
+  ypos 1011
+ }
+push $N5156ac00
+push $N5156b000
+ Viewer {
+  inputs 2
+  frame_range 1-62
+  colour_sample_bbox {0.003125000047 0.01197916642 0.003645833349 0.01250000019}
+  samplepoints {{0.003125000047 0.01197916642}
+    }
+  name Viewer1
+  xpos -774
+  ypos 1112
+ }
+end_group

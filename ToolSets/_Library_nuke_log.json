@@ -1,0 +1,22 @@
+{
+    "header": {
+        "project_name": "_Library",
+        "shot": "nuke",
+        "directory": "/Users/michaelmcreynolds/Dropbox/_Library/nuke/ToolSets",
+        "number_of_sessions": 0,
+        "shot_clock": "0:00:02",
+        "work_time": "0:00:02",
+        "idle_time": "0:00:00"
+    },
+    "sessions": [
+        {
+            "filename": "zachs shortcut toolset.nk",
+            "artist": "michaelmcreynolds",
+            "start_time": "2023-08-16T09:47:49.045732",
+            "notes": [],
+            "idle_time": 0,
+            "end_time": "2023-08-16T09:47:51.273888",
+            "status": "saved"
+        }
+    ]
+}

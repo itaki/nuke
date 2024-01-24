@@ -1,119 +1,155 @@
-#! /Applications/Nuke9.0v5/Nuke9.0v5.app/Contents/MacOS//libnuke-9.0.5.dylib -nx
-version 9.0 v5
-Gizmo {
- inputs 2
+#! /Applications/Nuke14.0v5/Nuke14.0v5.app/Contents/MacOS/libnuke-14.0.5.dylib -nx
+version 14.0 v5
+Group {
+ name DifferencePlus
+ inputs 3
+ tile_color 0x58e8ff
+ note_font Verdana
+ note_font_color 0xffffffff
  addUserKnob {20 User}
- addUserKnob {41 preblur l "pre blur" T footageblur.size}
- addUserKnob {41 filter_1 l filter T footageblur.filter}
- addUserKnob {41 postblur l "post blur" T Blur3.size}
- addUserKnob {41 filter T Blur3.filter}
- addUserKnob {41 range T Keyer1.range}
- addUserKnob {41 erode T FilterErode1.size}
+ addUserKnob {26 Help l "" t "This simple gizmo subtracts the clean plate from the footage plate and then adds the absolute values of the R,G and B channels together. This maximizes the most difference between the clean plate and the footage plate. It then uses that maximum difference to create an alpha. This only works where there is a lot of difference between the footage plate and clean plate.\n\nMake sure to stabilize or matchmove your footage and denoise it." +STARTLINE T "<font size=\"6\"><div><span style=\"color:#F5F9F1;\">Difference</span><span style=\"color:#FFA100;\">Plus+</span><font size=\"3\"></span><span style=\"color:#CFE6B2;\"> </span><span style=\"color:#DFD3E7;\">v1.1</span>\n\n"}
+ addUserKnob {26 website l "" +STARTLINE T "<font size=2>by <a href='http://itaki.com' style='color:#62E1EB;'>itaki</a></font>"}
+ addUserKnob {26 ""}
+ addUserKnob {41 soften l "<b><font color=#FFA100>Soften</font></b>" t "This blurs both the clean plate and the footage equaly before subtracting them which softens the matte a bit." T footageblur.size}
+ addUserKnob {41 key l "<b><font color=#FFA100>Key</font></b>" T Keyer2.range}
+ addUserKnob {6 premult t "Premultiply the image on the way out." +STARTLINE}
+ premult true
+ addUserKnob {26 ""}
+ addUserKnob {26 "" l mask T ""}
+ addUserKnob {41 maskChannelInput l "" -STARTLINE T Merge2.maskChannelInput}
+ addUserKnob {41 inject -STARTLINE T Merge2.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge2.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Merge2.fringe}
+ addUserKnob {41 mix T Merge2.mix}
 }
  Input {
   inputs 0
-  name footage
-  xpos -475
-  ypos -335
- }
- Dot {
-  name Dot1
-  xpos -441
-  ypos -295
- }
-set N2ed5a2f0 [stack 0]
- Dot {
-  name Dot3
-  xpos -441
-  ypos 133
- }
- Input {
-  inputs 0
-  name plate
-  xpos -245
-  ypos -343
+  name Inputcleanplate
+  label "\[value number]"
+  xpos -32
+  ypos -640
   number 1
  }
  Blur {
   size {{parent.footageblur.size}}
   name plateblur
-  xpos -245
-  ypos -303
+  xpos -32
+  ypos -361
  }
- Expression {
-  expr3 r+b+g
-  name Expression2
-  xpos -245
-  ypos -247
- }
-push $N2ed5a2f0
- Blur {
-  name footageblur
-  xpos -374
-  ypos -302
- }
- Expression {
-  expr3 r+b+g
-  name Expression1
-  xpos -374
-  ypos -246
+ Input {
+  inputs 0
+  name Input
+  label "\[value number]"
+  xpos 463
+  ypos -650
  }
  Dot {
   name Dot2
-  xpos -340
-  ypos -167
+  note_font Gotham-Book
+  xpos 497
+  ypos -521
+ }
+set N3ded4400 [stack 0]
+ Dot {
+  name Dot3
+  note_font Gotham-Book
+  xpos 387
+  ypos -521
+ }
+set N9b01a200 [stack 0]
+ Dot {
+  name Dot1
+  note_font Gotham-Book
+  xpos 193
+  ypos -521
+ }
+ Blur {
+  name footageblur
+  xpos 159
+  ypos -365
  }
  Merge2 {
   inputs 2
   operation minus
-  name Merge2
-  xpos -245
-  ypos -170
+  name Merge1
+  note_font Gotham-Book
+  xpos 159
+  ypos -239
  }
  Expression {
-  expr3 abs(a)*.3333333333
-  name Expression3
-  xpos -245
-  ypos -137
- }
- Blur {
-  name Blur3
-  xpos -245
-  ypos -96
+  expr3 (abs(r)+abs(g)+abs(g))/3
+  name Expression1
+  note_font Gotham-Book
+  xpos 159
+  ypos -191
+  cached true
  }
  Keyer {
   input alpha
   operation "luminance key"
-  name Keyer1
-  selected true
-  xpos -245
-  ypos -37
+  range {0.004801883363 0.005569481119 1 1}
+  name Keyer2
+  note_font Gotham-Book
+  xpos 159
+  ypos -167
  }
- FilterErode {
-  size 0.02
-  filter gaussian
-  name FilterErode1
-  xpos -245
-  ypos -5
- }
- Merge2 {
+push $N9b01a200
+ Copy {
   inputs 2
-  operation in
-  name Merge3
-  xpos -245
-  ypos 130
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  note_font Gotham-Book
+  xpos 353
+  ypos -167
  }
-set N2edc8c60 [stack 0]
+set N3b00d400 [stack 0]
+ Viewer {
+  frame_range 1-1
+  fps 23.97602463
+  colour_sample_bbox {0.09929078072 -0.2659574449 0.1028368771 -0.262411356}
+  samplepoints {{0.1028368771 -0.2340425551 0.1028368771 -0.2375886589 0.1028368771 -0.2411347479 0.1063829809 -0.2411347479 0.1063829809 -0.2446808517 0.1099290773 -0.2482269555 0.1099290773 -0.2517730594 0.1134751737 -0.2517730594 0.1134751737 -0.2553191483 0.1170212775 -0.2588652372 0.1170212775 -0.262411356 0.1205673739 -0.262411356 0.1134751737 -0.2588652372 0.1099290773 -0.2588652372 0.1063829809 -0.262411356 0.1063829809 -0.2659574449 0.1028368771 -0.2659574449 0.09929078072 -0.2659574449}
+    }
+  name Viewer1
+  note_font Gotham-Book
+  xpos 1043
+  ypos 229
+ }
+ Input {
+  inputs 0
+  name Inputmask
+  label "\[value number]"
+  note_font Gotham-Book
+  xpos 724
+  ypos -659
+  number 2
+ }
+ Dot {
+  name Dot4
+  note_font Gotham-Book
+  xpos 758
+  ypos -65
+ }
+push $N3b00d400
+ Premult {
+  name Premult3
+  note_font Gotham-Book
+  xpos 353
+  ypos -68
+  disable {{!parent.premult}}
+ }
+push $N3ded4400
+ Merge2 {
+  inputs 2+1
+  operation copy
+  name Merge2
+  note_font Gotham-Book
+  xpos 463
+  ypos -68
+ }
  Output {
   name Output1
-  xpos -245
-  ypos 230
- }
-push $N2edc8c60
- Viewer {
-  frame_range 0-40
-  name Viewer1
-  xpos -84
-  ypos 130
+  xpos 463
+  ypos 196
  }
 end_group

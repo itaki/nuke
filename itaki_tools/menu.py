@@ -8,10 +8,11 @@ from i_tools import formats
 from i_tools import output
 from i_tools import edit_nodes
 from i_tools import backdrop_presets
-from i_tools import backdropper
+#from i_tools import backdropper
 from i_tools import script_library
 from i_tools import attach_closest_node
 from i_tools import defaults
+from i_tools import backdrop_helper
 
 
 import node_color_toolbar
@@ -20,10 +21,14 @@ import node_color_toolbar
 
 # itaki tools Nuke Menu Definitions
 itaki_menu = nuke.menu('Nuke').addMenu('itaki')
-itaki_menu.addCommand('Preset Backdrop', 'backdrop_presets.backdrop_presets()', 'shift+b')
+itaki_menu.addCommand('Preset Backdrop', 'backdrop_presets.backdrop_presets()', 'shift+b', shortcutContext=2 )
 
+nuke.menu('Nuke').addMenu('Backdrop Helper').addCommand('backdrop_helper','backdrop_helper.backdrop_helper()','shift+v', shortcutContext=2 )
 #bm = backdrops.BackdropManager()
 #itaki_menu.addCommand('new preset backdrop', 'bm.create_popup_menu()', 'shift+v')
+
+import backdrop_helper
+
 
 # Get closest node script
 itaki_menu.addCommand('Attach input to closest node', 'attach_closest_node.connect_to_closest()', 'a', shortcutContext=2)
@@ -38,6 +43,10 @@ itaki_menu.addCommand('test', 'script_library.test("This is my test print")')
 # itaki tools Toolbar Definitions
 toolbar = nuke.menu('Nodes')
 i_menu = toolbar.addMenu('itaki', icon='itaki.png')
+
+# # Add my own icons
+# nuke.menu('Nodes').addMenu("RG Magic Bullet", icon="maxon.png")
+# nuke.menu('Nodes').addMenu("Tools", icon="toolbox_icon.png")
 
 # add tracker TRS checkbox toggling to the toolbar
 from i_tools.updateTrackerTRS import *

@@ -1,0 +1,269 @@
+#! C:/Program Files/Nuke12.2v5/nuke-12.2.5.dll -nx
+version 12.2 v5
+Gizmo {
+ tile_color 0x245bff
+ addUserKnob {20 ctr}
+ addUserKnob {26 mix -STARTLINE T "channels to get better key!"}
+ addUserKnob {4 choose M {red green blue luma}}
+ choose luma
+ addUserKnob {7 Multiply1 l Multiply -STARTLINE}
+ Multiply1 1
+ addUserKnob {26 mix_1 l + T ""}
+ addUserKnob {4 choose1 l choose M {red green blue luma "" "" "" "" "" "" "" "" ""}}
+ addUserKnob {7 multiply -STARTLINE}
+ addUserKnob {41 type T Ramp1.type}
+ addUserKnob {7 offset R -500 500}
+ addUserKnob {41 white l multiple T Grade1.white}
+ addUserKnob {41 gamma T Grade1.gamma}
+ addUserKnob {6 invert +STARTLINE}
+}
+ Input {
+  inputs 0
+  name img
+  xpos -19
+  ypos -405
+ }
+ Dot {
+  name Dot1
+  xpos 15
+  ypos -290
+ }
+set N8fe58800 [stack 0]
+ Expression {
+  expr0 r
+  expr1 r
+  expr2 r
+  expr3 r
+  name Expression5
+  xpos -298
+  ypos -238
+ }
+set N8fe58400 [stack 0]
+push 0
+push $N8fe58800
+ Expression {
+  expr0 g
+  expr1 g
+  expr2 g
+  expr3 g
+  name Expression3
+  xpos -202
+  ypos -235
+ }
+set N1e733c00 [stack 0]
+push $N8fe58800
+ Expression {
+  expr0 b
+  expr1 b
+  expr2 b
+  expr3 b
+  name Expression4
+  xpos -113
+  ypos -234
+ }
+set N1e733800 [stack 0]
+ Merge2 {
+  inputs 3+1
+  operation screen
+  name Merge2
+  xpos -19
+  ypos -172
+ }
+set N1e733400 [stack 0]
+push $N1e733800
+push $N1e733c00
+push $N8fe58400
+ Switch {
+  inputs 4
+  which {{parent.choose1}}
+  name Switch2
+  xpos -113
+  ypos -87
+ }
+ Multiply {
+  value {{parent.multiply}}
+  name Multiply1
+  xpos -113
+  ypos -63
+ }
+push $N1e733400
+push $N1e733800
+push $N1e733c00
+push $N8fe58400
+ Switch {
+  inputs 4
+  which {{parent.choose}}
+  name Switch1
+  xpos -19
+  ypos -84
+ }
+ Multiply {
+  value {{parent.Multiply1}}
+  name Multiply2
+  xpos -19
+  ypos -60
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge1
+  xpos -19
+  ypos 34
+ }
+push $N8fe58800
+ Dot {
+  name Dot3
+  xpos -364
+  ypos -290
+ }
+ Remove {
+  name Remove1
+  xpos -398
+  ypos -88
+ }
+ Ramp {
+  cliptype none
+  p0 {{"!\[value format.width]"} 0}
+  p1 {{"\[value format.width]" x1 2075} {0 x1 230}}
+  type plinear
+  name Ramp1
+  selected true
+  xpos -398
+  ypos -45
+ }
+ Group {
+  name Group1
+  xpos -398
+  ypos -9
+  addUserKnob {20 User l Offset}
+  addUserKnob {12 offset}
+  offset {{parent.offset} 0}
+  addUserKnob {14 tiles R 0 100}
+  tiles 1
+  addUserKnob {6 mx l "mirror x" +STARTLINE}
+  mx true
+  addUserKnob {6 my l "mirror y" -STARTLINE}
+  addUserKnob {41 filter T STMap1.filter}
+  addUserKnob {26 ""}
+  addUserKnob {41 motionblur T mb_trans.motionblur}
+  addUserKnob {41 shutter T mb_trans.shutter}
+  addUserKnob {41 shutteroffset l "shutter offset" T mb_trans.shutteroffset}
+  addUserKnob {41 shuttercustomoffset l "" -STARTLINE T mb_trans.shuttercustomoffset}
+  addUserKnob {20 about l @}
+  addUserKnob {26 author l "Author: " T "Mariusz Wesierski ( mw@fxcalibur.com )"}
+  addUserKnob {26 version l "Version: " T 1.0}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos -301
+   ypos -196
+  }
+set N20b32000 [stack 0]
+  Expression {
+   expr0 ((x-offset.x)<0?1+((x-offset.x)/width*tiles.w)-int((x-offset.x)/width*tiles.w):((x-offset.x)/width*tiles.w)-int((x-offset.x)/width*tiles.w))
+   expr1 ((y-offset.y)<0?1+((y-offset.y)/height*tiles.h)-int((y-offset.y)/height*tiles.h):((y-offset.y)/height*tiles.h)-int((y-offset.y)/height*tiles.h))
+   expr2 0
+   channel3 {none none none -rgba.alpha}
+   name offset_xp
+   xpos -422
+   ypos -142
+  }
+  Expression {
+   expr0 "mx?(x-offset.x>=0?0:1)+ fmod(int((x-offset.x)/width*tiles.w),2)!=0?1-r:r:r"
+   expr1 "my?(y-offset.y>=0?0:1)+ fmod(int((y-offset.y)/height*tiles.h),2)!=0?1-g:g:g"
+   channel2 {-rgba.red -rgba.green -rgba.blue none}
+   channel3 none
+   name mirror_xp
+   xpos -422
+   ypos -118
+   disable {{mx?0:my?0:1}}
+  }
+push $N20b32000
+  STMap {
+   inputs 2
+   uv rgb
+   blur_scale 0
+   name STMap1
+   xpos -301
+   ypos -124
+  }
+  Transform {
+   translate {{offset.x i} {offset.y i}}
+   center {800 501.5}
+   filter impulse
+   shutteroffset centred
+   name mb_trans
+   xpos -301
+   ypos -81
+   disable {{motionblur>0?0:1 i}}
+  }
+  Transform {
+   translate {{-offset.x i} {-offset.y i}}
+   center {800 501.5}
+   filter impulse
+   black_outside false
+   name inv_trans
+   xpos -301
+   ypos -57
+   disable {{mb_trans.motionblur>0?0:1 i}}
+  }
+  Output {
+   name Output1
+   xpos -301
+   ypos -23
+  }
+ end_group
+set N1de2eb00 [stack 0]
+ Grade {
+  white_clamp true
+  name Grade1
+  xpos -398
+  ypos 22
+ }
+ Clamp {
+  name Clamp1
+  xpos -398
+  ypos 55
+ }
+ Dot {
+  name Dot2
+  xpos -364
+  ypos 178
+ }
+ STMap {
+  inputs 2
+  channels rgba
+  uv rgb
+  name STMap1
+  xpos -19
+  ypos 175
+ }
+ Invert {
+  name Invert1
+  xpos -19
+  ypos 199
+  disable {{!parent.invert x1 1}}
+ }
+ Expression {
+  expr0 r
+  expr1 r
+  expr2 r
+  expr3 r
+  name Expression1
+  xpos -19
+  ypos 254
+ }
+ Output {
+  name Output1
+  xpos -19
+  ypos 321
+ }
+push $N1de2eb00
+ Viewer {
+  frame_range 1-100
+  name Viewer1
+  xpos 185
+  ypos 209
+ }
+end_group

@@ -1,0 +1,103 @@
+#! C:/Program Files/Nuke10.5v5/nuke-10.5.5.dll -nx
+version 10.5 v5
+Gizmo {
+ help "A simple inner shadow plugin, like the one in AfterEffects Layerstyle.\n\nCXB.\n\n简化版内阴影插件，效果约等于AE的layerstyle的内阴影，名称也采用ae的命名。\n\n"
+ lock_connections true
+ addUserKnob {20 innershadow l 内阴影}
+ addUserKnob {6 SRGB_mode l "Like AE colorspace?" +STARTLINE}
+ addUserKnob {18 color l Color t 阴影颜色}
+ color {0 0 0}
+ addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 opaque l opacity t 阴影浓度 R 0 100}
+ opaque 75
+ addUserKnob {7 angle l Angle t 阴影角度 R -360 360}
+ angle 120
+ addUserKnob {7 distance l Distance t 阴影距离 R 0 500}
+ distance 10
+ addUserKnob {7 choke l Choke t 收缩 R 0 100}
+ addUserKnob {7 blur l Size t 阴影羽化 R 0 100}
+ addUserKnob {26 ""}
+ addUserKnob {20 info l Info}
+ addUserKnob {26 cxb l "" +STARTLINE T "innershadow cxb\nversion 1.01 "}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 0
+ }
+set N6d0e5c00 [stack 0]
+ Transform {
+  translate {{"-1*cos(\[value angle]*pi/180)*\[value distance]" x1 0} {"-1*sin(\[value angle]*pi/180)*\[value distance]" x1 0}}
+  center {{input.format.w/2} {input.format.h/2}}
+  name Transform4
+  note_font Verdana
+  xpos 186
+  ypos 1
+  addUserKnob {20 User}
+  addUserKnob {7 angle R 0 360}
+  angle {{parent.angle}}
+  addUserKnob {7 distance R 0 50}
+  distance {{parent.distance}}
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos 186
+  ypos 39
+ }
+ Blur {
+  channels alpha
+  size {{parent.blur}}
+  name Blur1
+  xpos 186
+  ypos 88
+ }
+ Grade {
+  channels alpha
+  whitepoint {{0.025+0.975*((100-choke)/100)}}
+  gamma {{0.2+0.8*((100-choke)/100)}}
+  white_clamp true
+  name Grade1
+  xpos 186
+  ypos 169
+  disable {{blur==0}}
+ }
+ Dilate {
+  channels alpha
+  size {{2*(choke/100)}}
+  name Dilate1
+  xpos 186
+  ypos 250
+  disable {{blur==0}}
+ }
+ Multiply {
+  channels alpha
+  value {{parent.opaque/100}}
+  name Multiply1
+  xpos 186
+  ypos 666
+ }
+set N6d095800 [stack 0]
+push $N6d095800
+push $N6d0e5c00
+ Grade {
+  inputs 1+1
+  white {{parent.color} {parent.color} {parent.color} 1}
+  name Grade2
+  xpos 1
+  ypos 672
+ }
+ Colorspace {
+  inputs 1+1
+  colorspace_in sRGB
+  name Colorspace1
+  xpos 1
+  ypos 734
+  disable {{!parent.SRGB_mode}}
+ }
+ Output {
+  name Output1
+  xpos 1
+  ypos 1065
+ }
+end_group
