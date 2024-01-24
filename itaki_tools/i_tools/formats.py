@@ -1,6 +1,8 @@
 import nuke
 
-working_format = 'Regions'
+
+
+working_format = 'UHD_4K_sRGB'
 # examples are 'UHD_4K_sRGB', 'Regions', 'Horizon'
 # Set default formats. Note this expects an empty formats.tcl in the NUKE_PATH to clear the existing default formats.
 custom_formats = [

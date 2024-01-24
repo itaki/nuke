@@ -7,3 +7,4 @@ nuke.pluginAddPath('./hagbarth/tools')
 nuke.pluginAddPath('./hagbarth/grapichs')
 nuke.pluginAddPath('./hagbarth/python')
 
+ 

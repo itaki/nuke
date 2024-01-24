@@ -1,0 +1,400 @@
+#! /Applications/Nuke15.0v2/Nuke15.0v2.app/Contents/MacOS/libnuke-15.0.2.dylib -nx
+version 15.0 v2
+Group {
+name ASCII_Shader
+ note_font Gotham-Book
+ addUserKnob {20 User l "ASCII Shader"}
+ addUserKnob {84 style_font l font}
+ addUserKnob {1 char1 l "brightest character"}
+ char1 g
+ addUserKnob {1 char2 l "medium character"}
+ char2 p
+ addUserKnob {1 char3 l "darkest character"}
+ char3 g
+ addUserKnob {7 inputScale l "Input Scale"}
+ inputScale 0.095
+ addUserKnob {3 charResolution l "Character Resolution"}
+ charResolution 20
+ addUserKnob {6 monochrome l Monochrome? +STARTLINE}
+ addUserKnob {3 colours l Colours}
+ colours 256
+ addUserKnob {26 ""}
+ addUserKnob {26 _1 l "" -STARTLINE T "ASCII Shader | John Clayton"}
+}
+ Reformat {
+  inputs 0
+  format "8 8 0 0 8 8 1 8x8"
+  name Reformat6
+  xpos 226
+  ypos 299
+ }
+ Expression {
+  inputs 0
+  expr0 (x+0.5)/8
+  expr1 (y+0.5)/8
+  name Expression1
+  label STMap
+  xpos 240
+  ypos 462
+ }
+ Dot {
+  name Dot4
+  xpos 274
+  ypos 588
+ }
+push 0
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap2
+  xpos 384
+  ypos 579
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -446
+  ypos -308
+  addUserKnob {20 User}
+  addUserKnob {14 inputRes l "Input Res" R 0 100}
+  inputRes {{input.width} {input.height}}
+ }
+ Reformat {
+  type scale
+  format "640 480 0 0 640 480 1 PC_Video"
+  scale {{parent.inputScale}}
+  filter impulse
+  name Reformat1
+  xpos -446
+  ypos -172
+ }
+ Grade {
+  name Grade1
+  xpos -446
+  ypos -94
+ }
+ Reformat {
+  type scale
+  scale {{parent.charResolution}}
+  filter impulse
+  name Reformat3
+  xpos -446
+  ypos -22
+ }
+ Dot {
+  name Dot15
+  xpos -412
+  ypos 967
+ }
+set N7fcaac00 [stack 0]
+ Dot {
+  name Dot2
+  xpos -905
+  ypos 967
+ }
+ Saturation {
+  saturation 0
+  name Saturation1
+  xpos -939
+  ypos 1015
+ }
+ Dot {
+  name Dot20
+  xpos -905
+  ypos 1082
+ }
+set N7fc64e00 [stack 0]
+ Expression {
+  expr3 "r > 0.5 ? 1:0"
+  name Expression3
+  xpos -939
+  ypos 1222
+ }
+ Dot {
+  name Dot18
+  xpos -905
+  ypos 1498
+ }
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width {{((Input1.width*Reformat1.scale)*Reformat3.scale)}}
+  box_height {{((Input1.height*Reformat1.scale)*Reformat3.scale)}}
+  box_fixed true
+  resize none
+  filter impulse
+  name Reformat4
+  xpos -1298
+  ypos 427
+ }
+ Expression {
+  expr0 ((x+0.5)%parent.charResolution)/parent.charResolution
+  expr1 ((y+0.5)%parent.charResolution)/parent.charResolution
+  name Expression4
+  label STMap
+  xpos -1298
+  ypos 451
+  addUserKnob {20 User}
+  addUserKnob {12 posit}
+  posit {0.3 0.4}
+ }
+ Dot {
+  name Dot5
+  xpos -1264
+  ypos 588
+ }
+set N4d9e0400 [stack 0]
+ Dot {
+  name Dot6
+  xpos -1699
+  ypos 588
+ }
+set N4d9d6400 [stack 0]
+ Dot {
+  name Dot9
+  xpos -1995
+  ypos 588
+ }
+ Dot {
+  name Dot10
+  xpos -1995
+  ypos 708
+ }
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width {{parent.charResolution}}
+  box_height {{box_width}}
+  box_fixed true
+  resize none
+  filter impulse
+  name Reformat2
+  xpos -1522
+  ypos 172
+ }
+ Dot {
+  name Dot3
+  xpos -1488
+  ypos 251
+ }
+set N4d9e3200 [stack 0]
+ Dot {
+  name Dot12
+  xpos -1775
+  ypos 251
+ }
+set N4d9e3600 [stack 0]
+ Dot {
+  name Dot13
+  xpos -2071
+  ypos 251
+ }
+ Text2 {
+  font_size_toolbar 7
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.char1]"
+  old_message {{103}
+    }
+  old_expression_markers {{0 0}
+    }
+  box {0 0 {parent.charResolution} {parent.charResolution}}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  font_size_values {{0 7}
+    }
+  cursor_position 19
+  font {[value parent.style_font]}
+  global_font_scale {{parent.charResolution/8}}
+  font_size 7
+  center {4 4}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 8}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 4 4 0 0 1 1 0 0 0 0}
+    }
+  name Text2
+  xpos -2105
+  ypos 269
+ }
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap4
+  xpos -2105
+  ypos 699
+ }
+ Dot {
+  name Dot19
+  xpos -2071
+  ypos 1498
+ }
+push $N7fc64e00
+ Dot {
+  name Dot16
+  xpos -1015
+  ypos 1082
+ }
+ Expression {
+  expr3 "r > 0 ? 1:0"
+  name Expression2
+  xpos -1049
+  ypos 1222
+ }
+ Dot {
+  name Dot17
+  xpos -1015
+  ypos 1371
+ }
+push $N4d9d6400
+ Dot {
+  name Dot7
+  xpos -1699
+  ypos 708
+ }
+push $N4d9e3600
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.char2]"
+  old_message {{112}
+    }
+  old_expression_markers {{0 0}
+    }
+  box {0 0 {parent.charResolution} {parent.charResolution}}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 14
+  font {[value parent.style_font]}
+  global_font_scale {{parent.charResolution/8}}
+  center {4 4}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 8}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 4 4 0 0 1 1 0 0 0 0}
+    }
+  name Text1
+  xpos -1809
+  ypos 269
+ }
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap3
+  xpos -1809
+  ypos 699
+ }
+ Dot {
+  name Dot14
+  xpos -1775
+  ypos 1371
+ }
+push $N4d9e0400
+ Dot {
+  name Dot1
+  xpos -1264
+  ypos 708
+ }
+push $N4d9e3200
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.char3]"
+  old_message {{103}
+    }
+  old_expression_markers {{0 0}
+    }
+  box {0 0 {parent.charResolution} {parent.charResolution}}
+  xjustify center
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 14
+  font {[value parent.style_font]}
+  global_font_scale {{parent.charResolution/8}}
+  center {4 4}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 8}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 4 4 0 0 1 1 0 0 0 0}
+    }
+  name Text3
+  xpos -1522
+  ypos 269
+ }
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap1
+  xpos -1522
+  ypos 699
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -1522
+  ypos 1362
+ }
+ Keymix {
+  inputs 3
+  name Keymix2
+  xpos -1522
+  ypos 1489
+ }
+ Dot {
+  name Dot8
+  xpos -1488
+  ypos 1923
+ }
+set N236ea000 [stack 0]
+ Dot {
+  name Dot11
+  xpos -1488
+  ypos 2089
+ }
+push $N236ea000
+push $N7fcaac00
+ Posterize {
+  Colors {{parent.colours}}
+  name Posterize1
+  xpos -446
+  ypos 1629
+ }
+ Grade {
+  black 0.01
+  name Grade2
+  xpos -446
+  ypos 1714
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge1
+  xpos -446
+  ypos 1920
+ }
+ Switch {
+  inputs 2
+  which {{parent.monochrome}}
+  name Switch1
+  xpos -446
+  ypos 2086
+ }
+ Output {
+  name Output1
+  xpos -446
+  ypos 2540
+ }
+end_group

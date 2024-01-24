@@ -1,0 +1,778 @@
+Group {
+ name PsBridge
+ help "A Nuke Bridge for photoshop"
+ knobChanged on_change()
+ tile_color 0xffffffff
+ label "(frame \[value refFrame])\n"
+ addUserKnob {20 psTab l PsBridge}
+ addUserKnob {52 startup_onchange T "nuke.thisNode()\[\"ON_CHANGE\"].execute()" +STARTLINE}
+ addUserKnob {22 ON_CHANGE +HIDDEN T "import nuke\nimport os\nimport platform\n\nn = nuke.thisNode()\n\"\"\"\nTODO\n- create set_mac_photoshop_versions() for darwin\n\n\"\"\"\n\nbase_win_dir = 'C:\\\\Program Files\\\\Adobe'\nbase_mac_dir = '/Applications/'\n\n\ndef on_change_file_name():\n    fileDesDrop_value = n.knob('fileDesDrop').value()\n    fileDesText_knob = n.knob('fileDesText')\n\n    if fileDesDrop_value == 'Paint':\n        fileDesText_knob.setVisible(False)\n    else:\n        fileDesText_knob.setVisible(True)\n\n\ndef on_change_add_input_mask():\n    addMask = n.knob('addMask').value()\n\n    def add_mask():\n        input_node = nuke.createNode('Input', inpanel=False)\n        input_node.setName('mask')\n\n        keymix_node = nuke.toNode('MaskMerge')\n\n        keymix_node.setInput(1, input_node)\n\n    def delete_mask():\n        nuke.delete(nuke.toNode('mask'))\n\n    if addMask == 1:\n        if not nuke.exists('mask'):\n            add_mask()\n    else:\n        if nuke.exists('mask'):\n            delete_mask()\n\n\ndef on_ps_version_changed():\n    psversion = n.knob('psVersion').value()\n\n    if psversion == \"Custom Photoshop Path\":\n        n.knob('photoshopPath').setVisible(True)\n    else:\n        n.knob('photoshopPath').setVisible(False)\n\n\ndef on_render_changed():\n    render_option = n.knob('renderOption').value()\n    out_alpha_knob = n.knob('outAlpha')\n\n    if render_option == \"Paint\":\n        out_alpha_knob.setValue('Clear Source Alpha')\n        out_alpha_knob.setEnabled(False)\n    else:\n        out_alpha_knob.setEnabled(True)\n\n\ndef on_colorpreset_changed():\n    color_preset = nuke.thisNode().knob('colorPreset').value()\n    in_colorspace_knob = n.knob('in_colorspace')\n    out_colorspace_knob = n.knob('out_colorspace')\n\n    if color_preset == \"Linear\":\n        in_colorspace_knob.setValue('scene_linear')\n        out_colorspace_knob.setValue('scene_linear')\n    elif color_preset == \"ACES\":\n        in_colorspace_knob.setValue('scene_linear')\n        out_colorspace_knob.setValue('compositing_log')\n    elif color_preset == \"sRGB\":\n        in_colorspace_knob.setValue('scene_linear')\n        out_colorspace_knob.setValue('matte_paint')\n\n\ndef is_read_file_psd():\n    tools_node = nuke.toNode('TOOLS')\n    isPSD = tools_node.knob('isPSD').value()\n\n    if isPSD:\n        n.knob('breakOutTitle').setVisible(True)\n        n.knob('breakout').setVisible(True)\n    else:\n        n.knob('breakOutTitle').setVisible(False)\n        n.knob('breakout').setVisible(False)\n\n\ndef on_change():\n    if nuke.thisKnob().name() == 'renderOption':\n        on_render_changed()\n\n    if nuke.thisKnob().name() == 'colorPreset':\n        on_colorpreset_changed()\n\n    if nuke.thisKnob().name() == 'psVersion':\n        on_ps_version_changed()\n\n    if nuke.thisKnob().name() == 'addMask':\n        on_change_add_input_mask()\n\n    if nuke.thisKnob().name() == 'fileDesDrop':\n        on_change_file_name()\n\n    is_read_file_psd()\n\n\ndef set_win_photoshop_versions():\n    dir_search_name = 'Adobe Photoshop'\n    ps_list = \[]\n\n    for folder in os.listdir(base_win_dir):\n        dir_path = os.path.join(base_win_dir, folder)\n\n        if os.path.isdir(dir_path) and dir_search_name in folder:\n            r_exe = os.path.join(dir_path, 'Photoshop.exe')\n            if os.path.isfile(r_exe):\n                ps_list.append(folder)\n\n    ps_list.append('Custom Photoshop Path')\n    ps_list.sort()\n\n    n\['psVersion'].setValues(ps_list)\n\n\ndef set_mac_photoshop_versions():\n    dir_search_name = 'Adobe Photoshop'\n    ps_list = \[]\n\n    for folder in os.listdir(base_mac_dir):\n        dir_path = os.path.join(base_mac_dir, folder)\n\n        if os.path.isdir(dir_path) and dir_search_name in folder:\n            r_app = os.path.join(dir_path, folder + '.app')\n            if os.path.exists(r_app):\n                ps_list.append(folder)\n\n    ps_list.append('Custom Photoshop Path')\n    ps_list.sort()\n\n    n\['psVersion'].setValues(ps_list)\n\n\nif platform.system() == \"Windows\":\n    set_win_photoshop_versions()\nelif platform.system() == \"Darwin\":\n    set_mac_photoshop_versions()\nelse:\n    nuke.alert('Your operating system is not compatible!')\n\nn.knob('knobChanged').setValue('on_change()')\n" +STARTLINE}
+ addUserKnob {6 shownModal -STARTLINE +HIDDEN}
+ shownModal true
+ addUserKnob {4 psVersion l "Photoshop Version" t "current installed photoshop versions" M {"Adobe Photoshop (Beta)" "Adobe Photoshop 2024" "Custom Photoshop Path"}}
+ addUserKnob {2 photoshopPath l "Photoshop Path" t "add your custom photoshop .app or .exe path" +HIDDEN}
+ addUserKnob {26 _1 l "" +STARTLINE}
+ addUserKnob {3 refFrame l "Reference Frame"}
+ refFrame 1
+ addUserKnob {22 SET_TO_CURRENT_FRAME l "set to current frame" -STARTLINE T "import nuke\n\n\nn = nuke.thisNode()\n\n\ncurr_frame = nuke.frame()\nn.knob('refFrame').setValue(curr_frame)\nnuke.thisNode()\[\"SET_UUID\"].execute()\n\n\n"}
+ addUserKnob {6 holdFrame l "Hold Frame" -STARTLINE}
+ holdFrame true
+ addUserKnob {4 fileDesDrop l "File Description" M {Paint Custom "" "" "" "" "" "" "" "" "" "" "" ""}}
+ addUserKnob {1 fileDesText l Description +HIDDEN}
+ addUserKnob {1 fileNameText l Name +HIDDEN}
+ addUserKnob {26 text_1 l "" +STARTLINE}
+ addUserKnob {4 colorPreset l Preset M {None Linear sRGB ACES "" "" "" "" "" "" "" ""}}
+ addUserKnob {41 in_colorspace l "Input Colorspace" T OCIOColorSpace1.in_colorspace}
+ addUserKnob {41 out_colorspace l "PSD Colorspace" T OCIOColorSpace1.out_colorspace}
+ addUserKnob {41 premultiplied l Premultipy +INVISIBLE T readPsFile.premultiplied}
+ addUserKnob {26 text_2 l <b>Output</b>}
+ addUserKnob {20 filtering l Filtering n 1}
+ filtering 0
+ addUserKnob {4 removeAiArtifacts l Median t "Reduce the artifacts generated by Photoshop's AI within the image." M {"No Filtering" Low Medium High "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+ addUserKnob {41 sharpen l Sharpen T Filtering.size}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {4 renderOption l Render M {Composite Paint "" "" "" ""}}
+ addUserKnob {4 outAlpha l "Output Alpha" M {"Clear Source Alpha" "Preserve Alpha" "Clear All" "" "" "" "" "" "" ""}}
+ addUserKnob {6 addMask l "Add Input Mask" +STARTLINE}
+ addUserKnob {26 export l <b>Export</b>}
+ addUserKnob {22 export_file l "Export File" T "import nuke\nimport nukescripts\nimport os\nimport shutil\n\nn = nuke\ntn = n.thisNode()\nk = n.thisKnob()\ntn_name = tn.name()\nreadPsdNode = nuke.toNode(tn_name + '.readPsFile')\nreadFileVal = readPsdNode.knob('file').value()\n\n\nclass ExportPanel(nukescripts.PythonPanel):\n    def __init__(self, node):\n        nukescripts.PythonPanel.__init__(self, 'Export File')\n        self.fpNode = node\n        self.format = nuke.Text_Knob('format', 'Export Format', '<b>' + get_export_format() + '</b>')\n        self.shotName = nuke.String_Knob('shot_name', 'Shot Name', get_shot_name())\n        self.scopeStr = nuke.String_Knob('descriptor', 'Descriptor', 'dmp')\n        self.colorspace = nuke.String_Knob('colorspace', 'Colorspace', get_colorspace())\n        self.version = nuke.Int_Knob('version', 'Version')\n        self.exportTo = nuke.Text_Knob('exportTo', 'Export to', '<b>/' + get_export_path() + '/</b>')\n        self.fileName = nuke.Text_Knob('filename', 'File Name', 'filename')\n        self.addKnob(self.format)\n        self.addKnob(self.shotName)\n        self.addKnob(self.scopeStr)\n        self.addKnob(self.colorspace)\n        self.addKnob(self.version)\n        self.addKnob(self.exportTo)\n        self.addKnob(self.fileName)\n        set_filename(self)\n\n    def knobChanged(self, knob):\n        if knob in (self.shotName, self.scopeStr, self.colorspace, self.version):\n            set_filename(self)\n\n    def export_file(self):\n        nuk_dir = nuke.script_directory()\n        nuk_dir = nuk_dir.split('/')\n        nuk_dir = '/'.join(nuk_dir\[:-1]) + '/'\n        file_path = readFileVal\n        des_dir = nuk_dir + 'exports/'\n        new_name = set_filename(self)\n\n        if not os.path.exists(des_dir):\n            os.makedirs(des_dir)\n\n        try:\n            new_path = os.path.join(des_dir, new_name)\n            shutil.copy2(file_path, new_path)\n            nuke.message('File successfully exported!')\n        except Exception as e:\n            nuke.alert(e)\n\n\ndef get_colorspace():\n    c = nuke.toNode(tn_name + '.OCIOColorSpace1').knob('out_colorspace').value()\n\n    if c == 'scene_linear':\n        return 'Linear'\n    elif c == 'matte_paint':\n        return 'sRGB'\n    elif c == 'compositing_log' and nuke.usingOcio():\n        return 'ACES'\n    elif c == 'compositing_log':\n        return 'Log'\n\n\ndef get_shot_name():\n    # filename = \"TEST_000_000_cmp_v001.nk\"\n    filename = os.path.basename(str(n.root().name()))\n    # Show Knob\n    show = filename.split('_')\[0]\n    # Shot Knob\n    shot_list = filename.split('_')\[1:-1]\n    shot_digits = \[e for e in shot_list if e.isdigit()]\n    shot = '_'.join(\[e for e in shot_digits])\n    full_name = show + '_' + shot\n    return full_name\n\n\ndef get_export_format():\n    extension = os.path.splitext(readFileVal)\[1]\n    return extension.upper()\n\n\ndef get_export_path():\n    return 'exports'\n\n\ndef get_frame_number():\n    frame = tn.knob('refFrame').value()\n    return int(frame)\n\n\ndef set_filename(self):\n    frame_number = get_frame_number()\n    ext = get_export_format()\n    shot_name = self.shotName.value()\n    scope = self.scopeStr.value()\n    colorspace = self.colorspace.value()\n    version = self.version.value()\n    f_version = 'v' + str(int(version)).zfill(3)\n\n    filename = shot_name \\\n        + '_' + scope + '_' \\\n        + colorspace \\\n        + '_' + f_version + '.' \\\n        + str(frame_number) \\\n        + str(ext.lower())\n\n    self.fileName.setValue('<b>' + filename + '</b>')\n    return filename\n\n\ndef execute_on_change():\n    nuke.thisNode()\[\"ON_CHANGE\"].execute()\n\n\np = ExportPanel(tn)\n\nif len(readFileVal):\n    result = p.showModalDialog()\n    if result:\n        p.export_file()\n    execute_on_change()\nelse:\n    nuke.warning('Create a file first')\n    execute_on_change()\n" +STARTLINE}
+ addUserKnob {22 export_to l "Jump to exports folder" -STARTLINE T "import nuke\nimport subprocess\nimport platform\nimport os\n\n\ndef get_des_dir():\n    nuk_dir = nuke.script_directory()\n    nuk_dir = nuk_dir.split('/')\n    nuk_dir = '/'.join(nuk_dir\[:-1]) + '/'\n    des_dir = nuk_dir + 'exports/'\n    return des_dir\n\n\ndef jumpTo():\n    des_dir = get_des_dir()\n    if platform.system() == \"Windows\":\n        des_dir = des_dir.replace('/', '\\\\')\n        subprocess.Popen('explorer \"\{\}\"'.format(des_dir), shell=True)\n    elif platform.system() == \"Darwin\":\n        subprocess.Popen(\['open', des_dir])\n\n\ndes_d = get_des_dir()\n\nif os.path.exists(des_d):\n    jumpTo()\nelse:\n    nuke.message('Export your file first')\n"}
+ addUserKnob {26 text l "" +STARTLINE}
+ addUserKnob {22 openPhotoshop l "Open In Photoshop.." t "Opens Photoshop." T "import nuke\nimport subprocess\nimport os\nimport platform\n\nn = nuke.thisNode()\n\n\n# win executable example: 'C:\\\\Program Files\\\\Adobe\\\\Adobe Photoshop 2024\\\\Photoshop.exe'\n\ndef get_writeNode():\n    return nuke.toNode('renderFile')\n\n\ndef open_file_in_photoshop_darwin(photoshop_app):\n    write_node = get_writeNode()\n    file_path = write_node.knob('psFilePath').value()\n    command = \['open', '-a', photoshop_app, file_path]\n\n    try:\n        if os.path.exists(file_path):\n            subprocess.Popen(command)\n\n    except Exception as e:\n        nuke.message('Error while opening Photoshop: ' + e)\n\n\ndef open_custom_photoshop_path():\n    n = nuke.thisNode()\n    ps_file_path = n.knob('photoshopPath').value()\n    if len(ps_file_path) == 0:\n        nuke.alert(\"You need to specify the file path of your Photoshop executable file.\")\n    else:\n        open_file_in_photoshop(ps_file_path.replace('/', '\\\\'))\n\n\ndef open_file_in_photoshop(photoshop_executable):\n    write_node = get_writeNode()\n    file_path = write_node.knob('psFilePath').value()\n\n    command = \[photoshop_executable, file_path.replace('/', '\\\\')]\n\n    try:\n        if os.path.exists(file_path):\n            subprocess.Popen(command)\n\n    except Exception as e:\n        nuke.message('Error while opening Photoshop')\n\n\ndef render_ps_file():\n    write_node = get_writeNode()\n    refFrame = int(nuke.thisNode().knob('refFrame').value())\n\n    nuke.execute(write_node, refFrame, refFrame)\n    chose_photoshop_executable()\n\n\ndef chose_photoshop_executable():\n    n = nuke.thisNode()\n    ps_version = n.knob('psVersion').value()\n    win_base_path = 'C:\\\\Program Files\\\\Adobe'\n\n    def get_operating_system():\n        return platform.system()\n\n    # OPEN WINDOWS EXECUTABLE\n    if get_operating_system() == \"Windows\":\n        if not ps_version == \"Custom Photoshop Path\":\n            exe_path = win_base_path + '\\\\' + ps_version + '\\\\' + 'Photoshop.exe'\n            open_file_in_photoshop(exe_path)\n        else:\n            open_custom_photoshop_path()\n\n    # OPEN MACOS EXECUTABLE\n    elif get_operating_system() == \"Darwin\":\n        if not ps_version == \"Custom Photoshop Path\":\n            open_file_in_photoshop_darwin(ps_version)\n        else:\n            open_custom_photoshop_path()\n    else:\n        nuke.message(\"Your operating system is not compatible.\")\n\n\ndef to_render():\n    write_node = get_writeNode()\n    file_path = write_node.knob('psFilePath').value()\n\n    if os.path.exists(file_path):\n        chose_photoshop_executable()\n    else:\n        render_ps_file()\n\n\ndef check_if_input_is_connected():\n    n = nuke.thisNode()\n\n    if n.inputs():\n        to_render()\n    else:\n        nuke.message(\"Please connect your plate into the 'Source' input\")\n\n\ndef validate_nk_file_saved():\n    script_path = nuke.script_directory()\n\n    if len(script_path) == 0:\n        nuke.message(\"Please, save your .nk file before proceeding\")\n    else:\n        check_if_input_is_connected()\n\n\nvalidate_nk_file_saved()\n" +STARTLINE}
+ addUserKnob {22 reloadFile l reload t "Reload your file again after editing it in Photoshop." -STARTLINE T "import nuke\nimport os\nimport nukescripts\nimport platform\n\n\ndef get_readNode():\n    return nuke.toNode('readPsFile')\n\n\nclass ChooseFilePanel(nukescripts.PythonPanel):\n    def __init__(self, node, psfiles):\n        nukescripts.PythonPanel.__init__(self, 'Choose your working file')\n        self.fpNode = node\n        self.typeKnob = nuke.Enumeration_Knob('working_file', 'working file', psfiles)\n        self.addKnob(self.typeKnob)\n\n\ndef set_reload():\n    n = nuke.thisNode()\n    read_node = get_readNode()\n    read_node.knob('reload').execute()\n    set_alpha_mask()\n\n    # disabling knobs\n    n.knob('refFrame').setEnabled(False)\n    n.knob('SET_TO_CURRENT_FRAME').setEnabled(False)\n    n.knob('get_uuid').setEnabled(False)\n    n.knob('fileDesDrop').setEnabled(False)\n    n.knob('fileDesText').setEnabled(False)\n\n\ndef set_alpha_mask():\n    expr3_sum = \"\"\n    layer_channels = \[]\n    expr_node = nuke.toNode('Expression3')\n    channels = expr_node.channels()\n    expr_node_knob = expr_node.knob('expr3')\n    expr_node_knob_value = expr_node.knob('expr3').value()\n\n    for channel in channels:\n        if channel.endswith('.mask'):\n            layer_channels.append(channel)\n            expr3_sum += \"+\" + channel\n\n    if len(layer_channels) == 0:\n        expr_node_knob.setValue(\"\")\n    elif expr_node_knob_value != expr3_sum:\n        expr_node_knob.setValue(expr3_sum)\n\n\ndef on_press_reload():\n    node = nuke.thisNode()\n    uuidKnob = node.knob('uuid_knob')\n    read_node = get_readNode()\n    file_path = read_node.knob('file').value()\n    shownModal = node.knob('shownModal')\n\n    def get_ps_files_dir(s):\n        if platform.system() == \"Windows\":\n            res = s.replace('/', '\\\\') + '\\\\_psfiles'\n            return res\n        elif platform.system() == \"Darwin\":\n            return s + '/_psfiles'\n\n    scriptDir = nuke.script_directory()\n    psfilesDir = get_ps_files_dir(scriptDir)\n    list_psfilesDir = os.listdir(psfilesDir)\n    psfiles = \[element for element in list_psfilesDir if\n               uuidKnob.value() in element and element.endswith(('.psd', '.tiff'))]\n\n    panel = ChooseFilePanel(node, psfiles)\n\n    if os.path.exists(file_path):\n        if len(psfiles) > 1 and shownModal.value():\n            if panel.showModalDialog():\n                file_dir = scriptDir + '/_psfiles/' + panel.typeKnob.value()\n                nuke.toNode('readPsFile').knob('file').setValue(file_dir)\n                nuke.toNode('renderFile').knob('psFilePath').setValue(file_dir)\n                shownModal.setValue(False)\n                set_reload()\n        else:\n            set_reload()\n    else:\n        nuke.message('You first need to open Photoshop and save your file.')\n\n\non_press_reload()\n"}
+ addUserKnob {22 loadExistingFile l "Load Existing File.." t "You will be able to reload the Photoshop file as long as you render your file within PsBridge. Upon loading the file, PsBridge will automatically set the node name and the associated frame hold." -STARTLINE T "import nuke\nimport os\n\n\ndef get_readNode():\n    return nuke.toNode('readPsFile')\n\n\ndef get_writeNode():\n    return nuke.toNode('renderFile')\n\n\ndef set_alpha_mask():\n    expr3_sum = \"\"\n    layer_channels = \[]\n    expr_node = nuke.toNode('Expression3')\n    channels = expr_node.channels()\n    expr_node_knob = expr_node.knob('expr3')\n    expr_node_knob_value = expr_node.knob('expr3').value()\n\n\n\n    for channel in channels:\n        if channel.endswith('.mask'):\n            layer_channels.append(channel)\n            expr3_sum += \"+\" + channel\n\n\n\n    if len(layer_channels) == 0:\n        expr_node_knob.setValue(\"\")\n    elif expr_node_knob_value != expr3_sum:\n        expr_node_knob.setValue(expr3_sum)\n\n\ndef reload():\n    def set_reload():\n        n = nuke.thisNode()\n        read_node = nuke.toNode('readPsFile')\n        read_node.knob('reload').execute()\n        set_alpha_mask()\n\n\n        #disabling knobs\n        n.knob('refFrame').setEnabled(False)\n        n.knob('SET_TO_CURRENT_FRAME').setEnabled(False)\n        n.knob('get_uuid').setEnabled(False)\n        n.knob('fileDesDrop').setEnabled(False)\n        n.knob('fileDesText').setEnabled(False)\n        n.knob('shownModal').setValue(False)\n\n\n    def on_press_reload():\n        read_node = nuke.toNode('readPsFile')\n        file_path = read_node.knob('file').value()\n\n\n        if os.path.exists(file_path):\n            set_reload()\n        elif len(file_path) == 0:\n            nuke.message('You first need to open Photoshop and save your file.')\n\n\n    on_press_reload()\n\n\ndef is_psfile_valid(file_path):\n    file_name = os.path.basename(file_path).split(\".\")\[0]\n    valid_extensions = \['.psd','.tiff']\n\n\n    try:\n        extension = '.' + file_path.split('.')\[1]\n        if extension in valid_extensions:\n            file_array = file_name.split(\"_\")\n            if '_' in file_name and len(file_array) == 4:\n                return True\n            else:\n                error = \"Your file must have the following name structure:'PsBridge_Description_Frame_xxxxxxxx.tiff'\"\n                return error\n        else:\n            error = \"The file must have the following extensions: \" + str(valid_extensions)\n            return error\n    except Exception as e:\n        error = \"Error: \" + str(e)\n        return error\n\n\n\ndef set_ps_file(file_path):\n    n = nuke.thisNode()\n    write_node = nuke.toNode('renderFile')\n    read_node = nuke.toNode('readPsFile')\n\n\n    fileDesDrop_knob = n.knob('fileDesDrop')\n    fileDesText_knob = n.knob('fileDesText')\n\n\n    #node_uuid_val = PsBridge\[0]_Description\[1]_refFrame\[2]_uuid\[3]\n    file_name = os.path.basename(file_path).split(\".\")\[0]\n    uuid_description = file_name.split(\"_\")\[1]\n    uuid_refFrame = file_name.split(\"_\")\[2]\n\n\n    write_node.knob('psFilePath').setValue(file_path)\n    read_node.knob('file').setValue(file_path)\n\n\n    n.knob('refFrame').setValue(float(uuid_refFrame))\n\n\n    if 'Paint' in uuid_description:\n        fileDesDrop_knob.setValue('Paint')\n    else:\n        fileDesDrop_knob.setValue('Custom')\n        fileDesText_knob.setValue(uuid_description.replace('-',' '))\n\n\n    n.knob('uuid_knob').setValue(file_name)\n    reload()\n\n\n\ndef open_ps_filepath():\n    file_path = nuke.getFilename(\"Select your PS file\", '*.tiff *.psd', default = nuke.script_directory() + '/')\n\n\n    if file_path != None:\n        result = is_psfile_valid(file_path)\n        if result == True:\n            set_ps_file(file_path)\n        else:\n            nuke.message(result)\n        \n    \n\n\nopen_ps_filepath()"}
+ addUserKnob {26 breakOutTitle l "<b>PSD Options<b>" +HIDDEN}
+ addUserKnob {22 breakout l "Breakout Layers" t "Breaks out the PSD file into seperate layers and re-combines them together with merges. The blending modes are approximated and do not match\nPhotoshop exactly. It is recommended that all masks and adjustment layers are rasterized in Photoshop before importing into NUKE." +HIDDEN T "import nuke\n\n\n\nclass Layer():\n  def __init__(self):\n    self.attrs = \{\}\n\n\ndef getLayers(metadata):\n  layers = \[]\n\n\n  for key in metadata:\n    if key.startswith( 'input/psd/layers/' ):\n      splitKey = key.split( '/' )\n      num = int( splitKey\[3] )\n      attr = splitKey\[4]\n      try:\n        attr += '/' + splitKey\[5]\n      except:\n        pass\n\n\n      while ( len(layers) <= num ):\n        layers.append( Layer() )\n      layers\[num].attrs\[ attr ] = metadata\[key]\n\n\n\n  return layers\n\n\ndef breakoutLayers( node, sRGB = True ):\n\n\n  if not node:\n    return\n\n\n  nuke.Undo().begin()\n\n\n  blendMap = \{\}\n  blendMap\['norm'] = \"normal\"\n  blendMap\['scrn'] = \"screen\"\n  blendMap\['div '] = \"color dodge\"\n  blendMap\['over'] = \"overlay\"\n  blendMap\['mul '] = \"multiply\"\n  blendMap\['dark'] = \"darken\"\n  blendMap\['idiv'] = \"color burn\"\n  blendMap\['lbrn'] = \"linear burn\"\n  blendMap\['lite'] = \"lighten\"\n  blendMap\['lddg'] = \"linear dodge\"\n  blendMap\['lgCl'] = \"lighter color\"\n  blendMap\['sLit'] = \"soft light\"\n  blendMap\['hLit'] = \"hard light\"\n  blendMap\['lLit'] = \"linear light\"\n  blendMap\['vLit'] = \"vivid light\"\n  blendMap\['pLit'] = \"pin light\"\n  blendMap\['hMix'] = \"hard mix\"\n  blendMap\['diff'] = \"difference\"\n  blendMap\['smud'] = \"exclusion\"\n  blendMap\['fsub'] = \"subtract\"\n  blendMap\['fdiv'] = \"divide\"\n  blendMap\['hue '] = \"hue\"\n  blendMap\['sat '] = \"saturation\"\n  blendMap\['colr'] = \"color\"\n  blendMap\['lum '] = \"luminosity\"\n\n\n  node_in_colorspace = node.knob('in_colorspace').value()\n  node_out_colorspace = node.knob('out_colorspace').value()\n\n\n  metaData = node.metadata()\n  layers = getLayers(metaData)\n\n\n  xspacing = 80\n\n\n  dotXfudge = 34\n  dotYfudge = 4\n\n\n  backdropXfudge = -( xspacing//2 ) + 10\n  backdropYfudge = -40\n\n\n  spacing = 70\n\n\n  x = node.xpos()\n  y = node.ypos()\n  curY = y + spacing * 2\n\n\n\n  inputNode = node\n\n\n  curX = x\n  curY = y + spacing * 2\n  topY  = curY\n\n\n  lastLayer = None\n  background = None\n\n\n  i = 0\n\n\n  for l in layers:\n\n\n    try:\n      if l.attrs\['divider/type'] > 0: ## hidden divider or start of group\n        continue\n    except:\n      pass\n\n\n    i = i + 1\n    if i > 100:\n      nuke.message( \"Too many layers, stopping at layer 100.\" )\n      break\n\n\n    name = l.attrs\['nukeName']\n\n\n    curY = topY\n\n\n    if i % 2 :\n      tileColor = 2829621248\n    else:\n      tileColor = 1751668736\n\n\n    backdrop = nuke.nodes.BackdropNode(tile_color = tileColor, note_font_size=18)\n    backdrop.setXYpos( curX + backdropXfudge, curY + backdropYfudge )\n\n\n    curY += spacing//2\n\n\n    dot = nuke.nodes.Dot()\n    dot.setInput( 0, inputNode )\n    dot.setXYpos( curX + dotXfudge , curY + dotYfudge)\n    curY += spacing\n\n\n    inputNode = dot\n\n\n    shuffle = nuke.nodes.Shuffle()\n    shuffle\['label'].setValue( name )\n    shuffle\['in'].setValue( name )\n    shuffle\['in2'].setValue( 'none' )\n\n\n    shuffle\['red'].setValue( 'red' )\n    shuffle\['green'].setValue( 'green' )\n    shuffle\['blue'].setValue( 'blue' )\n    shuffle\['alpha'].setValue( 'alpha' )\n\n\n    ## if no 'alpha' assume alpha of 1\n    alphaChan = name + \".alpha\"\n    if not alphaChan in inputNode.channels():\n      shuffle\['alpha'].setValue( 'white' )\n\n\n    shuffle\['black'].setValue( 'red2' )\n    shuffle\['white'].setValue( 'green2' )\n    shuffle\['red2'].setValue( 'blue2' )\n    shuffle\['green2'].setValue( 'alpha2' )\n\n\n    shuffle\['out'].setValue( 'rgba' )\n    shuffle\['out2'].setValue( 'none' )\n\n\n    shuffle.setInput(0, inputNode )\n    shuffle.setXYpos( curX, curY )\n\n\n    curY += spacing\n\n\n    crop = nuke.nodes.Crop()\n    crop\['box'].setValue( l.attrs\['x'], 0 )\n    crop\['box'].setValue( l.attrs\['y'], 1 )\n    crop\['box'].setValue( l.attrs\['r'], 2 )\n    crop\['box'].setValue( l.attrs\['t'], 3 )\n\n\n    crop.setInput(0, shuffle )\n    crop.setXYpos( curX, curY )\n\n\n    curY += spacing * 2\n\n\n    layer = crop\n    merge = None\n\n\n    try:\n      operation = blendMap\[ l.attrs\['blendmode'] ]\n    except:\n      print(\"unknown blending mode \" + l.attrs\['blendmode'])\n      operation = \"normal\"\n\n\n    if lastLayer:\n      psdMerge = nuke.nodes.PSDMerge()\n      psdMerge\['operation'].setValue( operation )\n\n\n      psdMerge.setInput(0, lastLayer )\n      psdMerge.setInput(1, layer )\n      psdMerge.setXYpos( curX, curY )\n      psdMerge\['sRGB'].setValue( sRGB )\n      psdMerge\['mix'].setValue( (l.attrs\['opacity'] / 255.0) )\n      try:\n        if ( l.attrs\['mask/disable'] != True ):\n          psdMerge\['maskChannelInput'].setValue( name + '.mask' )\n          if ( l.attrs\['mask/invert'] == True ) :\n            psdMerge\['invert_mask'].setValue( True )\n      except:\n        pass\n      lastLayer = psdMerge\n    else:\n      dot = nuke.nodes.Dot()\n      dot.setInput( 0, layer )\n      dot.setXYpos( curX + dotXfudge, curY + dotYfudge )\n      lastLayer = dot\n\n\n    curY += spacing\n\n\n    backdrop\['bdwidth'].setValue( xspacing * 2 + backdropXfudge * 2 + 50)\n    backdrop\['bdheight'].setValue( ( curY - backdrop.ypos() ) - backdropYfudge -  50 )\n    backdrop\['label'].setValue( l.attrs\['name'] )\n\n\n    curY += spacing\n\n\n    curX = curX + xspacing * 2 + backdropXfudge * 2 + 50\n\n\n\n  if not sRGB:\n    colorSpace2 = nuke.nodes.OCIOColorSpace()\n    colorSpace2\['channels'].setValue( 'all' )\n    colorSpace2\['in_colorspace'].setValue(node_out_colorspace)\n    colorSpace2\['out_colorspace'].setValue(node_in_colorspace)\n    colorSpace2.setInput(0, lastLayer )\n    colorSpace2.setXYpos( lastLayer.xpos(), lastLayer.ypos() + 2 * spacing )\n\n\n  nuke.Undo().end()\n\n\n\ndef doBreakoutLayers():\n    node_context = nuke.thisNode()\n    root_context = nuke.root()\n\n\n    with root_context:\n        breakoutLayers(node_context, sRGB=False)\n\n\ndoBreakoutLayers()" +STARTLINE}
+ addUserKnob {26 _2 l "" +STARTLINE}
+ addUserKnob {26 text_3 l "" +STARTLINE T "<span style=\"color:#aaa;font-family:sans-serif;font-size:8pt\">PsBridge - Version 1.3 - 2023 - Gonzalo Rojas</span>"}
+ addUserKnob {20 settingsTab l Settings}
+ addUserKnob {52 startup l "" +STARTLINE T "nuke.thisNode()\[\"SET_UUID\"].execute()\n\n" +STARTLINE}
+ addUserKnob {22 SET_UUID +HIDDEN T "import uuid\nimport nuke\n\n\ndef update_uuid_description():\n  n = nuke.thisNode()\n  uuid_knob = n.knob('uuid_knob')\n  node_uuid_val = uuid_knob.value()\n\n\n  #node_uuid_val = PsBridge\[0]_Paint\[1]_refFrame\[2]_uuid\[3]\n  uuid_splited = node_uuid_val.split(\"_\")\n  uuid_node_refFrame = uuid_splited\[2]\n  uuid_node_id = uuid_splited\[3]\n\n\n  exclude_char = \{\n    ord(' '): '-',\n    ord('_'): '-',\n  \}\n\n\n  fileDesDrop_value = n.knob('fileDesDrop').value()\n  fileDesText_value = n.knob('fileDesText').value()\n  description_replaced = fileDesText_value.translate(str.maketrans(exclude_char))\n\n\n  if fileDesDrop_value == 'Paint' or fileDesText_value == \"\":\n    uuid_knob.setValue('PsBridge' + '_' + 'Paint' + '_' + uuid_node_refFrame + '_' + uuid_node_id)\n  else:\n    uuid_knob.setValue('PsBridge' + '_' + description_replaced + '_' + uuid_node_refFrame + '_' + uuid_node_id)\n\n\n\ndef set_uuid():\n  n = nuke.thisNode()\n  full_uuid = str(uuid.uuid4())\n  short_uuid = str(full_uuid)\[:8]\n\n\n  refFrame = int(n.knob('refFrame').value())\n  uuid_knob = n.knob('uuid_knob')\n\n\n\n  node_uuid_val = uuid_knob.value()\n\n\n\n  def update_uuid_frame():\n    #node_uuid_val = PsBridge\[0]_Paint\[1]_refFrame\[2]_uuid\[3]\n    uuid_splited = node_uuid_val.split(\"_\")\n    uuid_node_id = uuid_splited\[3]\n\n\n    fileDesDrop_value = n.knob('fileDesDrop').value()\n    fileDesText_value = n.knob('fileDesText').value()\n\n\n    if fileDesDrop_value == 'Paint':\n      uuid_knob.setValue('PsBridge' + '_' + 'Paint' + '_' + str(refFrame) + '_' + uuid_node_id)\n    else:\n      uuid_knob.setValue('PsBridge' + '_' + fileDesText_value.replace(' ','-') + '_' + str(refFrame) + '_' + uuid_node_id)\n\n\n\n  def set_new_uuid():\n    fileDesDrop_value = n.knob('fileDesDrop').value()\n    fileDesText_value = n.knob('fileDesText').value()\n\n\n    if fileDesDrop_value == 'Paint':\n      uuid_knob.setValue('PsBridge' + '_' + 'Paint' + '_' + str(refFrame) + '_' + short_uuid)\n    else:\n      uuid_knob.setValue('PsBridge' + '_' + fileDesText_value.replace(' ','-') + '_' + str(refFrame) + '_' + short_uuid)\n\n\n\n  def validate_uuid():\n    #node_uuid_val = PsBridge\[0]_Paint\[1]_refFrame\[2]_uuid\[3]\n    uuid_splited = node_uuid_val.split(\"_\")\n    uuid_node_description = uuid_splited\[1]\n    uuid_node_frame = uuid_splited\[2]\n\n\n    fileDesDrop_value = n.knob('fileDesDrop').value()\n    fileDesText_value = n.knob('fileDesText').value()\n\n\n    if uuid_node_description != fileDesText_value and fileDesDrop_value == \"Custom\":\n      update_uuid_description()\n    elif uuid_node_frame != refFrame:\n      update_uuid_frame()\n    \n\n\n\n  if len(node_uuid_val.split(\"_\")) != 4 or node_uuid_val == \"\":\n    set_new_uuid()\n  else: \n    validate_uuid()\n\n\n\nset_uuid()" +STARTLINE}
+ addUserKnob {1 uuid_knob l UUID t "The UUID is essential as it provides a unique identity to each paint within your node, ensuring proper identification and management." +DISABLED}
+ uuid_knob PsBridge_Paint_1_9e744f6d
+ addUserKnob {22 get_uuid l "Get UUID" t "This button sets your UUID if it is empty." -STARTLINE T set_uuid()}
+ addUserKnob {26 tiffOpt l "<b>TIFF Options<b>"}
+ addUserKnob {41 datatype l "data type" T renderFile.datatype}
+ addUserKnob {41 compression T renderFile.compression}
+ addUserKnob {26 text_4 l "<b>Reset Node<b>"}
+ addUserKnob {22 RESET l "reset node" t "The reset button restores the node to its default values. You can choose whether to delete the PS file separately, allowing you to reset the node while retaining or deleting the associated Photoshop file." T "import nuke\nimport os\n\n\ndef get_writeNode():\n    return nuke.toNode('renderFile')\n\n\ndef reset_node():\n    n = nuke.thisNode()\n    first_frame = nuke.Root().firstFrame()\n\n    nuke.toNode('renderFile').knob('psFilePath').setValue(\"\")\n    nuke.toNode('readPsFile').knob('file').setValue(\"\")\n\n    n.knob('refFrame').setValue(first_frame)\n    n.knob('shownModal').setValue(True)\n    n.knob('holdFrame').setValue(True)\n    n.knob('fileDesDrop').setValue('Paint')\n    n.knob('fileDesText').setValue('')\n    n.knob('colorPreset').setValue('None')\n    n.knob('in_colorspace').setValue('scene_linear')\n    n.knob('out_colorspace').setValue('scene_linear')\n    n.knob('renderOption').setValue('Composite')\n    n.knob('psVersion').setValue(0)\n    n.knob('removeAiArtifacts').setValue('No Filtering')\n    n.knob('sharpen').setValue(0)\n    n.knob('refFrame').setEnabled(True)\n    n.knob('fileDesDrop').setEnabled(True)\n    n.knob('fileDesText').setEnabled(True)\n    n.knob('SET_TO_CURRENT_FRAME').setEnabled(True)\n    n.knob('get_uuid').setEnabled(True)\n    n.knob('deletePSFile').setValue(False)\n    n.knob('addMask').setValue(False)\n    n.knob('uuid_knob').setValue('')\n    n.knob('SET_UUID').execute()\n\n\ndef delete_ps_file():\n    n = nuke.thisNode()\n    write_node = get_writeNode()\n    ps_file_path = write_node.knob('psFilePath').value()\n    delete_file_box = n.knob('deletePSFile').value()\n\n    def delete_files(path):\n        base_dir = os.path.dirname(path)\n        files = os.listdir(base_dir)\n        file_name = os.path.basename(path)\n        base_name = os.path.splitext(file_name)\[0]\n        del_list = set()\n\n        for file_d in files:\n            if base_name in file_d:\n                del_list.add(file_d)\n\n        for del_file in del_list:\n            full_file_path = os.path.join(base_dir, del_file)\n            full_file_path = full_file_path.replace('/', '\\\\')\n            os.remove(full_file_path)\n\n    def validate_and_delete():\n        if os.path.exists(ps_file_path):\n            delete_files(ps_file_path)\n        else:\n            nuke.message('The corresponding file was not found.')\n\n    if delete_file_box:\n        validate_and_delete()\n\n\ndef main():\n    response = nuke.ask(\"Do you want to reset the node configuration to the default settings?\")\n\n    if response:\n        delete_ps_file()\n        reset_node()\n        nuke.message(\"This node has been reset.\")\n\n\nmain()\n" +STARTLINE}
+ addUserKnob {6 deletePSFile l "Delete the PS file" t "Choose whether you want to keep or delete the paint file. By default, it is set to keep the file." -STARTLINE}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x45555ff
+  label IO
+  note_font "Verdana Bold"
+  note_font_size 42
+  note_font_color 0xff
+  xpos -165
+  ypos -850
+  appearance Border
+  bdwidth 931
+  bdheight 1970
+  z_order -1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x75141aff
+  label "remove alpha and adds frame hold"
+  note_font "Verdana Bold"
+  note_font_size 42
+  note_font_color 0xff
+  xpos -377
+  ypos -1354
+  appearance Border
+  bdwidth 821
+  bdheight 451
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x1554ff
+  label Alpha
+  note_font_size 42
+  xpos -642
+  ypos 2555
+  appearance Border
+  bdwidth 1364
+  bdheight 554
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0xa4724fff
+  label filtering
+  note_font Verdana
+  note_font_size 42
+  note_font_color 0xff
+  xpos -155
+  ypos 447
+  appearance Border
+  bdwidth 372
+  bdheight 272
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xffd600ff
+  label render
+  note_font "Verdana Bold"
+  note_font_size 42
+  note_font_color 0xdfff00ff
+  xpos -154
+  ypos -261
+  appearance Border
+  bdwidth 735
+  bdheight 550
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x43a8ff
+  label "Paint / Composite"
+  note_font "Verdana Bold"
+  note_font_size 42
+  xpos -14
+  ypos 1293
+  appearance Border
+  bdwidth 841
+  bdheight 681
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode7
+  tile_color 0x1f00ffff
+  label ALPHA
+  note_font "Verdana Bold"
+  note_font_size 42
+  xpos 931
+  ypos -14
+  appearance Border
+  bdwidth 878
+  bdheight 1714
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0xaaaaaa00
+  label Linear
+  note_font_size 42
+  xpos -67
+  ypos -159
+  bdwidth 239
+  bdheight 398
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x7171c600
+  label "set using ocio"
+  note_font_size 42
+  xpos 210
+  ypos -95
+  bdwidth 297
+  bdheight 140
+  z_order 1
+ }
+ Input {
+  inputs 0
+  name Source
+  xpos -4
+  ypos -1597
+ }
+ Dot {
+  name Dot13
+  xpos 30
+  ypos -1518
+ }
+set Ncd45400 [stack 0]
+ Dot {
+  name Dot4
+  xpos -632
+  ypos -1518
+ }
+ Dot {
+  name Dot16
+  xpos -632
+  ypos 222
+ }
+set Ncd44c00 [stack 0]
+push $Ncd44c00
+ Dot {
+  name Dot30
+  xpos -498
+  ypos 222
+ }
+ FrameHold {
+  first_frame {{parent.refFrame}}
+  name FrameHold3
+  xpos -532
+  ypos 272
+ }
+ FrameRange {
+  first_frame {{parent.refFrame}}
+  last_frame {{parent.refFrame}}
+  time ""
+  name FrameRange4
+  xpos -532
+  ypos 368
+ }
+ Switch {
+  inputs 2
+  which {{!parent.holdFrame}}
+  name Switch11
+  xpos -666
+  ypos 368
+ }
+ Dot {
+  name Dot22
+  xpos -632
+  ypos 2333
+ }
+set Ncd44000 [stack 0]
+ Dot {
+  name Dot10
+  xpos -632
+  ypos 2957
+ }
+ Read {
+  inputs 0
+  file_type psd
+  origset true
+  version 184
+  colorspace linear
+  premultiplied true
+  name readPsFile
+  knobChanged on_read_ps_file_changed()
+  tile_color 0x9fffff
+  xpos -4
+  ypos 80
+ }
+set Ncd85800 [stack 0]
+ PostageStamp {
+  name readPsFile_OUT
+  tile_color 0x9fffff
+  xpos 1210
+  ypos 116
+  hide_input true
+ }
+ NoOp {
+  name TOOLS
+  xpos 1210
+  ypos 218
+  addUserKnob {20 User}
+  addUserKnob {3 has_alpha}
+  has_alpha {{"\[python -execlocal import\\ nuke\\n\\n\\ndef\\ detect_alpha():\\n\\ \\ \\ \\ n\\ =\\ nuke.thisNode()\\n\\ \\ \\ \\ channels\\ =\\ n.channels()\\n\\n\\n\\ \\ \\ \\ if\\ 'rgba.alpha'\\ in\\ channels:\\n\\ \\ \\ \\ \\ \\ \\ \\ return\\ True\\n\\ \\ \\ \\ else:\\ \\n\\ \\ \\ \\ \\ \\ \\ \\ return\\ False\\n\\ \\ \\ \\ \\nret\\ =\\ detect_alpha()]"}}
+  addUserKnob {3 isPSD}
+  isPSD {{"\[python -execlocal def\\ is_psd():\\n\\ \\ \\ \\ readNode\\ =\\ nuke.toNode('readPsFile')\\n\\ \\ \\ \\ file_knob\\ =\\ readNode.knob('file')\\n\\n\\n\\ \\ \\ \\ if\\ '.psd'\\ in\\ file_knob.value():\\n\\ \\ \\ \\ \\ \\ \\ \\ return\\ True\\n\\ \\ \\ \\ else:\\n\\ \\ \\ \\ \\ \\ \\ \\ return\\ False\\n\\ \\ \\ \\ \\nret\\ =\\ is_psd()]"}}
+  addUserKnob {3 isPSD_alphaCh}
+  isPSD_alphaCh {{"\[python -execlocal def\\ getAlpha():\\n\\ \\ \\ \\ layer_channels\\ =\\ \\\[\\]\\n\\ \\ \\ \\ channels\\ =\\ nuke.thisNode().channels()\\n\\n\\n\\n\\ \\ \\ \\ for\\ channel\\ in\\ channels:\\n\\ \\ \\ \\ \\ \\ \\ \\ if\\ channel.endswith('.alpha')\\ or\\ channel.endswith('.mask'):\\n\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ layer_channels.append(channel)\\n\\n\\n\\n\\ \\ \\ \\ if\\ len(layer_channels)\\ ==\\ 0:\\n\\ \\ \\ \\ \\ \\ \\ \\ res\\ =\\ False\\n\\ \\ \\ \\ else:\\ \\n\\ \\ \\ \\ \\ \\ \\ \\ res\\ =\\ True\\n\\n\\n\\ \\ \\ \\ return\\ res\\n\\n\\n\\nret\\ =\\ getAlpha()]"}}
+ }
+ Dot {
+  name Dot17
+  xpos 1244
+  ypos 491
+ }
+set Ncd84800 [stack 0]
+ Dot {
+  name Dot19
+  xpos 1650
+  ypos 491
+ }
+ Expression {
+  expr3 +futurist_city_.mask
+  name Expression3
+  xpos 1616
+  ypos 671
+ }
+ Expression {
+  channel3 rgba
+  expr3 "alpha >= 0.008 ? alpha : 0\n"
+  name Expression1
+  label "REMOVE OPAQUE\nPIXELS"
+  xpos 1616
+  ypos 797
+ }
+ Blur {
+  size 3
+  name Blur1
+  xpos 1616
+  ypos 947
+ }
+ Clamp {
+  name Clamp1
+  xpos 1616
+  ypos 1121
+ }
+ Dot {
+  name Dot21
+  xpos 1650
+  ypos 1230
+ }
+push $Ncd84800
+ Expression {
+  channel3 rgba
+  expr3 "alpha >= 0.007 ? alpha : 0\n"
+  name Expression2
+  label "REMOVE OPAQUE\nPIXELS"
+  xpos 1210
+  ypos 688
+ }
+ Blur {
+  size 3
+  name Blur2
+  xpos 1210
+  ypos 947
+ }
+ Switch {
+  inputs 2
+  which {{parent.TOOLS.isPSD}}
+  name Switch1
+  xpos 1210
+  ypos 1227
+ }
+ Shuffle {
+  name Shuffle3
+  xpos 1210
+  ypos 1510
+ }
+ Dot {
+  name Dot5
+  xpos 1244
+  ypos 1621
+ }
+set Nca95c00 [stack 0]
+push $Nca95c00
+ PostageStamp {
+  name PostageStamp1
+  xpos 127
+  ypos 539
+  hide_input true
+  postage_stamp true
+ }
+push $Ncd85800
+ Group {
+  inputs 2
+  name Filtering
+  tile_color 0xff6d00ff
+  xpos -4
+  ypos 563
+  addUserKnob {20 User}
+  addUserKnob {41 which T Dissolve1.which}
+  addUserKnob {41 size T Sharpen1.size}
+ }
+  Input {
+   inputs 0
+   name mask
+   xpos 486
+   ypos 339
+   number 1
+  }
+  Dot {
+   name Dot5
+   xpos 520
+   ypos 401
+  }
+set Nca95000 [stack 0]
+  Dot {
+   name Dot6
+   xpos 520
+   ypos 496
+  }
+  Input {
+   inputs 0
+   name src
+   xpos 321
+   ypos 63
+  }
+  Dot {
+   name Dot4
+   xpos 355
+   ypos 138
+  }
+set Nca94400 [stack 0]
+  Dot {
+   name Dot3
+   xpos 203
+   ypos 138
+  }
+  Matrix {
+   matrix {
+       {0.1111111 0.1111111111 0.1111111111}
+       {0.1111111111 0.1111111111 0.1111111111}
+       {0.1111111111 0.1111111111 0.1111111111}
+     }
+   name Matrix1
+   label "Mean Filter"
+   xpos 169
+   ypos 193
+  }
+set Ncab1c00 [stack 0]
+  Dot {
+   name Dot1
+   xpos 71
+   ypos 210
+  }
+  Matrix {
+   matrix {
+       {0.1111111 0.1111111111 0.1111111111}
+       {0.1111111111 0.1111111111 0.1111111111}
+       {0.1111111111 0.1111111111 0.1111111111}
+     }
+   name Matrix2
+   label "Mean Filter"
+   xpos 37
+   ypos 289
+  }
+set Ncab1400 [stack 0]
+  Dot {
+   name Dot2
+   xpos -81
+   ypos 306
+  }
+  Matrix {
+   matrix {
+       {0.1111111 0.1111111111 0.1111111111}
+       {0.1111111111 0.1111111111 0.1111111111}
+       {0.1111111111 0.1111111111 0.1111111111}
+     }
+   name Matrix3
+   label "Mean Filter"
+   xpos -115
+   ypos 385
+  }
+push $Ncab1400
+push $Nca95000
+push $Ncab1c00
+push $Nca94400
+  Dissolve {
+   inputs 4+1
+   which {{"\[python nuke.thisNode().parent().parent().knob('removeAiArtifacts').getValue()]"}}
+   name Dissolve1
+   xpos 321
+   ypos 392
+  }
+  Sharpen {
+   inputs 1+1
+   size 0
+   name Sharpen1
+   xpos 321
+   ypos 487
+  }
+  Output {
+   name Output1
+   xpos 321
+   ypos 721
+  }
+ end_group
+ Dot {
+  name Dot9
+  xpos 30
+  ypos 662
+ }
+set N6e67fc00 [stack 0]
+ Dot {
+  name Dot14
+  xpos 182
+  ypos 662
+ }
+push $Ncd45400
+ Remove {
+  operation keep
+  channels rgb
+  name Remove3
+  xpos -4
+  ypos -1273
+ }
+ Dot {
+  name Dot25
+  xpos 30
+  ypos -1139
+ }
+set N6e67f000 [stack 0]
+push $N6e67f000
+ Dot {
+  name Dot26
+  xpos 236
+  ypos -1138
+ }
+ FrameHold {
+  first_frame {{parent.refFrame}}
+  name FrameHold2
+  xpos 202
+  ypos -1088
+ }
+ FrameRange {
+  first_frame {{parent.refFrame}}
+  last_frame {{parent.refFrame}}
+  time ""
+  name FrameRange3
+  xpos 202
+  ypos -994
+ }
+ Switch {
+  inputs 2
+  which {{!parent.holdFrame}}
+  name Switch9
+  xpos -4
+  ypos -993
+ }
+set N6e67e800 [stack 0]
+ OCIOColorSpace {
+  channels all
+  in_colorspace scene_linear
+  out_colorspace scene_linear
+  name OCIOColorSpace1
+  xpos -4
+  ypos -770
+ }
+ Dot {
+  name Dot11
+  xpos 30
+  ypos -695
+ }
+ Remove {
+  operation keep
+  channels rgb
+  name Remove1
+  xpos -4
+  ypos -561
+ }
+ FrameRange {
+  first_frame {{parent.refFrame}}
+  last_frame {{parent.refFrame}}
+  time ""
+  name FrameRange5
+  xpos -4
+  ypos -345
+ }
+set N6e61db80 [stack 0]
+ Dot {
+  name Dot8
+  xpos 654
+  ypos -342
+ }
+ Dot {
+  name Dot20
+  xpos 654
+  ypos 948
+ }
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos 148
+  ypos 945
+ }
+push $N6e67fc00
+ Switch {
+  inputs 2
+  which {{"TOOLS.has_alpha | !TOOLS.isPSD_alphaCh"}}
+  name BG
+  xpos -4
+  ypos 945
+ }
+ OCIOColorSpace {
+  channels all
+  in_colorspace {{parent.OCIOColorSpace1.out_colorspace x1 7 x1001 3}}
+  out_colorspace {{parent.OCIOColorSpace1.in_colorspace x1 7 x1001 9}}
+  name OCIOColorSpace2
+  xpos -4
+  ypos 1102
+ }
+ Dot {
+  name Dot12
+  xpos 30
+  ypos 1373
+ }
+set Nc95bc00 [stack 0]
+ Dot {
+  name Dot15
+  xpos 301
+  ypos 1373
+ }
+ Shuffle {
+  alpha white
+  name Shuffle1
+  xpos 267
+  ypos 1476
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge2
+  xpos 267
+  ypos 1618
+ }
+ Dot {
+  name Dot18
+  xpos 301
+  ypos 1733
+ }
+set Nc95ac00 [stack 0]
+ Dot {
+  name Dot6
+  xpos 301
+  ypos 2813
+ }
+push $Nc95ac00
+push $Nc95bc00
+ Switch {
+  inputs 2
+  which {{parent.renderOption}}
+  name renderSwitch
+  xpos -4
+  ypos 1730
+ }
+push $N6e67fc00
+ Dot {
+  name Dot24
+  xpos -114
+  ypos 662
+ }
+ OCIOColorSpace {
+  in_colorspace {{parent.OCIOColorSpace1.out_colorspace x1 7 x1001 3}}
+  out_colorspace {{parent.OCIOColorSpace1.in_colorspace x1 7 x1001 9}}
+  name OCIOColorSpace3
+  xpos -148
+  ypos 1863
+ }
+ Dot {
+  name Dot32
+  xpos -114
+  ypos 1925
+ }
+ Switch {
+  inputs 2
+  which {{"TOOLS.has_alpha | TOOLS.isPSD_alphaCh"}}
+  name hasAlphaSwitch
+  xpos -4
+  ypos 1922
+ }
+ Dot {
+  name Dot7
+  xpos 30
+  ypos 2021
+ }
+set Nc97cc00 [stack 0]
+push $N6e67e800
+ Dot {
+  name Dot23
+  xpos -268
+  ypos -990
+ }
+ Switch {
+  inputs 2
+  which {{parent.holdFrame}}
+  name frameHoldSwitch
+  xpos -302
+  ypos 2018
+ }
+ Dot {
+  name Dot3
+  xpos -268
+  ypos 2175
+ }
+push $Nc97cc00
+ Switch {
+  inputs 2
+  which {{"frame == parent.refFrame ? 0 : 1"}}
+  name refFrameSwitch
+  xpos -4
+  ypos 2172
+ }
+push $Ncd44000
+ Switch {
+  inputs 2
+  which {{"\[python -execlocal def\\ is_file_exist():\\n\\ \\ \\ \\ read_node\\ =\\ nuke.toNode('readPsFile')\\n\\ \\ \\ \\ file_path\\ =\\ read_node.knob('file').value()\\n\\n\\n\\ \\ \\ \\ return\\ os.path.exists(file_path)\\n\\n\\nret\\ =\\ is_file_exist()]"}}
+  name fileExist
+  xpos -4
+  ypos 2330
+ }
+ Remove {
+  channels alpha
+  name Remove2
+  xpos -4
+  ypos 2635
+ }
+ ChannelMerge {
+  inputs 2
+  name ChannelMerge1
+  xpos -4
+  ypos 2796
+ }
+ ChannelMerge {
+  inputs 2
+  name ChannelMerge2
+  xpos -4
+  ypos 2940
+  disable {{"parent.outAlpha == 0" x225 0}}
+ }
+ Remove {
+  channels alpha
+  name Remove4
+  xpos -4
+  ypos 3067
+  disable {{"parent.outAlpha != 2" x225 1}}
+ }
+ Dot {
+  name Dot1
+  label mask
+  note_font "Verdana Bold"
+  note_font_size 42
+  xpos 30
+  ypos 3546
+ }
+ Merge2 {
+  operation mask
+  name MaskMerge
+  xpos -4
+  ypos 3711
+  disable {{"\[exists parent.input1] ? 0 : 1"}}
+ }
+ Output {
+  name Output1
+  xpos -4
+  ypos 4191
+ }
+ NoOp {
+  inputs 0
+  name USING_OCIO
+  xpos 335
+  ypos -9
+  addUserKnob {20 User}
+  addUserKnob {6 usingOcio l boolean +STARTLINE}
+  usingOcio {{"\[python -execlocal def\\ is_proyect_using_ocio():\\n\\ \\ \\ \\ read_node\\ =\\ nuke.toNode('readPsFile')\\n\\ \\ \\ \\ write_node\\ =\\ nuke.toNode('renderFile')\\n\\n\\n\\ \\ \\ \\ if\\ nuke.usingOcio():\\n\\ \\ \\ \\ \\ \\ \\ \\ read_node.knob('colorspace').setValue('data')\\n\\ \\ \\ \\ \\ \\ \\ \\ write_node.knob('colorspace').setValue('data')\\n\\ \\ \\ \\ \\ \\ \\ \\ return\\ True\\n\\ \\ \\ \\ else:\\n\\ \\ \\ \\ \\ \\ \\ \\ read_node.knob('colorspace').setValue('linear')\\n\\ \\ \\ \\ \\ \\ \\ \\ write_node.knob('colorspace').setValue('linear')\\n\\ \\ \\ \\ \\ \\ \\ \\ return\\ False\\n\\ \\ \\ \\ \\nret\\ =\\ is_proyect_using_ocio()]"}}
+ }
+ Shuffle {
+  inputs 0
+  name Shuffle2
+  xpos 10190
+  ypos -9
+ }
+push $N6e61db80
+ Dot {
+  name Dot2
+  xpos 30
+  ypos -75
+ }
+ Write {
+  file "\[file dirname \[value root.name]]/_psfiles/\[value parent.uuid_knob].tiff"
+  colorspace linear
+  file_type tiff
+  datatype "16 bit"
+  compression none
+  create_directories true
+  checkHashOnRead false
+  version 111
+  afterRender "nuke.thisNode().knob('psFilePath').setValue(nuke.script_directory() + \"/_psfiles/\" + nuke.thisNode().parent().knob(\"uuid_knob\").value() + \".\" + nuke.thisNode().knob(\"file_type\").value()); nuke.toNode('readPsFile').knob('file').setValue(nuke.thisNode().knob('psFilePath').value())"
+  name renderFile
+  xpos -4
+  ypos -23
+  addUserKnob {20 ps l "Ps Vars"}
+  addUserKnob {1 psFilePath l "PS File Path"}
+ }
+end_group

@@ -1,0 +1,463 @@
+#! C:/Program Files/Nuke13.2v2/nuke-13.2.2.dll -nx
+version 13.2 v2
+Gizmo {
+ inputs 4
+ addUserKnob {20 make_wave_control l "make wave control"}
+ addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+ addUserKnob {26 _2_1 l "" +STARTLINE T "<font color=#7FA0F2 face=\"Comic Sans MS\" size=\"20\">Make Wave 0.1</font>"}
+ addUserKnob {26 ""}
+ addUserKnob {26 _2 l "" +STARTLINE T "<font size=\"4\">The displacement might need some overscan on the y-axis. "}
+ addUserKnob {26 _2_1_1 l "" +STARTLINE T "<font size=\"4\"> Zdepth input should be: 1=near, 0=far."}
+ addUserKnob {26 ""}
+ addUserKnob {41 "Local GPU: " T "LakeMake.Local GPU: "}
+ addUserKnob {41 wave_height l "wave height" t "control the height of the wave" T control_make_wave.wave_height}
+ addUserKnob {41 ambient_occlusion l "ambient occlusion" t "intensity of the ao" T control_make_wave.ambient_occlusion}
+ addUserKnob {41 relighting t "relighting via normals" T control_make_wave.relighting}
+ addUserKnob {41 light_rotation t "rotation of the normal relight" T control_make_wave.light_rotation}
+ addUserKnob {41 cam_rotation l "cam rotation input" t "input here the rotation of your 3d cam" T control_make_wave.cam_rotation}
+ addUserKnob {7 soften_displacement l "soften displacement" R 0 10}
+ soften_displacement 1
+ addUserKnob {6 outputstmap l "output as stmap" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 _1 l "" +STARTLINE T "clMakeWave v0.1|Claus Lunt|27.11.2023"}
+}
+ Axis3 {
+  inputs 0
+  rotate {{parent.control_make_wave.light_rotation} {parent.control_make_wave.light_rotation} {parent.control_make_wave.light_rotation}}
+  name Axis1
+  xpos 479
+  ypos -202
+ }
+ NoOp {
+  inputs 0
+  name control_make_wave
+  xpos -710
+  ypos -536
+  addUserKnob {20 User}
+  addUserKnob {7 wave_height l "wave height" R 0 400}
+  wave_height 1
+  addUserKnob {7 ambient_occlusion l "ambient occlusion"}
+  addUserKnob {7 relighting}
+  addUserKnob {13 light_rotation}
+  addUserKnob {13 cam_rotation l "cam rotation input"}
+ }
+ Input {
+  inputs 0
+  name Inputwave_alpha
+  xpos -522
+  ypos -1309
+  number 3
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.alpha 0 3 rgba.red 0 0 rgba.alpha 0 3 rgba.green 0 1 rgba.alpha 0 3 rgba.blue 0 2 rgba.alpha 0 3 rgba.alpha 0 3"
+  name Shuffle1
+  xpos -522
+  ypos -1045
+ }
+set Ne132ee30 [stack 0]
+ Input {
+  inputs 0
+  name Inputzdepth
+  xpos -720
+  ypos -1305
+  number 2
+ }
+ Dot {
+  name Dot12
+  xpos -686
+  ypos -1158
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy4
+  xpos -720
+  ypos -1051
+ }
+ Inpaint2 {
+  fillRegion "Source Inverted Alpha"
+  center {1024 778}
+  name Inpaint1
+  xpos -720
+  ypos -888
+ }
+ Dot {
+  name Dot7
+  xpos -686
+  ypos -839
+ }
+ Input {
+  inputs 0
+  name Inputheightmap
+  selected true
+  xpos 5
+  ypos -1306
+ }
+set Ne132bfb0 [stack 0]
+ Dot {
+  name Dot13
+  xpos 39
+  ypos -839
+ }
+set Ne132e290 [stack 0]
+push $Ne132ee30
+ Dot {
+  name Dot2
+  xpos -488
+  ypos -992
+ }
+ Input {
+  inputs 0
+  name Inputplate
+  xpos -247
+  ypos -1312
+  number 1
+ }
+ Dot {
+  name Dot10
+  xpos -213
+  ypos -1203
+ }
+set Ne1330d30 [stack 0]
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 black -1 -1 rgba.red 0 0 black -1 -1 rgba.green 0 1 black -1 -1 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3"
+  name Shuffle5
+  xpos -246
+  ypos -1132
+ }
+ Expression {
+  expr0 x/(width-1)
+  expr1 y/(height-1)
+  name Expression1
+  xpos -246
+  ypos -1025
+ }
+ Group {
+  inputs 4
+  name LakeMake
+  xpos -246
+  ypos -843
+  addUserKnob {20 LakeMake}
+  addUserKnob {41 "Local GPU: " T BlinkScript2.gpuName}
+  addUserKnob {41 "Use GPU if Available" T BlinkScript2.useGPUIfAvailable}
+  addUserKnob {26 ""}
+  addUserKnob {41 cam_angle T BlinkScript2.LakeMake_cam_angle}
+  addUserKnob {41 wave_height T BlinkScript2.LakeMake_wave_height}
+  addUserKnob {41 "ambient occlusion" T "BlinkScript2.LakeMake_ambient occlusion"}
+ }
+  Input {
+   inputs 0
+   name Input4
+   xpos 97
+   ypos 848
+   number 3
+  }
+  Input {
+   inputs 0
+   name Input3
+   xpos 97
+   ypos 848
+   number 2
+  }
+  Input {
+   inputs 0
+   name Input2
+   xpos 97
+   ypos 848
+   number 1
+  }
+  Input {
+   inputs 0
+   name Input1
+   xpos 97
+   ypos 848
+  }
+  BlinkScript {
+   inputs 4
+   recompileCount 757
+   ProgramGroup 1
+   KernelDescription "2 \"LakeMake\" iterate pixelWise 8251d08da3d44acde41545793610b0054c2131223be54614c07ee5931e1ff86f 5 \"plate\" Read Random \"lake_mask\" Read Random \"wave_noise\" Read Random \"z_depth\" Read Random \"dst\" Write Random 3 \"cam_angle\" Float 1 AAAAAA== \"wave_height\" Float 1 AAAIQg== \"ambient occlusion\" Float 1 AACAPw== 3 \"cam_angle\" 1 1 \"wave_height\" 1 1 \"ambient_occlusion\" 1 1 2 \"width\" Float 1 1 AAAAAA== \"height\" Float 1 1 AAAAAA=="
+   EncodedSource "1 1740 +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"
+   rebuild ""
+   LakeMake_cam_angle {{parent.parent.control_make_wave.cam_rotation.x}}
+   LakeMake_wave_height {{parent.parent.control_make_wave.wave_height}}
+   protectKernelWhenPublishing true
+   rebuild_finalise ""
+   name BlinkScript2
+   xpos 97
+   ypos 888
+  }
+  Output {
+   name Output1
+   xpos 97
+   ypos 988
+  }
+ end_group
+ Blur {
+  channels rgb
+  size {{parent.soften_displacement}}
+  name Blur1
+  xpos -246
+  ypos -657
+ }
+ Dot {
+  name Dot17
+  xpos -212
+  ypos -280
+ }
+set Ne132ea50 [stack 0]
+ Dot {
+  name Dot5
+  xpos -424
+  ypos -280
+ }
+ Dot {
+  name Dot4
+  xpos -424
+  ypos 590
+ }
+push $Ne132ea50
+ Constant {
+  inputs 0
+  channels rgb
+  color 0.5
+  name Constant1
+  xpos 595
+  ypos -498
+ }
+push $Ne132e290
+ Dot {
+  name Dot15
+  xpos 334
+  ypos -839
+ }
+set Ne1331cb0 [stack 0]
+ Matrix {
+  channels rgb
+  matrix {
+      {1 0 -1}
+      {1 0 -1}
+      {1 0 -1}
+    }
+  name Matrix1
+  xpos 300
+  ypos -711
+ }
+push $Ne1331cb0
+ Dot {
+  name Dot16
+  xpos 543
+  ypos -839
+ }
+ Matrix {
+  channels rgb
+  matrix {
+      {1 1 1}
+      {0 0 0}
+      {-1 -1 -1}
+    }
+  name Matrix2
+  xpos 509
+  ypos -708
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  name Copy2
+  xpos 300
+  ypos -579
+ }
+ Copy {
+  inputs 2
+  from0 rgba.blue
+  to0 rgba.blue
+  name Copy3
+  xpos 300
+  ypos -481
+ }
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap3
+  xpos 300
+  ypos -290
+ }
+ ColorMatrix {
+  matrix {
+      {{parent.Axis1.matrix.0} {parent.Axis1.matrix.1} {parent.Axis1.matrix.2}}
+      {{parent.Axis1.matrix.4} {parent.Axis1.matrix.5} {parent.Axis1.matrix.6}}
+      {{parent.Axis1.matrix.8} {parent.Axis1.matrix.9} {parent.Axis1.matrix.10}}
+    }
+  name ColorMatrix1
+  xpos 300
+  ypos -162
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.green 0 1 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.green 0 1 rgba.alpha 0 3"
+  name Shuffle4
+  xpos 300
+  ypos -109
+ }
+ Add {
+  channels rgb
+  value -1
+  name Add3
+  xpos 300
+  ypos -20
+ }
+ Multiply {
+  channels rgb
+  value {{parent.control_make_wave.relighting}}
+  name Multiply3
+  xpos 300
+  ypos 6
+ }
+ Add {
+  channels rgb
+  value 1
+  name Add4
+  xpos 300
+  ypos 32
+ }
+ Dot {
+  name Dot18
+  xpos 334
+  ypos 443
+ }
+push $Ne132ea50
+ Dot {
+  name Dot11
+  xpos -212
+  ypos -190
+ }
+set Ne297ed80 [stack 0]
+push $Ne132e290
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap2
+  xpos 5
+  ypos -200
+ }
+ Add {
+  channels rgb
+  value -1
+  name Add1
+  xpos 5
+  ypos -17
+ }
+ Multiply {
+  channels rgb
+  value {{parent.control_make_wave.ambient_occlusion}}
+  name Multiply1
+  xpos 5
+  ypos 9
+ }
+ Add {
+  channels rgb
+  value 1
+  name Add2
+  xpos 5
+  ypos 35
+ }
+ Dot {
+  name Dot14
+  xpos 39
+  ypos 251
+ }
+push $Ne297ed80
+push $Ne132ee30
+push $Ne1330d30
+ Dot {
+  name Dot9
+  xpos -356
+  ypos -1203
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -390
+  ypos -1051
+ }
+ Dot {
+  name Dot8
+  xpos -356
+  ypos 17
+ }
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap1
+  xpos -246
+  ypos 7
+ }
+ Dot {
+  name Dot1
+  xpos -212
+  ypos 123
+ }
+set Ne297a7c0 [stack 0]
+ Unpremult {
+  name Unpremult1
+  xpos -246
+  ypos 190
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  Bchannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge1
+  xpos -246
+  ypos 247
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  Bchannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge2
+  xpos -246
+  ypos 439
+ }
+ Premult {
+  name Premult1
+  xpos -246
+  ypos 497
+ }
+ Switch {
+  inputs 2
+  which {{parent.outputstmap x202 1}}
+  name Switch1
+  xpos -246
+  ypos 586
+ }
+ Output {
+  name Output1
+  xpos -246
+  ypos 711
+ }
+push $Ne297a7c0
+push $Ne132bfb0
+ Viewer {
+  inputs 2
+  frame 304
+  frame_range 1-367
+  monitorOutOutputTransform rec709
+  name Viewer1
+  xpos -129
+  ypos -1189
+ }
+end_group

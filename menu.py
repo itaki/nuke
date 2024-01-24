@@ -74,4 +74,4 @@ nuke.menu('Nodes').addMenu("Tools", icon="toolbox_icon.png")
 nuke.menu('Nodes').addMenu("Scripts", icon="scripts.png")
 nuke.menu('Nodes').addMenu("CG", icon="CG.png")
 nuke.menu('Nodes').addMenu("RG Magic Bullet", icon="maxon.png")
-
+nuke.menu('Nodes').addMenu("itaki", icon="itaki.png")

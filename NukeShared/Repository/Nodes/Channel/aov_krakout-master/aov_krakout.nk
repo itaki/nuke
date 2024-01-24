@@ -1,0 +1,25 @@
+set cut_paste_input [stack 0]
+version 13.0 v1
+push $cut_paste_input
+NoOp {
+ name aov_krakout
+ tile_color 0xff
+ selected true
+ addUserKnob {20 User}
+ addUserKnob {4 direction l "krakout to" t "The direction the AOV tree will break out from this node." M {left right "" "" "" "" ""}}
+ addUserKnob {3 xgu l "X grid units" t "This is the amount of horizontal working space generated between each aov"}
+ xgu 2
+ addUserKnob {3 ygu_small l "Y grid units - small" t "This is int amount of vertical space between dots and shuffles in grid height units."}
+ ygu_small 4
+ addUserKnob {3 ygu_large l "Y grid units - large" t "This is the amount of vertical working space generated in grid height units."}
+ ygu_large 40
+ addUserKnob {1 aov_pattern l "match patterns" t "Uses a bash style query system for searching AOV layers.\n\n<b>,</b> -> separates each AOV search query\n<b>/</b> -> divide AOV by another AOV and multiply back together\n<b>^</b> -> multiply AOV by another\n<b>!</b> -> exclude this AOV\n<b>*</b> -> wildcard to capture multiple AOVs - works with /,^,!\n<b>\$</b> -> parse an environment variable\n\nExamples:\n<i>lg*,!lg0</i>\nFetch all AOVs starting with 'lg', ignore 'lg0'.\n\n<i>light/diffuse,reflect,refract_raw^refract_filter,spec,gi</i>\nExplicitly break out some aovs. Divide 'light' by 'diffuse' multiply 'refract_raw' by 'refract_filter'.\n\n<i>\$char_aovs</i>\nParse an environment variable 'char_aovs'."}
+ aov_pattern "examples:lighting/diffuse,*Raw^*Filter,sss,gi,\$facility_aovs"
+ addUserKnob {6 x_half l "half x grid units for ^/ queries" t "Use half the amount of horizontal working space between each aov if dividing or multiplying one AOV by another using the '/' or '^' query terms." +STARTLINE}
+ addUserKnob {6 subtract_aovs l "subtract sum of aovs from rgb" t "Gather up any left over data that wasn't captured by the renderer by subtracting the queried AOVs from the rgb.\n\nUseful for debugging lighting.\n\nFinal production renders should not need to use this functionality." +STARTLINE}
+ addUserKnob {22 krakout l krakout! t "Break out AOVs and recombine." T "import aov_krakout\n\ndef krackout_btn(n):     \n    pref = nuke.toNode('preferences')                            \n    x_offset = n\['xgu'].value()*pref\['GridWidth'].value()\n    y_offset_small = n\['ygu_small'].value()*pref\['GridHeight'].value()\n    y_offset_large = n\['ygu_large'].value()*pref\['GridHeight'].value()\n    pattern=n\['aov_pattern'].getText()\n    dir_mult=1\n    if n\['direction'].value()=='left': dir_mult=-1\n    x_offset_mult=1\n    if n\['x_half'].value(): x_offset_mult=0.5\n    subtract_aovs=n\['subtract_aovs'].value()\n\n    if len(pattern)==0:\n        nuke.message ('Nothing to breakout.\\n\\nEmpty pattern.')\n        return        \n    aovk = aov_krakout.aov_krakout(n,dir_mult,x_offset,y_offset_small,y_offset_large,x_offset_mult,subtract_aovs)\n    aovk.set_aovs_from_pattern(pattern)\n    if len(aovk.aov_list)==0:\n        nuke.message ('Nothing to breakout.\\n\\nPattern didn\\'t find a match to any AOVs.')\n        return\n    if subtract_aovs:\n        if '^' in ''.join(aovk.aov_list):\n            if not nuke.ask ('Multiplying AOVs and subtracting the sum of the aovs from the rgb is not a good idea.\\n\\nProceed?'):\n                return\n    aovk.build_aov_trees()\n    \nn = nuke.thisNode()\nkrackout_btn(n)" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 title l "" +STARTLINE T "<font size='5'>aov_krakout</font>"}
+ addUserKnob {26 info l "" +STARTLINE T "<br>Creates a tree of lightgroups or illumination passes and recombines them.\n<br><a href=\"https://github.com/artandmath/aov_krakout\"><span style=\"color:#C8C8C8;\">https://github.com/artandmath/aov_krakout</a>"}
+ addUserKnob {26 version l "" +STARTLINE T "v007 @dharkness 2022-05-29"}
+}

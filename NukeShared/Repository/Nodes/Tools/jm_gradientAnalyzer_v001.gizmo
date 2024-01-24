@@ -1,0 +1,187 @@
+Gizmo {
+help "Generates lines perpendicular to gradients, useful for analyzing flow and smoothness in large soft gradients. \n\n jm_gradientAnalyzer_v001\n -by Johannes Møgelvang"
+ addUserKnob {20 User}
+ addUserKnob {41 preBlur l "Pre Blur" T J_GRADIENT_TEST.preBlur}
+ addUserKnob {41 posterizeSteps l "Posterize Steps" T J_GRADIENT_TEST.posterizeSteps}
+ addUserKnob {41 lineThickness l "Line Width" T J_GRADIENT_TEST.lineThickness}
+ addUserKnob {41 normLogInvLog l Norm/Log/InvLog T J_GRADIENT_TEST.normLogInvLog}
+ addUserKnob {41 onTop l "On Top" T J_GRADIENT_TEST.onTop}
+ addUserKnob {26 preCC l "Pre CC"}
+ addUserKnob {41 saturation t "Saturation adjustment of the image before line generation\nCan be used to adjust line distribution and to roll the lines " T pre_CC.saturation}
+ addUserKnob {41 gamma t "Gamma adjustment of the image before line generation\nCan be used to adjust line distribution and to roll the lines " T pre_CC.gamma}
+ addUserKnob {41 gain t "Gain adjustment of the image before line generation\nCan be used to adjust line distribution and to roll the lines " T pre_CC.gain}
+ addUserKnob {41 offset t "Offset adjustment of the image before line generation\nCan be used to adjust line distribution and to roll the lines " T pre_CC.offset}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 543
+  ypos 415
+ }
+ Dot {
+  name JGT_IN
+  xpos 577
+  ypos 455
+ }
+set Nd02eb800 [stack 0]
+ Dot {
+  name Dot38
+  xpos 974
+  ypos 604
+ }
+ Dot {
+  name Dot39
+  xpos 974
+  ypos 1209
+ }
+push $Nd02eb800
+ ColorCorrect {
+  gamma 0.965
+  name pre_CC
+  xpos 543
+  ypos 511
+ }
+ Blur {
+  size {{parent.J_GRADIENT_TEST.preBlur}}
+  name pre_blur
+  xpos 543
+  ypos 581
+ }
+set Ndd0b6c00 [stack 0]
+ Log2Lin {
+  operation lin2log
+  name Log2Lin9
+  xpos 791
+  ypos 664
+ }
+ Posterize {
+  Colors {{parent.Posterize9.Colors}}
+  name Posterize7
+  xpos 791
+  ypos 717
+ }
+ Log2Lin {
+  name Log2Lin10
+  xpos 791
+  ypos 782
+ }
+ Dot {
+  name Dot35
+  xpos 825
+  ypos 881
+ }
+push $Ndd0b6c00
+ Log2Lin {
+  name Log2Lin11
+  xpos 662
+  ypos 669
+ }
+ Posterize {
+  Colors {{parent.Posterize9.Colors}}
+  name Posterize8
+  xpos 662
+  ypos 721
+ }
+ Log2Lin {
+  operation lin2log
+  name Log2Lin12
+  xpos 662
+  ypos 784
+ }
+ Clamp {
+  name Clamp5
+  xpos 662
+  ypos 839
+ }
+push $Ndd0b6c00
+ Posterize {
+  Colors {{parent.J_GRADIENT_TEST.posterizeSteps}}
+  name Posterize9
+  xpos 543
+  ypos 721
+ }
+ Switch {
+  inputs 3
+  which {{parent.J_GRADIENT_TEST.normLogInvLog}}
+  name switch_normLogInvLog
+  xpos 543
+  ypos 942
+ }
+ Dot {
+  name Dot36
+  xpos 577
+  ypos 998
+ }
+set Nd5bc5800 [stack 0]
+ Blur {
+  size {{parent.J_GRADIENT_TEST.lineThickness}}
+  filter box
+  name lineThick
+  xpos 617
+  ypos 1039
+ }
+push $Nd5bc5800
+ Merge2 {
+  inputs 2
+  operation difference
+  name Merge13
+  label "\[value bbox]"
+  xpos 543
+  ypos 1097
+ }
+ Multiply {
+  value 500
+  name lineGain
+  xpos 543
+  ypos 1160
+ }
+ Clamp {
+  name Clamp6
+  xpos 543
+  ypos 1225
+ }
+set Ne6c30800 [stack 0]
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge14
+  label "\[value bbox]"
+  xpos 633
+  ypos 1315
+ }
+push $Ne6c30800
+ Switch {
+  inputs 2
+  which {{parent.J_GRADIENT_TEST.onTop}}
+  name onTop
+  xpos 543
+  ypos 1405
+ }
+ NoOp {
+  name J_GRADIENT_TEST
+  selected true
+  xpos 543
+  ypos 1529
+  addUserKnob {20 User}
+  addUserKnob {7 preBlur l "Pre Blur" t "Image blur before line detection.\nUsefull for removing high frequency detail." R 0 100}
+  preBlur 10
+  addUserKnob {3 posterizeSteps l "Posterize Steps" t "Amount of lines"}
+  posterizeSteps 25
+  addUserKnob {7 lineThickness l "Line Width" t "Widht of the lines" R 1.1 10}
+  lineThickness 1.1
+  addUserKnob {7 normLogInvLog l Norm/Log/InvLog t "Switch between colorspaces which the lines are generated in. \nCan be used to push the density of lines more towards high or low values" R 0 2}
+  normLogInvLog 2
+  addUserKnob {6 onTop l "On Top" t "Displays the lines on top of the image as an overlay or on transparent with alpha" +STARTLINE}
+  onTop true
+ }
+ Dot {
+  name JGT_OUT
+  xpos 577
+  ypos 1604
+ }
+ Output {
+  name Output1
+  xpos 577
+  ypos 1704
+ }
+end_group

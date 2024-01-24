@@ -1,0 +1,1121 @@
+#! C:/Program Files/Nuke8.0v4/nuke-8.0.v4.dll -nx
+version 8.0 v4
+Gizmo {
+ tile_color 0xffac8fff
+ addUserKnob {20 Message}
+ addUserKnob {43 message}
+ message "change this text\n\npress\n\nupdate"
+ addUserKnob {22 Update t "nuke.thisNode().addKnob(nuke.Int_Knob('letter' , 'K'))\n\n\nTransformMULT_INV\n\n\nnuke.thisGroup().node('Output2').input(0)\['decode'].execute()\n\nnuke.thisGroup().node('Output2').input(0)\['unicode'].execute()" -STARTLINE T "nuke.Undo().disable() \n\nnuke.thisGroup().node('Output2').setInput(0,nuke.toNode('SKUKKELIMUKKELIS_create'))\n\n\n#for whitespace removal after text\nfor n in range(0, 100):\n if nuke.thisNode()\['message'].getValue()\[-1:] == ' ':\n  nuke.thisNode()\['message'].setValue(str(nuke.thisNode()\['message'].getValue()\[:-1]))\n\nimport time\nimport threading\nstarto = time.clock()\nnuke.thisGroup().node('Output2').input(0).setInput(0,nuke.toNode('Analyzing_text_Switch0'))\ncheckboxes = nuke.thisNode()\['bottomcenter'].getValue()+nuke.thisNode()\['centercenter'].getValue()+nuke.thisNode()\['topcenter'].getValue()+nuke.thisNode()\['bottomright'].getValue()+nuke.thisNode()\['topright'].getValue()+nuke.thisNode()\['centerright'].getValue()+nuke.thisNode()\['bottomleft'].getValue()+nuke.thisNode()\['C1'].getValue()+nuke.thisNode()\['centerleft'].getValue()\n\nif checkboxes > 1 or checkboxes == 0:\n nuke.thisNode()\['C1'].setValue(0)\n nuke.thisNode()\['topcenter'].setValue(0)\n nuke.thisNode()\['topright'].setValue(0)\n nuke.thisNode()\['centerleft'].setValue(0)\n nuke.thisNode()\['centercenter'].setValue(1)\n nuke.thisNode()\['centerright'].setValue(0)\n nuke.thisNode()\['bottomcenter'].setValue(0)\n nuke.thisNode()\['bottomright'].setValue(0)\n nuke.thisNode()\['bottomleft'].setValue(0)\n\ncheckcheckboxes = nuke.thisNode()\['bottomcenter'].getValue()*11+nuke.thisNode()\['centercenter'].getValue()*22+nuke.thisNode()\['topcenter'].getValue()*33+nuke.thisNode()\['bottomright'].getValue()*44+nuke.thisNode()\['topright'].getValue()*55+nuke.thisNode()\['centerright'].getValue()*66+nuke.thisNode()\['bottomleft'].getValue()*77+nuke.thisNode()\['C1'].getValue()*88+nuke.thisNode()\['centerleft'].getValue()*99\n\nnuke.thisGroup().node('Output2').input(0)\['kill'].execute()\n\n\n\nimport random\nfrom time import gmtime, strftime\n# Random name to make slightly unique nodes\nif str(nuke.thisNode()\['mathrandname'].getValue())=='SKUKKELIMUKKELIS':\n d = (nuke.thisNode().name())\[:1]\n a = random.randint(1, 9)\n b = random.randint(1, 9)\n c = random.randint(1, 9)\n e = strftime(\"%a%b\", gmtime())\n nuke.thisNode()\['mathrandname'].setValue(str(d)+str(a)+str(b)+str(c)+str(d)+str(e)+('_'))\n #nuke.toNode('SKUKKELIMUKKELIS_create').setName(nuke.thisNode()\['mathrandname'+'_create'].getValue())\n nuke.thisNode()\['processtexts'].setValue('unique node names generated')\n nuke.thisNode()\['randnamecheck'].setValue(1)\n nuke.thisNode()\['mathrandname'].setVisible(False)\n# CHECK\nif str(nuke.thisNode()\['mathrandname'].getValue())=='0.0':\n print \"this version of nuke is unsupported or old. Text knob getValue fails\"\n nuke.thisNode()\['mathrandname'].setVisible(True)\n nuke.thisNode()\['processtexts'].setValue('Old Nuke, or node outdated ?')\n# CURRENT AMOUNT\n#Run Create\nnuke.thisGroup().node('Output2').input(0)\['analyze'].execute()\nnuke.thisNode()\['mathcurrentamount'].setValue(len(str(nuke.thisNode()\['message'].getValue())))\nall = int(nuke.thisNode()\['mathcurrentamount'].getValue()-nuke.thisNode()\['mathamount'].getValue())\n\ntask = nuke.ProgressTask(\"Creating nodes\")\ntask.setMessage(\"Creating nodes\")\nnuke.thisGroup().node('Output2').input(0)\['log'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['log'].getValue())+'\\n'+'forget checks ='+str(nuke.thisNode()\['forgetchecks'].getValue())+'  ,'+str(all)+' nodechains')\nfor i in range( 0, all ):\n if nuke.thisGroup().node('Output2').input(0)\['skip'].getValue()==0:\n  nuke.thisGroup().node('Output2').input(0)\['create'].execute()\n else:\n  nuke.thisGroup().node('Output2').input(0)\['skip'].setValue(0)\n task.setProgress(int(i/all*100))\n\ndel task\n\nnuke.thisNode()\['OpacityCHK_INV'].setValue(nuke.thisNode()\['OpacityCHK'].getValue())\n\n\nnuke.thisNode()\['TransformCHK_INV'].setValue(nuke.thisNode()\['TransformCHK'].getValue())\n\n\nnuke.thisNode()\['RotateCHK_INV'].setValue(nuke.thisNode()\['RotateCHK'].getValue())\n\n\nnuke.thisNode()\['ScaleCHK_INV'].setValue(nuke.thisNode()\['ScaleCHK'].getValue())\n\n\nnuke.thisNode()\['ScrollCHK_INV'].setValue(nuke.thisNode()\['ScrollCHK'].getValue())\n\n\nnuke.thisNode()\['BlurCHK_INV'].setValue(nuke.thisNode()\['BlurCHK'].getValue())\n\nnuke.thisNode()\['ColorCHK_INV'].setValue(nuke.thisNode()\['ColorCHK'].getValue())\n\nendo = round(time.clock()-starto,5)\n\nnuke.thisGroup().node('Output2').input(0)\['log'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['log'].getValue())+'\\n'+'total '+str(endo)+'s')\nnuke.thisNode()\['message'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue()))\nnuke.thisGroup().node('Output2').input(0).setInput(0,nuke.toNode('Premult_rgb_finalos'))\n\n#jnode display\nnuke.thisNode()\['IX0'].setValue('1')\nnuke.thisNode()\['IX1'].setValue('2')\nnuke.thisNode()\['IX2'].setValue('3')\nnuke.thisNode()\['IX3'].setValue('4')\nnuke.thisNode()\['IX4'].setValue('5')\nnuke.thisNode()\['IX5'].setValue('6')\nnuke.thisNode()\['IX6'].setValue('7')\nnuke.thisNode()\['IX7'].setValue('8')\nnuke.thisNode()\['IX8'].setValue('9')\nnuke.thisNode()\['IX9'].setValue('10')\nnuke.thisNode()\['IX10'].setValue('11')\nnuke.thisNode()\['IX11'].setValue('12')\n\n\nnuke.thisNode()\['TX0'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX0'].getValue())-1:int(nuke.thisNode()\['IX1'].getValue())-1])\nnuke.thisNode()\['TX1'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX1'].getValue())-1:int(nuke.thisNode()\['IX2'].getValue())-1])\nnuke.thisNode()\['TX2'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX2'].getValue())-1:int(nuke.thisNode()\['IX3'].getValue())-1])\nnuke.thisNode()\['TX3'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX3'].getValue())-1:int(nuke.thisNode()\['IX4'].getValue())-1])\nnuke.thisNode()\['TX4'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX4'].getValue())-1:int(nuke.thisNode()\['IX5'].getValue())-1])\nnuke.thisNode()\['TX5'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX5'].getValue())-1:int(nuke.thisNode()\['IX6'].getValue())-1])\nnuke.thisNode()\['TX6'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX6'].getValue())-1:int(nuke.thisNode()\['IX7'].getValue())-1])\nnuke.thisNode()\['TX7'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX7'].getValue())-1:int(nuke.thisNode()\['IX8'].getValue())-1])\nnuke.thisNode()\['TX8'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX8'].getValue())-1:int(nuke.thisNode()\['IX9'].getValue())-1])\nnuke.thisNode()\['TX9'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX9'].getValue())-1:int(nuke.thisNode()\['IX10'].getValue())-1])\nnuke.thisNode()\['TX10'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX10'].getValue())-1:int(nuke.thisNode()\['IX11'].getValue())-1])\nnuke.thisNode()\['TX11'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX11'].getValue())-1:int(nuke.thisNode()\['IX11'].getValue())])\n\nnuke.Undo().enable()\n\nself = nuke.thisNode().name()\nif nuke.toNode(self).Class() != \"Group\" and nuke.thisNode()\['convert'].getValue() == 1:\n nuke.tcl(\"copy_to_group\", self)\n nuke.selectedNode().setName(self+'_g')\n nuke.delete(nuke.toNode(self))\n nuke.message(\"Converted to group. Update again, sorry for the inconvenience\")"}
+ addUserKnob {6 convert l "convert to group" t "you can allow to keep as gizmo, but it will erase nodes inside when scene is loaded again. Nuke resets to gizmo default" +STARTLINE}
+ convert true
+ addUserKnob {2 font}
+ font C:/Windows/Fonts/arabtype.ttf
+ addUserKnob {3 index -STARTLINE}
+ addUserKnob {1 spacing l INVISIBLE t "define what character is considered as empty space" -STARTLINE +INVISIBLE}
+ spacing -
+ addUserKnob {1 newline l INVISIBLE t "define new line character" -STARTLINE +INVISIBLE}
+ newline /
+ addUserKnob {4 justify M {left center right "" "" "" "" "" "" "" "" "" "" ""}}
+ justify center
+ addUserKnob {6 TransformCHK l INVISIBLE t "transform enabled" +INVISIBLE +STARTLINE}
+ TransformCHK true
+ addUserKnob {6 TransformCHK_INV l INVISIBLE +INVISIBLE +STARTLINE}
+ TransformCHK_INV true
+ addUserKnob {6 ColorCHK l INVISIBLE t "color tab enabled" -STARTLINE +INVISIBLE}
+ addUserKnob {6 ColorCHK_INV l INVISIBLE +INVISIBLE +STARTLINE}
+ addUserKnob {6 RotateCHK l INVISIBLE t "rotate enabled" -STARTLINE +INVISIBLE}
+ RotateCHK true
+ addUserKnob {6 RotateCHK_INV +INVISIBLE +STARTLINE}
+ RotateCHK_INV true
+ addUserKnob {6 ScaleCHK l INVISIBLE t "scale, skew enabled" -STARTLINE +INVISIBLE}
+ ScaleCHK true
+ addUserKnob {6 ScaleCHK_INV +INVISIBLE +STARTLINE}
+ ScaleCHK_INV true
+ addUserKnob {6 BlurCHK l INVISIBLE t "blur enabled" -STARTLINE +INVISIBLE}
+ BlurCHK true
+ addUserKnob {6 BlurCHK_INV +INVISIBLE +STARTLINE}
+ BlurCHK_INV true
+ addUserKnob {6 ScrollCHK l INVISIBLE t "scrolling letters enabled" -STARTLINE +INVISIBLE}
+ ScrollCHK true
+ addUserKnob {6 ScrollCHK_INV +INVISIBLE +STARTLINE}
+ ScrollCHK_INV true
+ addUserKnob {6 OpacityCHK l INVISIBLE t "opacity enabled" -STARTLINE +INVISIBLE}
+ OpacityCHK true
+ addUserKnob {6 OpacityCHK_INV l INVISIBLE +INVISIBLE +STARTLINE}
+ OpacityCHK_INV true
+ addUserKnob {6 threedCHK l INVISIBLE t "3D letters enabled - POLYTEXT REQUIRED" -STARTLINE +INVISIBLE}
+ threedCHK true
+ addUserKnob {6 threedCHK_INV l INVISIBLE +INVISIBLE +STARTLINE}
+ threedCHK_INV true
+ addUserKnob {26 ""}
+ addUserKnob {26 processtexts l "" +STARTLINE T "press update"}
+ addUserKnob {26 ""}
+ addUserKnob {16 opacity}
+ opacity 1
+ addUserKnob {7 size R 1 100}
+ size 420
+ addUserKnob {7 kerning R -0.2 0.2}
+ addUserKnob {7 leading R 0 50}
+ leading 20
+ addUserKnob {26 ""}
+ addUserKnob {20 Color}
+ addUserKnob {20 Tools l "C o l o r :" n 1}
+ Tools 0
+ addUserKnob {18 basecolor l "base color"}
+ basecolor {0.5 0.1529682577 0.09837210178}
+ addUserKnob {6 basecolor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 unnamed l "" +STARTLINE}
+ addUserKnob {26 nfo l "" +STARTLINE T "G  r  a  d  i  e  n  t  s"}
+ addUserKnob {18 color_gradient l "gradient 1"}
+ color_gradient {1 0.6667436361 0}
+ addUserKnob {6 color_gradient_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {3 point0 l "g1 point 0"}
+ point0 120
+ addUserKnob {3 point1 -STARTLINE}
+ point1 70
+ addUserKnob {6 on_1 l on -STARTLINE}
+ on_1 true
+ addUserKnob {18 Color_gradient2 l "gradient 2"}
+ Color_gradient2 {0.00400000019 0.003800000064 0.0540000014}
+ addUserKnob {6 Color_gradient2_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {3 point0_1 l "g2 point 0"}
+ point0_1 77
+ addUserKnob {3 point1_1 l point1 -STARTLINE}
+ point1_1 87
+ addUserKnob {6 on_2 l on -STARTLINE}
+ on_2 true
+ addUserKnob {26 unnamed2 l "" +STARTLINE}
+ addUserKnob {26 nfo2 l "" +STARTLINE T "C  o  r  n  e  r  s"}
+ addUserKnob {16 dilate l "dilate size"}
+ dilate 2
+ addUserKnob {6 on_3 l on -STARTLINE}
+ addUserKnob {7 dilatemix l "dilate mix"}
+ dilatemix 1
+ addUserKnob {16 dilatebluro l "dilate blur"}
+ addUserKnob {16 dilateblur l "mask blur" t "blur from dilate mask"}
+ addUserKnob {26 ""}
+ addUserKnob {12 transformdilate l "T.dilate pos" t "transformed dilate"}
+ transformdilate {-2 -2}
+ addUserKnob {6 dilateton l on -STARTLINE}
+ dilateton true
+ addUserKnob {18 tdilatec l "T.dilate col."}
+ tdilatec {0.3048121929 0.6756119728 1}
+ addUserKnob {6 tdilatec_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {16 tdilatebluro l "T.dilate blur" t "transformed dilate blur"}
+ addUserKnob {16 tblur l "T.mask blur" t "blur from transformed dilate mask"}
+ addUserKnob {26 ""}
+ addUserKnob {7 stroke l "stroke size" R 0 10}
+ stroke 5
+ addUserKnob {7 bevel -STARTLINE R 0 10}
+ bevel 12
+ addUserKnob {6 bevelon l on -STARTLINE}
+ bevelon true
+ addUserKnob {19 strokecolor l "stroke col." t "stroke color"}
+ strokecolor {0.5 0.5 0.5 0.8}
+ addUserKnob {6 strokecolor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {26 nfo3 l "" +STARTLINE T "S  h  a  d  o  w  s"}
+ addUserKnob {12 shadow l "shadow 1 pos"}
+ shadow {10 -10}
+ addUserKnob {6 shaodwon l on t on/off -STARTLINE}
+ addUserKnob {19 shadowcolor l "shadow 1 col."}
+ shadowcolor {0 0 0.09799999744 0.5}
+ addUserKnob {6 shadowcolor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 shadowblur l "shadow 1 blur"}
+ shadowblur 0.39
+ addUserKnob {12 shadow2 l "shadow 2 pos"}
+ shadow2 {12 -12}
+ addUserKnob {6 shadow2on l on -STARTLINE}
+ shadow2on true
+ addUserKnob {19 shadow2color l "shadow 2 col."}
+ shadow2color {0 0 0 0.6}
+ addUserKnob {6 shadow2color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 shadow2blur l "shadow 2 blur"}
+ shadow2blur 2.67
+ addUserKnob {26 ""}
+ addUserKnob {7 sharpen}
+ sharpen 0.5
+ addUserKnob {7 sharpensize l size -STARTLINE R 0 50}
+ sharpensize 1
+ addUserKnob {6 sharpenon l on -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {19 emboss l "emboss  color"}
+ emboss {1 1 1 1}
+ addUserKnob {6 emboss_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 embosson l on -STARTLINE}
+ addUserKnob {19 embossinv l "emboss invert"}
+ embossinv {0.5 0.5 0.5 0.5}
+ addUserKnob {6 embossinv_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 embossinvon l on -STARTLINE}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 Presets l "" +STARTLINE T "P r e s e t s :"}
+ addUserKnob {22 ResetGrey l "Reset Grey" T "nuke.thisNode()\[\"basecolor\"].setValue(0.5,0)\nnuke.thisNode()\[\"basecolor\"].setValue(0.5,1)\nnuke.thisNode()\[\"basecolor\"].setValue(0.5,2)\nnuke.thisNode()\[\"color_gradient\"].setValue(1.0,0)\nnuke.thisNode()\[\"color_gradient\"].setValue(1.0,1)\nnuke.thisNode()\[\"color_gradient\"].setValue(1.0,2)\nnuke.thisNode()\[\"point0\"].setValue(120.0)\nnuke.thisNode()\[\"point1\"].setValue(90.0)\nnuke.thisNode()\[\"on_1\"].setValue(0)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.0,0)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.0579999983311,1)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.0,2)\nnuke.thisNode()\[\"point0_1\"].setValue(80.0)\nnuke.thisNode()\[\"point1_1\"].setValue(90.0)\nnuke.thisNode()\[\"on_2\"].setValue(0)\nnuke.thisNode()\[\"dilate\"].setValue(2.0)\nnuke.thisNode()\[\"dilatemix\"].setValue(1.0)\nnuke.thisNode()\[\"dilateblur\"].setValue(0.0)\nnuke.thisNode()\[\"dilatebluro\"].setValue(0.0)\nnuke.thisNode()\[\"transformdilate\"].setValue(4.0,0)\nnuke.thisNode()\[\"transformdilate\"].setValue(5.0,1)\nnuke.thisNode()\[\"dilateton\"].setValue(0)\nnuke.thisNode()\[\"tdilatec\"].setValue(0.5,0)\nnuke.thisNode()\[\"tdilatec\"].setValue(1.0,1)\nnuke.thisNode()\[\"tdilatec\"].setValue(1.0,2)\nnuke.thisNode()\[\"tdilatebluro\"].setValue(0.0)\nnuke.thisNode()\[\"tblur\"].setValue(0.0)\nnuke.thisNode()\[\"stroke\"].setValue(1.0)\nnuke.thisNode()\[\"bevel\"].setValue(1.0)\nnuke.thisNode()\[\"bevelon\"].setValue(0)\nnuke.thisNode()\[\"strokecolor\"].setValue(1.0,0)\nnuke.thisNode()\[\"strokecolor\"].setValue(1.0,1)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.5,2)\nnuke.thisNode()\[\"strokecolor\"].setValue(1.0,3)\nnuke.thisNode()\[\"shadow\"].setValue(10.0,0)\nnuke.thisNode()\[\"shadow\"].setValue(-10.0,1)\nnuke.thisNode()\[\"shaodwon\"].setValue(0)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.0,0)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.0,1)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.09799999744,2)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.5,3)\nnuke.thisNode()\[\"shadow2\"].setValue(2.0,0)\nnuke.thisNode()\[\"shadow2\"].setValue(-3.0,1)\nnuke.thisNode()\[\"shadow2on\"].setValue(0)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,0)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,1)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,2)\nnuke.thisNode()\[\"shadow2color\"].setValue(1.1,3)\nnuke.thisNode()\[\"sharpen\"].setValue(0.5)\nnuke.thisNode()\[\"sharpensize\"].setValue(1.0)\nnuke.thisNode()\[\"sharpenon\"].setValue(0)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,0)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,1)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,2)\nnuke.thisNode()\[\"embosson\"].setValue(0)\nnuke.thisNode()\[\"embossinv\"].setValue(0.5,0)\nnuke.thisNode()\[\"embossinv\"].setValue(0.5,1)\nnuke.thisNode()\[\"embossinv\"].setValue(0.5,2)\nnuke.thisNode()\[\"embossinvon\"].setValue(0)\n" +STARTLINE}
+ addUserKnob {22 pencil l Pencil -STARTLINE T "nuke.thisNode()\[\"basecolor\"].setValue(0.385885477066,0)\nnuke.thisNode()\[\"basecolor\"].setValue(0.5,1)\nnuke.thisNode()\[\"basecolor\"].setValue(0.482613444328,2)\nnuke.thisNode()\[\"color_gradient\"].setValue(1.0,0)\nnuke.thisNode()\[\"color_gradient\"].setValue(1.0,1)\nnuke.thisNode()\[\"color_gradient\"].setValue(1.0,2)\nnuke.thisNode()\[\"point0\"].setValue(120.0)\nnuke.thisNode()\[\"point1\"].setValue(50.0)\nnuke.thisNode()\[\"on_1\"].setValue(0)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.0,0)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.0579999983311,1)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.0,2)\nnuke.thisNode()\[\"point0_1\"].setValue(80.0)\nnuke.thisNode()\[\"point1_1\"].setValue(90.0)\nnuke.thisNode()\[\"on_2\"].setValue(0)\nnuke.thisNode()\[\"dilate\"].setValue(2.0)\nnuke.thisNode()\[\"dilatemix\"].setValue(1.0)\nnuke.thisNode()\[\"dilateblur\"].setValue(0.0)\nnuke.thisNode()\[\"dilatebluro\"].setValue(0.0)\nnuke.thisNode()\[\"transformdilate\"].setValue(1.0,0)\nnuke.thisNode()\[\"transformdilate\"].setValue(2.0,1)\nnuke.thisNode()\[\"dilateton\"].setValue(1)\nnuke.thisNode()\[\"tdilatec\"].setValue(0.0,0)\nnuke.thisNode()\[\"tdilatec\"].setValue(0.0824036598206,1)\nnuke.thisNode()\[\"tdilatec\"].setValue(1.0,2)\nnuke.thisNode()\[\"tdilatebluro\"].setValue(0.38)\nnuke.thisNode()\[\"tblur\"].setValue(0.14)\nnuke.thisNode()\[\"stroke\"].setValue(4.0)\nnuke.thisNode()\[\"bevel\"].setValue(6.0)\nnuke.thisNode()\[\"bevelon\"].setValue(1)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.17801965,0)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.10326803,1)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.1,2)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.1,3)\nnuke.thisNode()\[\"shadow\"].setValue(1.0,0)\nnuke.thisNode()\[\"shadow\"].setValue(-2.0,1)\nnuke.thisNode()\[\"shaodwon\"].setValue(1)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.0,0)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.0,1)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.09799999744,2)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.6,3)\nnuke.thisNode()\[\"shadow2\"].setValue(1.0,0)\nnuke.thisNode()\[\"shadow2\"].setValue(0.0,1)\nnuke.thisNode()\[\"shadow2on\"].setValue(1)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,0)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,1)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,2)\nnuke.thisNode()\[\"shadow2color\"].setValue(1.1,3)\nnuke.thisNode()\[\"sharpen\"].setValue(0.5)\nnuke.thisNode()\[\"sharpensize\"].setValue(1.0)\nnuke.thisNode()\[\"sharpenon\"].setValue(0)\nnuke.thisNode()\[\"emboss\"].setValue(5.0,0)\nnuke.thisNode()\[\"emboss\"].setValue(4.59412002563,1)\nnuke.thisNode()\[\"emboss\"].setValue(3.61000013351,2)\nnuke.thisNode()\[\"embosson\"].setValue(1)\nnuke.thisNode()\[\"embossinv\"].setValue(0.5,0)\nnuke.thisNode()\[\"embossinv\"].setValue(0.5,1)\nnuke.thisNode()\[\"embossinv\"].setValue(0.5,2)\nnuke.thisNode()\[\"embossinvon\"].setValue(0)\n"}
+ addUserKnob {22 Comic -STARTLINE T "nuke.thisNode()\[\"basecolor\"].setValue(0.5,0)\nnuke.thisNode()\[\"basecolor\"].setValue(0.152968257666,1)\nnuke.thisNode()\[\"basecolor\"].setValue(0.0983721017838,2)\nnuke.thisNode()\[\"color_gradient\"].setValue(1.0,0)\nnuke.thisNode()\[\"color_gradient\"].setValue(0.666743636131,1)\nnuke.thisNode()\[\"color_gradient\"].setValue(0.0,2)\nnuke.thisNode()\[\"point0\"].setValue(120.0)\nnuke.thisNode()\[\"point1\"].setValue(70.0)\nnuke.thisNode()\[\"on_1\"].setValue(1)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.00400000018999,0)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.00380000006407,1)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.0540000014007,2)\nnuke.thisNode()\[\"point0_1\"].setValue(77.0)\nnuke.thisNode()\[\"point1_1\"].setValue(87.0)\nnuke.thisNode()\[\"on_2\"].setValue(1)\nnuke.thisNode()\[\"dilate\"].setValue(2.0)\nnuke.thisNode()\[\"dilatemix\"].setValue(1.0)\nnuke.thisNode()\[\"dilateblur\"].setValue(0.0)\nnuke.thisNode()\[\"dilatebluro\"].setValue(0.0)\nnuke.thisNode()\[\"transformdilate\"].setValue(-2.0,0)\nnuke.thisNode()\[\"transformdilate\"].setValue(-2.0,1)\nnuke.thisNode()\[\"dilateton\"].setValue(1)\nnuke.thisNode()\[\"tdilatec\"].setValue(0.304812192917,0)\nnuke.thisNode()\[\"tdilatec\"].setValue(0.675611972809,1)\nnuke.thisNode()\[\"tdilatec\"].setValue(1.0,2)\nnuke.thisNode()\[\"tdilatebluro\"].setValue(0.0)\nnuke.thisNode()\[\"tblur\"].setValue(0.0)\nnuke.thisNode()\[\"stroke\"].setValue(5.0)\nnuke.thisNode()\[\"bevel\"].setValue(12.0)\nnuke.thisNode()\[\"bevelon\"].setValue(1)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.5,0)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.5,1)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.5,2)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.8,3)\nnuke.thisNode()\[\"shadow\"].setValue(10.0,0)\nnuke.thisNode()\[\"shadow\"].setValue(-10.0,1)\nnuke.thisNode()\[\"shaodwon\"].setValue(0)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.0,0)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.0,1)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.09799999744,2)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.5,3)\nnuke.thisNode()\[\"shadow2\"].setValue(12.0,0)\nnuke.thisNode()\[\"shadow2\"].setValue(-12.0,1)\nnuke.thisNode()\[\"shadow2on\"].setValue(1)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,0)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,1)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,2)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.6,3)\nnuke.thisNode()\[\"sharpen\"].setValue(0.5)\nnuke.thisNode()\[\"sharpensize\"].setValue(1.0)\nnuke.thisNode()\[\"sharpenon\"].setValue(0)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,0)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,1)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,2)\nnuke.thisNode()\[\"embosson\"].setValue(0)\nnuke.thisNode()\[\"embossinv\"].setValue(0.5,0)\nnuke.thisNode()\[\"embossinv\"].setValue(0.5,1)\nnuke.thisNode()\[\"embossinv\"].setValue(0.5,2)\nnuke.thisNode()\[\"embossinvon\"].setValue(0)\n"}
+ addUserKnob {22 Store l "\[Store]" t "store current settings" -STARTLINE T "nuke.thisNode()\['Restore'].setCommand('nuke.thisNode()\['+'\"'+'basecolor'+'\"'+'].setValue('+str(nuke.thisNode()\['basecolor'].getValue(0))+',0)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'basecolor'+'\"'+'].setValue('+str(nuke.thisNode()\['basecolor'].getValue(1))+',1)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'basecolor'+'\"'+'].setValue('+str(nuke.thisNode()\['basecolor'].getValue(2))+',2)'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'color_gradient'+'\"'+'].setValue('+str(nuke.thisNode()\['color_gradient'].getValue(0))+',0)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'color_gradient'+'\"'+'].setValue('+str(nuke.thisNode()\['color_gradient'].getValue(1))+',1)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'color_gradient'+'\"'+'].setValue('+str(nuke.thisNode()\['color_gradient'].getValue(2))+',2)'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'point0'+'\"'+'].setValue('+str(nuke.thisNode()\['point0'].getValue(0))+')'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'point1'+'\"'+'].setValue('+str(nuke.thisNode()\['point1'].getValue(0))+')'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'on_1'+'\"'+'].setValue('+str(int(nuke.thisNode()\['on_1'].getValue(0)))+')'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'Color_gradient2'+'\"'+'].setValue('+str(nuke.thisNode()\['Color_gradient2'].getValue(0))+',0)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'Color_gradient2'+'\"'+'].setValue('+str(nuke.thisNode()\['Color_gradient2'].getValue(1))+',1)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'Color_gradient2'+'\"'+'].setValue('+str(nuke.thisNode()\['Color_gradient2'].getValue(2))+',2)'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'point0_1'+'\"'+'].setValue('+str(nuke.thisNode()\['point0_1'].getValue(0))+')'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'point1_1'+'\"'+'].setValue('+str(nuke.thisNode()\['point1_1'].getValue(0))+')'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'on_2'+'\"'+'].setValue('+str(int(nuke.thisNode()\['on_2'].getValue(0)))+')'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'dilate'+'\"'+'].setValue('+str(nuke.thisNode()\['dilate'].getValue(0))+')'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'dilatemix'+'\"'+'].setValue('+str(nuke.thisNode()\['dilatemix'].getValue(0))+')'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'dilateblur'+'\"'+'].setValue('+str(nuke.thisNode()\['dilateblur'].getValue(0))+')'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'dilatebluro'+'\"'+'].setValue('+str(nuke.thisNode()\['dilatebluro'].getValue(0))+')'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'transformdilate'+'\"'+'].setValue('+str(nuke.thisNode()\['transformdilate'].getValue(0))+',0)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'transformdilate'+'\"'+'].setValue('+str(nuke.thisNode()\['transformdilate'].getValue(1))+',1)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'dilateton'+'\"'+'].setValue('+str(int(nuke.thisNode()\['dilateton'].getValue(0)))+')'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'tdilatec'+'\"'+'].setValue('+str(nuke.thisNode()\['tdilatec'].getValue(0))+',0)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'tdilatec'+'\"'+'].setValue('+str(nuke.thisNode()\['tdilatec'].getValue(1))+',1)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'tdilatec'+'\"'+'].setValue('+str(nuke.thisNode()\['tdilatec'].getValue(2))+',2)'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'tdilatebluro'+'\"'+'].setValue('+str(nuke.thisNode()\['tdilatebluro'].getValue(0))+')'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'tblur'+'\"'+'].setValue('+str(nuke.thisNode()\['tblur'].getValue(0))+')'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'stroke'+'\"'+'].setValue('+str(nuke.thisNode()\['stroke'].getValue(0))+')'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'bevel'+'\"'+'].setValue('+str(nuke.thisNode()\['bevel'].getValue(0))+')'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'bevelon'+'\"'+'].setValue('+str(int(nuke.thisNode()\['bevelon'].getValue(0)))+')'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'strokecolor'+'\"'+'].setValue('+str(nuke.thisNode()\['strokecolor'].getValue(0))+',0)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'strokecolor'+'\"'+'].setValue('+str(nuke.thisNode()\['strokecolor'].getValue(1))+',1)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'strokecolor'+'\"'+'].setValue('+str(nuke.thisNode()\['strokecolor'].getValue(2))+',2)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'strokecolor'+'\"'+'].setValue('+str(nuke.thisNode()\['strokecolor'].getValue(3))+',3)'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'shadow'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow'].getValue(0))+',0)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'shadow'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow'].getValue(1))+',1)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'shaodwon'+'\"'+'].setValue('+str(int(nuke.thisNode()\['shaodwon'].getValue(0)))+')'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'shadowcolor'+'\"'+'].setValue('+str(nuke.thisNode()\['shadowcolor'].getValue(0))+',0)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'shadowcolor'+'\"'+'].setValue('+str(nuke.thisNode()\['shadowcolor'].getValue(1))+',1)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'shadowcolor'+'\"'+'].setValue('+str(nuke.thisNode()\['shadowcolor'].getValue(2))+',2)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'shadowcolor'+'\"'+'].setValue('+str(nuke.thisNode()\['shadowcolor'].getValue(3))+',3)'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'shadow2'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow2'].getValue(0))+',0)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'shadow2'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow2'].getValue(1))+',1)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'shadow2on'+'\"'+'].setValue('+str(int(nuke.thisNode()\['shadow2on'].getValue(0)))+')'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'shadow2color'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow2color'].getValue(0))+',0)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'shadow2color'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow2color'].getValue(1))+',1)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'shadow2color'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow2color'].getValue(2))+',2)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'shadow2color'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow2color'].getValue(3))+',3)'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'sharpen'+'\"'+'].setValue('+str(nuke.thisNode()\['sharpen'].getValue(0))+')'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'sharpensize'+'\"'+'].setValue('+str(nuke.thisNode()\['sharpensize'].getValue(0))+')'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'sharpenon'+'\"'+'].setValue('+str(int(nuke.thisNode()\['sharpenon'].getValue(0)))+')'+'\\n')\n\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'emboss'+'\"'+'].setValue('+str(nuke.thisNode()\['emboss'].getValue(0))+',0)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'emboss'+'\"'+'].setValue('+str(nuke.thisNode()\['emboss'].getValue(1))+',1)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'emboss'+'\"'+'].setValue('+str(nuke.thisNode()\['emboss'].getValue(2))+',2)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'embosson'+'\"'+'].setValue('+str(int(nuke.thisNode()\['embosson'].getValue(0)))+')'+'\\n')\n\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'embossinv'+'\"'+'].setValue('+str(nuke.thisNode()\['embossinv'].getValue(0))+',0)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'embossinv'+'\"'+'].setValue('+str(nuke.thisNode()\['embossinv'].getValue(1))+',1)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'embossinv'+'\"'+'].setValue('+str(nuke.thisNode()\['embossinv'].getValue(2))+',2)'+'\\n')\nnuke.thisNode()\['Restore'].setCommand(str(nuke.thisNode()\['Restore'].value())+'nuke.thisNode()\['+'\"'+'embossinvon'+'\"'+'].setValue('+str(int(nuke.thisNode()\['embossinvon'].getValue(0)))+')'+'\\n')"}
+ addUserKnob {22 Copy l "\[Copy]" -STARTLINE T "from PySide import QtGui\n\nclipboard = QtGui.QApplication.clipboard()\n\nclipboard.setText(('nuke.thisNode()\['+'\"'+'basecolor'+'\"'+'].setValue('+str(nuke.thisNode()\['basecolor'].getValue(0))+',0)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'basecolor'+'\"'+'].setValue('+str(nuke.thisNode()\['basecolor'].getValue(1))+',1)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'basecolor'+'\"'+'].setValue('+str(nuke.thisNode()\['basecolor'].getValue(2))+',2)'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'color_gradient'+'\"'+'].setValue('+str(nuke.thisNode()\['color_gradient'].getValue(0))+',0)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'color_gradient'+'\"'+'].setValue('+str(nuke.thisNode()\['color_gradient'].getValue(1))+',1)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'color_gradient'+'\"'+'].setValue('+str(nuke.thisNode()\['color_gradient'].getValue(2))+',2)'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'point0'+'\"'+'].setValue('+str(nuke.thisNode()\['point0'].getValue(0))+')'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'point1'+'\"'+'].setValue('+str(nuke.thisNode()\['point1'].getValue(0))+')'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'on_1'+'\"'+'].setValue('+str(int(nuke.thisNode()\['on_1'].getValue(0)))+')'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'Color_gradient2'+'\"'+'].setValue('+str(nuke.thisNode()\['Color_gradient2'].getValue(0))+',0)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'Color_gradient2'+'\"'+'].setValue('+str(nuke.thisNode()\['Color_gradient2'].getValue(1))+',1)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'Color_gradient2'+'\"'+'].setValue('+str(nuke.thisNode()\['Color_gradient2'].getValue(2))+',2)'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'point0_1'+'\"'+'].setValue('+str(nuke.thisNode()\['point0_1'].getValue(0))+')'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'point1_1'+'\"'+'].setValue('+str(nuke.thisNode()\['point1_1'].getValue(0))+')'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'on_2'+'\"'+'].setValue('+str(int(nuke.thisNode()\['on_2'].getValue(0)))+')'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'dilate'+'\"'+'].setValue('+str(nuke.thisNode()\['dilate'].getValue(0))+')'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'dilatemix'+'\"'+'].setValue('+str(nuke.thisNode()\['dilatemix'].getValue(0))+')'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'dilateblur'+'\"'+'].setValue('+str(nuke.thisNode()\['dilateblur'].getValue(0))+')'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'dilatebluro'+'\"'+'].setValue('+str(nuke.thisNode()\['dilatebluro'].getValue(0))+')'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'transformdilate'+'\"'+'].setValue('+str(nuke.thisNode()\['transformdilate'].getValue(0))+',0)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'transformdilate'+'\"'+'].setValue('+str(nuke.thisNode()\['transformdilate'].getValue(1))+',1)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'dilateton'+'\"'+'].setValue('+str(int(nuke.thisNode()\['dilateton'].getValue(0)))+')'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'tdilatec'+'\"'+'].setValue('+str(nuke.thisNode()\['tdilatec'].getValue(0))+',0)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'tdilatec'+'\"'+'].setValue('+str(nuke.thisNode()\['tdilatec'].getValue(1))+',1)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'tdilatec'+'\"'+'].setValue('+str(nuke.thisNode()\['tdilatec'].getValue(2))+',2)'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'tdilatebluro'+'\"'+'].setValue('+str(nuke.thisNode()\['tdilatebluro'].getValue(0))+')'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'tblur'+'\"'+'].setValue('+str(nuke.thisNode()\['tblur'].getValue(0))+')'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'stroke'+'\"'+'].setValue('+str(nuke.thisNode()\['stroke'].getValue(0))+')'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'bevel'+'\"'+'].setValue('+str(nuke.thisNode()\['bevel'].getValue(0))+')'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'bevelon'+'\"'+'].setValue('+str(int(nuke.thisNode()\['bevelon'].getValue(0)))+')'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'strokecolor'+'\"'+'].setValue('+str(nuke.thisNode()\['strokecolor'].getValue(0))+',0)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'strokecolor'+'\"'+'].setValue('+str(nuke.thisNode()\['strokecolor'].getValue(1))+',1)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'strokecolor'+'\"'+'].setValue('+str(nuke.thisNode()\['strokecolor'].getValue(2))+',2)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'strokecolor'+'\"'+'].setValue('+str(nuke.thisNode()\['strokecolor'].getValue(3))+',3)'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'shadow'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow'].getValue(0))+',0)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'shadow'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow'].getValue(1))+',1)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'shaodwon'+'\"'+'].setValue('+str(int(nuke.thisNode()\['shaodwon'].getValue(0)))+')'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'shadowcolor'+'\"'+'].setValue('+str(nuke.thisNode()\['shadowcolor'].getValue(0))+',0)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'shadowcolor'+'\"'+'].setValue('+str(nuke.thisNode()\['shadowcolor'].getValue(1))+',1)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'shadowcolor'+'\"'+'].setValue('+str(nuke.thisNode()\['shadowcolor'].getValue(2))+',2)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'shadowcolor'+'\"'+'].setValue('+str(nuke.thisNode()\['shadowcolor'].getValue(3))+',3)'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'shadow2'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow2'].getValue(0))+',0)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'shadow2'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow2'].getValue(1))+',1)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'shadow2on'+'\"'+'].setValue('+str(int(nuke.thisNode()\['shadow2on'].getValue(0)))+')'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'shadow2color'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow2color'].getValue(0))+',0)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'shadow2color'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow2color'].getValue(1))+',1)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'shadow2color'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow2color'].getValue(2))+',2)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'shadow2color'+'\"'+'].setValue('+str(nuke.thisNode()\['shadow2color'].getValue(3))+',3)'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'sharpen'+'\"'+'].setValue('+str(nuke.thisNode()\['sharpen'].getValue(0))+')'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'sharpensize'+'\"'+'].setValue('+str(nuke.thisNode()\['sharpensize'].getValue(0))+')'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'sharpenon'+'\"'+'].setValue('+str(int(nuke.thisNode()\['sharpenon'].getValue(0)))+')'+'\\n')) # set clipboard\n\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'emboss'+'\"'+'].setValue('+str(nuke.thisNode()\['emboss'].getValue(0))+',0)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'emboss'+'\"'+'].setValue('+str(nuke.thisNode()\['emboss'].getValue(1))+',1)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'emboss'+'\"'+'].setValue('+str(nuke.thisNode()\['emboss'].getValue(2))+',2)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'embosson'+'\"'+'].setValue('+str(int(nuke.thisNode()\['embosson'].getValue(0)))+')'+'\\n')) # set clipboard\n\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'embossinv'+'\"'+'].setValue('+str(nuke.thisNode()\['embossinv'].getValue(0))+',0)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'embossinv'+'\"'+'].setValue('+str(nuke.thisNode()\['embossinv'].getValue(1))+',1)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'embossinv'+'\"'+'].setValue('+str(nuke.thisNode()\['embossinv'].getValue(2))+',2)'+'\\n')) # set clipboard\nclipboard.setText((clipboard.text()+'nuke.thisNode()\['+'\"'+'embossinvon'+'\"'+'].setValue('+str(int(nuke.thisNode()\['embossinvon'].getValue(0)))+')'+'\\n')) # set clipboard"}
+ addUserKnob {22 Goldenrose l "Golden Rose" T "nuke.thisNode()\[\"basecolor\"].setValue(0.4920000136,0)\nnuke.thisNode()\[\"basecolor\"].setValue(0.01799999923,1)\nnuke.thisNode()\[\"basecolor\"].setValue(0.01600000076,2)\nnuke.thisNode()\[\"color_gradient\"].setValue(0.488000005484,0)\nnuke.thisNode()\[\"color_gradient\"].setValue(0.355847924948,1)\nnuke.thisNode()\[\"color_gradient\"].setValue(0.189679756761,2)\nnuke.thisNode()\[\"point0\"].setValue(120.0)\nnuke.thisNode()\[\"point1\"].setValue(90.0)\nnuke.thisNode()\[\"on_1\"].setValue(1)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.156000003219,0)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.0343200042844,1)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.0343200042844,2)\nnuke.thisNode()\[\"point0_1\"].setValue(75.0)\nnuke.thisNode()\[\"point1_1\"].setValue(100.0)\nnuke.thisNode()\[\"on_2\"].setValue(1)\nnuke.thisNode()\[\"dilate\"].setValue(4.0)\nnuke.thisNode()\[\"dilatemix\"].setValue(0.16)\nnuke.thisNode()\[\"dilateblur\"].setValue(0.0)\nnuke.thisNode()\[\"dilatebluro\"].setValue(0.0)\nnuke.thisNode()\[\"transformdilate\"].setValue(15.0,0)\nnuke.thisNode()\[\"transformdilate\"].setValue(7.0,1)\nnuke.thisNode()\[\"dilateton\"].setValue(1)\nnuke.thisNode()\[\"tdilatec\"].setValue(2.0,0)\nnuke.thisNode()\[\"tdilatec\"].setValue(1.0,1)\nnuke.thisNode()\[\"tdilatec\"].setValue(1.0,2)\nnuke.thisNode()\[\"tdilatebluro\"].setValue(1.0)\nnuke.thisNode()\[\"tblur\"].setValue(0.0)\nnuke.thisNode()\[\"stroke\"].setValue(2.0)\nnuke.thisNode()\[\"bevel\"].setValue(5.2)\nnuke.thisNode()\[\"bevelon\"].setValue(1)\nnuke.thisNode()\[\"strokecolor\"].setValue(1.0,0)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.608681082726,1)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.0,2)\nnuke.thisNode()\[\"strokecolor\"].setValue(1.0,3)\nnuke.thisNode()\[\"shadow\"].setValue(30.0,0)\nnuke.thisNode()\[\"shadow\"].setValue(-20.0,1)\nnuke.thisNode()\[\"shaodwon\"].setValue(1)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.0,0)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.0,1)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.09799999744,2)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.5,3)\nnuke.thisNode()\[\"shadow2\"].setValue(5.0,0)\nnuke.thisNode()\[\"shadow2\"].setValue(-2.0,1)\nnuke.thisNode()\[\"shadow2on\"].setValue(1)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,0)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,1)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,2)\nnuke.thisNode()\[\"shadow2color\"].setValue(1.1,3)\nnuke.thisNode()\[\"sharpen\"].setValue(0.862)\nnuke.thisNode()\[\"sharpensize\"].setValue(28.0)\nnuke.thisNode()\[\"sharpenon\"].setValue(1)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,0)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,1)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,2)\nnuke.thisNode()\[\"embosson\"].setValue(1)\nnuke.thisNode()\[\"embossinv\"].setValue(0.358000010252,0)\nnuke.thisNode()\[\"embossinv\"].setValue(0.358000010252,1)\nnuke.thisNode()\[\"embossinv\"].setValue(0.358000010252,2)\nnuke.thisNode()\[\"embossinvon\"].setValue(0)\n" +STARTLINE}
+ addUserKnob {22 Smartred l SmartRed -STARTLINE T "nuke.thisNode()\[\"basecolor\"].setValue(0.4920000136,0)\nnuke.thisNode()\[\"basecolor\"].setValue(0.01799999923,1)\nnuke.thisNode()\[\"basecolor\"].setValue(0.01600000076,2)\nnuke.thisNode()\[\"color_gradient\"].setValue(0.0490042604506,0)\nnuke.thisNode()\[\"color_gradient\"].setValue(0.407853603363,1)\nnuke.thisNode()\[\"color_gradient\"].setValue(0.488000005484,2)\nnuke.thisNode()\[\"point0\"].setValue(120.0)\nnuke.thisNode()\[\"point1\"].setValue(90.0)\nnuke.thisNode()\[\"on_1\"].setValue(0)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.0,0)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.0579999983311,1)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.0,2)\nnuke.thisNode()\[\"point0_1\"].setValue(80.0)\nnuke.thisNode()\[\"point1_1\"].setValue(90.0)\nnuke.thisNode()\[\"on_2\"].setValue(0)\nnuke.thisNode()\[\"dilate\"].setValue(7.0)\nnuke.thisNode()\[\"dilatemix\"].setValue(0.16)\nnuke.thisNode()\[\"dilateblur\"].setValue(0.0)\nnuke.thisNode()\[\"dilatebluro\"].setValue(0.0)\nnuke.thisNode()\[\"transformdilate\"].setValue(4.0,0)\nnuke.thisNode()\[\"transformdilate\"].setValue(7.0,1)\nnuke.thisNode()\[\"dilateton\"].setValue(1)\nnuke.thisNode()\[\"tdilatec\"].setValue(2.0,0)\nnuke.thisNode()\[\"tdilatec\"].setValue(1.0,1)\nnuke.thisNode()\[\"tdilatec\"].setValue(1.0,2)\nnuke.thisNode()\[\"tdilatebluro\"].setValue(0.0)\nnuke.thisNode()\[\"tblur\"].setValue(0.0)\nnuke.thisNode()\[\"stroke\"].setValue(1.2)\nnuke.thisNode()\[\"bevel\"].setValue(1.0)\nnuke.thisNode()\[\"bevelon\"].setValue(0)\nnuke.thisNode()\[\"strokecolor\"].setValue(1.0,0)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.619299650192,1)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.422220349312,2)\nnuke.thisNode()\[\"strokecolor\"].setValue(1.0,3)\nnuke.thisNode()\[\"shadow\"].setValue(10.0,0)\nnuke.thisNode()\[\"shadow\"].setValue(-10.0,1)\nnuke.thisNode()\[\"shaodwon\"].setValue(1)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.0,0)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.0,1)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.09799999744,2)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.5,3)\nnuke.thisNode()\[\"shadow2\"].setValue(2.0,0)\nnuke.thisNode()\[\"shadow2\"].setValue(-3.0,1)\nnuke.thisNode()\[\"shadow2on\"].setValue(1)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,0)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,1)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,2)\nnuke.thisNode()\[\"shadow2color\"].setValue(1.1,3)\nnuke.thisNode()\[\"sharpen\"].setValue(0.762)\nnuke.thisNode()\[\"sharpensize\"].setValue(9.75)\nnuke.thisNode()\[\"sharpenon\"].setValue(1)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,0)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,1)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,2)\nnuke.thisNode()\[\"embosson\"].setValue(1)\nnuke.thisNode()\[\"embossinv\"].setValue(0.358000010252,0)\nnuke.thisNode()\[\"embossinv\"].setValue(0.358000010252,1)\nnuke.thisNode()\[\"embossinv\"].setValue(0.358000010252,2)\nnuke.thisNode()\[\"embossinvon\"].setValue(0)\n"}
+ addUserKnob {22 Barbie -STARTLINE T "nuke.thisNode()\[\"basecolor\"].setValue(0.23340266943,0)\nnuke.thisNode()\[\"basecolor\"].setValue(0.416914999485,1)\nnuke.thisNode()\[\"basecolor\"].setValue(0.5,2)\nnuke.thisNode()\[\"color_gradient\"].setValue(1.0,0)\nnuke.thisNode()\[\"color_gradient\"].setValue(0.603136122227,1)\nnuke.thisNode()\[\"color_gradient\"].setValue(0.0667899250984,2)\nnuke.thisNode()\[\"point0\"].setValue(120.0)\nnuke.thisNode()\[\"point1\"].setValue(30.0)\nnuke.thisNode()\[\"on_1\"].setValue(1)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.116999998689,0)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.148000001907,1)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.239999994636,2)\nnuke.thisNode()\[\"point0_1\"].setValue(80.0)\nnuke.thisNode()\[\"point1_1\"].setValue(90.0)\nnuke.thisNode()\[\"on_2\"].setValue(1)\nnuke.thisNode()\[\"dilate\"].setValue(5.0)\nnuke.thisNode()\[\"dilatemix\"].setValue(0.2)\nnuke.thisNode()\[\"dilateblur\"].setValue(0.46)\nnuke.thisNode()\[\"dilatebluro\"].setValue(0.0)\nnuke.thisNode()\[\"transformdilate\"].setValue(6.0,0)\nnuke.thisNode()\[\"transformdilate\"].setValue(5.0,1)\nnuke.thisNode()\[\"dilateton\"].setValue(1)\nnuke.thisNode()\[\"tdilatec\"].setValue(2.0,0)\nnuke.thisNode()\[\"tdilatec\"].setValue(2.0,1)\nnuke.thisNode()\[\"tdilatec\"].setValue(2.0,2)\nnuke.thisNode()\[\"tdilatebluro\"].setValue(0.71)\nnuke.thisNode()\[\"tblur\"].setValue(0.0)\nnuke.thisNode()\[\"stroke\"].setValue(1.0)\nnuke.thisNode()\[\"bevel\"].setValue(4.0)\nnuke.thisNode()\[\"bevelon\"].setValue(0)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.437999993563,0)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.129472270608,1)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.114300101995,2)\nnuke.thisNode()\[\"strokecolor\"].setValue(1.0,3)\nnuke.thisNode()\[\"shadow\"].setValue(2.0,0)\nnuke.thisNode()\[\"shadow\"].setValue(-2.0,1)\nnuke.thisNode()\[\"shaodwon\"].setValue(1)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.0,0)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.0,1)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.09799999744,2)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.5,3)\nnuke.thisNode()\[\"shadow2\"].setValue(2.0,0)\nnuke.thisNode()\[\"shadow2\"].setValue(-3.0,1)\nnuke.thisNode()\[\"shadow2on\"].setValue(1)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,0)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,1)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,2)\nnuke.thisNode()\[\"shadow2color\"].setValue(1.1,3)\nnuke.thisNode()\[\"sharpen\"].setValue(2.0)\nnuke.thisNode()\[\"sharpensize\"].setValue(12.0)\nnuke.thisNode()\[\"sharpenon\"].setValue(1)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,0)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,1)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,2)\nnuke.thisNode()\[\"embosson\"].setValue(1)\nnuke.thisNode()\[\"embossinv\"].setValue(0.5,0)\nnuke.thisNode()\[\"embossinv\"].setValue(0.5,1)\nnuke.thisNode()\[\"embossinv\"].setValue(0.5,2)\nnuke.thisNode()\[\"embossinvon\"].setValue(0)\n"}
+ addUserKnob {22 Restore l "\[Restore]" t "restore stored settings" -STARTLINE T "nuke.thisNode()\[\"basecolor\"].setValue(0.5,0)\nnuke.thisNode()\[\"basecolor\"].setValue(0.152968257666,1)\nnuke.thisNode()\[\"basecolor\"].setValue(0.0983721017838,2)\nnuke.thisNode()\[\"color_gradient\"].setValue(1.0,0)\nnuke.thisNode()\[\"color_gradient\"].setValue(0.666743636131,1)\nnuke.thisNode()\[\"color_gradient\"].setValue(0.0,2)\nnuke.thisNode()\[\"point0\"].setValue(120.0)\nnuke.thisNode()\[\"point1\"].setValue(70.0)\nnuke.thisNode()\[\"on_1\"].setValue(1)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.00400000018999,0)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.00380000006407,1)\nnuke.thisNode()\[\"Color_gradient2\"].setValue(0.0540000014007,2)\nnuke.thisNode()\[\"point0_1\"].setValue(77.0)\nnuke.thisNode()\[\"point1_1\"].setValue(87.0)\nnuke.thisNode()\[\"on_2\"].setValue(1)\nnuke.thisNode()\[\"dilate\"].setValue(2.0)\nnuke.thisNode()\[\"dilatemix\"].setValue(1.0)\nnuke.thisNode()\[\"dilateblur\"].setValue(0.0)\nnuke.thisNode()\[\"dilatebluro\"].setValue(0.0)\nnuke.thisNode()\[\"transformdilate\"].setValue(-2.0,0)\nnuke.thisNode()\[\"transformdilate\"].setValue(-2.0,1)\nnuke.thisNode()\[\"dilateton\"].setValue(1)\nnuke.thisNode()\[\"tdilatec\"].setValue(0.304812192917,0)\nnuke.thisNode()\[\"tdilatec\"].setValue(0.675611972809,1)\nnuke.thisNode()\[\"tdilatec\"].setValue(1.0,2)\nnuke.thisNode()\[\"tdilatebluro\"].setValue(0.0)\nnuke.thisNode()\[\"tblur\"].setValue(0.0)\nnuke.thisNode()\[\"stroke\"].setValue(5.0)\nnuke.thisNode()\[\"bevel\"].setValue(12.0)\nnuke.thisNode()\[\"bevelon\"].setValue(1)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.5,0)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.5,1)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.5,2)\nnuke.thisNode()\[\"strokecolor\"].setValue(0.8,3)\nnuke.thisNode()\[\"shadow\"].setValue(10.0,0)\nnuke.thisNode()\[\"shadow\"].setValue(-10.0,1)\nnuke.thisNode()\[\"shaodwon\"].setValue(0)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.0,0)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.0,1)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.09799999744,2)\nnuke.thisNode()\[\"shadowcolor\"].setValue(0.5,3)\nnuke.thisNode()\[\"shadow2\"].setValue(12.0,0)\nnuke.thisNode()\[\"shadow2\"].setValue(-12.0,1)\nnuke.thisNode()\[\"shadow2on\"].setValue(1)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,0)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,1)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.0,2)\nnuke.thisNode()\[\"shadow2color\"].setValue(0.6,3)\nnuke.thisNode()\[\"sharpen\"].setValue(0.5)\nnuke.thisNode()\[\"sharpensize\"].setValue(1.0)\nnuke.thisNode()\[\"sharpenon\"].setValue(0)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,0)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,1)\nnuke.thisNode()\[\"emboss\"].setValue(1.0,2)\nnuke.thisNode()\[\"embosson\"].setValue(0)\nnuke.thisNode()\[\"embossinv\"].setValue(0.5,0)\nnuke.thisNode()\[\"embossinv\"].setValue(0.5,1)\nnuke.thisNode()\[\"embossinv\"].setValue(0.5,2)\nnuke.thisNode()\[\"embossinvon\"].setValue(0)\n"}
+ addUserKnob {22 Paste l "\[Paste]" -STARTLINE T "from PySide import QtGui \n\nclipboard = QtGui.QApplication.clipboard()\n\ntext = clipboard.text()\n\nlist = text.split()\n\nfor item in list:\n eval(item)"}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 Animate}
+ addUserKnob {3 timeoffset l Offset t "frame offset for letter animations\n\nyou can use - value to invert orders"}
+ timeoffset -1
+ addUserKnob {26 lOrder l Order}
+ addUserKnob {3 OrderCHK l INVISIBLE +INVISIBLE}
+ addUserKnob {16 OrderM l INVISIBLE +INVISIBLE}
+ addUserKnob {22 forward l > t "Letters move in order from first to last\nTry it and see." T "nuke.thisNode()\['displayt1'].setValue('  ')\nnuke.thisNode()\['displayt2'].setValue('  >')\nnuke.thisNode()\['displayt3'].setValue('  ')\nnuke.thisNode()\['OrderCHK'].setValue(0)\nnuke.thisNode()\['timeoffset'].setValue(-1*(nuke.thisNode()\['timeoffset'].getValue()))" +STARTLINE}
+ addUserKnob {26 n1 l "" -STARTLINE T "  1"}
+ addUserKnob {26 n2 l "" -STARTLINE T " 2"}
+ addUserKnob {26 n3 l "" -STARTLINE T " 3"}
+ addUserKnob {26 n4 l "" -STARTLINE T " 4"}
+ addUserKnob {26 n5 l "" -STARTLINE T " 5  "}
+ addUserKnob {22 reverse l < t "Letters move in order from last to first EACH ROW.\nTry it and see." -STARTLINE T "nuke.thisNode()\['displayt1'].setValue('  ')\nnuke.thisNode()\['displayt2'].setValue('  <')\nnuke.thisNode()\['displayt3'].setValue('  ')\nnuke.thisNode()\['OrderCHK'].setValue(1)"}
+ addUserKnob {26 n6 l "" -STARTLINE T "  5"}
+ addUserKnob {26 n7 l "" -STARTLINE T " 4"}
+ addUserKnob {26 n8 l "" -STARTLINE T " 3"}
+ addUserKnob {26 n9 l "" -STARTLINE T " 2"}
+ addUserKnob {26 n10 l "" -STARTLINE T " 1"}
+ addUserKnob {26 displayt2 l "" -STARTLINE T "  >"}
+ addUserKnob {22 in l >< t "Letters move in order towards middle\nTry it and see." T "nuke.thisNode()\['displayt2'].setValue('  ')\nnuke.thisNode()\['displayt1'].setValue(' ><')\nnuke.thisNode()\['displayt3'].setValue('  ')\nnuke.thisNode()\['OrderCHK'].setValue(3)" +STARTLINE}
+ addUserKnob {26 n11 l "" -STARTLINE T "  1"}
+ addUserKnob {26 n11_1 l "" -STARTLINE T " 2"}
+ addUserKnob {26 n13 l "" -STARTLINE T " 3"}
+ addUserKnob {26 n14 l "" -STARTLINE T " 2"}
+ addUserKnob {26 n15 l "" -STARTLINE T " 1  "}
+ addUserKnob {22 out l <> t "Letters move in order from the middle\nTry it and see." -STARTLINE T "nuke.thisNode()\['displayt2'].setValue('  ')\nnuke.thisNode()\['displayt1'].setValue(' <>')\nnuke.thisNode()\['displayt3'].setValue('  ')\nnuke.thisNode()\['OrderCHK'].setValue(2)"}
+ addUserKnob {26 n17 l "" -STARTLINE T "  3"}
+ addUserKnob {26 n18 l "" -STARTLINE T " 2"}
+ addUserKnob {26 n19 l "" -STARTLINE T " 1"}
+ addUserKnob {26 n20 l "" -STARTLINE T " 2"}
+ addUserKnob {26 n21 l "" -STARTLINE T " 3"}
+ addUserKnob {26 displayt1 l "" -STARTLINE T "  "}
+ addUserKnob {22 Snakef l S> t "Letters move in order from first to last but change direction each new line\nTry it and see." T "nuke.thisNode()\['displayt1'].setValue('  ')\nnuke.thisNode()\['displayt2'].setValue('  ')\nnuke.thisNode()\['displayt3'].setValue(' S>')\nnuke.thisNode()\['OrderCHK'].setValue(4)" +STARTLINE}
+ addUserKnob {26 n22 l "" -STARTLINE T "  S"}
+ addUserKnob {26 n23 l "" -STARTLINE T " N"}
+ addUserKnob {26 n24 l "" -STARTLINE T " A"}
+ addUserKnob {26 N25 l "" -STARTLINE T " K"}
+ addUserKnob {26 N26 l "" -STARTLINE T " E "}
+ addUserKnob {22 Snakeb l <S t "Letters move in order from last to first but change direction each new line\nTry it and see." -STARTLINE T "nuke.thisNode()\['displayt1'].setValue('  ')\nnuke.thisNode()\['displayt2'].setValue('  ')\nnuke.thisNode()\['displayt3'].setValue(' <S')\nnuke.thisNode()\['OrderCHK'].setValue(5)"}
+ addUserKnob {26 n25 l "" -STARTLINE T "  E"}
+ addUserKnob {26 n26 l "" -STARTLINE T " K"}
+ addUserKnob {26 n27 l "" -STARTLINE T " A"}
+ addUserKnob {26 n28 l "" -STARTLINE T " N"}
+ addUserKnob {26 n29 l "" -STARTLINE T " S"}
+ addUserKnob {26 displayt3 l "" -STARTLINE T "  "}
+ addUserKnob {26 ""}
+ addUserKnob {3 Random l Rand t "Random Range - from"}
+ Random 2
+ addUserKnob {3 fromto l to t "Random Range - to" -STARTLINE}
+ fromto 5
+ addUserKnob {3 randomseed l "Rand seed" t "Random seed" -STARTLINE}
+ randomseed 17
+ addUserKnob {6 on t "Random on/off" -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 scroll t "Scrolls letter 'list' up. List shown under Setup tab.\nDoes not adjust new kernings, this results some rough bouncing. Use another node for clean effect." R 0 20}
+ addUserKnob {12 translate}
+ translate {890 2120}
+ addUserKnob {7 rotate R -180 180}
+ addUserKnob {14 skew R 0 100}
+ skew {0 0}
+ addUserKnob {14 scale R 0 100}
+ scale {1 1}
+ addUserKnob {14 blur R 0 100}
+ blur {0 0}
+ addUserKnob {16 opacity_a l opacity}
+ opacity_a 1
+ addUserKnob {26 ""}
+ addUserKnob {7 motionblur R 0 4}
+ addUserKnob {7 shutter R 0 2}
+ shutter 0.19
+ addUserKnob {20 Setup}
+ addUserKnob {1 mathrandname l INVISIBLE t SKUKKELIMUKKELIS +HIDDEN +INVISIBLE}
+ mathrandname SKUKKELIMUKKELIS
+ addUserKnob {6 randnamecheck l INVISIBLE +INVISIBLE +STARTLINE}
+ randnamecheck true
+ addUserKnob {3 mathamount l INVISIBLE +INVISIBLE}
+ addUserKnob {3 mathcurrentamount l INVISIBLE +INVISIBLE}
+ mathcurrentamount 29
+ addUserKnob {26 SwitchD l INVISIBLE +INVISIBLE T "Method :"}
+ addUserKnob {22 twoD l INVISIBLE +INVISIBLE +STARTLINE}
+ addUserKnob {22 threeD l INVISIBLE -STARTLINE +INVISIBLE}
+ addUserKnob {6 Mcopyvalues l INVISIBLE t "copy animations when switching" -STARTLINE +INVISIBLE}
+ Mcopyvalues true
+ addUserKnob {22 SingleL l INVISIBLE t "Create one letter after another. If 'forget checks' is on this can be useful for giving certain unique values.\n\nA bit extreme. Should not be used as default." +INVISIBLE +STARTLINE}
+ addUserKnob {6 forgetchecks l INVISIBLE t "forgets all checks that see if general settings have changed before executing a single letter script.\n\nA bit extreme. Should not be on as default." -STARTLINE +INVISIBLE}
+ addUserKnob {26 ""}
+ addUserKnob {6 C1 l "" t "top left" +STARTLINE +STARTLINE}
+ addUserKnob {6 topcenter l "" t "top center" -STARTLINE}
+ addUserKnob {6 topright l "" t "top right" -STARTLINE}
+ addUserKnob {26 _Centeradjustment l "" -STARTLINE T " Letter"}
+ addUserKnob {6 centerleft l "" t "center left" +STARTLINE +STARTLINE}
+ addUserKnob {6 centercenter l "" t "center center" -STARTLINE}
+ centercenter true
+ addUserKnob {6 centerright l "" t "center right" -STARTLINE}
+ addUserKnob {26 _origoadjustment l "" -STARTLINE T " center"}
+ addUserKnob {6 bottomleft l "" t "bottom left" +STARTLINE +STARTLINE}
+ addUserKnob {6 bottomcenter l "" t "bottom center" -STARTLINE}
+ addUserKnob {6 bottomright l "" t "bottom right" -STARTLINE}
+ addUserKnob {26 _positionadjustment l "" -STARTLINE T " position"}
+ addUserKnob {3 lastcheck l INVISIBLE +INVISIBLE}
+ lastcheck 22
+ addUserKnob {26 ""}
+ addUserKnob {26 kerning_1 l "" +STARTLINE T "K e r n i n g    a d d i t i o n a l    v a l u e s  :"}
+ addUserKnob {43 table l "" t "Kerning table. Add positive or negative values replacing 0. You may add new characters to list if you follow the same pattern." +STARTLINE}
+ table "a\t0\nb\t0\nc\t0\nd\t0\ne\t0\nf\t0\ng\t0\nh\t0\ni\t0\nj\t0\nk\t0\nl\t0\nm\t0\nn\t0\no\t0\np\t0\nq\t0\nr\t0\ns\t0\nt\t0\nu\t0\nv\t0\nw\t0\nx\t0\ny\t0\nz\t0\nA\t0\nB\t0\nC\t0\nD\t0\nE\t0\nF\t0\nG\t0\nH\t0\nI\t0\nJ\t0\nK\t0\nL\t0\nM\t0\nN\t0\nO\t0\nP\t0\nQ\t0\nR\t0\nS\t0\nT\t0\nU\t0\nV\t0\nW\t0\nX\t0\nY\t0\nZ\t0\n!\t0\n\"\t0\n#\t0\n\$\t0\n%\t0\n&\t0\n'\t0\n(\t0\n)\t0\n*\t0\n+\t0\n,\t0\n-\t0\n.\t0\n/\t0\n0\t0\n1\t0\n2\t0\n3\t0\n4\t0\n5\t0\n6\t0\n7\t0\n8\t0\n9\t0\n:\t0\n;\t0\n<\t0\n=\t0\n>\t0\n?\t0\n@\t0\n\[\t0\n]\t0\n^\t0\n_\t0\n`\t0\n\{\t0\n|\t0\n\}\t0\n~\t0\n\177\t0\nä\t0\nÄ\t0\nö\t0\nÖ\t0\nå\t0\nÅ\t0"
+ addUserKnob {6 cumulative l "c u m u l a t i v e" t "on = every next letter is moved as well\noff = only specific letter moves, rest stay unaffected\n" +STARTLINE}
+ cumulative true
+ addUserKnob {26 ""}
+ addUserKnob {26 nodecreation l "" +STARTLINE T "S e t u p :"}
+ addUserKnob {22 Log l "Print Log" T "print nuke.thisGroup().node('Output2').input(0)\['log'].getValue()" +STARTLINE}
+ addUserKnob {22 cleanlog l "Clear Log" -STARTLINE T "print nuke.thisGroup().node('Output2').input(0)\['log'].setValue('Cleared')"}
+ addUserKnob {22 ResetKill l "Reset Kill" t "\"Reset Kill\" delete any nodes found inside" -STARTLINE T "nuke.Undo().disable()\nprint nuke.thisGroup().node('Output2').input(0)\['kill'].execute()\nnuke.thisNode()\['mathrandname'].setValue('SKUKKELIMUKKELIS')\nnuke.Undo().enable()"}
+ addUserKnob {26 ""}
+ addUserKnob {26 display l "" +STARTLINE T "N o d e   D i s p l a y  :"}
+ addUserKnob {22 IB l < T "if int(nuke.thisNode()\['IX0'].getValue())>1:\n nuke.thisNode()\['IX0'].setValue(str(int(nuke.thisNode()\['IX0'].getValue())-1))\n nuke.thisNode()\['IX1'].setValue(str(int(nuke.thisNode()\['IX1'].getValue())-1))\n nuke.thisNode()\['IX2'].setValue(str(int(nuke.thisNode()\['IX2'].getValue())-1))\n nuke.thisNode()\['IX3'].setValue(str(int(nuke.thisNode()\['IX3'].getValue())-1))\n nuke.thisNode()\['IX4'].setValue(str(int(nuke.thisNode()\['IX4'].getValue())-1))\n nuke.thisNode()\['IX5'].setValue(str(int(nuke.thisNode()\['IX5'].getValue())-1))\n nuke.thisNode()\['IX6'].setValue(str(int(nuke.thisNode()\['IX6'].getValue())-1))\n nuke.thisNode()\['IX7'].setValue(str(int(nuke.thisNode()\['IX7'].getValue())-1))\n nuke.thisNode()\['IX8'].setValue(str(int(nuke.thisNode()\['IX8'].getValue())-1))\n nuke.thisNode()\['IX9'].setValue(str(int(nuke.thisNode()\['IX9'].getValue())-1))\n nuke.thisNode()\['IX10'].setValue(str(int(nuke.thisNode()\['IX10'].getValue())-1))\n nuke.thisNode()\['IX11'].setValue(str(int(nuke.thisNode()\['IX11'].getValue())-1))\n\n\nnuke.thisNode()\['TX0'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX0'].getValue())-1:int(nuke.thisNode()\['IX1'].getValue())-1])\nnuke.thisNode()\['TX1'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX1'].getValue())-1:int(nuke.thisNode()\['IX2'].getValue())-1])\nnuke.thisNode()\['TX2'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX2'].getValue())-1:int(nuke.thisNode()\['IX3'].getValue())-1])\nnuke.thisNode()\['TX3'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX3'].getValue())-1:int(nuke.thisNode()\['IX4'].getValue())-1])\nnuke.thisNode()\['TX4'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX4'].getValue())-1:int(nuke.thisNode()\['IX5'].getValue())-1])\nnuke.thisNode()\['TX5'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX5'].getValue())-1:int(nuke.thisNode()\['IX6'].getValue())-1])\nnuke.thisNode()\['TX6'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX6'].getValue())-1:int(nuke.thisNode()\['IX7'].getValue())-1])\nnuke.thisNode()\['TX7'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX7'].getValue())-1:int(nuke.thisNode()\['IX8'].getValue())-1])\nnuke.thisNode()\['TX8'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX8'].getValue())-1:int(nuke.thisNode()\['IX9'].getValue())-1])\nnuke.thisNode()\['TX9'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX9'].getValue())-1:int(nuke.thisNode()\['IX10'].getValue())-1])\nnuke.thisNode()\['TX10'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX10'].getValue())-1:int(nuke.thisNode()\['IX11'].getValue())-1])\nnuke.thisNode()\['TX11'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX11'].getValue())-1:int(nuke.thisNode()\['IX11'].getValue())])" +STARTLINE}
+ addUserKnob {1 IX0 l "" -STARTLINE}
+ IX0 1
+ addUserKnob {1 IX1 l "" -STARTLINE}
+ IX1 2
+ addUserKnob {1 IX2 l "" -STARTLINE}
+ IX2 3
+ addUserKnob {1 IX3 l "" -STARTLINE}
+ IX3 4
+ addUserKnob {1 IX4 l "" -STARTLINE}
+ IX4 5
+ addUserKnob {1 IX5 l "" -STARTLINE}
+ IX5 6
+ addUserKnob {1 IX6 l "" -STARTLINE}
+ IX6 7
+ addUserKnob {1 IX7 l "" -STARTLINE}
+ IX7 8
+ addUserKnob {1 IX8 l "" -STARTLINE}
+ IX8 9
+ addUserKnob {1 IX9 l "" -STARTLINE}
+ IX9 10
+ addUserKnob {1 IX10 l "" -STARTLINE}
+ IX10 11
+ addUserKnob {1 IX11 l "" -STARTLINE}
+ IX11 12
+ addUserKnob {22 IF l > -STARTLINE T "nuke.thisNode()\['IX0'].setValue(str(int(nuke.thisNode()\['IX0'].getValue())+1))\nnuke.thisNode()\['IX1'].setValue(str(int(nuke.thisNode()\['IX1'].getValue())+1))\nnuke.thisNode()\['IX2'].setValue(str(int(nuke.thisNode()\['IX2'].getValue())+1))\nnuke.thisNode()\['IX3'].setValue(str(int(nuke.thisNode()\['IX3'].getValue())+1))\nnuke.thisNode()\['IX4'].setValue(str(int(nuke.thisNode()\['IX4'].getValue())+1))\nnuke.thisNode()\['IX5'].setValue(str(int(nuke.thisNode()\['IX5'].getValue())+1))\nnuke.thisNode()\['IX6'].setValue(str(int(nuke.thisNode()\['IX6'].getValue())+1))\nnuke.thisNode()\['IX7'].setValue(str(int(nuke.thisNode()\['IX7'].getValue())+1))\nnuke.thisNode()\['IX8'].setValue(str(int(nuke.thisNode()\['IX8'].getValue())+1))\nnuke.thisNode()\['IX9'].setValue(str(int(nuke.thisNode()\['IX9'].getValue())+1))\nnuke.thisNode()\['IX10'].setValue(str(int(nuke.thisNode()\['IX10'].getValue())+1))\nnuke.thisNode()\['IX11'].setValue(str(int(nuke.thisNode()\['IX11'].getValue())+1))\n\n\nnuke.thisNode()\['TX0'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX0'].getValue())-1:int(nuke.thisNode()\['IX1'].getValue())-1])\nnuke.thisNode()\['TX1'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX1'].getValue())-1:int(nuke.thisNode()\['IX2'].getValue())-1])\nnuke.thisNode()\['TX2'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX2'].getValue())-1:int(nuke.thisNode()\['IX3'].getValue())-1])\nnuke.thisNode()\['TX3'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX3'].getValue())-1:int(nuke.thisNode()\['IX4'].getValue())-1])\nnuke.thisNode()\['TX4'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX4'].getValue())-1:int(nuke.thisNode()\['IX5'].getValue())-1])\nnuke.thisNode()\['TX5'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX5'].getValue())-1:int(nuke.thisNode()\['IX6'].getValue())-1])\nnuke.thisNode()\['TX6'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX6'].getValue())-1:int(nuke.thisNode()\['IX7'].getValue())-1])\nnuke.thisNode()\['TX7'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX7'].getValue())-1:int(nuke.thisNode()\['IX8'].getValue())-1])\nnuke.thisNode()\['TX8'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX8'].getValue())-1:int(nuke.thisNode()\['IX9'].getValue())-1])\nnuke.thisNode()\['TX9'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX9'].getValue())-1:int(nuke.thisNode()\['IX10'].getValue())-1])\nnuke.thisNode()\['TX10'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX10'].getValue())-1:int(nuke.thisNode()\['IX11'].getValue())-1])\nnuke.thisNode()\['TX11'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX11'].getValue())-1:int(nuke.thisNode()\['IX11'].getValue())])"}
+ addUserKnob {22 TXBACK l < T "if int(nuke.thisNode()\['IX0'].getValue())>1:\n nuke.thisNode()\['IX0'].setValue(str(int(nuke.thisNode()\['IX0'].getValue())-1))\n nuke.thisNode()\['IX1'].setValue(str(int(nuke.thisNode()\['IX1'].getValue())-1))\n nuke.thisNode()\['IX2'].setValue(str(int(nuke.thisNode()\['IX2'].getValue())-1))\n nuke.thisNode()\['IX3'].setValue(str(int(nuke.thisNode()\['IX3'].getValue())-1))\n nuke.thisNode()\['IX4'].setValue(str(int(nuke.thisNode()\['IX4'].getValue())-1))\n nuke.thisNode()\['IX5'].setValue(str(int(nuke.thisNode()\['IX5'].getValue())-1))\n nuke.thisNode()\['IX6'].setValue(str(int(nuke.thisNode()\['IX6'].getValue())-1))\n nuke.thisNode()\['IX7'].setValue(str(int(nuke.thisNode()\['IX7'].getValue())-1))\n nuke.thisNode()\['IX8'].setValue(str(int(nuke.thisNode()\['IX8'].getValue())-1))\n nuke.thisNode()\['IX9'].setValue(str(int(nuke.thisNode()\['IX9'].getValue())-1))\n nuke.thisNode()\['IX10'].setValue(str(int(nuke.thisNode()\['IX10'].getValue())-1))\n nuke.thisNode()\['IX11'].setValue(str(int(nuke.thisNode()\['IX11'].getValue())-1))\n\n\nnuke.thisNode()\['TX0'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX0'].getValue())-1:int(nuke.thisNode()\['IX1'].getValue())-1])\nnuke.thisNode()\['TX1'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX1'].getValue())-1:int(nuke.thisNode()\['IX2'].getValue())-1])\nnuke.thisNode()\['TX2'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX2'].getValue())-1:int(nuke.thisNode()\['IX3'].getValue())-1])\nnuke.thisNode()\['TX3'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX3'].getValue())-1:int(nuke.thisNode()\['IX4'].getValue())-1])\nnuke.thisNode()\['TX4'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX4'].getValue())-1:int(nuke.thisNode()\['IX5'].getValue())-1])\nnuke.thisNode()\['TX5'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX5'].getValue())-1:int(nuke.thisNode()\['IX6'].getValue())-1])\nnuke.thisNode()\['TX6'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX6'].getValue())-1:int(nuke.thisNode()\['IX7'].getValue())-1])\nnuke.thisNode()\['TX7'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX7'].getValue())-1:int(nuke.thisNode()\['IX8'].getValue())-1])\nnuke.thisNode()\['TX8'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX8'].getValue())-1:int(nuke.thisNode()\['IX9'].getValue())-1])\nnuke.thisNode()\['TX9'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX9'].getValue())-1:int(nuke.thisNode()\['IX10'].getValue())-1])\nnuke.thisNode()\['TX10'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX10'].getValue())-1:int(nuke.thisNode()\['IX11'].getValue())-1])\nnuke.thisNode()\['TX11'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX11'].getValue())-1:int(nuke.thisNode()\['IX11'].getValue())])" +STARTLINE}
+ addUserKnob {1 TX0 l "" -STARTLINE}
+ TX0 c
+ addUserKnob {1 TX1 l "" -STARTLINE}
+ TX1 h
+ addUserKnob {1 TX2 l "" -STARTLINE}
+ TX2 a
+ addUserKnob {1 TX3 l "" -STARTLINE}
+ TX3 n
+ addUserKnob {1 TX4 l "" -STARTLINE}
+ TX4 g
+ addUserKnob {1 TX5 l "" -STARTLINE}
+ TX5 e
+ addUserKnob {1 TX6 l "" -STARTLINE}
+ TX6 " "
+ addUserKnob {1 TX7 l "" -STARTLINE}
+ TX7 t
+ addUserKnob {1 TX8 l "" -STARTLINE}
+ TX8 h
+ addUserKnob {1 TX9 l "" -STARTLINE}
+ TX9 i
+ addUserKnob {1 TX10 l "" -STARTLINE}
+ TX10 s
+ addUserKnob {1 TX11 l "" -STARTLINE}
+ TX11 " "
+ addUserKnob {22 TXFORW l > -STARTLINE T "nuke.thisNode()\['IX0'].setValue(str(int(nuke.thisNode()\['IX0'].getValue())+1))\nnuke.thisNode()\['IX1'].setValue(str(int(nuke.thisNode()\['IX1'].getValue())+1))\nnuke.thisNode()\['IX2'].setValue(str(int(nuke.thisNode()\['IX2'].getValue())+1))\nnuke.thisNode()\['IX3'].setValue(str(int(nuke.thisNode()\['IX3'].getValue())+1))\nnuke.thisNode()\['IX4'].setValue(str(int(nuke.thisNode()\['IX4'].getValue())+1))\nnuke.thisNode()\['IX5'].setValue(str(int(nuke.thisNode()\['IX5'].getValue())+1))\nnuke.thisNode()\['IX6'].setValue(str(int(nuke.thisNode()\['IX6'].getValue())+1))\nnuke.thisNode()\['IX7'].setValue(str(int(nuke.thisNode()\['IX7'].getValue())+1))\nnuke.thisNode()\['IX8'].setValue(str(int(nuke.thisNode()\['IX8'].getValue())+1))\nnuke.thisNode()\['IX9'].setValue(str(int(nuke.thisNode()\['IX9'].getValue())+1))\nnuke.thisNode()\['IX10'].setValue(str(int(nuke.thisNode()\['IX10'].getValue())+1))\nnuke.thisNode()\['IX11'].setValue(str(int(nuke.thisNode()\['IX11'].getValue())+1))\n\n\nnuke.thisNode()\['TX0'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX0'].getValue())-1:int(nuke.thisNode()\['IX1'].getValue())-1])\nnuke.thisNode()\['TX1'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX1'].getValue())-1:int(nuke.thisNode()\['IX2'].getValue())-1])\nnuke.thisNode()\['TX2'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX2'].getValue())-1:int(nuke.thisNode()\['IX3'].getValue())-1])\nnuke.thisNode()\['TX3'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX3'].getValue())-1:int(nuke.thisNode()\['IX4'].getValue())-1])\nnuke.thisNode()\['TX4'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX4'].getValue())-1:int(nuke.thisNode()\['IX5'].getValue())-1])\nnuke.thisNode()\['TX5'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX5'].getValue())-1:int(nuke.thisNode()\['IX6'].getValue())-1])\nnuke.thisNode()\['TX6'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX6'].getValue())-1:int(nuke.thisNode()\['IX7'].getValue())-1])\nnuke.thisNode()\['TX7'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX7'].getValue())-1:int(nuke.thisNode()\['IX8'].getValue())-1])\nnuke.thisNode()\['TX8'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX8'].getValue())-1:int(nuke.thisNode()\['IX9'].getValue())-1])\nnuke.thisNode()\['TX9'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX9'].getValue())-1:int(nuke.thisNode()\['IX10'].getValue())-1])\nnuke.thisNode()\['TX10'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX10'].getValue())-1:int(nuke.thisNode()\['IX11'].getValue())-1])\nnuke.thisNode()\['TX11'].setValue(str(nuke.thisGroup().node('Output2').input(0)\['old'].getValue())\[int(nuke.thisNode()\['IX11'].getValue())-1:int(nuke.thisNode()\['IX11'].getValue())])"}
+ addUserKnob {26 operate_info l "" +STARTLINE T "O p e r a t e :"}
+ addUserKnob {4 action M {"clear anim" "static value" expression "time offset" "" "" "" "" ""}}
+ action "time offset"
+ addUserKnob {4 actionvalues l "" -STARTLINE M {"translate (x y, t)" "rotate (float, t)" "scale (x y, t)" "blur (x y, t)" "skew (x y, t)" "opacity (float, t)" "all (x y, float, t)" "" "" "" "" "" "" ""}}
+ actionvalues "all (x y, float, t)"
+ addUserKnob {3 node t "letter number as shown on node display" -STARTLINE}
+ node 1
+ addUserKnob {22 printcurrent l Print t "print current expressions in the node & sets them in the action expression" -STARTLINE T "nodname=nuke.thisNode()\['mathrandname'].getValue()\nnode=int(nuke.thisNode()\['node'].getValue())-1\n\nif nuke.thisNode()\['action'].getValue() == 2:\n if int(nuke.thisNode()\['actionvalues'].getValue())==0:\n  exp = nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['translate'].toScript()\n if int(nuke.thisNode()\['actionvalues'].getValue())==1:\n  exp = nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['rotate'].toScript()\n if int(nuke.thisNode()\['actionvalues'].getValue())==2:\n  exp = nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['scale'].toScript()\n if int(nuke.thisNode()\['actionvalues'].getValue())==4:\n  exp2 = nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['skewX'].toScript()\n  exp3 = nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['skewY'].toScript()\n if int(nuke.thisNode()\['actionvalues'].getValue())==5:\n  exp = nuke.thisGroup().node(str(nodname)+'OPA'+str(node))\['value'].toScript()\n if int(nuke.thisNode()\['actionvalues'].getValue())==3:\n  exp = nuke.thisGroup().node(str(nodname)+'BLU'+str(node))\['size'].toScript()\n if int(nuke.thisNode()\['actionvalues'].getValue())==4:\n  exp2 = exp2.split(\"\{\")\n  exp3 = exp3.split(\"\{\")\n  print exp2\[1]\[:-2]\n  print exp3\[1]\[:-2]\n if int(nuke.thisNode()\['actionvalues'].getValue())==0:\n  exp = exp.split(\"\{\")\n  print exp\[1]\[:-2]\n  print exp\[2]\[:-1]\n if int(nuke.thisNode()\['actionvalues'].getValue())==1:\n  print exp\[:-2]\n if int(nuke.thisNode()\['actionvalues'].getValue())==2:\n  exp = exp.split(\"\{\")\n  print exp\[1]\[:-2]\n  print exp\[2]\[:-1]\n if int(nuke.thisNode()\['actionvalues'].getValue())==3:\n  exp = exp.split(\"\{\")\n  print exp\[1]\[:-2]\n  print exp\[2]\[:-1]\n if int(nuke.thisNode()\['actionvalues'].getValue())==5:\n  print exp\[:-1]"}
+ addUserKnob {12 additionalvalue l "x y action" t "Scripting additional value\nreserved for actions\n\n2 channels, x y"}
+ additionalvalue {{frame*1} {frame*1}}
+ addUserKnob {7 additionalvalue2 l "float action" t "Scripting additional value\nreserved for actions\n\nfor single channels such as rotate" -STARTLINE R -180 180}
+ additionalvalue2 {{frame*1}}
+ addUserKnob {3 additionalvalue3 l "t action" t "time offset action" -STARTLINE}
+ additionalvalue3 -1
+ addUserKnob {22 Action l "Operate !" -STARTLINE T "nodname=nuke.thisNode()\['mathrandname'].getValue()\nnode=int(nuke.thisNode()\['node'].getValue())-1\n\nif nuke.thisNode()\['action'].getValue() == 0:\n if int(nuke.thisNode()\['actionvalues'].getValue())==0 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['translate'].clearAnimated()\n if int(nuke.thisNode()\['actionvalues'].getValue())==1 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['rotate'].clearAnimated()\n if int(nuke.thisNode()\['actionvalues'].getValue())==2 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['scale'].clearAnimated()\n if int(nuke.thisNode()\['actionvalues'].getValue())==4 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['skewX'].clearAnimated()\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['skewY'].clearAnimated()\n if int(nuke.thisNode()\['actionvalues'].getValue())==5 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'OPA'+str(node))\['value'].clearAnimated()\n if int(nuke.thisNode()\['actionvalues'].getValue())==3 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'BLU'+str(node))\['size'].clearAnimated()\n\nif nuke.thisNode()\['action'].getValue() == 1:\n if int(nuke.thisNode()\['actionvalues'].getValue())==0 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['translate'].clearAnimated()\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['translate'].setValue(nuke.thisNode()\['additionalvalue'].getValue())\n if int(nuke.thisNode()\['actionvalues'].getValue())==1 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['rotate'].clearAnimated()\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['rotate'].setValue(nuke.thisNode()\['additionalvalue2'].getValue(0))\n if int(nuke.thisNode()\['actionvalues'].getValue())==2 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['scale'].clearAnimated()\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['scale'].setValue(nuke.thisNode()\['additionalvalue'].getValue())\n if int(nuke.thisNode()\['actionvalues'].getValue())==4 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['skewX'].clearAnimated()\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['skewX'].setValue(nuke.thisNode()\['additionalvalue'].getValue())\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['skewY'].clearAnimated()\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['skewY'].setValue(nuke.thisNode()\['additionalvalue'].getValue())\n if int(nuke.thisNode()\['actionvalues'].getValue())==5 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'OPA'+str(node))\['value'].clearAnimated()\n  nuke.thisGroup().node(str(nodname)+'OPA'+str(node))\['value'].setValue(nuke.thisNode()\['additionalvalue2'].getValue(0))\n if int(nuke.thisNode()\['actionvalues'].getValue())==3 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'BLU'+str(node))\['size'].clearAnimated()\n  nuke.thisGroup().node(str(nodname)+'BLU'+str(node))\['size'].setValue(nuke.thisNode()\['additionalvalue'].getValue())\n\nif nuke.thisNode()\['action'].getValue() == 2:\n if int(nuke.thisNode()\['actionvalues'].getValue())==0 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['translate'].fromScript(nuke.thisNode()\['additionalvalue'].toScript())\n if int(nuke.thisNode()\['actionvalues'].getValue())==1 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['rotate'].fromScript(nuke.thisNode()\['additionalvalue2'].toScript())\n if int(nuke.thisNode()\['actionvalues'].getValue())==2 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['scale'].fromScript(nuke.thisNode()\['additionalvalue'].toScript())\n if int(nuke.thisNode()\['actionvalues'].getValue())==4 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['skewX'].fromScript(nuke.thisNode()\['additionalvalue'].toScript())\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['skewY'].fromScript(nuke.thisNode()\['additionalvalue'].toScript())\n if int(nuke.thisNode()\['actionvalues'].getValue())==5 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'OPA'+str(node))\['value'].fromScript(nuke.thisNode()\['additionalvalue2'].toScript())\n if int(nuke.thisNode()\['actionvalues'].getValue())==3 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'BLU'+str(node))\['size'].fromScript(nuke.thisNode()\['additionalvalue'].toScript())\n\nif nuke.thisNode()\['action'].getValue() == 3:\n offset = nuke.thisNode()\['additionalvalue3'].getValue()\n if int(nuke.thisNode()\['actionvalues'].getValue())==0 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['T_offset'].setValue(offset)\n if int(nuke.thisNode()\['actionvalues'].getValue())==1 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['T_offset'].setValue(offset)\n if int(nuke.thisNode()\['actionvalues'].getValue())==2 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['T_offset'].setValue(offset)\n if int(nuke.thisNode()\['actionvalues'].getValue())==4 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'txt'+str(node))\['T_offset'].setValue(offset)\n if int(nuke.thisNode()\['actionvalues'].getValue())==5 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'OPA'+str(node))\['T_offset'].setValue(offset)\n if int(nuke.thisNode()\['actionvalues'].getValue())==3 or int(nuke.thisNode()\['actionvalues'].getValue())==6:\n  nuke.thisGroup().node(str(nodname)+'BLU'+str(node))\['T_offset'].setValue(offset)"}
+}
+ BackdropNode {
+  inputs 0
+  name DO_NOT_TOUCH
+  tile_color 0xff3926ff
+  xpos 3359
+  ypos 2059
+  bdwidth 1288
+  bdheight 234
+ }
+ Dot {
+  inputs 0
+  name Dot2
+  xpos 4525
+  ypos 2137
+ }
+ Reformat {
+  type "to box"
+  format "4096 3112 0 0 4096 3112 1 4K_Super_35(full-ap)"
+  box_width {{"50*\[string length \[value parent.message]]+parent.size*50"}}
+  name Reformat1
+  xpos 3890
+  ypos 2134
+ }
+ Dot {
+  name Dot5
+  xpos 3846
+  ypos 2137
+ }
+set N2414d6e0 [stack 0]
+ Dot {
+  name Dot4
+  xpos 3846
+  ypos 2080
+ }
+ Text {
+  cliptype none
+  message "\[string is print \[string range \[value parent.message] 0 0]]"
+  font "\[value parent.font]"
+  size 1
+  yjustify bottom
+  Transform 1
+  box {0 0 100000 84}
+  center {1024 778}
+  name Analyzing_text_leading_zeros
+  tile_color 0xed00ff
+  xpos 3642
+  ypos 2076
+ }
+ Dot {
+  name Dot3
+  xpos 3611
+  ypos 2080
+ }
+set N2414e130 [stack 0]
+ Text {
+  cliptype none
+  message a
+  font "\[value parent.font]"
+  size 120
+  yjustify bottom
+  Transform 1
+  box {0 0 100000 84}
+  scale {0.8 1}
+  center {1024 778}
+  name Analyzing_text_leading
+  tile_color 0xed00ff
+  xpos 3519
+  ypos 2076
+ }
+ Dot {
+  name analyzing_text_bbox_l_h
+  tile_color 0xffff
+  xpos 3490
+  ypos 2080
+  addUserKnob {20 User}
+  addUserKnob {16 bboxl}
+  bboxl {{bbox.h i}}
+ }
+push $N2414d6e0
+ Text {
+  cliptype none
+  message .
+  font "\[value parent.font]"
+  size 120
+  yjustify bottom
+  Transform 1
+  box {0 0 100000 1167}
+  center {1024 778}
+  name Analyzing_text_spacing1
+  tile_color 0xed00ff
+  xpos 3812
+  ypos 2192
+ }
+ Text {
+  cliptype none
+  message " ."
+  font "\[value parent.font]"
+  size 120
+  yjustify bottom
+  Transform 1
+  box {0 0 100000 1167}
+  center {1024 778}
+  name Analyzing_text_spacing
+  tile_color 0xed00ff
+  xpos 3702
+  ypos 2192
+ }
+ Dot {
+  name dummy
+  xpos 3656
+  ypos 2196
+  addUserKnob {20 User}
+  addUserKnob {1 message}
+  message "\[string range \[value parent.message] 22 22]"
+ }
+ Dot {
+  name analyzing_text_bbox1
+  tile_color 0xffff
+  xpos 3609
+  ypos 2196
+  addUserKnob {20 User}
+  addUserKnob {16 bbox}
+  bbox {{input.input.bbox.w-input.input.input.bbox.w}}
+ }
+ Text {
+  inputs 0
+  message ab
+  font "\[value parent.font]"
+  size {{parent.size*5}}
+  kerning 1
+  yjustify top
+  Transform 1
+  box {0 0 1 {input.height}}
+  name VersionTwo_cropmagic_sample
+  tile_color 0x2c6e97ff
+  xpos 3596
+  ypos 2256
+ }
+ Dot {
+  name VersionTwo_cropmagic_sample_dot
+  xpos 3716
+  ypos 2259
+  addUserKnob {20 User}
+  addUserKnob {22 aja T "nuke.toNode('VersionTwo_cropmagic_sample')\['message'].setValue('a')\ncbbo = nuke.toNode('VersionTwo_cropmagic_sample_dot')\['bbox'].getValue()\nnuke.toNode('VersionTwo_cropmagic_sample')\['message'].setValue('ab')\ncbbob = nuke.toNode('VersionTwo_cropmagic_sample_dot')\['bbox'].getValue()\n\nnuke.thisNode()\['arraylet'].setValue(cbbob-cbbo)" +STARTLINE}
+  addUserKnob {7 bbox}
+  bbox {{bbox.h}}
+ }
+ Rectangle {
+  inputs 0
+  area {0 0 1200 1197}
+  ramp linear
+  color {{parent.Color_gradient2.r} {parent.Color_gradient2.g} {parent.Color_gradient2.b} {parent.on_2*0.75}}
+  p1 {0 {parent.point0_1*7}}
+  color0 {0 0 0 0}
+  p0 {0 {parent.point1_1*7}}
+  name Rectangle2
+  xpos 3216
+  ypos 1737
+ }
+ Premult {
+  name PMerge2
+  xpos 3216
+  ypos 1761
+ }
+ Rectangle {
+  inputs 0
+  area {0 0 1200 1197}
+  ramp linear
+  color {{parent.color_gradient.r} {parent.color_gradient.g} {parent.color_gradient.b} {parent.on_1}}
+  p1 {0 {parent.point0*7}}
+  color0 {0 0 0 0}
+  p0 {0 {parent.point1*7}}
+  name Rectangle1
+  xpos 3106
+  ypos 1737
+ }
+ Premult {
+  name Pmerge1
+  xpos 3106
+  ypos 1761
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+  name Constant1
+  xpos 2192
+  ypos 1774
+ }
+ Clamp {
+  maximum 0
+  name Clamp3
+  xpos 2302
+  ypos 1792
+ }
+ Reformat {
+  type scale
+  scale {1 120}
+  center false
+  filter Impulse
+  black_outside true
+  name ReformatBeforeTwo
+  xpos 2412
+  ypos 1798
+ }
+ Text {
+  message "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#\$%&'()*+,-./0123456789:;<=>?@\[]^_`\{|\}~\177äÄöÖåÅ"
+  font "\[value parent.font]"
+  size 600
+  kerning 1
+  leading 1
+  yjustify top
+  Transform 1
+  box {0 0 1 {186720 x11 93360}}
+  translate {135 0}
+  name VersionTwo_cropmagic
+  tile_color 0x9700ff
+  xpos 2515
+  ypos 1798
+ }
+ Crop {
+  box {0 0 2048 186720}
+  name Crop1
+  xpos 2515
+  ypos 1628
+ }
+ Dot {
+  name Dot13
+  xpos 2549
+  ypos 1395
+ }
+ Dot {
+  name Dot12
+  xpos 2659
+  ypos 1395
+ }
+set N245bc570 [stack 0]
+ Dot {
+  name Dot11
+  tile_color 0xff
+  xpos 2659
+  ypos 1356
+ }
+ Dot {
+  name Dot10
+  xpos 2966
+  ypos 1356
+ }
+ Dot {
+  name Dot9
+  xpos 2966
+  ypos 1816
+ }
+push $N245bc570
+add_layer {textalpha textalpha.red textalpha.green textalpha.blue textalpha.alpha}
+ Shuffle {
+  black red
+  white green
+  red2 blue
+  green2 alpha
+  out2 textalpha
+  name Shuffle1
+  xpos 2625
+  ypos 1449
+ }
+set N245bd330 [stack 0]
+push $N245bd330
+ Dilate {
+  size {{-parent.stroke}}
+  maskChannelInput -rgba.alpha
+  invert_mask true
+  name Dilate3
+  xpos 2819
+  ypos 1634
+ }
+ Invert {
+  inputs 1+1
+  name Invert2
+  xpos 2819
+  ypos 1678
+ }
+set N245bda10 [stack 0]
+push $N245bc570
+push $N245bc570
+ Transform {
+  translate {{parent.shadow2.x} {parent.shadow2.y}}
+  center {1024 778}
+  name shadow1
+  xpos 2762
+  ypos 1541
+ }
+ Blur {
+  size {{parent.shadow2blur*10}}
+  name Blur6
+  xpos 2872
+  ypos 1535
+ }
+ Multiply {
+  inputs 1+1
+  value 0
+  name Multiply2
+  xpos 2764
+  ypos 1587
+ }
+set N245be460 [stack 0]
+push $N245be460
+push $N245bc570
+push $N245bc570
+ Transform {
+  translate {{parent.shadow.x} {parent.shadow.y}}
+  center {1024 778}
+  name shadow
+  xpos 2762
+  ypos 1392
+ }
+ Blur {
+  size {{parent.shadowblur*10}}
+  name Blur5
+  xpos 2872
+  ypos 1386
+ }
+ Multiply {
+  inputs 1+1
+  value 0
+  name Multiply1
+  xpos 2764
+  ypos 1438
+ }
+set N246b1ed0 [stack 0]
+push $N246b1ed0
+push $N245bd330
+ Clamp {
+  inputs 1+1
+  channels alpha
+  minimum {{parent.shadowcolor.a}}
+  maximum {{parent.shadowcolor.a}}
+  name Clamp4
+  xpos 2625
+  ypos 1486
+  disable {{1-parent.shaodwon}}
+ }
+ Clamp {
+  inputs 1+1
+  channels rgb
+  minimum {{parent.shadowcolor.r} {parent.shadowcolor.g} {parent.shadowcolor.b} 0}
+  maximum {{parent.shadowcolor.r} {parent.shadowcolor.g} {parent.shadowcolor.b} 1}
+  name Clamp5
+  xpos 2625
+  ypos 1534
+  disable {{1-parent.shaodwon}}
+ }
+ Clamp {
+  inputs 1+1
+  channels alpha
+  minimum {{parent.shadow2color.a}}
+  maximum {{parent.shadow2color.a}}
+  name Clamp6
+  xpos 2625
+  ypos 1587
+  disable {{1-parent.shadow2on}}
+ }
+ Clamp {
+  inputs 1+1
+  channels rgb
+  minimum {{parent.shadow2color.r} {parent.shadow2color.g} {parent.shadow2color.b} 0}
+  maximum {{parent.shadow2color.r} {parent.shadow2color.g} {parent.shadow2color.b} 1}
+  name Clamp7
+  xpos 2625
+  ypos 1630
+  disable {{1-parent.shadow2on}}
+ }
+ ColorCorrect {
+  gain 0.5
+  name halfgain
+  xpos 2625
+  ypos 1654
+ }
+ ColorCorrect {
+  gain {{parent.basecolor.main.r} {parent.basecolor.main.g} {parent.basecolor.main.b} 1}
+  name ColorCorrect1
+  xpos 2625
+  ypos 1678
+ }
+set N246b3370 [stack 0]
+ Clamp {
+  inputs 1+1
+  minimum {{parent.strokecolor.r} {parent.strokecolor.g} {parent.strokecolor.b} {parent.strokecolor.a}}
+  maximum {{parent.strokecolor.r} {parent.strokecolor.g} {parent.strokecolor.b} {parent.strokecolor.a}}
+  name Clamp9
+  xpos 2819
+  ypos 1714
+ }
+ Emboss {
+  Width {{parent.bevel}}
+  name Emboss2
+  xpos 2819
+  ypos 1755
+ }
+ ColorCorrect {
+  saturation 0
+  contrast 0.95
+  gamma 0.2
+  gain 3
+  offset -0.07
+  name ColorCorrect4
+  xpos 2729
+  ypos 1761
+ }
+push $N245bda10
+push $N246b3370
+ Clamp {
+  inputs 1+1
+  minimum {{parent.strokecolor.r} {parent.strokecolor.g} {parent.strokecolor.b} {parent.strokecolor.a}}
+  maximum {{parent.strokecolor.r} {parent.strokecolor.g} {parent.strokecolor.b} {parent.strokecolor.a}}
+  name Clamp8
+  xpos 2625
+  ypos 1703
+  disable {{1-parent.bevelon}}
+ }
+ Merge2 {
+  inputs 2
+  Achannels rgb
+  name Merge1
+  xpos 2625
+  ypos 1761
+  disable {{1-parent.bevelon x44 1}}
+ }
+ Multiply {
+  value 0
+  maskChannelInput rgba.alpha
+  invert_mask true
+  name Multiply3
+  xpos 2625
+  ypos 1791
+ }
+ ColorCorrect {
+  name ColorCorrect3
+  xpos 2625
+  ypos 1865
+ }
+set N246b4b80 [stack 0]
+push $N246b4b80
+ Dilate {
+  size {{parent.dilate.main}}
+  maskChannelInput rgba.alpha
+  invert_mask true
+  name Dilate2
+  xpos 2625
+  ypos 1919
+ }
+ Clamp {
+  inputs 1+1
+  maximum 0
+  name Clamp1
+  xpos 2724
+  ypos 1919
+ }
+set N247ed830 [stack 0]
+push $N247ed830
+ Transform {
+  translate {{parent.transformdilate.main.x} {parent.transformdilate.main.y}}
+  center {1024 778}
+  name Transform1
+  xpos 2882
+  ypos 2035
+ }
+ Clamp {
+  inputs 1+1
+  maximum 0
+  name Clamp2
+  xpos 2882
+  ypos 1964
+ }
+set N247edba0 [stack 0]
+ Blur {
+  size {{parent.tdilatebluro.main*20 i}}
+  name Blur3
+  xpos 2882
+  ypos 1912
+ }
+push $N247ed830
+push $N246b4b80
+ Dilate {
+  size {{parent.dilate.main i}}
+  maskChannelInput rgba.alpha
+  invert_mask true
+  mix {{parent.dilatemix.main i}}
+  name Dilate1
+  xpos 2724
+  ypos 1792
+  disable {{1-parent.on_3.main i}}
+ }
+ ShuffleCopy {
+  inputs 2
+  in alpha
+  red red
+  out mask
+  name ShuffleCopy1
+  xpos 2724
+  ypos 1844
+ }
+ Dot {
+  name Dot8
+  xpos 2758
+  ypos 1870
+ }
+ Blur {
+  size {{parent.dilatebluro.main*20 i}}
+  name Blur4
+  xpos 2791
+  ypos 1860
+ }
+ ColorCorrect {
+  inputs 1+1
+  gain {{parent.tdilatec.main.r i} {parent.tdilatec.main.g i} {parent.tdilatec.main.b i} 1}
+  name ColorCorrect2
+  xpos 2882
+  ypos 1866
+  disable {{1-parent.dilateton.main i}}
+ }
+set N247ef040 [stack 0]
+push $N247edba0
+ ChannelMerge {
+  inputs 2
+  operation minus
+  name ChannelMerge1
+  xpos 3005
+  ypos 1957
+ }
+push $N247ef040
+ ShuffleCopy {
+  inputs 2
+  in alpha
+  red red
+  out rotopaint_mask
+  name ShuffleCopy2
+  xpos 3005
+  ypos 1866
+ }
+ Blur {
+  size {{parent.tblur.main*20 i}}
+  maskChannelInput rotopaint_mask.a
+  name Blur1
+  xpos 3115
+  ypos 1860
+ }
+ Blur {
+  size {{parent.dilateblur.main*20 i}}
+  maskChannelInput mask.a
+  name Blur2
+  xpos 3115
+  ypos 1959
+ }
+set N247efe00 [stack 0]
+ Emboss {
+  channels alpha
+  name Emboss1
+  xpos 3216
+  ypos 2047
+ }
+ RolloffContrast {
+  contrast 2.25
+  center 0.9
+  slope_mag_low1 0.8000000119
+  black_low 1
+  slope_mag_high2 0.8000000119
+  white_high 1
+  name RolloffContrast1
+  xpos 3216
+  ypos 2007
+ }
+set N247f04e0 [stack 0]
+ Invert {
+  name Invert1
+  xpos 3316
+  ypos 2001
+ }
+push $N247f04e0
+push $N247efe00
+ ColorCorrect {
+  inputs 1+1
+  saturation 0
+  gain {{parent.emboss.r} {parent.emboss.g} {parent.emboss.b} {parent.emboss.a}}
+  mix {{parent.emboss.a}}
+  name emboss
+  xpos 3216
+  ypos 1965
+  disable {{1-parent.embosson}}
+ }
+ ColorCorrect {
+  inputs 1+1
+  saturation 0
+  gain {{parent.embossinv.r} {parent.embossinv.g} {parent.embossinv.b} {parent.embossinv.a}}
+  mix {{parent.embossinv.a}}
+  name emboss1
+  xpos 3216
+  ypos 1877
+  disable {{1-parent.embossinvon}}
+ }
+ Sharpen {
+  inputs 1+1
+  amount {{parent.sharpen}}
+  size {{parent.sharpensize}}
+  maskChannelInput -rgba.alpha
+  name Sharpen1
+  xpos 3216
+  ypos 1807
+  disable {{1-parent.sharpenon}}
+ }
+ Dot {
+  name Dot1
+  tile_color 0xc60000ff
+  xpos 3326
+  ypos 1816
+ }
+ Dot {
+  name Input1_dot_b
+  xpos 3326
+  ypos 1740
+ }
+ Dot {
+  inputs 0
+  name Clamp_rgb
+  xpos 4617
+  ypos 1598
+ }
+ Dot {
+  name Dot7
+  xpos 4617
+  ypos 2109
+ }
+ Premult {
+  name Premult_rgb_finalos2
+  xpos 3505
+  ypos 2106
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos 2412
+  ypos 2106
+ }
+set N2d4d1fc0 [stack 0]
+ Merge2 {
+  inputs 2
+  name Premult_rgb_finalos
+  xpos 3392
+  ypos 2106
+ }
+push $N2d4d1fc0
+ Text {
+  cliptype none
+  message "\[value parent.message]"
+  font "\[value parent.font]"
+  size {{parent.size}}
+  kerning {{parent.kerning}}
+  yjustify top
+  Transform 1
+  box {0 0 100000 84}
+  translate {{parent.translate.x+100} {parent.translate.y+250}}
+  scale {{parent.scale.w} {parent.scale.h}}
+  skewX {{parent.skew.w}}
+  skewY {{parent.skew.h}}
+  name SAMPLE_text
+  tile_color 0xed00ff
+  xpos 3233
+  ypos 2258
+ }
+ Output {
+  name Output2
+  xpos 3456
+  ypos 2258
+ }
+push $N2414e130
+push $N2414d6e0
+ Text {
+  cliptype none
+  message "\[value parent.message]"
+  font "\[value parent.font]"
+  size 120
+  yjustify bottom
+  Transform 1
+  box {0 0 100000 1167}
+  center {1024 778}
+  name Analyzing_text0
+  tile_color 0xed00ff
+  xpos 3726
+  ypos 2134
+ }
+ Dot {
+  name analyzing_text_bbox0
+  tile_color 0x7aff
+  xpos 3682
+  ypos 2137
+  addUserKnob {20 User}
+  addUserKnob {16 bboxh}
+  bboxh {{bbox.h}}
+  addUserKnob {16 bbox}
+  bbox {{bbox.w}}
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Analyzing_text_Switch0
+  xpos 3577
+  ypos 2133
+ }
+set N245e38b0 [stack 0]
+ Dot {
+  name print
+  tile_color 0xff3232ff
+  xpos 3380
+  ypos 2136
+  addUserKnob {20 User}
+  addUserKnob {16 test}
+  addUserKnob {6 test_name +STARTLINE}
+  addUserKnob {22 reset l reset-mathamount T "nuke.thisParent()\['mathamount'].setValue(0)\n\nfor node in nuke.selectedNodes():\n node.setSelected(0)\n\nselecto = str(nuke.thisParent()\['mathrandname'].getValue())+'nul'+str(n)\nnuke.createNode('Dot','tile_color 21',inpanel=False).setName(selecto)\nnuke.toNode(selecto).setSelected(True) \nnuke.selectSimilar(nuke.MATCH_COLOR)\nfor i in nuke.selectedNodes():\n nuke.delete(i)" +STARTLINE}
+  addUserKnob {22 getxypos T "print nuke.selectedNode().xpos()\nprint nuke.selectedNode().ypos()" +STARTLINE}
+  addUserKnob {22 print t "print str.replace(str(nuke.thisParent()\['OpacityCHK'].getValue()),1,'O')+str.replace((str(nuke.thisParent()\['TransformCHK'].getValue()),1,'T')+str.replace((str(nuke.thisParent()\['RotateCHK'].getValue()),1,'R')+str.replace((str(nuke.thisParent()\['ScaleCHK'].getValue()),1,'S')+str.replace((str(nuke.thisParent()\['ScrollCHK'].getValue()),1,'SR')+str.replace((str(nuke.thisParent()\['BlurCHK'].getValue()),1,'B'))" T "print int(nuke.thisParent()\['mathrandname'].getValue())\nprint int(nuke.thisParent()\['mathamount'].getValue())\nprint int(nuke.thisParent()\['mathcurrentamount'].getValue())\nprint str.replace(str.replace(str(int(nuke.thisParent()\['TransformCHK'].getValue())),'1','T')+'-'+str.replace(str(int(nuke.thisParent()\['RotateCHK'].getValue())),'1','R')+'-'+str.replace(str(int(nuke.thisParent()\['OpacityCHK'].getValue())),'1','O')+'-'+str.replace(str(int(nuke.thisParent()\['ScaleCHK'].getValue())),'1','S')+'-'+str.replace(str(int(nuke.thisParent()\['ScrollCHK'].getValue())),'1','SR')+'-'+str.replace(str(int(nuke.thisParent()\['BlurCHK'].getValue())),'1','B'),'0','-')" +STARTLINE}
+ }
+push $N245e38b0
+ Dot {
+  name SKUKKELIMUKKELIS_create
+  tile_color 0xdb00ff
+  label "\n\nimportant nodes, keep here before output2, order case sensitive"
+  note_font_size 21
+  xpos 3490
+  ypos 2136
+  addUserKnob {20 User}
+  addUserKnob {7 jright}
+  jright 348
+  addUserKnob {7 jtotal}
+  addUserKnob {7 jfirst}
+  jfirst 208
+  addUserKnob {6 skip +STARTLINE}
+  addUserKnob {3 skip_u_value}
+  addUserKnob {22 kill t "nuke.toNode('SKUKKELIMUKKELIS_create').setInput(0,nuke.toNode('Analyzing_text_Switch0'))\nnuke.toNode('Clamp_rgb').setInput(0,nuke.toNode('None'))" T "n=000000000000\nnuke.toNode('SKUKKELIMUKKELIS_create').setInput(0,nuke.toNode('Analyzing_text_Switch0'))\n\nnuke.thisParent()\['mathamount'].setValue(0)\n\nfor node in nuke.selectedNodes():\n node.setSelected(0)\n\nselecto = str(nuke.thisParent()\['mathrandname'].getValue())+'nul'+str(n)\nnuke.createNode('Dot','tile_color 21',inpanel=False).setName(selecto)\nnuke.toNode(selecto).setSelected(True) \nnuke.selectSimilar(nuke.MATCH_COLOR)\nfor i in nuke.selectedNodes():\n nuke.delete(i)\n\n\nnuke.toNode('Clamp_rgb').setInput(0,nuke.toNode('None'))\nnuke.thisNode()\['kerning'].setValue(0)" +STARTLINE}
+  addUserKnob {22 knobs t "nuke.thisParent().addKnob(nuke.Int_Knob('letter' , 'K'))\n\n\n\n\n\n\n\n\n nuke.thisParent().removeKnob(nuke.Int_Knob('letter6'))" T "nuke.thisParent().removeKnob(nuke.Int_Knob('letter6'))\n" +STARTLINE}
+  addUserKnob {22 reset T "nuke.toNode('SKUKKELIMUKKELIS_create').setInput(0,nuke.toNode('Analyzing_text_Switch0'))\n\nn = int(nuke.thisParent()\['mathamount'].getValue())\n\nfor i in range( 0, n ):\n nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+\"txt\"+str(i)).setSelected(1)\n if nuke.thisParent()\['ColorCHK_INV'].getValue()==1:\n  nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+\"COP\"+str(i)).setSelected(1)\n  nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+\"REF\"+str(i)).setSelected(1)\n  nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+\"REFTRA\"+str(i)).setSelected(1)\n if nuke.thisParent()\['BlurCHK_INV'].getValue()==1:\n  nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+\"BLU\"+str(i)).setSelected(1)\n nuke.delete(nuke.selectedNode())\n\nfor i in range( 1, n ):\n if i > 0:\n  nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+\"mrg\"+str(i)).setSelected(1)\n nuke.delete(nuke.selectedNode())\n\nnuke.thisParent()\['mathamount'].setValue(0)\n\nnuke.toNode('Clamp_rgb').setInput(0,nuke.toNode('None'))\n\nnuke.thisNode()\['kerning'].setValue(0)" +STARTLINE}
+  addUserKnob {1 array}
+  array "\[31.0, 76.0, 114.0, 158.0, 199.0, 232.0, 256.0, 283.0, 327.0, 348.0, 379.0, 403.0, 430.0, 463.0, 504.0, 529.0, 529.0, 569.0, 601.0, 635.0, 666.0, 697.0, 512.0, 766.0, 807.0, 852.0, 890.0, 914.0, 947.0]"
+  addUserKnob {1 arrayb}
+  arrayb "\[31.0, 42.0, 35.0, 43.0, 39.0, 31.0, 20.0, 24.0, 42.0, 18.0, 27.0, 20.0, 24.0, 31.0, 38.0, 24.0, 11.0, 38.0, 28.0, 31.0, 27.0, 27.0, 20.0, 43.0, 38.0, 40.0, 35.0, 24.0, 31.0]"
+  addUserKnob {1 arrayc}
+  arrayc "\[0.0, 34.0, 79.0, 115.0, 160.0, 201.0, 236.0, 259.0, 285.0, 330.0, 352.0, 383.0, 406.0, 432.0, 466.0, 505.0, 518.0, 531.0, 573.0, 604.0, 639.0, 670.0, 492.0, 723.0, 769.0, 812.0, 855.0, 890.0, 916.0]"
+  addUserKnob {1 arrayh}
+  arrayh "\[77.0, 106.0, 77.0, 77.0, 77.0, 77.0, 11.0, 89.0, 106.0, 93.0, 77.0, 11.0, 89.0, 77.0, 77.0, 89.0, 11.0, 77.0, 77.0, 77.0, 77.0, 77.0, 11.0, 77.0, 77.0, 106.0, 77.0, 89.0, 77.0]"
+  addUserKnob {1 arrayl t "array leading"}
+  arrayl "\[79.0, 79.0, 79.0, 79.0, 79.0, 79.0, 79.0, 79.0, 79.0, 79.0, 79.0, 79.0, 79.0, 79.0, 79.0, 79.0, 80.0, 199.0, 199.0, 199.0, 199.0, 199.0, 199.0, 199.0, 199.0, 199.0, 199.0, 199.0, 199.0]"
+  addUserKnob {1 arrayspot}
+  arrayspot "\['0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '518.0', '531.0', '531.0', '531.0', '531.0', '531.0', '531.0', '531.0', '531.0', '531.0', '531.0', '531.0', '531.0']"
+  addUserKnob {1 arrayspot_half}
+  addUserKnob {1 arrays}
+  arrays "\[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17]"
+  addUserKnob {1 arraysbs}
+  arraysbs "\[28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]"
+  addUserKnob {1 arrayREV}
+  arrayREV "\[13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 12, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]"
+  addUserKnob {1 arraylet}
+  arraylet 1200.0
+  addUserKnob {3 kerning}
+  addUserKnob {22 create t "cenx+(nuke.thisParent()\['size'].getValue()/24)\n\n\n\nnuke.toNode('Input1').setSelected(1)\n\nnuke.thisNode()\['OrderCHK'].setValue(1)\n\n^viittaa sitten ku tarvis\n\n\n\t  try:\n\t   str(nuke.thisNode()\['old'].getValue())\[sub:sub2].decode('ascii')\n\n\t#remove\n\t for i in range( 0, o ):\n\t  word = x.readline()\n\t  try:\n\t   word\[0:1].decode('ascii')\n\t   print word\[0:1]\n\t  except UnicodeDecodeError:\n\t   print 'unicode'\n\t#r\n\n\n\nselecto = \"testnode\"+str(n)\n\n\n+str.replace(str(int(nuke.thisParent()\['threedCHK'].getValue())),'1','D'),'0','-')+'-'\n\n\n+str.replace(str(int(nuke.thisParent()\['threedCHK'].getValue())),'1','D'),'0','-')+'-'\n\nstr(nuke.thisNode()\['old'].getValue())\[sub:sub2]:\n\n\n+Sk+Ac\n\n\nOPACITY EI TOIMI NY\n\nif nuke.thisParent()\['OpacityCHK'].getValue()==1:\n nuke.toNode(selecto)\['color'].setExpression(tclo)\n\n\n\n\n\t  try:\n\t      a.decode('ascii')\n\t  except UnicodeDecodeError:\n\t      nuke.toNode('VersionTwo_cropmagic')\['message'].setValue(str(nuke.toNode('VersionTwo_cropmagic')\['message'].getValue()+word\[0:2]))\n\t  else:\n\t      nuke.toNode('VersionTwo_cropmagic')\['message'].setValue(str(nuke.toNode('VersionTwo_cropmagic')\['message'].getValue()+word\[0:1]))\n\n\n #create merge\n kill(str);\n if n > 0:\n  selectoM = str(nuke.thisParent()\['mathrandname'].getValue())+'mrg'+str(n)\n  nuke.createNode('Merge','tile_color 21',inpanel=False).setName(selectoM)\n  nuke.toNode(selectoM).setXYpos(3890,1895-ypos*n)\n  nuke.toNode(selectoM)\['operation'].setValue('over')\n  nuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'mrg'+str(n-1)))\n nuke.thisParent()\['mathamount'].setValue(n+1)\n if nuke.toNode(selectoM).input(1)==None:\n  nuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'mrg'+str(n-2)))\nelse:\n\n if nuke.toNode(selectoM).input(1)==None:\n  nuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'mrg'+str(n-2)))\n\n\n" T "import StringIO\n\nimport time\nimport random\nstart = time.clock()\n\n# N DEFINITION\nn = int(nuke.thisParent()\['mathamount'].getValue())\nc = int(nuke.thisParent()\['mathcurrentamount'].getValue())\n\nselecto = str(nuke.thisParent()\['mathrandname'].getValue())+'txt'+str(n)\nselectoTXTt = str(nuke.thisParent()\['mathrandname'].getValue())+'cxt'+str(n)\nselectoRMG = str(nuke.thisParent()\['mathrandname'].getValue())+'RMG'+str(n)\nselectoRMG2 = str(nuke.thisParent()\['mathrandname'].getValue())+'RMGt'+str(n)\nselectoTXTto = str(nuke.thisParent()\['mathrandname'].getValue())+'coxt'+str(n)\nselectoSCALe = str(nuke.thisParent()\['mathrandname'].getValue())+'SCL'+str(n)\nselectoOPA = str(nuke.thisParent()\['mathrandname'].getValue())+'OPA'+str(n)\nstrlen = len(str(nuke.thisParent()\['mathrandname'].getValue()))+3\n\nskip = 0\nypos = 100\n\ndef Runtext( str ):\n nuke.selectedNode()\['output'].setValue('rgba');\n nuke.selectedNode()\['premult'].setValue('none');\n nuke.selectedNode()\['cliptype'].setValue('no clip');\n nuke.selectedNode()\['xjustify'].setValue('left');\n nuke.selectedNode()\['yjustify'].setValue('center');\n return;\n\ndef kill( str ):\n for node in nuke.selectedNodes():\n  node.setSelected(0)\n return;\nkill(str);\nif str(nuke.thisParent()\['message'].getValue())\[n:n+1].isspace()==True:\n #create merge\n kill(str);\n nuke.thisParent()\['mathamount'].setValue(n+1)\nelse:\n\tnuke.createNode('Crop','tile_color 21',inpanel=False).setName(selectoTXTt)\n\tnuke.toNode(selectoTXTt).addKnob(nuke.Int_Knob(\"T_offset\", \"T_offset\"))\n\tnuke.toNode(selectoTXTt).setXYpos(3376,1895-ypos*n)\n\tnuke.toNode(selectoTXTt).setInput(0,nuke.toNode('Input1_dot_b'))\n\tnuke.toNode('VersionTwo_cropmagic_sample')\['message'].setValue('a')\n\tcbbo = nuke.toNode('VersionTwo_cropmagic_sample_dot')\['bbox'].getValue()\n\tnuke.toNode('VersionTwo_cropmagic_sample')\['message'].setValue('ab')\n\tcbbob = nuke.toNode('VersionTwo_cropmagic_sample_dot')\['bbox'].getValue()\n\tsub = int(nuke.toNode(selectoTXTt).name()\[strlen:])\n\tsub2 = sub+1\n\tf = StringIO.StringIO(str(nuke.thisParent()\['table'].getValue()))\n\n\tstring = str(nuke.thisParent()\['message'].getValue())\[sub:sub2]\n\tuvalue = nuke.thisNode()\['skip_u_value'].getValue()\n\tsubu = int(nuke.thisNode()\['skip_u_value'].getValue()+sub)\n\tsubu2 = int(nuke.thisNode()\['skip_u_value'].getValue()+sub2)\n\n\to = len(f.readlines())\n\toob = '0'\n\tx = StringIO.StringIO(str(nuke.thisParent()\['table'].getValue()))\n\tfor i in range( 0, o ):\n\t word = x.readline()\n\t try:\n\t  word\[0:1].decode('ascii')\n\t except UnicodeDecodeError:\n\t  pass\n\t  a = word\[0:2]\n\t  if a == str(nuke.thisNode()\['old'].getValue())\[subu:subu2+1]:\n\t   skip = 0\n\t   croplet=i\n\t   break\n\t else:\n\t  try:\n\t   str(nuke.thisNode()\['old'].getValue())\[subu:subu2].decode('ascii')\n\t  except UnicodeDecodeError:\n\t   nuke.thisNode()\['skip_u_value'].setValue(uvalue+1)\n\t  else:\n\t   a = word\[0:1]\n\t   if a == string:\n\t    croplet=i\n\t    break\n\tif nuke.thisParent()\['ScrollCHK'].getValue() == 0:\n\t nuke.toNode(selectoTXTt)\['box'].setExpression('0',0)\n\t nuke.toNode(selectoTXTt)\['box'].setExpression('input.height+300-'+str(nuke.thisNode()\['arraylet'].getValue())+'-'+str(nuke.thisNode()\['arraylet'].getValue())+'*'+str(croplet),1)\n\t nuke.toNode(selectoTXTt)\['box'].setExpression(str(nuke.thisNode()\['arraylet'].getValue())+'/2',2)\n\t nuke.toNode(selectoTXTt)\['box'].setExpression('input.height+300-'+'3-'+str(nuke.thisNode()\['arraylet'].getValue())+'*'+str(croplet),3)\n\tnuke.toNode(selectoTXTt)\['reformat'].setValue(1)\n\n\tnuke.createNode('Merge','tile_color 21',inpanel=False).setName(selectoRMG)\n\tnuke.toNode(selectoRMG).addKnob(nuke.Int_Knob(\"T_offset\", \"T_offset\"))\n\tnuke.toNode(selectoRMG).setInput(1,nuke.toNode('Pmerge1'))\n\tnuke.toNode(selectoRMG).setInput(0,nuke.toNode(selectoTXTt))\n\tnuke.toNode(selectoRMG)\['maskChannelInput'].setValue('textalpha.alpha')\n\tnuke.toNode(selectoRMG)\['operation'].setValue('max')\n\tnuke.toNode(selectoRMG).setXYpos(3480,1895+40-ypos*n)\n\tnuke.createNode('Merge','tile_color 21',inpanel=False).setName(selectoRMG2)\n\tnuke.toNode(selectoRMG2).addKnob(nuke.Int_Knob(\"T_offset\", \"T_offset\"))\n\tnuke.toNode(selectoRMG2).setInput(1,nuke.toNode('PMerge2'))\n\tnuke.toNode(selectoRMG2).setInput(0,nuke.toNode(selectoRMG))\n\tnuke.toNode(selectoRMG2)\['maskChannelInput'].setValue('textalpha.alpha')\n\tnuke.toNode(selectoRMG2)\['operation'].setValue('over')\n\tnuke.toNode(selectoRMG2).setXYpos(3480,1895+20-ypos*n)\n\n\tnuke.createNode('Transform','tile_color 21',inpanel=False).setName(selectoTXTto)\n\tnuke.toNode(selectoTXTto).addKnob(nuke.Int_Knob(\"T_offset\", \"T_offset\"))\n\tnuke.toNode(selectoTXTto)\['center'].setValue(0,0)\n\tnuke.toNode(selectoTXTto)\['center'].setValue(0,1)\n\tnuke.toNode(selectoTXTto)\['translate'].setValue(-80,1)\n\tnuke.toNode(selectoTXTto)\['scale'].setValue(0.2)\n\tnuke.toNode(selectoTXTto).setXYpos(3480,1895-ypos*n)\n\tnuke.toNode(selectoTXTto).setInput(0,nuke.toNode(selectoRMG2))\n\t\n\t#Create Nodes\n\tkill(str);\n\tnuke.createNode('Transform','tile_color 21',inpanel=False).setName(selecto)\n\tnuke.toNode(selecto).addKnob(nuke.Int_Knob(\"T_offset\", \"T_offset\"))\n\tnuke.toNode(selecto).setXYpos(3577,1895-ypos*n)\n\tnuke.toNode(selecto).setInput(0,nuke.toNode(selectoTXTto))\n\t#cenx = eval(nuke.thisNode()\['arrayb'].getValue())\n\t#ceny = eval(nuke.thisNode()\['arrayh'].getValue())\n\tcenx = eval(nuke.thisNode()\['arrayb'].getValue())\n\tceny = eval(nuke.thisNode()\['arrayh'].getValue())\n\n\tcheckboxes = nuke.thisParent()\['topcenter'].getValue()+nuke.thisParent()\['centercenter'].getValue()+nuke.thisParent()\['topcenter'].getValue()+nuke.thisParent()\['bottomright'].getValue()+nuke.thisParent()\['topright'].getValue()+nuke.thisParent()\['centerright'].getValue()+nuke.thisParent()\['bottomleft'].getValue()+nuke.thisParent()\['C1'].getValue()+nuke.thisParent()\['centerleft'].getValue()\n\n\tcheckcheckboxes = nuke.thisParent()\['topcenter'].getValue()*11+nuke.thisParent()\['centercenter'].getValue()*22+nuke.thisParent()\['topcenter'].getValue()*33+nuke.thisParent()\['bottomright'].getValue()*44+nuke.thisParent()\['topright'].getValue()*55+nuke.thisParent()\['centerright'].getValue()*66+nuke.thisParent()\['bottomleft'].getValue()*77+nuke.thisParent()\['C1'].getValue()*88+nuke.thisParent()\['centerleft'].getValue()*99\n\tnuke.thisParent()\['lastcheck'].setValue(checkcheckboxes)\n\n\tif checkboxes > 1 or checkboxes == 0:\n\t nuke.thisParent()\['C1'].setValue(0)\n\t nuke.thisParent()\['topcenter'].setValue(0)\n\t nuke.thisParent()\['topright'].setValue(0)\n\t nuke.thisParent()\['centerleft'].setValue(0)\n\t nuke.thisParent()\['centercenter'].setValue(1)\n\t nuke.thisParent()\['centerright'].setValue(0)\n\t nuke.thisParent()\['bottomcenter'].setValue(0)\n\t nuke.thisParent()\['bottomright'].setValue(0)\n\t nuke.thisParent()\['bottomleft'].setValue(0)\n\n\t#cenx\n\tif nuke.thisParent()\['centercenter'].getValue()==1 or nuke.thisParent()\['bottomcenter'].getValue()==1 or nuke.thisParent()\['topcenter'].getValue()==1:\n\t cenx = (cenx\[int(nuke.toNode(selecto).name()\[strlen:])])/2+28\n\tif nuke.thisParent()\['bottomright'].getValue()==1 or nuke.thisParent()\['topright'].getValue()==1 or nuke.thisParent()\['centerright'].getValue()==1:\n\t cenx = (cenx\[int(nuke.toNode(selecto).name()\[strlen:])])+28\n\tif nuke.thisParent()\['bottomleft'].getValue()==1 or nuke.thisParent()\['C1'].getValue()==1 or nuke.thisParent()\['centerleft'].getValue()==1:\n\t cenx = 28\n\n\t#ceny\n\tif nuke.thisParent()\['C1'].getValue()==1 or nuke.thisParent()\['topright'].getValue()==1 or nuke.thisParent()\['topcenter'].getValue()==1:\n\t ceny = (ceny\[int(nuke.toNode(selecto).name()\[strlen:])])\n\tif nuke.thisParent()\['centercenter'].getValue()==1 or nuke.thisParent()\['centerleft'].getValue()==1 or nuke.thisParent()\['centerright'].getValue()==1:\n\t ceny = (ceny\[int(nuke.toNode(selecto).name()\[strlen:])])/2\n\tif nuke.thisParent()\['bottomleft'].getValue()==1 or nuke.thisParent()\['bottomright'].getValue()==1 or nuke.thisParent()\['bottomcenter'].getValue()==1:\n\t ceny = 0\n\n\tsub = int(nuke.toNode(selecto).name()\[strlen:])\n\tsub2 = sub+1\n\n\trandom.seed(sub)\n\tseed = round(random.random()*11023+random.random()*1205+random.random()*12+random.random()*111)\n\n\n\t#translate\n\n\tLinky = 'parent.translate.y'\n\tLinkx = 'parent.translate.x'\n\tLinkr = 'parent.rotate'\n\tLinksx = 'parent.scale.w'\n\tLinksy = 'parent.scale.h'\n\tLinkbx = 'parent.blur.w'\n\tLinkby = 'parent.blur.h'\n\tLinksk = 'parent.skew.w'\n\tLinksky = 'parent.skew.h'\n\tLinkso = 'parent.opacity_a'\n\n\tAl = '-'+str(eval(nuke.thisNode()\['arrayl'].getValue())\[sub:sub2])\[1:]\[:-1]\n\tAlb = '+'+str(eval(nuke.thisNode()\['arrayl'].getValue())\[0:1])\[1:]\[:-1]\n\tAb = str(eval(nuke.thisNode()\['arrayc'].getValue())\[sub:sub2])\n\tR = '('+'rint(parent.fromto*random(parent.randomseed*'+str(seed)+')+parent.Random*random(parent.randomseed+1*'+str(seed)+'))*parent.on)'\n\n\t#TCL ORDER\n\tif int(nuke.thisParent()\['OrderCHK'].getValue())==0:\n\t tcl = '(frame + T_offset + parent.timeoffset*'+str(sub)+'+'+R+')'\n\tif int(nuke.thisParent()\['OrderCHK'].getValue())==1:\n\t tcl = '(frame + T_offset + parent.timeoffset*'+str(eval(nuke.thisNode()\['arrayREV'].getValue())\[sub:sub2])\[1:]\[:-1]+'+'+R+')'\n\tif int(nuke.thisParent()\['OrderCHK'].getValue())==2:\n\t if sub < int(nuke.thisParent()\['mathcurrentamount'].getValue())/2:\n\t  tcl = '(frame + T_offset + parent.timeoffset*'+str(sub)+'+'+R+')'\n\t if sub >= int(nuke.thisParent()\['mathcurrentamount'].getValue())/2:\n\t  tcl = '(frame + T_offset + parent.timeoffset*'+str(nuke.thisParent()\['mathcurrentamount'].getValue()-sub-1)+'+'+R+')'\n\tif int(nuke.thisParent()\['OrderCHK'].getValue())==3:\n\t if sub < int(nuke.thisParent()\['mathcurrentamount'].getValue())/2:\n\t  tcl = '(frame + T_offset + parent.timeoffset*'+str(nuke.thisParent()\['mathcurrentamount'].getValue()-sub-1)+'+'+R+')'\n\t if sub >= int(nuke.thisParent()\['mathcurrentamount'].getValue())/2:\n\t  tcl = '(frame + T_offset + parent.timeoffset*'+str(sub)+'+'+R+')'\n\tif int(nuke.thisParent()\['OrderCHK'].getValue())==4:\n\t tcl = '(frame + T_offset + parent.timeoffset*'+str(eval(nuke.thisNode()\['arrays'].getValue())\[sub:sub2])\[1:]\[:-1]+'+'+R+')'\n\tif int(nuke.thisParent()\['OrderCHK'].getValue())==5:\n\t tcl = '(frame + T_offset + parent.timeoffset*'+str(eval(nuke.thisNode()\['arraysbs'].getValue())\[sub:sub2])\[1:]\[:-1]+'+'+R+')'\n\n\tf = StringIO.StringIO(str(nuke.thisParent()\['table'].getValue()))\n\n\tstring = str(nuke.thisParent()\['message'].getValue())\[sub:sub2]\n\n\to = len(f.readlines())\n\toob = '0'\n\tx = StringIO.StringIO(str(nuke.thisParent()\['table'].getValue()))\n\t#tcl to scrolletters crop\n\tif nuke.thisParent()\['ScrollCHK'].getValue() == 1:\n\t nuke.toNode(selectoTXTt)\['box'].setExpression('0',0)\n\t nuke.toNode(selectoTXTt)\['box'].setExpression('input.height+300-'+str(nuke.thisNode()\['arraylet'].getValue())+'-'+str(nuke.thisNode()\['arraylet'].getValue())+'*('+str(croplet)+'+int(parent.scroll'+tcl+'))',1)\n\t nuke.toNode(selectoTXTt)\['box'].setExpression(str(nuke.thisNode()\['arraylet'].getValue()),2)\n\t nuke.toNode(selectoTXTt)\['box'].setExpression('input.height+300-'+'3-'+str(nuke.thisNode()\['arraylet'].getValue())+'*('+str(croplet)+'+int(parent.scroll'+tcl+'))',3)\n\n\tfor i in range( 0, o ):\n\t word = x.readline()\n\t try:\n\t  word\[0:1].decode('ascii')\n\t except UnicodeDecodeError:\n\t  a = word\[0:2]\n\t  b = word\[3:]\n\t  if a == string:\n\t   oob = b.rstrip()\n\t else:\n\t  a = word\[0:1]\n\t  b = word\[2:]\n\t  if a == string:\n\t   oob = b.rstrip()\n\tkerold=nuke.thisNode()\['kerning'].getValue()\n\tnuke.thisNode()\['kerning'].setValue(eval(str(kerold)+str(oob)))\n\n\tPOP = str(eval(nuke.thisNode()\['arrayspot'].getValue())\[sub:sub2])\[1:]\[:-1]\n\tccm = str(eval(nuke.thisNode()\['arrayspot'].getValue())\[sub:sub2])\[1:]\[:-1]\n\n\tif str(eval(nuke.thisNode()\['arrayspot'].getValue())\[sub:sub2])\[1:]\[:-1]!=str(eval(nuke.thisNode()\['arrayspot'].getValue())\[sub-1:sub2-1]):\n\t nuke.thisNode()\['kerning'].setValue(0)\n\n\t#DEFINE NEWLINE BACKSTEP\n\n\tif nuke.thisParent()\['justify'].getValue()==0.0:\n\t POP = str(eval(nuke.thisNode()\['arrayspot'].getValue())\[sub:sub2])\[1:]\[:-1]\n\n\tif nuke.thisParent()\['justify'].getValue()==1.0:\n\t POP = str(eval(nuke.thisNode()\['arrayspot_half'].getValue())\[sub:sub2])\[1:]\[:-1]\n\n\tif nuke.thisParent()\['justify'].getValue()==2.0:\n\t if n==0:\n\t  nuke.thisNode()\['jright'].setValue(0)\n\t  nuke.thisNode()\['jtotal'].setValue(0)\n\t  nuke.thisNode()\['jfirst'].setValue(0)\n\t  POP = '0'\n\t if n>0:\n\t  POP = str(eval(nuke.thisNode()\['arrayspot'].getValue())\[sub:sub2])\[2:]\[:-2]\n\t  if POP != str(eval(nuke.thisNode()\['arrayspot'].getValue())\[sub-1:sub2-1])\[2:]\[:-2]:\n\t   nuke.thisNode()\['jright'].setValue(nuke.thisNode()\['jright'].getValue()+float(POP))\n\t   if nuke.thisNode()\['jfirst'].getValue()==0:\n\t    nuke.thisNode()\['jfirst'].setValue(float(POP))\n\t   for i in range( n, c-1 ):\n\t    if i==c-2:\n\t     nuke.thisNode()\['jright'].setValue(float(str(eval(nuke.thisNode()\['array'].getValue())\[c-1:c])\[1:]\[:-1])-nuke.thisNode()\['jfirst'].getValue())\n\t    PEP = str(eval(nuke.thisNode()\['arrayspot'].getValue())\[i+1:i+2])\[2:]\[:-2]\n\t    if PEP != str(eval(nuke.thisNode()\['arrayspot'].getValue())\[i:i+1])\[2:]\[:-2]:\n\t     nuke.thisNode()\['jright'].setValue(float(str(eval(nuke.thisNode()\['arrayspot'].getValue())\[i+2:i+3])\[2:]\[:-2])-nuke.thisNode()\['jfirst'].getValue())\n\t     nuke.thisNode()\['jtotal'].setValue(float(POP))\n\t     break\n\t  POP = '\['+str(nuke.thisNode()\['jright'].getValue())+']'\n\n\tif nuke.thisParent()\['cumulative'].getValue()==1:\n\t kerif=str(nuke.thisNode()\['kerning'].getValue())\n\telse:\n\t kerif='0'\n\tif nuke.thisParent()\['TransformCHK'].getValue()==1:\n\t tclx = '('+Linkx+tcl+'+'+Ab\[1:]\[:-1]+'+'+str(oob)+'-'+str(POP)\[1:]\[:-1]+'+'+kerif+')*(1+parent.kerning)'\n\t tcly = Linky+tcl+Al+'*(1-(0.1*(20-parent.leading)))'+Alb\n\t tclxSC = '('+Linkx+tcl+'+'+'+'+str(oob)+'+'+kerif+')*(1+parent.kerning)'\n\t tclySC = Linky+tcl\n\telse:\n\t tclx = '('+Linkx+'+'+Ab\[1:]\[:-1]+'+'+str(oob)+'-'+str(POP)\[1:]\[:-1]+'+'+kerif+')*(1+parent.kerning)'\n\t tcly = Linky+Al+Alb\n\t tclxSC = '('+Linkx+'+'+'+'+str(oob)+'+'+kerif+')*(1+parent.kerning)'\n\t tclySC = Linky\n\n\ttcr = Linkr+tcl\n\n\ttcsx = Linksx+tcl\n\ttcsy = Linksy+tcl\n\ttcsk = Linksk+tcl\n\ttcsky = Linksky+tcl\n\ttclo = Linkso+tcl\n\ttcbx = Linkbx+tcl\n\ttcby = Linkby+tcl\n\n\tnuke.toNode(selecto)\['center'].setValue(cenx,0)\n\tnuke.toNode(selecto)\['center'].setValue(ceny,1)\n\tif nuke.thisParent()\['TransformCHK'].getValue()==1:\n\t nuke.toNode(selecto)\['translate'].setExpression(tclx, 0)\n\t nuke.toNode(selecto)\['translate'].setExpression(tcly, 1)\n\t#OPACITY EI TOIMI NY\n\tif nuke.thisParent()\['RotateCHK'].getValue()==1:\n\t nuke.toNode(selecto)\['rotate'].setExpression(tcr)\n\n\tif nuke.thisParent()\['ScaleCHK'].getValue()==1:\n\t nuke.toNode(selecto)\['scale'].setSingleValue(False)\n\t nuke.toNode(selecto)\['scale'].setExpression(tcsx, 0)\n\t nuke.toNode(selecto)\['scale'].setExpression(tcsy, 1)\n\tnuke.toNode(selecto)\['skewX'].setExpression(tcsk)\n\tnuke.toNode(selecto)\['skewY'].setExpression(tcsky)\n\n\t#nuke.toNode(selecto)\['message'].setValue(str(nuke.thisParent()\['message'].getValue())\[sub:sub2])\n\n\t#between: adding colors\n\tARRAYB = str(eval(nuke.thisNode()\['arrayb'].getValue())\[sub:sub2])\[1:]\[:-1]\n\tARRAYH = str(eval(nuke.thisNode()\['arrayh'].getValue())\[sub:sub2])\[1:]\[:-1]\n\n\tnuke.createNode('Transform','tile_color 21',inpanel=False).setName(selectoSCALe)\n\tnuke.toNode(selectoSCALe).addKnob(nuke.Int_Knob(\"T_offset\", \"T_offset\"))\n\tnuke.toNode(selectoSCALe)\['center'].setExpression(tclxSC, 0)\n\tnuke.toNode(selectoSCALe)\['center'].setExpression(tclySC, 1)\n\tnuke.toNode(selectoSCALe)\['scale'].setExpression('parent.size/120')\n\tnuke.toNode(selectoSCALe).setInput(0,nuke.toNode(selecto))\n\tnuke.toNode(selectoSCALe)\['motionblur'].setExpression('parent.motionblur')\n\tnuke.toNode(selectoSCALe)\['shutter'].setExpression('parent.shutter')\n\n\tselectoBLU = str(nuke.thisParent()\['mathrandname'].getValue())+'BLU'+str(n)\n\n\tif nuke.thisParent()\['ColorCHK'].getValue()==1:\n\t selectoREF = str(nuke.thisParent()\['mathrandname'].getValue())+'REF'+str(n)\n\t selectoREFTRA = str(nuke.thisParent()\['mathrandname'].getValue())+'REFTRA'+str(n)\n\t selectoC = str(nuke.thisParent()\['mathrandname'].getValue())+'COP'+str(n)\n\t selectoPRE = str(nuke.thisParent()\['mathrandname'].getValue())+'PRE'+str(n)\n\t nuke.createNode('Crop','tile_color 21',inpanel=False).setName(selectoREF)\n\t nuke.toNode(selectoREF).addKnob(nuke.Int_Knob(\"T_offset\", \"T_offset\"))\n\t nuke.createNode('Transform','tile_color 21',inpanel=False).setName(selectoREFTRA)\n\t nuke.toNode(selectoREFTRA).addKnob(nuke.Int_Knob(\"T_offset\", \"T_offset\"))\n\t nuke.createNode('ShuffleCopy','tile_color 21',inpanel=False).setName(selectoC)\n\t nuke.toNode(selectoC).addKnob(nuke.Int_Knob(\"T_offset\", \"T_offset\"))\n\t nuke.toNode(selectoREF).setInput(0,nuke.toNode('DotCOLORS'))\n\t nuke.toNode(selectoREF)\['crop'].setValue(1)\n\t nuke.toNode(selectoREF)\['box'].setExpression(ARRAYB,2)\n\t nuke.toNode(selectoREF)\['box'].setExpression(ARRAYH,3)\n\t if nuke.thisParent()\['TransformCHK'].getValue()==1:\n\t  nuke.toNode(selectoREFTRA)\['translate'].setExpression(tclx,0)\n\t  nuke.toNode(selectoREFTRA)\['translate'].setExpression(tcly,1)\n\t if nuke.thisParent()\['RotateCHK'].getValue()==1:\n\t  nuke.toNode(selectoREFTRA)\['rotate'].setExpression(tcr)\n\t nuke.toNode(selectoREF).setXYpos(3683,1835-ypos*n)\n\t nuke.toNode(selectoREFTRA).setXYpos(3683,1865-ypos*n)\n\t nuke.toNode(selectoC).setXYpos(3683,1895-ypos*n)\n\t \n\t nuke.toNode(selectoC).setInput(1,nuke.toNode(selectoSCALe))\n\t nuke.toNode(selectoREFTRA).setInput(0,nuke.toNode(selectoREF))\n\t nuke.toNode(selectoC).setInput(0,nuke.toNode(selectoREFTRA))\n\t nuke.toNode(selectoREF).setSelected(0)\n\t nuke.toNode(selectoREFTRA).setSelected(0)\n\t nuke.toNode(selectoC).setSelected(0)\n\t nuke.toNode(selecto).setSelected(0)\n\t nuke.toNode(selectoREFTRA)\['center'].setValue(cenx,0)\n\t nuke.toNode(selectoREFTRA)\['center'].setValue(ceny,1)\n\t \n\t if nuke.thisParent()\['ScaleCHK'].getValue()==1:\n\t  nuke.toNode(selectoREFTRA)\['scale'].setSingleValue(False)\n\t  nuke.toNode(selectoREFTRA)\['scale'].setExpression('('+tcsx+')*(1+parent.skew)*1.1', 0)\n\t  nuke.toNode(selectoREFTRA)\['scale'].setExpression(tcsy, 1)\n\n\t#PREMULT FOR COLOR\n\tif nuke.thisParent()\['ColorCHK'].getValue()==1:\n\t nuke.createNode('Premult','tile_color 21',inpanel=False).setName(selectoPRE)\n\t nuke.toNode(selectoPRE).addKnob(nuke.Int_Knob(\"T_offset\", \"T_offset\"))\n\t nuke.toNode(selectoPRE).setXYpos(3815,1895-ypos*n)\n\n\tif nuke.thisParent()\['BlurCHK'].getValue()==1:\n\t nuke.createNode('Blur','tile_color 21',inpanel=False).setName(selectoBLU)\n\t nuke.toNode(selectoBLU).addKnob(nuke.Int_Knob(\"T_offset\", \"T_offset\"))\n\t nuke.toNode(selectoBLU)\['size'].setSingleValue(False)\n\t nuke.toNode(selectoBLU)\['size'].setExpression(tcbx,0)\n\t nuke.toNode(selectoBLU)\['size'].setExpression(tcby,1)\n\t nuke.toNode(selectoBLU).setXYpos(3785,1895-ypos*n)\n\t if nuke.thisParent()\['ColorCHK'].getValue()==1:\n\t  nuke.toNode(selectoBLU).setInput(0,nuke.toNode(selectoC))\n\t  nuke.toNode(selectoPRE).setInput(0,nuke.toNode(selectoBLU))\n\t else:\n\t  nuke.toNode(selectoBLU).setInput(0,nuke.toNode(selectoSCALe))\n\telse:\n\t if nuke.thisParent()\['ColorCHK'].getValue()==1:\n\t  nuke.toNode(selectoPRE).setInput(0,nuke.toNode(selectoC))\n\t\n\tif nuke.thisParent()\['OpacityCHK'].getValue()==1:\n\t nuke.createNode('Multiply','tile_color 21',inpanel=False).setName(selectoOPA)\n\t nuke.toNode(selectoOPA).addKnob(nuke.Int_Knob(\"T_offset\", \"T_offset\"))\n\t nuke.toNode(selectoOPA)\['value'].setExpression(tclo)\n\t nuke.toNode(selectoOPA).setXYpos(3785,1880-ypos*n)\n\t#nuke.toNode(selecto).setInput(0,nuke.toNode('Input1_dot'))\n\tif skip==1:\n\t nuke.thisNode()\['skip'].setValue(1)\n\t nuke.thisParent()\['mathamount'].setValue(n+2)\n\telse:\n\t nuke.thisParent()\['mathamount'].setValue(n+1)\n\t#create merge\n\tkill(str);\n\tif n > 0:\n\t selectoM = str(nuke.thisParent()\['mathrandname'].getValue())+'mrg'+str(n)\n\t nuke.createNode('Merge','tile_color 21',inpanel=False).setName(selectoM)\n\t nuke.toNode(selectoM).setXYpos(3890,1895-ypos*n)\n\t nuke.toNode(selectoM)\['operation'].setValue('over')\n\t if nuke.thisParent()\['ColorCHK'].getValue()==1:\n\t  if nuke.thisParent()\['BlurCHK'].getValue()==0:\n\t   nuke.toNode(selectoM).setInput(0,nuke.toNode(selectoPRE))\n\t  else:\n\t   nuke.toNode(selectoM).setInput(0,nuke.toNode(selectoPRE))\n\t else:\n\t  if nuke.thisParent()\['BlurCHK'].getValue()==0:\n\t   nuke.toNode(selectoM).setInput(0,nuke.toNode(selectoSCALe))\n\t  else:\n\t   nuke.toNode(selectoM).setInput(0,nuke.toNode(selectoBLU))\n\t  if nuke.thisParent()\['OpacityCHK'].getValue()==1:\n\t   nuke.toNode(selectoM).setInput(0,nuke.toNode(selectoOPA))\n\t if n == 1:\n\t  if nuke.thisParent()\['ColorCHK'].getValue()==1:\n\t   if nuke.thisParent()\['BlurCHK'].getValue()==0:\n\t\tnuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'PRE'+str(n-1)))\n\t   else:\n\t\tnuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'PRE'+str(n-1)))\n\t  else:\n\t   if nuke.thisParent()\['BlurCHK'].getValue()==0:\n\t\tnuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'txt'+str(n-1)))\n\t   else:\n\t\tif nuke.thisParent()\['ColorCHK'].getValue()==0:\n\t\t nuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'BLU'+str(n-1)))\n\t\telse:\n\t\t nuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'PRE'+str(n-1)))\n\t  if nuke.thisParent()\['OpacityCHK'].getValue()==1:\n\t   nuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'OPA'+str(n-1)))\n\t else:\n\t  if nuke.thisParent()\['ColorCHK'].getValue()==1:\n\t   nuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'mrg'+str(n-1)))\n\t  else:\n\t   nuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'mrg'+str(n-1)))\n\n\t#END\n\n\tend = round(time.clock()-start,5)\n\n\tnuke.thisNode()\['log'].setValue(str(nuke.thisNode()\['log'].getValue())+'\\n'+str(selecto)+'-'+str.replace(str.replace(str(int(nuke.thisParent()\['TransformCHK'].getValue())),'1','T')+'-'+str.replace(str(int(nuke.thisParent()\['RotateCHK'].getValue())),'1','R')+'-'+str.replace(str(int(nuke.thisParent()\['OpacityCHK'].getValue())),'1','O')+'-'+str.replace(str(int(nuke.thisParent()\['ScaleCHK'].getValue())),'1','S')+'-'+str.replace(str(int(nuke.thisParent()\['ScrollCHK'].getValue())),'1','SR')+'-'+str.replace(str(int(nuke.thisParent()\['BlurCHK'].getValue())),'1','B'),'0','-')+'-'+str(end)+'s')\nselectoM = str(nuke.thisParent()\['mathrandname'].getValue())+'mrg'+str(n)\nfor i in range( 1, 100 ):\n try:\n  if nuke.toNode(selectoM).input(1)==None:\n   nuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'mrg'+str(n-i)))\n except:\n  pass\ntry:\n if nuke.toNode(selectoM).input(1)==None:\n  nuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'BLU'+str(n-2)))\nexcept:\n pass\ntry:\n if nuke.toNode(selectoM).input(1)==None:\n  nuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'SCL'+str(n-2)))\nexcept:\n pass\ntry:\n if nuke.toNode(selectoM).input(1)==None:\n  nuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'txt'+str(n-2)))\nexcept:\n pass\ntry:\n if nuke.toNode(selectoM).input(1)==None:\n  nuke.toNode(selectoM).setInput(1,nuke.toNode(str(nuke.thisParent()\['mathrandname'].getValue())+'cox'+str(n-2)))\nexcept:\n pass\ntry:\n nuke.toNode('Clamp_rgb').setInput(0,nuke.toNode(selectoM))\nexcept NameError:\n pass" +STARTLINE}
+  addUserKnob {22 analyze t "print nuke.thisNode().input(0).input(0)\['bbox'].getValue()\n\n\nfrom array import array\nnuke.toNode('Analyzing_text_Switch0')\['which'].setValue(0)\nr = len(str(nuke.thisParent()\['message'].getValue()))\nc = 0\na = \[0.0]\nfor i in range( 0, r ):\n nuke.toNode('Analyzing_text0')\['message'].setValue('\[string range \[value parent.message] 0 '+str(i)+']')\n b = nuke.thisNode().input(0).input(0)\['bbox'].getValue()\n a.insert(i, b-c)\n c = b\n\nnuke.toNode('Analyzing_text0')\['message'].setValue('\[value parent.message]')\n\nnuke.toNode('Analyzing_text_Switch0')\['which'].setValue(1)\na.pop()\nnuke.thisNode()\['array'].setValue(str(a))\n\n.replace('\\n', '')\n\nstring replace\n\n\n\n try:\n     word\[0:1].decode('ascii')\n except UnicodeDecodeError:\n     doo\n else:\n     dont\n\n\n\n\n\n" T "nuke.thisNode()\['skip_u_value'].setValue(0)\nstr1 = nuke.thisParent()\['message'].getValue() \nstr2 = str1.replace('ä','a')\nstr3 = str2.replace('å','a')\nstr4 = str3.replace('ö','o')\nstr5 = str4.replace('Ä','A')\nstr6 = str5.replace('Å','a')\nstr7 = str6.replace('Ö','O')\nnuke.thisNode()\['old'].setValue(nuke.thisParent()\['message'].getValue())\nnuke.thisParent()\['message'].setValue(str7)\n\nimport  StringIO\nfrom array import array\nnuke.thisNode().input(0)\['which'].setValue(0)\n\n#\[regsub -all \\n \[string range \[value parent.message] 0 21] \[]]\n\nr = len(nuke.thisParent()\['message'].getValue())\nc = 0\na = \[0.0]\nfor i in range( 0, r ):\n nuke.thisNode().input(0).setInput(0,nuke.toNode('analyzing_text_bbox0'))\n if nuke.thisParent()\['message'].getValue()\[i:i+1]==' ':\n  nuke.thisNode().input(0).setInput(0,nuke.toNode('analyzing_text_bbox1'))\n  nuke.thisNode().input(0).input(0).input(0).input(0)\['message'].setValue('\[string range \[value parent.message] 0 '+str(i-1)+']'+' .')\n nuke.thisNode().input(0).input(0).input(0)\['message'].setValue('\[regsub -all \\\\n \[string range \[value parent.message] 0 '+str(i)+'] \[]]')\n b = nuke.thisNode().input(0).input(0)\['bbox'].getValue()\n a.insert(i, b-4)\n c = b\n if nuke.thisParent()\['message'].getValue()\[i:i+1]==' ':\n  nuke.thisNode().input(0).input(0).input(0).input(0)\['message'].setValue(' .')\n nuke.thisNode().input(0).setInput(0,nuke.toNode('analyzing_text_bbox0'))\n\nnuke.thisNode().input(0).input(0).input(0)\['message'].setValue('\[value parent.message]')\n\na.pop()\nnuke.thisNode()\['array'].setValue(str(a))\n\n#ARRAY b c...\n\nab = \[0.0]\nfor i in range( 0, r ):\n nuke.thisNode().input(0).setInput(0,nuke.toNode('analyzing_text_bbox0'))\n if nuke.thisParent()\['message'].getValue()\[i:i+1]==' ':\n  nuke.thisNode().input(0).setInput(0,nuke.toNode('analyzing_text_bbox1'))\n nuke.thisNode().input(0).input(0).input(0)\['message'].setValue('\[string range \[value parent.message] '+str(i)+' '+str(i)+']')\n bb = nuke.thisNode().input(0).input(0)\['bbox'].getValue()\n ab.insert(i, bb-4)\n nuke.thisNode().input(0).setInput(0,nuke.toNode('analyzing_text_bbox0'))\n\nnuke.thisNode().input(0).input(0).input(0)\['message'].setValue('\[value parent.message]')\n\nab.pop()\nnuke.thisNode()\['arrayb'].setValue(str(ab))\n\ncd = \[0.0]\nfor i in range( 0, r ):\n cc = a\[i]-ab\[i]\n cd.insert(i, cc)\n\ncd.pop()\n\nnuke.thisNode()\['arrayc'].setValue(str(cd))\n\n#ARRAY H...\n\nabh = \[0.0]\nfor i in range( 0, r ):\n nuke.thisNode().input(0).input(0).input(0)\['message'].setValue('\[string range \[value parent.message] '+str(i)+' '+str(i)+']')\n bb = nuke.thisNode().input(0).input(0)\['bboxh'].getValue()\n abh.insert(i, bb-4)\n\nnuke.thisNode().input(0).input(0).input(0)\['message'].setValue('\[value parent.message]')\n\nabh.pop()\nnuke.thisNode()\['arrayh'].setValue(str(abh))\n\n#ARRAY L...\nminus=1\no=0\ndelay = 0\n#AND POPS AND Snake\neye = 0\npops = \[0.0]\nsnake = \[0.0]\nsnake2 = \[0.0]\nreversed = \[0.0]\nnuke.thisNode().setInput(0,nuke.toNode('analyzing_text_bbox_l_h'))\nal = 'a'\nabl = \[0.0]\nfor i in range( 0, r ):\n if nuke.thisNode().input(0).input(0).input(0).input(0)\['message'].getValue()=='1':\n  al = 'a'\n elif nuke.thisNode().input(0).input(0).input(0).input(0)\['message'].getValue()=='0':\n  al = '\\n'\n nuke.thisNode().input(0).input(0)\['message'].setValue(str(nuke.thisNode().input(0).input(0)\['message'].getValue())+al)\n nuke.thisNode().input(0).input(0).input(0).input(0)\['message'].setValue('\[string is print \[string range \[value parent.message] '+str(i)+' '+str(i)+']]')\n if bb != nuke.thisNode().input(0)\['bboxl'].getValue():\n  pops.insert(i, str(eval(nuke.thisNode()\['arrayc'].getValue())\[i:i+1])\[1:]\[:-1])\n  eye = str(eval(nuke.thisNode()\['arrayc'].getValue())\[i:i+1])\[1:]\[:-1]\n  if delay == 1:\n   minus = minus*(-1)\n  o = i\n  delay = 1\n else:\n  delay = 0\n  if i < r:\n   pops.insert(i, eye)\n  else:\n   pops.insert(i, str(eval(nuke.thisNode()\['arrayc'].getValue())\[i:i+1])\[1:]\[:-1])\n bb = nuke.thisNode().input(0)\['bboxl'].getValue()\n abl.insert(i, bb-4)\n if minus==1:\n  snake.insert(i, i)\n  snake2.insert(i, -i+r-1)\n  reversed.insert(o, -i+r-1)\n else:\n  snake.insert(o, i)\n  snake2.insert(o, -i+r-1)\n  reversed.insert(o, -i+r-1)\nnuke.thisNode().input(0).input(0)\['message'].setValue('a')\nnuke.thisNode().input(0).input(0).input(0).input(0)\['message'].setValue('\[string is print \[string range \[value parent.message] 0 0]]')\n\nf = StringIO.StringIO(str(nuke.thisParent()\['table'].getValue()))\n\no = len(f.readlines())\nx = StringIO.StringIO(str(nuke.thisParent()\['table'].getValue()))\nnuke.toNode('VersionTwo_cropmagic')\['message'].setValue('')\nfor i in range( 0, o ):\n word = x.readline()\n try:\n     word\[0:1].decode('ascii')\n except UnicodeDecodeError:\n     nuke.toNode('VersionTwo_cropmagic')\['message'].setValue(str(nuke.toNode('VersionTwo_cropmagic')\['message'].getValue()+word\[0:2]))\n else:\n     nuke.toNode('VersionTwo_cropmagic')\['message'].setValue(str(nuke.toNode('VersionTwo_cropmagic')\['message'].getValue()+word\[0:1]))\n\n\nabl.pop()\npops.pop()\nsnake.pop()\nsnake2.pop()\nreversed.pop()\nnuke.thisNode()\['arrayl'].setValue(str(abl))\nnuke.thisNode()\['arrayspot'].setValue(str(pops))\nnuke.thisNode()\['arrays'].setValue(str(snake))\nnuke.thisNode()\['arraysbs'].setValue(str(snake2))\nnuke.thisNode()\['arrayREV'].setValue(str(reversed))\n\nnuke.thisNode().setInput(0,nuke.toNode('Analyzing_text_Switch0'))\n\n#END\nnuke.thisNode().input(0)\['which'].setValue(1)\n\n#4CENTERING\n\nlist = nuke.thisNode()\['arrayspot'].getValue()\[:-1]\[1:].split(',') \narray = nuke.thisNode()\['array'].getValue()\[:-1]\[1:].split(',')\nmax = len(list)-1\nskip = 0\nnuke.thisNode()\['arrayspot_half'].setValue('')\naddval = \[float(array\[max])]\nfor i in range(len(list)):\n if list\[max-i] == list\[max-i-1]:\n  pass\n elif skip == 0:\n  skip=1\n elif skip == 1:\n  skip=0\n  addval.append(float(list\[max-i].replace(\"'\",'').replace(' ','')))\n\nfor i in range(len(addval)):\n try:\n  addval\[i] = addval\[i]-addval\[i+1]\n except:\n  pass\n\naddval.reverse()\n\nsetval = \[]\nx = 0\nfor i in range(len(list)):\n if float(list\[i].replace(\"'\",'').replace(' ','')) == float(list\[i-1].replace(\"'\",'').replace(' ','')):\n  pass\n elif skip == 0:\n  skip=1\n  x+=1\n elif skip == 1:\n  skip=0\n setval.append(str(addval\[x]/2+float(list\[i].replace(\"'\",'').replace(' ',''))))\n\nnuke.thisNode()\['arrayspot_half'].setValue(str(setval))" +STARTLINE}
+  addUserKnob {22 print t "selectoREF = str(nuke.thisParent()\['mathrandname'].getValue())+'REF'+str(n)\nselectoC = str(nuke.thisParent()\['mathrandname'].getValue())+'COP'+str(n)\n\n\n\n\n\n\nnuke.createNode('Reformat','tile_color 21',inpanel=False).setName(selectoREF)\n\nnuke.createNode('ShuffleCopy','tile_color 21',inpanel=False).setName(selectoC)\nnuke.toNode(selectoREF).setInput(0,nuke.toNode('DotCOLORS'))\nnuke.toNode(selectoC).setInput(0,nuke.toNode(selecto))\nnuke.toNode(selectoC).setInput(1,nuke.toNode(selectoREF))" T "print float('6.0')" +STARTLINE}
+  addUserKnob {43 log}
+  log Cleared
+  addUserKnob {22 test T "list = nuke.thisNode()\['arrayspot'].getValue()\[:-1]\[1:].split(',') \nmax = len(list)-1\nfor i in range(len(list)):\n print list\[max-i]" +STARTLINE}
+  addUserKnob {1 unicode2}
+  unicode2 o
+  addUserKnob {22 decode T "strs = nuke.thisParent()\['message'].getValue() \nstrs = strs.replace('ä','a')\nstr = strs.replace('å','a')\nstrs = strs.replace('ö','o')\nstrs = strs.replace('Ä','A')\nstrs = strs.replace('Å','a')\nstrs = strs.replace('Ö','O')\nnuke.thisNode()\['old'].setValue(nuke.thisParent()\['message'].getValue())\nnuke.thisParent()\['message'].setValue(strs)\n" +STARTLINE}
+  addUserKnob {22 unicode T "nuke.thisParent()\['message'].setValue(nuke.thisNode()\['old'].getValue())" +STARTLINE}
+  addUserKnob {1 old}
+  old "change this text\npress update"
+ }
+end_group

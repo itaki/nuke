@@ -1,0 +1,727 @@
+#! C:/Program Files/Nuke13.1v1/nuke-13.1.1.dll -nx
+version 13.1 v1
+Gizmo {
+ name ExpressMoire
+ tile_color 0xff
+ addUserKnob {20 effect l "Moiré Effect"}
+ addUserKnob {4 result l Result M {Composite "Moiré Only" "" ""}}
+ addUserKnob {4 model l Type M {"Model A" "Model B" "Model C"}}
+ addUserKnob {41 size l Size T Horizontal_Lines.size}
+ addUserKnob {41 speed l "Flicker Speed" T Grade1.control}
+ addUserKnob {41 flicker l "Disable Flicker" T Grade1.disable}
+ addUserKnob {26 ""}
+ addUserKnob {26 aberration l "" +STARTLINE T "<b>Chromatic Aberration\n"}
+ addUserKnob {26 space l "" +STARTLINE T " "}
+ addUserKnob {41 red l Red T Control.red}
+ addUserKnob {41 green l Green T Control.green}
+ addUserKnob {41 blue l Blue T Control.blue}
+ addUserKnob {26 ""}
+ addUserKnob {26 degradation l "" +STARTLINE T "<b>Background Degradation"}
+ addUserKnob {26 space2 l "" +STARTLINE T "   "}
+ addUserKnob {41 resoluation l Resolution T Control.mix}
+ addUserKnob {41 mix_1 l "Mix Pixelation" T Merge8.mix}
+ addUserKnob {41 disable_1 l "Disable Pixelation" T Merge8.disable}
+ addUserKnob {26 ""}
+ addUserKnob {26 time_offset_1 l "" +STARTLINE T "<b>Time Offset</b>"}
+ addUserKnob {26 space_1 l "" +STARTLINE T " "}
+ addUserKnob {41 time_offset l "Offset Frames" T TimeOffset2.time_offset}
+ addUserKnob {26 ""}
+ addUserKnob {41 mix l Mix T Merge4.mix}
+ addUserKnob {20 info l Info}
+ addUserKnob {26 created T "Created by <b><a href=\"https://vimeo.com/lucascoutinho\">Lucas L. Coutinho</a></b>"}
+ addUserKnob {26 version T "Version: <b>v1.2</b>"}
+ addUserKnob {26 year T "Year: 2022"}
+}
+ StickyNote {
+  inputs 0
+  name StickyNote3
+  tile_color 0xff
+  label Flicker
+  note_font_size 60
+  xpos -1304
+  ypos 1682
+  bookmark true
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  tile_color 0xff
+  label "Procedural Lines"
+  note_font_size 60
+  xpos -1178
+  ypos -564
+  bookmark true
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote5
+  tile_color 0xff
+  label Pixelation
+  note_font_size 60
+  xpos -2138
+  ypos 1131
+  bookmark true
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote4
+  tile_color 0xff
+  label Degradation
+  note_font_size 60
+  xpos -8
+  ypos -42
+  bookmark true
+ }
+ Merge2 {
+  inputs 0
+  name Control
+  xpos -298
+  ypos -58
+  hide_input true
+  addUserKnob {20 User}
+  addUserKnob {7 blue l Blue R 0 2}
+  blue 1
+  addUserKnob {7 green l Green R 0 2}
+  green 1
+  addUserKnob {7 red l Red R 0 2}
+  red 1
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote2
+  tile_color 0xff
+  label Aberration
+  note_font_size 60
+  xpos -1361
+  ypos 959
+  bookmark true
+ }
+ Input {
+  inputs 0
+  name Source
+  xpos -157
+  ypos -761
+ }
+ Dot {
+  name Dot8
+  xpos -123
+  ypos -605
+ }
+set N45777800 [stack 0]
+ Dot {
+  name Dot13
+  xpos -641
+  ypos -605
+ }
+ Remove {
+  name Remove1
+  xpos -675
+  ypos -524
+ }
+ Dot {
+  name Dot32
+  xpos -641
+  ypos -407
+ }
+set N45776c00 [stack 0]
+ Dot {
+  name Dot31
+  xpos -769
+  ypos -407
+ }
+set N45776800 [stack 0]
+ Dot {
+  name Dot12
+  xpos -882
+  ypos -407
+ }
+set N45776400 [stack 0]
+ Dot {
+  name Dot11
+  xpos -992
+  ypos -407
+ }
+set N45776000 [stack 0]
+ Dot {
+  name Dot10
+  xpos -1102
+  ypos -407
+ }
+set N45775c00 [stack 0]
+ Dot {
+  name Dot9
+  xpos -1212
+  ypos -407
+ }
+set N45775800 [stack 0]
+ Dot {
+  name Dot14
+  xpos -1352
+  ypos -407
+ }
+set N45775400 [stack 0]
+ Dot {
+  name Dot24
+  xpos -1463
+  ypos -407
+ }
+set N45775000 [stack 0]
+ Dot {
+  name Dot29
+  xpos -1611
+  ypos -407
+ }
+ Dot {
+  name Dot27
+  xpos -1611
+  ypos 1039
+ }
+set N45774800 [stack 0]
+ Dot {
+  name Dot28
+  xpos -1775
+  ypos 1039
+ }
+ Expression {
+  expr2 "clamp(fmod(y,4)-2) + clamp(fmod(x,4)-2)"
+  name Expression3
+  xpos -1809
+  ypos 1134
+ }
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle5
+  xpos -1809
+  ypos 1174
+ }
+ Dot {
+  name Dot18
+  xpos -1775
+  ypos 1287
+ }
+push $N45774800
+ Expression {
+  expr2 fmod(x,3)-1
+  name Expression1
+  xpos -1645
+  ypos 1130
+ }
+ Expression {
+  expr0 "b < 0 ? 1 : r"
+  expr1 "b == 0 ? 1 : g"
+  name Expression2
+  xpos -1645
+  ypos 1170
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge7
+  xpos -1645
+  ypos 1284
+ }
+ Clamp {
+  name Clamp2
+  xpos -1645
+  ypos 1324
+ }
+ Transform {
+  scale {{1/parent.Control.mix}}
+  center {{width/2} {height/2}}
+  name Transform8
+  xpos -1645
+  ypos 1417
+ }
+ Dot {
+  name Dot20
+  xpos -1611
+  ypos 1544
+ }
+push $N45776800
+ Expression {
+  expr0 "sin( (atan(x + width/2, y - height/2) + offset) * lines)"
+  name Radial_left
+  xpos -803
+  ypos -217
+  addUserKnob {20 User}
+  addUserKnob {7 offset l Offset}
+  offset {{frame}}
+  addUserKnob {7 lines l Lines R 0 1500}
+  lines {{parent.Horizontal_Lines.size*3000}}
+ }
+ Dot {
+  name Dot30
+  xpos -769
+  ypos -81
+ }
+push $N45776c00
+ Expression {
+  expr0 "sin( (atan(x - width*1.5, y - height/2) + offset) * lines)"
+  name Radial_right
+  xpos -675
+  ypos -217
+  addUserKnob {20 User}
+  addUserKnob {7 offset l Offset}
+  offset {{frame}}
+  addUserKnob {7 lines l Lines R 0 100}
+  lines {{parent.Radial_left.lines}}
+ }
+ Merge2 {
+  inputs 2
+  operation average
+  name Merge9
+  xpos -675
+  ypos -84
+ }
+ Dot {
+  name Dot33
+  xpos -641
+  ypos 405
+ }
+push $N45775800
+ Expression {
+  expr0 sin((y*2)/size+frame)
+  name Horizontal_Lines
+  xpos -1246
+  ypos -323
+  addUserKnob {20 User}
+  addUserKnob {7 size l Size R 0.5 1}
+  size 1
+ }
+ Transform {
+  rotate {{frame/4}}
+  scale 2.2
+  center {{width/2} {height/2}}
+  name Transform1
+  xpos -1246
+  ypos -69
+ }
+ Dot {
+  name Dot3
+  xpos -1212
+  ypos 53
+ }
+push $N45775c00
+ Expression {
+  expr0 sin((x*2)/size+frame)
+  name Vertical_Lines
+  xpos -1136
+  ypos -217
+  addUserKnob {20 User}
+  addUserKnob {7 size l Size R 1 10}
+  size {{parent.Horizontal_Lines.size}}
+ }
+ Transform {
+  rotate {{-parent.Transform1.rotate}}
+  scale {{parent.Transform1.scale}}
+  center {{width/2} {height/2}}
+  name Transform2
+  xpos -1136
+  ypos -69
+ }
+ Merge2 {
+  inputs 2
+  operation average
+  bbox B
+  name Merge3
+  xpos -1136
+  ypos 50
+ }
+ Dot {
+  name Dot2
+  xpos -1102
+  ypos 183
+ }
+set N456de800 [stack 0]
+push $N45776000
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue none}
+  expr0 "sin( hypot(x/size-position.x/size, y/size-position.y/size) )"
+  channel1 {-rgba.red rgba.green -rgba.blue none}
+  channel2 {-rgba.red -rgba.green rgba.blue none}
+  name Circles_Up
+  xpos -1026
+  ypos -217
+  addUserKnob {20 User}
+  addUserKnob {7 size l Size R 1 10}
+  size {{parent.Horizontal_Lines.size}}
+  addUserKnob {12 position l Position}
+  position {{width/2} {height*1.5+frame/2}}
+ }
+ Dot {
+  name Dot1
+  xpos -992
+  ypos 57
+ }
+push $N45776400
+ Expression {
+  expr0 "sin( hypot(x/size-position.x/size, y/size-position.y/size) )"
+  name Circles_Down
+  xpos -916
+  ypos -217
+  addUserKnob {20 User}
+  addUserKnob {7 size l Size R 1 10}
+  size {{parent.Horizontal_Lines.size}}
+  addUserKnob {7 offset l Offset R 0 100}
+  offset {{parent.NoOp1.offset*100}}
+  addUserKnob {12 position l Position}
+  position {{width/2} {-height/2-frame/2}}
+ }
+ Merge2 {
+  inputs 2
+  operation average
+  bbox B
+  name Merge1
+  xpos -916
+  ypos 54
+ }
+ Merge2 {
+  inputs 2
+  operation average
+  name Merge2
+  xpos -916
+  ypos 180
+ }
+push $N45775000
+ Expression {
+  expr0 sin((atan(x-position.x,y-position.y)+offset)*size)
+  name Radial_Up
+  xpos -1497
+  ypos -323
+  addUserKnob {20 User}
+  addUserKnob {12 position}
+  position {{width/2} {height*1.5+frame/2}}
+  addUserKnob {7 offset R 0 100}
+  offset {{frame}}
+  addUserKnob {7 size R 0 100}
+  size {{width/Horizontal_Lines.size}}
+ }
+ Dot {
+  name Dot4
+  xpos -1463
+  ypos -99
+ }
+push $N45775400
+ Expression {
+  expr0 sin((atan(x-position.x,y-position.y)+offset)*size)
+  name Radial_Down
+  xpos -1386
+  ypos -217
+  addUserKnob {20 User}
+  addUserKnob {12 position}
+  position {{width/2} {-height/2-frame/2}}
+  addUserKnob {7 offset R 0 100}
+  offset {{frame}}
+  addUserKnob {7 size R 0 100}
+  size {{parent.Radial_Up.size}}
+ }
+ Merge2 {
+  inputs 2
+  operation average
+  name Merge5
+  xpos -1386
+  ypos -102
+ }
+ Dot {
+  name Dot25
+  xpos -1352
+  ypos 293
+ }
+push $N456de800
+ Merge2 {
+  inputs 2
+  operation average
+  name Merge6
+  xpos -1136
+  ypos 290
+ }
+ Dot {
+  name Dot26
+  xpos -1102
+  ypos 405
+ }
+ Switch {
+  inputs 3
+  which {{model}}
+  name Switch2
+  xpos -916
+  ypos 402
+ }
+ TimeOffset {
+  time_offset {{first_frame}}
+  time ""
+  name TimeOffset1
+  xpos -916
+  ypos 509
+ }
+ TimeOffset {
+  time ""
+  name TimeOffset2
+  xpos -916
+  ypos 549
+ }
+ Shuffle {
+  green red
+  blue red
+  name Shuffle6
+  xpos -916
+  ypos 589
+ }
+ Clamp {
+  name Clamp1
+  xpos -916
+  ypos 649
+ }
+ Dot {
+  name Dot15
+  xpos -882
+  ypos 735
+ }
+set N45666400 [stack 0]
+ Dot {
+  name Dot16
+  xpos -736
+  ypos 735
+ }
+set N45666000 [stack 0]
+ Dot {
+  name Dot5
+  xpos -515
+  ypos 735
+ }
+ Radial {
+  area {0 0 {width} {height}}
+  name Radial1
+  xpos -549
+  ypos 825
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos -549
+  ypos 865
+ }
+ Dot {
+  name Dot21
+  xpos -515
+  ypos 973
+ }
+set N45665000 [stack 0]
+ Dot {
+  name Dot22
+  xpos -515
+  ypos 1055
+ }
+set N45664c00 [stack 0]
+ Dot {
+  name Dot23
+  xpos -515
+  ypos 1141
+ }
+push $N45666400
+ Dot {
+  name Dot41
+  xpos -1045
+  ypos 735
+ }
+ Shuffle {
+  green red
+  blue red
+  name Shuffle4
+  tile_color 0xff0000ff
+  label R
+  xpos -1079
+  ypos 842
+ }
+ TransformMasked {
+  inputs 1+1
+  scale {{1+red/1000}}
+  center {{width/2} {height/2}}
+  name Transform6
+  xpos -1079
+  ypos 1132
+  addUserKnob {20 User}
+  addUserKnob {7 red l Red R 0 2}
+  red {{parent.Control.red}}
+ }
+push $N45664c00
+push $N45666400
+ Shuffle {
+  red green
+  blue green
+  name Shuffle3
+  tile_color 0x7fff00ff
+  label G
+  xpos -916
+  ypos 841
+ }
+ TransformMasked {
+  inputs 1+1
+  scale {{1+green/1000}}
+  center {{width/2} {height/2}}
+  name Transform5
+  xpos -916
+  ypos 1046
+  addUserKnob {20 User}
+  addUserKnob {7 green l Green R 0 2}
+  green {{parent.Control.green}}
+ }
+ Dot {
+  name Dot19
+  xpos -882
+  ypos 1281
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  blue black
+  name ShuffleCopy1
+  xpos -1079
+  ypos 1277
+ }
+push $N45665000
+push $N45666000
+ Shuffle {
+  red blue
+  green blue
+  name Shuffle2
+  tile_color 0x3fffff
+  label B
+  xpos -770
+  ypos 842
+ }
+ TransformMasked {
+  inputs 1+1
+  scale {{1+blue/1000}}
+  center {{width/2} {height/2}}
+  name Transform4
+  xpos -770
+  ypos 964
+  addUserKnob {20 User}
+  addUserKnob {7 blue l Blue R 0 2}
+  blue {{parent.Control.blue}}
+ }
+ Dot {
+  name Dot17
+  xpos -736
+  ypos 1399
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  name ShuffleCopy2
+  xpos -1079
+  ypos 1395
+ }
+ Reformat {
+  type scale
+  resize none
+  name Reformat1
+  xpos -1079
+  ypos 1471
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  bbox B
+  name Merge8
+  xpos -1079
+  ypos 1541
+ }
+ Grade {
+  white {{random(frame/speed)*0.4+0.6 x18 0.0005}}
+  name Grade1
+  xpos -1079
+  ypos 1717
+  addUserKnob {20 User}
+  addUserKnob {7 control l Control R 0.1 1}
+  control 0.1
+  addUserKnob {7 speed l Speed R 0.05 10}
+  speed {{1/control}}
+ }
+ Crop {
+  box {0 0 {input.width} {input.height}}
+  crop false
+  name Crop1
+  xpos -1079
+  ypos 1757
+ }
+ Dot {
+  name Dot7
+  xpos -1045
+  ypos 1881
+ }
+set N455a7c00 [stack 0]
+ Multiply {
+  value {{parent.Merge4.mix}}
+  name Multiply1
+  xpos -1079
+  ypos 2018
+ }
+ Dot {
+  name Dot6
+  xpos -1045
+  ypos 2153
+ }
+push $N455a7c00
+push $N45777800
+ Crop {
+  box {0 0 {input.width} {input.height}}
+  name Crop2
+  xpos -157
+  ypos 35
+ }
+ Transform {
+  scale {{parent.Control.mix}}
+  center {{width/2} {height/2}}
+  name Transform3
+  xpos -157
+  ypos 75
+ }
+ Shuffle {
+  name Shuffle7
+  label "Break Concatenation"
+  xpos -157
+  ypos 115
+ }
+ Transform {
+  scale {{1/parent.Transform3.scale}}
+  center {{width/2} {height/2}}
+  name Transform7
+  xpos -157
+  ypos 167
+ }
+ Crop {
+  box {0 0 {input.width} {input.height}}
+  crop false
+  name Crop3
+  xpos -157
+  ypos 207
+ }
+ Merge2 {
+  inputs 2
+  operation geometric
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name Merge4
+  xpos -157
+  ypos 1878
+ }
+ Switch {
+  inputs 2
+  which {{result}}
+  name Switch1
+  xpos -157
+  ypos 2150
+ }
+ Output {
+  name Output1
+  xpos -157
+  ypos 2323
+ }
+end_group

@@ -1,6 +1,7 @@
 #! C:/Program Files/Nuke10.5v2/nuke-10.5.2.dll -nx
 version 10.5 v2
-Gizmo {
+Group {
+ name G_Toon
  inputs 2
  tile_color 0xffe435ff
  gl_color 0xffe851ff

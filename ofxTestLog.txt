@@ -1,0 +1,88 @@
+********************************************************************************
+START mainEntry (OfxActionLoad)
+    WARNING : Could not fetch the optional suite 'OfxProgressSuite' version 2.
+    Retrieved int property OfxPropAPIVersion[0], was given 1.
+    Retrieved int property OfxPropAPIVersion[1], was given 2.
+    Retrieved string property OfxPropName[0], was given uk.co.thefoundry.nuke.
+    Retrieved string property OfxPropLabel[0], was given nuke.
+    Retrieved int property OfxPropVersion[0], was given 15.
+    Retrieved int property OfxPropVersion[1], was given 0.
+    Retrieved int property OfxPropVersion[2], was given 1.
+    Retrieved string property OfxPropVersionLabel[0], was given 15.0.
+    Retrieved int property OfxImageEffectHostPropIsBackground[0], was given 0.
+    Retrieved int property OfxImageEffectPropSupportsOverlays[0], was given 1.
+    Retrieved int property OfxImageEffectPropSupportsMultiResolution[0], was given 1.
+    Retrieved int property OfxImageEffectPropSupportsTiles[0], was given 1.
+    Retrieved int property OfxImageEffectPropTemporalClipAccess[0], was given 1.
+    Retrieved int property OfxImageEffectPropMultipleClipDepths[0], was given 0.
+    Retrieved int property OfxImageEffectPropSupportsMultipleClipPARs[0], was given 0.
+    Retrieved int property OfxImageEffectPropSetableFrameRate[0], was given 0.
+    Retrieved int property OfxImageEffectPropSetableFielding[0], was given 0.
+    Retrieved int property OfxImageEffectInstancePropSequentialRender[0], was given 0.
+    Retrieved int property OfxParamHostPropSupportsStringAnimation[0], was given 0.
+    Retrieved int property OfxParamHostPropSupportsCustomInteract[0], was given 1.
+    Retrieved int property OfxParamHostPropSupportsChoiceAnimation[0], was given 1.
+    ERROR : Failed on getting int property OfxParamHostPropSupportsStrChoiceAnimation[0], host returned status kOfxStatErrUnknown;
+    Retrieved int property OfxParamHostPropSupportsStrChoiceAnimation[0], was given 0.
+    Retrieved int property OfxParamHostPropSupportsBooleanAnimation[0], was given 1.
+    Retrieved int property OfxParamHostPropSupportsCustomAnimation[0], was given 0.
+    Retrieved pointer property OfxPropHostOSHandle[0], was given 0x116ad3748.
+    Retrieved int property OfxParamHostPropSupportsParametricAnimation[0], was given 0.
+    ERROR : Failed on getting string property OfxImageEffectPropOpenCLRenderSupported[0], host returned status kOfxStatErrUnknown;
+    Retrieved string property OfxImageEffectPropOpenCLRenderSupported[0], was given (null).
+    ERROR : Failed on getting string property OfxImageEffectPropCudaRenderSupported[0], host returned status kOfxStatErrUnknown;
+    Retrieved string property OfxImageEffectPropCudaRenderSupported[0], was given (null).
+    ERROR : Failed on getting string property OfxImageEffectPropCudaStreamSupported[0], host returned status kOfxStatErrUnknown;
+    Retrieved string property OfxImageEffectPropCudaStreamSupported[0], was given (null).
+    ERROR : Failed on getting string property OfxImageEffectPropMetalRenderSupported[0], host returned status kOfxStatErrUnknown;
+    Retrieved string property OfxImageEffectPropMetalRenderSupported[0], was given (null).
+    ERROR : Failed on getting int property OfxImageEffectPropRenderQualityDraft[0], host returned status kOfxStatErrUnknown;
+    Retrieved int property OfxImageEffectPropRenderQualityDraft[0], was given 0.
+    ERROR : Failed on getting string property OfxImageEffectHostPropNativeOrigin[0], host returned status kOfxStatErrUnknown;
+    Retrieved string property OfxImageEffectHostPropNativeOrigin[0], was given (null).
+    Retrieved int property OfxParamHostPropMaxParameters[0], was given -1.
+    Retrieved int property OfxParamHostPropMaxPages[0], was given 0.
+    Retrieved int property OfxParamHostPropPageRowColumnCount[0], was given 0.
+    Retrieved int property OfxParamHostPropPageRowColumnCount[1], was given 0.
+    Fetched dimension of property OfxImageEffectPropSupportedComponents, returned 4.
+    Retrieved string property OfxImageEffectPropSupportedComponents[0], was given OfxImageComponentRGBA.
+    Retrieved string property OfxImageEffectPropSupportedComponents[1], was given OfxImageComponentAlpha.
+    Retrieved string property OfxImageEffectPropSupportedComponents[2], was given uk.co.thefoundry.OfxImageComponentMotionVectors.
+    Retrieved string property OfxImageEffectPropSupportedComponents[3], was given uk.co.thefoundry.OfxImageComponentStereoDisparity.
+    Fetched dimension of property OfxImageEffectPropSupportedContexts, returned 2.
+    Retrieved string property OfxImageEffectPropSupportedContexts[0], was given OfxImageEffectContextFilter.
+    Retrieved string property OfxImageEffectPropSupportedContexts[1], was given OfxImageEffectContextGeneral.
+    Fetched dimension of property OfxImageEffectPropSupportedPixelDepths, returned 1.
+    Retrieved string property OfxImageEffectPropSupportedPixelDepths[0], was given OfxBitDepthFloat.
+    Retrieved int property OfxPropVersion[0], was given 15.
+    Retrieved int property OfxPropVersion[1], was given 0.
+    Retrieved string property OfxPropName[0], was given uk.co.thefoundry.nuke.
+STOP mainEntry (OfxActionLoad)
+
+********************************************************************************
+START mainEntry (OfxActionDescribe)
+    Set string property OfxPropLabel[0] to be Looks.
+    Set string property OfxPropShortLabel[0] to be Looks.
+    Set string property OfxPropLongLabel[0] to be Looks.
+    Set string property OfxImageEffectPluginPropGrouping[0] to be RG Magic Bullet.
+    Fetched dimension of property OfxImageEffectPropSupportedContexts, returned 0.
+    Set string property OfxImageEffectPropSupportedContexts[0] to be OfxImageEffectContextFilter.
+    Fetched dimension of property OfxImageEffectPropSupportedPixelDepths, returned 0.
+    Set string property OfxImageEffectPropSupportedPixelDepths[0] to be OfxBitDepthFloat.
+    Fetched dimension of property OfxImageEffectPropSupportedPixelDepths, returned 1.
+    Set string property OfxImageEffectPropSupportedPixelDepths[1] to be OfxBitDepthByte.
+    Set int property OfxImageEffectPluginPropSingleInstance[0] to be 0.
+    Set int property OfxImageEffectPluginPropHostFrameThreading[0] to be 0.
+    Set string property OfxImageEffectPluginRenderThreadSafety[0] to be OfxImageEffectRenderUnsafe.
+    Set int property OfxImageEffectPropSupportsMultiResolution[0] to be 0.
+    Set int property OfxImageEffectPropSupportsTiles[0] to be 0.
+    Set int property OfxImageEffectPluginPropFieldRenderTwiceAlways[0] to be 0.
+    Set int property OfxImageEffectPropSupportsMultipleClipPARs[0] to be 0.
+    Set int property OfxImageEffectPropMultipleClipDepths[0] to be 0.
+    Set int property OfxImageEffectPropTemporalClipAccess[0] to be 1.
+STOP mainEntry (OfxActionDescribe)
+
+********************************************************************************
+START mainEntry (OfxActionUnload)
+STOP mainEntry (OfxActionUnload)
+

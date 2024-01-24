@@ -1,9 +1,10 @@
 import os
 import nuke
+import subprocess
 
 class DiskCache():
     '''
-    NOTE: This script ONLY works on MacOS and possibly Linux
+    NOTE: This script has ONLY been tested on MacOS. It may work on Linux, but probably not windows.
 
     This class assigns takes a list of potential disks to make Nukes cache drive.
     It checks them in order of preference and as soon as it finds one that is available
@@ -21,7 +22,11 @@ class DiskCache():
 
     NOTE: Nuke will still create all the directories in /var/tmp/nuke-u501/ViewerCache,
     and will print out the disk location being there if you run from the command line.
-    However, if you print(os.environ['NUKE_TEMP_DIR']) it prints out the correct location.
+    However, if you 
+    
+    print(f"NUKE_TEMP_DIR : {os.environ['NUKE_TEMP_DIR']}\nNUKE_DISK_CACHE : {os.environ['NUKE_DISK_CACHE']}")
+    
+    it prints out the correct location.
 
     Add this to your init.py file
     ### SET TEMP DIRECTORY
@@ -58,14 +63,14 @@ class DiskCache():
         returns the first valid one. If it fails to find any suitable locations
         it will NOT set a location'''
         for volume in self.preferred_disks:
-            cache_path = self.check_if_volume_exists(volume)
+            cache_path = self.check_if_volume_is_suitable(volume)
             if cache_path != False:
                 # Stop searching, I found one, move along from here.
                 break
         if cache_path != False: # Send the directory I found home
             print(f"Cache directory set to {cache_path}")
             return cache_path
-        else: # if no drive has be set, set local
+        else: # if no drive has been set, set local
             cache_path = os.path.join(os.path.expanduser( '~' ), self.cache_dir)
             if os.path.isdir(cache_path):
                 print(f"Cache directory is using user's home folder {cache_path}")
@@ -78,33 +83,53 @@ class DiskCache():
                     return cache_path
                 except: # Couldn't make cache directory
                     return False
+                
 
+    def is_network_drive(self, drive_path):
+        '''This function checks to see if a drive is a network drive'''
+        try:
+            output = subprocess.check_output(['df', '-t', drive_path])
+            lines = output.decode().split('\n')[1:]
+            for line in lines:
+                if line:
+                    drive_info = line.split()
+                    drive_type = drive_info[0]
+                    if 'smb' in drive_type:
+                        return True
+            return False
+        except subprocess.CalledProcessError:
+            return False
     
-    def check_if_volume_exists(self, volume):
+    def check_if_volume_is_suitable(self, volume):
         '''Recieves volume name and checks to see if it exists
-        If it does exist will check to see if the cache folder exists
+        If if does exist it checks to make sure it is not a network drive
+        If it is not a network drive will check to see if the cache folder exists
         If it does exist it returns the cache folder path
         If it does not exist it tries to create the folder
-        If it successfully creates the path it returns the path
+        If it successfully creates the path it returns the path ( Folder it writable! )
         If it fails it returns false
         
         NOTE: This is the part that doesn't work on Windows
         '''
-        short_path = os.path.join('/Volumes', volume)
-        if os.path.isdir(short_path):
-            full_path = os.path.join(short_path, self.cache_dir)
-            if os.path.isdir(full_path):    
+        volume_path = os.path.join('/Volumes', volume)
+        print (f"Volume Path : {volume_path}")
+        if os.path.isdir(volume_path): # Check to see if the volume exists
+            if self.is_network_drive(volume_path): # Check to see if the volume is a network drive
+                print(f"Requested Cache Drive : {volume} is a network drive. Please use a local drive for cache.")
+                return False
+            full_path = os.path.join(volume_path, self.cache_dir) # Create the full path
+            if os.path.isdir(full_path):
                 return full_path
             else:
                 try:
                     os.makedirs(full_path)
-                    print(f"Created a new temp directory at {full_path}")
+                    print(f"Created a new cache directory at {full_path}")
                     return full_path
                 except:
                     print(f"Failed to create {full_path}")
-                    print(f"Volume : {short_path} exists but is not writable!")
+                    print(f"Requested Cache Drive : {volume_path} exists but is not writable!")
                     return False
                     
         else:
-            print(f"Cache drive {volume} not accesable on this machine")
+            print(f"Requested Cache Drive : {volume} not accesable on this machine. Skipping")
             return False

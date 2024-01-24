@@ -1,0 +1,154 @@
+#! C:/Program Files/Nuke14.0v5/nuke-14.0.5.dll -nx
+version 14.0 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="2557" h="1360" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1894" stretch="1"/>
+            <splitter orientation="2">
+                <split size="774"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="544"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+                <page id="Scenegraph.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/jjpar/Desktop/rank_filter.nk
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement Nuke
+ workingSpaceLUT linear
+ monitorLut sRGB
+ monitorOutLUT rec709
+ int8Lut sRGB
+ int16Lut sRGB
+ logLut Cineon
+ floatLut linear
+}
+Group {
+ inputs 0
+ name RankFilter
+ tile_color 0x168696ff
+ xpos 245
+ ypos -186
+ addUserKnob {20 RankFilter}
+ addUserKnob {41 "Local GPU: " T BlinkScript1.gpuName}
+ addUserKnob {41 "Use GPU if Available" T BlinkScript1.useGPUIfAvailable}
+ addUserKnob {26 ""}
+ addUserKnob {7 rankpicker_1 l "Rank Picker"}
+ rankpicker_1 0.115
+ addUserKnob {41 "filter size" T "BlinkScript1.RankFilter_filter size"}
+ addUserKnob {26 ""}
+ addUserKnob {26 "" l mask T ""}
+ addUserKnob {41 maskChannelInput l "" -STARTLINE T Merge1.maskChannelInput}
+ addUserKnob {41 inject -STARTLINE T Merge1.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge1.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Merge1.fringe}
+ addUserKnob {41 mix T Merge1.mix}
+ addUserKnob {26 ""}
+ addUserKnob {26 credit l "" +STARTLINE T "Rank Filter made by Josh Parks\n"}
+ addUserKnob {26 credit2 l "" +STARTLINE T www.joshparks.co.uk}
+}
+ Input {
+  inputs 0
+  name Inputmask
+  xpos -199
+  ypos -188
+  number 1
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos -356
+  ypos -444
+ }
+ Dot {
+  name Dot1
+  note_font_size 41
+  xpos -322
+  ypos -370
+ }
+set N1cbd4400 [stack 0]
+ AddChannels {
+  channels rgba
+  name AddChannels1
+  xpos -356
+  ypos -318
+ }
+ BlinkScript {
+  recompileCount 136
+  ProgramGroup 1
+  KernelDescription "2 \"RankFilter\" iterate componentWise 8f4632feddf6438e381689a2ba97b17de2940d93cef050361f5f241bb1ec4f00 2 \"imageIn\" Read Ranged2D \"imageOut\" Write Point 2 \"filter size\" Int 1 AQAAAA== \"number picker\" Float 1 AACAPw== 2 \"size\" 1 1 \"number_picker\" 1 1 2 \"imageInrangeMin\" Int 2 1 AAAAAAAAAAA= \"imageInrangeMax\" Int 2 1 AAAAAAAAAAA="
+  kernelSource "kernel RankFilter : public ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> imageIn; \n  Image<eWrite, eAccessPoint> imageOut;          \n\nparam:\n  int size;  //The filter size\n  float number_picker; \n\nlocal:\n\n\n  void define() \{\n    defineParam(size, \"filter size\", 1); \n    defineParam(number_picker, \"number picker\", 1.0f); \n  \}\n\n  void init()\n  \{\n    imageIn.setRange(-size-1, -size-1, size+1, size+1);\n\n  \}\n\n  void process()\n  \{\n\n    float vals\[512]; ///creates array is this to big?\n\n    float size_ref = size; \n\n   \n\n    for (int j = -size_ref, index = 0; j <= size_ref; j++) \{ //this section is just collecting all the values in the filter size and putting them in the array\n      for (int i = -size_ref; i <= size_ref; i++, index++) \{\n        vals\[index] = imageIn(i, j);\n      \}\n    \}\n\n\n    float tempvaluesforsorting;\n    int filterSizeref = (2 * size_ref + 1) * (2 * size_ref + 1); //  setting the amount of times to run the sort\n\n    for (int i = 0; i < filterSizeref; i++) \{     //this is sorting the values\n      for (int j = 0; j < (filterSizeref - i - 1); j++) \{\n        if (vals\[j] > vals\[j + 1]) \{\n          tempvaluesforsorting = vals\[j];\n          vals\[j] = vals\[j + 1];\n          vals\[j + 1] = tempvaluesforsorting;\n        \}\n      \}\n    \}\n\n  \n    int normalised = number_picker *((2 * size_ref + 1) * (2 * size_ref + 1)-1);\n\n    imageOut() = vals\[normalised]; // selecting a certain value in the aray\n    \n  \}\n\};"
+  vectorize false
+  rebuild ""
+  "RankFilter_filter size" 3
+  "RankFilter_number picker" {{slider}}
+  rebuild_finalise ""
+  name BlinkScript1
+  xpos -356
+  ypos -262
+  addUserKnob {20 User}
+  addUserKnob {7 slider}
+  slider {{rankpicker_1}}
+ }
+push $N1cbd4400
+ Dot {
+  name Dot2
+  note_font_size 41
+  xpos -487
+  ypos -370
+ }
+ Dot {
+  name Dot3
+  note_font_size 41
+  xpos -487
+  ypos -184
+ }
+ Merge2 {
+  inputs 2+1
+  operation copy
+  bbox B
+  name Merge1
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos -356
+  ypos -188
+ }
+ Output {
+  name Output1
+  xpos -356
+  ypos -97
+ }
+end_group
+push 0
+Viewer {
+ inputs 2
+ frame 1
+ frame_range 1-100
+ input_number 1
+ monitorOutOutputTransform rec709
+ name Viewer1
+ xpos -40
+ ypos -9
+}

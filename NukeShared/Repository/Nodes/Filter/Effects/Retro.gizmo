@@ -1,6 +1,7 @@
 #! /Applications/Nuke6.0v1-32/Nuke6.0v1.app/Contents/MacOS/Nuke6.0v1 -nx
 version 6.0 v1
-Gizmo {
+Group {
+ name Retro
  addUserKnob {20 User}
  addUserKnob {6 chromaticenable l "chromatic aberration" +STARTLINE}
  addUserKnob {41 mix l "color mix" T mixer.mix}

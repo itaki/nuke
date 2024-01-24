@@ -1,0 +1,237 @@
+## Clean Plate, helps generate a clean plate. Patch black as in the IBK Colour
+## Script by Andres Seedorf, 23/08/2023
+
+Group {
+ name AS_CleanPlate
+ tile_color 0xad00ff
+ selected true
+ addUserKnob {20 User}
+ addUserKnob {26 instruct_label l "" +STARTLINE T "<b>HOW TO:</b><br><br>\n- Select the right color for your Screen.<br>\n- If <b>Green</b>, adjust <b>G</b> and <b>Y</b>. If <b>Blue</b>, adjust <b>B</b> and <b>Y</b>.<br>\n- <b>R</b> is just for small details and shouldn't go higher than 1.<br>\n- Erode as needed,<br>\n- Keep Size not higher than 1 to retain detail.<br>\n- Patch all the way.<br><br>"}
+ addUserKnob {6 simple_degrain l "Degrain (only if needed)" t "This process could introduce undesired noise into our clean plate." +STARTLINE}
+ addUserKnob {26 blank_space l "" +STARTLINE T <br>}
+ addUserKnob {41 screen_color_patch l "Screen Color" T Expression1.screen_color_patch}
+ addUserKnob {26 ""}
+ addUserKnob {26 adjust_screen l "" +STARTLINE T "<b>Screen Adjustment</b><br>"}
+ addUserKnob {41 fine_tune_r l "Fine Tune R: " T Expression1.fine_tune_r}
+ addUserKnob {41 fine_tune_g l "Fine Tune G: " T Expression1.fine_tune_g}
+ addUserKnob {41 fine_tune_b l "Fine Tune B: " T Expression1.fine_tune_b}
+ addUserKnob {41 fine_tune_a l "Fine Tune Y: " T Expression1.fine_tune_a}
+ addUserKnob {26 ""}
+ addUserKnob {26 text l "" +STARTLINE T "<b>Black Patch</b><br>"}
+ addUserKnob {7 erode_patch l "Erode: " R 1 100}
+ erode_patch 1
+ addUserKnob {7 size_erode l "Size: "}
+ addUserKnob {7 patch_black l "Patch Black" R 1 1000}
+ patch_black 1
+ addUserKnob {26 ""}
+ addUserKnob {26 about_label l "" +STARTLINE T "<br><br>\nScript by <b>Andres Seedorf</b>, 23/08/2023<br>\nPatch Black from the IBK Colour."}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0xaaaaaa00
+  label "IBK Colour Erode and Black Patch"
+  note_font_size 22
+  xpos -340
+  ypos 334
+  appearance Border
+  bdwidth 817
+  bdheight 684
+ }
+ Input {
+  inputs 0
+  name plate
+  xpos 35
+  ypos -48
+ }
+ DegrainSimple {
+  channels rgba
+  name DegrainSimple1
+  xpos 35
+  ypos 18
+  disable {{1-simple_degrain}}
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 white -1 -1 rgba.alpha 0 3"
+  name alpha_cleaner
+  xpos 35
+  ypos 82
+ }
+set Nec82100 [stack 0]
+ Dot {
+  name Dot3
+  xpos -216
+  ypos 86
+ }
+ Expression {
+  temp_name0 limit_r
+  temp_expr0 fine_tune_r
+  temp_name1 limit_g
+  temp_expr1 fine_tune_g
+  temp_name2 limit_b
+  temp_expr2 fine_tune_b
+  temp_name3 limit_a
+  temp_expr3 fine_tune_a
+  expr0 r>((g+b)/2)*limit_r?1:r<(g+b)/2?0:1
+  expr1 screen_color_patch==0?(g>((b+r)/2)*limit_g?g<(r+b)/2?0:0:1):(g>((b+r)/2)*limit_g?1:g<(r+b)/2?0:1)
+  expr2 screen_color_patch==1?(b>((r+g)/2)*limit_b?b<(g+r)/2?0:0:1):(b>((r+g)/2)*limit_b?1:b<(g+r)/2?0:1)
+  expr3 (r+g+b)/3>.1*limit_a?0:1
+  name Expression1
+  xpos -250
+  ypos 191
+  addUserKnob {20 User}
+  addUserKnob {4 screen_color_patch l "Screen Color" M {"Green Screen" "Blue Screen"}}
+  addUserKnob {7 fine_tune_r l "Fine Limit R" R -1 1}
+  fine_tune_r 1
+  addUserKnob {7 fine_tune_g l "Fine Limit G" R 1 5}
+  fine_tune_g 1
+  addUserKnob {7 fine_tune_b l "Fine Limit B" R 1 5}
+  fine_tune_b 1
+  addUserKnob {7 fine_tune_a l "Fine Limit A" R -1 5}
+ }
+ Expression {
+  expr3 (1-(r+g+b+a))
+  name Expression2
+  xpos -250
+  ypos 226
+  addUserKnob {20 User}
+ }
+ Clamp {
+  channels rgba
+  name clamp_matte
+  xpos -250
+  ypos 261
+ }
+ Erode {
+  size {{erode_patch}}
+  name Erode2
+  xpos -250
+  ypos 414
+ }
+set Nfb3db00 [stack 0]
+ Dot {
+  name Dot2
+  xpos -216
+  ypos 963
+ }
+push $Nfb3db00
+push $Nec82100
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy4
+  xpos 35
+  ypos 414
+ }
+ Premult {
+  name Premult2
+  xpos 35
+  ypos 475
+ }
+ Blur {
+  size {{size_erode}}
+  maskChannelInput rgba.alpha
+  invert_mask true
+  name Blur2
+  xpos 35
+  ypos 514
+ }
+ Unpremult {
+  name Unpremult3
+  xpos 35
+  ypos 565
+ }
+set Nfb74c50 [stack 0]
+ Clamp {
+  channels rgba
+  maximum 0
+  MinClampTo_enable true
+  MaxClampTo_enable true
+  name Clamp4
+  xpos 207
+  ypos 565
+ }
+set Nfb7ce20 [stack 0]
+ Dot {
+  name Dot7
+  xpos 388
+  ypos 569
+ }
+push $Nfb7ce20
+push $Nfb74c50
+ Dot {
+  name Dot6
+  xpos 69
+  ypos 649
+ }
+set Nfb90b00 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy5
+  xpos 207
+  ypos 639
+ }
+ Blur {
+  channels rgba
+  size {{size_erode*3*patch_black}}
+  name Blur3
+  xpos 207
+  ypos 706
+ }
+ Unpremult {
+  name Unpremult5
+  xpos 207
+  ypos 761
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy6
+  xpos 354
+  ypos 755
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos 354
+  ypos 813
+ }
+ FilterErode {
+  size {{(-size_erode/5)*patch_black*2}}
+  filter triangle
+  name FilterErode3
+  xpos 208
+  ypos 813
+ }
+ Premult {
+  name Premult4
+  xpos 208
+  ypos 880
+ }
+push $Nfb90b00
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos 35
+  ypos 880
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy7
+  xpos 35
+  ypos 953
+ }
+ Output {
+  name Output1
+  xpos 35
+  ypos 1087
+ }
+end_group

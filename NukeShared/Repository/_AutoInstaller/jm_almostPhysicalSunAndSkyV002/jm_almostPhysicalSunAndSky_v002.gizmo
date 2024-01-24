@@ -1,0 +1,1514 @@
+Gizmo {
+help "Generates an adjustable sun and sky. \n It is unfortunately not an implementation of the Hosek-Wilkie sky radiance model, but it is made to look like the physical sky implementation in Arnold using ACES. \n It requires the filepath pointing to the required sky source. \n\n jm_almostPhysicalSunAndSky_v002\n -by Johannes Møgelvang"
+inputs 2
+addUserKnob {20 User}
+addUserKnob {41 turbidity l Turbidity T j_APSAS_Control.turbidity}
+addUserKnob {41 elevation l Elevation T j_APSAS_Control.elevation}
+addUserKnob {41 azimuth l Azimuth T j_APSAS_Control.azimuth}
+addUserKnob {41 sunSize l "Sun Size" T j_APSAS_Control.sunSize}
+addUserKnob {41 sunGain l "Sun Gain" T j_APSAS_Control.sunGain}
+addUserKnob {26 internalOnlyControls l "" +STARTLINE}
+addUserKnob {41 intCameraFocalLengt l "Internal Camera Focal Length" T j_APSAS_Control.intCameraFocalLengt}
+addUserKnob {41 intCameraRX l "Internal Camera Tilt" T j_APSAS_Control.intCameraRX}
+addUserKnob {41 saturation l "Sky Saturation" t "Saturation CC of the sky" T j_APSAS_skyCC.saturation}
+addUserKnob {41 contrast l "Sky Contrast" t "Contrast CC of the sky" T j_APSAS_skyCC.contrast}
+addUserKnob {41 gamma l "Sky Gamma" t "Gamma CC of the sky" T j_APSAS_skyCC.gamma}
+addUserKnob {41 gain l "Sky Gain" t "Gain CC of the sky" T j_APSAS_skyCC.gain}
+addUserKnob {41 offset l "Sky Offset" t "Offset CC of the sky" T j_APSAS_skyCC.offset}
+addUserKnob {41 sunSoftness l "Internal Sun Softness" T j_APSAS_Control.sunSoftness}
+addUserKnob {41 sunColor l "Internal Sun Color" T j_APSAS_Control.sunColor}
+addUserKnob {41 useExternalCam l "Use External Camera" T j_APSAS_Control.useExternalCam}
+addUserKnob {41 useSunExtInput l "Use External Sun" T j_APSAS_Control.useSunExtInput}
+addUserKnob {26 rarelyTouched l "" +STARTLINE}
+addUserKnob {41 skyQuality l "Sky Quality" T j_APSAS_Control.skyQuality}
+addUserKnob {41 outputSelector l "Output Selector" T j_APSAS_Control.outputSelector}
+addUserKnob {41 envSphereSize l "Sky Sphere Size" T j_APSAS_Control.envSphereSize}
+addUserKnob {41 format l "Output Format" t "Output pixel size" T j_APSAS_outputFormat.format}
+addUserKnob {41 file l "Sky Source File Location" t "Sky Source File Location" T j_APSAS_source.file}
+addUserKnob {41 colorspace l "Sky Source Input Transform" t "The color input transform of the sky source" T j_APSAS_source.colorspace}
+}
+DirectLight {
+inputs 0
+color {{parent.j_APSAS_Control.sunColor} {parent.j_APSAS_Control.sunColor} {parent.j_APSAS_Control.sunColor}}
+intensity {{"parent.j_APSAS_Control.sunGain * 10"}}
+translate {0 10 0}
+rotate {{parent.j_APSAS_Control.elevation+180} {-parent.j_APSAS_Control.azimuth} 0}
+cast_shadows true
+shadow_mode "full alpha"
+samples 0
+sample_width 1.56
+depthmap_bias 0.132
+depthmap_slope_bias 0.2195
+clipping_threshold 0.209
+shadow_jitter_scale 6.98
+depthmap_width 250
+name sun_3DDirectLight1
+xpos 560
+ypos 414
+}
+set N1f9d1800 [stack 0]
+Axis3 {
+inputs 0
+rotate {0 {-parent.j_APSAS_Control.azimuth} 0}
+name Axis_azimuth1
+xpos -363
+ypos 237
+}
+Dot {
+name Dot12
+xpos -258
+ypos 344
+}
+set N7f30800 [stack 0]
+Dot {
+name Dot13
+xpos 893
+ypos 344
+}
+Axis3 {
+inputs 0
+rotate {{parent.j_APSAS_Control.elevation} 0 0}
+uniform_scale {{"parent.j_APSAS_Control.envSphereSize * 0.001"}}
+name Axis_sunElevation2
+xpos 798
+ypos -174
+}
+Axis3 {
+translate {0 0 -900}
+uniform_scale {{parent.j_APSAS_Control.sunSize}}
+name Axis_sunDistanceAnsSize1
+xpos 798
+ypos -50
+}
+Dot {
+name Dot14
+xpos 822
+ypos 63
+}
+Input {
+inputs 0
+name Sun
+xpos -1012
+ypos -3867
+number 1
+}
+Dot {
+name Dot15
+xpos -978
+ypos -809
+}
+Constant {
+inputs 0
+format "4096 4096 0 0 4096 4096 1 WP_square_4K"
+name sunBase
+xpos 936
+ypos -1101
+}
+Radial {
+area {0 0 {width} {height}}
+plinear true
+name Radial2
+xpos 936
+ypos -971
+}
+RolloffContrast {
+contrast {{"(30 - j_APSAS_Control.sunSoftness) +1"}}
+slope_mag_low1 0.8000000119
+black_low 1
+slope_mag_high2 0.8000000119
+white_high 1
+name RolloffContrast2
+xpos 936
+ypos -911
+}
+PLogLin {
+channels rgba
+name PLogLin1
+xpos 936
+ypos -842
+}
+ColorCorrect {
+gain {{parent.j_APSAS_Control.sunColor} {parent.j_APSAS_Control.sunColor} {parent.j_APSAS_Control.sunColor} {parent.j_APSAS_Control.sunColor}}
+name j_APSAS_sunBaseColor
+xpos 936
+ypos -774
+}
+ColorLookup {
+lut {master {curve L x0.011111103 0 C x1 1}
+  red {}
+  green {}
+  blue {}
+  alpha {}}
+name clamp_cleanSunBlack1
+xpos 936
+ypos -712
+}
+Shuffle {
+alpha black
+name Shuffle6
+label "\[value knob.in] --> \[value knob.out]"
+xpos 936
+ypos -630
+}
+Switch {
+inputs 2
+which {{parent.j_APSAS_Control.useSunExtInput}}
+name sunSelector1
+xpos 936
+ypos -459
+}
+Multiply {
+value {{parent.j_APSAS_Control.sunGain} {parent.j_APSAS_Control.sunGain} {parent.j_APSAS_Control.sunGain} {parent.j_APSAS_Control.sunGain}}
+name j_APSAS_sunGain
+xpos 936
+ypos -359
+}
+Card2 {
+cast_shadow false
+receive_shadow false
+image_aspect false
+uniform_scale 100
+control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+name sun_card1
+xpos 936
+ypos -27
+}
+TransformGeo {
+inputs 2
+name TransformGeo3
+xpos 936
+ypos 160
+}
+TransformGeo {
+inputs 2
+name TransformGeo6
+xpos 936
+ypos 423
+}
+Dot {
+name Dot52
+xpos 970
+ypos 484
+}
+set N1658ac00 [stack 0]
+push $N7f30800
+Read {
+inputs 0
+file_type exr
+file "\[python \{gizmoSupport\} ]/jm_almostPhysicalSunAndSky_source/jm_almostPhysicalSunAndSky020.%06d.exr"
+localizationPolicy off
+format "200 400 0 0 200 400 1 "
+first 0
+last 500
+origfirst 0
+origlast 500
+origset true
+auto_alpha true
+name j_APSAS_source
+label "\[value first_frame] - \[value last_frame]"
+xpos -179
+ypos -3979
+}
+Crop {
+box {0 180 200 400}
+crop false
+name Crop19
+xpos -179
+ypos -3728
+}
+set N1658b800 [stack 0]
+Crop {
+box {0 0 200 1}
+name Crop20
+xpos -95
+ypos -3682
+}
+Blur {
+size {200 0}
+name Blur4
+xpos -95
+ypos -3648
+}
+Crop {
+box {0 0 200 1}
+crop false
+name Crop21
+xpos -95
+ypos -3602
+}
+Crop {
+box {0 0 200 400}
+name Crop22
+xpos -95
+ypos -3565
+}
+Crop {
+box {-200 -200 400 200}
+softness 200
+intersect true
+name Crop23
+xpos -95
+ypos -3527
+}
+push $N1658b800
+Merge2 {
+inputs 2
+name Merge8
+label "\[value bbox]"
+xpos -179
+ypos -3480
+}
+Reformat {
+type "to box"
+format "1024 1024 0 0 1024 1024 1 square_1K"
+box_width 1024
+box_height 1024
+resize distort
+filter notch
+name Reformat_skyTo1k1
+xpos -179
+ypos -3389
+}
+Reformat {
+type scale
+scale {{parent.j_APSAS_Control.skyQuality}}
+filter notch
+name Reformat13_skyScaleFactor1
+xpos -179
+ypos -3325
+}
+Dot {
+name Dot16
+xpos -145
+ypos -3090
+}
+set N7e2ea400 [stack 0]
+TimeOffset {
+time_offset -450
+time ""
+name TimeOffset20
+label "\[value knob.time_offset]"
+xpos 7726
+ypos -2595
+}
+FrameRange {
+first_frame 1
+last_frame 50
+time ""
+name FrameRange1
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 7726
+ypos -2518
+}
+Retime {
+input.first_lock true
+input.last 50
+input.last_lock true
+output.first_lock true
+output.last 50
+output.last_lock true
+after bounce
+shutter 0
+time ""
+name Retime11
+xpos 7726
+ypos -2443
+}
+FrameRange {
+first_frame 1
+last_frame 99
+time ""
+name FrameRange4
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 7726
+ypos -2389
+}
+Dot {
+name Dot70
+xpos 7760
+ypos -2238
+}
+set N7e2eac00 [stack 0]
+Dot {
+name Dot71
+xpos 7906
+ypos -2179
+}
+set N7e2eb000 [stack 0]
+Transform {
+translate {{-width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform27
+xpos 7803
+ypos -2140
+}
+push $N7e2eb000
+Transform {
+translate {{width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform28
+xpos 7933
+ypos -2140
+}
+Merge2 {
+inputs 2
+operation disjoint-over
+name Merge24
+label "\[value bbox]"
+xpos 7870
+ypos -2089
+}
+Crop {
+box {0 0 2048 2048}
+crop false
+name Crop33
+xpos 7870
+ypos -2035
+}
+push $N7e2eac00
+Dissolve {
+inputs 2
+which {{curve x49 0 x51 1}}
+name Dissolve13_halfwaySunUpSunDownSwitch10
+xpos 7726
+ypos -1981
+}
+TimeWarp {
+lookup {{parent.j_APSAS_Control.elevToSrcFrame}}
+time ""
+name TimeWarp_selectElevationAlt9
+xpos 7726
+ypos -1870
+}
+push $N7e2ea400
+TimeOffset {
+time_offset -400
+time ""
+name TimeOffset21
+label "\[value knob.time_offset]"
+xpos 6619
+ypos -2595
+}
+FrameRange {
+first_frame 1
+last_frame 50
+time ""
+name FrameRange7
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 6619
+ypos -2518
+}
+Retime {
+input.first_lock true
+input.last 50
+input.last_lock true
+output.first_lock true
+output.last 50
+output.last_lock true
+after bounce
+shutter 0
+time ""
+name Retime12
+xpos 6619
+ypos -2443
+}
+FrameRange {
+first_frame 1
+last_frame 99
+time ""
+name FrameRange10
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 6619
+ypos -2389
+}
+Dot {
+name Dot68
+xpos 6653
+ypos -2254
+}
+set N19385000 [stack 0]
+Dot {
+name Dot69
+xpos 6799
+ypos -2195
+}
+set N19385400 [stack 0]
+Transform {
+translate {{-width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform22
+xpos 6696
+ypos -2156
+}
+push $N19385400
+Transform {
+translate {{width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform23
+xpos 6826
+ypos -2156
+}
+Merge2 {
+inputs 2
+operation disjoint-over
+name Merge23
+label "\[value bbox]"
+xpos 6763
+ypos -2105
+}
+Crop {
+box {0 0 2048 2048}
+crop false
+name Crop32
+xpos 6763
+ypos -2051
+}
+push $N19385000
+Dissolve {
+inputs 2
+which {{curve x49 0 x51 1}}
+name Dissolve13_halfwaySunUpSunDownSwitch9
+xpos 6619
+ypos -1997
+}
+TimeWarp {
+lookup {{parent.j_APSAS_Control.elevToSrcFrame}}
+time ""
+name TimeWarp_selectElevationAlt8
+xpos 6619
+ypos -1886
+}
+push $N7e2ea400
+TimeOffset {
+time_offset -350
+time ""
+name TimeOffset22
+label "\[value knob.time_offset]"
+xpos 5707
+ypos -2590
+}
+FrameRange {
+first_frame 1
+last_frame 50
+time ""
+name FrameRange15
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 5707
+ypos -2513
+}
+Retime {
+input.first_lock true
+input.last 50
+input.last_lock true
+output.first_lock true
+output.last 50
+output.last_lock true
+after bounce
+shutter 0
+time ""
+name Retime13
+xpos 5707
+ypos -2438
+}
+FrameRange {
+first_frame 1
+last_frame 99
+time ""
+name FrameRange18
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 5707
+ypos -2384
+}
+Dot {
+name Dot66
+xpos 5741
+ypos -2227
+}
+set N5600b400 [stack 0]
+Dot {
+name Dot67
+xpos 5887
+ypos -2168
+}
+set N5600b800 [stack 0]
+Transform {
+translate {{-width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform20
+xpos 5784
+ypos -2129
+}
+push $N5600b800
+Transform {
+translate {{width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform21
+xpos 5914
+ypos -2129
+}
+Merge2 {
+inputs 2
+operation disjoint-over
+name Merge22
+label "\[value bbox]"
+xpos 5851
+ypos -2078
+}
+Crop {
+box {0 0 2048 2048}
+crop false
+name Crop31
+xpos 5851
+ypos -2024
+}
+push $N5600b400
+Dissolve {
+inputs 2
+which {{curve x49 0 x51 1}}
+name Dissolve13_halfwaySunUpSunDownSwitch8
+xpos 5707
+ypos -1970
+}
+TimeWarp {
+lookup {{parent.j_APSAS_Control.elevToSrcFrame}}
+time ""
+name TimeWarp_selectElevationAlt7
+xpos 5707
+ypos -1859
+}
+push $N7e2ea400
+TimeOffset {
+time_offset -300
+time ""
+name TimeOffset23
+label "\[value knob.time_offset]"
+xpos 4763
+ypos -2595
+}
+FrameRange {
+first_frame 1
+last_frame 50
+time ""
+name FrameRange21
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 4763
+ypos -2518
+}
+Retime {
+input.first_lock true
+input.last 50
+input.last_lock true
+output.first_lock true
+output.last 50
+output.last_lock true
+after bounce
+shutter 0
+time ""
+name Retime14
+xpos 4763
+ypos -2443
+}
+FrameRange {
+first_frame 1
+last_frame 99
+time ""
+name FrameRange24
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 4763
+ypos -2389
+}
+Dot {
+name Dot63
+xpos 4797
+ypos -2254
+}
+set N6433b800 [stack 0]
+Dot {
+name Dot65
+xpos 4943
+ypos -2195
+}
+set N6433bc00 [stack 0]
+Transform {
+translate {{-width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform18
+xpos 4840
+ypos -2156
+}
+push $N6433bc00
+Transform {
+translate {{width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform19
+xpos 4970
+ypos -2156
+}
+Merge2 {
+inputs 2
+operation disjoint-over
+name Merge21
+label "\[value bbox]"
+xpos 4907
+ypos -2105
+}
+Crop {
+box {0 0 2048 2048}
+crop false
+name Crop30
+xpos 4907
+ypos -2051
+}
+push $N6433b800
+Dissolve {
+inputs 2
+which {{curve x49 0 x51 1}}
+name Dissolve13_halfwaySunUpSunDownSwitch7
+xpos 4763
+ypos -1997
+}
+TimeWarp {
+lookup {{parent.j_APSAS_Control.elevToSrcFrame}}
+time ""
+name TimeWarp_selectElevationAlt6
+xpos 4763
+ypos -1886
+}
+push $N7e2ea400
+TimeOffset {
+time_offset -250
+time ""
+name TimeOffset24
+label "\[value knob.time_offset]"
+xpos 3877
+ypos -2603
+}
+FrameRange {
+first_frame 1
+last_frame 50
+time ""
+name FrameRange27
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 3877
+ypos -2526
+}
+Retime {
+input.first_lock true
+input.last 50
+input.last_lock true
+output.first_lock true
+output.last 50
+output.last_lock true
+after bounce
+shutter 0
+time ""
+name Retime15
+xpos 3877
+ypos -2451
+}
+FrameRange {
+first_frame 1
+last_frame 99
+time ""
+name FrameRange30
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 3877
+ypos -2397
+}
+Dot {
+name Dot61
+xpos 3911
+ypos -2269
+}
+set N64643c00 [stack 0]
+Dot {
+name Dot62
+xpos 4057
+ypos -2210
+}
+set Nedc38000 [stack 0]
+Transform {
+translate {{-width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform16
+xpos 3954
+ypos -2171
+}
+push $Nedc38000
+Transform {
+translate {{width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform17
+xpos 4084
+ypos -2171
+}
+Merge2 {
+inputs 2
+operation disjoint-over
+name Merge15
+label "\[value bbox]"
+xpos 4021
+ypos -2120
+}
+Crop {
+box {0 0 2048 2048}
+crop false
+name Crop29
+xpos 4021
+ypos -2066
+}
+push $N64643c00
+Dissolve {
+inputs 2
+which {{curve x49 0 x51 1}}
+name Dissolve13_halfwaySunUpSunDownSwitch6
+xpos 3877
+ypos -2012
+}
+TimeWarp {
+lookup {{parent.j_APSAS_Control.elevToSrcFrame}}
+time ""
+name TimeWarp_selectElevationAlt5
+xpos 3877
+ypos -1901
+}
+push $N7e2ea400
+TimeOffset {
+time_offset -200
+time ""
+name TimeOffset25
+label "\[value knob.time_offset]"
+xpos 2943
+ypos -2601
+}
+FrameRange {
+first_frame 1
+last_frame 50
+time ""
+name FrameRange31
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 2943
+ypos -2524
+}
+Retime {
+input.first_lock true
+input.last 50
+input.last_lock true
+output.first_lock true
+output.last 50
+output.last_lock true
+after bounce
+shutter 0
+time ""
+name Retime16
+xpos 2943
+ypos -2449
+}
+FrameRange {
+first_frame 1
+last_frame 99
+time ""
+name FrameRange32
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 2943
+ypos -2395
+}
+Dot {
+name Dot59
+xpos 2977
+ypos -2266
+}
+set N2a8a4000 [stack 0]
+Dot {
+name Dot60
+xpos 3123
+ypos -2207
+}
+set N2a8a4400 [stack 0]
+Transform {
+translate {{-width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform14
+xpos 3020
+ypos -2168
+}
+push $N2a8a4400
+Transform {
+translate {{width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform15
+xpos 3150
+ypos -2168
+}
+Merge2 {
+inputs 2
+operation disjoint-over
+name Merge14
+label "\[value bbox]"
+xpos 3087
+ypos -2117
+}
+Crop {
+box {0 0 2048 2048}
+crop false
+name Crop28
+xpos 3087
+ypos -2063
+}
+push $N2a8a4000
+Dissolve {
+inputs 2
+which {{curve x49 0 x51 1}}
+name Dissolve13_halfwaySunUpSunDownSwitch5
+xpos 2943
+ypos -2009
+}
+TimeWarp {
+lookup {{parent.j_APSAS_Control.elevToSrcFrame}}
+time ""
+name TimeWarp_selectElevationAlt4
+xpos 2943
+ypos -1898
+}
+push $N7e2ea400
+TimeOffset {
+time_offset -150
+time ""
+name TimeOffset26
+label "\[value knob.time_offset]"
+xpos 2085
+ypos -2601
+}
+FrameRange {
+first_frame 1
+last_frame 50
+time ""
+name FrameRange33
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 2085
+ypos -2524
+}
+Retime {
+input.first_lock true
+input.last 50
+input.last_lock true
+output.first_lock true
+output.last 50
+output.last_lock true
+after bounce
+shutter 0
+time ""
+name Retime17
+xpos 2085
+ypos -2449
+}
+FrameRange {
+first_frame 1
+last_frame 99
+time ""
+name FrameRange34
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 2085
+ypos -2395
+}
+Dot {
+name Dot57
+xpos 2119
+ypos -2252
+}
+set N5d97e400 [stack 0]
+Dot {
+name Dot58
+xpos 2265
+ypos -2193
+}
+set N5d97e800 [stack 0]
+Transform {
+translate {{-width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform12
+xpos 2162
+ypos -2154
+}
+push $N5d97e800
+Transform {
+translate {{width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform13
+xpos 2292
+ypos -2154
+}
+Merge2 {
+inputs 2
+operation disjoint-over
+name Merge13
+label "\[value bbox]"
+xpos 2229
+ypos -2103
+}
+Crop {
+box {0 0 2048 2048}
+crop false
+name Crop27
+xpos 2229
+ypos -2049
+}
+push $N5d97e400
+Dissolve {
+inputs 2
+which {{curve x49 0 x51 1}}
+name Dissolve13_halfwaySunUpSunDownSwitch4
+xpos 2085
+ypos -1995
+}
+TimeWarp {
+lookup {{parent.j_APSAS_Control.elevToSrcFrame}}
+time ""
+name TimeWarp_selectElevationAlt3
+xpos 2085
+ypos -1884
+}
+push $N7e2ea400
+TimeOffset {
+time_offset -100
+time ""
+name TimeOffset27
+label "\[value knob.time_offset]"
+xpos 1233
+ypos -2601
+}
+FrameRange {
+first_frame 1
+last_frame 50
+time ""
+name FrameRange35
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 1233
+ypos -2524
+}
+Retime {
+input.first_lock true
+input.last 50
+input.last_lock true
+output.first_lock true
+output.last 50
+output.last_lock true
+after bounce
+shutter 0
+time ""
+name Retime18
+xpos 1233
+ypos -2449
+}
+FrameRange {
+first_frame 1
+last_frame 99
+time ""
+name FrameRange36
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 1233
+ypos -2395
+}
+Dot {
+name Dot55
+xpos 1267
+ypos -2246
+}
+set N2c8ac800 [stack 0]
+Dot {
+name Dot56
+xpos 1413
+ypos -2187
+}
+set N2c8acc00 [stack 0]
+Transform {
+translate {{-width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform10
+xpos 1310
+ypos -2148
+}
+push $N2c8acc00
+Transform {
+translate {{width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform11
+xpos 1440
+ypos -2148
+}
+Merge2 {
+inputs 2
+operation disjoint-over
+name Merge12
+label "\[value bbox]"
+xpos 1377
+ypos -2097
+}
+Crop {
+box {0 0 2048 2048}
+crop false
+name Crop26
+xpos 1377
+ypos -2043
+}
+push $N2c8ac800
+Dissolve {
+inputs 2
+which {{curve x49 0 x51 1}}
+name Dissolve13_halfwaySunUpSunDownSwitch3
+xpos 1233
+ypos -1989
+}
+TimeWarp {
+lookup {{parent.j_APSAS_Control.elevToSrcFrame}}
+time ""
+name TimeWarp_selectElevationAlt2
+xpos 1233
+ypos -1878
+}
+push 0
+push $N7e2ea400
+TimeOffset {
+time_offset -50
+time ""
+name TimeOffset28
+label "\[value knob.time_offset]"
+xpos 457
+ypos -2606
+}
+FrameRange {
+first_frame 1
+last_frame 50
+time ""
+name FrameRange37
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 457
+ypos -2529
+}
+Retime {
+input.first_lock true
+input.last 50
+input.last_lock true
+output.first_lock true
+output.last 50
+output.last_lock true
+after bounce
+shutter 0
+time ""
+name Retime19
+xpos 457
+ypos -2454
+}
+FrameRange {
+first_frame 1
+last_frame 99
+time ""
+name FrameRange38
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos 457
+ypos -2400
+}
+Dot {
+name Dot53
+xpos 491
+ypos -2243
+}
+set N3f56ec00 [stack 0]
+Dot {
+name Dot54
+xpos 637
+ypos -2184
+}
+set N3f56f000 [stack 0]
+Transform {
+translate {{-width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform8
+xpos 534
+ypos -2145
+}
+push $N3f56f000
+Transform {
+translate {{width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform9
+xpos 664
+ypos -2145
+}
+Merge2 {
+inputs 2
+operation disjoint-over
+name Merge11
+label "\[value bbox]"
+xpos 601
+ypos -2094
+}
+Crop {
+box {0 0 2048 2048}
+crop false
+name Crop25
+xpos 601
+ypos -2040
+}
+push $N3f56ec00
+Dissolve {
+inputs 2
+which {{curve x49 0 x51 1}}
+name Dissolve13_halfwaySunUpSunDownSwitch2
+xpos 457
+ypos -1986
+}
+TimeWarp {
+lookup {{parent.j_APSAS_Control.elevToSrcFrame}}
+time ""
+name TimeWarp_selectElevationAlt1
+xpos 457
+ypos -1875
+}
+push $N7e2ea400
+Dot {
+name Dot17
+xpos -145
+ypos -2619
+}
+FrameRange {
+first_frame 1
+last_frame 50
+time ""
+name FrameRange39
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos -179
+ypos -2551
+}
+Retime {
+input.first_lock true
+input.last 50
+input.last_lock true
+output.first_lock true
+output.last 50
+output.last_lock true
+after bounce
+shutter 0
+time ""
+name Retime20
+xpos -179
+ypos -2476
+}
+FrameRange {
+first_frame 1
+last_frame 99
+time ""
+name FrameRange40
+label "\[value knob.first_frame] - \[value knob.last_frame]"
+xpos -179
+ypos -2422
+}
+Dot {
+name Dot18
+xpos -145
+ypos -2257
+}
+set Ncc735400 [stack 0]
+Dot {
+name Dot19
+xpos 1
+ypos -2198
+}
+set Ncc735800 [stack 0]
+Transform {
+translate {{-width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform3
+xpos -102
+ypos -2159
+}
+push $Ncc735800
+Transform {
+translate {{width/2} 0}
+center {{width/2} {"height / 2"}}
+name Transform5
+xpos 28
+ypos -2159
+}
+Merge2 {
+inputs 2
+operation disjoint-over
+name Merge9
+label "\[value bbox]"
+xpos -35
+ypos -2108
+}
+Crop {
+box {0 0 2048 2048}
+crop false
+name Crop24
+xpos -35
+ypos -2054
+}
+push $Ncc735400
+Dissolve {
+inputs 2
+which {{curve x49 0 x51 1}}
+name Dissolve13_halfwaySunUpSunDownSwitch1
+xpos -179
+ypos -2000
+}
+TimeWarp {
+lookup {{parent.j_APSAS_Control.elevToSrcFrame}}
+time ""
+name TimeWarp_selectElevationAlt
+xpos -179
+ypos -1889
+}
+Dissolve {
+inputs 10+1
+which {{"parent.j_APSAS_Control.turbidity - 1"}}
+name Dissolv_turbidityAmount1
+xpos -179
+ypos -1296
+}
+Dot {
+name Dot28
+xpos -145
+ypos -1089
+}
+ColorCorrect {
+name j_APSAS_skyCC
+xpos -179
+ypos -374
+}
+Dot {
+name Dot20
+xpos -145
+ypos -86
+}
+Sphere {
+cast_shadow false
+receive_shadow false
+rows 60
+columns 100
+uniform_scale {{parent.j_APSAS_Control.envSphereSize}}
+name sky_sphere1
+xpos -179
+ypos 161
+}
+TransformGeo {
+inputs 2
+name TransformGeo7
+xpos -179
+ypos 405
+}
+Dot {
+name Dot51
+xpos -145
+ypos 454
+}
+set N13b62c00 [stack 0]
+Scene {
+inputs 3
+name combined_scene1
+xpos 680
+ypos 567
+}
+Dot {
+name Dot21
+xpos 704
+ypos 1226
+}
+push $N1f9d1800
+Dot {
+name Dot22
+xpos 584
+ypos 1162
+}
+Input {
+inputs 0
+name Camera
+xpos -675
+ypos -3867
+number 0
+}
+Dot {
+name Dot72
+xpos -641
+ypos 182
+}
+Camera3 {
+inputs 0
+rotate {{parent.j_APSAS_Control.intCameraRX} 0 0}
+focal {{parent.j_APSAS_Control.intCameraFocalLengt}}
+haperture 36
+vaperture 24
+name j_APSAS_internalCam
+xpos -865
+ypos 322
+}
+Switch {
+inputs 2
+which {{parent.j_APSAS_Control.useExternalCam}}
+name j_APSAS_CameraSwitch
+xpos -675
+ypos 428
+}
+Dot {
+name Dot29
+xpos -641
+ypos 512
+}
+Dot {
+name Dot23
+xpos -250
+ypos 656
+}
+set N61d7b800 [stack 0]
+Dot {
+name Dot24
+xpos 900
+ypos 656
+}
+push $N1658ac00
+Constant {
+inputs 0
+format "3840 2160 0 0 3840 2160 1 UHD_4K"
+name j_APSAS_outputFormat
+xpos -486
+ypos 707
+}
+Dot {
+name Dot25
+xpos -408
+ypos 801
+}
+Dot {
+name Dot26
+xpos -272
+ypos 801
+}
+set Ncf6f4800 [stack 0]
+Dot {
+name Dot27
+xpos 864
+ypos 801
+}
+ScanlineRender {
+inputs 3
+conservative_shader_sampling false
+motion_vectors_type distance
+name ScanlineRender_sun1
+xpos 936
+ypos 877
+}
+set Ncf6f5000 [stack 0]
+Dot {
+name Dot49
+xpos 970
+ypos 992
+}
+Dot {
+name Dot50
+xpos 420
+ypos 1168
+}
+push $N61d7b800
+push $N13b62c00
+push $Ncf6f4800
+ScanlineRender {
+inputs 3
+conservative_shader_sampling false
+motion_vectors_type distance
+name ScanlineRender_sky1
+xpos -179
+ypos 877
+}
+set Ncf6f5c00 [stack 0]
+Dot {
+name Dot46
+xpos -145
+ypos 1020
+}
+Dot {
+name Dot48
+xpos 250
+ypos 1160
+}
+push $Ncf6f5000
+push $Ncf6f5c00
+Merge2 {
+inputs 2
+mix 0.777
+name Merge10
+label "\[value bbox]"
+xpos 107
+ypos 1035
+}
+Dot {
+name Dot47
+xpos 141
+ypos 1223
+}
+Switch {
+inputs 5
+which {{j_APSAS_Control.outputSelector}}
+name Switch_outputSelector1
+xpos 302
+ypos 1320
+}
+NoOp {
+name j_APSAS_Control
+label "Remember to include:\noutput format\nsource path\nsource colorspace\nsky CC\n\ndefault values:\nturbidity = 3\nelevation = 45\nazimuth = 90\nsun color 1.27 1 0.73"
+xpos 302
+ypos 1443
+addUserKnob {20 User}
+addUserKnob {7 turbidity l Turbidity t "Amount of aerosol in the air (haze, fog, dust, moisture, ice crystals)" R 1 10}
+turbidity 3
+addUserKnob {7 elevation l Elevation t "Sun height position" R 0 180}
+elevation 40
+addUserKnob {7 azimuth l Azimuth t "Sun sidways position" R -180 180}
+addUserKnob {7 sunSize l "Sun Size" t "Size of the sun" R 0 10}
+sunSize 0.5
+addUserKnob {19 sunGain l "Sun Gain" t "Useful for adjusting sun color and poower (over time) " R 0 10}
+sunGain 1
+addUserKnob {6 sunGain_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {26 internalOnlyControls l "" +STARTLINE}
+addUserKnob {7 intCameraFocalLengt l "Internal Camera Focal Length" t "FOV of the internal camera" R 5 100}
+intCameraFocalLengt 24
+addUserKnob {7 intCameraRX l "Internal Camera Tilt" t "Camera rotation on the X axis" R 0 90}
+intCameraRX 20
+addUserKnob {7 sunSoftness l "Internal Sun Softness" t "Hardness/softness of the sun. It only has an effect on the internal sun" R 0 30}
+sunSoftness 30
+addUserKnob {19 sunColor l "Internal Sun Color" t "The base color of the internal sun"}
+sunColor {1.27 1 0.73 1}
+addUserKnob {6 sunColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 useExternalCam l "Use External Camera" t "Use an external camera instead of the internal camera" +STARTLINE}
+addUserKnob {6 useSunExtInput l "Use External Sun" t "Usen either the internal generated sun, or a sun from the external input" +STARTLINE}
+addUserKnob {26 rarelyTouched l "" +STARTLINE}
+addUserKnob {7 skyQuality l "Sky Quality" t "Sky texture size on the sky sphere. \n1 = 1024, 2 = 2048, 8 = 8192, etc." R 0.01 10}
+skyQuality 2
+addUserKnob {4 outputSelector l "Output Selector" t "Switch between different kinds of output" M {"Sun and Sky" "Sky only" "Sun only" "3D Sun light only" "3D scene" "" "" "" ""}}
+addUserKnob {7 envSphereSize l "Sky Sphere Size" t "Scale of the sky sphere and distance to the sun (the sun is a little closer than the sky)" R 100 10000}
+envSphereSize 1000
+addUserKnob {26 hiddenBelow l "--- hidden below ---" +INVISIBLE}
+addUserKnob {7 elevToSrcFrame +INVISIBLE R 1 50}
+elevToSrcFrame {{"((elevation) * ( 98 / 180 ) +1 )"}}
+}
+Output {
+name j_APSAS_OUT
+xpos 302
+ypos 1680
+}
+Output {
+name Output1
+xpos 302
+ypos 1780
+}
+end_group

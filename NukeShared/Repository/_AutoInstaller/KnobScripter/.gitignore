@@ -1,0 +1,7 @@
+
+*.pyc
+.DS_Store
+KnobScripter/knob_scripter.sublime-workspace
+venv
+tab_stats.dat
+.idea
